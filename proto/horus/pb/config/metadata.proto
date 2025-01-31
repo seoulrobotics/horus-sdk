@@ -63,6 +63,7 @@ message Duration {
 
 // Matrix types
 // ------------
+// TODO(HRS-495) Reuse Matrixf for representing affine transform.
 message AffineTransform3f {
 
   repeated float data = 1;
