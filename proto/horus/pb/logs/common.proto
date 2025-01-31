@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package horus.pb.logs;
+
+// Validation error which maps a message to a path in a nested object.
+message ValidationError {
+  string path = 1;
+  string message = 2;
+}

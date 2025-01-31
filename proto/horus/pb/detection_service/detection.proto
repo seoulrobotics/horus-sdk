@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+package horus.pb;
+
+import "horus/pb/config/metadata.proto";
+
+import "horus/pb/point/point_message.proto";
+
+// A bounding box message.
+message BoundingBox {
+  // The base is defined by the center_x, center_y, and lowest_z in meters
+  // relevant to the global origin.
+  Vector3f base = 1;
+  // The size is defined by the width, height and depth of the box in meters.
+  Vector3f size = 2;
+  // The yaw of the box in radians.
+  float yaw = 3;
+}
+
+// A labeled point cloud message.
+message LabeledPointCloud {
+  // The point cloud and its metadata.
+  PointFrame point_cloud = 1;
+  // Attributes for each point defining which `DetectedObject` a point belongs
+  // to. The int32_t::max is reserved for unassigned points.
+  UInt32List point_index_to_object_id = 2;
+}
+
+// The supported object labels.
+enum ObjectLabel {
+  LABEL_UNSPECIFIED = 0;
+  MISC = 1;
+  CAR = 2;
+  CYCLIST = 3;
+  PEDESTRIAN = 4;
+}
+
+// The detected object tracking status.
+enum TrackingStatus {
+  TRACKING_STATUS_UNSPECIFIED = 0;
+  INVALIDATING = 1;
+  VALIDATING = 2;
+  DRIFTING = 3;
+  TRACKING = 4;
+}
+
+// A singular detection object message.
+message DetectedObject {
+  message Classification {
+    // The label of the detected object.
+    ObjectLabel class_label = 1;
+  }
+
+  message Kinematics {
+    // The (X, Y) linear velocity in m/s.
+    Vector2f linear_velocity = 1;
+
+    // The optional yaw rate in radians.
+    // The yaw rate is not set if the used tracker uses a constant velocity
+    // motion model.
+    optional float yaw_rate = 2;
+  }
+
+  message Shape {
+    // The bounding box of the detected object.
+    BoundingBox bounding_box = 1;
+  }
+
+  message Status {
+    // The id of the detected object.
+    // Set optional to avoid field ellision for id 0 after serialization.
+    optional uint32 id = 1;
+
+    // The tracking status of the detected object.
+    TrackingStatus tracking_status = 2;
+  }
+
+  Classification classification = 1;
+  Kinematics kinematics = 2;
+  Shape shape = 3;
+  Status status = 4;
+}
+
+// A detection event message.
+message DetectionEvent {
+  message FrameInfo {
+    // The detection frame timestamp.
+    Timestamp frame_timestamp = 1;
+  }
+
+  // The detected objects.
+  repeated DetectedObject objects = 1;
+  // The labeled point clouds.
+  repeated LabeledPointCloud labeled_point_clouds = 2;
+  // The frame info of the detection event.
+  FrameInfo frame_info = 3;
+}

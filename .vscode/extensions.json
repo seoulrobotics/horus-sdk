@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    // spell-checker:disable
+    "llvm-vs-code-extensions.vscode-clangd",
+    "ms-python.python",
+    "ms-vscode.cmake-tools",
+    "vadimcn.vscode-lldb",
+    "matepek.vscode-catch2-test-adapter"
+    // spell-checker:enable
+  ]
+}

@@ -1,0 +1,90 @@
+/// @file
+///
+/// Attributes used within the Horus SDK.
+
+// Do not modify; this was automatically generated from
+// ${HORUS_SDK_SOURCE_DIR}/horus/internal/attributes.h.in.
+
+// NOLINTBEGIN(*-macro-*)
+// clang-format off
+
+// spell-checker: ignore cmakedefine01
+
+#ifndef HORUS_INTERNAL_ATTRIBUTES_H_
+#define HORUS_INTERNAL_ATTRIBUTES_H_
+
+#define HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND ${HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND}
+#define HORUS_SDK_ATTRIBUTE_NO_UNIQUE_ADDRESS ${HORUS_SDK_ATTRIBUTE_NO_UNIQUE_ADDRESS}
+#define HORUS_SDK_ATTRIBUTE_TRIVIAL_ABI ${HORUS_SDK_ATTRIBUTE_TRIVIAL_ABI}
+#cmakedefine01 HORUS_SDK_USE_PB_NAMESPACE_ALIAS
+#cmakedefine01 HORUS_SDK_USE_UNION
+
+#define HORUS_SDK_NO_SANITIZE(x) ${HORUS_SDK_NO_SANITIZE}
+#define HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(x) ${HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE}
+
+// Thread safety annotations; source: https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h.
+
+#define HORUS_SDK_CAPABILITY(x) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(capability(x))
+
+#define HORUS_SDK_SCOPED_CAPABILITY \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(scoped_lockable)
+
+#define HORUS_SDK_GUARDED_BY(x) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(guarded_by(x))
+
+#define HORUS_SDK_PT_GUARDED_BY(x) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(pt_guarded_by(x))
+
+#define HORUS_SDK_ACQUIRED_BEFORE(...) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(acquired_before(__VA_ARGS__))
+
+#define HORUS_SDK_ACQUIRED_AFTER(...) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(acquired_after(__VA_ARGS__))
+
+#define HORUS_SDK_REQUIRES(...) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(requires_capability(__VA_ARGS__))
+
+#define HORUS_SDK_REQUIRES_SHARED(...) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(requires_shared_capability(__VA_ARGS__))
+
+#define HORUS_SDK_ACQUIRE(...) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(acquire_capability(__VA_ARGS__))
+
+#define HORUS_SDK_ACQUIRE_SHARED(...) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(acquire_shared_capability(__VA_ARGS__))
+
+#define HORUS_SDK_RELEASE(...) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(release_capability(__VA_ARGS__))
+
+#define HORUS_SDK_RELEASE_SHARED(...) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(release_shared_capability(__VA_ARGS__))
+
+#define HORUS_SDK_RELEASE_GENERIC(...) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(release_generic_capability(__VA_ARGS__))
+
+#define HORUS_SDK_TRY_ACQUIRE(...) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(try_acquire_capability(__VA_ARGS__))
+
+#define HORUS_SDK_TRY_ACQUIRE_SHARED(...) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(try_acquire_shared_capability(__VA_ARGS__))
+
+#define HORUS_SDK_EXCLUDES(...) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(locks_excluded(__VA_ARGS__))
+
+#define HORUS_SDK_ASSERT_CAPABILITY(x) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(assert_capability(x))
+
+#define HORUS_SDK_ASSERT_SHARED_CAPABILITY(x) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(assert_shared_capability(x))
+
+#define HORUS_SDK_RETURN_CAPABILITY(x) \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(lock_returned(x))
+
+#define HORUS_SDK_NO_THREAD_SAFETY_ANALYSIS \
+  HORUS_SDK_THREAD_ANNOTATION_ATTRIBUTE(no_thread_safety_analysis)
+
+// NOLINTEND(*-macro-*)
+// clang-format on
+
+#endif  // HORUS_INTERNAL_ATTRIBUTES_H_

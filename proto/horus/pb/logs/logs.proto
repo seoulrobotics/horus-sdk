@@ -1,0 +1,1172 @@
+syntax = "proto3";
+
+import "horus/pb/logs/common.proto";
+import "horus/pb/logs/metadata.proto";
+
+package horus.pb.logs;
+
+// Log #1.
+//
+// > $message
+message Generic {
+  string message = 1;
+  LogMetadata.SourceLocation location = 2;
+}
+
+// Log #2.
+//
+// > Out of memory
+message Oom {
+}
+
+// Log #3.
+//
+// > Cannot initiate connection to $target_service at $target_uri: $details
+message RpcConnectionError {
+  string target_service = 1;
+  string target_uri = 2;
+  string details = 3;
+}
+
+// Log #4.
+//
+// > Project name `$name` is invalid: $details
+message InvalidProjectName {
+  string name = 1;
+  string details = 2;
+}
+
+// Log #5.
+//
+// > Project `$name` not found
+message ProjectNotFound {
+  string name = 1;
+}
+
+// Log #6.
+//
+// > Project `$name` already exists
+message ProjectAlreadyExists {
+  string name = 1;
+}
+
+// Log #7.
+//
+// > Configuration is invalid
+message InvalidConfiguration {
+  repeated ValidationError validation_errors = 1;
+}
+
+// Log #8.
+//
+// > $entity_type `$id` not found
+message EntityNotFound {
+  string id = 1;
+  string entity_type = 2;
+}
+
+// Log #9.
+//
+// > Active project cannot be deleted
+message ActiveProjectCannotBeDeleted {
+}
+
+// Log #10.
+//
+// > Cannot terminate connection to $target_service at $target_uri: $details
+message RpcDisconnectionError {
+  string target_service = 1;
+  string target_uri = 2;
+  string details = 3;
+}
+
+// Log #11.
+//
+// > Dropped $n log messages
+message DroppedLogs {
+  uint64 n = 1;
+}
+
+// Log #12.
+//
+// > Opened project $project_name
+message OpenedProject {
+  string project_name = 1;
+}
+
+// Log #13.
+//
+// > Created project $project_name from $source_name
+message CreatedProject {
+  string project_name = 1;
+  string source_name = 2;
+}
+
+// Log #14.
+//
+// > Configuration is unavailable; request cannot be processed.
+message ConfigUnavailable {
+}
+
+// Log #15.
+//
+// > Invalid request received: $details
+message InvalidRequest {
+  string details = 1;
+}
+
+// Log #16.
+//
+// > $sanity_check_name failed: $details
+message SanityCheckError {
+  string sanity_check_name = 1;
+  string details = 2;
+}
+
+// Log #17.
+//
+// > The bag file ($horus_bag_path) could not be opened: $details
+message BagFailedToOpen {
+  string horus_bag_path = 1;
+  string details = 2;
+}
+
+// Log #18.
+//
+// > Bag file could not be closed: $details
+message BagFailedToClose {
+  string details = 1;
+}
+
+// Log #19.
+//
+// > Bag file conversion failed: $details
+message BagConversionFailed {
+  string details = 1;
+}
+
+// Log #20.
+//
+// > Bag file writing failed $name: $details
+message BagFailedToWrite {
+  string name = 1;
+  string details = 2;
+}
+
+// Log #21.
+//
+// > Calibration failed: $details
+message CalibrationError {
+  string details = 1;
+}
+
+// Log #22.
+//
+// > Failed to start recording: $details
+message ProjectManagerFailedToStartRecording {
+  string details = 1;
+}
+
+// Log #23.
+//
+// > Failed to stop recording: $details
+message ProjectManagerFailedToStopRecording {
+  string details = 1;
+}
+
+// Log #24.
+//
+// > The connection with the requested $node_type node with ID $node_id timed out
+message ServiceConnectionTimedOut {
+  string node_type = 1;
+  string node_id = 2;
+}
+
+// Log #25.
+//
+// > Bag recorder is already running for $path
+message BagRecorderAlreadyRunning {
+  string path = 1;
+}
+
+// Log #26.
+//
+// > Could not connect to license server: $details.
+message LicenseServerConnectionError {
+  string details = 1;
+}
+
+// Log #27.
+//
+// > Could not read license: $details.
+message LicenseError {
+  string details = 1;
+}
+
+// Log #145.
+//
+// > Found no valid license.
+message LicenseNotFoundError {
+}
+
+// Log #146.
+//
+// > License expired on $expiration_time.
+message LicenseExpiredError {
+  LogMetadata.Timestamp expiration_time = 1;
+}
+
+// Log #147.
+//
+// > Project exceeds number of LiDARs allowed by license ($lidar_count > $max_lidar_count).
+message LicenseExceededError {
+  uint32 lidar_count = 1;
+  uint32 max_lidar_count = 2;
+}
+
+// Log #28.
+//
+// > Could not validate license with current hardware - $details.
+message LicenseHostMachineError {
+  string details = 1;
+}
+
+// Log #148.
+//
+// > Endpoint requires "$missing_privilege" privilege: $level_error.
+message LicensePrivilegeError {
+  string missing_privilege = 1;
+  string level_error = 2;
+}
+
+// Log #149.
+//
+// > License is active.
+message LicenseActiveInfo {
+}
+
+// Log #150.
+//
+// > Found $non_expired_licenses_count non-expired concurrent licenses. Only "$active_license_filename" is used.
+message MultipleLicensesWarning {
+  uint32 non_expired_licenses_count = 1;
+  string active_license_filename = 2;
+}
+
+// Log #29.
+//
+// > Current license accepts up to $max_lidar_count and expires on $expiration_time.
+message LicenseCurrentLicenseStatusInfo {
+  LogMetadata.Timestamp expiration_time = 1;
+  uint32 max_lidar_count = 2;
+}
+
+// Log #30.
+//
+// > Bag recording stopped for $path: $details
+message BagRecordingStoppedInfo {
+  string path = 1;
+  string details = 2;
+}
+
+// Log #31.
+//
+// > Bag recording failed to start: $details
+message BagRecordingFailedToStart {
+  string details = 1;
+}
+
+// Log #32.
+//
+// > Bag recording started for $path
+message BagRecordingStartedInfo {
+  string path = 1;
+}
+
+// Log #33.
+//
+// > Replay Restarted
+message ReplayRestartedInfo {
+}
+
+// Log #34.
+//
+// > Input source $source requested
+message InputSourceChangeRequestedInfo {
+  string source = 1;
+}
+
+// Log #35.
+//
+// > Input source changed to $source
+message InputSourceSwitchedInfo {
+  string source = 1;
+}
+
+// Log #36.
+//
+// > RPC request $request_name to $endpoint timed out after $elapsed.
+message RpcTimeoutWarning {
+  string request_name = 1;
+  string endpoint = 2;
+  LogMetadata.Duration elapsed = 3;
+}
+
+// Log #37.
+//
+// > Notification service cannot write log in $path: $details
+message CannotWriteLogFile {
+  string path = 1;
+  string details = 2;
+}
+
+// Log #38.
+//
+// > Point cloud parsing failed: $details
+message PointCloudParsingFailureWarning {
+  string details = 1;
+}
+
+// Log #39.
+//
+// > The lidar $lidar_id is considered dead. No data has been received for a while.
+message LidarIsDead {
+  string lidar_id = 1;
+}
+
+// Log #40.
+//
+// > The lidar $lidar_id is not considered dead anymore. A point cloud has been received again after some time.
+message LidarIsNotDeadAnymore {
+  string lidar_id = 1;
+}
+
+// Log #41.
+//
+// > The lidar $lidar_id is obstructed.
+message LidarIsObstructed {
+  string lidar_id = 1;
+}
+
+// Log #42.
+//
+// > The lidar $lidar_id is not obstructed anymore.
+message LidarIsNotObstructedAnymore {
+  string lidar_id = 1;
+}
+
+// Log #43.
+//
+// > The lidar $lidar_id is tilted.
+message LidarIsTilted {
+  string lidar_id = 1;
+}
+
+// Log #44.
+//
+// > The lidar $lidar_id is not tilted anymore.
+message LidarIsNotTiltedAnymore {
+  string lidar_id = 1;
+}
+
+// Log #45.
+//
+// > The lidar $lidar_id has been automatically re-calibrated.
+message LidarHasBeenAutomaticallyRecalibrated {
+  string lidar_id = 1;
+}
+
+// Log #46.
+//
+// > Data has been received for the first time for the lidar $lidar_id.
+message ReceivedFirstDataForLidar {
+  string lidar_id = 1;
+}
+
+// Log #47.
+//
+// > Failed to destruct $component: $details
+message TerminationFailureError {
+  string component = 1;
+  string details = 2;
+}
+
+// Log #48.
+//
+// > The Frame Task Scheduler failed to process frame task: $details
+message FrameProcessingError {
+  string details = 1;
+}
+
+// Log #49.
+//
+// > Thread pool is not available: $consequence
+message ThreadPoolUnavailableError {
+  string consequence = 1;
+}
+
+// Log #50.
+//
+// > Invalid argument: $details
+message InvalidArgument {
+  string details = 1;
+}
+
+// Log #51.
+//
+// > Failed to initialize $component: $details
+message ComponentInitializationFailureFatal {
+  string component = 1;
+  string details = 2;
+}
+
+// Log #52.
+//
+// > Unhandled enum case $case_name at $location
+message UnhandledEnumCaseError {
+  string case_name = 1;
+  LogMetadata.SourceLocation location = 2;
+}
+
+// Log #53.
+//
+// > The replay bag file is empty.
+message BagEmptyError {
+}
+
+// Log #54.
+//
+// > Discarding data in $component: $details
+message DiscardingDataError {
+  string component = 1;
+  string details = 2;
+}
+
+// Log #55.
+//
+// > Discarding data in $component: $details.
+message DiscardingDataWarning {
+  string component = 1;
+  string details = 2;
+}
+
+// Log #56.
+//
+// > Nothing to process: $details
+message NothingToProcess {
+  string details = 1;
+}
+
+// Log #57.
+//
+// > Invalid configuration for $component: $details
+message InvalidComponentConfiguration {
+  string component = 1;
+  string details = 2;
+}
+
+// Log #58.
+//
+// > Channel receiver $key not found
+message ChannelReceiverNotFoundWarning {
+  string key = 1;
+}
+
+// Log #59.
+//
+// > Model $model failed to load: $details
+message ModelLoadFailure {
+  string model = 1;
+  string details = 2;
+}
+
+// Log #60.
+//
+// > Model $model failed to execute: $details
+message ModelExecutionFailureError {
+  string model = 1;
+  string details = 2;
+}
+
+// Log #61.
+//
+// > $service service is ready
+message ServiceReadyInfo {
+  string service = 1;
+}
+
+// Log #62.
+//
+// > Preparing model $model, it may take several seconds to stabilize.
+message ModelPreparingInfo {
+  string model = 1;
+}
+
+// Log #63.
+//
+// > $name model has been initialized and is ready for use.
+message ModelInitializedInfo {
+  string name = 1;
+}
+
+// Log #64.
+//
+// > Failed to initialize model $model: $details
+message ModelInitializationFailureWarning {
+  string model = 1;
+  string details = 2;
+}
+
+// Log #65.
+//
+// > ROS spinner stopped: $details
+message RosSpinnerStoppedWarning {
+  string details = 1;
+}
+
+// Log #66.
+//
+// > Actor system is not available. Please reinstantiate the pipeline.
+message ActorSystemUnavailableError {
+}
+
+// Log #67.
+//
+// > Configuration for node $node is unavailable
+message ConfigNodeNotFoundError {
+  string node = 1;
+}
+
+// Log #68.
+//
+// > Timestamps are out of order: $prior_timestamp > $current_timestamp
+message BagTimestampOutOfOrderError {
+  LogMetadata.Timestamp prior_timestamp = 1;
+  LogMetadata.Timestamp current_timestamp = 2;
+}
+
+// Log #69.
+//
+// > Unexpected timestamp: expected $expected_timestamp but received $received_timestamp
+message BagReplayUnexpectedTimestampError {
+  LogMetadata.Timestamp expected_timestamp = 1;
+  LogMetadata.Timestamp received_timestamp = 2;
+}
+
+// Log #70.
+//
+// > WebSocket RPC connection to $uri closed
+message WebsocketClosedInfo {
+  string uri = 1;
+}
+
+// Log #71.
+//
+// > WebSocket RPC connection to $uri opened (as $endpoint_is_server_client)
+message WebsocketOpenedInfo {
+  string uri = 1;
+  string endpoint_is_server_client = 2;
+}
+
+// Log #72.
+//
+// > Subscriber $name disconnected ($uri)
+message SubscriberDisconnectedInfo {
+  string name = 1;
+  string uri = 2;
+}
+
+// Log #73.
+//
+// > Thread pool is slowing down for $number times!
+message ThreadPoolSlowingDownWarning {
+  uint64 number = 1;
+}
+
+// Log #74.
+//
+// > Thread pool is not responding for $not_responding_for.
+message ThreadPoolNotRespondingWarning {
+  LogMetadata.Duration not_responding_for = 1;
+}
+
+// Log #75.
+//
+// > Thread pool task future is no longer available. The thread pool might have been restarted during events such as input source change.
+message ThreadPoolBrokenPromiseWarning {
+}
+
+// Log #76.
+//
+// > Some points are below the base Z-coordinate when fitting the box. This might affect the detection results.
+message BoxFittingPointsBelowBaseWarning {
+}
+
+// Log #77.
+//
+// > Failed to remove stale points: $details
+message FailedToRemoveStalePointsWarning {
+  string details = 1;
+}
+
+// Log #78.
+//
+// > $num_irregular irregular broadcast(s) detected in the last $duration (mean deviation: $mean_deviation).
+message IrregularBroadcastingPeriodWarning {
+  uint64 num_irregular = 1;
+  LogMetadata.Duration duration = 2;
+  LogMetadata.Duration mean_deviation = 3;
+}
+
+// Log #79.
+//
+// > There are $num_points points out of range in the clusterer. Some points: $sample_points.
+message ClustererPointsOutOfRangeWarning {
+  uint64 num_points = 1;
+  string sample_points = 2;
+}
+
+// Log #80.
+//
+// > An internal error occurred: $details
+message InternalError {
+  string details = 1;
+}
+
+// Log #81.
+//
+// > An internal fatal error occurred: $details
+message InternalFatal {
+  string details = 1;
+}
+
+// Log #82.
+//
+// > $service is starting
+message ServiceStartingInfo {
+  string service = 1;
+}
+
+// Log #83.
+//
+// > Configuration for node $node is unavailable
+message ConfigNodeNotFoundFatal {
+  string node = 1;
+}
+
+// Log #84.
+//
+// > Failed to setup: $details
+message ServiceSetupError {
+  string details = 1;
+}
+
+// Log #85.
+//
+// > Filesystem error: $details
+message FilesystemError {
+  string details = 1;
+}
+
+// Log #86.
+//
+// > Tried to apply invalid preset $preset due to $reason, falling back to $fallback_name.
+message InvalidPresetWarning {
+  string preset = 1;
+  string fallback_name = 2;
+  string reason = 3;
+}
+
+// Log #87.
+//
+// > WebSocket failed to clear pending queues: $exception
+message WebsocketFailedClearPendingError {
+  string exception = 1;
+}
+
+// Log #88.
+//
+// > WebSocket failed to stop: $exception
+message WebsocketFailedToStopError {
+  string exception = 1;
+}
+
+// Log #89.
+//
+// > Failed to create RPC server ws://$host:$port/: $exception
+message WebsocketFailedToCreateError {
+  string host = 1;
+  uint32 port = 2;
+  string exception = 3;
+}
+
+// Log #90.
+//
+// > Unexpected RPC error: $details
+message UnexpectedRpcError {
+  string details = 1;
+}
+
+// Log #91.
+//
+// > Failed to poll license server: $details
+message LicensePollFailed {
+  string details = 1;
+}
+
+// Log #92.
+//
+// > License expired on $expiration_time.
+message LicenseExpiredWarning {
+  LogMetadata.Timestamp expiration_time = 1;
+}
+
+// Log #93.
+//
+// > License count of $lidar_count exceeds allowed usage of $max_lidar_count
+message LicenseUsageExceededWarning {
+  uint64 lidar_count = 1;
+  int64 max_lidar_count = 2;
+}
+
+// Log #94.
+//
+// > ThreadPool task took $time_elapsed to complete task enqueued in $enqueue_location
+message StaticThreadPoolSlowTaskWarning {
+  LogMetadata.Duration time_elapsed = 1;
+  LogMetadata.SourceLocation enqueue_location = 2;
+}
+
+// Log #95.
+//
+// > Received request for unsupported service: $service_id
+message RpcUnsupportedServiceWarning {
+  uint32 service_id = 1;
+}
+
+// Log #96.
+//
+// > WebSocket RPC handler encountered an error: $what
+message WebsocketHandlerProblem {
+  string what = 1;
+}
+
+// Log #97.
+//
+// > WebSocket RPC received message cannot be deserialized: $what
+message WebsocketDeserializeError {
+  string what = 1;
+}
+
+// Log #98.
+//
+// > Attempting to access expired WebSocket RPC endpoint $uri
+message WebsocketExpiredRpcEndpointError {
+  string uri = 1;
+}
+
+// Log #99.
+//
+// > Websocket message queue overloaded: $current / $max
+message WebsocketQueueOverloadedWarning {
+  uint64 current = 1;
+  uint64 max = 2;
+}
+
+// Log #100.
+//
+// > Could not notify $notification_name to $service $uri: $what
+message RpcFailedToNotifyWarning {
+  string service = 1;
+  string uri = 2;
+  string notification_name = 3;
+  string what = 4;
+}
+
+// Log #101.
+//
+// > Failed to subscribe to config: $details
+message ConfigSubscriptionFailedWarning {
+  string details = 1;
+}
+
+// Log #102.
+//
+// > Clamped thread pool workers to $clamped instead of $requested
+message ThreadPoolClampedWorkersWarning {
+  uint64 clamped = 1;
+  uint64 requested = 2;
+}
+
+// Log #103.
+//
+// > Trying to stop the Horus bag recorder which is already stopped.
+message StoppingHorusBagRecorderAlreadyStopped {
+}
+
+// Log #104.
+//
+// > An update for the Horus bag recorder has been received while it was running. This update will not be taken into account until the next recording.
+message RecorderConfigUpdateWhileRunning {
+}
+
+// Log #105.
+//
+// > Clamping point cloud: $details
+message ClampingDataWarning {
+  string details = 1;
+}
+
+// Log #106.
+//
+// > Lidars $lidar_ip1 and $lidar_ip2 have incompatible $value_names: $value1 vs. $value2; $resolution.
+message LidarIncompatibleValues {
+  string lidar_ip1 = 1;
+  string lidar_ip2 = 2;
+  string value1 = 3;
+  string value2 = 4;
+  string value_names = 5;
+  string resolution = 6;
+}
+
+// Log #107.
+//
+// > Cannot determine current Docker container ID; unknown $container_id_file_path format.
+message CannotDetermineContainerIdError {
+  string container_id_file_path = 1;
+}
+
+// Log #108.
+//
+// > Started lidar driver container $lidar_id.
+message StartedLidarDriver {
+  string lidar_id = 1;
+}
+
+// Log #109.
+//
+// > Cannot start lidar driver container $lidar_id: $details.
+message CannotStartLidarDriver {
+  string lidar_id = 1;
+  string details = 2;
+}
+
+// Log #110.
+//
+// > Stopped lidar driver container $lidar_id.
+message StoppedLidarDriver {
+  string lidar_id = 1;
+}
+
+// Log #111.
+//
+// > Cannot stop lidar driver container $lidar_id: $details.
+message CannotStopLidarDriver {
+  string lidar_id = 1;
+  string details = 2;
+}
+
+// Log #112.
+//
+// > Restarted lidar driver container $lidar_id.
+message RestartedLidarDriver {
+  string lidar_id = 1;
+}
+
+// Log #113.
+//
+// > Cannot restart lidar driver container $lidar_id: $details.
+message CannotRestartLidarDriver {
+  string lidar_id = 1;
+  string details = 2;
+}
+
+// Log #114.
+//
+// > Removed unused lidar driver container $lidar_id.
+message RemovedUnusedLidarDriver {
+  string lidar_id = 1;
+}
+
+// Log #115.
+//
+// > Cannot remove unused lidar driver container $lidar_id: $details.
+message CannotRemoveUnusedLidarDriver {
+  string lidar_id = 1;
+  string details = 2;
+}
+
+// Log #116.
+//
+// > Error encountered while removing unused lidar driver containers: $details.
+message LidarDriverGcFailure {
+  string details = 1;
+}
+
+// Log #117.
+//
+// > Cannot allocate new identifier with prefix "$prefix".
+message IdSpaceExhausted {
+  string prefix = 1;
+}
+
+// Log #118.
+//
+// > The point cloud publishing to the point aggregator service has been skipped $num_skipped_points time(s) in the last $check_interval.
+message PreprocessingToPointAggregatorPointsSkipped {
+  uint64 num_skipped_points = 1;
+  LogMetadata.Duration check_interval = 2;
+}
+
+// Log #119.
+//
+// > Discarding lidar points from $lidar_id since the time interval between two point-cloud messages is too close (<$threshold). Adjust the Min-Message Interval parameter to change this behavior.
+message MinMsgIntervalLessThanThreshold {
+  string lidar_id = 1;
+  LogMetadata.Duration threshold = 2;
+}
+
+// Log #120.
+//
+// > Failed to clean up ROS nodes and processes: $details
+message FailedToCleanupRosWarning {
+  string details = 1;
+}
+
+// Log #121.
+//
+// > RPC request $request_name to $endpoint failed since endpoint is disconnected.
+message RpcDisconnectedWarning {
+  string request_name = 1;
+  string endpoint = 2;
+}
+
+// Log #122.
+//
+// > RPC request handler for $request_name failed due to an unhandled internal error: $details.
+message RpcUnhandledError {
+  string request_name = 1;
+  string details = 2;
+}
+
+// Log #123.
+//
+// > Time difference is out of range: $diff. Previous timestamp: $prev_time, Current timestamp: $curr_time.
+message TimeDiffOutOfRangeWarning {
+  LogMetadata.Timestamp prev_time = 1;
+  LogMetadata.Timestamp curr_time = 2;
+  LogMetadata.Duration diff = 3;
+}
+
+// Log #124.
+//
+// > [TensorRT] $log
+message TensorrtLog {
+  string log = 1;
+}
+
+// Log #125.
+//
+// > Building TensorRT engine since the model has changed or the engine is not available. This may take a while.
+message BuildingTensorrtEngineInfo {
+}
+
+// Log #126.
+//
+// > Loading TensorRT engine. This may take a while.
+message LoadingTensorrtEngineInfo {
+}
+
+// Log #127.
+//
+// > The calibration map $path was not found.
+message CalibrationMapNotFound {
+  string path = 1;
+}
+
+// Log #128.
+//
+// > The calibration map $path is not valid.
+message CalibrationMapNotValid {
+  string path = 1;
+}
+
+// Log #129.
+//
+// > The calibration map path $path already exists.
+message CalibrationMapPathAlreadyExists {
+  string path = 1;
+}
+
+// Log #130.
+//
+// > Failed to save the calibration map to $path.
+message FailedToSaveCalibrationMap {
+  string path = 1;
+}
+
+// Log #131.
+//
+// > Failed to remove the calibration map at $path.
+message FailedToRemoveCalibrationMap {
+  string path = 1;
+}
+
+// Log #132.
+//
+// > Failed to iterate in the $directory_name directory $directory_path: $details.
+message FailedToIterateInDirectory {
+  string directory_name = 1;
+  string directory_path = 2;
+  string details = 3;
+}
+
+// Log #133.
+//
+// > The calibration map must be running before triggering the map-based calibration.
+message MapBasedCalibrationWithoutMapLoading {
+}
+
+// Log #134.
+//
+// > The map-based calibration is already running.
+message MapBasedCalibrationAlreadyRunning {
+}
+
+// Log #135.
+//
+// > A cancel map-based calibration request has been received while the calibration is not running.
+message CancelMapBasedCalibrationNotRunning {
+}
+
+// Log #136.
+//
+// > The stream $stream_id was not found from $bag_path.
+message BagStreamNotFound {
+  string bag_path = 1;
+  string stream_id = 2;
+}
+
+// Log #137.
+//
+// > Evaluation bag started for $bag_path
+message EvaluationBagStartedInfo {
+  string bag_path = 1;
+}
+
+// Log #138.
+//
+// > Evaluation bag finished for $bag_path
+message EvaluationBagFinishedInfo {
+  string bag_path = 1;
+}
+
+// Log #139.
+//
+// > The bag $bag_path was not found.
+message BagNotFound {
+  string bag_path = 1;
+}
+
+// Log #140.
+//
+// > Building the $pipeline_name pipeline.
+message BuildingPipelineInfo {
+  string pipeline_name = 1;
+}
+
+// Log #141.
+//
+// > The bag $bag_path is not an evaluation bag.
+message BagIsNotEvaluation {
+  string bag_path = 1;
+}
+
+// Log #142.
+//
+// > A Horus bag is currently running.
+message HorusBagRunning {
+}
+
+// Log #143.
+//
+// > Automatic ground calibration failed for the following lidars: $failed_lidar_ids.
+message AutoGroundCalibrationWarning {
+  string failed_lidar_ids = 2;
+}
+
+// Log #144.
+//
+// > Automatic ground calibration failed for all lidars.
+message AutoGroundCalibrationError {
+}
+
+// Log #151.
+//
+// > The object detector is not loaded yet. Temporarily using rule based detection which may result in degraded detection results.
+message ObjectDetectorNotLoadedWarning {
+}
+
+// Log #152.
+//
+// > A calibration process is already running.
+message CalibrationIsRunningError {
+}
+
+// Log #153.
+//
+// > $component will start processing data once all models have finished initializing.
+message ModelInitInProgressInfo {
+  string component = 1;
+}
+
+// Log #154.
+//
+// > RPC request "$request_name" to "$endpoint" timed out after $elapsed. Resolution: $resolution
+message RpcTimeoutWithResolutionWarning {
+  string request_name = 1;
+  string endpoint = 2;
+  LogMetadata.Duration elapsed = 3;
+  string resolution = 4;
+}
+
+// Log #155.
+//
+// > The $calibration_process_name process was cancelled.
+message CalibrationWasCancelledInfo {
+  string calibration_process_name = 1;
+}
+
+// Log #156.
+//
+// > Failed to start recording the calibration map: $path
+message CalibrationMapRecordingFailedToStart {
+  string path = 1;
+}
+
+// Log #157.
+//
+// > The detection pipeline has been requested to be reset because $reason.
+message DetectionPipelineRequestedResetInfo {
+  string reason = 1;
+}
+
+// Log #158.
+//
+// > Preprocessing service pipeline is not available yet due to $reason.
+message PreprocessingServicePipelineUnavailable {
+  string reason = 1;
+}
+
+// Log #159.
+//
+// > The circular recording is disabled: $reason
+message CircularRecordingDisabledWarning {
+  string reason = 1;
+}
+
+// Log #160.
+//
+// > A snapshot is already running.
+message SnapshotAlreadyRunningWarning {
+}

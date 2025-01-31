@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+import "google/protobuf/descriptor.proto";
+import "horus/pb/logs/logs.proto";
+
+package horus.pb;
+
+// Indicates that no response is expected, and that the client does not need to
+// wait for a response.
+message NoResponse {}
+
+// Protobuf metadata options specified on RPC services and methods.
+message RpcServiceOptions {
+  // The identifier of the service.
+  //
+  // Must be unique across all services.
+  //
+  // Cannot be 0.
+  //
+  // To determine available service IDs for a new service, run
+  //
+  //   horus cat service_ids.txt
+  uint32 id = 1;
+
+  // The description of the service shown in the generated code.
+  string description = 2;
+}
+
+// Protobuf method options for in house-RPC.
+message RpcMethodOptions {
+  message SubscribeMethod {
+    // The type name of the subscriber.
+    string subscriber_name = 1;
+  }
+  message UnsubscribeMethod {
+    // The type name of the subscriber.
+    string subscriber_name = 1;
+  }
+
+  // The identifier of the method.
+  //
+  // Must be unique across methods within a service.
+  //
+  // Cannot be 0.
+  uint32 id = 1;
+
+  // The description of the service or method shown in the generated code.
+  string description = 2;
+
+  // The type of the method. This is optional, but may affect generated code.
+  oneof type {
+    // The method is meant to set up a subscription, and will have a default
+    // implementation in C++.
+    SubscribeMethod subscribe = 3;
+    // The method is meant to tear down a subscription, and will have a default
+    // implementation in C++.
+    UnsubscribeMethod unsubscribe = 4;
+  }
+}
+
+extend google.protobuf.ServiceOptions {
+  optional RpcServiceOptions service_options = 0xb98ab8;
+}
+
+extend google.protobuf.MethodOptions {
+  optional RpcMethodOptions method_options = 0xb98ab8;
+}
+
+message DefaultSubscribeRequest {}
+
+message DefaultSubscribeResponse {
+  oneof error {
+    logs.RpcConnectionError connection_error = 1;
+  }
+}
+
+message DefaultUnsubscribeRequest {}
+
+message DefaultUnsubscribeResponse {
+  oneof error {
+    logs.RpcDisconnectionError disconnection_error = 1;
+  }
+}

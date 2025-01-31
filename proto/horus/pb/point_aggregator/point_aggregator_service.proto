@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+import "horus/pb/point/point_message.proto";
+import "horus/pb/rpc.proto";
+
+import "horus/pb/preprocessing/messages.proto";
+
+package horus.pb;
+
+service PointAggregatorService {
+  option (service_options) = {
+    id: 6
+    description: "Service for receiving pre-processed point clouds."
+  };
+
+  rpc Subscribe(DefaultSubscribeRequest) returns (DefaultSubscribeResponse) {
+    option (method_options) = {
+      id: 5
+      description: "Subscribes to receive future processed point clouds as they are made available."
+      subscribe { subscriber_name: "PointAggregatorSubscriberService" }
+    };
+  }
+
+  rpc Unsubscribe(DefaultUnsubscribeRequest)
+      returns (DefaultUnsubscribeResponse) {
+    option (method_options) = {
+      id: 6
+      description: "Unsubscribe following a call to `Subscribe()`."
+      unsubscribe { subscriber_name: "PointAggregatorSubscriberService" }
+    };
+  }
+
+}
+
+service PointAggregatorSubscriberService {
+  option (service_options) = {
+    id: 5
+    description: "Service exposed by clients of the `PointAggregatorService` "
+                 "that wish to receive updates when new processed points are received."
+  };
+
+  rpc BroadcastProcessedPoints(AggregatedPointEvents) returns (NoResponse) {
+    option (method_options) = {
+      id: 2
+      description: "Notify new processed points input."
+    };
+  }
+
+  rpc BroadcastOccupancyGrid(OccupancyGridEvent) returns (NoResponse) {
+    option (method_options) = {
+      id: 3
+      description: "Notify new occupancy grid input."
+    };
+  }
+}

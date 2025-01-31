@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package horus.pb;
+
+// Test enum.
+enum TestEnum {
+  // Unspecified.
+  TEST_ENUM_UNSPECIFIED = 0;
+  // Value `1`.
+  TEST_ENUM_ONE = 1;
+  // Value `2`.
+  TEST_ENUM_TWO = 2;
+}
+
+// Test message.
+message TestMessage {
+  message SubMessage {
+    uint32 u32 = 1;
+    int32 i32 = 2;
+    string string = 3;
+  }
+
+  float float = 1;
+  double double = 2;
+  int32 i32 = 3;
+  int64 i64 = 4;
+  uint32 u32 = 5;
+  uint64 u64 = 6;
+  bytes bytes = 7;
+  string string = 8;
+  SubMessage submessage = 9;
+  bool bool = 10;
+
+  oneof test_oneof {
+    float oneof_float = 11;
+    double oneof_double = 12;
+    int32 oneof_i32 = 13;
+    int64 oneof_i64 = 14;
+    uint32 oneof_u32 = 15;
+    uint64 oneof_u64 = 16;
+    bytes oneof_bytes = 17;
+    string oneof_string = 18;
+    SubMessage oneof_submessage = 19;
+    bool oneof_bool = 20;
+  }
+
+  repeated float rep_float = 21;
+  repeated double rep_double = 22;
+  repeated int32 rep_i32 = 23;
+  repeated int64 rep_i64 = 24;
+  repeated uint32 rep_u32 = 25;
+  repeated uint64 rep_u64 = 26;
+  repeated bytes rep_bytes = 27;
+  repeated string rep_string = 28;
+  repeated SubMessage rep_submessage = 29;
+  repeated bool rep_bool = 30;
+}

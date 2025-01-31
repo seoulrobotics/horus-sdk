@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // Use the test explorer (with CMake and/or TestMate C++) to debug C++ binaries.
+    {
+      "name": "Debug current Python file",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/py"
+      }
+    }
+  ]
+}

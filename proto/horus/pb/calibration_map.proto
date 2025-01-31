@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package horus.pb;
+
+message CalibrationMap {
+  reserved 1;
+
+  // Packed 3D points (x, y, z)
+  repeated float map_points = 2;
+}

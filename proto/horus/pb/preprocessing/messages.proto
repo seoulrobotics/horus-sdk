@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package horus.pb;
+
+/// The classification of the occupancy grid cell.
+/// @note The maximum number of classification enum values supported is 2^3=8.
+/// @see `OccupancyGrid` message and `occupancy_map_constants` for more details.
+enum OccupancyClassification {
+
+  OCCUPANCYCLASSIFICATION_UNSPECIFIED = 0;
+  FREE = 1;
+  OCCLUDED = 2;
+  STATIONARY_OCCUPIED = 3;
+}
+
+/// The data of the occupancy map.
+/// The data is formated with a run-length encoding (RLE) in row-major order.
+/// Consecutive cells of the same classification are compressed into a single
+/// uint32.
+message OccupancyGrid {
+  uint32 rows = 1;
+  uint32 cols = 2;
+  // Packed representation of cells: Encodes <value, length>. The three most
+  // significant bits of the uint32 encodes the value of
+  // `OccupancyClassification`. The remaining 29 bits encode the run length.
+  // @note The maximum number of classification enum values supported is 2^3=8.
+  // @see `occupancy_map_constants` for more details.
+  repeated uint32 cells = 3;
+}
+
+/// The occupancy grid event.
+/// Contains the occupancy grid, the range of the grid and the resolution.
+///
+/// Grid Coverage:
+///   The grid covers the x and y range inclusively with the specified
+///   resolution.
+///
+/// Grid Dims Calculation:
+///   Computed as:
+///     `x_dims = floor((x_max - x_min) / resolution) + 1`
+///
+/// Projecting a point onto the Grid:
+///   To determine the grid cell corresponding to a point in space:
+///     `grid_x = floor((point.x - x_min) / resolution)`
+///     `grid_y = floor((point.y - y_min) / resolution)`
+message OccupancyGridEvent {
+  OccupancyGrid grid = 1;
+  float x_min = 2;
+  float x_max = 3;
+  float y_min = 4;
+  float y_max = 5;
+  float resolution = 6;
+}

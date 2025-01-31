@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package horus.pb;
+
+// A message used to implement RPCs, sent from the client to the server or
+// vice-versa.
+message RpcMessage {
+  enum Version {
+    VERSION_UNSPECIFIED = 0;
+    VERSION_ONE = 1;
+  }
+
+  // The version of the message.
+  Version version = 1;
+  // The ID of the service being talked to.
+  uint32 service_id = 2;
+  // The bytes making up the request or response. The type is determined by the
+  // receiver.
+  bytes message_bytes = 3;
+  // The ID of the request (may also be set for responses to specify which
+  // request is being replied to). Specify 0 to indicate this request expects no
+  // response.
+  uint32 request_id = 4;
+  // The ID of the method being called. Only set in requests.
+  uint32 method_id = 5;
+  // An error encountered while processing a request which expects a response.
+  // This field will be set when the handler of a request fails to provide a
+  // response for any reason. Such errors are **internal errors**, and should
+  // never occur. However, RPC endpoints need a mechanism to stop awaiting
+  // pending requests in case of error, which this field provides.
+  string error = 6;
+  // Whether this message is a cancellation request, in which case
+  // `request_id` must be set and non-zero. The response to the relevant
+  // request will be ignored, but **must nonetheless be sent to the client**.
+  //
+  // A response must still be provided following a cancellation request
+  // because it may already be on its way to the client. If the client
+  // immediately made the `request_id` available for new requests without
+  // waiting for a response, it would be possible for the following to happen:
+  //
+  // 1. Alice sends a request Foo with ID #1 to Bob.
+  // 2. Bob computes a response and enqueues it.
+  // 3. Alice sends a cancellation request for #1, making #1 available for
+  //    re-use.
+  // 4. Alice sends a new request Bar with the same reused ID #1 to Bob.
+  // 5. Bob responds to Foo.
+  // 6. Alice receives a FooResponse while it expects a BarResponse.
+  bool cancel = 7;
+}

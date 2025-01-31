@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package horus.pb;
+
+import "horus/pb/logs/message.proto";
+
+import "horus/pb/profiling.proto";
+import "horus/pb/rpc.proto";
+
+service NotificationService {
+  option (service_options) = {
+    id: 2
+    description: "Service which receives notifications from services, storing and forwarding them."
+  };
+
+  rpc LogMessage(LogMessageRequest) returns (NoResponse) {
+    option (method_options) = {
+      id: 1
+      description: "Logs a message, storing it and broadcasting it to subscribers."
+    };
+  }
+
+  rpc Subscribe(DefaultSubscribeRequest) returns (DefaultSubscribeResponse) {
+    option (method_options) = {
+      id: 3
+      description: "Subscribes to new log and profiling events."
+      subscribe { subscriber_name: "NotificationListenerService" }
+    };
+  }
+
+  rpc Unsubscribe(DefaultUnsubscribeRequest)
+      returns (DefaultUnsubscribeResponse) {
+    option (method_options) = {
+      id: 4
+      description: "Unsubscribe following a call to `Subscribe()`."
+      unsubscribe { subscriber_name: "NotificationListenerService" }
+    };
+  }
+
+}
+
+service NotificationListenerService {
+  option (service_options) = {
+    id: 10
+    description: "Service which listens for notifications forwarded by the `NotificationService`."
+  };
+
+  rpc NotifyLogMessage(LogMessageEvent) returns (NoResponse) {
+    option (method_options) = {
+      id: 1
+      description: "Received when a log message is received by the `NotificationService`."
+    };
+  }
+
+  rpc NotifyProfilingInfo(ProfilingInfoEvent) returns (NoResponse) {
+    option (method_options) = {
+      id: 2
+      description: "Received when a profiling info is received by the `NotificationService`."
+    };
+  }
+
+  rpc NotifySensorInfo(SensorInfoEvent) returns (NoResponse) {
+    option (method_options) = {
+      id: 3
+      description: "Received when a sensor info is received by the `NotificationService`."
+    };
+  }
+
+}
+
+message LogMessageRequest {
+  // The message to log.
+  LogMessage log_message = 1;
+}
+
+message LogMessageEvent {
+  // The logged message.
+  LogMessage log_message = 1;
+}
+
+message ProfilingInfoEvent {
+  ProfilingInfo profiling_info = 1;
+}
+
+message SensorInfo {
+  string lidar_id = 1;
+  // Status as uint32, each status is combined using bitwise OR.
+  uint32 status = 2;
+  double measured_frequency = 3;
+}
+
+message SensorInfoEvent {
+  repeated SensorInfo sensor_info = 1;
+}

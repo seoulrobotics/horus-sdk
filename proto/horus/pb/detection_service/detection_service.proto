@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+import "horus/pb/detection_service/detection.proto";
+
+import "horus/pb/rpc.proto";
+
+package horus.pb;
+
+// The detection service handles communication with its clients.
+// It receives pre-processed foreground points and sends detection results.
+service DetectionService {
+  option (service_options) = {
+    id: 7
+    description: "Service for receiving pre-processed foreground points and sending detection results."
+  };
+
+  rpc Subscribe(DefaultSubscribeRequest) returns (DefaultSubscribeResponse) {
+    option (method_options) = {
+      id: 2
+      description: "Subscribes to receive future detection results as they are made available."
+      // Auto-generate subscription/unsubscription code.
+      subscribe { subscriber_name: "DetectionSubscriberService" }
+    };
+  }
+
+  rpc Unsubscribe(DefaultUnsubscribeRequest)
+      returns (DefaultUnsubscribeResponse) {
+    option (method_options) = {
+      id: 3
+      description: "Unsubscribe following a call to `Subscribe()`."
+      unsubscribe { subscriber_name: "DetectionSubscriberService" }
+    };
+  }
+
+}
+
+// Service for clients to subscribe to detection results.
+service DetectionSubscriberService {
+  option (service_options) = {
+    id: 12
+    description: "Service exposed by clients of the `DetectionService` that "
+                 "wish to receive updates when new detection results are processed."
+  };
+
+  rpc BroadcastDetection(DetectionEvent) returns (NoResponse) {
+    option (method_options) = {
+      id: 1
+      description: "Notify new detection results."
+    };
+  }
+}

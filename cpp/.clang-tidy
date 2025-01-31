@@ -1,0 +1,43 @@
+Checks: >
+  *,
+
+  -altera-*,
+  -android-*,
+  -boost-*,
+  -darwin-*,
+  -fuchsia-*,
+  -linuxkernel-*,
+  -llvm-*,
+  -llvmlibc-*,
+  -mpi-*,
+  -objc-*,
+  -openmp-*,
+  -zircon-*,
+
+  -bugprone-easily-swappable-parameters,
+  -cppcoreguidelines-avoid-const-or-ref-data-members,
+  -cppcoreguidelines-avoid-do-while,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -misc-confusable-identifiers,
+  -modernize-concat-nested-namespaces,
+  -modernize-type-traits,
+  -modernize-unary-static-assert,
+  -modernize-use-default-member-init,
+  -modernize-use-nodiscard,
+  -modernize-use-trailing-return-type,
+  -readability-avoid-const-params-in-decls,
+  -readability-function-cognitive-complexity,
+  -readability-magic-numbers,
+  -readability-redundant-declaration,
+  -readability-redundant-member-init,
+
+CheckOptions:
+  misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic: true
+  performance-unnecessary-value-param.AllowedTypes: "std::shared_ptr" # Compliance with A8-4-13
+
+WarningsAsErrors: >
+  *,
+HeaderFilterRegex: '/horus/.+\.h$'
+FormatStyle: file
+
+# spell-checker: ignore linuxkernel

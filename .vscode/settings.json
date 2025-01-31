@@ -1,0 +1,62 @@
+{
+  // MARK: General
+  // -----
+
+  "editor.formatOnSave": true,
+
+  // MARK: C++
+  // -----
+
+  "cmake.sourceDirectory": "${workspaceFolder}/cpp",
+  "cmake.buildDirectory": "${workspaceFolder}/build/${buildType}",
+  "cmake.generator": "Ninja",
+  "cmake.saveBeforeBuild": true,
+  "cmake.configureOnEdit": false,
+  "cmake.parallelJobs": 0,
+  "cmake.configureArgs": [
+    "-DCMAKE_C_COMPILER=clang",
+    "-DCMAKE_CXX_COMPILER=clang++",
+    "-DCMAKE_MAKE_PROGRAM=ninja",
+
+    "-DHORUS_SDK_BUILD_SYMLINK=${workspaceFolder}/build/current",
+    "-DHORUS_SDK_USE_UNION=ON"
+  ],
+  "cmake.debugConfig": {
+    "type": "lldb",
+    "request": "launch",
+    "cwd": "${workspaceFolder}",
+    "env": {
+      "HORUS_SDK_DEBUGGING": "1"
+    }
+  },
+
+  "clangd.arguments": [ "--compile-commands-dir=build/current" ],
+  "clangd.fallbackFlags": [ "-xc++", "-std=c++14" ],
+
+  "testMate.cpp.test.advancedExecutables": [
+    {
+      "pattern": "{build}/current/horus_{core,sdk}_test",
+      "gtest": {
+        "debug.enableOutputColouring": true // spell-checker: disable-line
+      },
+      "debug.configTemplate": {
+        "type": "lldb",
+        "request": "launch",
+        "program": "${absPath}",
+        "args": "${argsArray}",
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "HORUS_SDK_DEBUGGING": "1"
+        }
+      }
+    }
+  ],
+
+  // MARK: Python
+  // -----
+
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/py"
+  ],
+  "python.analysis.typeCheckingMode": "standard"
+}

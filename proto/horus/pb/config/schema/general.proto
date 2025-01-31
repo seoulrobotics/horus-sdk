@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+import "horus/pb/config/metadata.proto";
+
+package horus.pb;
+
+message DetectionRange {
+
+  optional Range x_range = 1;
+  optional Range y_range = 2;
+  optional Range z_range = 3;
+}

@@ -1,0 +1,74 @@
+{
+  // `.cpp` files:
+  "New C++ file": {
+    "prefix": "newcpp",
+    "body": [
+      "#include \"${1:${RELATIVE_FILEPATH/cpp\\/|\\.cpp//g}}.h\"",
+      "",
+      "namespace horus {",
+      "",
+      "$0",
+      "",
+      "}  // namespace horus",
+      "",
+    ],
+    "isFileTemplate": true,
+    "scope": "cpp",
+  },
+  "New C++ test file": {
+    "prefix": "newtest",
+    "body": [
+      "#include \"${1:${RELATIVE_FILEPATH/cpp\\/|\\_test.cpp//g}}.h\"",
+      "",
+      "#include <gtest/gtest.h>",
+      "",
+      "namespace horus {",
+      "namespace {",
+      "",
+      "$0",
+      "",
+      "}  // namespace",
+      "}  // namespace horus",
+      "",
+    ],
+    "isFileTemplate": true,
+    "scope": "cpp",
+  },
+  "New namespace": {
+    "prefix": "namespace",
+    "body": [
+      "namespace $1 {",
+      "",
+      "$0",
+      "",
+      "}  // namespace $1",
+    ],
+    "scope": "cpp",
+  },
+  // `.h` files:
+  "New C++ header": {
+    "prefix": "newh",
+    "body": [
+      "/// @file",
+      "///",
+      "/// $1",
+      "",
+      // VS Code snippets do not support recursive replacements so we must be
+      // creative: replace segments like `foo/`, `bar.` and `h<eos>` to `FOO_`,
+      // `BAR_` and `H_` such that `foo/bar.h` becomes `FOO_BAR_H_`.
+      "#ifndef ${RELATIVE_FILEPATH/(?:^cpp\\/)?(\\w+)(?:\\.|\\/|$)/${1:/upcase}_/g}",
+      "#define ${RELATIVE_FILEPATH/(?:^cpp\\/)?(\\w+)(?:\\.|\\/|$)/${1:/upcase}_/g}",
+      "",
+      "namespace horus {",
+      "",
+      "$0",
+      "",
+      "}  // namespace horus",
+      "",
+      "#endif  // ${RELATIVE_FILEPATH/(?:^cpp\\/)?(\\w+)(?:\\.|\\/|$)/${1:/upcase}_/g}",
+      "",
+    ],
+    "isFileTemplate": true,
+    "scope": "cpp",
+  },
+}

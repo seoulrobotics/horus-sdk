@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+import "horus/pb/config/metadata.proto";
+
+package horus.pb;
+
+// PointAttribute enum
+// @note Each enum value should be a power of two.
+// @note No attributes should have the same value.
+// @note The enums are sorted by priority so that the first element has the
+// highest priority. ATTRIBUTE_NONE is a special case and can not be combined
+// with others.
+// @note For visualization to be applied correctly, any update to this enum
+// also needs to be applied to the fragment shader
+// `attribute-pointcloud-fragment.glsl`.
+enum PointAttribute {
+
+  ATTRIBUTE_NONE = 0;
+  OUT_OF_RANGE = 1;
+  GROUND = 2;
+  LOW_INTENSITY = 4;
+  EXCLUSION_ZONE = 8;
+  STATIC = 16;
+  STATIC_DETECTION_ZONE = 32;
+  REFLECTION_ZONE = 64;
+}
+
+// Message frame for single point cloud.
+//
+// Warning: All the timestamps used in the point frame messages are system clock
+// timestamps. This means that the services exchanging point frame messages
+// must be time synced in order to use these timestamps.
+message PointFrame {
+  // Header for storing per-frame info of the point cloud frame
+  message Header {
+    /// The calibration transformation (from sensor to origin coordinates)
+    AffineTransform3f calibration_transform = 1;
+    // Lidar ID should be unique among all lidars in the project.
+    string lidar_id = 2;
+    /// The point cloud creation timestamp.
+    Timestamp point_cloud_creation_timestamp = 4;
+  }
+  Header header = 2;
+
+  reserved 3 to 5;
+
+  reserved 7;
+
+  optional AttributedPoints points = 9;
+}
+
+/// Point cloud data with attributes.
+///
+/// @note The attributes are all or none. If the attributes are nonempty, the
+/// number of attributes should be equal to the number of points.
+message AttributedPoints {
+  // 3D point buffer of which stride length is 3 floats (12 bytes).
+  repeated float flattened_points = 1;
+
+  // Point attributes such as ground and static. Each element consists of two
+  // `uint16` attributes to save space. We have to use fixed32 as uint16 is not
+  // available in Protobuf.
+  // The first two bytes (low) are occupied by the even index of the attributes
+  // and the rest (high) are occupied by the odd index. Each element can be
+  // decomposed as follows:
+  // ```cpp
+  // // direct memory copy
+  // std::memcpy(point_attributes.data(), attributes.data(), num_attributes *
+  // sizeof(std::uint16_t));
+  //
+  // // iterative decomposition
+  // point_attributes[2 * i + 0] = attributes[i] & 0xFFFF
+  // point_attributes[2 * i + 1] = (attributes[i] >> 16) & 0xFFFF
+  // ```
+  repeated fixed32 attributes = 2;
+
+  /// Bytes corresponding to packed uint16 intensities for each point.
+  /// We have to use fixed32 as uint16 is not available in Protobuf.
+  repeated fixed32 intensities = 3;
+}
+
+// Processed point cloud data from a single lidar.
+message ProcessedPointsEvent {
+  PointFrame point_frame = 1;
+}
+
+message AggregatedPointEvents {
+  repeated ProcessedPointsEvent events = 1;
+}
