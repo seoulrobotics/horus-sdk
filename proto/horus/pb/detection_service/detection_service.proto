@@ -19,6 +19,8 @@ service DetectionService {
       id: 2
       description: "Subscribes to receive future detection results as they are made available."
       // Auto-generate subscription/unsubscription code.
+      // TODO(HRS-562): Consider controlling the output of the detection service
+      // in overriden subscribe.
       subscribe { subscriber_name: "DetectionSubscriberService" }
     };
   }

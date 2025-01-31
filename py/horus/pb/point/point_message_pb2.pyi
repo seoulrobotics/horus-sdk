@@ -17,6 +17,7 @@ class PointAttribute(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     STATIC: _ClassVar[PointAttribute]
     STATIC_DETECTION_ZONE: _ClassVar[PointAttribute]
     REFLECTION_ZONE: _ClassVar[PointAttribute]
+    STATIC_EXCLUSION_ZONE: _ClassVar[PointAttribute]
 ATTRIBUTE_NONE: PointAttribute
 OUT_OF_RANGE: PointAttribute
 GROUND: PointAttribute
@@ -25,6 +26,7 @@ EXCLUSION_ZONE: PointAttribute
 STATIC: PointAttribute
 STATIC_DETECTION_ZONE: PointAttribute
 REFLECTION_ZONE: PointAttribute
+STATIC_EXCLUSION_ZONE: PointAttribute
 
 class PointFrame(_message.Message):
     __slots__ = ("header", "points")
