@@ -61,6 +61,7 @@ class OccupancyClassification(enum.Flag):
     FREE = 1
     OCCLUDED = 2
     STATIONARY_OCCUPIED = 3
+    EXCLUDED = 4
 
 
 @dataclasses.dataclass(frozen=True)

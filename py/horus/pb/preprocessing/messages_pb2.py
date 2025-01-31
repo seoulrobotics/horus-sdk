@@ -24,15 +24,15 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n%horus/pb/preprocessing/messages.proto\x12\x08horus.pb\":\n\rOccupancyGrid\x12\x0c\n\x04rows\x18\x01 \x01(\r\x12\x0c\n\x04\x63ols\x18\x02 \x01(\r\x12\r\n\x05\x63\x65lls\x18\x03 \x03(\r\"\x8b\x01\n\x12OccupancyGridEvent\x12%\n\x04grid\x18\x01 \x01(\x0b\x32\x17.horus.pb.OccupancyGrid\x12\r\n\x05x_min\x18\x02 \x01(\x02\x12\r\n\x05x_max\x18\x03 \x01(\x02\x12\r\n\x05y_min\x18\x04 \x01(\x02\x12\r\n\x05y_max\x18\x05 \x01(\x02\x12\x12\n\nresolution\x18\x06 \x01(\x02*s\n\x17OccupancyClassification\x12\'\n#OCCUPANCYCLASSIFICATION_UNSPECIFIED\x10\x00\x12\x08\n\x04\x46REE\x10\x01\x12\x0c\n\x08OCCLUDED\x10\x02\x12\x17\n\x13STATIONARY_OCCUPIED\x10\x03\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n%horus/pb/preprocessing/messages.proto\x12\x08horus.pb\":\n\rOccupancyGrid\x12\x0c\n\x04rows\x18\x01 \x01(\r\x12\x0c\n\x04\x63ols\x18\x02 \x01(\r\x12\r\n\x05\x63\x65lls\x18\x03 \x03(\r\"\x8b\x01\n\x12OccupancyGridEvent\x12%\n\x04grid\x18\x01 \x01(\x0b\x32\x17.horus.pb.OccupancyGrid\x12\r\n\x05x_min\x18\x02 \x01(\x02\x12\r\n\x05x_max\x18\x03 \x01(\x02\x12\r\n\x05y_min\x18\x04 \x01(\x02\x12\r\n\x05y_max\x18\x05 \x01(\x02\x12\x12\n\nresolution\x18\x06 \x01(\x02*\x81\x01\n\x17OccupancyClassification\x12\'\n#OCCUPANCYCLASSIFICATION_UNSPECIFIED\x10\x00\x12\x08\n\x04\x46REE\x10\x01\x12\x0c\n\x08OCCLUDED\x10\x02\x12\x17\n\x13STATIONARY_OCCUPIED\x10\x03\x12\x0c\n\x08\x45XCLUDED\x10\x04\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'horus.pb.preprocessing.messages_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_OCCUPANCYCLASSIFICATION']._serialized_start=253
-  _globals['_OCCUPANCYCLASSIFICATION']._serialized_end=368
+  _globals['_OCCUPANCYCLASSIFICATION']._serialized_start=254
+  _globals['_OCCUPANCYCLASSIFICATION']._serialized_end=383
   _globals['_OCCUPANCYGRID']._serialized_start=51
   _globals['_OCCUPANCYGRID']._serialized_end=109
   _globals['_OCCUPANCYGRIDEVENT']._serialized_start=112

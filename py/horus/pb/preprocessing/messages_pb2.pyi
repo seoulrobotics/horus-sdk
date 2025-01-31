@@ -12,10 +12,12 @@ class OccupancyClassification(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
     FREE: _ClassVar[OccupancyClassification]
     OCCLUDED: _ClassVar[OccupancyClassification]
     STATIONARY_OCCUPIED: _ClassVar[OccupancyClassification]
+    EXCLUDED: _ClassVar[OccupancyClassification]
 OCCUPANCYCLASSIFICATION_UNSPECIFIED: OccupancyClassification
 FREE: OccupancyClassification
 OCCLUDED: OccupancyClassification
 STATIONARY_OCCUPIED: OccupancyClassification
+EXCLUDED: OccupancyClassification
 
 class OccupancyGrid(_message.Message):
     __slots__ = ("rows", "cols", "cells")

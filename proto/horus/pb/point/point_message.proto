@@ -23,6 +23,7 @@ enum PointAttribute {
   STATIC = 16;
   STATIC_DETECTION_ZONE = 32;
   REFLECTION_ZONE = 64;
+  STATIC_EXCLUSION_ZONE = 128;
 }
 
 // Message frame for single point cloud.
@@ -46,6 +47,8 @@ message PointFrame {
 
   reserved 7;
 
+  // TODO(HRS-1898): This is kept until the frontend handles
+  // decompression/dequantization
   optional AttributedPoints points = 9;
 }
 
