@@ -466,6 +466,7 @@ func (b0 Duration_builder) Build() *Duration {
 
 // Matrix types
 // ------------
+// TODO(HRS-495) Reuse Matrixf for representing affine transform.
 type AffineTransform3F struct {
 	state           protoimpl.MessageState `protogen:"opaque.v1"`
 	xxx_hidden_Data []float32              `protobuf:"fixed32,1,rep,packed,name=data,proto3" json:"data,omitempty"`

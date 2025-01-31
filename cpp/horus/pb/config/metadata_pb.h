@@ -893,6 +893,7 @@ class Duration final : public PbMessage {
 
 /// Matrix types
 ///  ------------
+///  TODO(HRS-495) Reuse Matrixf for representing affine transform.
 ///
 /// Source: horus/pb/config/metadata.proto:67:1
 class AffineTransform3f final : public PbMessage {

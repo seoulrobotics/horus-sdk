@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from horus.pb.config import metadata_pb2 as horus_dot_pb_dot_config_dot_metadata__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\"horus/pb/point/point_message.proto\x12\x08horus.pb\x1a\x1ehorus/pb/config/metadata.proto\"\x97\x02\n\nPointFrame\x12+\n\x06header\x18\x02 \x01(\x0b\x32\x1b.horus.pb.PointFrame.Header\x12/\n\x06points\x18\t \x01(\x0b\x32\x1a.horus.pb.AttributedPointsH\x00\x88\x01\x01\x1a\x93\x01\n\x06Header\x12:\n\x15\x63\x61libration_transform\x18\x01 \x01(\x0b\x32\x1b.horus.pb.AffineTransform3f\x12\x10\n\x08lidar_id\x18\x02 \x01(\t\x12;\n\x1epoint_cloud_creation_timestamp\x18\x04 \x01(\x0b\x32\x13.horus.pb.TimestampB\t\n\x07_pointsJ\x04\x08\x03\x10\x06J\x04\x08\x07\x10\x08\"U\n\x10\x41ttributedPoints\x12\x18\n\x10\x66lattened_points\x18\x01 \x03(\x02\x12\x12\n\nattributes\x18\x02 \x03(\x07\x12\x13\n\x0bintensities\x18\x03 \x03(\x07\"A\n\x14ProcessedPointsEvent\x12)\n\x0bpoint_frame\x18\x01 \x01(\x0b\x32\x14.horus.pb.PointFrame\"G\n\x15\x41ggregatedPointEvents\x12.\n\x06\x65vents\x18\x01 \x03(\x0b\x32\x1e.horus.pb.ProcessedPointsEvent*\xa5\x01\n\x0ePointAttribute\x12\x12\n\x0e\x41TTRIBUTE_NONE\x10\x00\x12\x10\n\x0cOUT_OF_RANGE\x10\x01\x12\n\n\x06GROUND\x10\x02\x12\x11\n\rLOW_INTENSITY\x10\x04\x12\x12\n\x0e\x45XCLUSION_ZONE\x10\x08\x12\n\n\x06STATIC\x10\x10\x12\x19\n\x15STATIC_DETECTION_ZONE\x10 \x12\x13\n\x0fREFLECTION_ZONE\x10@b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\"horus/pb/point/point_message.proto\x12\x08horus.pb\x1a\x1ehorus/pb/config/metadata.proto\"\x97\x02\n\nPointFrame\x12+\n\x06header\x18\x02 \x01(\x0b\x32\x1b.horus.pb.PointFrame.Header\x12/\n\x06points\x18\t \x01(\x0b\x32\x1a.horus.pb.AttributedPointsH\x00\x88\x01\x01\x1a\x93\x01\n\x06Header\x12:\n\x15\x63\x61libration_transform\x18\x01 \x01(\x0b\x32\x1b.horus.pb.AffineTransform3f\x12\x10\n\x08lidar_id\x18\x02 \x01(\t\x12;\n\x1epoint_cloud_creation_timestamp\x18\x04 \x01(\x0b\x32\x13.horus.pb.TimestampB\t\n\x07_pointsJ\x04\x08\x03\x10\x06J\x04\x08\x07\x10\x08\"U\n\x10\x41ttributedPoints\x12\x18\n\x10\x66lattened_points\x18\x01 \x03(\x02\x12\x12\n\nattributes\x18\x02 \x03(\x07\x12\x13\n\x0bintensities\x18\x03 \x03(\x07\"A\n\x14ProcessedPointsEvent\x12)\n\x0bpoint_frame\x18\x01 \x01(\x0b\x32\x14.horus.pb.PointFrame\"G\n\x15\x41ggregatedPointEvents\x12.\n\x06\x65vents\x18\x01 \x03(\x0b\x32\x1e.horus.pb.ProcessedPointsEvent*\xc1\x01\n\x0ePointAttribute\x12\x12\n\x0e\x41TTRIBUTE_NONE\x10\x00\x12\x10\n\x0cOUT_OF_RANGE\x10\x01\x12\n\n\x06GROUND\x10\x02\x12\x11\n\rLOW_INTENSITY\x10\x04\x12\x12\n\x0e\x45XCLUSION_ZONE\x10\x08\x12\n\n\x06STATIC\x10\x10\x12\x19\n\x15STATIC_DETECTION_ZONE\x10 \x12\x13\n\x0fREFLECTION_ZONE\x10@\x12\x1a\n\x15STATIC_EXCLUSION_ZONE\x10\x80\x01\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -33,7 +33,7 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'horus.pb.point.point_messag
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_POINTATTRIBUTE']._serialized_start=590
-  _globals['_POINTATTRIBUTE']._serialized_end=755
+  _globals['_POINTATTRIBUTE']._serialized_end=783
   _globals['_POINTFRAME']._serialized_start=81
   _globals['_POINTFRAME']._serialized_end=360
   _globals['_POINTFRAME_HEADER']._serialized_start=190
