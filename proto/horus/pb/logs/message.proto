@@ -176,5 +176,10 @@ message LogData {
     logs.PreprocessingServicePipelineUnavailable preprocessing_service_pipeline_unavailable = 158;
     logs.CircularRecordingDisabledWarning circular_recording_disabled_warning = 159;
     logs.SnapshotAlreadyRunningWarning snapshot_already_running_warning = 160;
+    logs.ActiveProjectChangedInfo active_project_changed_info = 161;
+    logs.ProjectConfigUpdatedInfo project_config_updated_info = 162;
+    logs.InvalidLidarTimestamp invalid_lidar_timestamp = 163;
+    logs.CalibrationAccumulatingPointsInfo calibration_accumulating_points_info = 164;
+    logs.SparseNoiseFilterUsageNonRotationalLidars sparse_noise_filter_usage_non_rotational_lidars = 165;
   }
 }

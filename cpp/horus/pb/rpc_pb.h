@@ -12,6 +12,7 @@
 #include <utility>
 
 #include "horus/pb/cow_bytes.h"
+#include "horus/pb/cow_repeated.h"
 #include "horus/pb/logs/logs_pb.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
@@ -260,19 +261,71 @@ class RpcServiceOptions final : public PbMessage {
     return std::move(set_description(std::move(description)));
   }
 
+  // Field `reserved_ids` (no 3).
+  // -----
+
+  /// Identifiers which are on longer available for methods in a service.
+  ///
+  /// Field no: 3.
+  constexpr const CowRepeated<std::uint32_t>& reserved_ids() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return reserved_ids_;
+  }
+
+  /// If `reserved_ids` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowRepeated<std::uint32_t> reserved_ids() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(reserved_ids_);
+  }
+
+  /// Identifiers which are on longer available for methods in a service.
+  ///
+  /// Field no: 3.
+  CowRepeated<std::uint32_t>& mutable_reserved_ids() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return reserved_ids_;
+  }
+
+  /// Returns whether `reserved_ids` (no 3) is set.
+  constexpr bool has_reserved_ids() const noexcept { return set_fields_[2]; }
+
+  /// Clears `reserved_ids` (no 3).
+  void clear_reserved_ids() & noexcept {
+    set_fields_[2] = false;
+    reserved_ids_ = {};
+  }
+
+  /// Sets `reserved_ids` (no 3) and returns `*this`.
+  RpcServiceOptions& set_reserved_ids(CowRepeated<std::uint32_t>&& reserved_ids) & noexcept {
+    set_fields_[2] = true;
+    reserved_ids_ = std::move(reserved_ids);
+    return *this;
+  }
+  /// Sets `reserved_ids` (no 3) and returns `*this`.
+  RpcServiceOptions&& set_reserved_ids(CowRepeated<std::uint32_t>&& reserved_ids) && noexcept {
+    return std::move(set_reserved_ids(std::move(reserved_ids)));
+  }
+
  private:
   /// @see id()
   std::uint32_t id_{};
   /// @see description()
   CowBytes description_{};
+  /// @see reserved_ids()
+  CowRepeated<std::uint32_t> reserved_ids_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 /// No documentation.
 ///
-/// Source: horus/pb/rpc.proto:31:3
+/// Source: horus/pb/rpc.proto:34:3
 class RpcMethodOptions_SubscribeMethod final : public PbMessage {
  public:
 
@@ -382,7 +435,7 @@ class RpcMethodOptions_SubscribeMethod final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/rpc.proto:35:3
+/// Source: horus/pb/rpc.proto:38:3
 class RpcMethodOptions_UnsubscribeMethod final : public PbMessage {
  public:
 
@@ -492,7 +545,7 @@ class RpcMethodOptions_UnsubscribeMethod final : public PbMessage {
 
 /// Protobuf method options for in house-RPC.
 ///
-/// Source: horus/pb/rpc.proto:30:1
+/// Source: horus/pb/rpc.proto:33:1
 class RpcMethodOptions final : public PbMessage {
  public:
   /// @see RpcMethodOptions_SubscribeMethod
@@ -810,7 +863,7 @@ class RpcMethodOptions final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/rpc.proto:69:1
+/// Source: horus/pb/rpc.proto:72:1
 class DefaultSubscribeRequest final : public PbMessage {
  public:
 
@@ -872,7 +925,7 @@ class DefaultSubscribeRequest final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/rpc.proto:71:1
+/// Source: horus/pb/rpc.proto:74:1
 class DefaultSubscribeResponse final : public PbMessage {
  public:
 
@@ -1019,7 +1072,7 @@ class DefaultSubscribeResponse final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/rpc.proto:77:1
+/// Source: horus/pb/rpc.proto:80:1
 class DefaultUnsubscribeRequest final : public PbMessage {
  public:
 
@@ -1081,7 +1134,7 @@ class DefaultUnsubscribeRequest final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/rpc.proto:79:1
+/// Source: horus/pb/rpc.proto:82:1
 class DefaultUnsubscribeResponse final : public PbMessage {
  public:
 

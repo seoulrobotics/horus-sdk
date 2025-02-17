@@ -85,6 +85,59 @@ void Vector3f::DeserializeFrom(PbReader& reader) noexcept(false) {
   }
 }
 
+Quaterniond::Quaterniond(const Quaterniond& other) noexcept(false)
+    : qw_{other.qw_}
+    , qx_{other.qx_}
+    , qy_{other.qy_}
+    , qz_{other.qz_}
+    , set_fields_{other.set_fields_} {}
+
+void Quaterniond::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<double, PbDeserFlags::kFixed>(writer, /*tag=*/ 1, qw_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<double, PbDeserFlags::kFixed>(writer, /*tag=*/ 2, qx_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<double, PbDeserFlags::kFixed>(writer, /*tag=*/ 3, qy_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<double, PbDeserFlags::kFixed>(writer, /*tag=*/ 4, qz_);
+  }
+}
+
+void Quaterniond::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<double, PbDeserFlags::kFixed>(reader, qw_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<double, PbDeserFlags::kFixed>(reader, qx_);
+        set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<double, PbDeserFlags::kFixed>(reader, qy_);
+        set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        DeserializeField<double, PbDeserFlags::kFixed>(reader, qz_);
+        set_fields_[3] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
 Range::Range(const Range& other) noexcept(false)
     : start_{other.start_}
     , end_{other.end_}

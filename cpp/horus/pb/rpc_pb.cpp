@@ -11,6 +11,7 @@ namespace pb {
 RpcServiceOptions::RpcServiceOptions(const RpcServiceOptions& other) noexcept(false)
     : id_{other.id_}
     , description_{other.description_}
+    , reserved_ids_{other.reserved_ids_}
     , set_fields_{other.set_fields_} {}
 
 void RpcServiceOptions::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -19,6 +20,9 @@ void RpcServiceOptions::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[1]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 2, description_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowRepeated<std::uint32_t>>(writer, /*tag=*/ 3, reserved_ids_);
   }
 }
 
@@ -33,6 +37,11 @@ void RpcServiceOptions::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 2: {
         DeserializeField<CowBytes>(reader, description_);
         set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<CowRepeated<std::uint32_t>>(reader, reserved_ids_);
+        set_fields_[2] = true;
         break;
       }
       default: {

@@ -26,7 +26,7 @@ from google.protobuf import descriptor_pb2 as google_dot_protobuf_dot_descriptor
 from horus.pb.logs import logs_pb2 as horus_dot_pb_dot_logs_dot_logs__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12horus/pb/rpc.proto\x12\x08horus.pb\x1a google/protobuf/descriptor.proto\x1a\x18horus/pb/logs/logs.proto\"\x0c\n\nNoResponse\"4\n\x11RpcServiceOptions\x12\n\n\x02id\x18\x01 \x01(\r\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\"\x9b\x02\n\x10RpcMethodOptions\x12\n\n\x02id\x18\x01 \x01(\r\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12?\n\tsubscribe\x18\x03 \x01(\x0b\x32*.horus.pb.RpcMethodOptions.SubscribeMethodH\x00\x12\x43\n\x0bunsubscribe\x18\x04 \x01(\x0b\x32,.horus.pb.RpcMethodOptions.UnsubscribeMethodH\x00\x1a*\n\x0fSubscribeMethod\x12\x17\n\x0fsubscriber_name\x18\x01 \x01(\t\x1a,\n\x11UnsubscribeMethod\x12\x17\n\x0fsubscriber_name\x18\x01 \x01(\tB\x06\n\x04type\"\x19\n\x17\x44\x65\x66\x61ultSubscribeRequest\"b\n\x18\x44\x65\x66\x61ultSubscribeResponse\x12=\n\x10\x63onnection_error\x18\x01 \x01(\x0b\x32!.horus.pb.logs.RpcConnectionErrorH\x00\x42\x07\n\x05\x65rror\"\x1b\n\x19\x44\x65\x66\x61ultUnsubscribeRequest\"j\n\x1a\x44\x65\x66\x61ultUnsubscribeResponse\x12\x43\n\x13\x64isconnection_error\x18\x01 \x01(\x0b\x32$.horus.pb.logs.RpcDisconnectionErrorH\x00\x42\x07\n\x05\x65rror:[\n\x0fservice_options\x12\x1f.google.protobuf.ServiceOptions\x18\xb8\x95\xe6\x05 \x01(\x0b\x32\x1b.horus.pb.RpcServiceOptions\x88\x01\x01:X\n\x0emethod_options\x12\x1e.google.protobuf.MethodOptions\x18\xb8\x95\xe6\x05 \x01(\x0b\x32\x1a.horus.pb.RpcMethodOptions\x88\x01\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12horus/pb/rpc.proto\x12\x08horus.pb\x1a google/protobuf/descriptor.proto\x1a\x18horus/pb/logs/logs.proto\"\x0c\n\nNoResponse\"J\n\x11RpcServiceOptions\x12\n\n\x02id\x18\x01 \x01(\r\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x14\n\x0creserved_ids\x18\x03 \x03(\r\"\x9b\x02\n\x10RpcMethodOptions\x12\n\n\x02id\x18\x01 \x01(\r\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12?\n\tsubscribe\x18\x03 \x01(\x0b\x32*.horus.pb.RpcMethodOptions.SubscribeMethodH\x00\x12\x43\n\x0bunsubscribe\x18\x04 \x01(\x0b\x32,.horus.pb.RpcMethodOptions.UnsubscribeMethodH\x00\x1a*\n\x0fSubscribeMethod\x12\x17\n\x0fsubscriber_name\x18\x01 \x01(\t\x1a,\n\x11UnsubscribeMethod\x12\x17\n\x0fsubscriber_name\x18\x01 \x01(\tB\x06\n\x04type\"\x19\n\x17\x44\x65\x66\x61ultSubscribeRequest\"b\n\x18\x44\x65\x66\x61ultSubscribeResponse\x12=\n\x10\x63onnection_error\x18\x01 \x01(\x0b\x32!.horus.pb.logs.RpcConnectionErrorH\x00\x42\x07\n\x05\x65rror\"\x1b\n\x19\x44\x65\x66\x61ultUnsubscribeRequest\"j\n\x1a\x44\x65\x66\x61ultUnsubscribeResponse\x12\x43\n\x13\x64isconnection_error\x18\x01 \x01(\x0b\x32$.horus.pb.logs.RpcDisconnectionErrorH\x00\x42\x07\n\x05\x65rror:[\n\x0fservice_options\x12\x1f.google.protobuf.ServiceOptions\x18\xb8\x95\xe6\x05 \x01(\x0b\x32\x1b.horus.pb.RpcServiceOptions\x88\x01\x01:X\n\x0emethod_options\x12\x1e.google.protobuf.MethodOptions\x18\xb8\x95\xe6\x05 \x01(\x0b\x32\x1a.horus.pb.RpcMethodOptions\x88\x01\x01\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -36,19 +36,19 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_NORESPONSE']._serialized_start=92
   _globals['_NORESPONSE']._serialized_end=104
   _globals['_RPCSERVICEOPTIONS']._serialized_start=106
-  _globals['_RPCSERVICEOPTIONS']._serialized_end=158
-  _globals['_RPCMETHODOPTIONS']._serialized_start=161
-  _globals['_RPCMETHODOPTIONS']._serialized_end=444
-  _globals['_RPCMETHODOPTIONS_SUBSCRIBEMETHOD']._serialized_start=348
-  _globals['_RPCMETHODOPTIONS_SUBSCRIBEMETHOD']._serialized_end=390
-  _globals['_RPCMETHODOPTIONS_UNSUBSCRIBEMETHOD']._serialized_start=392
-  _globals['_RPCMETHODOPTIONS_UNSUBSCRIBEMETHOD']._serialized_end=436
-  _globals['_DEFAULTSUBSCRIBEREQUEST']._serialized_start=446
-  _globals['_DEFAULTSUBSCRIBEREQUEST']._serialized_end=471
-  _globals['_DEFAULTSUBSCRIBERESPONSE']._serialized_start=473
-  _globals['_DEFAULTSUBSCRIBERESPONSE']._serialized_end=571
-  _globals['_DEFAULTUNSUBSCRIBEREQUEST']._serialized_start=573
-  _globals['_DEFAULTUNSUBSCRIBEREQUEST']._serialized_end=600
-  _globals['_DEFAULTUNSUBSCRIBERESPONSE']._serialized_start=602
-  _globals['_DEFAULTUNSUBSCRIBERESPONSE']._serialized_end=708
+  _globals['_RPCSERVICEOPTIONS']._serialized_end=180
+  _globals['_RPCMETHODOPTIONS']._serialized_start=183
+  _globals['_RPCMETHODOPTIONS']._serialized_end=466
+  _globals['_RPCMETHODOPTIONS_SUBSCRIBEMETHOD']._serialized_start=370
+  _globals['_RPCMETHODOPTIONS_SUBSCRIBEMETHOD']._serialized_end=412
+  _globals['_RPCMETHODOPTIONS_UNSUBSCRIBEMETHOD']._serialized_start=414
+  _globals['_RPCMETHODOPTIONS_UNSUBSCRIBEMETHOD']._serialized_end=458
+  _globals['_DEFAULTSUBSCRIBEREQUEST']._serialized_start=468
+  _globals['_DEFAULTSUBSCRIBEREQUEST']._serialized_end=493
+  _globals['_DEFAULTSUBSCRIBERESPONSE']._serialized_start=495
+  _globals['_DEFAULTSUBSCRIBERESPONSE']._serialized_end=593
+  _globals['_DEFAULTUNSUBSCRIBEREQUEST']._serialized_start=595
+  _globals['_DEFAULTUNSUBSCRIBEREQUEST']._serialized_end=622
+  _globals['_DEFAULTUNSUBSCRIBERESPONSE']._serialized_start=624
+  _globals['_DEFAULTUNSUBSCRIBERESPONSE']._serialized_end=730
 # @@protoc_insertion_point(module_scope)

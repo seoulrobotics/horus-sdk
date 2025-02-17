@@ -192,6 +192,11 @@ class DetectionPipelineRequestedResetInfo;
 class PreprocessingServicePipelineUnavailable;
 class CircularRecordingDisabledWarning;
 class SnapshotAlreadyRunningWarning;
+class ActiveProjectChangedInfo;
+class ProjectConfigUpdatedInfo;
+class InvalidLidarTimestamp;
+class CalibrationAccumulatingPointsInfo;
+class SparseNoiseFilterUsageNonRotationalLidars;
 
 // MARK: Message declarations
 
@@ -20383,6 +20388,474 @@ class SnapshotAlreadyRunningWarning final : public PbMessage {
   static constexpr StringView TypeName() noexcept { return "horus.pb.logs.SnapshotAlreadyRunningWarning"; }
 
   /// The full name of the message: `horus.pb.logs.SnapshotAlreadyRunningWarning`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+ private:
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<0> set_fields_;
+};
+
+/// Log #161.
+/// 
+///  > The active project has been changed.
+///
+/// Source: horus/pb/logs/logs.proto:1177:1
+class ActiveProjectChangedInfo final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `ActiveProjectChangedInfo`.
+  ActiveProjectChangedInfo() noexcept = default;
+
+  /// Move constructor.
+  ActiveProjectChangedInfo(ActiveProjectChangedInfo&&) noexcept = default;
+  /// Move assignment operator.
+  ActiveProjectChangedInfo& operator=(ActiveProjectChangedInfo&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit ActiveProjectChangedInfo(const ActiveProjectChangedInfo&) noexcept = default;  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  ActiveProjectChangedInfo& operator=(const ActiveProjectChangedInfo&) = delete;
+
+  /// Default destructor.
+  ~ActiveProjectChangedInfo() noexcept final = default;
+
+  /// Creates a `ActiveProjectChangedInfo` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit ActiveProjectChangedInfo(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final {
+    static_cast<void>(writer);
+  }
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final {
+    reader.SkipMessage();
+  }
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.ActiveProjectChangedInfo`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.ActiveProjectChangedInfo"; }
+
+  /// The full name of the message: `horus.pb.logs.ActiveProjectChangedInfo`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+ private:
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<0> set_fields_;
+};
+
+/// Log #162.
+/// 
+///  > The project configuration has been updated.
+///
+/// Source: horus/pb/logs/logs.proto:1183:1
+class ProjectConfigUpdatedInfo final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `ProjectConfigUpdatedInfo`.
+  ProjectConfigUpdatedInfo() noexcept = default;
+
+  /// Move constructor.
+  ProjectConfigUpdatedInfo(ProjectConfigUpdatedInfo&&) noexcept = default;
+  /// Move assignment operator.
+  ProjectConfigUpdatedInfo& operator=(ProjectConfigUpdatedInfo&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit ProjectConfigUpdatedInfo(const ProjectConfigUpdatedInfo&) noexcept = default;  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  ProjectConfigUpdatedInfo& operator=(const ProjectConfigUpdatedInfo&) = delete;
+
+  /// Default destructor.
+  ~ProjectConfigUpdatedInfo() noexcept final = default;
+
+  /// Creates a `ProjectConfigUpdatedInfo` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit ProjectConfigUpdatedInfo(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final {
+    static_cast<void>(writer);
+  }
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final {
+    reader.SkipMessage();
+  }
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.ProjectConfigUpdatedInfo`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.ProjectConfigUpdatedInfo"; }
+
+  /// The full name of the message: `horus.pb.logs.ProjectConfigUpdatedInfo`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+ private:
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<0> set_fields_;
+};
+
+/// Log #163.
+/// 
+///  > Invalid timestamp $timestamp sent by lidar $lidar_id.
+///
+/// Source: horus/pb/logs/logs.proto:1189:1
+class InvalidLidarTimestamp final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `InvalidLidarTimestamp`.
+  InvalidLidarTimestamp() noexcept = default;
+
+  /// Move constructor.
+  InvalidLidarTimestamp(InvalidLidarTimestamp&&) noexcept = default;
+  /// Move assignment operator.
+  InvalidLidarTimestamp& operator=(InvalidLidarTimestamp&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit InvalidLidarTimestamp(const InvalidLidarTimestamp& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  InvalidLidarTimestamp& operator=(const InvalidLidarTimestamp&) = delete;
+
+  /// Default destructor.
+  ~InvalidLidarTimestamp() noexcept final = default;
+
+  /// Creates a `InvalidLidarTimestamp` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit InvalidLidarTimestamp(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.InvalidLidarTimestamp`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.InvalidLidarTimestamp"; }
+
+  /// The full name of the message: `horus.pb.logs.InvalidLidarTimestamp`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `lidar_id` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 1) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[0]; }
+
+  /// Clears `lidar_id` (no 1).
+  void clear_lidar_id() & noexcept {
+    set_fields_[0] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  InvalidLidarTimestamp& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[0] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  InvalidLidarTimestamp&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `timestamp` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const horus::pb::LogMetadata_Timestamp& timestamp() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return timestamp_;
+  }
+
+  /// If `timestamp` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  horus::pb::LogMetadata_Timestamp timestamp() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(timestamp_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  horus::pb::LogMetadata_Timestamp& mutable_timestamp() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return timestamp_;
+  }
+
+  /// Returns whether `timestamp` (no 2) is set.
+  constexpr bool has_timestamp() const noexcept { return set_fields_[1]; }
+
+  /// Clears `timestamp` (no 2).
+  void clear_timestamp() & noexcept {
+    set_fields_[1] = false;
+    timestamp_ = {};
+  }
+
+  /// Sets `timestamp` (no 2) and returns `*this`.
+  InvalidLidarTimestamp& set_timestamp(horus::pb::LogMetadata_Timestamp&& timestamp) & noexcept {
+    set_fields_[1] = true;
+    timestamp_ = std::move(timestamp);
+    return *this;
+  }
+  /// Sets `timestamp` (no 2) and returns `*this`.
+  InvalidLidarTimestamp&& set_timestamp(horus::pb::LogMetadata_Timestamp&& timestamp) && noexcept {
+    return std::move(set_timestamp(std::move(timestamp)));
+  }
+
+ private:
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see timestamp()
+  horus::pb::LogMetadata_Timestamp timestamp_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// Log #164.
+/// 
+///  > Calibration is accumulating points for $time
+///
+/// Source: horus/pb/logs/logs.proto:1197:1
+class CalibrationAccumulatingPointsInfo final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `CalibrationAccumulatingPointsInfo`.
+  CalibrationAccumulatingPointsInfo() noexcept = default;
+
+  /// Move constructor.
+  CalibrationAccumulatingPointsInfo(CalibrationAccumulatingPointsInfo&&) noexcept = default;
+  /// Move assignment operator.
+  CalibrationAccumulatingPointsInfo& operator=(CalibrationAccumulatingPointsInfo&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit CalibrationAccumulatingPointsInfo(const CalibrationAccumulatingPointsInfo& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  CalibrationAccumulatingPointsInfo& operator=(const CalibrationAccumulatingPointsInfo&) = delete;
+
+  /// Default destructor.
+  ~CalibrationAccumulatingPointsInfo() noexcept final = default;
+
+  /// Creates a `CalibrationAccumulatingPointsInfo` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit CalibrationAccumulatingPointsInfo(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.CalibrationAccumulatingPointsInfo`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.CalibrationAccumulatingPointsInfo"; }
+
+  /// The full name of the message: `horus.pb.logs.CalibrationAccumulatingPointsInfo`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `time` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const horus::pb::LogMetadata_Duration& time() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return time_;
+  }
+
+  /// If `time` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  horus::pb::LogMetadata_Duration time() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(time_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  horus::pb::LogMetadata_Duration& mutable_time() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return time_;
+  }
+
+  /// Returns whether `time` (no 1) is set.
+  constexpr bool has_time() const noexcept { return set_fields_[0]; }
+
+  /// Clears `time` (no 1).
+  void clear_time() & noexcept {
+    set_fields_[0] = false;
+    time_ = {};
+  }
+
+  /// Sets `time` (no 1) and returns `*this`.
+  CalibrationAccumulatingPointsInfo& set_time(horus::pb::LogMetadata_Duration&& time) & noexcept {
+    set_fields_[0] = true;
+    time_ = std::move(time);
+    return *this;
+  }
+  /// Sets `time` (no 1) and returns `*this`.
+  CalibrationAccumulatingPointsInfo&& set_time(horus::pb::LogMetadata_Duration&& time) && noexcept {
+    return std::move(set_time(std::move(time)));
+  }
+
+ private:
+  /// @see time()
+  horus::pb::LogMetadata_Duration time_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
+};
+
+/// Log #165.
+/// 
+///  > The sparse noise filter cannot be used with non-rotational lidars.
+///
+/// Source: horus/pb/logs/logs.proto:1204:1
+class SparseNoiseFilterUsageNonRotationalLidars final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `SparseNoiseFilterUsageNonRotationalLidars`.
+  SparseNoiseFilterUsageNonRotationalLidars() noexcept = default;
+
+  /// Move constructor.
+  SparseNoiseFilterUsageNonRotationalLidars(SparseNoiseFilterUsageNonRotationalLidars&&) noexcept = default;
+  /// Move assignment operator.
+  SparseNoiseFilterUsageNonRotationalLidars& operator=(SparseNoiseFilterUsageNonRotationalLidars&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit SparseNoiseFilterUsageNonRotationalLidars(const SparseNoiseFilterUsageNonRotationalLidars&) noexcept = default;  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  SparseNoiseFilterUsageNonRotationalLidars& operator=(const SparseNoiseFilterUsageNonRotationalLidars&) = delete;
+
+  /// Default destructor.
+  ~SparseNoiseFilterUsageNonRotationalLidars() noexcept final = default;
+
+  /// Creates a `SparseNoiseFilterUsageNonRotationalLidars` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit SparseNoiseFilterUsageNonRotationalLidars(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final {
+    static_cast<void>(writer);
+  }
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final {
+    reader.SkipMessage();
+  }
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.SparseNoiseFilterUsageNonRotationalLidars`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.SparseNoiseFilterUsageNonRotationalLidars"; }
+
+  /// The full name of the message: `horus.pb.logs.SparseNoiseFilterUsageNonRotationalLidars`.
   StringView MessageTypeName() const noexcept final { return TypeName(); }
 
  private:

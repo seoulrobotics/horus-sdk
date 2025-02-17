@@ -1,8 +1,9 @@
 from google.protobuf import descriptor_pb2 as _descriptor_pb2
 from horus.pb.logs import logs_pb2 as _logs_pb2
+from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Optional, Union as _Union
+from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 SERVICE_OPTIONS_FIELD_NUMBER: _ClassVar[int]
@@ -15,12 +16,14 @@ class NoResponse(_message.Message):
     def __init__(self) -> None: ...
 
 class RpcServiceOptions(_message.Message):
-    __slots__ = ("id", "description")
+    __slots__ = ("id", "description", "reserved_ids")
     ID_FIELD_NUMBER: _ClassVar[int]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
+    RESERVED_IDS_FIELD_NUMBER: _ClassVar[int]
     id: int
     description: str
-    def __init__(self, id: _Optional[int] = ..., description: _Optional[str] = ...) -> None: ...
+    reserved_ids: _containers.RepeatedScalarFieldContainer[int]
+    def __init__(self, id: _Optional[int] = ..., description: _Optional[str] = ..., reserved_ids: _Optional[_Iterable[int]] = ...) -> None: ...
 
 class RpcMethodOptions(_message.Message):
     __slots__ = ("id", "description", "subscribe", "unsubscribe")

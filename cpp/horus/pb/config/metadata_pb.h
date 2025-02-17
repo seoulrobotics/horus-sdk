@@ -31,6 +31,7 @@ namespace pb {
 
 class Vector2f;
 class Vector3f;
+class Quaterniond;
 class Range;
 class UInt32List;
 class Timestamp;
@@ -355,10 +356,228 @@ class Vector3f final : public PbMessage {
   std::bitset<3> set_fields_;
 };
 
+/// A quaternion with 4 `double` fields.
+///
+/// Source: horus/pb/config/metadata.proto:25:1
+class Quaterniond final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `Quaterniond`.
+  Quaterniond() noexcept = default;
+
+  /// Move constructor.
+  Quaterniond(Quaterniond&&) noexcept = default;
+  /// Move assignment operator.
+  Quaterniond& operator=(Quaterniond&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit Quaterniond(const Quaterniond& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  Quaterniond& operator=(const Quaterniond&) = delete;
+
+  /// Default destructor.
+  ~Quaterniond() noexcept final = default;
+
+  /// Creates a `Quaterniond` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit Quaterniond(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.Quaterniond`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.Quaterniond"; }
+
+  /// The full name of the message: `horus.pb.Quaterniond`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `qw` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr double qw() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return qw_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  double& mutable_qw() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return qw_;
+  }
+
+  /// Returns whether `qw` (no 1) is set.
+  constexpr bool has_qw() const noexcept { return set_fields_[0]; }
+
+  /// Clears `qw` (no 1).
+  void clear_qw() & noexcept {
+    set_fields_[0] = false;
+    qw_ = {};
+  }
+
+  /// Sets `qw` (no 1) and returns `*this`.
+  Quaterniond& set_qw(double qw) & noexcept {
+    set_fields_[0] = true;
+    qw_ = qw;
+    return *this;
+  }
+  /// Sets `qw` (no 1) and returns `*this`.
+  Quaterniond&& set_qw(double qw) && noexcept {
+    return std::move(set_qw(qw));
+  }
+
+  // Field `qx` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr double qx() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return qx_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  double& mutable_qx() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return qx_;
+  }
+
+  /// Returns whether `qx` (no 2) is set.
+  constexpr bool has_qx() const noexcept { return set_fields_[1]; }
+
+  /// Clears `qx` (no 2).
+  void clear_qx() & noexcept {
+    set_fields_[1] = false;
+    qx_ = {};
+  }
+
+  /// Sets `qx` (no 2) and returns `*this`.
+  Quaterniond& set_qx(double qx) & noexcept {
+    set_fields_[1] = true;
+    qx_ = qx;
+    return *this;
+  }
+  /// Sets `qx` (no 2) and returns `*this`.
+  Quaterniond&& set_qx(double qx) && noexcept {
+    return std::move(set_qx(qx));
+  }
+
+  // Field `qy` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr double qy() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return qy_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  double& mutable_qy() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return qy_;
+  }
+
+  /// Returns whether `qy` (no 3) is set.
+  constexpr bool has_qy() const noexcept { return set_fields_[2]; }
+
+  /// Clears `qy` (no 3).
+  void clear_qy() & noexcept {
+    set_fields_[2] = false;
+    qy_ = {};
+  }
+
+  /// Sets `qy` (no 3) and returns `*this`.
+  Quaterniond& set_qy(double qy) & noexcept {
+    set_fields_[2] = true;
+    qy_ = qy;
+    return *this;
+  }
+  /// Sets `qy` (no 3) and returns `*this`.
+  Quaterniond&& set_qy(double qy) && noexcept {
+    return std::move(set_qy(qy));
+  }
+
+  // Field `qz` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr double qz() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return qz_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  double& mutable_qz() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return qz_;
+  }
+
+  /// Returns whether `qz` (no 4) is set.
+  constexpr bool has_qz() const noexcept { return set_fields_[3]; }
+
+  /// Clears `qz` (no 4).
+  void clear_qz() & noexcept {
+    set_fields_[3] = false;
+    qz_ = {};
+  }
+
+  /// Sets `qz` (no 4) and returns `*this`.
+  Quaterniond& set_qz(double qz) & noexcept {
+    set_fields_[3] = true;
+    qz_ = qz;
+    return *this;
+  }
+  /// Sets `qz` (no 4) and returns `*this`.
+  Quaterniond&& set_qz(double qz) && noexcept {
+    return std::move(set_qz(qz));
+  }
+
+ private:
+  /// @see qw()
+  double qw_{};
+  /// @see qx()
+  double qx_{};
+  /// @see qy()
+  double qy_{};
+  /// @see qz()
+  double qz_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<4> set_fields_;
+};
+
 /// A vector with two `double` fields representing a range (where the `start`
 ///  must be lower than or equal to the `end`).
 ///
-/// Source: horus/pb/config/metadata.proto:26:1
+/// Source: horus/pb/config/metadata.proto:35:1
 class Range final : public PbMessage {
  public:
 
@@ -497,7 +716,7 @@ class Range final : public PbMessage {
 /// Contains a list of `uint32` values. Used when a list of repeated `uint32`
 ///  values should be `optional`.
 ///
-/// Source: horus/pb/config/metadata.proto:34:1
+/// Source: horus/pb/config/metadata.proto:43:1
 class UInt32List final : public PbMessage {
  public:
 
@@ -611,7 +830,7 @@ class UInt32List final : public PbMessage {
 ///  not libprotobuf-lite, and generating metadata for such messages would lead to
 ///  binary conflicts.
 ///
-/// Source: horus/pb/config/metadata.proto:44:1
+/// Source: horus/pb/config/metadata.proto:53:1
 class Timestamp final : public PbMessage {
  public:
 
@@ -755,7 +974,7 @@ class Timestamp final : public PbMessage {
 ///  not libprotobuf-lite, and generating metadata for such messages would lead to
 ///  binary conflicts.
 ///
-/// Source: horus/pb/config/metadata.proto:58:1
+/// Source: horus/pb/config/metadata.proto:67:1
 class Duration final : public PbMessage {
  public:
 
@@ -893,8 +1112,9 @@ class Duration final : public PbMessage {
 
 /// Matrix types
 ///  ------------
+///  TODO(HRS-495) Reuse Matrixf for representing affine transform.
 ///
-/// Source: horus/pb/config/metadata.proto:67:1
+/// Source: horus/pb/config/metadata.proto:76:1
 class AffineTransform3f final : public PbMessage {
  public:
 

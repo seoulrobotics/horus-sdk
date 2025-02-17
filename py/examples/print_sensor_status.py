@@ -12,7 +12,7 @@ async def print_sensor_status() -> None:
     def print_sensor(sensor_info_event: horus.SensorInfoEvent) -> None:
         for sensor_info in sensor_info_event.sensor_info:
             print(
-                f"Sensor {sensor_info.lidar_id} status: {sensor_info.status} frequency: {sensor_info.measured_frequency_hz} Hz"
+                f"Sensor {sensor_info.lidar_id}, status: {sensor_info.status}, frequency: {sensor_info.measured_frequency_hz} Hz, corrected pose: {sensor_info.corrected_pose}"
             )
 
     async with sdk.subscribe_to_sensor_info(on_sensor_info_event=print_sensor):

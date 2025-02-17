@@ -17,6 +17,8 @@ class PointAttribute(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     STATIC: _ClassVar[PointAttribute]
     STATIC_DETECTION_ZONE: _ClassVar[PointAttribute]
     REFLECTION_ZONE: _ClassVar[PointAttribute]
+    STATIC_EXCLUSION_ZONE: _ClassVar[PointAttribute]
+    SPARSE_NOISE: _ClassVar[PointAttribute]
 ATTRIBUTE_NONE: PointAttribute
 OUT_OF_RANGE: PointAttribute
 GROUND: PointAttribute
@@ -25,6 +27,8 @@ EXCLUSION_ZONE: PointAttribute
 STATIC: PointAttribute
 STATIC_DETECTION_ZONE: PointAttribute
 REFLECTION_ZONE: PointAttribute
+STATIC_EXCLUSION_ZONE: PointAttribute
+SPARSE_NOISE: PointAttribute
 
 class PointFrame(_message.Message):
     __slots__ = ("header", "points")
@@ -44,14 +48,16 @@ class PointFrame(_message.Message):
     def __init__(self, header: _Optional[_Union[PointFrame.Header, _Mapping]] = ..., points: _Optional[_Union[AttributedPoints, _Mapping]] = ...) -> None: ...
 
 class AttributedPoints(_message.Message):
-    __slots__ = ("flattened_points", "attributes", "intensities")
+    __slots__ = ("flattened_points", "attributes", "intensities", "ring_indices")
     FLATTENED_POINTS_FIELD_NUMBER: _ClassVar[int]
     ATTRIBUTES_FIELD_NUMBER: _ClassVar[int]
     INTENSITIES_FIELD_NUMBER: _ClassVar[int]
+    RING_INDICES_FIELD_NUMBER: _ClassVar[int]
     flattened_points: _containers.RepeatedScalarFieldContainer[float]
     attributes: _containers.RepeatedScalarFieldContainer[int]
     intensities: _containers.RepeatedScalarFieldContainer[int]
-    def __init__(self, flattened_points: _Optional[_Iterable[float]] = ..., attributes: _Optional[_Iterable[int]] = ..., intensities: _Optional[_Iterable[int]] = ...) -> None: ...
+    ring_indices: bytes
+    def __init__(self, flattened_points: _Optional[_Iterable[float]] = ..., attributes: _Optional[_Iterable[int]] = ..., intensities: _Optional[_Iterable[int]] = ..., ring_indices: _Optional[bytes] = ...) -> None: ...
 
 class ProcessedPointsEvent(_message.Message):
     __slots__ = ("point_frame",)

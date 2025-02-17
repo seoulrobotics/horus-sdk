@@ -1590,6 +1590,51 @@ func (x *LogData) GetSnapshotAlreadyRunningWarning() *logs_pb.SnapshotAlreadyRun
 	return nil
 }
 
+func (x *LogData) GetActiveProjectChangedInfo() *logs_pb.ActiveProjectChangedInfo {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_ActiveProjectChangedInfo); ok {
+			return x.ActiveProjectChangedInfo
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetProjectConfigUpdatedInfo() *logs_pb.ProjectConfigUpdatedInfo {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_ProjectConfigUpdatedInfo); ok {
+			return x.ProjectConfigUpdatedInfo
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetInvalidLidarTimestamp() *logs_pb.InvalidLidarTimestamp {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_InvalidLidarTimestamp); ok {
+			return x.InvalidLidarTimestamp
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetCalibrationAccumulatingPointsInfo() *logs_pb.CalibrationAccumulatingPointsInfo {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_CalibrationAccumulatingPointsInfo); ok {
+			return x.CalibrationAccumulatingPointsInfo
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetSparseNoiseFilterUsageNonRotationalLidars() *logs_pb.SparseNoiseFilterUsageNonRotationalLidars {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_SparseNoiseFilterUsageNonRotationalLidars); ok {
+			return x.SparseNoiseFilterUsageNonRotationalLidars
+		}
+	}
+	return nil
+}
+
 func (x *LogData) SetGeneric(v *logs_pb.Generic) {
 	if v == nil {
 		x.xxx_hidden_Data = nil
@@ -2868,6 +2913,46 @@ func (x *LogData) SetSnapshotAlreadyRunningWarning(v *logs_pb.SnapshotAlreadyRun
 		return
 	}
 	x.xxx_hidden_Data = &logData_SnapshotAlreadyRunningWarning{v}
+}
+
+func (x *LogData) SetActiveProjectChangedInfo(v *logs_pb.ActiveProjectChangedInfo) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_ActiveProjectChangedInfo{v}
+}
+
+func (x *LogData) SetProjectConfigUpdatedInfo(v *logs_pb.ProjectConfigUpdatedInfo) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_ProjectConfigUpdatedInfo{v}
+}
+
+func (x *LogData) SetInvalidLidarTimestamp(v *logs_pb.InvalidLidarTimestamp) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_InvalidLidarTimestamp{v}
+}
+
+func (x *LogData) SetCalibrationAccumulatingPointsInfo(v *logs_pb.CalibrationAccumulatingPointsInfo) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_CalibrationAccumulatingPointsInfo{v}
+}
+
+func (x *LogData) SetSparseNoiseFilterUsageNonRotationalLidars(v *logs_pb.SparseNoiseFilterUsageNonRotationalLidars) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_SparseNoiseFilterUsageNonRotationalLidars{v}
 }
 
 func (x *LogData) HasData() bool {
@@ -4157,6 +4242,46 @@ func (x *LogData) HasSnapshotAlreadyRunningWarning() bool {
 	return ok
 }
 
+func (x *LogData) HasActiveProjectChangedInfo() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_ActiveProjectChangedInfo)
+	return ok
+}
+
+func (x *LogData) HasProjectConfigUpdatedInfo() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_ProjectConfigUpdatedInfo)
+	return ok
+}
+
+func (x *LogData) HasInvalidLidarTimestamp() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_InvalidLidarTimestamp)
+	return ok
+}
+
+func (x *LogData) HasCalibrationAccumulatingPointsInfo() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_CalibrationAccumulatingPointsInfo)
+	return ok
+}
+
+func (x *LogData) HasSparseNoiseFilterUsageNonRotationalLidars() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_SparseNoiseFilterUsageNonRotationalLidars)
+	return ok
+}
+
 func (x *LogData) ClearData() {
 	x.xxx_hidden_Data = nil
 }
@@ -5121,6 +5246,36 @@ func (x *LogData) ClearSnapshotAlreadyRunningWarning() {
 	}
 }
 
+func (x *LogData) ClearActiveProjectChangedInfo() {
+	if _, ok := x.xxx_hidden_Data.(*logData_ActiveProjectChangedInfo); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearProjectConfigUpdatedInfo() {
+	if _, ok := x.xxx_hidden_Data.(*logData_ProjectConfigUpdatedInfo); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearInvalidLidarTimestamp() {
+	if _, ok := x.xxx_hidden_Data.(*logData_InvalidLidarTimestamp); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearCalibrationAccumulatingPointsInfo() {
+	if _, ok := x.xxx_hidden_Data.(*logData_CalibrationAccumulatingPointsInfo); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearSparseNoiseFilterUsageNonRotationalLidars() {
+	if _, ok := x.xxx_hidden_Data.(*logData_SparseNoiseFilterUsageNonRotationalLidars); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
 const LogData_Data_not_set_case case_LogData_Data = 0
 const LogData_Generic_case case_LogData_Data = 1
 const LogData_Oom_case case_LogData_Data = 2
@@ -5282,6 +5437,11 @@ const LogData_DetectionPipelineRequestedResetInfo_case case_LogData_Data = 157
 const LogData_PreprocessingServicePipelineUnavailable_case case_LogData_Data = 158
 const LogData_CircularRecordingDisabledWarning_case case_LogData_Data = 159
 const LogData_SnapshotAlreadyRunningWarning_case case_LogData_Data = 160
+const LogData_ActiveProjectChangedInfo_case case_LogData_Data = 161
+const LogData_ProjectConfigUpdatedInfo_case case_LogData_Data = 162
+const LogData_InvalidLidarTimestamp_case case_LogData_Data = 163
+const LogData_CalibrationAccumulatingPointsInfo_case case_LogData_Data = 164
+const LogData_SparseNoiseFilterUsageNonRotationalLidars_case case_LogData_Data = 165
 
 func (x *LogData) WhichData() case_LogData_Data {
 	if x == nil {
@@ -5608,6 +5768,16 @@ func (x *LogData) WhichData() case_LogData_Data {
 		return LogData_CircularRecordingDisabledWarning_case
 	case *logData_SnapshotAlreadyRunningWarning:
 		return LogData_SnapshotAlreadyRunningWarning_case
+	case *logData_ActiveProjectChangedInfo:
+		return LogData_ActiveProjectChangedInfo_case
+	case *logData_ProjectConfigUpdatedInfo:
+		return LogData_ProjectConfigUpdatedInfo_case
+	case *logData_InvalidLidarTimestamp:
+		return LogData_InvalidLidarTimestamp_case
+	case *logData_CalibrationAccumulatingPointsInfo:
+		return LogData_CalibrationAccumulatingPointsInfo_case
+	case *logData_SparseNoiseFilterUsageNonRotationalLidars:
+		return LogData_SparseNoiseFilterUsageNonRotationalLidars_case
 	default:
 		return LogData_Data_not_set_case
 	}
@@ -5777,6 +5947,11 @@ type LogData_builder struct {
 	PreprocessingServicePipelineUnavailable     *logs_pb.PreprocessingServicePipelineUnavailable
 	CircularRecordingDisabledWarning            *logs_pb.CircularRecordingDisabledWarning
 	SnapshotAlreadyRunningWarning               *logs_pb.SnapshotAlreadyRunningWarning
+	ActiveProjectChangedInfo                    *logs_pb.ActiveProjectChangedInfo
+	ProjectConfigUpdatedInfo                    *logs_pb.ProjectConfigUpdatedInfo
+	InvalidLidarTimestamp                       *logs_pb.InvalidLidarTimestamp
+	CalibrationAccumulatingPointsInfo           *logs_pb.CalibrationAccumulatingPointsInfo
+	SparseNoiseFilterUsageNonRotationalLidars   *logs_pb.SparseNoiseFilterUsageNonRotationalLidars
 	// -- end of xxx_hidden_Data
 }
 
@@ -6263,6 +6438,21 @@ func (b0 LogData_builder) Build() *LogData {
 	}
 	if b.SnapshotAlreadyRunningWarning != nil {
 		x.xxx_hidden_Data = &logData_SnapshotAlreadyRunningWarning{b.SnapshotAlreadyRunningWarning}
+	}
+	if b.ActiveProjectChangedInfo != nil {
+		x.xxx_hidden_Data = &logData_ActiveProjectChangedInfo{b.ActiveProjectChangedInfo}
+	}
+	if b.ProjectConfigUpdatedInfo != nil {
+		x.xxx_hidden_Data = &logData_ProjectConfigUpdatedInfo{b.ProjectConfigUpdatedInfo}
+	}
+	if b.InvalidLidarTimestamp != nil {
+		x.xxx_hidden_Data = &logData_InvalidLidarTimestamp{b.InvalidLidarTimestamp}
+	}
+	if b.CalibrationAccumulatingPointsInfo != nil {
+		x.xxx_hidden_Data = &logData_CalibrationAccumulatingPointsInfo{b.CalibrationAccumulatingPointsInfo}
+	}
+	if b.SparseNoiseFilterUsageNonRotationalLidars != nil {
+		x.xxx_hidden_Data = &logData_SparseNoiseFilterUsageNonRotationalLidars{b.SparseNoiseFilterUsageNonRotationalLidars}
 	}
 	return m0
 }
@@ -6921,6 +7111,26 @@ type logData_SnapshotAlreadyRunningWarning struct {
 	SnapshotAlreadyRunningWarning *logs_pb.SnapshotAlreadyRunningWarning `protobuf:"bytes,160,opt,name=snapshot_already_running_warning,json=snapshotAlreadyRunningWarning,proto3,oneof"`
 }
 
+type logData_ActiveProjectChangedInfo struct {
+	ActiveProjectChangedInfo *logs_pb.ActiveProjectChangedInfo `protobuf:"bytes,161,opt,name=active_project_changed_info,json=activeProjectChangedInfo,proto3,oneof"`
+}
+
+type logData_ProjectConfigUpdatedInfo struct {
+	ProjectConfigUpdatedInfo *logs_pb.ProjectConfigUpdatedInfo `protobuf:"bytes,162,opt,name=project_config_updated_info,json=projectConfigUpdatedInfo,proto3,oneof"`
+}
+
+type logData_InvalidLidarTimestamp struct {
+	InvalidLidarTimestamp *logs_pb.InvalidLidarTimestamp `protobuf:"bytes,163,opt,name=invalid_lidar_timestamp,json=invalidLidarTimestamp,proto3,oneof"`
+}
+
+type logData_CalibrationAccumulatingPointsInfo struct {
+	CalibrationAccumulatingPointsInfo *logs_pb.CalibrationAccumulatingPointsInfo `protobuf:"bytes,164,opt,name=calibration_accumulating_points_info,json=calibrationAccumulatingPointsInfo,proto3,oneof"`
+}
+
+type logData_SparseNoiseFilterUsageNonRotationalLidars struct {
+	SparseNoiseFilterUsageNonRotationalLidars *logs_pb.SparseNoiseFilterUsageNonRotationalLidars `protobuf:"bytes,165,opt,name=sparse_noise_filter_usage_non_rotational_lidars,json=sparseNoiseFilterUsageNonRotationalLidars,proto3,oneof"`
+}
+
 func (*logData_Generic) isLogData_Data() {}
 
 func (*logData_Oom) isLogData_Data() {}
@@ -7241,6 +7451,16 @@ func (*logData_CircularRecordingDisabledWarning) isLogData_Data() {}
 
 func (*logData_SnapshotAlreadyRunningWarning) isLogData_Data() {}
 
+func (*logData_ActiveProjectChangedInfo) isLogData_Data() {}
+
+func (*logData_ProjectConfigUpdatedInfo) isLogData_Data() {}
+
+func (*logData_InvalidLidarTimestamp) isLogData_Data() {}
+
+func (*logData_CalibrationAccumulatingPointsInfo) isLogData_Data() {}
+
+func (*logData_SparseNoiseFilterUsageNonRotationalLidars) isLogData_Data() {}
+
 var File_horus_pb_logs_message_proto protoreflect.FileDescriptor
 
 var file_horus_pb_logs_message_proto_rawDesc = []byte{
@@ -7256,7 +7476,7 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
 	0x12, 0x25, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11,
 	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x6f, 0x67, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xc3, 0x82, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
+	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xa3, 0x87, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
 	0x44, 0x61, 0x74, 0x61, 0x12, 0x32, 0x0a, 0x07, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62,
 	0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x48, 0x00, 0x52,
@@ -8300,7 +8520,45 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x41, 0x6c, 0x72, 0x65, 0x61, 0x64, 0x79, 0x52, 0x75, 0x6e, 0x6e, 0x69, 0x6e, 0x67, 0x57, 0x61,
 	0x72, 0x6e, 0x69, 0x6e, 0x67, 0x48, 0x00, 0x52, 0x1d, 0x73, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f,
 	0x74, 0x41, 0x6c, 0x72, 0x65, 0x61, 0x64, 0x79, 0x52, 0x75, 0x6e, 0x6e, 0x69, 0x6e, 0x67, 0x57,
-	0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06,
+	0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x12, 0x69, 0x0a, 0x1b, 0x61, 0x63, 0x74, 0x69, 0x76, 0x65,
+	0x5f, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x5f, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x64,
+	0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0xa1, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x68,
+	0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x41, 0x63, 0x74,
+	0x69, 0x76, 0x65, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65,
+	0x64, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x00, 0x52, 0x18, 0x61, 0x63, 0x74, 0x69, 0x76, 0x65, 0x50,
+	0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x64, 0x49, 0x6e, 0x66,
+	0x6f, 0x12, 0x69, 0x0a, 0x1b, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x5f, 0x63, 0x6f, 0x6e,
+	0x66, 0x69, 0x67, 0x5f, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x5f, 0x69, 0x6e, 0x66, 0x6f,
+	0x18, 0xa2, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e,
+	0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x43,
+	0x6f, 0x6e, 0x66, 0x69, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x49, 0x6e, 0x66, 0x6f,
+	0x48, 0x00, 0x52, 0x18, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69,
+	0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x5f, 0x0a, 0x17,
+	0x69, 0x6e, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x5f, 0x6c, 0x69, 0x64, 0x61, 0x72, 0x5f, 0x74, 0x69,
+	0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0xa3, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x24,
+	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x49,
+	0x6e, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x54, 0x69, 0x6d, 0x65, 0x73,
+	0x74, 0x61, 0x6d, 0x70, 0x48, 0x00, 0x52, 0x15, 0x69, 0x6e, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x4c,
+	0x69, 0x64, 0x61, 0x72, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x84, 0x01,
+	0x0a, 0x24, 0x63, 0x61, 0x6c, 0x69, 0x62, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x61, 0x63,
+	0x63, 0x75, 0x6d, 0x75, 0x6c, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x5f, 0x70, 0x6f, 0x69, 0x6e, 0x74,
+	0x73, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0xa4, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x30, 0x2e,
+	0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x43, 0x61,
+	0x6c, 0x69, 0x62, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x41, 0x63, 0x63, 0x75, 0x6d, 0x75, 0x6c,
+	0x61, 0x74, 0x69, 0x6e, 0x67, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x48,
+	0x00, 0x52, 0x21, 0x63, 0x61, 0x6c, 0x69, 0x62, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x41, 0x63,
+	0x63, 0x75, 0x6d, 0x75, 0x6c, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x73,
+	0x49, 0x6e, 0x66, 0x6f, 0x12, 0x9f, 0x01, 0x0a, 0x2f, 0x73, 0x70, 0x61, 0x72, 0x73, 0x65, 0x5f,
+	0x6e, 0x6f, 0x69, 0x73, 0x65, 0x5f, 0x66, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x5f, 0x75, 0x73, 0x61,
+	0x67, 0x65, 0x5f, 0x6e, 0x6f, 0x6e, 0x5f, 0x72, 0x6f, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x61,
+	0x6c, 0x5f, 0x6c, 0x69, 0x64, 0x61, 0x72, 0x73, 0x18, 0xa5, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x38, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e,
+	0x53, 0x70, 0x61, 0x72, 0x73, 0x65, 0x4e, 0x6f, 0x69, 0x73, 0x65, 0x46, 0x69, 0x6c, 0x74, 0x65,
+	0x72, 0x55, 0x73, 0x61, 0x67, 0x65, 0x4e, 0x6f, 0x6e, 0x52, 0x6f, 0x74, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x61, 0x6c, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x73, 0x48, 0x00, 0x52, 0x29, 0x73, 0x70, 0x61,
+	0x72, 0x73, 0x65, 0x4e, 0x6f, 0x69, 0x73, 0x65, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x55, 0x73,
+	0x61, 0x67, 0x65, 0x4e, 0x6f, 0x6e, 0x52, 0x6f, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x61, 0x6c,
+	0x4c, 0x69, 0x64, 0x61, 0x72, 0x73, 0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
@@ -8469,6 +8727,11 @@ var file_horus_pb_logs_message_proto_goTypes = []any{
 	(*logs_pb.PreprocessingServicePipelineUnavailable)(nil),     // 160: horus.pb.logs.PreprocessingServicePipelineUnavailable
 	(*logs_pb.CircularRecordingDisabledWarning)(nil),            // 161: horus.pb.logs.CircularRecordingDisabledWarning
 	(*logs_pb.SnapshotAlreadyRunningWarning)(nil),               // 162: horus.pb.logs.SnapshotAlreadyRunningWarning
+	(*logs_pb.ActiveProjectChangedInfo)(nil),                    // 163: horus.pb.logs.ActiveProjectChangedInfo
+	(*logs_pb.ProjectConfigUpdatedInfo)(nil),                    // 164: horus.pb.logs.ProjectConfigUpdatedInfo
+	(*logs_pb.InvalidLidarTimestamp)(nil),                       // 165: horus.pb.logs.InvalidLidarTimestamp
+	(*logs_pb.CalibrationAccumulatingPointsInfo)(nil),           // 166: horus.pb.logs.CalibrationAccumulatingPointsInfo
+	(*logs_pb.SparseNoiseFilterUsageNonRotationalLidars)(nil),   // 167: horus.pb.logs.SparseNoiseFilterUsageNonRotationalLidars
 }
 var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	2,   // 0: horus.pb.LogMessage.metadata:type_name -> horus.pb.LogMetadata
@@ -8633,11 +8896,16 @@ var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	160, // 159: horus.pb.LogData.preprocessing_service_pipeline_unavailable:type_name -> horus.pb.logs.PreprocessingServicePipelineUnavailable
 	161, // 160: horus.pb.LogData.circular_recording_disabled_warning:type_name -> horus.pb.logs.CircularRecordingDisabledWarning
 	162, // 161: horus.pb.LogData.snapshot_already_running_warning:type_name -> horus.pb.logs.SnapshotAlreadyRunningWarning
-	162, // [162:162] is the sub-list for method output_type
-	162, // [162:162] is the sub-list for method input_type
-	162, // [162:162] is the sub-list for extension type_name
-	162, // [162:162] is the sub-list for extension extendee
-	0,   // [0:162] is the sub-list for field type_name
+	163, // 162: horus.pb.LogData.active_project_changed_info:type_name -> horus.pb.logs.ActiveProjectChangedInfo
+	164, // 163: horus.pb.LogData.project_config_updated_info:type_name -> horus.pb.logs.ProjectConfigUpdatedInfo
+	165, // 164: horus.pb.LogData.invalid_lidar_timestamp:type_name -> horus.pb.logs.InvalidLidarTimestamp
+	166, // 165: horus.pb.LogData.calibration_accumulating_points_info:type_name -> horus.pb.logs.CalibrationAccumulatingPointsInfo
+	167, // 166: horus.pb.LogData.sparse_noise_filter_usage_non_rotational_lidars:type_name -> horus.pb.logs.SparseNoiseFilterUsageNonRotationalLidars
+	167, // [167:167] is the sub-list for method output_type
+	167, // [167:167] is the sub-list for method input_type
+	167, // [167:167] is the sub-list for extension type_name
+	167, // [167:167] is the sub-list for extension extendee
+	0,   // [0:167] is the sub-list for field type_name
 }
 
 func init() { file_horus_pb_logs_message_proto_init() }
@@ -8806,6 +9074,11 @@ func file_horus_pb_logs_message_proto_init() {
 		(*logData_PreprocessingServicePipelineUnavailable)(nil),
 		(*logData_CircularRecordingDisabledWarning)(nil),
 		(*logData_SnapshotAlreadyRunningWarning)(nil),
+		(*logData_ActiveProjectChangedInfo)(nil),
+		(*logData_ProjectConfigUpdatedInfo)(nil),
+		(*logData_InvalidLidarTimestamp)(nil),
+		(*logData_CalibrationAccumulatingPointsInfo)(nil),
+		(*logData_SparseNoiseFilterUsageNonRotationalLidars)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
