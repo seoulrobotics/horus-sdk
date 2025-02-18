@@ -18,3 +18,7 @@ def timestamp_to_datetime(timestamp: metadata_pb2.Timestamp) -> datetime.datetim
 Vector2f = typing.NamedTuple("Vector2f", [("x", float), ("y", float)])
 
 Vector3f = typing.NamedTuple("Vector3f", [("x", float), ("y", float), ("z", float)])
+
+Quaternion = typing.NamedTuple(
+    "Quaternion", [("qx", float), ("qy", float), ("qz", float), ("qw", float)]
+)

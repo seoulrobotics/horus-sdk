@@ -1170,3 +1170,36 @@ message CircularRecordingDisabledWarning {
 // > A snapshot is already running.
 message SnapshotAlreadyRunningWarning {
 }
+
+// Log #161.
+//
+// > The active project has been changed.
+message ActiveProjectChangedInfo {
+}
+
+// Log #162.
+//
+// > The project configuration has been updated.
+message ProjectConfigUpdatedInfo {
+}
+
+// Log #163.
+//
+// > Invalid timestamp $timestamp sent by lidar $lidar_id.
+message InvalidLidarTimestamp {
+  string lidar_id = 1;
+  LogMetadata.Timestamp timestamp = 2;
+}
+
+// Log #164.
+//
+// > Calibration is accumulating points for $time
+message CalibrationAccumulatingPointsInfo {
+  LogMetadata.Duration time = 1;
+}
+
+// Log #165.
+//
+// > The sparse noise filter cannot be used with non-rotational lidars.
+message SparseNoiseFilterUsageNonRotationalLidars {
+}

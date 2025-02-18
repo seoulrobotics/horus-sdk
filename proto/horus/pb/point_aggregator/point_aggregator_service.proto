@@ -10,6 +10,7 @@ package horus.pb;
 service PointAggregatorService {
   option (service_options) = {
     id: 6
+    reserved_ids: [ 8, 10 ]
     description: "Service for receiving pre-processed point clouds."
   };
 
@@ -29,7 +30,6 @@ service PointAggregatorService {
       unsubscribe { subscriber_name: "PointAggregatorSubscriberService" }
     };
   }
-
 }
 
 service PointAggregatorSubscriberService {

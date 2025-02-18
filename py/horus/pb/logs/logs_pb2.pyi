@@ -1058,3 +1058,29 @@ class CircularRecordingDisabledWarning(_message.Message):
 class SnapshotAlreadyRunningWarning(_message.Message):
     __slots__ = ()
     def __init__(self) -> None: ...
+
+class ActiveProjectChangedInfo(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
+
+class ProjectConfigUpdatedInfo(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
+
+class InvalidLidarTimestamp(_message.Message):
+    __slots__ = ("lidar_id", "timestamp")
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+    lidar_id: str
+    timestamp: _metadata_pb2.LogMetadata.Timestamp
+    def __init__(self, lidar_id: _Optional[str] = ..., timestamp: _Optional[_Union[_metadata_pb2.LogMetadata.Timestamp, _Mapping]] = ...) -> None: ...
+
+class CalibrationAccumulatingPointsInfo(_message.Message):
+    __slots__ = ("time",)
+    TIME_FIELD_NUMBER: _ClassVar[int]
+    time: _metadata_pb2.LogMetadata.Duration
+    def __init__(self, time: _Optional[_Union[_metadata_pb2.LogMetadata.Duration, _Mapping]] = ...) -> None: ...
+
+class SparseNoiseFilterUsageNonRotationalLidars(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...

@@ -807,6 +807,28 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     StrAppendToSink(sink, "A snapshot is already running.");
     break;
   }
+  case LogData::DataOneof::kActiveProjectChangedInfo: {
+    StrAppendToSink(sink, "The active project has been changed.");
+    break;
+  }
+  case LogData::DataOneof::kProjectConfigUpdatedInfo: {
+    StrAppendToSink(sink, "The project configuration has been updated.");
+    break;
+  }
+  case LogData::DataOneof::kInvalidLidarTimestamp: {
+    const logs::InvalidLidarTimestamp& data{log_data.invalid_lidar_timestamp()};
+    StrAppendToSink(sink, "Invalid timestamp ", data.timestamp(), " sent by lidar ", data.lidar_id(), ".");
+    break;
+  }
+  case LogData::DataOneof::kCalibrationAccumulatingPointsInfo: {
+    const logs::CalibrationAccumulatingPointsInfo& data{log_data.calibration_accumulating_points_info()};
+    StrAppendToSink(sink, "Calibration is accumulating points for ", data.time());
+    break;
+  }
+  case LogData::DataOneof::kSparseNoiseFilterUsageNonRotationalLidars: {
+    StrAppendToSink(sink, "The sparse noise filter cannot be used with non-rotational lidars.");
+    break;
+  }
   case LogData::DataOneof::kNotSet:
   default: {
     sink.Append("Unknown log message");

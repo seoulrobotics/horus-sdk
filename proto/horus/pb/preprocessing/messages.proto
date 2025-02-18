@@ -11,6 +11,7 @@ enum OccupancyClassification {
   FREE = 1;
   OCCLUDED = 2;
   STATIONARY_OCCUPIED = 3;
+  EXCLUDED = 4;
 }
 
 /// The data of the occupancy map.

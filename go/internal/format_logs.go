@@ -330,6 +330,16 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return fmt.Sprintf("The circular recording is disabled: %v", data.GetReason())
 	case *logs_pb.SnapshotAlreadyRunningWarning:
 		return "A snapshot is already running."
+	case *logs_pb.ActiveProjectChangedInfo:
+		return "The active project has been changed."
+	case *logs_pb.ProjectConfigUpdatedInfo:
+		return "The project configuration has been updated."
+	case *logs_pb.InvalidLidarTimestamp:
+		return fmt.Sprintf("Invalid timestamp %v sent by lidar %v.", data.GetTimestamp(), data.GetLidarId())
+	case *logs_pb.CalibrationAccumulatingPointsInfo:
+		return fmt.Sprintf("Calibration is accumulating points for %v", data.GetTime())
+	case *logs_pb.SparseNoiseFilterUsageNonRotationalLidars:
+		return "The sparse noise filter cannot be used with non-rotational lidars."
 	default:
 		return "unknown log message"
 	}

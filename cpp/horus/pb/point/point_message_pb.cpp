@@ -54,6 +54,7 @@ AttributedPoints::AttributedPoints(const AttributedPoints& other) noexcept(false
     : flattened_points_{other.flattened_points_}
     , attributes_{other.attributes_}
     , intensities_{other.intensities_}
+    , ring_indices_{other.ring_indices_}
     , set_fields_{other.set_fields_} {}
 
 void AttributedPoints::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -65,6 +66,9 @@ void AttributedPoints::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[2]) {
     SerializeField<CowSpan<std::uint32_t>, PbDeserFlags::kFixed>(writer, /*tag=*/ 3, intensities_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 5, ring_indices_);
   }
 }
 
@@ -84,6 +88,11 @@ void AttributedPoints::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 3: {
         DeserializeField<CowSpan<std::uint32_t>, PbDeserFlags::kFixed>(reader, intensities_);
         set_fields_[2] = true;
+        break;
+      }
+      case 5: {
+        DeserializeField<CowBytes>(reader, ring_indices_);
+        set_fields_[3] = true;
         break;
       }
       default: {

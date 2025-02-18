@@ -1,3 +1,4 @@
+from horus.pb.config import metadata_pb2 as _metadata_pb2
 from horus.pb.logs import message_pb2 as _message_pb2
 from horus.pb import profiling_pb2 as _profiling_pb2
 from horus.pb import rpc_pb2 as _rpc_pb2
@@ -27,14 +28,23 @@ class ProfilingInfoEvent(_message.Message):
     def __init__(self, profiling_info: _Optional[_Union[_profiling_pb2.ProfilingInfo, _Mapping]] = ...) -> None: ...
 
 class SensorInfo(_message.Message):
-    __slots__ = ("lidar_id", "status", "measured_frequency")
+    __slots__ = ("lidar_id", "status", "measured_frequency", "pose_correction")
+    class PoseCorrection(_message.Message):
+        __slots__ = ("translation", "rotation")
+        TRANSLATION_FIELD_NUMBER: _ClassVar[int]
+        ROTATION_FIELD_NUMBER: _ClassVar[int]
+        translation: _metadata_pb2.Vector3f
+        rotation: _metadata_pb2.Quaterniond
+        def __init__(self, translation: _Optional[_Union[_metadata_pb2.Vector3f, _Mapping]] = ..., rotation: _Optional[_Union[_metadata_pb2.Quaterniond, _Mapping]] = ...) -> None: ...
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
     MEASURED_FREQUENCY_FIELD_NUMBER: _ClassVar[int]
+    POSE_CORRECTION_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
     status: int
     measured_frequency: float
-    def __init__(self, lidar_id: _Optional[str] = ..., status: _Optional[int] = ..., measured_frequency: _Optional[float] = ...) -> None: ...
+    pose_correction: SensorInfo.PoseCorrection
+    def __init__(self, lidar_id: _Optional[str] = ..., status: _Optional[int] = ..., measured_frequency: _Optional[float] = ..., pose_correction: _Optional[_Union[SensorInfo.PoseCorrection, _Mapping]] = ...) -> None: ...
 
 class SensorInfoEvent(_message.Message):
     __slots__ = ("sensor_info",)

@@ -4251,6 +4251,73 @@ void CircularRecordingDisabledWarning::DeserializeFrom(PbReader& reader) noexcep
 
 
 
+
+
+
+
+InvalidLidarTimestamp::InvalidLidarTimestamp(const InvalidLidarTimestamp& other) noexcept(false)
+    : lidar_id_{other.lidar_id_}
+    , timestamp_{other.timestamp_}
+    , set_fields_{other.set_fields_} {}
+
+void InvalidLidarTimestamp::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<horus::pb::LogMetadata_Timestamp>(writer, /*tag=*/ 2, timestamp_);
+  }
+}
+
+void InvalidLidarTimestamp::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<horus::pb::LogMetadata_Timestamp>(reader, timestamp_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+CalibrationAccumulatingPointsInfo::CalibrationAccumulatingPointsInfo(const CalibrationAccumulatingPointsInfo& other) noexcept(false)
+    : time_{other.time_}
+    , set_fields_{other.set_fields_} {}
+
+void CalibrationAccumulatingPointsInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<horus::pb::LogMetadata_Duration>(writer, /*tag=*/ 1, time_);
+  }
+}
+
+void CalibrationAccumulatingPointsInfo::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<horus::pb::LogMetadata_Duration>(reader, time_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+
+
 }  // namespace logs
 }  // namespace pb
 }  // namespace sdk

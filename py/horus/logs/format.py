@@ -162,6 +162,11 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.PREPROCESSING_SERVICE_PIPELINE_UNAVAILABLE_FIELD_NUMBER: lambda m: f"Preprocessing service pipeline is not available yet due to {m.preprocessing_service_pipeline_unavailable.reason}.",
     LogData.CIRCULAR_RECORDING_DISABLED_WARNING_FIELD_NUMBER: lambda m: f"The circular recording is disabled: {m.circular_recording_disabled_warning.reason}",
     LogData.SNAPSHOT_ALREADY_RUNNING_WARNING_FIELD_NUMBER: lambda m: f"A snapshot is already running.",
+    LogData.ACTIVE_PROJECT_CHANGED_INFO_FIELD_NUMBER: lambda m: f"The active project has been changed.",
+    LogData.PROJECT_CONFIG_UPDATED_INFO_FIELD_NUMBER: lambda m: f"The project configuration has been updated.",
+    LogData.INVALID_LIDAR_TIMESTAMP_FIELD_NUMBER: lambda m: f"Invalid timestamp {m.invalid_lidar_timestamp.timestamp} sent by lidar {m.invalid_lidar_timestamp.lidar_id}.",
+    LogData.CALIBRATION_ACCUMULATING_POINTS_INFO_FIELD_NUMBER: lambda m: f"Calibration is accumulating points for {m.calibration_accumulating_points_info.time}",
+    LogData.SPARSE_NOISE_FILTER_USAGE_NON_ROTATIONAL_LIDARS_FIELD_NUMBER: lambda m: f"The sparse noise filter cannot be used with non-rotational lidars.",
 }
 
 def _unknown_format(data: LogData) -> str:

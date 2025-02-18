@@ -167,6 +167,11 @@ LogData::LogData(const LogData& other) noexcept(false)
     , preprocessing_service_pipeline_unavailable_{other.preprocessing_service_pipeline_unavailable_}
     , circular_recording_disabled_warning_{other.circular_recording_disabled_warning_}
     , snapshot_already_running_warning_{other.snapshot_already_running_warning_}
+    , active_project_changed_info_{other.active_project_changed_info_}
+    , project_config_updated_info_{other.project_config_updated_info_}
+    , invalid_lidar_timestamp_{other.invalid_lidar_timestamp_}
+    , calibration_accumulating_points_info_{other.calibration_accumulating_points_info_}
+    , sparse_noise_filter_usage_non_rotational_lidars_{other.sparse_noise_filter_usage_non_rotational_lidars_}
     , data_{other.data_}
     , set_fields_{other.set_fields_} {}
 
@@ -650,6 +655,21 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[159]) {
     SerializeField<logs::SnapshotAlreadyRunningWarning>(writer, /*tag=*/ 160, snapshot_already_running_warning_);
+  }
+  if (set_fields_[160]) {
+    SerializeField<logs::ActiveProjectChangedInfo>(writer, /*tag=*/ 161, active_project_changed_info_);
+  }
+  if (set_fields_[161]) {
+    SerializeField<logs::ProjectConfigUpdatedInfo>(writer, /*tag=*/ 162, project_config_updated_info_);
+  }
+  if (set_fields_[162]) {
+    SerializeField<logs::InvalidLidarTimestamp>(writer, /*tag=*/ 163, invalid_lidar_timestamp_);
+  }
+  if (set_fields_[163]) {
+    SerializeField<logs::CalibrationAccumulatingPointsInfo>(writer, /*tag=*/ 164, calibration_accumulating_points_info_);
+  }
+  if (set_fields_[164]) {
+    SerializeField<logs::SparseNoiseFilterUsageNonRotationalLidars>(writer, /*tag=*/ 165, sparse_noise_filter_usage_non_rotational_lidars_);
   }
 }
 
@@ -1774,6 +1794,41 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
         data_ = DataOneof::kSnapshotAlreadyRunningWarning;
         DeserializeField<logs::SnapshotAlreadyRunningWarning>(reader, snapshot_already_running_warning_);
         set_fields_[159] = true;
+        break;
+      }
+      case 161: {
+        clear_data();
+        data_ = DataOneof::kActiveProjectChangedInfo;
+        DeserializeField<logs::ActiveProjectChangedInfo>(reader, active_project_changed_info_);
+        set_fields_[160] = true;
+        break;
+      }
+      case 162: {
+        clear_data();
+        data_ = DataOneof::kProjectConfigUpdatedInfo;
+        DeserializeField<logs::ProjectConfigUpdatedInfo>(reader, project_config_updated_info_);
+        set_fields_[161] = true;
+        break;
+      }
+      case 163: {
+        clear_data();
+        data_ = DataOneof::kInvalidLidarTimestamp;
+        DeserializeField<logs::InvalidLidarTimestamp>(reader, invalid_lidar_timestamp_);
+        set_fields_[162] = true;
+        break;
+      }
+      case 164: {
+        clear_data();
+        data_ = DataOneof::kCalibrationAccumulatingPointsInfo;
+        DeserializeField<logs::CalibrationAccumulatingPointsInfo>(reader, calibration_accumulating_points_info_);
+        set_fields_[163] = true;
+        break;
+      }
+      case 165: {
+        clear_data();
+        data_ = DataOneof::kSparseNoiseFilterUsageNonRotationalLidars;
+        DeserializeField<logs::SparseNoiseFilterUsageNonRotationalLidars>(reader, sparse_noise_filter_usage_non_rotational_lidars_);
+        set_fields_[164] = true;
         break;
       }
       default: {
