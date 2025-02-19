@@ -4,6 +4,7 @@ import typing
 
 from horus.pb.notification_service import service_pb2
 from horus.pb.preprocessing import messages_pb2
+from horus.sdk.common import Quaternion, Vector3f
 
 
 class SensorStatus(enum.Flag):
@@ -19,6 +20,33 @@ class SensorStatus(enum.Flag):
 
 
 @dataclasses.dataclass(frozen=True)
+class PoseCorrection:
+    translation: Vector3f
+    rotation: Quaternion
+
+    @staticmethod
+    def _from_pb(
+        pb: typing.Optional[service_pb2.SensorInfo.PoseCorrection],
+    ) -> typing.Optional["PoseCorrection"]:
+        if pb is None:
+            return None
+
+        return PoseCorrection(
+            translation=Vector3f(
+                x=pb.translation.x,
+                y=pb.translation.y,
+                z=pb.translation.z,
+            ),
+            rotation=Quaternion(
+                qx=pb.rotation.qx,
+                qy=pb.rotation.qy,
+                qz=pb.rotation.qz,
+                qw=pb.rotation.qw,
+            ),
+        )
+
+
+@dataclasses.dataclass(frozen=True)
 class SensorInfo:
     """A sensor status message."""
 
@@ -28,6 +56,8 @@ class SensorInfo:
     """Status of the sensor."""
     measured_frequency_hz: float
     """Frequency at which the sensor is measuring."""
+    corrected_pose: typing.Optional[PoseCorrection]
+    """Pose correction applied to the sensor."""
 
     @staticmethod
     def _from_pb(pb: service_pb2.SensorInfo) -> "SensorInfo":
@@ -35,6 +65,7 @@ class SensorInfo:
             lidar_id=pb.lidar_id,
             status=SensorStatus(pb.status),
             measured_frequency_hz=pb.measured_frequency,
+            corrected_pose=PoseCorrection._from_pb(pb.pose_correction),
         )
 
 
@@ -61,6 +92,7 @@ class OccupancyClassification(enum.Flag):
     FREE = 1
     OCCLUDED = 2
     STATIONARY_OCCUPIED = 3
+    EXCLUDED = 4
 
 
 @dataclasses.dataclass(frozen=True)

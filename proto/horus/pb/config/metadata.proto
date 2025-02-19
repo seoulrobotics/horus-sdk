@@ -21,6 +21,15 @@ message Vector3f {
   float z = 3;
 }
 
+// A quaternion with 4 `double` fields.
+message Quaterniond {
+
+  double qw = 1;
+  double qx = 2;
+  double qy = 3;
+  double qz = 4;
+}
+
 // A vector with two `double` fields representing a range (where the `start`
 // must be lower than or equal to the `end`).
 message Range {
@@ -63,6 +72,7 @@ message Duration {
 
 // Matrix types
 // ------------
+// TODO(HRS-495) Reuse Matrixf for representing affine transform.
 message AffineTransform3f {
 
   repeated float data = 1;

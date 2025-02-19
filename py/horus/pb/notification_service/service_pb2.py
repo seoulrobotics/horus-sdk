@@ -22,12 +22,13 @@ _runtime_version.ValidateProtobufRuntimeVersion(
 _sym_db = _symbol_database.Default()
 
 
+from horus.pb.config import metadata_pb2 as horus_dot_pb_dot_config_dot_metadata__pb2
 from horus.pb.logs import message_pb2 as horus_dot_pb_dot_logs_dot_message__pb2
 from horus.pb import profiling_pb2 as horus_dot_pb_dot_profiling__pb2
 from horus.pb import rpc_pb2 as horus_dot_pb_dot_rpc__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n+horus/pb/notification_service/service.proto\x12\x08horus.pb\x1a\x1bhorus/pb/logs/message.proto\x1a\x18horus/pb/profiling.proto\x1a\x12horus/pb/rpc.proto\">\n\x11LogMessageRequest\x12)\n\x0blog_message\x18\x01 \x01(\x0b\x32\x14.horus.pb.LogMessage\"<\n\x0fLogMessageEvent\x12)\n\x0blog_message\x18\x01 \x01(\x0b\x32\x14.horus.pb.LogMessage\"E\n\x12ProfilingInfoEvent\x12/\n\x0eprofiling_info\x18\x01 \x01(\x0b\x32\x17.horus.pb.ProfilingInfo\"J\n\nSensorInfo\x12\x10\n\x08lidar_id\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\r\x12\x1a\n\x12measured_frequency\x18\x03 \x01(\x01\"<\n\x0fSensorInfoEvent\x12)\n\x0bsensor_info\x18\x01 \x03(\x0b\x32\x14.horus.pb.SensorInfo2\xd8\x04\n\x13NotificationService\x12\x88\x01\n\nLogMessage\x12\x1b.horus.pb.LogMessageRequest\x1a\x14.horus.pb.NoResponse\"G\xc2\xab\xb1.B\x08\x01\x12>Logs a message, storing it and broadcasting it to subscribers.\x12\xa7\x01\n\tSubscribe\x12!.horus.pb.DefaultSubscribeRequest\x1a\".horus.pb.DefaultSubscribeResponse\"S\xc2\xab\xb1.N\x08\x03\x12+Subscribes to new log and profiling events.\x1a\x1d\n\x1bNotificationListenerService\x12\xb0\x01\n\x0bUnsubscribe\x12#.horus.pb.DefaultUnsubscribeRequest\x1a$.horus.pb.DefaultUnsubscribeResponse\"V\xc2\xab\xb1.Q\x08\x04\x12.Unsubscribe following a call to `Subscribe()`.\"\x1d\n\x1bNotificationListenerService\x1aY\xc2\xab\xb1.T\x08\x02\x12PService which receives notifications from services, storing and forwarding them.2\xc2\x04\n\x1bNotificationListenerService\x12\x93\x01\n\x10NotifyLogMessage\x12\x19.horus.pb.LogMessageEvent\x1a\x14.horus.pb.NoResponse\"N\xc2\xab\xb1.I\x08\x01\x12\x45Received when a log message is received by the `NotificationService`.\x12\x9c\x01\n\x13NotifyProfilingInfo\x12\x1c.horus.pb.ProfilingInfoEvent\x1a\x14.horus.pb.NoResponse\"Q\xc2\xab\xb1.L\x08\x02\x12HReceived when a profiling info is received by the `NotificationService`.\x12\x93\x01\n\x10NotifySensorInfo\x12\x19.horus.pb.SensorInfoEvent\x1a\x14.horus.pb.NoResponse\"N\xc2\xab\xb1.I\x08\x03\x12\x45Received when a sensor info is received by the `NotificationService`.\x1aX\xc2\xab\xb1.S\x08\n\x12OService which listens for notifications forwarded by the `NotificationService`.b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n+horus/pb/notification_service/service.proto\x12\x08horus.pb\x1a\x1ehorus/pb/config/metadata.proto\x1a\x1bhorus/pb/logs/message.proto\x1a\x18horus/pb/profiling.proto\x1a\x12horus/pb/rpc.proto\">\n\x11LogMessageRequest\x12)\n\x0blog_message\x18\x01 \x01(\x0b\x32\x14.horus.pb.LogMessage\"<\n\x0fLogMessageEvent\x12)\n\x0blog_message\x18\x01 \x01(\x0b\x32\x14.horus.pb.LogMessage\"E\n\x12ProfilingInfoEvent\x12/\n\x0eprofiling_info\x18\x01 \x01(\x0b\x32\x17.horus.pb.ProfilingInfo\"\x85\x02\n\nSensorInfo\x12\x10\n\x08lidar_id\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\r\x12\x1a\n\x12measured_frequency\x18\x03 \x01(\x01\x12\x41\n\x0fpose_correction\x18\x04 \x01(\x0b\x32#.horus.pb.SensorInfo.PoseCorrectionH\x00\x88\x01\x01\x1a\x62\n\x0ePoseCorrection\x12\'\n\x0btranslation\x18\x01 \x01(\x0b\x32\x12.horus.pb.Vector3f\x12\'\n\x08rotation\x18\x02 \x01(\x0b\x32\x15.horus.pb.QuaterniondB\x12\n\x10_pose_correction\"<\n\x0fSensorInfoEvent\x12)\n\x0bsensor_info\x18\x01 \x03(\x0b\x32\x14.horus.pb.SensorInfo2\xd8\x04\n\x13NotificationService\x12\x88\x01\n\nLogMessage\x12\x1b.horus.pb.LogMessageRequest\x1a\x14.horus.pb.NoResponse\"G\xc2\xab\xb1.B\x08\x01\x12>Logs a message, storing it and broadcasting it to subscribers.\x12\xa7\x01\n\tSubscribe\x12!.horus.pb.DefaultSubscribeRequest\x1a\".horus.pb.DefaultSubscribeResponse\"S\xc2\xab\xb1.N\x08\x03\x12+Subscribes to new log and profiling events.\x1a\x1d\n\x1bNotificationListenerService\x12\xb0\x01\n\x0bUnsubscribe\x12#.horus.pb.DefaultUnsubscribeRequest\x1a$.horus.pb.DefaultUnsubscribeResponse\"V\xc2\xab\xb1.Q\x08\x04\x12.Unsubscribe following a call to `Subscribe()`.\"\x1d\n\x1bNotificationListenerService\x1aY\xc2\xab\xb1.T\x08\x02\x12PService which receives notifications from services, storing and forwarding them.2\xc2\x04\n\x1bNotificationListenerService\x12\x93\x01\n\x10NotifyLogMessage\x12\x19.horus.pb.LogMessageEvent\x1a\x14.horus.pb.NoResponse\"N\xc2\xab\xb1.I\x08\x01\x12\x45Received when a log message is received by the `NotificationService`.\x12\x9c\x01\n\x13NotifyProfilingInfo\x12\x1c.horus.pb.ProfilingInfoEvent\x1a\x14.horus.pb.NoResponse\"Q\xc2\xab\xb1.L\x08\x02\x12HReceived when a profiling info is received by the `NotificationService`.\x12\x93\x01\n\x10NotifySensorInfo\x12\x19.horus.pb.SensorInfoEvent\x1a\x14.horus.pb.NoResponse\"N\xc2\xab\xb1.I\x08\x03\x12\x45Received when a sensor info is received by the `NotificationService`.\x1aX\xc2\xab\xb1.S\x08\n\x12OService which listens for notifications forwarded by the `NotificationService`.b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -50,18 +51,20 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_NOTIFICATIONLISTENERSERVICE'].methods_by_name['NotifyProfilingInfo']._serialized_options = b'\302\253\261.L\010\002\022HReceived when a profiling info is received by the `NotificationService`.'
   _globals['_NOTIFICATIONLISTENERSERVICE'].methods_by_name['NotifySensorInfo']._loaded_options = None
   _globals['_NOTIFICATIONLISTENERSERVICE'].methods_by_name['NotifySensorInfo']._serialized_options = b'\302\253\261.I\010\003\022EReceived when a sensor info is received by the `NotificationService`.'
-  _globals['_LOGMESSAGEREQUEST']._serialized_start=132
-  _globals['_LOGMESSAGEREQUEST']._serialized_end=194
-  _globals['_LOGMESSAGEEVENT']._serialized_start=196
-  _globals['_LOGMESSAGEEVENT']._serialized_end=256
-  _globals['_PROFILINGINFOEVENT']._serialized_start=258
-  _globals['_PROFILINGINFOEVENT']._serialized_end=327
-  _globals['_SENSORINFO']._serialized_start=329
-  _globals['_SENSORINFO']._serialized_end=403
-  _globals['_SENSORINFOEVENT']._serialized_start=405
-  _globals['_SENSORINFOEVENT']._serialized_end=465
-  _globals['_NOTIFICATIONSERVICE']._serialized_start=468
-  _globals['_NOTIFICATIONSERVICE']._serialized_end=1068
-  _globals['_NOTIFICATIONLISTENERSERVICE']._serialized_start=1071
-  _globals['_NOTIFICATIONLISTENERSERVICE']._serialized_end=1649
+  _globals['_LOGMESSAGEREQUEST']._serialized_start=164
+  _globals['_LOGMESSAGEREQUEST']._serialized_end=226
+  _globals['_LOGMESSAGEEVENT']._serialized_start=228
+  _globals['_LOGMESSAGEEVENT']._serialized_end=288
+  _globals['_PROFILINGINFOEVENT']._serialized_start=290
+  _globals['_PROFILINGINFOEVENT']._serialized_end=359
+  _globals['_SENSORINFO']._serialized_start=362
+  _globals['_SENSORINFO']._serialized_end=623
+  _globals['_SENSORINFO_POSECORRECTION']._serialized_start=505
+  _globals['_SENSORINFO_POSECORRECTION']._serialized_end=603
+  _globals['_SENSORINFOEVENT']._serialized_start=625
+  _globals['_SENSORINFOEVENT']._serialized_end=685
+  _globals['_NOTIFICATIONSERVICE']._serialized_start=688
+  _globals['_NOTIFICATIONSERVICE']._serialized_end=1288
+  _globals['_NOTIFICATIONLISTENERSERVICE']._serialized_start=1291
+  _globals['_NOTIFICATIONLISTENERSERVICE']._serialized_end=1869
 # @@protoc_insertion_point(module_scope)

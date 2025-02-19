@@ -23,6 +23,18 @@ class Vector3f(_message.Message):
     z: float
     def __init__(self, x: _Optional[float] = ..., y: _Optional[float] = ..., z: _Optional[float] = ...) -> None: ...
 
+class Quaterniond(_message.Message):
+    __slots__ = ("qw", "qx", "qy", "qz")
+    QW_FIELD_NUMBER: _ClassVar[int]
+    QX_FIELD_NUMBER: _ClassVar[int]
+    QY_FIELD_NUMBER: _ClassVar[int]
+    QZ_FIELD_NUMBER: _ClassVar[int]
+    qw: float
+    qx: float
+    qy: float
+    qz: float
+    def __init__(self, qw: _Optional[float] = ..., qx: _Optional[float] = ..., qy: _Optional[float] = ..., qz: _Optional[float] = ...) -> None: ...
+
 class Range(_message.Message):
     __slots__ = ("start", "end")
     START_FIELD_NUMBER: _ClassVar[int]

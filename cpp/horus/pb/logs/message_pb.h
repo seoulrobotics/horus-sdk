@@ -8888,6 +8888,281 @@ class LogData final : public PbMessage {
     return std::move(set_snapshot_already_running_warning(std::move(snapshot_already_running_warning)));
   }
 
+  // Field `active_project_changed_info` (no 161).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 161.
+  constexpr const logs::ActiveProjectChangedInfo& active_project_changed_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return active_project_changed_info_;
+  }
+
+  /// If `active_project_changed_info` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 161.
+  logs::ActiveProjectChangedInfo active_project_changed_info() && noexcept {
+    if (!set_fields_[160]) {
+      return {};
+    }
+    return std::move(active_project_changed_info_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 161.
+  logs::ActiveProjectChangedInfo& mutable_active_project_changed_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kActiveProjectChangedInfo;
+    set_fields_[160] = true;
+    return active_project_changed_info_;
+  }
+
+  /// Returns whether `active_project_changed_info` (no 161) is set.
+  constexpr bool has_active_project_changed_info() const noexcept { return set_fields_[160]; }
+
+  /// Clears `active_project_changed_info` (no 161).
+  void clear_active_project_changed_info() & noexcept {
+    data_ = {};
+    set_fields_[160] = false;
+    active_project_changed_info_ = {};
+  }
+
+  /// Sets `active_project_changed_info` (no 161) and returns `*this`.
+  LogData& set_active_project_changed_info(logs::ActiveProjectChangedInfo&& active_project_changed_info) & noexcept {
+    clear_data();
+    data_ = DataOneof::kActiveProjectChangedInfo;
+    set_fields_[160] = true;
+    active_project_changed_info_ = std::move(active_project_changed_info);
+    return *this;
+  }
+  /// Sets `active_project_changed_info` (no 161) and returns `*this`.
+  LogData&& set_active_project_changed_info(logs::ActiveProjectChangedInfo&& active_project_changed_info) && noexcept {
+    return std::move(set_active_project_changed_info(std::move(active_project_changed_info)));
+  }
+
+  // Field `project_config_updated_info` (no 162).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 162.
+  constexpr const logs::ProjectConfigUpdatedInfo& project_config_updated_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return project_config_updated_info_;
+  }
+
+  /// If `project_config_updated_info` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 162.
+  logs::ProjectConfigUpdatedInfo project_config_updated_info() && noexcept {
+    if (!set_fields_[161]) {
+      return {};
+    }
+    return std::move(project_config_updated_info_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 162.
+  logs::ProjectConfigUpdatedInfo& mutable_project_config_updated_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kProjectConfigUpdatedInfo;
+    set_fields_[161] = true;
+    return project_config_updated_info_;
+  }
+
+  /// Returns whether `project_config_updated_info` (no 162) is set.
+  constexpr bool has_project_config_updated_info() const noexcept { return set_fields_[161]; }
+
+  /// Clears `project_config_updated_info` (no 162).
+  void clear_project_config_updated_info() & noexcept {
+    data_ = {};
+    set_fields_[161] = false;
+    project_config_updated_info_ = {};
+  }
+
+  /// Sets `project_config_updated_info` (no 162) and returns `*this`.
+  LogData& set_project_config_updated_info(logs::ProjectConfigUpdatedInfo&& project_config_updated_info) & noexcept {
+    clear_data();
+    data_ = DataOneof::kProjectConfigUpdatedInfo;
+    set_fields_[161] = true;
+    project_config_updated_info_ = std::move(project_config_updated_info);
+    return *this;
+  }
+  /// Sets `project_config_updated_info` (no 162) and returns `*this`.
+  LogData&& set_project_config_updated_info(logs::ProjectConfigUpdatedInfo&& project_config_updated_info) && noexcept {
+    return std::move(set_project_config_updated_info(std::move(project_config_updated_info)));
+  }
+
+  // Field `invalid_lidar_timestamp` (no 163).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 163.
+  constexpr const logs::InvalidLidarTimestamp& invalid_lidar_timestamp() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return invalid_lidar_timestamp_;
+  }
+
+  /// If `invalid_lidar_timestamp` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 163.
+  logs::InvalidLidarTimestamp invalid_lidar_timestamp() && noexcept {
+    if (!set_fields_[162]) {
+      return {};
+    }
+    return std::move(invalid_lidar_timestamp_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 163.
+  logs::InvalidLidarTimestamp& mutable_invalid_lidar_timestamp() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kInvalidLidarTimestamp;
+    set_fields_[162] = true;
+    return invalid_lidar_timestamp_;
+  }
+
+  /// Returns whether `invalid_lidar_timestamp` (no 163) is set.
+  constexpr bool has_invalid_lidar_timestamp() const noexcept { return set_fields_[162]; }
+
+  /// Clears `invalid_lidar_timestamp` (no 163).
+  void clear_invalid_lidar_timestamp() & noexcept {
+    data_ = {};
+    set_fields_[162] = false;
+    invalid_lidar_timestamp_ = {};
+  }
+
+  /// Sets `invalid_lidar_timestamp` (no 163) and returns `*this`.
+  LogData& set_invalid_lidar_timestamp(logs::InvalidLidarTimestamp&& invalid_lidar_timestamp) & noexcept {
+    clear_data();
+    data_ = DataOneof::kInvalidLidarTimestamp;
+    set_fields_[162] = true;
+    invalid_lidar_timestamp_ = std::move(invalid_lidar_timestamp);
+    return *this;
+  }
+  /// Sets `invalid_lidar_timestamp` (no 163) and returns `*this`.
+  LogData&& set_invalid_lidar_timestamp(logs::InvalidLidarTimestamp&& invalid_lidar_timestamp) && noexcept {
+    return std::move(set_invalid_lidar_timestamp(std::move(invalid_lidar_timestamp)));
+  }
+
+  // Field `calibration_accumulating_points_info` (no 164).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 164.
+  constexpr const logs::CalibrationAccumulatingPointsInfo& calibration_accumulating_points_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return calibration_accumulating_points_info_;
+  }
+
+  /// If `calibration_accumulating_points_info` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 164.
+  logs::CalibrationAccumulatingPointsInfo calibration_accumulating_points_info() && noexcept {
+    if (!set_fields_[163]) {
+      return {};
+    }
+    return std::move(calibration_accumulating_points_info_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 164.
+  logs::CalibrationAccumulatingPointsInfo& mutable_calibration_accumulating_points_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kCalibrationAccumulatingPointsInfo;
+    set_fields_[163] = true;
+    return calibration_accumulating_points_info_;
+  }
+
+  /// Returns whether `calibration_accumulating_points_info` (no 164) is set.
+  constexpr bool has_calibration_accumulating_points_info() const noexcept { return set_fields_[163]; }
+
+  /// Clears `calibration_accumulating_points_info` (no 164).
+  void clear_calibration_accumulating_points_info() & noexcept {
+    data_ = {};
+    set_fields_[163] = false;
+    calibration_accumulating_points_info_ = {};
+  }
+
+  /// Sets `calibration_accumulating_points_info` (no 164) and returns `*this`.
+  LogData& set_calibration_accumulating_points_info(logs::CalibrationAccumulatingPointsInfo&& calibration_accumulating_points_info) & noexcept {
+    clear_data();
+    data_ = DataOneof::kCalibrationAccumulatingPointsInfo;
+    set_fields_[163] = true;
+    calibration_accumulating_points_info_ = std::move(calibration_accumulating_points_info);
+    return *this;
+  }
+  /// Sets `calibration_accumulating_points_info` (no 164) and returns `*this`.
+  LogData&& set_calibration_accumulating_points_info(logs::CalibrationAccumulatingPointsInfo&& calibration_accumulating_points_info) && noexcept {
+    return std::move(set_calibration_accumulating_points_info(std::move(calibration_accumulating_points_info)));
+  }
+
+  // Field `sparse_noise_filter_usage_non_rotational_lidars` (no 165).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 165.
+  constexpr const logs::SparseNoiseFilterUsageNonRotationalLidars& sparse_noise_filter_usage_non_rotational_lidars() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return sparse_noise_filter_usage_non_rotational_lidars_;
+  }
+
+  /// If `sparse_noise_filter_usage_non_rotational_lidars` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 165.
+  logs::SparseNoiseFilterUsageNonRotationalLidars sparse_noise_filter_usage_non_rotational_lidars() && noexcept {
+    if (!set_fields_[164]) {
+      return {};
+    }
+    return std::move(sparse_noise_filter_usage_non_rotational_lidars_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 165.
+  logs::SparseNoiseFilterUsageNonRotationalLidars& mutable_sparse_noise_filter_usage_non_rotational_lidars() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kSparseNoiseFilterUsageNonRotationalLidars;
+    set_fields_[164] = true;
+    return sparse_noise_filter_usage_non_rotational_lidars_;
+  }
+
+  /// Returns whether `sparse_noise_filter_usage_non_rotational_lidars` (no 165) is set.
+  constexpr bool has_sparse_noise_filter_usage_non_rotational_lidars() const noexcept { return set_fields_[164]; }
+
+  /// Clears `sparse_noise_filter_usage_non_rotational_lidars` (no 165).
+  void clear_sparse_noise_filter_usage_non_rotational_lidars() & noexcept {
+    data_ = {};
+    set_fields_[164] = false;
+    sparse_noise_filter_usage_non_rotational_lidars_ = {};
+  }
+
+  /// Sets `sparse_noise_filter_usage_non_rotational_lidars` (no 165) and returns `*this`.
+  LogData& set_sparse_noise_filter_usage_non_rotational_lidars(logs::SparseNoiseFilterUsageNonRotationalLidars&& sparse_noise_filter_usage_non_rotational_lidars) & noexcept {
+    clear_data();
+    data_ = DataOneof::kSparseNoiseFilterUsageNonRotationalLidars;
+    set_fields_[164] = true;
+    sparse_noise_filter_usage_non_rotational_lidars_ = std::move(sparse_noise_filter_usage_non_rotational_lidars);
+    return *this;
+  }
+  /// Sets `sparse_noise_filter_usage_non_rotational_lidars` (no 165) and returns `*this`.
+  LogData&& set_sparse_noise_filter_usage_non_rotational_lidars(logs::SparseNoiseFilterUsageNonRotationalLidars&& sparse_noise_filter_usage_non_rotational_lidars) && noexcept {
+    return std::move(set_sparse_noise_filter_usage_non_rotational_lidars(std::move(sparse_noise_filter_usage_non_rotational_lidars)));
+  }
+
   // Oneof `data`.
   // -----
 
@@ -9215,6 +9490,16 @@ class LogData final : public PbMessage {
     kCircularRecordingDisabledWarning = 159,
     /// @see snapshot_already_running_warning()
     kSnapshotAlreadyRunningWarning = 160,
+    /// @see active_project_changed_info()
+    kActiveProjectChangedInfo = 161,
+    /// @see project_config_updated_info()
+    kProjectConfigUpdatedInfo = 162,
+    /// @see invalid_lidar_timestamp()
+    kInvalidLidarTimestamp = 163,
+    /// @see calibration_accumulating_points_info()
+    kCalibrationAccumulatingPointsInfo = 164,
+    /// @see sparse_noise_filter_usage_non_rotational_lidars()
+    kSparseNoiseFilterUsageNonRotationalLidars = 165,
   };
 
   /// Returns the current case set in `data`.
@@ -9865,6 +10150,26 @@ class LogData final : public PbMessage {
         clear_snapshot_already_running_warning();
         break;
       }
+      case DataOneof::kActiveProjectChangedInfo: {
+        clear_active_project_changed_info();
+        break;
+      }
+      case DataOneof::kProjectConfigUpdatedInfo: {
+        clear_project_config_updated_info();
+        break;
+      }
+      case DataOneof::kInvalidLidarTimestamp: {
+        clear_invalid_lidar_timestamp();
+        break;
+      }
+      case DataOneof::kCalibrationAccumulatingPointsInfo: {
+        clear_calibration_accumulating_points_info();
+        break;
+      }
+      case DataOneof::kSparseNoiseFilterUsageNonRotationalLidars: {
+        clear_sparse_noise_filter_usage_non_rotational_lidars();
+        break;
+      }
       case DataOneof::kNotSet:
       default:
         break;
@@ -10192,12 +10497,22 @@ class LogData final : public PbMessage {
   logs::CircularRecordingDisabledWarning circular_recording_disabled_warning_{};
   /// @see snapshot_already_running_warning()
   logs::SnapshotAlreadyRunningWarning snapshot_already_running_warning_{};
+  /// @see active_project_changed_info()
+  logs::ActiveProjectChangedInfo active_project_changed_info_{};
+  /// @see project_config_updated_info()
+  logs::ProjectConfigUpdatedInfo project_config_updated_info_{};
+  /// @see invalid_lidar_timestamp()
+  logs::InvalidLidarTimestamp invalid_lidar_timestamp_{};
+  /// @see calibration_accumulating_points_info()
+  logs::CalibrationAccumulatingPointsInfo calibration_accumulating_points_info_{};
+  /// @see sparse_noise_filter_usage_non_rotational_lidars()
+  logs::SparseNoiseFilterUsageNonRotationalLidars sparse_noise_filter_usage_non_rotational_lidars_{};
 
   /// @see data_case()
   DataOneof data_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<160> set_fields_;
+  std::bitset<165> set_fields_;
 };
 
 /// A log message notifying users about some status.

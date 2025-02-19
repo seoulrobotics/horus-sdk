@@ -11,6 +11,7 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/pb/config/metadata_pb.h"
 #include "horus/pb/cow_bytes.h"
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/logs/message_pb.h"
@@ -34,6 +35,7 @@ namespace pb {
 class LogMessageRequest;
 class LogMessageEvent;
 class ProfilingInfoEvent;
+class SensorInfo_PoseCorrection;
 class SensorInfo;
 class SensorInfoEvent;
 
@@ -41,7 +43,7 @@ class SensorInfoEvent;
 
 /// No documentation.
 ///
-/// Source: horus/pb/notification_service/service.proto:71:1
+/// Source: horus/pb/notification_service/service.proto:72:1
 class LogMessageRequest final : public PbMessage {
  public:
 
@@ -151,7 +153,7 @@ class LogMessageRequest final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/notification_service/service.proto:76:1
+/// Source: horus/pb/notification_service/service.proto:77:1
 class LogMessageEvent final : public PbMessage {
  public:
 
@@ -261,7 +263,7 @@ class LogMessageEvent final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/notification_service/service.proto:81:1
+/// Source: horus/pb/notification_service/service.proto:82:1
 class ProfilingInfoEvent final : public PbMessage {
  public:
 
@@ -371,9 +373,173 @@ class ProfilingInfoEvent final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/notification_service/service.proto:85:1
+/// Source: horus/pb/notification_service/service.proto:94:3
+class SensorInfo_PoseCorrection final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `SensorInfo_PoseCorrection`.
+  SensorInfo_PoseCorrection() noexcept = default;
+
+  /// Move constructor.
+  SensorInfo_PoseCorrection(SensorInfo_PoseCorrection&&) noexcept = default;
+  /// Move assignment operator.
+  SensorInfo_PoseCorrection& operator=(SensorInfo_PoseCorrection&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit SensorInfo_PoseCorrection(const SensorInfo_PoseCorrection& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  SensorInfo_PoseCorrection& operator=(const SensorInfo_PoseCorrection&) = delete;
+
+  /// Default destructor.
+  ~SensorInfo_PoseCorrection() noexcept final = default;
+
+  /// Creates a `SensorInfo_PoseCorrection` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit SensorInfo_PoseCorrection(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.SensorInfo.PoseCorrection`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.SensorInfo.PoseCorrection"; }
+
+  /// The full name of the message: `horus.pb.SensorInfo.PoseCorrection`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `translation` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const Vector3f& translation() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return translation_;
+  }
+
+  /// If `translation` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  Vector3f translation() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(translation_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  Vector3f& mutable_translation() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return translation_;
+  }
+
+  /// Returns whether `translation` (no 1) is set.
+  constexpr bool has_translation() const noexcept { return set_fields_[0]; }
+
+  /// Clears `translation` (no 1).
+  void clear_translation() & noexcept {
+    set_fields_[0] = false;
+    translation_ = {};
+  }
+
+  /// Sets `translation` (no 1) and returns `*this`.
+  SensorInfo_PoseCorrection& set_translation(Vector3f&& translation) & noexcept {
+    set_fields_[0] = true;
+    translation_ = std::move(translation);
+    return *this;
+  }
+  /// Sets `translation` (no 1) and returns `*this`.
+  SensorInfo_PoseCorrection&& set_translation(Vector3f&& translation) && noexcept {
+    return std::move(set_translation(std::move(translation)));
+  }
+
+  // Field `rotation` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const Quaterniond& rotation() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return rotation_;
+  }
+
+  /// If `rotation` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  Quaterniond rotation() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(rotation_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  Quaterniond& mutable_rotation() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return rotation_;
+  }
+
+  /// Returns whether `rotation` (no 2) is set.
+  constexpr bool has_rotation() const noexcept { return set_fields_[1]; }
+
+  /// Clears `rotation` (no 2).
+  void clear_rotation() & noexcept {
+    set_fields_[1] = false;
+    rotation_ = {};
+  }
+
+  /// Sets `rotation` (no 2) and returns `*this`.
+  SensorInfo_PoseCorrection& set_rotation(Quaterniond&& rotation) & noexcept {
+    set_fields_[1] = true;
+    rotation_ = std::move(rotation);
+    return *this;
+  }
+  /// Sets `rotation` (no 2) and returns `*this`.
+  SensorInfo_PoseCorrection&& set_rotation(Quaterniond&& rotation) && noexcept {
+    return std::move(set_rotation(std::move(rotation)));
+  }
+
+ private:
+  /// @see translation()
+  Vector3f translation_{};
+  /// @see rotation()
+  Quaterniond rotation_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// No documentation.
+///
+/// Source: horus/pb/notification_service/service.proto:86:1
 class SensorInfo final : public PbMessage {
  public:
+  /// @see SensorInfo_PoseCorrection
+  using PoseCorrection = SensorInfo_PoseCorrection;
 
   /// Constructs a default-initialized `SensorInfo`.
   SensorInfo() noexcept = default;
@@ -547,6 +713,56 @@ class SensorInfo final : public PbMessage {
     return std::move(set_measured_frequency(measured_frequency));
   }
 
+  // Field `pose_correction` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr const SensorInfo_PoseCorrection& pose_correction() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return pose_correction_;
+  }
+
+  /// If `pose_correction` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  SensorInfo_PoseCorrection pose_correction() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(pose_correction_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  SensorInfo_PoseCorrection& mutable_pose_correction() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return pose_correction_;
+  }
+
+  /// Returns whether `pose_correction` (no 4) is set.
+  constexpr bool has_pose_correction() const noexcept { return set_fields_[3]; }
+
+  /// Clears `pose_correction` (no 4).
+  void clear_pose_correction() & noexcept {
+    set_fields_[3] = false;
+    pose_correction_ = {};
+  }
+
+  /// Sets `pose_correction` (no 4) and returns `*this`.
+  SensorInfo& set_pose_correction(SensorInfo_PoseCorrection&& pose_correction) & noexcept {
+    set_fields_[3] = true;
+    pose_correction_ = std::move(pose_correction);
+    return *this;
+  }
+  /// Sets `pose_correction` (no 4) and returns `*this`.
+  SensorInfo&& set_pose_correction(SensorInfo_PoseCorrection&& pose_correction) && noexcept {
+    return std::move(set_pose_correction(std::move(pose_correction)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
@@ -554,14 +770,16 @@ class SensorInfo final : public PbMessage {
   std::uint32_t status_{};
   /// @see measured_frequency()
   double measured_frequency_{};
+  /// @see pose_correction()
+  SensorInfo_PoseCorrection pose_correction_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<3> set_fields_;
+  std::bitset<4> set_fields_;
 };
 
 /// No documentation.
 ///
-/// Source: horus/pb/notification_service/service.proto:92:1
+/// Source: horus/pb/notification_service/service.proto:100:1
 class SensorInfoEvent final : public PbMessage {
  public:
 
