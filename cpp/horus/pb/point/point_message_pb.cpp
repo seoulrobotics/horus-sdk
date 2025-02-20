@@ -10,6 +10,7 @@ PointFrame_Header::PointFrame_Header(const PointFrame_Header& other) noexcept(fa
     : calibration_transform_{other.calibration_transform_}
     , lidar_id_{other.lidar_id_}
     , point_cloud_creation_timestamp_{other.point_cloud_creation_timestamp_}
+    , static_env_learning_progress_{other.static_env_learning_progress_}
     , set_fields_{other.set_fields_} {}
 
 void PointFrame_Header::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -21,6 +22,9 @@ void PointFrame_Header::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[2]) {
     SerializeField<Timestamp>(writer, /*tag=*/ 4, point_cloud_creation_timestamp_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<std::uint32_t>(writer, /*tag=*/ 5, static_env_learning_progress_);
   }
 }
 
@@ -40,6 +44,11 @@ void PointFrame_Header::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 4: {
         DeserializeField<Timestamp>(reader, point_cloud_creation_timestamp_);
         set_fields_[2] = true;
+        break;
+      }
+      case 5: {
+        DeserializeField<std::uint32_t>(reader, static_env_learning_progress_);
+        set_fields_[3] = true;
         break;
       }
       default: {
@@ -104,15 +113,19 @@ void AttributedPoints::DeserializeFrom(PbReader& reader) noexcept(false) {
 }
 
 PointFrame::PointFrame(const PointFrame& other) noexcept(false)
-    : header_{other.header_}
+    : id_{other.id_}
+    , header_{other.header_}
     , points_{other.points_}
     , set_fields_{other.set_fields_} {}
 
 void PointFrame::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
-    SerializeField<PointFrame_Header>(writer, /*tag=*/ 2, header_);
+    SerializeField<std::uint32_t>(writer, /*tag=*/ 1, id_);
   }
   if (set_fields_[1]) {
+    SerializeField<PointFrame_Header>(writer, /*tag=*/ 2, header_);
+  }
+  if (set_fields_[2]) {
     SerializeField<AttributedPoints>(writer, /*tag=*/ 9, points_);
   }
 }
@@ -120,14 +133,19 @@ void PointFrame::SerializeTo(PbWriter& writer) const noexcept(false) {
 void PointFrame::DeserializeFrom(PbReader& reader) noexcept(false) {
   while (reader.Reader().next()) {
     switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<std::uint32_t>(reader, id_);
+        set_fields_[0] = true;
+        break;
+      }
       case 2: {
         DeserializeField<PointFrame_Header>(reader, header_);
-        set_fields_[0] = true;
+        set_fields_[1] = true;
         break;
       }
       case 9: {
         DeserializeField<AttributedPoints>(reader, points_);
-        set_fields_[1] = true;
+        set_fields_[2] = true;
         break;
       }
       default: {

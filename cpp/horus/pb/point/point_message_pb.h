@@ -281,6 +281,44 @@ class PointFrame_Header final : public PbMessage {
     return std::move(set_point_cloud_creation_timestamp(std::move(point_cloud_creation_timestamp)));
   }
 
+  // Field `static_env_learning_progress` (no 5).
+  // -----
+
+  /// / Static environment learning progress.
+  ///
+  /// Field no: 5.
+  constexpr std::uint32_t static_env_learning_progress() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return static_env_learning_progress_;
+  }
+
+  /// / Static environment learning progress.
+  ///
+  /// Field no: 5.
+  std::uint32_t& mutable_static_env_learning_progress() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return static_env_learning_progress_;
+  }
+
+  /// Returns whether `static_env_learning_progress` (no 5) is set.
+  constexpr bool has_static_env_learning_progress() const noexcept { return set_fields_[3]; }
+
+  /// Clears `static_env_learning_progress` (no 5).
+  void clear_static_env_learning_progress() & noexcept {
+    set_fields_[3] = false;
+    static_env_learning_progress_ = {};
+  }
+
+  /// Sets `static_env_learning_progress` (no 5) and returns `*this`.
+  PointFrame_Header& set_static_env_learning_progress(std::uint32_t static_env_learning_progress) & noexcept {
+    set_fields_[3] = true;
+    static_env_learning_progress_ = static_env_learning_progress;
+    return *this;
+  }
+  /// Sets `static_env_learning_progress` (no 5) and returns `*this`.
+  PointFrame_Header&& set_static_env_learning_progress(std::uint32_t static_env_learning_progress) && noexcept {
+    return std::move(set_static_env_learning_progress(static_env_learning_progress));
+  }
+
  private:
   /// @see calibration_transform()
   AffineTransform3f calibration_transform_{};
@@ -288,9 +326,11 @@ class PointFrame_Header final : public PbMessage {
   CowBytes lidar_id_{};
   /// @see point_cloud_creation_timestamp()
   Timestamp point_cloud_creation_timestamp_{};
+  /// @see static_env_learning_progress()
+  std::uint32_t static_env_learning_progress_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<3> set_fields_;
+  std::bitset<4> set_fields_;
 };
 
 /// / Point cloud data with attributes.
@@ -298,7 +338,7 @@ class PointFrame_Header final : public PbMessage {
 /// / @note The attributes are all or none. If the attributes are nonempty, the
 /// / number of attributes should be equal to the number of points.
 ///
-/// Source: horus/pb/point/point_message.proto:60:1
+/// Source: horus/pb/point/point_message.proto:66:1
 class AttributedPoints final : public PbMessage {
  public:
 
@@ -652,6 +692,46 @@ class PointFrame final : public PbMessage {
   /// The full name of the message: `horus.pb.PointFrame`.
   StringView MessageTypeName() const noexcept final { return TypeName(); }
 
+  // Field `id` (no 1).
+  // -----
+
+  /// This is incremented for each point frame.
+  ///  CompositeKey(id, header.lidar_id) uniquely id this object.
+  ///
+  /// Field no: 1.
+  constexpr std::uint32_t id() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return id_;
+  }
+
+  /// This is incremented for each point frame.
+  ///  CompositeKey(id, header.lidar_id) uniquely id this object.
+  ///
+  /// Field no: 1.
+  std::uint32_t& mutable_id() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return id_;
+  }
+
+  /// Returns whether `id` (no 1) is set.
+  constexpr bool has_id() const noexcept { return set_fields_[0]; }
+
+  /// Clears `id` (no 1).
+  void clear_id() & noexcept {
+    set_fields_[0] = false;
+    id_ = {};
+  }
+
+  /// Sets `id` (no 1) and returns `*this`.
+  PointFrame& set_id(std::uint32_t id) & noexcept {
+    set_fields_[0] = true;
+    id_ = id;
+    return *this;
+  }
+  /// Sets `id` (no 1) and returns `*this`.
+  PointFrame&& set_id(std::uint32_t id) && noexcept {
+    return std::move(set_id(id));
+  }
+
   // Field `header` (no 2).
   // -----
 
@@ -668,7 +748,7 @@ class PointFrame final : public PbMessage {
   ///
   /// Field no: 2.
   PointFrame_Header header() && noexcept {
-    if (!set_fields_[0]) {
+    if (!set_fields_[1]) {
       return {};
     }
     return std::move(header_);
@@ -678,22 +758,22 @@ class PointFrame final : public PbMessage {
   ///
   /// Field no: 2.
   PointFrame_Header& mutable_header() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
-    set_fields_[0] = true;
+    set_fields_[1] = true;
     return header_;
   }
 
   /// Returns whether `header` (no 2) is set.
-  constexpr bool has_header() const noexcept { return set_fields_[0]; }
+  constexpr bool has_header() const noexcept { return set_fields_[1]; }
 
   /// Clears `header` (no 2).
   void clear_header() & noexcept {
-    set_fields_[0] = false;
+    set_fields_[1] = false;
     header_ = {};
   }
 
   /// Sets `header` (no 2) and returns `*this`.
   PointFrame& set_header(PointFrame_Header&& header) & noexcept {
-    set_fields_[0] = true;
+    set_fields_[1] = true;
     header_ = std::move(header);
     return *this;
   }
@@ -719,7 +799,7 @@ class PointFrame final : public PbMessage {
   ///
   /// Field no: 9.
   AttributedPoints points() && noexcept {
-    if (!set_fields_[1]) {
+    if (!set_fields_[2]) {
       return {};
     }
     return std::move(points_);
@@ -730,22 +810,22 @@ class PointFrame final : public PbMessage {
   ///
   /// Field no: 9.
   AttributedPoints& mutable_points() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
-    set_fields_[1] = true;
+    set_fields_[2] = true;
     return points_;
   }
 
   /// Returns whether `points` (no 9) is set.
-  constexpr bool has_points() const noexcept { return set_fields_[1]; }
+  constexpr bool has_points() const noexcept { return set_fields_[2]; }
 
   /// Clears `points` (no 9).
   void clear_points() & noexcept {
-    set_fields_[1] = false;
+    set_fields_[2] = false;
     points_ = {};
   }
 
   /// Sets `points` (no 9) and returns `*this`.
   PointFrame& set_points(AttributedPoints&& points) & noexcept {
-    set_fields_[1] = true;
+    set_fields_[2] = true;
     points_ = std::move(points);
     return *this;
   }
@@ -755,18 +835,20 @@ class PointFrame final : public PbMessage {
   }
 
  private:
+  /// @see id()
+  std::uint32_t id_{};
   /// @see header()
   PointFrame_Header header_{};
   /// @see points()
   AttributedPoints points_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 /// Processed point cloud data from a single lidar.
 ///
-/// Source: horus/pb/point/point_message.proto:94:1
+/// Source: horus/pb/point/point_message.proto:100:1
 class ProcessedPointsEvent final : public PbMessage {
  public:
 
@@ -876,7 +958,7 @@ class ProcessedPointsEvent final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/point/point_message.proto:98:1
+/// Source: horus/pb/point/point_message.proto:104:1
 class AggregatedPointEvents final : public PbMessage {
  public:
 

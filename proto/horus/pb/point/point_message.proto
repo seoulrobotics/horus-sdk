@@ -41,7 +41,13 @@ message PointFrame {
     string lidar_id = 2;
     /// The point cloud creation timestamp.
     Timestamp point_cloud_creation_timestamp = 4;
+    /// Static environment learning progress.
+    optional uint32 static_env_learning_progress = 5;
   }
+
+  // This is incremented for each point frame.
+  // CompositeKey(id, header.lidar_id) uniquely id this object.
+  uint32 id = 1;
   Header header = 2;
 
   reserved 3 to 5;

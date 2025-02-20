@@ -31,21 +31,25 @@ STATIC_EXCLUSION_ZONE: PointAttribute
 SPARSE_NOISE: PointAttribute
 
 class PointFrame(_message.Message):
-    __slots__ = ("header", "points")
+    __slots__ = ("id", "header", "points")
     class Header(_message.Message):
-        __slots__ = ("calibration_transform", "lidar_id", "point_cloud_creation_timestamp")
+        __slots__ = ("calibration_transform", "lidar_id", "point_cloud_creation_timestamp", "static_env_learning_progress")
         CALIBRATION_TRANSFORM_FIELD_NUMBER: _ClassVar[int]
         LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
         POINT_CLOUD_CREATION_TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+        STATIC_ENV_LEARNING_PROGRESS_FIELD_NUMBER: _ClassVar[int]
         calibration_transform: _metadata_pb2.AffineTransform3f
         lidar_id: str
         point_cloud_creation_timestamp: _metadata_pb2.Timestamp
-        def __init__(self, calibration_transform: _Optional[_Union[_metadata_pb2.AffineTransform3f, _Mapping]] = ..., lidar_id: _Optional[str] = ..., point_cloud_creation_timestamp: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+        static_env_learning_progress: int
+        def __init__(self, calibration_transform: _Optional[_Union[_metadata_pb2.AffineTransform3f, _Mapping]] = ..., lidar_id: _Optional[str] = ..., point_cloud_creation_timestamp: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ..., static_env_learning_progress: _Optional[int] = ...) -> None: ...
+    ID_FIELD_NUMBER: _ClassVar[int]
     HEADER_FIELD_NUMBER: _ClassVar[int]
     POINTS_FIELD_NUMBER: _ClassVar[int]
+    id: int
     header: PointFrame.Header
     points: AttributedPoints
-    def __init__(self, header: _Optional[_Union[PointFrame.Header, _Mapping]] = ..., points: _Optional[_Union[AttributedPoints, _Mapping]] = ...) -> None: ...
+    def __init__(self, id: _Optional[int] = ..., header: _Optional[_Union[PointFrame.Header, _Mapping]] = ..., points: _Optional[_Union[AttributedPoints, _Mapping]] = ...) -> None: ...
 
 class AttributedPoints(_message.Message):
     __slots__ = ("flattened_points", "attributes", "intensities", "ring_indices")
