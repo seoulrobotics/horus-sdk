@@ -361,7 +361,13 @@ void WebSocketRpcEndpoint::Initialize(std::shared_ptr<WebSocketRpcEndpoint> self
           response = std::move(self->pending_responses_[request_id]);
           self->used_pending_responses_.reset(request_id);
         }
-        static_cast<void>(response.continuation.ContinueWith(std::move(rpc_message)));
+        StringView const error{rpc_message.error().Str()};
+        if (error.empty()) {
+          static_cast<void>(response.continuation.ContinueWith(std::move(rpc_message)));
+        } else {
+          static_cast<void>(response.continuation.FailWith(
+              std::make_exception_ptr(RpcInternalError{std::string{error}})));
+        }
         break;
       }
       case ix::WebSocketMessageType::Open: {

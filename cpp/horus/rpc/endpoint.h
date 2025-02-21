@@ -45,6 +45,13 @@ class RpcEndpointDisconnectedError : public std::runtime_error {
   RpcEndpointDisconnectedError() : std::runtime_error("rpc endpoint disconnected") {}
 };
 
+/// Exception thrown by `RpcEndpoint::SendWithResponse()` when an unexpected error occurs on the
+/// endpoint handling the request.
+class RpcInternalError : public std::runtime_error {
+ public:
+  using std::runtime_error::runtime_error;
+};
+
 /// Type of `RpcMessage::RequestId()`.
 using RpcRequestId = decltype(std::declval<sdk::pb::RpcMessage>().request_id());
 

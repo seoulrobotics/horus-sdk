@@ -160,13 +160,14 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.CALIBRATION_MAP_RECORDING_FAILED_TO_START_FIELD_NUMBER: lambda m: f"Failed to start recording the calibration map: {m.calibration_map_recording_failed_to_start.path}",
     LogData.DETECTION_PIPELINE_REQUESTED_RESET_INFO_FIELD_NUMBER: lambda m: f"The detection pipeline has been requested to be reset because {m.detection_pipeline_requested_reset_info.reason}.",
     LogData.PREPROCESSING_SERVICE_PIPELINE_UNAVAILABLE_FIELD_NUMBER: lambda m: f"Preprocessing service pipeline is not available yet due to {m.preprocessing_service_pipeline_unavailable.reason}.",
-    LogData.CIRCULAR_RECORDING_DISABLED_WARNING_FIELD_NUMBER: lambda m: f"The circular recording is disabled: {m.circular_recording_disabled_warning.reason}",
+    LogData.CIRCULAR_RECORDING_DISABLED_WARNING_FIELD_NUMBER: lambda m: f"The timeframe snapshot is disabled: {m.circular_recording_disabled_warning.reason}",
     LogData.SNAPSHOT_ALREADY_RUNNING_WARNING_FIELD_NUMBER: lambda m: f"A snapshot is already running.",
     LogData.ACTIVE_PROJECT_CHANGED_INFO_FIELD_NUMBER: lambda m: f"The active project has been changed.",
     LogData.PROJECT_CONFIG_UPDATED_INFO_FIELD_NUMBER: lambda m: f"The project configuration has been updated.",
     LogData.INVALID_LIDAR_TIMESTAMP_FIELD_NUMBER: lambda m: f"Invalid timestamp {m.invalid_lidar_timestamp.timestamp} sent by lidar {m.invalid_lidar_timestamp.lidar_id}.",
     LogData.CALIBRATION_ACCUMULATING_POINTS_INFO_FIELD_NUMBER: lambda m: f"Calibration is accumulating points for {m.calibration_accumulating_points_info.time}",
     LogData.SPARSE_NOISE_FILTER_USAGE_NON_ROTATIONAL_LIDARS_FIELD_NUMBER: lambda m: f"The sparse noise filter cannot be used with non-rotational lidars.",
+    LogData.FILE_WRITE_ERROR_FIELD_NUMBER: lambda m: f"Failed to write to file \"{m.file_write_error.filename}\": \"{m.file_write_error.details}\".",
 }
 
 def _unknown_format(data: LogData) -> str:

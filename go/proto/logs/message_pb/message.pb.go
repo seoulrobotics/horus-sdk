@@ -1635,6 +1635,15 @@ func (x *LogData) GetSparseNoiseFilterUsageNonRotationalLidars() *logs_pb.Sparse
 	return nil
 }
 
+func (x *LogData) GetFileWriteError() *logs_pb.FileWriteError {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_FileWriteError); ok {
+			return x.FileWriteError
+		}
+	}
+	return nil
+}
+
 func (x *LogData) SetGeneric(v *logs_pb.Generic) {
 	if v == nil {
 		x.xxx_hidden_Data = nil
@@ -2953,6 +2962,14 @@ func (x *LogData) SetSparseNoiseFilterUsageNonRotationalLidars(v *logs_pb.Sparse
 		return
 	}
 	x.xxx_hidden_Data = &logData_SparseNoiseFilterUsageNonRotationalLidars{v}
+}
+
+func (x *LogData) SetFileWriteError(v *logs_pb.FileWriteError) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_FileWriteError{v}
 }
 
 func (x *LogData) HasData() bool {
@@ -4282,6 +4299,14 @@ func (x *LogData) HasSparseNoiseFilterUsageNonRotationalLidars() bool {
 	return ok
 }
 
+func (x *LogData) HasFileWriteError() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_FileWriteError)
+	return ok
+}
+
 func (x *LogData) ClearData() {
 	x.xxx_hidden_Data = nil
 }
@@ -5276,6 +5301,12 @@ func (x *LogData) ClearSparseNoiseFilterUsageNonRotationalLidars() {
 	}
 }
 
+func (x *LogData) ClearFileWriteError() {
+	if _, ok := x.xxx_hidden_Data.(*logData_FileWriteError); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
 const LogData_Data_not_set_case case_LogData_Data = 0
 const LogData_Generic_case case_LogData_Data = 1
 const LogData_Oom_case case_LogData_Data = 2
@@ -5442,6 +5473,7 @@ const LogData_ProjectConfigUpdatedInfo_case case_LogData_Data = 162
 const LogData_InvalidLidarTimestamp_case case_LogData_Data = 163
 const LogData_CalibrationAccumulatingPointsInfo_case case_LogData_Data = 164
 const LogData_SparseNoiseFilterUsageNonRotationalLidars_case case_LogData_Data = 165
+const LogData_FileWriteError_case case_LogData_Data = 166
 
 func (x *LogData) WhichData() case_LogData_Data {
 	if x == nil {
@@ -5778,6 +5810,8 @@ func (x *LogData) WhichData() case_LogData_Data {
 		return LogData_CalibrationAccumulatingPointsInfo_case
 	case *logData_SparseNoiseFilterUsageNonRotationalLidars:
 		return LogData_SparseNoiseFilterUsageNonRotationalLidars_case
+	case *logData_FileWriteError:
+		return LogData_FileWriteError_case
 	default:
 		return LogData_Data_not_set_case
 	}
@@ -5952,6 +5986,7 @@ type LogData_builder struct {
 	InvalidLidarTimestamp                       *logs_pb.InvalidLidarTimestamp
 	CalibrationAccumulatingPointsInfo           *logs_pb.CalibrationAccumulatingPointsInfo
 	SparseNoiseFilterUsageNonRotationalLidars   *logs_pb.SparseNoiseFilterUsageNonRotationalLidars
+	FileWriteError                              *logs_pb.FileWriteError
 	// -- end of xxx_hidden_Data
 }
 
@@ -6453,6 +6488,9 @@ func (b0 LogData_builder) Build() *LogData {
 	}
 	if b.SparseNoiseFilterUsageNonRotationalLidars != nil {
 		x.xxx_hidden_Data = &logData_SparseNoiseFilterUsageNonRotationalLidars{b.SparseNoiseFilterUsageNonRotationalLidars}
+	}
+	if b.FileWriteError != nil {
+		x.xxx_hidden_Data = &logData_FileWriteError{b.FileWriteError}
 	}
 	return m0
 }
@@ -7131,6 +7169,10 @@ type logData_SparseNoiseFilterUsageNonRotationalLidars struct {
 	SparseNoiseFilterUsageNonRotationalLidars *logs_pb.SparseNoiseFilterUsageNonRotationalLidars `protobuf:"bytes,165,opt,name=sparse_noise_filter_usage_non_rotational_lidars,json=sparseNoiseFilterUsageNonRotationalLidars,proto3,oneof"`
 }
 
+type logData_FileWriteError struct {
+	FileWriteError *logs_pb.FileWriteError `protobuf:"bytes,166,opt,name=file_write_error,json=fileWriteError,proto3,oneof"`
+}
+
 func (*logData_Generic) isLogData_Data() {}
 
 func (*logData_Oom) isLogData_Data() {}
@@ -7461,6 +7503,8 @@ func (*logData_CalibrationAccumulatingPointsInfo) isLogData_Data() {}
 
 func (*logData_SparseNoiseFilterUsageNonRotationalLidars) isLogData_Data() {}
 
+func (*logData_FileWriteError) isLogData_Data() {}
+
 var File_horus_pb_logs_message_proto protoreflect.FileDescriptor
 
 var file_horus_pb_logs_message_proto_rawDesc = []byte{
@@ -7476,7 +7520,7 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
 	0x12, 0x25, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11,
 	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x6f, 0x67, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xa3, 0x87, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
+	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xef, 0x87, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
 	0x44, 0x61, 0x74, 0x61, 0x12, 0x32, 0x0a, 0x07, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62,
 	0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x48, 0x00, 0x52,
@@ -8558,8 +8602,13 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x6e, 0x61, 0x6c, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x73, 0x48, 0x00, 0x52, 0x29, 0x73, 0x70, 0x61,
 	0x72, 0x73, 0x65, 0x4e, 0x6f, 0x69, 0x73, 0x65, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x55, 0x73,
 	0x61, 0x67, 0x65, 0x4e, 0x6f, 0x6e, 0x52, 0x6f, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x61, 0x6c,
-	0x4c, 0x69, 0x64, 0x61, 0x72, 0x73, 0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x4c, 0x69, 0x64, 0x61, 0x72, 0x73, 0x12, 0x4a, 0x0a, 0x10, 0x66, 0x69, 0x6c, 0x65, 0x5f, 0x77,
+	0x72, 0x69, 0x74, 0x65, 0x5f, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0xa6, 0x01, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x1d, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67,
+	0x73, 0x2e, 0x46, 0x69, 0x6c, 0x65, 0x57, 0x72, 0x69, 0x74, 0x65, 0x45, 0x72, 0x72, 0x6f, 0x72,
+	0x48, 0x00, 0x52, 0x0e, 0x66, 0x69, 0x6c, 0x65, 0x57, 0x72, 0x69, 0x74, 0x65, 0x45, 0x72, 0x72,
+	0x6f, 0x72, 0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var file_horus_pb_logs_message_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
@@ -8732,6 +8781,7 @@ var file_horus_pb_logs_message_proto_goTypes = []any{
 	(*logs_pb.InvalidLidarTimestamp)(nil),                       // 165: horus.pb.logs.InvalidLidarTimestamp
 	(*logs_pb.CalibrationAccumulatingPointsInfo)(nil),           // 166: horus.pb.logs.CalibrationAccumulatingPointsInfo
 	(*logs_pb.SparseNoiseFilterUsageNonRotationalLidars)(nil),   // 167: horus.pb.logs.SparseNoiseFilterUsageNonRotationalLidars
+	(*logs_pb.FileWriteError)(nil),                              // 168: horus.pb.logs.FileWriteError
 }
 var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	2,   // 0: horus.pb.LogMessage.metadata:type_name -> horus.pb.LogMetadata
@@ -8901,11 +8951,12 @@ var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	165, // 164: horus.pb.LogData.invalid_lidar_timestamp:type_name -> horus.pb.logs.InvalidLidarTimestamp
 	166, // 165: horus.pb.LogData.calibration_accumulating_points_info:type_name -> horus.pb.logs.CalibrationAccumulatingPointsInfo
 	167, // 166: horus.pb.LogData.sparse_noise_filter_usage_non_rotational_lidars:type_name -> horus.pb.logs.SparseNoiseFilterUsageNonRotationalLidars
-	167, // [167:167] is the sub-list for method output_type
-	167, // [167:167] is the sub-list for method input_type
-	167, // [167:167] is the sub-list for extension type_name
-	167, // [167:167] is the sub-list for extension extendee
-	0,   // [0:167] is the sub-list for field type_name
+	168, // 167: horus.pb.LogData.file_write_error:type_name -> horus.pb.logs.FileWriteError
+	168, // [168:168] is the sub-list for method output_type
+	168, // [168:168] is the sub-list for method input_type
+	168, // [168:168] is the sub-list for extension type_name
+	168, // [168:168] is the sub-list for extension extendee
+	0,   // [0:168] is the sub-list for field type_name
 }
 
 func init() { file_horus_pb_logs_message_proto_init() }
@@ -9079,6 +9130,7 @@ func file_horus_pb_logs_message_proto_init() {
 		(*logData_InvalidLidarTimestamp)(nil),
 		(*logData_CalibrationAccumulatingPointsInfo)(nil),
 		(*logData_SparseNoiseFilterUsageNonRotationalLidars)(nil),
+		(*logData_FileWriteError)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

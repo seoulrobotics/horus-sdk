@@ -800,7 +800,7 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
   }
   case LogData::DataOneof::kCircularRecordingDisabledWarning: {
     const logs::CircularRecordingDisabledWarning& data{log_data.circular_recording_disabled_warning()};
-    StrAppendToSink(sink, "The circular recording is disabled: ", data.reason());
+    StrAppendToSink(sink, "The timeframe snapshot is disabled: ", data.reason());
     break;
   }
   case LogData::DataOneof::kSnapshotAlreadyRunningWarning: {
@@ -827,6 +827,11 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
   }
   case LogData::DataOneof::kSparseNoiseFilterUsageNonRotationalLidars: {
     StrAppendToSink(sink, "The sparse noise filter cannot be used with non-rotational lidars.");
+    break;
+  }
+  case LogData::DataOneof::kFileWriteError: {
+    const logs::FileWriteError& data{log_data.file_write_error()};
+    StrAppendToSink(sink, "Failed to write to file \"", data.filename(), "\": \"", data.details(), "\".");
     break;
   }
   case LogData::DataOneof::kNotSet:
