@@ -26,7 +26,7 @@ class PoseCorrection:
 
     @staticmethod
     def _from_pb(
-        pb: typing.Optional[service_pb2.SensorInfo.PoseCorrection],
+        pb: typing.Optional[messages_pb2.SensorInfo.PoseCorrection],
     ) -> typing.Optional["PoseCorrection"]:
         if pb is None:
             return None
@@ -52,7 +52,7 @@ class SensorInfo:
 
     lidar_id: str
     """Unique identifier of the sensor."""
-    status: SensorStatus
+    status: typing.FrozenSet[SensorStatus]
     """Status of the sensor."""
     measured_frequency_hz: float
     """Frequency at which the sensor is measuring."""
@@ -60,10 +60,19 @@ class SensorInfo:
     """Pose correction applied to the sensor."""
 
     @staticmethod
-    def _from_pb(pb: service_pb2.SensorInfo) -> "SensorInfo":
+    def _from_pb(pb: messages_pb2.SensorInfo) -> "SensorInfo":
+        status = frozenset(
+            [
+                SensorStatus(flag)
+                for flag in messages_pb2.SensorStatus.values()
+                if flag != SensorStatus.SENSOR_STATUS_UNSPECIFIED.value
+                and (pb.status & flag) == flag
+            ]
+        )
+
         return SensorInfo(
             lidar_id=pb.lidar_id,
-            status=SensorStatus(pb.status),
+            status=status,
             measured_frequency_hz=pb.measured_frequency,
             corrected_pose=PoseCorrection._from_pb(pb.pose_correction),
         )

@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package horus.pb;
 
-import "horus/pb/config/metadata.proto";
 import "horus/pb/logs/message.proto";
 
 import "horus/pb/profiling.proto";
 import "horus/pb/rpc.proto";
+import "horus/pb/preprocessing/messages.proto";
 
 service NotificationService {
   option (service_options) = {
@@ -81,20 +81,6 @@ message LogMessageEvent {
 
 message ProfilingInfoEvent {
   ProfilingInfo profiling_info = 1;
-}
-
-message SensorInfo {
-  string lidar_id = 1;
-  // Status as uint32, each status is combined using bitwise OR.
-  uint32 status = 2;
-  double measured_frequency = 3;
-
-  optional PoseCorrection pose_correction = 4;
-
-  message PoseCorrection {
-    Vector3f translation = 1;
-    Quaterniond rotation = 2;
-  }
 }
 
 message SensorInfoEvent {

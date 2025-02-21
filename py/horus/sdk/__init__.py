@@ -1,6 +1,14 @@
+import asyncio
 import logging
 import typing
+from typing_extensions import Self
 
+from horus.pb.project_manager.service_pb2 import (
+    GetHealthStatusRequest as _GetHealthStatusRequest,
+)
+from horus.pb.project_manager.service_client import (
+    ProjectManagerServiceClient as _ProjectManagerServiceClient,
+)
 from horus.pb.detection_service.detection_service_client import (
     DetectionServiceClient as _DetectionServiceClient,
 )
@@ -14,6 +22,7 @@ from horus.pb.notification_service.service_client import (
 from horus.pb.rpc_pb2 import DefaultSubscribeRequest as _DefaultSubscribeRequest
 from horus.pb.rpc_pb2 import DefaultUnsubscribeRequest as _DefaultUnsubscribeRequest
 from horus.rpc.client_listener_pair import ClientListenerPair as _ClientListenerPair
+from horus.rpc.client import Client as _Client
 from horus.rpc.services import RpcServices
 from horus.sdk.detection import DetectionEvent
 from horus.sdk.services import DetectionServiceListener as _DetectionServiceListener
@@ -28,8 +37,11 @@ from horus.pb.point_aggregator.point_aggregator_service_client import (
     PointAggregatorServiceClient as _PointAggregatorServiceClient,
 )
 from horus.sdk.profiling import ProfilingInfo
-from horus.sdk.sensor import OccupancyGridEvent, OccupancyGrid, OccupancyClassification
-from horus.proto import *  # Needed to access defined data types externally via SDK.
+from horus.sdk.sensor import OccupancyGridEvent
+from horus.proto import *
+from horus.sdk.health import (
+    HealthStatus,
+)
 
 _T = typing.TypeVar("_T")
 
@@ -87,6 +99,12 @@ class Sdk:
             _PointAggregatorServiceClient.unsubscribe,
         )
 
+        self._project_manager_service_client = _Client(
+            services.project_manager.url,
+            logger,
+            _ProjectManagerServiceClient,
+        )
+
     def subscribe_to_detections(
         self, on_detection_event: typing.Callable[[DetectionEvent], None]
     ) -> "Subscription":
@@ -139,6 +157,26 @@ class Sdk:
         return Subscription(
             lambda: self._subscribe_to_sensor_info_async(on_sensor_info_event)
         )
+
+    async def get_health_status(self) -> HealthStatus:
+        """
+        Retrieves a general status summarizing the health of the system.
+
+        This health status gathers:
+        - License status
+        - Sensor statuses
+        - Service connectivity statuses
+        """
+
+        client = await self._ensure_project_manager_service()
+        return HealthStatus._from_pb(
+            await client.get_health_status(_GetHealthStatusRequest())
+        )
+
+    async def _ensure_project_manager_service(
+        self,
+    ) -> _ProjectManagerServiceClient:
+        return await self._project_manager_service_client.connect()
 
     async def _ensure_detection_service(
         self,
@@ -230,6 +268,27 @@ class Sdk:
             self._notification_service,
             listener.has_no_subscriber,
         )
+
+    async def close(self) -> None:
+        """Closes all connections"""
+
+        await asyncio.gather(
+            self._detection_service.disconnect(),
+            self._notification_service.disconnect(),
+            self._point_aggregator_service.disconnect(),
+            self._project_manager_service_client.disconnect(),
+        )
+
+    async def __aenter__(self) -> Self:
+        """No-op. Must be called to use the SDK as an async context manager."""
+        return self
+
+    async def __aexit__(
+        self, exc_type: typing.Any, exc: typing.Any, tb: typing.Any
+    ) -> None:
+        """Closes all connections"""
+
+        await self.close()
 
 
 class Subscription:

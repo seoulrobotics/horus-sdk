@@ -1,3 +1,4 @@
+from horus.pb.config import metadata_pb2 as _metadata_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
@@ -13,11 +14,28 @@ class OccupancyClassification(int, metaclass=_enum_type_wrapper.EnumTypeWrapper)
     OCCLUDED: _ClassVar[OccupancyClassification]
     STATIONARY_OCCUPIED: _ClassVar[OccupancyClassification]
     EXCLUDED: _ClassVar[OccupancyClassification]
+
+class SensorStatus(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    SENSOR_STATUS_UNSPECIFIED: _ClassVar[SensorStatus]
+    NO_DATA: _ClassVar[SensorStatus]
+    RECEIVING_DATA: _ClassVar[SensorStatus]
+    LOW_FREQUENCY: _ClassVar[SensorStatus]
+    HIGH_FREQUENCY: _ClassVar[SensorStatus]
+    TILTED: _ClassVar[SensorStatus]
+    OBSTRUCTED: _ClassVar[SensorStatus]
 OCCUPANCYCLASSIFICATION_UNSPECIFIED: OccupancyClassification
 FREE: OccupancyClassification
 OCCLUDED: OccupancyClassification
 STATIONARY_OCCUPIED: OccupancyClassification
 EXCLUDED: OccupancyClassification
+SENSOR_STATUS_UNSPECIFIED: SensorStatus
+NO_DATA: SensorStatus
+RECEIVING_DATA: SensorStatus
+LOW_FREQUENCY: SensorStatus
+HIGH_FREQUENCY: SensorStatus
+TILTED: SensorStatus
+OBSTRUCTED: SensorStatus
 
 class OccupancyGrid(_message.Message):
     __slots__ = ("rows", "cols", "cells")
@@ -44,3 +62,22 @@ class OccupancyGridEvent(_message.Message):
     y_max: float
     resolution: float
     def __init__(self, grid: _Optional[_Union[OccupancyGrid, _Mapping]] = ..., x_min: _Optional[float] = ..., x_max: _Optional[float] = ..., y_min: _Optional[float] = ..., y_max: _Optional[float] = ..., resolution: _Optional[float] = ...) -> None: ...
+
+class SensorInfo(_message.Message):
+    __slots__ = ("lidar_id", "status", "measured_frequency", "pose_correction")
+    class PoseCorrection(_message.Message):
+        __slots__ = ("translation", "rotation")
+        TRANSLATION_FIELD_NUMBER: _ClassVar[int]
+        ROTATION_FIELD_NUMBER: _ClassVar[int]
+        translation: _metadata_pb2.Vector3f
+        rotation: _metadata_pb2.Quaterniond
+        def __init__(self, translation: _Optional[_Union[_metadata_pb2.Vector3f, _Mapping]] = ..., rotation: _Optional[_Union[_metadata_pb2.Quaterniond, _Mapping]] = ...) -> None: ...
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    STATUS_FIELD_NUMBER: _ClassVar[int]
+    MEASURED_FREQUENCY_FIELD_NUMBER: _ClassVar[int]
+    POSE_CORRECTION_FIELD_NUMBER: _ClassVar[int]
+    lidar_id: str
+    status: int
+    measured_frequency: float
+    pose_correction: SensorInfo.PoseCorrection
+    def __init__(self, lidar_id: _Optional[str] = ..., status: _Optional[int] = ..., measured_frequency: _Optional[float] = ..., pose_correction: _Optional[_Union[SensorInfo.PoseCorrection, _Mapping]] = ...) -> None: ...

@@ -5,16 +5,20 @@
 #include <array>
 #include <chrono>
 #include <cstddef>
-#include <cstdlib>
 #include <mutex>
 
 #include "examples/helpers.h"
 #include "horus/logs/format.h"  // IWYU pragma: keep
 #include "horus/pb/cow.h"
+#include "horus/pb/cow_repeated.h"
+#include "horus/pb/cow_span.h"
 #include "horus/pb/detection_service/detection_pb.h"
 #include "horus/pb/logs/message_pb.h"
+#include "horus/pb/logs/metadata_pb.h"
 #include "horus/pb/point/point_message_pb.h"
 #include "horus/pb/profiling_pb.h"
+#include "horus/pb/unaligned_span.h"
+#include "horus/rpc/services.h"
 #include "horus/sdk.h"
 #include "horus/strings/ansi.h"
 #include "horus/strings/chrono.h"  // IWYU pragma: keep
@@ -81,7 +85,7 @@ void PrintHeader(StringView event_type, ColoredFormat<StringView> (*color)(const
 int main(int argc, const char* argv[]) {
   const horus::Span<const char*> args{argv, static_cast<std::size_t>(argc)};
 
-  horus::Sdk::ServiceResolutionMap service_map;
+  horus::RpcServices::ServiceResolutionMap service_map;
   if (!horus::ParseArgs(service_map, args)) {
     return 1;
   }

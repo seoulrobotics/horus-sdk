@@ -13,6 +13,7 @@ import (
 	"github.com/seoulrobotics/horus-sdk/go/proto/detection_service/detection_service_pb"
 	"github.com/seoulrobotics/horus-sdk/go/proto/point/point_message_pb"
 	"github.com/seoulrobotics/horus-sdk/go/proto/point_aggregator/point_aggregator_service_pb"
+	project_manager_service_pb "github.com/seoulrobotics/horus-sdk/go/proto/project_manager/service_pb"
 	"github.com/seoulrobotics/horus-sdk/go/proto/rpc_pb"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/protobuf/proto"
@@ -24,6 +25,7 @@ type Sdk struct {
 
 	detection       *detection_service_pb.DetectionServiceClient
 	pointAggregator *point_aggregator_service_pb.PointAggregatorServiceClient
+	projectManager  *project_manager_service_pb.ProjectManagerServiceClient
 
 	detectionRcs       *rcSubscription
 	pointAggregatorRcs *rcSubscription
@@ -74,7 +76,7 @@ func NewSdk(ctx context.Context, options SdkOptions) (*Sdk, error) {
 	var g errgroup.Group
 
 	g.Go(func() (err error) {
-		sdk.detection, sdk.detectionRcs, err = newClient(
+		sdk.detection, sdk.detectionRcs, err = newSubscribingClient(
 			ctx,
 			logger,
 			options,
@@ -88,7 +90,7 @@ func NewSdk(ctx context.Context, options SdkOptions) (*Sdk, error) {
 	})
 
 	g.Go(func() (err error) {
-		sdk.pointAggregator, sdk.pointAggregatorRcs, err = newClient(
+		sdk.pointAggregator, sdk.pointAggregatorRcs, err = newSubscribingClient(
 			ctx,
 			logger,
 			options,
@@ -101,11 +103,39 @@ func NewSdk(ctx context.Context, options SdkOptions) (*Sdk, error) {
 		return
 	})
 
+	g.Go(func() (err error) {
+		sdk.projectManager, err = newClient(
+			ctx,
+			logger,
+			options,
+			services.ProjectManager,
+			project_manager_service_pb.NewProjectManagerServiceClient,
+			&project_manager_service_pb.ProjectManagerServiceHandler{},
+		)
+		return
+	})
+
 	err := g.Wait()
 	if err != nil {
 		return nil, err
 	}
 	return sdk, nil
+}
+
+func (sdk *Sdk) GetHealthStatus(req GetHealthStatusRequest) (*HealthStatus, error) {
+	ctx := context.Background()
+
+	pbHealthStatus, err := sdk.projectManager.GetHealthStatus(ctx, req.toPb())
+	if err != nil {
+		return nil, err
+	}
+
+	healthStatus, err := newHealthStatusFromPb(pbHealthStatus)
+	if err != nil {
+		return nil, err
+	}
+
+	return healthStatus, nil
 }
 
 // SubscribeToObjects subscribes to object detection events and calls f for each event received.
@@ -191,11 +221,16 @@ func (hs *handlerSet[M]) removeHandler(f *func(M)) {
 	delete(hs.handlers, f)
 }
 
+// A rpcClient is an object used to perform all the requests to an endpoint.
+type rpcClient interface {
+	Endpoint() *rpc.Endpoint
+	ServiceFullName() string
+}
+
 // A defaultSubscribable is a service that can be subscribed to and unsubscribed from with default
 // request and response types.
 type defaultSubscribable interface {
-	Endpoint() *rpc.Endpoint
-	ServiceFullName() string
+	rpcClient
 	Subscribe(context.Context, *rpc_pb.DefaultSubscribeRequest) (*rpc_pb.DefaultSubscribeResponse, error)
 	Unsubscribe(context.Context, *rpc_pb.DefaultUnsubscribeRequest) (*rpc_pb.DefaultUnsubscribeResponse, error)
 }
@@ -267,28 +302,18 @@ func (s *rcSubscription) onConnected() {
 	}
 }
 
-// newClient creates a [rpc.Endpoint] connected to si, constructs a client using createClient, and
-// sets up subscriptions and the given handler for that client.
-func newClient[S defaultSubscribable](
+// Creates a rpcClient by creating a RPC endpoint to the designated service.
+func newClient[C rpcClient](
 	ctx context.Context,
 	logger *slog.Logger,
 	options SdkOptions,
 	si ServiceInfo,
-	createClient func(*rpc.Endpoint) S,
+	createClient func(*rpc.Endpoint) C,
 	handler rpc.Handler,
-) (S, *rcSubscription, error) {
-	// Set up event handlers.
-	subscription := &rcSubscription{
-		logger:   logger,
-		handlers: make(map[*Subscription]struct{}),
-	}
-
-	onConnected := subscription.onConnected
+) (C, error) {
+	onConnected := func() {}
 	if options.OnConnected != nil {
-		onConnected = func() {
-			subscription.onConnected()
-			options.OnConnected(si)
-		}
+		onConnected = func() { options.OnConnected(si) }
 	}
 
 	onDisconnected := func(error) {}
@@ -312,11 +337,46 @@ func newClient[S defaultSubscribable](
 		onError,
 	)
 	if err != nil {
-		return *new(S), subscription, err
+		return *new(C), err
 	}
 	endpoint.SetHandler(handler)
 
-	client := createClient(endpoint)
+	return createClient(endpoint), nil
+}
+
+// newSubscribingClient creates a [rpc.Endpoint] connected to si, constructs a client using createClient, and
+// sets up subscriptions and the given handler for that client.
+func newSubscribingClient[S defaultSubscribable](
+	ctx context.Context,
+	logger *slog.Logger,
+	options SdkOptions,
+	si ServiceInfo,
+	createClient func(*rpc.Endpoint) S,
+	handler rpc.Handler,
+) (S, *rcSubscription, error) {
+
+	// Set up event handlers.
+	subscription := &rcSubscription{
+		logger:   logger,
+		handlers: make(map[*Subscription]struct{}),
+	}
+
+	onConnected := func(ServiceInfo) {
+		subscription.onConnected()
+	}
+	if options.OnConnected != nil {
+		onConnected = func(ServiceInfo) {
+			subscription.onConnected()
+			options.OnConnected(si)
+		}
+	}
+	options.OnConnected = onConnected
+
+	client, err := newClient(ctx, logger, options, si, createClient, handler)
+
+	if err != nil {
+		return *new(S), subscription, err
+	}
 
 	// subscription only accesses its service when adding subscriptions, so it is okay to only
 	// assign it now.

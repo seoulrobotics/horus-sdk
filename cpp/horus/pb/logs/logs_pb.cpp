@@ -4318,6 +4318,41 @@ void CalibrationAccumulatingPointsInfo::DeserializeFrom(PbReader& reader) noexce
 
 
 
+FileWriteError::FileWriteError(const FileWriteError& other) noexcept(false)
+    : filename_{other.filename_}
+    , details_{other.details_}
+    , set_fields_{other.set_fields_} {}
+
+void FileWriteError::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, filename_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+}
+
+void FileWriteError::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, filename_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, details_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
 }  // namespace logs
 }  // namespace pb
 }  // namespace sdk

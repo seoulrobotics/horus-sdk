@@ -22,9 +22,9 @@
 #include "horus/future/future.h"
 #include "horus/future/map_to.h"
 #include "horus/future/work.h"
-#include "horus/internal/attributes.h"
 #include "horus/rpc/endpoint.h"
 #include "horus/rpc/services.h"
+#include "horus/sdk/health.h"
 #include "horus/sdk/logs.h"
 #include "horus/sdk/objects.h"
 #include "horus/sdk/point_clouds.h"
@@ -32,7 +32,6 @@
 #include "horus/sdk/sensor.h"
 #include "horus/types/in_place.h"
 #include "horus/types/one_of.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 
@@ -43,39 +42,8 @@ namespace horus {
 /// `horus/strings/logging.h`) to redirect calls in a scope.
 class Sdk final {
  public:
-  /// A map from service to URL where it can be resolved.
-  struct ServiceResolutionMap {
-    /// An entry in the map.
-    struct Entry {
-      /// The host name of the service.
-      StringView host;
-      /// The port at which the service listens.
-      std::uint16_t port;
-
-      /// Constructs an entry pointing to a `<given_host>:<given_port>` pair. `given_host` will
-      /// *not* be copied.
-      constexpr Entry(StringView given_host HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND,
-                      std::uint16_t given_port) noexcept
-          : host{given_host}, port{given_port} {}
-
-      /// Constructs an entry pointing to `127.0.0.1:<local_port>`.
-      constexpr explicit Entry(std::uint16_t local_port) noexcept
-          : Entry{"127.0.0.1", local_port} {}
-
-      /// Constructs an entry pointing to the default configuration of a service.
-      constexpr explicit Entry(const RpcServices::ServiceInfo& service_info) noexcept
-          : Entry{service_info.default_ip, service_info.default_port} {}
-    };
-
-    /// How to resolve the notification service.
-    Entry notification{RpcServices::NotificationService()};
-
-    /// How to resolve the detection service.
-    Entry detection{RpcServices::DetectionService()};
-
-    /// How to resolve the point aggregator.
-    Entry point_aggregator{RpcServices::PointAggregatorService()};
-  };
+  /// @see horus::RpcServices::ServiceResolutionMap
+  using ServiceResolutionMap = horus::RpcServices::ServiceResolutionMap;
 
   /// A future returned by the `Sdk`.
   ///
@@ -130,6 +98,15 @@ class Sdk final {
 
   /// Subscribes to receive sensor information.
   Future<Subscription> SubscribeToSensorInfo(sdk::SensorInfoSubscriptionRequest&& request);
+
+  /// Fetches the health status from the project manager.
+  ///
+  /// The following exception can be thrown by the function or by its returned future.
+  /// - `RpcEndpointDisconnectedError` if the project manager service could not be reached.
+  /// - `CancellationError` if the request to the project manager service times out (2 seconds).
+  /// Warning: this function or its underlying future could potentially throw other exceptions, not
+  /// listed here.
+  Future<sdk::HealthStatus> GetHealthStatus(sdk::GetHealthStatusRequest&& request);
 
  private:
   /// A task to perform on the event loop.
@@ -382,12 +359,13 @@ class Sdk::Subscription final {
   }
 
   /// The current status of the subscription. This may be slightly outdated since the status may
-  /// be changed in another thread while this function is called (although the function itself is
-  /// thread-safe).
+  /// be changed in another thread while this function is called (although the function itself
+  /// is thread-safe).
   Status CurrentStatus() const noexcept { return state_->CurrentStatus(); }
 
  private:
-  /// The state held by the subscription and stored in a `std::shared_ptr` (since it is immovable).
+  /// The state held by the subscription and stored in a `std::shared_ptr` (since it is
+  /// immovable).
   class State final : public std::enable_shared_from_this<State> {
    public:
     /// Constructs the state.
@@ -418,8 +396,8 @@ class Sdk::Subscription final {
     /// A reference to the SDK.
     Sdk& sdk_;
 
-    /// The endpoint which subscribes to the event stream; when destroyed, this will shut down the
-    /// connection and therefore unsubscribe.
+    /// The endpoint which subscribes to the event stream; when destroyed, this will shut down
+    /// the connection and therefore unsubscribe.
     std::shared_ptr<RpcEndpoint> subscriber_;
 
     /// The function to call when we are connected and able to subscribe.
@@ -429,8 +407,9 @@ class Sdk::Subscription final {
     std::atomic<Status> status_{Status::kConnecting};
   };
 
-  /// The (non-null) state of the subscription. We use a `std::shared_ptr` since we pass a reference
-  /// to the subscription to event handlers whose lifetimes isn't bound to the `Subscription`.
+  /// The (non-null) state of the subscription. We use a `std::shared_ptr` since we pass a
+  /// reference to the subscription to event handlers whose lifetimes isn't bound to the
+  /// `Subscription`.
   std::shared_ptr<State> state_;
 };
 
