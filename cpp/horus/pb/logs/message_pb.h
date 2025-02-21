@@ -9163,6 +9163,61 @@ class LogData final : public PbMessage {
     return std::move(set_sparse_noise_filter_usage_non_rotational_lidars(std::move(sparse_noise_filter_usage_non_rotational_lidars)));
   }
 
+  // Field `file_write_error` (no 166).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 166.
+  constexpr const logs::FileWriteError& file_write_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return file_write_error_;
+  }
+
+  /// If `file_write_error` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 166.
+  logs::FileWriteError file_write_error() && noexcept {
+    if (!set_fields_[165]) {
+      return {};
+    }
+    return std::move(file_write_error_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 166.
+  logs::FileWriteError& mutable_file_write_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kFileWriteError;
+    set_fields_[165] = true;
+    return file_write_error_;
+  }
+
+  /// Returns whether `file_write_error` (no 166) is set.
+  constexpr bool has_file_write_error() const noexcept { return set_fields_[165]; }
+
+  /// Clears `file_write_error` (no 166).
+  void clear_file_write_error() & noexcept {
+    data_ = {};
+    set_fields_[165] = false;
+    file_write_error_ = {};
+  }
+
+  /// Sets `file_write_error` (no 166) and returns `*this`.
+  LogData& set_file_write_error(logs::FileWriteError&& file_write_error) & noexcept {
+    clear_data();
+    data_ = DataOneof::kFileWriteError;
+    set_fields_[165] = true;
+    file_write_error_ = std::move(file_write_error);
+    return *this;
+  }
+  /// Sets `file_write_error` (no 166) and returns `*this`.
+  LogData&& set_file_write_error(logs::FileWriteError&& file_write_error) && noexcept {
+    return std::move(set_file_write_error(std::move(file_write_error)));
+  }
+
   // Oneof `data`.
   // -----
 
@@ -9500,6 +9555,8 @@ class LogData final : public PbMessage {
     kCalibrationAccumulatingPointsInfo = 164,
     /// @see sparse_noise_filter_usage_non_rotational_lidars()
     kSparseNoiseFilterUsageNonRotationalLidars = 165,
+    /// @see file_write_error()
+    kFileWriteError = 166,
   };
 
   /// Returns the current case set in `data`.
@@ -10170,6 +10227,10 @@ class LogData final : public PbMessage {
         clear_sparse_noise_filter_usage_non_rotational_lidars();
         break;
       }
+      case DataOneof::kFileWriteError: {
+        clear_file_write_error();
+        break;
+      }
       case DataOneof::kNotSet:
       default:
         break;
@@ -10507,12 +10568,14 @@ class LogData final : public PbMessage {
   logs::CalibrationAccumulatingPointsInfo calibration_accumulating_points_info_{};
   /// @see sparse_noise_filter_usage_non_rotational_lidars()
   logs::SparseNoiseFilterUsageNonRotationalLidars sparse_noise_filter_usage_non_rotational_lidars_{};
+  /// @see file_write_error()
+  logs::FileWriteError file_write_error_{};
 
   /// @see data_case()
   DataOneof data_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<165> set_fields_;
+  std::bitset<166> set_fields_;
 };
 
 /// A log message notifying users about some status.

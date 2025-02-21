@@ -172,6 +172,7 @@ LogData::LogData(const LogData& other) noexcept(false)
     , invalid_lidar_timestamp_{other.invalid_lidar_timestamp_}
     , calibration_accumulating_points_info_{other.calibration_accumulating_points_info_}
     , sparse_noise_filter_usage_non_rotational_lidars_{other.sparse_noise_filter_usage_non_rotational_lidars_}
+    , file_write_error_{other.file_write_error_}
     , data_{other.data_}
     , set_fields_{other.set_fields_} {}
 
@@ -670,6 +671,9 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[164]) {
     SerializeField<logs::SparseNoiseFilterUsageNonRotationalLidars>(writer, /*tag=*/ 165, sparse_noise_filter_usage_non_rotational_lidars_);
+  }
+  if (set_fields_[165]) {
+    SerializeField<logs::FileWriteError>(writer, /*tag=*/ 166, file_write_error_);
   }
 }
 
@@ -1829,6 +1833,13 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
         data_ = DataOneof::kSparseNoiseFilterUsageNonRotationalLidars;
         DeserializeField<logs::SparseNoiseFilterUsageNonRotationalLidars>(reader, sparse_noise_filter_usage_non_rotational_lidars_);
         set_fields_[164] = true;
+        break;
+      }
+      case 166: {
+        clear_data();
+        data_ = DataOneof::kFileWriteError;
+        DeserializeField<logs::FileWriteError>(reader, file_write_error_);
+        set_fields_[165] = true;
         break;
       }
       default: {
