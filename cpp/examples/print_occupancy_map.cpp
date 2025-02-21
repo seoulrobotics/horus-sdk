@@ -6,12 +6,15 @@
 /// Note that the executable will continuously try to silently reconnect to the notification
 /// service, so even if it is not running no error message will be printed.
 
+#include <algorithm>
 #include <cstddef>
-#include <cstdlib>
+#include <cstdint>
+#include <vector>
 
 #include "examples/helpers.h"
-#include "horus/pb/logs/message_pb.h"
+#include "horus/pb/cow_repeated.h"
 #include "horus/pb/preprocessing/messages_pb.h"
+#include "horus/rpc/services.h"
 #include "horus/sdk.h"
 #include "horus/strings/chrono.h"  // IWYU pragma: keep
 #include "horus/strings/stdio.h"
@@ -21,7 +24,7 @@
 int main(int argc, const char* argv[]) {
   const horus::Span<const char*> args{argv, static_cast<std::size_t>(argc)};
 
-  horus::Sdk::ServiceResolutionMap service_map;
+  horus::RpcServices::ServiceResolutionMap service_map;
   if (!horus::ParseArgs(service_map.notification, args)) {
     return 1;
   }
@@ -48,7 +51,7 @@ int main(int argc, const char* argv[]) {
                classifications.reserve(rows * cols);
 
                constexpr std::uint32_t const kNumCountBits{29U};
-               for (std::uint32_t cell : event.grid().cells()) {
+               for (const std::uint32_t cell : event.grid().cells()) {
                  std::uint32_t const value{cell >> kNumCountBits};
                  std::uint32_t const count{cell & ((1U << kNumCountBits) - 1U)};
                  for (std::uint32_t i{0}; i < count; ++i) {

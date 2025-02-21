@@ -20,6 +20,7 @@
 #include "horus/pb/rpc_pb.h"
 #include "horus/rpc/endpoint.h"
 #include "horus/rpc/retry_policy.h"
+#include "horus/rpc/services.h"
 #include "horus/testing/timing.h"
 #include "horus/testing/ws_server.h"
 
@@ -56,7 +57,10 @@ TEST(Sdk, SubscribeToLogs) {
       return weak_endpoint.lock();
     };
 
-    Sdk sdk{Sdk::ServiceResolutionMap{/*notification=*/{"127.0.0.1", server.Port()}}};
+    RpcServices::ServiceResolutionMap service_map{};
+    service_map.notification = {"127.0.0.1", server.Port()};
+
+    Sdk sdk{service_map};
     std::atomic<std::int32_t> log_count{0};
     FLAKY_EXPECT_EQ(get_endpoint(), nullptr);
     FLAKY_EXPECT_EQ(server.ClientCount(), 0);

@@ -48,8 +48,22 @@ class TryFuture final : public Future<FutureResult<F>> {
 };
 
 /// Returns a future that attempts to drive `future` to completion, catching exceptions using the
-/// given `handlers`. If a handler which takes no argument is given, it will be executed no matter
-/// whether an exception was caught or not.
+/// given `handlers`.
+///
+/// - If a handler which takes no argument is given, it will be executed no matter
+///   whether an exception was caught or not.
+/// - Otherwise, it will be executed if an exception with a matching type is thrown.
+///   In that case, and especially if you want to throw an error in this handler, make sure to
+///   explicitely specify the handler's return type to the original return type of the `Try()`
+///   future.
+///
+/// Example:
+///
+///   Try(ResolveWith<std::uint8_t>(0), [](std::runtime_error const& error) -> std::uint8_t {
+///      throw MyCustomException(error.what());
+///   }, []() {
+///      Log("Execution finished");
+///   });
 template <class F, class... Handlers>
 inline TryFuture<F, Handlers...> Try(F&& future, Handlers&&... handlers) noexcept {
   return TryFuture<F, Handlers...>{std::forward<F>(future), std::forward<Handlers>(handlers)...,
@@ -57,6 +71,18 @@ inline TryFuture<F, Handlers...> Try(F&& future, Handlers&&... handlers) noexcep
 }
 
 /// `Pipe()` operator which handles exceptions thrown by a future.
+///
+/// This can be considered as the piped version of `Try()` future.
+/// Please also make sure to explicitely define the return type of your handlers, especially if you
+/// want to throw an exception.
+///
+/// Example:
+///
+///   ResolveWith<std::uint8_t>(0) | Catch([](std::runtime_error const& error) -> std::uint8_t {
+///      throw MyCustomException(error.what());
+///   }, []() {
+///      Log("Execution finished");
+///   });
 template <class... Handlers>
 inline FutureOperator<TryFuture, void, Handlers...> Catch(Handlers&&... handlers) noexcept {
   return FutureOperator<TryFuture, void, Handlers...>{std::forward<Handlers>(handlers)...,

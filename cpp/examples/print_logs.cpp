@@ -7,10 +7,10 @@
 /// service, so even if it is not running no error message will be printed.
 
 #include <cstddef>
-#include <cstdlib>
 
 #include "examples/helpers.h"
 #include "horus/pb/logs/message_pb.h"
+#include "horus/rpc/services.h"
 #include "horus/sdk.h"
 #include "horus/sdk/logs.h"
 #include "horus/strings/ansi.h"
@@ -23,7 +23,7 @@
 int main(int argc, const char* argv[]) {
   const horus::Span<const char*> args{argv, static_cast<std::size_t>(argc)};
 
-  horus::Sdk::ServiceResolutionMap service_map;
+  horus::RpcServices::ServiceResolutionMap service_map;
   if (!horus::ParseArgs(service_map.notification, args)) {
     return 1;
   }
