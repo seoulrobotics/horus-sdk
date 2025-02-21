@@ -11,7 +11,7 @@
 #include <mutex>
 #include <utility>
 
-#include "horus/sdk.h"
+#include "horus/rpc/services.h"
 #include "horus/types/span.h"
 #include "horus/types/string_view.h"
 
@@ -20,7 +20,7 @@ namespace {
 
 /// Parses a `<host>:<port>` or `<port>` `url` into `entry`. If unsuccessful, prints an error on
 /// `stderr` and returns `false`.
-bool ParseServiceEntry(Sdk::ServiceResolutionMap::Entry& entry, StringView url) noexcept {
+bool ParseServiceEntry(RpcServices::ServiceResolutionMap::Entry& entry, StringView url) noexcept {
   url = StripSuffix(StripPrefix(url, "ws://"), "/");
 
   StringView::size_type const colon_index{url.find(':')};
@@ -47,7 +47,8 @@ bool ParseServiceEntry(Sdk::ServiceResolutionMap::Entry& entry, StringView url) 
 
 }  // namespace
 
-bool ParseArgs(Sdk::ServiceResolutionMap::Entry& entry, Span<const char* const> args) noexcept {
+bool ParseArgs(RpcServices::ServiceResolutionMap::Entry& entry,
+               Span<const char* const> args) noexcept {
   if (args.size() <= 1) {
     return true;
   }
@@ -58,13 +59,16 @@ bool ParseArgs(Sdk::ServiceResolutionMap::Entry& entry, Span<const char* const> 
   return ParseServiceEntry(entry, args[1]);
 }
 
-bool ParseArgs(Sdk::ServiceResolutionMap& entries, Span<const char* const> args) noexcept {
-  const std::array<std::pair<StringView, Sdk::ServiceResolutionMap::Entry*>, 3> arg_entries{
-      std::pair<StringView, Sdk::ServiceResolutionMap::Entry*>("--detection=", &entries.detection),
-      std::pair<StringView, Sdk::ServiceResolutionMap::Entry*>("--notification=",
-                                                               &entries.notification),
-      std::pair<StringView, Sdk::ServiceResolutionMap::Entry*>("--point-aggregator=",
-                                                               &entries.point_aggregator),
+bool ParseArgs(RpcServices::ServiceResolutionMap& entries, Span<const char* const> args) noexcept {
+  const std::array<std::pair<StringView, RpcServices::ServiceResolutionMap::Entry*>, 4> arg_entries{
+      std::pair<StringView, RpcServices::ServiceResolutionMap::Entry*>("--detection=",
+                                                                       &entries.detection),
+      std::pair<StringView, RpcServices::ServiceResolutionMap::Entry*>("--notification=",
+                                                                       &entries.notification),
+      std::pair<StringView, RpcServices::ServiceResolutionMap::Entry*>("--point-aggregator=",
+                                                                       &entries.point_aggregator),
+      std::pair<StringView, RpcServices::ServiceResolutionMap::Entry*>("--project-manager=",
+                                                                       &entries.project_manager),
   };
   for (const StringView arg : args.subspan(1)) {
     bool found{false};

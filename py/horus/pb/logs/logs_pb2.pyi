@@ -1084,3 +1084,11 @@ class CalibrationAccumulatingPointsInfo(_message.Message):
 class SparseNoiseFilterUsageNonRotationalLidars(_message.Message):
     __slots__ = ()
     def __init__(self) -> None: ...
+
+class FileWriteError(_message.Message):
+    __slots__ = ("filename", "details")
+    FILENAME_FIELD_NUMBER: _ClassVar[int]
+    DETAILS_FIELD_NUMBER: _ClassVar[int]
+    filename: str
+    details: str
+    def __init__(self, filename: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...

@@ -11,6 +11,8 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/pb/config/metadata_pb.h"
+#include "horus/pb/cow_bytes.h"
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
@@ -33,7 +35,7 @@ namespace pb {
 /// / @note The maximum number of classification enum values supported is 2^3=8.
 /// / @see `OccupancyGrid` message and `occupancy_map_constants` for more details.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:8:1
+/// Source: horus/pb/preprocessing/messages.proto:10:1
 enum class OccupancyClassification : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kOccupancyclassificationUnspecified = 0,
@@ -50,10 +52,37 @@ enum class OccupancyClassification : PbEnum {  // NOLINT(*-enum-size)
   kUnknownWireValue = 5,
 };
 
+/// Sensor status enum.
+///  @note Each enum value should be a power of two.
+///  @note No status should have the same value.
+///
+/// Source: horus/pb/preprocessing/messages.proto:61:1
+enum class SensorStatus : PbEnum {  // NOLINT(*-enum-size)
+  /// No documentation.
+  kUnspecified = 0,
+  /// No documentation.
+  kNoData = 1,
+  /// No documentation.
+  kReceivingData = 2,
+  /// No documentation.
+  kLowFrequency = 4,
+  /// No documentation.
+  kHighFrequency = 8,
+  /// No documentation.
+  kTilted = 16,
+  /// No documentation.
+  kObstructed = 32,
+
+  /// Unknown value read from the wire.
+  kUnknownWireValue = 33,
+};
+
 // MARK: Message forward declarations
 
 class OccupancyGrid;
 class OccupancyGridEvent;
+class SensorInfo_PoseCorrection;
+class SensorInfo;
 
 // MARK: Message declarations
 
@@ -62,7 +91,7 @@ class OccupancyGridEvent;
 /// / Consecutive cells of the same classification are compressed into a single
 /// / uint32.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:21:1
+/// Source: horus/pb/preprocessing/messages.proto:23:1
 class OccupancyGrid final : public PbMessage {
  public:
 
@@ -274,7 +303,7 @@ class OccupancyGrid final : public PbMessage {
 /// /     `grid_x = floor((point.x - x_min) / resolution)`
 /// /     `grid_y = floor((point.y - y_min) / resolution)`
 ///
-/// Source: horus/pb/preprocessing/messages.proto:47:1
+/// Source: horus/pb/preprocessing/messages.proto:49:1
 class OccupancyGridEvent final : public PbMessage {
  public:
 
@@ -582,6 +611,412 @@ class OccupancyGridEvent final : public PbMessage {
   std::bitset<6> set_fields_;
 };
 
+/// No documentation.
+///
+/// Source: horus/pb/preprocessing/messages.proto:79:3
+class SensorInfo_PoseCorrection final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `SensorInfo_PoseCorrection`.
+  SensorInfo_PoseCorrection() noexcept = default;
+
+  /// Move constructor.
+  SensorInfo_PoseCorrection(SensorInfo_PoseCorrection&&) noexcept = default;
+  /// Move assignment operator.
+  SensorInfo_PoseCorrection& operator=(SensorInfo_PoseCorrection&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit SensorInfo_PoseCorrection(const SensorInfo_PoseCorrection& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  SensorInfo_PoseCorrection& operator=(const SensorInfo_PoseCorrection&) = delete;
+
+  /// Default destructor.
+  ~SensorInfo_PoseCorrection() noexcept final = default;
+
+  /// Creates a `SensorInfo_PoseCorrection` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit SensorInfo_PoseCorrection(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.SensorInfo.PoseCorrection`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.SensorInfo.PoseCorrection"; }
+
+  /// The full name of the message: `horus.pb.SensorInfo.PoseCorrection`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `translation` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const Vector3f& translation() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return translation_;
+  }
+
+  /// If `translation` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  Vector3f translation() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(translation_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  Vector3f& mutable_translation() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return translation_;
+  }
+
+  /// Returns whether `translation` (no 1) is set.
+  constexpr bool has_translation() const noexcept { return set_fields_[0]; }
+
+  /// Clears `translation` (no 1).
+  void clear_translation() & noexcept {
+    set_fields_[0] = false;
+    translation_ = {};
+  }
+
+  /// Sets `translation` (no 1) and returns `*this`.
+  SensorInfo_PoseCorrection& set_translation(Vector3f&& translation) & noexcept {
+    set_fields_[0] = true;
+    translation_ = std::move(translation);
+    return *this;
+  }
+  /// Sets `translation` (no 1) and returns `*this`.
+  SensorInfo_PoseCorrection&& set_translation(Vector3f&& translation) && noexcept {
+    return std::move(set_translation(std::move(translation)));
+  }
+
+  // Field `rotation` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const Quaterniond& rotation() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return rotation_;
+  }
+
+  /// If `rotation` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  Quaterniond rotation() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(rotation_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  Quaterniond& mutable_rotation() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return rotation_;
+  }
+
+  /// Returns whether `rotation` (no 2) is set.
+  constexpr bool has_rotation() const noexcept { return set_fields_[1]; }
+
+  /// Clears `rotation` (no 2).
+  void clear_rotation() & noexcept {
+    set_fields_[1] = false;
+    rotation_ = {};
+  }
+
+  /// Sets `rotation` (no 2) and returns `*this`.
+  SensorInfo_PoseCorrection& set_rotation(Quaterniond&& rotation) & noexcept {
+    set_fields_[1] = true;
+    rotation_ = std::move(rotation);
+    return *this;
+  }
+  /// Sets `rotation` (no 2) and returns `*this`.
+  SensorInfo_PoseCorrection&& set_rotation(Quaterniond&& rotation) && noexcept {
+    return std::move(set_rotation(std::move(rotation)));
+  }
+
+ private:
+  /// @see translation()
+  Vector3f translation_{};
+  /// @see rotation()
+  Quaterniond rotation_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// No documentation.
+///
+/// Source: horus/pb/preprocessing/messages.proto:71:1
+class SensorInfo final : public PbMessage {
+ public:
+  /// @see SensorInfo_PoseCorrection
+  using PoseCorrection = SensorInfo_PoseCorrection;
+
+  /// Constructs a default-initialized `SensorInfo`.
+  SensorInfo() noexcept = default;
+
+  /// Move constructor.
+  SensorInfo(SensorInfo&&) noexcept = default;
+  /// Move assignment operator.
+  SensorInfo& operator=(SensorInfo&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit SensorInfo(const SensorInfo& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  SensorInfo& operator=(const SensorInfo&) = delete;
+
+  /// Default destructor.
+  ~SensorInfo() noexcept final = default;
+
+  /// Creates a `SensorInfo` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit SensorInfo(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.SensorInfo`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.SensorInfo"; }
+
+  /// The full name of the message: `horus.pb.SensorInfo`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `lidar_id` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 1) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[0]; }
+
+  /// Clears `lidar_id` (no 1).
+  void clear_lidar_id() & noexcept {
+    set_fields_[0] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  SensorInfo& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[0] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  SensorInfo&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `status` (no 2).
+  // -----
+
+  /// Status as uint32, each status is combined using bitwise OR.
+  ///
+  /// Field no: 2.
+  constexpr std::uint32_t status() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return status_;
+  }
+
+  /// Status as uint32, each status is combined using bitwise OR.
+  ///
+  /// Field no: 2.
+  std::uint32_t& mutable_status() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return status_;
+  }
+
+  /// Returns whether `status` (no 2) is set.
+  constexpr bool has_status() const noexcept { return set_fields_[1]; }
+
+  /// Clears `status` (no 2).
+  void clear_status() & noexcept {
+    set_fields_[1] = false;
+    status_ = {};
+  }
+
+  /// Sets `status` (no 2) and returns `*this`.
+  SensorInfo& set_status(std::uint32_t status) & noexcept {
+    set_fields_[1] = true;
+    status_ = status;
+    return *this;
+  }
+  /// Sets `status` (no 2) and returns `*this`.
+  SensorInfo&& set_status(std::uint32_t status) && noexcept {
+    return std::move(set_status(status));
+  }
+
+  // Field `measured_frequency` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr double measured_frequency() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return measured_frequency_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  double& mutable_measured_frequency() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return measured_frequency_;
+  }
+
+  /// Returns whether `measured_frequency` (no 3) is set.
+  constexpr bool has_measured_frequency() const noexcept { return set_fields_[2]; }
+
+  /// Clears `measured_frequency` (no 3).
+  void clear_measured_frequency() & noexcept {
+    set_fields_[2] = false;
+    measured_frequency_ = {};
+  }
+
+  /// Sets `measured_frequency` (no 3) and returns `*this`.
+  SensorInfo& set_measured_frequency(double measured_frequency) & noexcept {
+    set_fields_[2] = true;
+    measured_frequency_ = measured_frequency;
+    return *this;
+  }
+  /// Sets `measured_frequency` (no 3) and returns `*this`.
+  SensorInfo&& set_measured_frequency(double measured_frequency) && noexcept {
+    return std::move(set_measured_frequency(measured_frequency));
+  }
+
+  // Field `pose_correction` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr const SensorInfo_PoseCorrection& pose_correction() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return pose_correction_;
+  }
+
+  /// If `pose_correction` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  SensorInfo_PoseCorrection pose_correction() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(pose_correction_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  SensorInfo_PoseCorrection& mutable_pose_correction() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return pose_correction_;
+  }
+
+  /// Returns whether `pose_correction` (no 4) is set.
+  constexpr bool has_pose_correction() const noexcept { return set_fields_[3]; }
+
+  /// Clears `pose_correction` (no 4).
+  void clear_pose_correction() & noexcept {
+    set_fields_[3] = false;
+    pose_correction_ = {};
+  }
+
+  /// Sets `pose_correction` (no 4) and returns `*this`.
+  SensorInfo& set_pose_correction(SensorInfo_PoseCorrection&& pose_correction) & noexcept {
+    set_fields_[3] = true;
+    pose_correction_ = std::move(pose_correction);
+    return *this;
+  }
+  /// Sets `pose_correction` (no 4) and returns `*this`.
+  SensorInfo&& set_pose_correction(SensorInfo_PoseCorrection&& pose_correction) && noexcept {
+    return std::move(set_pose_correction(std::move(pose_correction)));
+  }
+
+ private:
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see status()
+  std::uint32_t status_{};
+  /// @see measured_frequency()
+  double measured_frequency_{};
+  /// @see pose_correction()
+  SensorInfo_PoseCorrection pose_correction_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<4> set_fields_;
+};
+
 }  // namespace pb
 }  // namespace sdk
 }  // namespace horus
@@ -680,6 +1115,114 @@ class PbTraits<horus::sdk::pb::OccupancyClassification> final {
   }
 };
 
+template <>
+class PbEnumTraits<horus::sdk::pb::SensorStatus> final {
+ public:
+  /// The full name of the enum: `horus.sdk.pb.SensorStatus`.
+  static constexpr StringView EnumName() noexcept { return "horus.sdk.pb.SensorStatus"; }
+
+  /// Returns the name of the given enumerator, or an empty string.
+  static constexpr StringView NameOf(horus::sdk::pb::SensorStatus value) noexcept {
+    switch (value) {
+      case horus::sdk::pb::SensorStatus::kUnspecified: {
+        return "SENSOR_STATUS_UNSPECIFIED";
+      }
+      case horus::sdk::pb::SensorStatus::kNoData: {
+        return "NO_DATA";
+      }
+      case horus::sdk::pb::SensorStatus::kReceivingData: {
+        return "RECEIVING_DATA";
+      }
+      case horus::sdk::pb::SensorStatus::kLowFrequency: {
+        return "LOW_FREQUENCY";
+      }
+      case horus::sdk::pb::SensorStatus::kHighFrequency: {
+        return "HIGH_FREQUENCY";
+      }
+      case horus::sdk::pb::SensorStatus::kTilted: {
+        return "TILTED";
+      }
+      case horus::sdk::pb::SensorStatus::kObstructed: {
+        return "OBSTRUCTED";
+      }
+      case horus::sdk::pb::SensorStatus::kUnknownWireValue:
+      default: {
+        return "";
+      }
+    }
+  }
+
+  /// Returns the value corresponding to the given name, or `default_value`.
+  static constexpr horus::sdk::pb::SensorStatus ValueOf(PbEnum value, horus::sdk::pb::SensorStatus default_value = horus::sdk::pb::SensorStatus::kUnknownWireValue) noexcept {
+    switch (value) {
+      case 0: {
+        return horus::sdk::pb::SensorStatus::kUnspecified;
+      }
+      case 1: {
+        return horus::sdk::pb::SensorStatus::kNoData;
+      }
+      case 2: {
+        return horus::sdk::pb::SensorStatus::kReceivingData;
+      }
+      case 4: {
+        return horus::sdk::pb::SensorStatus::kLowFrequency;
+      }
+      case 8: {
+        return horus::sdk::pb::SensorStatus::kHighFrequency;
+      }
+      case 16: {
+        return horus::sdk::pb::SensorStatus::kTilted;
+      }
+      case 32: {
+        return horus::sdk::pb::SensorStatus::kObstructed;
+      }
+      default: {
+        return default_value;
+      }
+    }
+  }
+
+  /// Returns the value corresponding to the given name, or `default_value`.
+  static constexpr horus::sdk::pb::SensorStatus ValueOf(StringView name, horus::sdk::pb::SensorStatus default_value = horus::sdk::pb::SensorStatus::kUnknownWireValue) noexcept {
+    if (name == "SENSOR_STATUS_UNSPECIFIED") {
+      return horus::sdk::pb::SensorStatus::kUnspecified;
+    }
+    if (name == "NO_DATA") {
+      return horus::sdk::pb::SensorStatus::kNoData;
+    }
+    if (name == "RECEIVING_DATA") {
+      return horus::sdk::pb::SensorStatus::kReceivingData;
+    }
+    if (name == "LOW_FREQUENCY") {
+      return horus::sdk::pb::SensorStatus::kLowFrequency;
+    }
+    if (name == "HIGH_FREQUENCY") {
+      return horus::sdk::pb::SensorStatus::kHighFrequency;
+    }
+    if (name == "TILTED") {
+      return horus::sdk::pb::SensorStatus::kTilted;
+    }
+    if (name == "OBSTRUCTED") {
+      return horus::sdk::pb::SensorStatus::kObstructed;
+    }
+    return default_value;
+  }
+};
+
+template <>
+class PbTraits<horus::sdk::pb::SensorStatus> final {
+ public:
+  /// Serializes `value` into `writer`.
+  static void Serialize(PbWriter& writer, PbTag tag, horus::sdk::pb::SensorStatus value) {
+    writer.Writer().add_enum(tag, static_cast<PbEnum>(value));
+  }
+
+  /// Deserializes `horus::sdk::pb::SensorStatus` from `reader`.
+  static horus::sdk::pb::SensorStatus Deserialize(PbReader& reader) {
+    return PbEnumTraits<horus::sdk::pb::SensorStatus>::ValueOf(reader.Reader().get_enum());
+  }
+};
+
 }  // namespace horus
 
 namespace horus {
@@ -690,6 +1233,12 @@ namespace pb {
 template <class Sink>
 void HorusStringify(Sink& sink, OccupancyClassification value) noexcept(noexcept(sink.Append(StringView{}))) {
   sink.Append(PbEnumTraits<OccupancyClassification>::NameOf(value));
+}
+
+/// Appends `value` to `sink`.
+template <class Sink>
+void HorusStringify(Sink& sink, SensorStatus value) noexcept(noexcept(sink.Append(StringView{}))) {
+  sink.Append(PbEnumTraits<SensorStatus>::NameOf(value));
 }
 
 }  // namespace pb

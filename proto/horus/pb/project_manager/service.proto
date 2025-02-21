@@ -1,0 +1,172 @@
+syntax = "proto3";
+
+package horus.pb;
+
+import "horus/pb/logs/logs.proto";
+
+import "horus/pb/preprocessing/messages.proto";
+import "horus/pb/license_server/messages.proto";
+import "horus/pb/rpc.proto";
+
+service ProjectManagerService {
+  option (service_options) = {
+    id: 3
+    description: "Service which stores configuration for all other services "
+                 "and coordinates updates to this configuration."
+  };
+
+  rpc GetHealthStatus(GetHealthStatusRequest)
+      returns (GetHealthStatusResponse) {
+    option (method_options) = {
+      id: 38
+      description: "Provides horus health indicators."
+    };
+  }
+}
+
+// Different actions allowed by a license level
+// Encoded through a bitwise encoding
+enum LicensePrivilege {
+  LICENSE_PRIVILEGE_UNSPECIFIED = 0;
+
+  // ---------- LEVEL 1 ----------
+  // Generic privilege granted by each level.
+  LOWEST = 1;
+  // Allow calls to RPC endpoint Subscribe().
+  SUBSCRIBE = 2;
+
+  // ---------- LEVEL 2 ----------
+  // Allow calls to license management RPC endpoints:
+  // GetLicenseStatus, DownloadLicenseKeyFile, UploadLicenseKey
+  LICENSE_ACTIONS = 4;
+
+  // ---------- LEVEL 3 ----------
+  // Allow any read action on config.
+  READ = 8;
+
+  // ---------- LEVEL 4 ----------
+  // Allow any config changes.
+  WRITE = 16;
+}
+
+message LicenseLevel {
+  // We are using such fields number to easily be able to add other license
+  // levels in the future.
+  oneof level {
+    Level1 level_1 = 10;
+    Level2 level_2 = 20;
+    Level3 level_3 = 30;
+    Level4 level_4 = 40;
+  }
+
+  // Bitset of granted privileges; hard-coded for each level.
+  // Refers to LicensePrivilege.
+  uint32 privilege = 60;
+
+  message Level1 {
+    oneof reason {
+      logs.LicenseServerConnectionError license_server_unreachable = 1;
+    }
+  }
+  message Level2 {
+    oneof reason {
+      logs.LicenseNotFoundError license_not_found = 1;
+    }
+  }
+  message Level3 {
+    oneof reason {
+      logs.LicenseExpiredError license_expired = 1;
+      logs.LicenseServerConnectionError license_server_disconnected = 2;
+    }
+  }
+  message Level4 {
+    oneof reason {
+      logs.LicenseActiveInfo license_active = 1;
+    }
+  }
+}
+
+message LicenseStatus {
+  LicenseLevel license_level = 1;
+
+  // If level is inferior to 3, this field is unset
+  optional LicenseInfo license_info = 2;
+}
+
+;
+
+;
+
+;
+
+;
+
+;
+
+;
+
+;
+
+;
+
+;
+
+;
+
+;
+
+message GetHealthStatusRequest {}
+
+// Report of the health status of horus.
+// It gathers information about:
+// - License
+// - Lidar status
+// - Services connectivity
+message GetHealthStatusResponse {
+  // Connectivity status of a single node.
+  message NodeHealth {
+    // Service represented by the node.
+    enum Service {
+      SERVICE_UNSPECIFIED = 0;
+      SERVICE_DETECTION = 1;
+      SERVICE_LIDAR_RUNNER = 2;
+      SERVICE_NOTIFICATION = 3;
+      SERVICE_POINT_AGGREGATOR = 4;
+      SERVICE_PREPROCESSING = 5;
+      SERVICE_PROJECT_MANAGER = 6;
+    }
+
+    // Connectivity status.
+    enum Status {
+      STATUS_UNSPECIFIED = 0;
+      STATUS_UNREACHABLE = 1;
+      STATUS_ALIVE = 2;
+    }
+    Service service = 1;
+    string node_id = 2;
+    Status node_status = 3;
+  }
+
+  // Wraps SensorInfo with node unreachable error
+  message SensorHealth {
+    // ID of the preprocessing node managing the sensor
+    string preprocessing_node_id = 1;
+    // Info of the sensor
+    SensorInfo info = 2;
+    // Set if we could not connect to the node
+    oneof node_unreachable_error {
+      logs.ServiceConnectionTimedOut timeout = 3;
+    }
+  }
+
+  LicenseStatus license_status = 1;
+  // Connectivity status of the sensors.
+  // If enum status is set to SENSOR_STATUS_UNSPECIFIED, it means that the
+  // preprocessing node managing the sensor could not be reached.
+  // This specific value will be interpreted as "Sensor unreachable" by the
+  // clients.
+  repeated SensorHealth sensor_statuses = 2;
+
+  // Connectivity status of each node.
+  repeated NodeHealth service_statuses = 3;
+}

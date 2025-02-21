@@ -2,6 +2,7 @@
 
 #include <atomic>
 #include <cassert>
+#include <chrono>
 #include <exception>
 #include <functional>
 #include <memory>
@@ -13,6 +14,7 @@
 #include "horus/event_loop/event_loop.h"
 #include "horus/functional/move_only_function.h"
 #include "horus/future/any.h"
+#include "horus/future/attach.h"
 #include "horus/future/channel.h"
 #include "horus/future/future.h"
 #include "horus/future/loop.h"
@@ -36,12 +38,15 @@
 #include "horus/pb/point_aggregator/point_aggregator_service_handler.h"
 #include "horus/pb/preprocessing/messages_pb.h"
 #include "horus/pb/profiling_pb.h"
+#include "horus/pb/project_manager/service_client.h"
+#include "horus/pb/project_manager/service_pb.h"
 #include "horus/pb/rpc_pb.h"
 #include "horus/rpc/base_client.h"
 #include "horus/rpc/client_handler.h"
 #include "horus/rpc/endpoint.h"
 #include "horus/rpc/retry_policy.h"
 #include "horus/rpc/ws.h"
+#include "horus/sdk/health.h"
 #include "horus/sdk/logs.h"
 #include "horus/sdk/objects.h"
 #include "horus/sdk/point_clouds.h"
@@ -242,6 +247,27 @@ SdkFuture<SdkSubscription> Sdk::SubscribeToSensorInfo(
       });
   return CreateSubscription<pb::NotificationServiceClient>(
       service_map_.notification, std::move(listener), pb::DefaultSubscribeRequest{});
+}
+
+Sdk::Future<sdk::HealthStatus> Sdk::GetHealthStatus(sdk::GetHealthStatusRequest&& request) {
+  // clang tidy triggers an error because request is trivially copyable
+  static_cast<void>(
+      sdk::GetHealthStatusRequest{std::move(request)});  // NOLINT (hicpp-move-const-arg)
+  return CreateFuture(ConnectedWebSocket(service_map_.project_manager.host,
+                                         service_map_.project_manager.port, CreateClientHandler()) |
+                      Then([](std::shared_ptr<RpcEndpoint>&& endpoint)
+                               -> AnyFuture<sdk::pb::GetHealthStatusResponse> {
+                        sdk::pb::ProjectManagerServiceClient client{endpoint};
+                        return client.GetHealthStatus(
+                                   sdk::pb::GetHealthStatusRequest{},
+                                   RetryClientDefault().WithTimeout(std::chrono::seconds{2})) |
+                               Attach(std::move(endpoint));
+                      }) |
+                      Map([](sdk::pb::GetHealthStatusResponse&& rpc_response) -> sdk::HealthStatus {
+                        // clang-tidy wants us to move rpc_response, which would have no effect,
+                        // since it is trivially copyable NOLINTNEXTLINE(*-move-const-arg)
+                        return sdk::HealthStatus{std::move(rpc_response)};
+                      }));
 }
 
 // static

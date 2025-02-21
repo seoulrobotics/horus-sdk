@@ -180,6 +180,7 @@ add_library(horus_core
   horus/future/rejected.h
   horus/future/resolved.h
   horus/future/run.h
+  horus/future/shared.h
   horus/future/signal.cpp
   horus/future/signal.h
   horus/future/then.h
@@ -267,6 +268,9 @@ add_library(horus_sdk
   horus/rpc/services.h
   horus/sdk.cpp
   horus/sdk.h
+  horus/sdk/errors.h
+  horus/sdk/health.cpp
+  horus/sdk/health.h
   horus/sdk/logs.cpp
   horus/sdk/logs.h
   horus/sdk/objects.h
@@ -297,6 +301,7 @@ if(HORUS_SDK_BUILD_TESTING)
     horus/future/join_test.cpp
     horus/future/loop_test.cpp
     horus/future/race_test.cpp
+    horus/future/shared_test.cpp
     horus/future/then_test.cpp
     horus/future/time_test.cpp
     horus/future/try_test.cpp
@@ -333,7 +338,7 @@ if(HORUS_SDK_BUILD_TESTING)
 endif()
 
 if(HORUS_SDK_BUILD_EXAMPLES)
-  foreach(example print_logs print_events)
+  foreach(example print_logs print_events print_health_status print_occupancy_map)
     add_executable(horus_example_${example}
       examples/${example}.cpp
       examples/helpers.cpp

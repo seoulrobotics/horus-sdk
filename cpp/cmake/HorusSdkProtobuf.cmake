@@ -13,6 +13,8 @@ set(horus_core_pb_sources
   horus/pb/detection_service/detection_service_client.h
   horus/pb/detection_service/detection_service_handler.h
   horus/pb/detection_service/detection_service_handler.cpp
+  horus/pb/license_server/messages_pb.h
+  horus/pb/license_server/messages_pb.cpp
   horus/pb/logs/common_pb.h
   horus/pb/logs/common_pb.cpp
   horus/pb/logs/logs_pb.h
@@ -37,6 +39,11 @@ set(horus_core_pb_sources
   horus/pb/preprocessing/messages_pb.cpp
   horus/pb/profiling_pb.h
   horus/pb/profiling_pb.cpp
+  horus/pb/project_manager/service_pb.h
+  horus/pb/project_manager/service_pb.cpp
+  horus/pb/project_manager/service_client.h
+  horus/pb/project_manager/service_handler.h
+  horus/pb/project_manager/service_handler.cpp
   horus/pb/rpc_pb.h
   horus/pb/rpc_pb.cpp
   horus/pb/rpc/message_pb.h

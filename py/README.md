@@ -24,6 +24,20 @@ python3 examples/print_logs.py
 
 ## Development
 
+Make sure you are in a virtual environment:
+
+```sh
+python3 -m venv .env
+source .env/bin/activate
+```
+
+To install the `horus` package locally, without having to rebuild every time you
+do a change, you can use:
+
+```sh
+python3 -m pip install -e .
+```
+
 [`mypy`](https://github.com/python/mypy) is used for type-checking:
 
 ```sh

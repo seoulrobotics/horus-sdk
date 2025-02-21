@@ -327,7 +327,7 @@ func FormatAnyLogMessage(message proto.Message) string {
 	case *logs_pb.PreprocessingServicePipelineUnavailable:
 		return fmt.Sprintf("Preprocessing service pipeline is not available yet due to %v.", data.GetReason())
 	case *logs_pb.CircularRecordingDisabledWarning:
-		return fmt.Sprintf("The circular recording is disabled: %v", data.GetReason())
+		return fmt.Sprintf("The timeframe snapshot is disabled: %v", data.GetReason())
 	case *logs_pb.SnapshotAlreadyRunningWarning:
 		return "A snapshot is already running."
 	case *logs_pb.ActiveProjectChangedInfo:
@@ -340,6 +340,8 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return fmt.Sprintf("Calibration is accumulating points for %v", data.GetTime())
 	case *logs_pb.SparseNoiseFilterUsageNonRotationalLidars:
 		return "The sparse noise filter cannot be used with non-rotational lidars."
+	case *logs_pb.FileWriteError:
+		return fmt.Sprintf("Failed to write to file \"%v\": \"%v\".", data.GetFilename(), data.GetDetails())
 	default:
 		return "unknown log message"
 	}

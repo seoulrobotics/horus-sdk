@@ -93,7 +93,7 @@ class AnyFuture final : public Future<T> {
   /// Move-assigns a future.
   AnyFuture& operator=(AnyFuture&& other) noexcept {
     if (this != &other) {
-      ~AnyFuture();
+      this->~AnyFuture();
       new (this) AnyFuture{std::move(other)};
     }
     return *this;
