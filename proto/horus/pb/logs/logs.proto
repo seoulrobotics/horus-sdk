@@ -1203,3 +1203,11 @@ message CalibrationAccumulatingPointsInfo {
 // > The sparse noise filter cannot be used with non-rotational lidars.
 message SparseNoiseFilterUsageNonRotationalLidars {
 }
+
+// Log #166.
+//
+// > Failed to write to file "$filename": "$details".
+message FileWriteError {
+  string filename = 1;
+  string details = 2;
+}

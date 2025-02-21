@@ -173,9 +173,9 @@ class PointAggregatorServiceListener(PointAggregatorSubscriberServiceHandler):
 
     @override
     async def broadcast_processed_points(
-        self, request: point_message_pb2.AggregatedPointEvents
+        self, _: point_message_pb2.AggregatedPointEvents
     ) -> None:
-        raise NotImplementedError
+        pass
 
     def has_no_subscriber(self) -> bool:
         return not self._on_occupancy_grid_event

@@ -340,6 +340,8 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return fmt.Sprintf("Calibration is accumulating points for %v", data.GetTime())
 	case *logs_pb.SparseNoiseFilterUsageNonRotationalLidars:
 		return "The sparse noise filter cannot be used with non-rotational lidars."
+	case *logs_pb.FileWriteError:
+		return fmt.Sprintf("Failed to write to file \"%v\": \"%v\".", data.GetFilename(), data.GetDetails())
 	default:
 		return "unknown log message"
 	}

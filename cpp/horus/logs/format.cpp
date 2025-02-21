@@ -829,6 +829,11 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     StrAppendToSink(sink, "The sparse noise filter cannot be used with non-rotational lidars.");
     break;
   }
+  case LogData::DataOneof::kFileWriteError: {
+    const logs::FileWriteError& data{log_data.file_write_error()};
+    StrAppendToSink(sink, "Failed to write to file \"", data.filename(), "\": \"", data.details(), "\".");
+    break;
+  }
   case LogData::DataOneof::kNotSet:
   default: {
     sink.Append("Unknown log message");

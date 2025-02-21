@@ -167,6 +167,7 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.INVALID_LIDAR_TIMESTAMP_FIELD_NUMBER: lambda m: f"Invalid timestamp {m.invalid_lidar_timestamp.timestamp} sent by lidar {m.invalid_lidar_timestamp.lidar_id}.",
     LogData.CALIBRATION_ACCUMULATING_POINTS_INFO_FIELD_NUMBER: lambda m: f"Calibration is accumulating points for {m.calibration_accumulating_points_info.time}",
     LogData.SPARSE_NOISE_FILTER_USAGE_NON_ROTATIONAL_LIDARS_FIELD_NUMBER: lambda m: f"The sparse noise filter cannot be used with non-rotational lidars.",
+    LogData.FILE_WRITE_ERROR_FIELD_NUMBER: lambda m: f"Failed to write to file \"{m.file_write_error.filename}\": \"{m.file_write_error.details}\".",
 }
 
 def _unknown_format(data: LogData) -> str:
