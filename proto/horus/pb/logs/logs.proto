@@ -1160,7 +1160,7 @@ message PreprocessingServicePipelineUnavailable {
 
 // Log #159.
 //
-// > The circular recording is disabled: $reason
+// > The timeframe snapshot is disabled: $reason
 message CircularRecordingDisabledWarning {
   string reason = 1;
 }
@@ -1202,4 +1202,12 @@ message CalibrationAccumulatingPointsInfo {
 //
 // > The sparse noise filter cannot be used with non-rotational lidars.
 message SparseNoiseFilterUsageNonRotationalLidars {
+}
+
+// Log #166.
+//
+// > Failed to write to file "$filename": "$details".
+message FileWriteError {
+  string filename = 1;
+  string details = 2;
 }
