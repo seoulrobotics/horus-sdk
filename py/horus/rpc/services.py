@@ -53,15 +53,24 @@ class RpcServices:
         port=40006,
     )
 
+    project_manager: RpcServiceInfo = RpcServiceInfo(
+        full_name="horus.pb.ProjectManagerService",
+        id=3,
+        host="127.0.0.1",
+        port=40003,
+    )
+
     def with_(self,
               /,
               detection: _Optional[RpcServiceInfo]=None,
               notification: _Optional[RpcServiceInfo]=None,
               point_aggregator: _Optional[RpcServiceInfo]=None,
+              project_manager: _Optional[RpcServiceInfo]=None,
              ) -> "RpcServices":
         """Returns a copy of `self` with services replaced as specified."""
         return RpcServices(
             detection=detection or self.detection,
             notification=notification or self.notification,
             point_aggregator=point_aggregator or self.point_aggregator,
+            project_manager=project_manager or self.project_manager,
         )

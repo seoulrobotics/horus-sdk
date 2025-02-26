@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+import "horus/pb/config/metadata.proto";
+
+package horus.pb;
+
+message LicenseInfo {
+  // Timestamp defining the license's end date of validity
+  Timestamp expiration_date = 1;
+  // Number of LiDAR devices running at the same time allowed by the license
+  uint32 lidar_count = 2;
+}

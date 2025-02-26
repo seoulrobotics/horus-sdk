@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package horus.pb;
 
+import "horus/pb/config/metadata.proto";
+
 /// The classification of the occupancy grid cell.
 /// @note The maximum number of classification enum values supported is 2^3=8.
 /// @see `OccupancyGrid` message and `occupancy_map_constants` for more details.
@@ -51,4 +53,31 @@ message OccupancyGridEvent {
   float y_min = 4;
   float y_max = 5;
   float resolution = 6;
+}
+
+// Sensor status enum.
+// @note Each enum value should be a power of two.
+// @note No status should have the same value.
+enum SensorStatus {
+  SENSOR_STATUS_UNSPECIFIED = 0;
+  NO_DATA = 1;
+  RECEIVING_DATA = 2;
+  LOW_FREQUENCY = 4;
+  HIGH_FREQUENCY = 8;
+  TILTED = 16;
+  OBSTRUCTED = 32;
+}
+
+message SensorInfo {
+  string lidar_id = 1;
+  // Status as uint32, each status is combined using bitwise OR.
+  uint32 status = 2;
+  double measured_frequency = 3;
+
+  optional PoseCorrection pose_correction = 4;
+
+  message PoseCorrection {
+    Vector3f translation = 1;
+    Quaterniond rotation = 2;
+  }
 }

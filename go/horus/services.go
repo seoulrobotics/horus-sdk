@@ -29,6 +29,7 @@ type Services struct {
 	Detection ServiceInfo
 	Notification ServiceInfo
 	PointAggregator ServiceInfo
+	ProjectManager ServiceInfo
 }
 
 // WithDetection returns a copy of s with its [Services.Detection] set to si.
@@ -46,6 +47,12 @@ func (s Services) WithNotification(si ServiceInfo) Services {
 // WithPointAggregator returns a copy of s with its [Services.PointAggregator] set to si.
 func (s Services) WithPointAggregator(si ServiceInfo) Services {
 	s.PointAggregator = si
+	return s
+}
+
+// WithProjectManager returns a copy of s with its [Services.ProjectManager] set to si.
+func (s Services) WithProjectManager(si ServiceInfo) Services {
+	s.ProjectManager = si
 	return s
 }
 
@@ -69,6 +76,12 @@ func DefaultServices() Services {
 			Id: 6,
 			Host: "127.0.0.1",
 			Port: 40006,
+		},
+		ProjectManager: ServiceInfo{
+			FullName: "horus.pb.ProjectManagerService",
+			Id: 3,
+			Host: "127.0.0.1",
+			Port: 40003,
 		},
 	}
 }

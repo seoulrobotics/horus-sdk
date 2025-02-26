@@ -1,6 +1,8 @@
 #include "horus/rpc/ws.h"
 
 #include <ixwebsocket/IXWebSocket.h>
+#include <ixwebsocket/IXWebSocketCloseInfo.h>
+#include <ixwebsocket/IXWebSocketErrorInfo.h>
 #include <ixwebsocket/IXWebSocketMessage.h>
 #include <ixwebsocket/IXWebSocketMessageType.h>
 
@@ -25,10 +27,12 @@
 #include <utility>
 
 #include "horus/event_loop/event_loop.h"
+#include "horus/functional/move_only_function.h"
 #include "horus/future/any.h"
 #include "horus/future/cancel.h"
 #include "horus/future/from_continuation.h"
 #include "horus/future/from_poll.h"
+#include "horus/future/future.h"
 #include "horus/future/map.h"
 #include "horus/future/poll.h"
 #include "horus/future/then.h"
@@ -361,7 +365,13 @@ void WebSocketRpcEndpoint::Initialize(std::shared_ptr<WebSocketRpcEndpoint> self
           response = std::move(self->pending_responses_[request_id]);
           self->used_pending_responses_.reset(request_id);
         }
-        static_cast<void>(response.continuation.ContinueWith(std::move(rpc_message)));
+        StringView const error{rpc_message.error().Str()};
+        if (error.empty()) {
+          static_cast<void>(response.continuation.ContinueWith(std::move(rpc_message)));
+        } else {
+          static_cast<void>(response.continuation.FailWith(
+              std::make_exception_ptr(RpcInternalError{std::string{error}})));
+        }
         break;
       }
       case ix::WebSocketMessageType::Open: {
@@ -713,8 +723,8 @@ class WebSocketConnectLifecycleCallback final {
       }
       case RpcEndpoint::LifecycleEvent::kTagFor<RpcEndpoint::ErrorEvent>: {
         if (failures_ == kMaxFailures) {
-          static_cast<void>(
-              continuation_.FailWith(lifecycle_event.As<RpcEndpoint::ErrorEvent>().error));
+          // We cannot properly connect -> return a disconnected error.
+          static_cast<void>(continuation_.FailWith(RpcEndpointDisconnectedError{}));
         } else {
           ++failures_;
           return;
