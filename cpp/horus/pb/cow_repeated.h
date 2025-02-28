@@ -23,7 +23,6 @@
 #include "horus/internal/attributes.h"
 #include "horus/internal/pointer_arithmetic.h"
 #include "horus/internal/pointer_cast.h"
-#include "horus/internal/type_traits.h"
 #include "horus/pb/buffer.h"
 #include "horus/pb/cow.h"
 #include "horus/pb/repeated_iterator.h"
@@ -100,7 +99,7 @@ class VectorBool final {
 ///
 /// Note that copying a `CowRepeated` internally storing an owned vector (because it was mutated)
 /// will make a copy of the vector.
-template <class T, bool kPacked = std::is_arithmetic<T>::value || std::is_enum<T>::value>
+template <class T, bool kPacked = std::is_arithmetic<T>::value>
 class CowRepeated;
 
 // MARK: CowRepeated<T, kPacked = true>
@@ -334,7 +333,7 @@ auto CowRepeated<T, /*kPacked=*/true>::Vector() noexcept(false) -> VectorT& {
 namespace horus_internal {
 
 /// `add_packed_*` and `get_packed_*` functions for `T`.
-template <class T, class Enable = void>
+template <class T>
 class PackedFns;
 
 template <>
@@ -371,13 +370,6 @@ class PackedFns<std::int64_t> {
   constexpr static auto kAddPacked =
       &protozero::pbf_writer::add_packed_int64<CowRepeated<std::int64_t, true>::const_iterator>;
   constexpr static auto kGetPacked = &protozero::pbf_reader::get_packed_int64;
-};
-template <class T>
-class PackedFns<T, VoidT<PbEnumTraits<T>>> {
- public:
-  constexpr static auto kAddPacked =
-      &protozero::pbf_writer::add_packed_enum<typename CowRepeated<T, true>::const_iterator>;
-  constexpr static auto kGetPacked = &protozero::pbf_reader::get_packed_enum;
 };
 
 }  // namespace horus_internal

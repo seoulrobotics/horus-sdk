@@ -16,7 +16,7 @@ TEST_ENUM_ONE: TestEnum
 TEST_ENUM_TWO: TestEnum
 
 class TestMessage(_message.Message):
-    __slots__ = ("float", "double", "i32", "i64", "u32", "u64", "bytes", "string", "submessage", "bool", "oneof_float", "oneof_double", "oneof_i32", "oneof_i64", "oneof_u32", "oneof_u64", "oneof_bytes", "oneof_string", "oneof_submessage", "oneof_bool", "rep_float", "rep_double", "rep_i32", "rep_i64", "rep_u32", "rep_u64", "rep_bytes", "rep_string", "rep_submessage", "rep_bool", "rep_enum")
+    __slots__ = ("float", "double", "i32", "i64", "u32", "u64", "bytes", "string", "submessage", "bool", "oneof_float", "oneof_double", "oneof_i32", "oneof_i64", "oneof_u32", "oneof_u64", "oneof_bytes", "oneof_string", "oneof_submessage", "oneof_bool", "rep_float", "rep_double", "rep_i32", "rep_i64", "rep_u32", "rep_u64", "rep_bytes", "rep_string", "rep_submessage", "rep_bool")
     class SubMessage(_message.Message):
         __slots__ = ("u32", "i32", "string")
         U32_FIELD_NUMBER: _ClassVar[int]
@@ -56,7 +56,6 @@ class TestMessage(_message.Message):
     REP_STRING_FIELD_NUMBER: _ClassVar[int]
     REP_SUBMESSAGE_FIELD_NUMBER: _ClassVar[int]
     REP_BOOL_FIELD_NUMBER: _ClassVar[int]
-    REP_ENUM_FIELD_NUMBER: _ClassVar[int]
     float: float
     double: float
     i32: int
@@ -87,5 +86,4 @@ class TestMessage(_message.Message):
     rep_string: _containers.RepeatedScalarFieldContainer[str]
     rep_submessage: _containers.RepeatedCompositeFieldContainer[TestMessage.SubMessage]
     rep_bool: _containers.RepeatedScalarFieldContainer[bool]
-    rep_enum: _containers.RepeatedScalarFieldContainer[TestEnum]
-    def __init__(self, float: _Optional[float] = ..., double: _Optional[float] = ..., i32: _Optional[int] = ..., i64: _Optional[int] = ..., u32: _Optional[int] = ..., u64: _Optional[int] = ..., bytes: _Optional[bytes] = ..., string: _Optional[str] = ..., submessage: _Optional[_Union[TestMessage.SubMessage, _Mapping]] = ..., bool: bool = ..., oneof_float: _Optional[float] = ..., oneof_double: _Optional[float] = ..., oneof_i32: _Optional[int] = ..., oneof_i64: _Optional[int] = ..., oneof_u32: _Optional[int] = ..., oneof_u64: _Optional[int] = ..., oneof_bytes: _Optional[bytes] = ..., oneof_string: _Optional[str] = ..., oneof_submessage: _Optional[_Union[TestMessage.SubMessage, _Mapping]] = ..., oneof_bool: bool = ..., rep_float: _Optional[_Iterable[float]] = ..., rep_double: _Optional[_Iterable[float]] = ..., rep_i32: _Optional[_Iterable[int]] = ..., rep_i64: _Optional[_Iterable[int]] = ..., rep_u32: _Optional[_Iterable[int]] = ..., rep_u64: _Optional[_Iterable[int]] = ..., rep_bytes: _Optional[_Iterable[bytes]] = ..., rep_string: _Optional[_Iterable[str]] = ..., rep_submessage: _Optional[_Iterable[_Union[TestMessage.SubMessage, _Mapping]]] = ..., rep_bool: _Optional[_Iterable[bool]] = ..., rep_enum: _Optional[_Iterable[_Union[TestEnum, str]]] = ...) -> None: ...
+    def __init__(self, float: _Optional[float] = ..., double: _Optional[float] = ..., i32: _Optional[int] = ..., i64: _Optional[int] = ..., u32: _Optional[int] = ..., u64: _Optional[int] = ..., bytes: _Optional[bytes] = ..., string: _Optional[str] = ..., submessage: _Optional[_Union[TestMessage.SubMessage, _Mapping]] = ..., bool: bool = ..., oneof_float: _Optional[float] = ..., oneof_double: _Optional[float] = ..., oneof_i32: _Optional[int] = ..., oneof_i64: _Optional[int] = ..., oneof_u32: _Optional[int] = ..., oneof_u64: _Optional[int] = ..., oneof_bytes: _Optional[bytes] = ..., oneof_string: _Optional[str] = ..., oneof_submessage: _Optional[_Union[TestMessage.SubMessage, _Mapping]] = ..., oneof_bool: bool = ..., rep_float: _Optional[_Iterable[float]] = ..., rep_double: _Optional[_Iterable[float]] = ..., rep_i32: _Optional[_Iterable[int]] = ..., rep_i64: _Optional[_Iterable[int]] = ..., rep_u32: _Optional[_Iterable[int]] = ..., rep_u64: _Optional[_Iterable[int]] = ..., rep_bytes: _Optional[_Iterable[bytes]] = ..., rep_string: _Optional[_Iterable[str]] = ..., rep_submessage: _Optional[_Iterable[_Union[TestMessage.SubMessage, _Mapping]]] = ..., rep_bool: _Optional[_Iterable[bool]] = ...) -> None: ...

@@ -1679,56 +1679,6 @@ class TestMessage final : public PbMessage {
     return std::move(set_rep_bool(std::move(rep_bool)));
   }
 
-  // Field `rep_enum` (no 31).
-  // -----
-
-  /// No documentation.
-  ///
-  /// Field no: 31.
-  constexpr const CowRepeated<TestEnum>& rep_enum() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
-    return rep_enum_;
-  }
-
-  /// If `rep_enum` is set, moves it out of the message (without marking it as unset).
-  ///
-  /// Otherwise, returns a default-initialized value.
-  ///
-  /// Field no: 31.
-  CowRepeated<TestEnum> rep_enum() && noexcept {
-    if (!set_fields_[30]) {
-      return {};
-    }
-    return std::move(rep_enum_);
-  }
-
-  /// No documentation.
-  ///
-  /// Field no: 31.
-  CowRepeated<TestEnum>& mutable_rep_enum() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
-    set_fields_[30] = true;
-    return rep_enum_;
-  }
-
-  /// Returns whether `rep_enum` (no 31) is set.
-  constexpr bool has_rep_enum() const noexcept { return set_fields_[30]; }
-
-  /// Clears `rep_enum` (no 31).
-  void clear_rep_enum() & noexcept {
-    set_fields_[30] = false;
-    rep_enum_ = {};
-  }
-
-  /// Sets `rep_enum` (no 31) and returns `*this`.
-  TestMessage& set_rep_enum(CowRepeated<TestEnum>&& rep_enum) & noexcept {
-    set_fields_[30] = true;
-    rep_enum_ = std::move(rep_enum);
-    return *this;
-  }
-  /// Sets `rep_enum` (no 31) and returns `*this`.
-  TestMessage&& set_rep_enum(CowRepeated<TestEnum>&& rep_enum) && noexcept {
-    return std::move(set_rep_enum(std::move(rep_enum)));
-  }
-
   // Oneof `test_oneof`.
   // -----
 
@@ -1873,14 +1823,12 @@ class TestMessage final : public PbMessage {
   CowRepeated<TestMessage_SubMessage> rep_submessage_{};
   /// @see rep_bool()
   CowRepeated<bool> rep_bool_{};
-  /// @see rep_enum()
-  CowRepeated<TestEnum> rep_enum_{};
 
   /// @see test_oneof_case()
   TestOneofOneof test_oneof_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<31> set_fields_;
+  std::bitset<30> set_fields_;
 };
 
 }  // namespace pb

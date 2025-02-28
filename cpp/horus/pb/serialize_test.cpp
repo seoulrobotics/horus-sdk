@@ -1,6 +1,5 @@
 #include "horus/pb/serialize.h"
 
-#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <horus/strings/str_cat.h>
 #include <unistd.h>  // IWYU pragma: keep
@@ -23,9 +22,6 @@
 
 namespace horus {
 namespace {
-
-using ::testing::ElementsAre;
-using ::testing::Eq;
 
 // spell-checker: ignore textpb
 
@@ -128,8 +124,7 @@ TEST(Serialize, AllFields) {
               CowRepeated<pb::TestMessage::SubMessage>{}
                   .Add(pb::TestMessage::SubMessage{}.set_string(CowBytes::Borrowed("ghi")))
                   .Add())
-          .set_rep_bool(CowRepeated<bool>{true, false})
-          .set_rep_enum(CowRepeated<pb::TestEnum>{pb::TestEnum::kOne, pb::TestEnum::kTwo}),
+          .set_rep_bool(CowRepeated<bool>{true, false}),
       R"pb(
         float: 1.
         double: 2.
@@ -164,8 +159,6 @@ TEST(Serialize, AllFields) {
         rep_submessage {}
         rep_bool: true
         rep_bool: false
-        rep_enum: TEST_ENUM_ONE
-        rep_enum: TEST_ENUM_TWO
       )pb",
       [](const pb::TestMessage& test_message) {
         EXPECT_EQ(test_message.float_(), 1.F);
@@ -187,9 +180,6 @@ TEST(Serialize, AllFields) {
         EXPECT_FALSE(test_message.has_oneof_submessage());
 
         EXPECT_EQ(test_message.test_oneof_case(), pb::TestMessage::TestOneofOneof::kOneofString);
-
-        EXPECT_THAT(test_message.rep_enum(),
-                    ElementsAre(Eq(pb::TestEnum::kOne), Eq(pb::TestEnum::kTwo)));
       });
 }
 

@@ -54,5 +54,4 @@ message TestMessage {
   repeated string rep_string = 28;
   repeated SubMessage rep_submessage = 29;
   repeated bool rep_bool = 30;
-  repeated TestEnum rep_enum = 31;
 }
