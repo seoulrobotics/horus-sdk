@@ -81,7 +81,6 @@ TestMessage::TestMessage(const TestMessage& other) noexcept(false)
     , rep_string_{other.rep_string_}
     , rep_submessage_{other.rep_submessage_}
     , rep_bool_{other.rep_bool_}
-    , rep_enum_{other.rep_enum_}
     , test_oneof_{other.test_oneof_}
     , set_fields_{other.set_fields_} {}
 
@@ -175,9 +174,6 @@ void TestMessage::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[29]) {
     SerializeField<CowRepeated<bool>>(writer, /*tag=*/ 30, rep_bool_);
-  }
-  if (set_fields_[30]) {
-    SerializeField<CowRepeated<TestEnum>>(writer, /*tag=*/ 31, rep_enum_);
   }
 }
 
@@ -352,11 +348,6 @@ void TestMessage::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 30: {
         DeserializeField<CowRepeated<bool>>(reader, rep_bool_);
         set_fields_[29] = true;
-        break;
-      }
-      case 31: {
-        DeserializeField<CowRepeated<TestEnum>>(reader, rep_enum_);
-        set_fields_[30] = true;
         break;
       }
       default: {
