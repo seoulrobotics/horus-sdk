@@ -16,6 +16,7 @@
 
 #include "horus/logs/format.h"
 #include "horus/pb/cow_bytes.h"
+#include "horus/pb/license_server/messages_pb.h"
 #include "horus/pb/logs/logs_pb.h"
 #include "horus/pb/preprocessing/messages_pb.h"
 #include "horus/pb/project_manager/service_pb.h"
@@ -36,11 +37,38 @@ class LicenseStatus final {
 
   /// Gathers license details.
   /// Only available if a license was found by the license server.
-  struct LicenseInfo {
+  class LicenseInfo final {
+   public:
+    /// Protobuf enum representing a license feature.
+    using LicenseFeature = pb::LicenseFeature;
+
+    /// Default constructor, called if LicenseInfo is empty.
+    LicenseInfo() : expiration_timestamp_{}, number_of_lidars_{} {};
+
+    /// Constructos from a `pb::LicenseInfo`.
+    explicit LicenseInfo(const pb::LicenseInfo& pb_license_info);
+
+    /// Returns the expiration date and time.
+    std::chrono::system_clock::time_point ExpirationTimestamp() const noexcept {
+      return expiration_timestamp_;
+    }
+
+    /// Returns the number of lidars.
+    constexpr std::uint32_t NumberOfLidars() const noexcept { return number_of_lidars_; }
+
+    /// Returns a ref to the allowed features.
+    Span<const pb::LicenseFeature> AllowedFeatures() const noexcept
+        HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+      return {allowed_features_.begin().base(), allowed_features_.end().base()};
+    }
+
+   private:
+    /// Timestamp of license expiration.
+    std::chrono::system_clock::time_point expiration_timestamp_;
     /// Number of simultaneous lidars allowed by the license.
-    std::uint32_t number_of_lidars;
-    /// Timestamp of license expiration, in seconds.
-    std::chrono::seconds expiration_epoch;
+    std::uint32_t number_of_lidars_;
+    /// List of features allowed by the license.
+    std::vector<pb::LicenseFeature> allowed_features_;
   };
 
   /// Returns the license level.

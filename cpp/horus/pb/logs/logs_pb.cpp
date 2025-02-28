@@ -4353,6 +4353,32 @@ void FileWriteError::DeserializeFrom(PbReader& reader) noexcept(false) {
   }
 }
 
+LicenseForbiddenFeature::LicenseForbiddenFeature(const LicenseForbiddenFeature& other) noexcept(false)
+    : feature_name_{other.feature_name_}
+    , set_fields_{other.set_fields_} {}
+
+void LicenseForbiddenFeature::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, feature_name_);
+  }
+}
+
+void LicenseForbiddenFeature::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, feature_name_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
 }  // namespace logs
 }  // namespace pb
 }  // namespace sdk

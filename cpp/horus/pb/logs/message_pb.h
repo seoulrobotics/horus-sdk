@@ -9218,6 +9218,61 @@ class LogData final : public PbMessage {
     return std::move(set_file_write_error(std::move(file_write_error)));
   }
 
+  // Field `license_forbidden_feature` (no 167).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 167.
+  constexpr const logs::LicenseForbiddenFeature& license_forbidden_feature() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return license_forbidden_feature_;
+  }
+
+  /// If `license_forbidden_feature` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 167.
+  logs::LicenseForbiddenFeature license_forbidden_feature() && noexcept {
+    if (!set_fields_[166]) {
+      return {};
+    }
+    return std::move(license_forbidden_feature_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 167.
+  logs::LicenseForbiddenFeature& mutable_license_forbidden_feature() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kLicenseForbiddenFeature;
+    set_fields_[166] = true;
+    return license_forbidden_feature_;
+  }
+
+  /// Returns whether `license_forbidden_feature` (no 167) is set.
+  constexpr bool has_license_forbidden_feature() const noexcept { return set_fields_[166]; }
+
+  /// Clears `license_forbidden_feature` (no 167).
+  void clear_license_forbidden_feature() & noexcept {
+    data_ = {};
+    set_fields_[166] = false;
+    license_forbidden_feature_ = {};
+  }
+
+  /// Sets `license_forbidden_feature` (no 167) and returns `*this`.
+  LogData& set_license_forbidden_feature(logs::LicenseForbiddenFeature&& license_forbidden_feature) & noexcept {
+    clear_data();
+    data_ = DataOneof::kLicenseForbiddenFeature;
+    set_fields_[166] = true;
+    license_forbidden_feature_ = std::move(license_forbidden_feature);
+    return *this;
+  }
+  /// Sets `license_forbidden_feature` (no 167) and returns `*this`.
+  LogData&& set_license_forbidden_feature(logs::LicenseForbiddenFeature&& license_forbidden_feature) && noexcept {
+    return std::move(set_license_forbidden_feature(std::move(license_forbidden_feature)));
+  }
+
   // Oneof `data`.
   // -----
 
@@ -9557,6 +9612,8 @@ class LogData final : public PbMessage {
     kSparseNoiseFilterUsageNonRotationalLidars = 165,
     /// @see file_write_error()
     kFileWriteError = 166,
+    /// @see license_forbidden_feature()
+    kLicenseForbiddenFeature = 167,
   };
 
   /// Returns the current case set in `data`.
@@ -10231,6 +10288,10 @@ class LogData final : public PbMessage {
         clear_file_write_error();
         break;
       }
+      case DataOneof::kLicenseForbiddenFeature: {
+        clear_license_forbidden_feature();
+        break;
+      }
       case DataOneof::kNotSet:
       default:
         break;
@@ -10570,12 +10631,14 @@ class LogData final : public PbMessage {
   logs::SparseNoiseFilterUsageNonRotationalLidars sparse_noise_filter_usage_non_rotational_lidars_{};
   /// @see file_write_error()
   logs::FileWriteError file_write_error_{};
+  /// @see license_forbidden_feature()
+  logs::LicenseForbiddenFeature license_forbidden_feature_{};
 
   /// @see data_case()
   DataOneof data_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<166> set_fields_;
+  std::bitset<167> set_fields_;
 };
 
 /// A log message notifying users about some status.

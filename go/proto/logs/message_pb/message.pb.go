@@ -1644,6 +1644,15 @@ func (x *LogData) GetFileWriteError() *logs_pb.FileWriteError {
 	return nil
 }
 
+func (x *LogData) GetLicenseForbiddenFeature() *logs_pb.LicenseForbiddenFeature {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_LicenseForbiddenFeature); ok {
+			return x.LicenseForbiddenFeature
+		}
+	}
+	return nil
+}
+
 func (x *LogData) SetGeneric(v *logs_pb.Generic) {
 	if v == nil {
 		x.xxx_hidden_Data = nil
@@ -2970,6 +2979,14 @@ func (x *LogData) SetFileWriteError(v *logs_pb.FileWriteError) {
 		return
 	}
 	x.xxx_hidden_Data = &logData_FileWriteError{v}
+}
+
+func (x *LogData) SetLicenseForbiddenFeature(v *logs_pb.LicenseForbiddenFeature) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_LicenseForbiddenFeature{v}
 }
 
 func (x *LogData) HasData() bool {
@@ -4307,6 +4324,14 @@ func (x *LogData) HasFileWriteError() bool {
 	return ok
 }
 
+func (x *LogData) HasLicenseForbiddenFeature() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_LicenseForbiddenFeature)
+	return ok
+}
+
 func (x *LogData) ClearData() {
 	x.xxx_hidden_Data = nil
 }
@@ -5307,6 +5332,12 @@ func (x *LogData) ClearFileWriteError() {
 	}
 }
 
+func (x *LogData) ClearLicenseForbiddenFeature() {
+	if _, ok := x.xxx_hidden_Data.(*logData_LicenseForbiddenFeature); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
 const LogData_Data_not_set_case case_LogData_Data = 0
 const LogData_Generic_case case_LogData_Data = 1
 const LogData_Oom_case case_LogData_Data = 2
@@ -5474,6 +5505,7 @@ const LogData_InvalidLidarTimestamp_case case_LogData_Data = 163
 const LogData_CalibrationAccumulatingPointsInfo_case case_LogData_Data = 164
 const LogData_SparseNoiseFilterUsageNonRotationalLidars_case case_LogData_Data = 165
 const LogData_FileWriteError_case case_LogData_Data = 166
+const LogData_LicenseForbiddenFeature_case case_LogData_Data = 167
 
 func (x *LogData) WhichData() case_LogData_Data {
 	if x == nil {
@@ -5812,6 +5844,8 @@ func (x *LogData) WhichData() case_LogData_Data {
 		return LogData_SparseNoiseFilterUsageNonRotationalLidars_case
 	case *logData_FileWriteError:
 		return LogData_FileWriteError_case
+	case *logData_LicenseForbiddenFeature:
+		return LogData_LicenseForbiddenFeature_case
 	default:
 		return LogData_Data_not_set_case
 	}
@@ -5987,6 +6021,7 @@ type LogData_builder struct {
 	CalibrationAccumulatingPointsInfo           *logs_pb.CalibrationAccumulatingPointsInfo
 	SparseNoiseFilterUsageNonRotationalLidars   *logs_pb.SparseNoiseFilterUsageNonRotationalLidars
 	FileWriteError                              *logs_pb.FileWriteError
+	LicenseForbiddenFeature                     *logs_pb.LicenseForbiddenFeature
 	// -- end of xxx_hidden_Data
 }
 
@@ -6491,6 +6526,9 @@ func (b0 LogData_builder) Build() *LogData {
 	}
 	if b.FileWriteError != nil {
 		x.xxx_hidden_Data = &logData_FileWriteError{b.FileWriteError}
+	}
+	if b.LicenseForbiddenFeature != nil {
+		x.xxx_hidden_Data = &logData_LicenseForbiddenFeature{b.LicenseForbiddenFeature}
 	}
 	return m0
 }
@@ -7173,6 +7211,10 @@ type logData_FileWriteError struct {
 	FileWriteError *logs_pb.FileWriteError `protobuf:"bytes,166,opt,name=file_write_error,json=fileWriteError,proto3,oneof"`
 }
 
+type logData_LicenseForbiddenFeature struct {
+	LicenseForbiddenFeature *logs_pb.LicenseForbiddenFeature `protobuf:"bytes,167,opt,name=license_forbidden_feature,json=licenseForbiddenFeature,proto3,oneof"`
+}
+
 func (*logData_Generic) isLogData_Data() {}
 
 func (*logData_Oom) isLogData_Data() {}
@@ -7505,6 +7547,8 @@ func (*logData_SparseNoiseFilterUsageNonRotationalLidars) isLogData_Data() {}
 
 func (*logData_FileWriteError) isLogData_Data() {}
 
+func (*logData_LicenseForbiddenFeature) isLogData_Data() {}
+
 var File_horus_pb_logs_message_proto protoreflect.FileDescriptor
 
 var file_horus_pb_logs_message_proto_rawDesc = []byte{
@@ -7520,7 +7564,7 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
 	0x12, 0x25, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11,
 	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x6f, 0x67, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xef, 0x87, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
+	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xd6, 0x88, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
 	0x44, 0x61, 0x74, 0x61, 0x12, 0x32, 0x0a, 0x07, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62,
 	0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x48, 0x00, 0x52,
@@ -8607,8 +8651,14 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x0b, 0x32, 0x1d, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67,
 	0x73, 0x2e, 0x46, 0x69, 0x6c, 0x65, 0x57, 0x72, 0x69, 0x74, 0x65, 0x45, 0x72, 0x72, 0x6f, 0x72,
 	0x48, 0x00, 0x52, 0x0e, 0x66, 0x69, 0x6c, 0x65, 0x57, 0x72, 0x69, 0x74, 0x65, 0x45, 0x72, 0x72,
-	0x6f, 0x72, 0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x6f, 0x72, 0x12, 0x65, 0x0a, 0x19, 0x6c, 0x69, 0x63, 0x65, 0x6e, 0x73, 0x65, 0x5f, 0x66, 0x6f,
+	0x72, 0x62, 0x69, 0x64, 0x64, 0x65, 0x6e, 0x5f, 0x66, 0x65, 0x61, 0x74, 0x75, 0x72, 0x65, 0x18,
+	0xa7, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x26, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70,
+	0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x4c, 0x69, 0x63, 0x65, 0x6e, 0x73, 0x65, 0x46, 0x6f,
+	0x72, 0x62, 0x69, 0x64, 0x64, 0x65, 0x6e, 0x46, 0x65, 0x61, 0x74, 0x75, 0x72, 0x65, 0x48, 0x00,
+	0x52, 0x17, 0x6c, 0x69, 0x63, 0x65, 0x6e, 0x73, 0x65, 0x46, 0x6f, 0x72, 0x62, 0x69, 0x64, 0x64,
+	0x65, 0x6e, 0x46, 0x65, 0x61, 0x74, 0x75, 0x72, 0x65, 0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74,
+	0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_horus_pb_logs_message_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
@@ -8782,6 +8832,7 @@ var file_horus_pb_logs_message_proto_goTypes = []any{
 	(*logs_pb.CalibrationAccumulatingPointsInfo)(nil),           // 166: horus.pb.logs.CalibrationAccumulatingPointsInfo
 	(*logs_pb.SparseNoiseFilterUsageNonRotationalLidars)(nil),   // 167: horus.pb.logs.SparseNoiseFilterUsageNonRotationalLidars
 	(*logs_pb.FileWriteError)(nil),                              // 168: horus.pb.logs.FileWriteError
+	(*logs_pb.LicenseForbiddenFeature)(nil),                     // 169: horus.pb.logs.LicenseForbiddenFeature
 }
 var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	2,   // 0: horus.pb.LogMessage.metadata:type_name -> horus.pb.LogMetadata
@@ -8952,11 +9003,12 @@ var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	166, // 165: horus.pb.LogData.calibration_accumulating_points_info:type_name -> horus.pb.logs.CalibrationAccumulatingPointsInfo
 	167, // 166: horus.pb.LogData.sparse_noise_filter_usage_non_rotational_lidars:type_name -> horus.pb.logs.SparseNoiseFilterUsageNonRotationalLidars
 	168, // 167: horus.pb.LogData.file_write_error:type_name -> horus.pb.logs.FileWriteError
-	168, // [168:168] is the sub-list for method output_type
-	168, // [168:168] is the sub-list for method input_type
-	168, // [168:168] is the sub-list for extension type_name
-	168, // [168:168] is the sub-list for extension extendee
-	0,   // [0:168] is the sub-list for field type_name
+	169, // 168: horus.pb.LogData.license_forbidden_feature:type_name -> horus.pb.logs.LicenseForbiddenFeature
+	169, // [169:169] is the sub-list for method output_type
+	169, // [169:169] is the sub-list for method input_type
+	169, // [169:169] is the sub-list for extension type_name
+	169, // [169:169] is the sub-list for extension extendee
+	0,   // [0:169] is the sub-list for field type_name
 }
 
 func init() { file_horus_pb_logs_message_proto_init() }
@@ -9131,6 +9183,7 @@ func file_horus_pb_logs_message_proto_init() {
 		(*logData_CalibrationAccumulatingPointsInfo)(nil),
 		(*logData_SparseNoiseFilterUsageNonRotationalLidars)(nil),
 		(*logData_FileWriteError)(nil),
+		(*logData_LicenseForbiddenFeature)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

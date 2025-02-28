@@ -12,8 +12,10 @@
 #include <utility>
 
 #include "horus/pb/config/metadata_pb.h"
+#include "horus/pb/cow_repeated.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
+#include "horus/pb/types.h"
 #include "horus/types/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
@@ -26,17 +28,143 @@ namespace horus {
 namespace sdk {
 namespace pb {
 
+// MARK: Enum declarations
+
+/// license_converter.cpp is charged of concerting a JWT payload features array
+///  to LicenseFeature.
+///
+/// Source: horus/pb/license_server/messages.proto:9:1
+enum class LicenseFeature : PbEnum {  // NOLINT(*-enum-size)
+  /// No documentation.
+  kCan = 0,
+  /// No documentation.
+  kVinAssociator = 1,
+  /// No documentation.
+  kMultiRosbag = 2,
+  /// No documentation.
+  kDebuggingSupport = 3,
+  /// No documentation.
+  kAtlas = 4,
+  /// No documentation.
+  kMacgyver = 5,
+
+  /// Unknown value read from the wire.
+  kUnknownWireValue = 6,
+};
+
 // MARK: Message forward declarations
 
+class LicenseInfo_AllowedFeature;
 class LicenseInfo;
 
 // MARK: Message declarations
 
+/// We use this wrapper message because protobuf does not support well repeated
+///  enums in C++
+///
+/// Source: horus/pb/license_server/messages.proto:21:3
+class LicenseInfo_AllowedFeature final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `LicenseInfo_AllowedFeature`.
+  LicenseInfo_AllowedFeature() noexcept = default;
+
+  /// Move constructor.
+  LicenseInfo_AllowedFeature(LicenseInfo_AllowedFeature&&) noexcept = default;
+  /// Move assignment operator.
+  LicenseInfo_AllowedFeature& operator=(LicenseInfo_AllowedFeature&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit LicenseInfo_AllowedFeature(const LicenseInfo_AllowedFeature& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  LicenseInfo_AllowedFeature& operator=(const LicenseInfo_AllowedFeature&) = delete;
+
+  /// Default destructor.
+  ~LicenseInfo_AllowedFeature() noexcept final = default;
+
+  /// Creates a `LicenseInfo_AllowedFeature` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit LicenseInfo_AllowedFeature(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.LicenseInfo.AllowedFeature`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.LicenseInfo.AllowedFeature"; }
+
+  /// The full name of the message: `horus.pb.LicenseInfo.AllowedFeature`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `feature` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr LicenseFeature feature() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return feature_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  LicenseFeature& mutable_feature() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return feature_;
+  }
+
+  /// Returns whether `feature` (no 1) is set.
+  constexpr bool has_feature() const noexcept { return set_fields_[0]; }
+
+  /// Clears `feature` (no 1).
+  void clear_feature() & noexcept {
+    set_fields_[0] = false;
+    feature_ = {};
+  }
+
+  /// Sets `feature` (no 1) and returns `*this`.
+  LicenseInfo_AllowedFeature& set_feature(LicenseFeature feature) & noexcept {
+    set_fields_[0] = true;
+    feature_ = feature;
+    return *this;
+  }
+  /// Sets `feature` (no 1) and returns `*this`.
+  LicenseInfo_AllowedFeature&& set_feature(LicenseFeature feature) && noexcept {
+    return std::move(set_feature(feature));
+  }
+
+ private:
+  /// @see feature()
+  LicenseFeature feature_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
+};
+
 /// No documentation.
 ///
-/// Source: horus/pb/license_server/messages.proto:7:1
+/// Source: horus/pb/license_server/messages.proto:18:1
 class LicenseInfo final : public PbMessage {
  public:
+  /// @see LicenseInfo_AllowedFeature
+  using AllowedFeature = LicenseInfo_AllowedFeature;
 
   /// Constructs a default-initialized `LicenseInfo`.
   LicenseInfo() noexcept = default;
@@ -172,15 +300,186 @@ class LicenseInfo final : public PbMessage {
     return std::move(set_lidar_count(lidar_count));
   }
 
+  // Field `allowed_features` (no 3).
+  // -----
+
+  /// Features allowed by the license
+  ///
+  /// Field no: 3.
+  constexpr const CowRepeated<LicenseInfo_AllowedFeature>& allowed_features() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return allowed_features_;
+  }
+
+  /// If `allowed_features` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowRepeated<LicenseInfo_AllowedFeature> allowed_features() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(allowed_features_);
+  }
+
+  /// Features allowed by the license
+  ///
+  /// Field no: 3.
+  CowRepeated<LicenseInfo_AllowedFeature>& mutable_allowed_features() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return allowed_features_;
+  }
+
+  /// Returns whether `allowed_features` (no 3) is set.
+  constexpr bool has_allowed_features() const noexcept { return set_fields_[2]; }
+
+  /// Clears `allowed_features` (no 3).
+  void clear_allowed_features() & noexcept {
+    set_fields_[2] = false;
+    allowed_features_ = {};
+  }
+
+  /// Sets `allowed_features` (no 3) and returns `*this`.
+  LicenseInfo& set_allowed_features(CowRepeated<LicenseInfo_AllowedFeature>&& allowed_features) & noexcept {
+    set_fields_[2] = true;
+    allowed_features_ = std::move(allowed_features);
+    return *this;
+  }
+  /// Sets `allowed_features` (no 3) and returns `*this`.
+  LicenseInfo&& set_allowed_features(CowRepeated<LicenseInfo_AllowedFeature>&& allowed_features) && noexcept {
+    return std::move(set_allowed_features(std::move(allowed_features)));
+  }
+
  private:
   /// @see expiration_date()
   Timestamp expiration_date_{};
   /// @see lidar_count()
   std::uint32_t lidar_count_{};
+  /// @see allowed_features()
+  CowRepeated<LicenseInfo_AllowedFeature> allowed_features_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<3> set_fields_;
 };
+
+}  // namespace pb
+}  // namespace sdk
+}  // namespace horus
+
+// MARK: Enum traits
+
+namespace horus {
+
+template <>
+class PbEnumTraits<horus::sdk::pb::LicenseFeature> final {
+ public:
+  /// The full name of the enum: `horus.sdk.pb.LicenseFeature`.
+  static constexpr StringView EnumName() noexcept { return "horus.sdk.pb.LicenseFeature"; }
+
+  /// Returns the name of the given enumerator, or an empty string.
+  static constexpr StringView NameOf(horus::sdk::pb::LicenseFeature value) noexcept {
+    switch (value) {
+      case horus::sdk::pb::LicenseFeature::kCan: {
+        return "LICENSE_FEATURE_CAN";
+      }
+      case horus::sdk::pb::LicenseFeature::kVinAssociator: {
+        return "LICENSE_FEATURE_VIN_ASSOCIATOR";
+      }
+      case horus::sdk::pb::LicenseFeature::kMultiRosbag: {
+        return "LICENSE_FEATURE_MULTI_ROSBAG";
+      }
+      case horus::sdk::pb::LicenseFeature::kDebuggingSupport: {
+        return "LICENSE_FEATURE_DEBUGGING_SUPPORT";
+      }
+      case horus::sdk::pb::LicenseFeature::kAtlas: {
+        return "LICENSE_FEATURE_ATLAS";
+      }
+      case horus::sdk::pb::LicenseFeature::kMacgyver: {
+        return "LICENSE_FEATURE_MACGYVER";
+      }
+      case horus::sdk::pb::LicenseFeature::kUnknownWireValue:
+      default: {
+        return "";
+      }
+    }
+  }
+
+  /// Returns the value corresponding to the given name, or `default_value`.
+  static constexpr horus::sdk::pb::LicenseFeature ValueOf(PbEnum value, horus::sdk::pb::LicenseFeature default_value = horus::sdk::pb::LicenseFeature::kUnknownWireValue) noexcept {
+    switch (value) {
+      case 0: {
+        return horus::sdk::pb::LicenseFeature::kCan;
+      }
+      case 1: {
+        return horus::sdk::pb::LicenseFeature::kVinAssociator;
+      }
+      case 2: {
+        return horus::sdk::pb::LicenseFeature::kMultiRosbag;
+      }
+      case 3: {
+        return horus::sdk::pb::LicenseFeature::kDebuggingSupport;
+      }
+      case 4: {
+        return horus::sdk::pb::LicenseFeature::kAtlas;
+      }
+      case 5: {
+        return horus::sdk::pb::LicenseFeature::kMacgyver;
+      }
+      default: {
+        return default_value;
+      }
+    }
+  }
+
+  /// Returns the value corresponding to the given name, or `default_value`.
+  static constexpr horus::sdk::pb::LicenseFeature ValueOf(StringView name, horus::sdk::pb::LicenseFeature default_value = horus::sdk::pb::LicenseFeature::kUnknownWireValue) noexcept {
+    if (name == "LICENSE_FEATURE_CAN") {
+      return horus::sdk::pb::LicenseFeature::kCan;
+    }
+    if (name == "LICENSE_FEATURE_VIN_ASSOCIATOR") {
+      return horus::sdk::pb::LicenseFeature::kVinAssociator;
+    }
+    if (name == "LICENSE_FEATURE_MULTI_ROSBAG") {
+      return horus::sdk::pb::LicenseFeature::kMultiRosbag;
+    }
+    if (name == "LICENSE_FEATURE_DEBUGGING_SUPPORT") {
+      return horus::sdk::pb::LicenseFeature::kDebuggingSupport;
+    }
+    if (name == "LICENSE_FEATURE_ATLAS") {
+      return horus::sdk::pb::LicenseFeature::kAtlas;
+    }
+    if (name == "LICENSE_FEATURE_MACGYVER") {
+      return horus::sdk::pb::LicenseFeature::kMacgyver;
+    }
+    return default_value;
+  }
+};
+
+template <>
+class PbTraits<horus::sdk::pb::LicenseFeature> final {
+ public:
+  /// Serializes `value` into `writer`.
+  static void Serialize(PbWriter& writer, PbTag tag, horus::sdk::pb::LicenseFeature value) {
+    writer.Writer().add_enum(tag, static_cast<PbEnum>(value));
+  }
+
+  /// Deserializes `horus::sdk::pb::LicenseFeature` from `reader`.
+  static horus::sdk::pb::LicenseFeature Deserialize(PbReader& reader) {
+    return PbEnumTraits<horus::sdk::pb::LicenseFeature>::ValueOf(reader.Reader().get_enum());
+  }
+};
+
+}  // namespace horus
+
+namespace horus {
+namespace sdk {
+namespace pb {
+
+/// Appends `value` to `sink`.
+template <class Sink>
+void HorusStringify(Sink& sink, LicenseFeature value) noexcept(noexcept(sink.Append(StringView{}))) {
+  sink.Append(PbEnumTraits<LicenseFeature>::NameOf(value));
+}
 
 }  // namespace pb
 }  // namespace sdk

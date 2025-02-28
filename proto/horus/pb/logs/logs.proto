@@ -1211,3 +1211,10 @@ message FileWriteError {
   string filename = 1;
   string details = 2;
 }
+
+// Log #167.
+//
+// > $feature_name is not allowed by the current license.
+message LicenseForbiddenFeature {
+  string feature_name = 1;
+}

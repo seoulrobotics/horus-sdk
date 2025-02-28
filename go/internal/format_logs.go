@@ -342,6 +342,8 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return "The sparse noise filter cannot be used with non-rotational lidars."
 	case *logs_pb.FileWriteError:
 		return fmt.Sprintf("Failed to write to file \"%v\": \"%v\".", data.GetFilename(), data.GetDetails())
+	case *logs_pb.LicenseForbiddenFeature:
+		return fmt.Sprintf("%v is not allowed by the current license.", data.GetFeatureName())
 	default:
 		return "unknown log message"
 	}

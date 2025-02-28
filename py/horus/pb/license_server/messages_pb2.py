@@ -25,13 +25,17 @@ _sym_db = _symbol_database.Default()
 from horus.pb.config import metadata_pb2 as horus_dot_pb_dot_config_dot_metadata__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n&horus/pb/license_server/messages.proto\x12\x08horus.pb\x1a\x1ehorus/pb/config/metadata.proto\"P\n\x0bLicenseInfo\x12,\n\x0f\x65xpiration_date\x18\x01 \x01(\x0b\x32\x13.horus.pb.Timestamp\x12\x13\n\x0blidar_count\x18\x02 \x01(\rb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n&horus/pb/license_server/messages.proto\x12\x08horus.pb\x1a\x1ehorus/pb/config/metadata.proto\"\xcd\x01\n\x0bLicenseInfo\x12,\n\x0f\x65xpiration_date\x18\x01 \x01(\x0b\x32\x13.horus.pb.Timestamp\x12\x13\n\x0blidar_count\x18\x02 \x01(\r\x12>\n\x10\x61llowed_features\x18\x03 \x03(\x0b\x32$.horus.pb.LicenseInfo.AllowedFeature\x1a;\n\x0e\x41llowedFeature\x12)\n\x07\x66\x65\x61ture\x18\x01 \x01(\x0e\x32\x18.horus.pb.LicenseFeature*\xcf\x01\n\x0eLicenseFeature\x12\x17\n\x13LICENSE_FEATURE_CAN\x10\x00\x12\"\n\x1eLICENSE_FEATURE_VIN_ASSOCIATOR\x10\x01\x12 \n\x1cLICENSE_FEATURE_MULTI_ROSBAG\x10\x02\x12%\n!LICENSE_FEATURE_DEBUGGING_SUPPORT\x10\x03\x12\x19\n\x15LICENSE_FEATURE_ATLAS\x10\x04\x12\x1c\n\x18LICENSE_FEATURE_MACGYVER\x10\x05\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'horus.pb.license_server.messages_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_LICENSEINFO']._serialized_start=84
-  _globals['_LICENSEINFO']._serialized_end=164
+  _globals['_LICENSEFEATURE']._serialized_start=293
+  _globals['_LICENSEFEATURE']._serialized_end=500
+  _globals['_LICENSEINFO']._serialized_start=85
+  _globals['_LICENSEINFO']._serialized_end=290
+  _globals['_LICENSEINFO_ALLOWEDFEATURE']._serialized_start=231
+  _globals['_LICENSEINFO_ALLOWEDFEATURE']._serialized_end=290
 # @@protoc_insertion_point(module_scope)

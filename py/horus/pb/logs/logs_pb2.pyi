@@ -1092,3 +1092,9 @@ class FileWriteError(_message.Message):
     filename: str
     details: str
     def __init__(self, filename: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+
+class LicenseForbiddenFeature(_message.Message):
+    __slots__ = ("feature_name",)
+    FEATURE_NAME_FIELD_NUMBER: _ClassVar[int]
+    feature_name: str
+    def __init__(self, feature_name: _Optional[str] = ...) -> None: ...

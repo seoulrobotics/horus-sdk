@@ -695,6 +695,10 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     logs::HorusStringify(sink, log_data.file_write_error());
     break;
   }
+  case LogData::DataOneof::kLicenseForbiddenFeature: {
+    logs::HorusStringify(sink, log_data.license_forbidden_feature());
+    break;
+  }
   case LogData::DataOneof::kNotSet:
   default: {
     sink.Append("Unknown log message");
@@ -1367,6 +1371,10 @@ void HorusStringify(const ErasedSink& sink, const SparseNoiseFilterUsageNonRotat
 
 void HorusStringify(const ErasedSink& sink, const FileWriteError& data) {
   StrAppendToSink(sink, "Failed to write to file \"", data.filename(), "\": \"", data.details(), "\".");
+}
+
+void HorusStringify(const ErasedSink& sink, const LicenseForbiddenFeature& data) {
+  StrAppendToSink(sink, data.feature_name(), " is not allowed by the current license.");
 }
 
 }  // namespace logs

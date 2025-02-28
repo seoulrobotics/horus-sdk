@@ -5,11 +5,68 @@ import (
 	"time"
 
 	"github.com/seoulrobotics/horus-sdk/go/internal"
+	ls_pb "github.com/seoulrobotics/horus-sdk/go/proto/license_server/messages_pb"
 	pp_pb "github.com/seoulrobotics/horus-sdk/go/proto/preprocessing/messages_pb"
 	pm_pb "github.com/seoulrobotics/horus-sdk/go/proto/project_manager/service_pb"
 )
 
 // MARK: License status
+
+// Current license information.
+type LicenseInfo struct {
+	// Expiration timestamp of the current license.
+	Expiration time.Time
+	// Number of lidars allowed by the current license.
+	LidarCount uint32
+	// List of features allowed by the license.
+	AllowedFeatures []LicenseFeature
+}
+
+// Builds a LicenseInfo from protobuf counterpart.
+func newLicenseInfoFromPb(pb *ls_pb.LicenseInfo) *LicenseInfo {
+	features := make([]LicenseFeature, len(pb.GetAllowedFeatures()))
+	for i, feature := range pb.GetAllowedFeatures() {
+		features[i] = LicenseFeature(feature.GetFeature())
+	}
+
+	return &LicenseInfo{
+		Expiration:      time.Unix(pb.GetExpirationDate().GetSeconds(), int64(pb.GetExpirationDate().GetNanos())),
+		LidarCount:      pb.GetLidarCount(),
+		AllowedFeatures: features,
+	}
+}
+
+// Enum representing the features allowed by a license.
+type LicenseFeature uint32
+
+const (
+	LicenseFeatureCan              LicenseFeature = LicenseFeature(ls_pb.LicenseFeature_LICENSE_FEATURE_CAN)
+	LicenseFeatureVinAssociator    LicenseFeature = LicenseFeature(ls_pb.LicenseFeature_LICENSE_FEATURE_VIN_ASSOCIATOR)
+	LicenseFeatureMultiRosbag      LicenseFeature = LicenseFeature(ls_pb.LicenseFeature_LICENSE_FEATURE_MULTI_ROSBAG)
+	LicenseFeatureDebuggingSupport LicenseFeature = LicenseFeature(ls_pb.LicenseFeature_LICENSE_FEATURE_DEBUGGING_SUPPORT)
+	LicenseFeatureAtlas            LicenseFeature = LicenseFeature(ls_pb.LicenseFeature_LICENSE_FEATURE_ATLAS)
+	LicenseFeatureMacgyver         LicenseFeature = LicenseFeature(ls_pb.LicenseFeature_LICENSE_FEATURE_MACGYVER)
+)
+
+// Converts LicenseFeature enum to string.
+func (feature LicenseFeature) String() string {
+	switch feature {
+	case LicenseFeatureCan:
+		return "CAN bus"
+	case LicenseFeatureVinAssociator:
+		return "VIN associator"
+	case LicenseFeatureMultiRosbag:
+		return "Multiple rosbags"
+	case LicenseFeatureDebuggingSupport:
+		return "Debugging support"
+	case LicenseFeatureAtlas:
+		return "Atlas"
+	case LicenseFeatureMacgyver:
+		return "SR Analytics"
+	default:
+		return "Unknown"
+	}
+}
 
 // License status gathering all license information.
 type LicenseStatus struct {
@@ -55,16 +112,13 @@ func newLicenseStatusFromPb(pb *pm_pb.LicenseStatus) (*LicenseStatus, error) {
 	}
 
 	privileges = make(map[LicensePrivilege]bool)
-	privilegesToTest := []LicensePrivilege{LicensePrivilege_LOWEST, LicensePrivilege_LICENSE_ACTIONS, LicensePrivilege_SUBSCRIBE, LicensePrivilege_READ, LicensePrivilege_WRITE}
+	privilegesToTest := []LicensePrivilege{LicensePrivilegeLowest, LicensePrivilegeLicenseActions, LicensePrivilegeSubscribe, LicensePrivilegeRead, LicensePrivilegeWrite}
 	for _, privilege := range privilegesToTest {
 		privileges[privilege] = pb.GetLicenseLevel().GetPrivilege()&uint32(privilege) == uint32(privilege)
 	}
 
 	if pb.HasLicenseInfo() {
-		licenseInfo = &LicenseInfo{
-			LidarCount: pb.GetLicenseInfo().GetLidarCount(),
-			Expiration: time.Unix(pb.GetLicenseInfo().GetExpirationDate().GetSeconds(), int64(pb.GetLicenseInfo().GetExpirationDate().GetNanos())),
-		}
+		licenseInfo = newLicenseInfoFromPb(pb.GetLicenseInfo())
 	}
 
 	return &LicenseStatus{
@@ -84,37 +138,29 @@ func (licenseStatus *LicenseStatus) HasPrivilege(privilege LicensePrivilege) boo
 type LicensePrivilege uint32
 
 const (
-	LicensePrivilege_LOWEST          LicensePrivilege = LicensePrivilege(pm_pb.LicensePrivilege_LOWEST)
-	LicensePrivilege_SUBSCRIBE       LicensePrivilege = LicensePrivilege(pm_pb.LicensePrivilege_SUBSCRIBE)
-	LicensePrivilege_LICENSE_ACTIONS LicensePrivilege = LicensePrivilege(pm_pb.LicensePrivilege_LICENSE_ACTIONS)
-	LicensePrivilege_READ            LicensePrivilege = LicensePrivilege(pm_pb.LicensePrivilege_READ)
-	LicensePrivilege_WRITE           LicensePrivilege = LicensePrivilege(pm_pb.LicensePrivilege_WRITE)
+	LicensePrivilegeLowest         LicensePrivilege = LicensePrivilege(pm_pb.LicensePrivilege_LOWEST)
+	LicensePrivilegeSubscribe      LicensePrivilege = LicensePrivilege(pm_pb.LicensePrivilege_SUBSCRIBE)
+	LicensePrivilegeLicenseActions LicensePrivilege = LicensePrivilege(pm_pb.LicensePrivilege_LICENSE_ACTIONS)
+	LicensePrivilegeRead           LicensePrivilege = LicensePrivilege(pm_pb.LicensePrivilege_READ)
+	LicensePrivilegeWrite          LicensePrivilege = LicensePrivilege(pm_pb.LicensePrivilege_WRITE)
 )
 
 // Converts LicensePrivilege enum to string.
 func (privilege LicensePrivilege) String() string {
 	switch privilege {
-	case LicensePrivilege_LOWEST:
+	case LicensePrivilegeLowest:
 		return "Lowest"
-	case LicensePrivilege_SUBSCRIBE:
+	case LicensePrivilegeSubscribe:
 		return "Subscribe"
-	case LicensePrivilege_LICENSE_ACTIONS:
+	case LicensePrivilegeLicenseActions:
 		return "License actions"
-	case LicensePrivilege_READ:
+	case LicensePrivilegeRead:
 		return "Read"
-	case LicensePrivilege_WRITE:
+	case LicensePrivilegeWrite:
 		return "Write"
 	default:
 		return "Unknown"
 	}
-}
-
-// Current license information.
-type LicenseInfo struct {
-	// Number of lidars allowed by the current license.
-	LidarCount uint32
-	// Expiration timestamp of the current license.
-	Expiration time.Time
 }
 
 // MARK: Sensor info
@@ -135,28 +181,28 @@ type SensorHealth struct {
 type SensorStatus uint32
 
 const (
-	SensorStatus_NO_DATA        SensorStatus = SensorStatus(pp_pb.SensorStatus_NO_DATA)
-	SensorStatus_RECEIVING_DATA SensorStatus = SensorStatus(pp_pb.SensorStatus_RECEIVING_DATA)
-	SensorStatus_LOW_FREQUENCY  SensorStatus = SensorStatus(pp_pb.SensorStatus_LOW_FREQUENCY)
-	SensorStatus_HIGH_FREQUENCY SensorStatus = SensorStatus(pp_pb.SensorStatus_HIGH_FREQUENCY)
-	SensorStatus_TILTED         SensorStatus = SensorStatus(pp_pb.SensorStatus_TILTED)
-	SensorStatus_OBSTRUCTED     SensorStatus = SensorStatus(pp_pb.SensorStatus_OBSTRUCTED)
+	SensorStatusNoData        SensorStatus = SensorStatus(pp_pb.SensorStatus_NO_DATA)
+	SensorStatusReceivingData SensorStatus = SensorStatus(pp_pb.SensorStatus_RECEIVING_DATA)
+	SensorStatusLowFrequency  SensorStatus = SensorStatus(pp_pb.SensorStatus_LOW_FREQUENCY)
+	SensorStatusHighFrequency SensorStatus = SensorStatus(pp_pb.SensorStatus_HIGH_FREQUENCY)
+	SensorStatusTilted        SensorStatus = SensorStatus(pp_pb.SensorStatus_TILTED)
+	SensorStatusObstructed    SensorStatus = SensorStatus(pp_pb.SensorStatus_OBSTRUCTED)
 )
 
 // Converts SensorHealth flag enum to string.
 func (status SensorStatus) String() string {
 	switch status {
-	case SensorStatus_NO_DATA:
+	case SensorStatusNoData:
 		return "No data"
-	case SensorStatus_RECEIVING_DATA:
+	case SensorStatusReceivingData:
 		return "Receiving data"
-	case SensorStatus_LOW_FREQUENCY:
+	case SensorStatusLowFrequency:
 		return "Low frequency"
-	case SensorStatus_HIGH_FREQUENCY:
+	case SensorStatusHighFrequency:
 		return "High frequency"
-	case SensorStatus_TILTED:
+	case SensorStatusTilted:
 		return "Tilted"
-	case SensorStatus_OBSTRUCTED:
+	case SensorStatusObstructed:
 		return "Obstructed"
 	default:
 		return "Unknown"
@@ -174,7 +220,7 @@ func newSensorHealthFromPb(pb *pm_pb.GetHealthStatusResponse_SensorHealth) *Sens
 		unreachableReason = internal.FormatAnyLogMessage(pb.GetTimeout())
 	} else {
 		statuses = make(map[SensorStatus]bool)
-		statusesToTest := []SensorStatus{SensorStatus_NO_DATA, SensorStatus_RECEIVING_DATA, SensorStatus_LOW_FREQUENCY, SensorStatus_HIGH_FREQUENCY, SensorStatus_TILTED, SensorStatus_OBSTRUCTED}
+		statusesToTest := []SensorStatus{SensorStatusNoData, SensorStatusReceivingData, SensorStatusLowFrequency, SensorStatusHighFrequency, SensorStatusTilted, SensorStatusObstructed}
 		for _, status := range statusesToTest {
 			statuses[status] = (pb.GetInfo().GetStatus() & uint32(status)) == uint32(status)
 		}
@@ -214,26 +260,26 @@ type NodeHealth struct {
 type NodeHealthService uint32
 
 const (
-	NodeHealthService_SERVICE_DETECTION        NodeHealthService = NodeHealthService(pm_pb.GetHealthStatusResponse_NodeHealth_SERVICE_DETECTION)
-	NodeHealthService_SERVICE_LIDAR_RUNNER     NodeHealthService = NodeHealthService(pm_pb.GetHealthStatusResponse_NodeHealth_SERVICE_LIDAR_RUNNER)
-	NodeHealthService_SERVICE_NOTIFICATION     NodeHealthService = NodeHealthService(pm_pb.GetHealthStatusResponse_NodeHealth_SERVICE_NOTIFICATION)
-	NodeHealthService_SERVICE_POINT_AGGREGATOR NodeHealthService = NodeHealthService(pm_pb.GetHealthStatusResponse_NodeHealth_SERVICE_POINT_AGGREGATOR)
-	NodeHealthService_SERVICE_PREPROCESSING    NodeHealthService = NodeHealthService(pm_pb.GetHealthStatusResponse_NodeHealth_SERVICE_PREPROCESSING)
-	NodeHealthService_SERVICE_PROJECT_MANAGER  NodeHealthService = NodeHealthService(pm_pb.GetHealthStatusResponse_NodeHealth_SERVICE_PROJECT_MANAGER)
+	NodeHealthServiceServiceDetection       NodeHealthService = NodeHealthService(pm_pb.GetHealthStatusResponse_NodeHealth_SERVICE_DETECTION)
+	NodeHealthServiceServiceLidarRunner     NodeHealthService = NodeHealthService(pm_pb.GetHealthStatusResponse_NodeHealth_SERVICE_LIDAR_RUNNER)
+	NodeHealthServiceServiceNotification    NodeHealthService = NodeHealthService(pm_pb.GetHealthStatusResponse_NodeHealth_SERVICE_NOTIFICATION)
+	NodeHealthServiceServicePointAggregator NodeHealthService = NodeHealthService(pm_pb.GetHealthStatusResponse_NodeHealth_SERVICE_POINT_AGGREGATOR)
+	NodeHealthServiceServicePreprocessing   NodeHealthService = NodeHealthService(pm_pb.GetHealthStatusResponse_NodeHealth_SERVICE_PREPROCESSING)
+	NodeHealthServiceServiceProjectManager  NodeHealthService = NodeHealthService(pm_pb.GetHealthStatusResponse_NodeHealth_SERVICE_PROJECT_MANAGER)
 )
 
 // Converts NodeHealthService enum to string.
 func (service NodeHealthService) String() string {
 	switch service {
-	case NodeHealthService_SERVICE_DETECTION:
+	case NodeHealthServiceServiceDetection:
 		return "Detection"
-	case NodeHealthService_SERVICE_LIDAR_RUNNER:
+	case NodeHealthServiceServiceLidarRunner:
 		return "Lidar runner"
-	case NodeHealthService_SERVICE_NOTIFICATION:
+	case NodeHealthServiceServiceNotification:
 		return "Notification"
-	case NodeHealthService_SERVICE_POINT_AGGREGATOR:
+	case NodeHealthServiceServicePointAggregator:
 		return "Point aggregator"
-	case NodeHealthService_SERVICE_PREPROCESSING:
+	case NodeHealthServiceServicePreprocessing:
 		return "Preprocessing"
 	default:
 		return "Unknown"
@@ -244,16 +290,16 @@ func (service NodeHealthService) String() string {
 type NodeHealthStatus uint32
 
 const (
-	NodeHealth_UNREACHABLE NodeHealthStatus = NodeHealthStatus(pm_pb.GetHealthStatusResponse_NodeHealth_STATUS_UNREACHABLE)
-	NodeHealth_ALIVE       NodeHealthStatus = NodeHealthStatus(pm_pb.GetHealthStatusResponse_NodeHealth_STATUS_ALIVE)
+	NodeHealthUnreachable NodeHealthStatus = NodeHealthStatus(pm_pb.GetHealthStatusResponse_NodeHealth_STATUS_UNREACHABLE)
+	NodeHealthAlive       NodeHealthStatus = NodeHealthStatus(pm_pb.GetHealthStatusResponse_NodeHealth_STATUS_ALIVE)
 )
 
 // Converts NodeHealthStatus enum to string.
 func (status NodeHealthStatus) String() string {
 	switch status {
-	case NodeHealth_UNREACHABLE:
+	case NodeHealthUnreachable:
 		return "Unreachable"
-	case NodeHealth_ALIVE:
+	case NodeHealthAlive:
 		return "Alive"
 	default:
 		return "Unknown"
@@ -299,7 +345,7 @@ func newHealthStatusFromPb(pb *pm_pb.GetHealthStatusResponse) (*HealthStatus, er
 	var sensorStatuses []SensorHealth
 	var serviceStatuses []NodeHealth
 
-	if licenseStatus.HasPrivilege(LicensePrivilege_READ) {
+	if licenseStatus.HasPrivilege(LicensePrivilegeRead) {
 		sensorStatuses = make([]SensorHealth, len(pb.GetSensorStatuses()))
 		for i, sensorStatus := range pb.GetSensorStatuses() {
 			sensorStatuses[i] = *newSensorHealthFromPb(sensorStatus)

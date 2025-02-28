@@ -4,9 +4,28 @@ import "horus/pb/config/metadata.proto";
 
 package horus.pb;
 
+// license_converter.cpp is charged of concerting a JWT payload features array
+// to LicenseFeature.
+enum LicenseFeature {
+  LICENSE_FEATURE_CAN = 0;
+  LICENSE_FEATURE_VIN_ASSOCIATOR = 1;
+  LICENSE_FEATURE_MULTI_ROSBAG = 2;
+  LICENSE_FEATURE_DEBUGGING_SUPPORT = 3;
+  LICENSE_FEATURE_ATLAS = 4;
+  LICENSE_FEATURE_MACGYVER = 5;
+}
+
 message LicenseInfo {
+  // We use this wrapper message because protobuf does not support well repeated
+  // enums in C++
+  message AllowedFeature {
+    LicenseFeature feature = 1;
+  }
+
   // Timestamp defining the license's end date of validity
   Timestamp expiration_date = 1;
   // Number of LiDAR devices running at the same time allowed by the license
   uint32 lidar_count = 2;
+  // Features allowed by the license
+  repeated AllowedFeature allowed_features = 3;
 }
