@@ -529,6 +529,9 @@ void HorusStringify(const ErasedSink& sink, const SparseNoiseFilterUsageNonRotat
 /// Formats the log `logs::FileWriteError` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const FileWriteError& data);
 
+/// Formats the log `logs::LicenseForbiddenFeature` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const LicenseForbiddenFeature& data);
+
 }  // namespace logs
 
 }  // namespace pb

@@ -22,12 +22,21 @@ func printHealthStatus(healthStatus *horus.HealthStatus) {
 	}
 
 	if healthStatus.LicenseStatus.LicenseInfo != nil {
-		fmt.Printf("Lidar count: %d\n", healthStatus.LicenseStatus.LicenseInfo.LidarCount)
 		fmt.Printf("Expiration timestamp: %s\n", healthStatus.LicenseStatus.LicenseInfo.Expiration.String())
+		fmt.Printf("Lidar count: %d\n", healthStatus.LicenseStatus.LicenseInfo.LidarCount)
+
+		if len(healthStatus.LicenseStatus.LicenseInfo.AllowedFeatures) > 0 {
+			fmt.Println("Allowed features:")
+			for _, feature := range healthStatus.LicenseStatus.LicenseInfo.AllowedFeatures {
+				fmt.Printf("  - %s\n", feature.String())
+			}
+		} else {
+			fmt.Println("Allowed features: NONE!")
+		}
 	}
 	fmt.Println()
 
-	if !healthStatus.LicenseStatus.HasPrivilege(horus.LicensePrivilege_READ) {
+	if !healthStatus.LicenseStatus.HasPrivilege(horus.LicensePrivilegeRead) {
 		fmt.Printf("License level does not grant Read privilege. Could not receive sensor and service statuses")
 		return
 	}
@@ -75,11 +84,11 @@ func printHealthStatus(healthStatus *horus.HealthStatus) {
 		fmt.Println()
 	}
 
-	printService(horus.NodeHealthService_SERVICE_DETECTION)
-	printService(horus.NodeHealthService_SERVICE_LIDAR_RUNNER)
-	printService(horus.NodeHealthService_SERVICE_NOTIFICATION)
-	printService(horus.NodeHealthService_SERVICE_POINT_AGGREGATOR)
-	printService(horus.NodeHealthService_SERVICE_PREPROCESSING)
+	printService(horus.NodeHealthServiceServiceDetection)
+	printService(horus.NodeHealthServiceServiceLidarRunner)
+	printService(horus.NodeHealthServiceServiceNotification)
+	printService(horus.NodeHealthServiceServicePointAggregator)
+	printService(horus.NodeHealthServiceServicePreprocessing)
 }
 
 func main() {

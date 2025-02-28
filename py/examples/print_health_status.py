@@ -20,13 +20,23 @@ async def print_health_status() -> None:
         print(f"- {privilege.name}")
 
     if health_status.license_status.license_info is not None:
+        date_str = (
+            health_status.license_status.license_info.expiration_datetime.strftime(
+                "%Y-%m-%d %H:%M:%S"
+            )
+        )
+        print(f"Expiration date: {date_str}")
         print(
             f"Lidar count: {health_status.license_status.license_info.number_of_lidars}"
         )
-        date_str = health_status.license_status.license_info.expiration_epoch.strftime(
-            "%Y-%m-%d %H:%M:%S"
-        )
-        print(f"Expiration date: {date_str}\n")
+        if len(health_status.license_status.license_info.allowed_features) > 0:
+            print(f"Allowed features:")
+            for feature in health_status.license_status.license_info.allowed_features:
+                print(f"  - {feature.name}")
+        else:
+            print(f"Allowed features: NONE!")
+
+        print()
 
     if LicensePrivilege.READ not in health_status.license_status.privileges:
         print(

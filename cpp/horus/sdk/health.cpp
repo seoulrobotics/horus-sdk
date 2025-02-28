@@ -1,6 +1,7 @@
 #include "horus/sdk/health.h"
 
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <cstdint>
 #include <stdexcept>
@@ -21,6 +22,18 @@
 
 namespace horus {
 namespace sdk {
+
+LicenseStatus::LicenseInfo::LicenseInfo(const pb::LicenseInfo& pb_license_info)
+    : expiration_timestamp_{std::chrono::system_clock::from_time_t(
+                                pb_license_info.expiration_date().seconds()) +
+                            std::chrono::nanoseconds{pb_license_info.expiration_date().nanos()}},
+      number_of_lidars_{pb_license_info.lidar_count()} {
+  allowed_features_.reserve(pb_license_info.allowed_features().size());
+  for (const Cow<pb::LicenseInfo::AllowedFeature> allowed_feature :
+       pb_license_info.allowed_features()) {
+    allowed_features_.push_back(allowed_feature.Ref().feature());
+  }
+}
 
 LicenseStatus::LicenseStatus(const pb::LicenseStatus& pb_license_status) : license_info_{} {
   switch (pb_license_status.license_level().level_case()) {
@@ -68,9 +81,7 @@ LicenseStatus::LicenseStatus(const pb::LicenseStatus& pb_license_status) : licen
   }
 
   if (pb_license_status.has_license_info()) {
-    license_info_ = LicenseInfo{
-        pb_license_status.license_info().lidar_count(),
-        std::chrono::seconds{pb_license_status.license_info().expiration_date().seconds()}};
+    license_info_ = LicenseInfo{pb_license_status.license_info()};
   }
 
   const auto if_has_privilege_then_add_to_set =

@@ -14,18 +14,35 @@ from horus.logs.format import (
 from horus.sdk.sensor import SensorInfo, SensorStatus
 
 
+class LicenseFeature(enum.IntEnum):
+    """Feature allowed by a license."""
+
+    CAN = 0
+    VIN_ASSOCIATOR = 1
+    MULTI_ROSBAG = 2
+    DEBUGGING_SUPPORT = 3
+    ATLAS = 4
+    MACGYVER = 5
+
+
 @dataclasses.dataclass(frozen=True)
 class LicenseInfo:
+    expiration_datetime: datetime
+    """Timestamp of license expiration."""
     number_of_lidars: int
     """Number of simultaneous lidars allowed by the license."""
-    expiration_epoch: datetime
-    """Timestamp of license expiration."""
+    allowed_features: typing.List[LicenseFeature]
+    """Features allowed by the license."""
 
     @staticmethod
     def _from_pb(pb: lc_pb.LicenseInfo) -> "LicenseInfo":
         return LicenseInfo(
             number_of_lidars=pb.lidar_count,
-            expiration_epoch=datetime.fromtimestamp(pb.expiration_date.seconds),
+            expiration_datetime=datetime.fromtimestamp(pb.expiration_date.seconds),
+            allowed_features=[
+                LicenseFeature(allowed_feature.feature)
+                for allowed_feature in pb.allowed_features
+            ],
         )
 
 

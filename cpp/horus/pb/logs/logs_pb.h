@@ -198,6 +198,7 @@ class InvalidLidarTimestamp;
 class CalibrationAccumulatingPointsInfo;
 class SparseNoiseFilterUsageNonRotationalLidars;
 class FileWriteError;
+class LicenseForbiddenFeature;
 
 // MARK: Message declarations
 
@@ -21027,6 +21028,118 @@ class FileWriteError final : public PbMessage {
 
   /// The set of fields that have been given an explicit value.
   std::bitset<2> set_fields_;
+};
+
+/// Log #167.
+/// 
+///  > $feature_name is not allowed by the current license.
+///
+/// Source: horus/pb/logs/logs.proto:1218:1
+class LicenseForbiddenFeature final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `LicenseForbiddenFeature`.
+  LicenseForbiddenFeature() noexcept = default;
+
+  /// Move constructor.
+  LicenseForbiddenFeature(LicenseForbiddenFeature&&) noexcept = default;
+  /// Move assignment operator.
+  LicenseForbiddenFeature& operator=(LicenseForbiddenFeature&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit LicenseForbiddenFeature(const LicenseForbiddenFeature& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  LicenseForbiddenFeature& operator=(const LicenseForbiddenFeature&) = delete;
+
+  /// Default destructor.
+  ~LicenseForbiddenFeature() noexcept final = default;
+
+  /// Creates a `LicenseForbiddenFeature` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit LicenseForbiddenFeature(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.LicenseForbiddenFeature`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.LicenseForbiddenFeature"; }
+
+  /// The full name of the message: `horus.pb.logs.LicenseForbiddenFeature`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `feature_name` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& feature_name() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return feature_name_;
+  }
+
+  /// If `feature_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes feature_name() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(feature_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_feature_name() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return feature_name_;
+  }
+
+  /// Returns whether `feature_name` (no 1) is set.
+  constexpr bool has_feature_name() const noexcept { return set_fields_[0]; }
+
+  /// Clears `feature_name` (no 1).
+  void clear_feature_name() & noexcept {
+    set_fields_[0] = false;
+    feature_name_ = {};
+  }
+
+  /// Sets `feature_name` (no 1) and returns `*this`.
+  LicenseForbiddenFeature& set_feature_name(CowBytes&& feature_name) & noexcept {
+    set_fields_[0] = true;
+    feature_name_ = std::move(feature_name);
+    return *this;
+  }
+  /// Sets `feature_name` (no 1) and returns `*this`.
+  LicenseForbiddenFeature&& set_feature_name(CowBytes&& feature_name) && noexcept {
+    return std::move(set_feature_name(std::move(feature_name)));
+  }
+
+ private:
+  /// @see feature_name()
+  CowBytes feature_name_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
 };
 
 }  // namespace logs

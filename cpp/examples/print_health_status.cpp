@@ -21,6 +21,36 @@
 #include "horus/types/string_view.h"
 
 namespace {
+
+/// Converts a `LicenseFeature` to its stringified representation.
+horus::StringView LicenseFeatureToString(
+    const horus::sdk::LicenseStatus::LicenseInfo::LicenseFeature feature) {
+  switch (feature) {
+    case horus::sdk::LicenseStatus::LicenseInfo::LicenseFeature::kCan: {
+      return "CAN bus";
+    }
+    case horus::sdk::LicenseStatus::LicenseInfo::LicenseFeature::kVinAssociator: {
+      return "VIN associator";
+    }
+    case horus::sdk::LicenseStatus::LicenseInfo::LicenseFeature::kMultiRosbag: {
+      return "Multiple rosbags";
+    }
+    case horus::sdk::LicenseStatus::LicenseInfo::LicenseFeature::kDebuggingSupport: {
+      return "Debugging support";
+    }
+    case horus::sdk::LicenseStatus::LicenseInfo::LicenseFeature::kAtlas: {
+      return "Atlas";
+    }
+    case horus::sdk::LicenseStatus::LicenseInfo::LicenseFeature::kMacgyver: {
+      return "SR Analytics";
+    }
+    case horus::sdk::LicenseStatus::LicenseInfo::LicenseFeature::kUnknownWireValue:
+    default: {
+      return "UNKNOWN";
+    }
+  }
+}
+
 /// Stringifies a `LicenseStatus`.
 void PrintLicenseStatus(const horus::sdk::LicenseStatus& license_status) {
   horus::StrAppendToSink(horus::StdoutSink(), "- License level: ", license_status.LicenseLevel(),
@@ -51,11 +81,20 @@ void PrintLicenseStatus(const horus::sdk::LicenseStatus& license_status) {
   const horus::sdk::LicenseStatus::LicenseInfo& license_info{license_status.GetLicenseInfo()};
 
   horus::StrAppendToSink(horus::StdoutSink(), "- License info:\n");
-  horus::StrAppendToSink(horus::StdoutSink(),
-                         "  - Number of lidars: ", license_info.number_of_lidars, "\n");
   horus::StrAppendToSink(horus::StdoutSink(), "  - Expiration date: ",
-                         horus::Iso8601{std::chrono::time_point<std::chrono::system_clock>{
-                             license_info.expiration_epoch}});
+                         horus::Iso8601{license_info.ExpirationTimestamp()}, "\n");
+  horus::StrAppendToSink(horus::StdoutSink(),
+                         "  - Number of lidars: ", license_info.NumberOfLidars(), "\n");
+
+  if (!license_info.AllowedFeatures().empty()) {
+    horus::StrAppendToSink(horus::StdoutSink(), "  - Allowed features:\n");
+    for (const horus::sdk::LicenseStatus::LicenseInfo::LicenseFeature feature :
+         license_info.AllowedFeatures()) {
+      horus::StrAppendToSink(horus::StdoutSink(), "    - ", LicenseFeatureToString(feature), "\n");
+    }
+  } else {
+    horus::StrAppendToSink(horus::StdoutSink(), "  - Allowed features: NONE!\n");
+  }
 }
 
 void PrintSensorHealth(const horus::sdk::SensorHealth& sensor_health_status) {
@@ -94,7 +133,8 @@ void PrintSensorHealth(const horus::sdk::SensorHealth& sensor_health_status) {
 }
 
 void PrintServiceStatuses(horus::Span<const horus::sdk::NodeHealth> service_health_statuses) {
-  // This vector will be progressively emptied while we call stringify_service_health_status().
+  // This vector will be progressively emptied while we call
+  // stringify_service_health_status().
   std::vector<horus::sdk::NodeHealth> service_health_statuses_copy{};
   for (const horus::sdk::NodeHealth& node : service_health_statuses) {
     service_health_statuses_copy.push_back(node);
@@ -180,7 +220,6 @@ int main(int argc, const char* argv[]) {
       return 0;
     }
 
-    horus::StrAppendToSink(horus::StdoutSink(), "\n");
     horus::StrAppendToSink(horus::StdoutSink(), "---- Lidar statuses ----\n");
     for (const horus::sdk::SensorHealth& sensor_health_status : health_status.SensorStatuses()) {
       PrintSensorHealth(sensor_health_status);
