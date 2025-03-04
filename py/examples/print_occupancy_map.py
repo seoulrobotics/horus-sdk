@@ -31,7 +31,9 @@ async def print_occupancy_grid() -> None:
     )
 
     def print_grid(event: horus.OccupancyGridEvent) -> None:
-        print(f"Received occupancy grid: {event.grid.rows}x{event.grid.cols}")
+        print(
+            f"[{event.timestamp}] Received occupancy grid: {event.grid.rows}x{event.grid.cols}"
+        )
         plt.clf()
 
         grid_map = np.asarray(event.grid.data).reshape(event.grid.rows, event.grid.cols)

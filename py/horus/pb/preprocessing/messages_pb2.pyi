@@ -48,20 +48,22 @@ class OccupancyGrid(_message.Message):
     def __init__(self, rows: _Optional[int] = ..., cols: _Optional[int] = ..., cells: _Optional[_Iterable[int]] = ...) -> None: ...
 
 class OccupancyGridEvent(_message.Message):
-    __slots__ = ("grid", "x_min", "x_max", "y_min", "y_max", "resolution")
+    __slots__ = ("grid", "x_min", "x_max", "y_min", "y_max", "resolution", "timestamp")
     GRID_FIELD_NUMBER: _ClassVar[int]
     X_MIN_FIELD_NUMBER: _ClassVar[int]
     X_MAX_FIELD_NUMBER: _ClassVar[int]
     Y_MIN_FIELD_NUMBER: _ClassVar[int]
     Y_MAX_FIELD_NUMBER: _ClassVar[int]
     RESOLUTION_FIELD_NUMBER: _ClassVar[int]
+    TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
     grid: OccupancyGrid
     x_min: float
     x_max: float
     y_min: float
     y_max: float
     resolution: float
-    def __init__(self, grid: _Optional[_Union[OccupancyGrid, _Mapping]] = ..., x_min: _Optional[float] = ..., x_max: _Optional[float] = ..., y_min: _Optional[float] = ..., y_max: _Optional[float] = ..., resolution: _Optional[float] = ...) -> None: ...
+    timestamp: _metadata_pb2.Timestamp
+    def __init__(self, grid: _Optional[_Union[OccupancyGrid, _Mapping]] = ..., x_min: _Optional[float] = ..., x_max: _Optional[float] = ..., y_min: _Optional[float] = ..., y_max: _Optional[float] = ..., resolution: _Optional[float] = ..., timestamp: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class SensorInfo(_message.Message):
     __slots__ = ("lidar_id", "status", "measured_frequency", "pose_correction")

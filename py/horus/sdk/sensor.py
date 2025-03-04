@@ -1,4 +1,6 @@
 import dataclasses
+from datetime import date
+import datetime
 import enum
 import typing
 
@@ -150,6 +152,8 @@ class OccupancyGridEvent:
     y_max: float
     """The resolution of the grid."""
     resolution: float
+    """The timestamp of the event."""
+    timestamp: datetime.datetime
 
     @staticmethod
     def _from_pb(pb: messages_pb2.OccupancyGridEvent) -> "OccupancyGridEvent":
@@ -160,4 +164,7 @@ class OccupancyGridEvent:
             y_min=pb.y_min,
             y_max=pb.y_max,
             resolution=pb.resolution,
+            timestamp=datetime.datetime.fromtimestamp(
+                pb.timestamp.seconds + pb.timestamp.nanos / 1e9
+            ),
         )

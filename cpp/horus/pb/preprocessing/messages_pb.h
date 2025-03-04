@@ -56,7 +56,7 @@ enum class OccupancyClassification : PbEnum {  // NOLINT(*-enum-size)
 ///  @note Each enum value should be a power of two.
 ///  @note No status should have the same value.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:61:1
+/// Source: horus/pb/preprocessing/messages.proto:62:1
 enum class SensorStatus : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -593,6 +593,56 @@ class OccupancyGridEvent final : public PbMessage {
     return std::move(set_resolution(resolution));
   }
 
+  // Field `timestamp` (no 7).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 7.
+  constexpr const Timestamp& timestamp() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return timestamp_;
+  }
+
+  /// If `timestamp` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 7.
+  Timestamp timestamp() && noexcept {
+    if (!set_fields_[6]) {
+      return {};
+    }
+    return std::move(timestamp_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 7.
+  Timestamp& mutable_timestamp() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[6] = true;
+    return timestamp_;
+  }
+
+  /// Returns whether `timestamp` (no 7) is set.
+  constexpr bool has_timestamp() const noexcept { return set_fields_[6]; }
+
+  /// Clears `timestamp` (no 7).
+  void clear_timestamp() & noexcept {
+    set_fields_[6] = false;
+    timestamp_ = {};
+  }
+
+  /// Sets `timestamp` (no 7) and returns `*this`.
+  OccupancyGridEvent& set_timestamp(Timestamp&& timestamp) & noexcept {
+    set_fields_[6] = true;
+    timestamp_ = std::move(timestamp);
+    return *this;
+  }
+  /// Sets `timestamp` (no 7) and returns `*this`.
+  OccupancyGridEvent&& set_timestamp(Timestamp&& timestamp) && noexcept {
+    return std::move(set_timestamp(std::move(timestamp)));
+  }
+
  private:
   /// @see grid()
   OccupancyGrid grid_{};
@@ -606,14 +656,16 @@ class OccupancyGridEvent final : public PbMessage {
   float y_max_{};
   /// @see resolution()
   float resolution_{};
+  /// @see timestamp()
+  Timestamp timestamp_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<6> set_fields_;
+  std::bitset<7> set_fields_;
 };
 
 /// No documentation.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:79:3
+/// Source: horus/pb/preprocessing/messages.proto:80:3
 class SensorInfo_PoseCorrection final : public PbMessage {
  public:
 
@@ -775,7 +827,7 @@ class SensorInfo_PoseCorrection final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:71:1
+/// Source: horus/pb/preprocessing/messages.proto:72:1
 class SensorInfo final : public PbMessage {
  public:
   /// @see SensorInfo_PoseCorrection
