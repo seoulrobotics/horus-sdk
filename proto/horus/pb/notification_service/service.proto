@@ -4,9 +4,9 @@ package horus.pb;
 
 import "horus/pb/logs/message.proto";
 
+import "horus/pb/preprocessing/messages.proto";
 import "horus/pb/profiling.proto";
 import "horus/pb/rpc.proto";
-import "horus/pb/preprocessing/messages.proto";
 
 service NotificationService {
   option (service_options) = {

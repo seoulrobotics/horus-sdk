@@ -140,11 +140,11 @@ void PrintServiceStatuses(horus::Span<const horus::sdk::NodeHealth> service_heal
     service_health_statuses_copy.push_back(node);
   }
 
-  const auto stringify_service_health_status = [&nodes{service_health_statuses_copy}](
+  const auto stringify_service_health_status = [&service_health_statuses_copy](
                                                    const std::string& service_name,
                                                    const horus::sdk::NodeHealth::Service service) {
     std::vector<horus::sdk::NodeHealth> service_nodes{};
-    for (horus::sdk::NodeHealth& node : nodes) {
+    for (horus::sdk::NodeHealth& node : service_health_statuses_copy) {
       if (node.service != service) {
         continue;
       }

@@ -1,7 +1,11 @@
 import asyncio
 import logging
 import typing
-from typing_extensions import Self
+
+if typing.TYPE_CHECKING:
+    from typing_extensions import Self
+else:
+    Self = None
 
 from horus.pb.project_manager.service_pb2 import (
     GetHealthStatusRequest as _GetHealthStatusRequest,

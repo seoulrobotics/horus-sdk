@@ -1,7 +1,7 @@
 from horus.pb.logs import message_pb2 as _message_pb2
+from horus.pb.preprocessing import messages_pb2 as _messages_pb2
 from horus.pb import profiling_pb2 as _profiling_pb2
 from horus.pb import rpc_pb2 as _rpc_pb2
-from horus.pb.preprocessing import messages_pb2 as _messages_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
