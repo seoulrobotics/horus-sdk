@@ -57,6 +57,7 @@ OccupancyGridEvent::OccupancyGridEvent(const OccupancyGridEvent& other) noexcept
     , y_min_{other.y_min_}
     , y_max_{other.y_max_}
     , resolution_{other.resolution_}
+    , timestamp_{other.timestamp_}
     , set_fields_{other.set_fields_} {}
 
 void OccupancyGridEvent::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -77,6 +78,9 @@ void OccupancyGridEvent::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[5]) {
     SerializeField<float, PbDeserFlags::kFixed>(writer, /*tag=*/ 6, resolution_);
+  }
+  if (set_fields_[6]) {
+    SerializeField<Timestamp>(writer, /*tag=*/ 7, timestamp_);
   }
 }
 
@@ -111,6 +115,11 @@ void OccupancyGridEvent::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 6: {
         DeserializeField<float, PbDeserFlags::kFixed>(reader, resolution_);
         set_fields_[5] = true;
+        break;
+      }
+      case 7: {
+        DeserializeField<Timestamp>(reader, timestamp_);
+        set_fields_[6] = true;
         break;
       }
       default: {

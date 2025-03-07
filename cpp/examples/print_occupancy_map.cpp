@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "examples/helpers.h"
+#include "horus/pb/config/metadata_pb.h"
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/preprocessing/messages_pb.h"
 #include "horus/rpc/services.h"
@@ -43,6 +44,9 @@ int main(int argc, const char* argv[]) {
                                       " - ", event.x_min(), "\n");
                horus::StrAppendToSink(horus::StdoutSink(), "  detection range y: ", event.y_min(),
                                       " - ", event.y_min(), "\n");
+               horus::StrAppendToSink(horus::StdoutSink(),
+                                      "  timestamp: ", event.timestamp().seconds(), "s ",
+                                      event.timestamp().nanos(), "ns\n");
 
                std::vector<horus::pb::OccupancyClassification> classifications;
 
@@ -51,13 +55,12 @@ int main(int argc, const char* argv[]) {
                classifications.reserve(rows * cols);
 
                constexpr std::uint32_t const kNumCountBits{29U};
+               constexpr std::uint32_t const kValueMask{(1U << kNumCountBits) - 1U};
                for (const std::uint32_t cell : event.grid().cells()) {
                  std::uint32_t const value{cell >> kNumCountBits};
-                 std::uint32_t const count{cell & ((1U << kNumCountBits) - 1U)};
-                 for (std::uint32_t i{0}; i < count; ++i) {
-                   classifications.push_back(
-                       static_cast<horus::pb::OccupancyClassification>(value));
-                 }
+                 std::uint32_t const count{cell & kValueMask};
+                 classifications.insert(classifications.end(), count,
+                                        static_cast<horus::pb::OccupancyClassification>(value));
                }
 
                auto const num_occluded = std::count_if(

@@ -338,6 +338,8 @@ if(HORUS_SDK_BUILD_TESTING)
 endif()
 
 if(HORUS_SDK_BUILD_EXAMPLES)
+  set(horus_examples_targets)
+
   foreach(example print_logs print_events print_health_status print_occupancy_map)
     add_executable(horus_example_${example}
       examples/${example}.cpp
@@ -347,7 +349,12 @@ if(HORUS_SDK_BUILD_EXAMPLES)
 
     target_link_libraries(horus_example_${example} PRIVATE horus::core horus::sdk)
     list(APPEND horus_targets horus_example_${example})
+    list(APPEND horus_examples_targets horus_example_${example})
   endforeach()
+
+  add_custom_target(horus_sdk_examples
+    DEPENDS ${horus_examples_targets}
+  )
 endif()
 
 

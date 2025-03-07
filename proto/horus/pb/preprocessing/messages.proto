@@ -53,6 +53,7 @@ message OccupancyGridEvent {
   float y_min = 4;
   float y_max = 5;
   float resolution = 6;
+  Timestamp timestamp = 7;
 }
 
 // Sensor status enum.
