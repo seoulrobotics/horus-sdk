@@ -241,7 +241,7 @@ func (sensorStatus *SensorHealth) HasStatus(status SensorStatus) bool {
 
 // Returns whether a sensor is unreachable.
 func (sensorStatus *SensorHealth) IsUnreachable() bool {
-	return sensorStatus.UnreachableReason == ""
+	return sensorStatus.UnreachableReason != ""
 }
 
 // MARK: Node status

@@ -3,6 +3,7 @@ package horus
 
 import (
 	"context"
+	"errors"
 	"log/slog"
 	"sync"
 	"sync/atomic"
@@ -37,6 +38,7 @@ type Sdk struct {
 // SdkOptions specifies options for creating an [Sdk] with [NewSdk].
 type SdkOptions struct {
 	// The services to connect to. Defaults to [DefaultServices] if nil.
+	// Each ServiceInfo can be set to nil. In that case, the SDK will not try to connect to it.
 	Services *Services
 	// Logger for internal events. Defaults to [slog.Default] if nil.
 	Logger *slog.Logger
@@ -75,45 +77,51 @@ func NewSdk(ctx context.Context, options SdkOptions) (*Sdk, error) {
 	// Connect to services. Use an errgroup to connect concurrently.
 	var g errgroup.Group
 
-	g.Go(func() (err error) {
-		sdk.detection, sdk.detectionRcs, err = newSubscribingClient(
-			ctx,
-			logger,
-			options,
-			services.Detection,
-			detection_service_pb.NewDetectionServiceClient,
-			&detection_service_pb.DetectionSubscriberServiceHandler{
-				BroadcastDetection: sdk.detectionEventHandlers.handle,
-			},
-		)
-		return
-	})
+	if services.Detection != nil {
+		g.Go(func() (err error) {
+			sdk.detection, sdk.detectionRcs, err = newSubscribingClient(
+				ctx,
+				logger,
+				options,
+				*services.Detection,
+				detection_service_pb.NewDetectionServiceClient,
+				&detection_service_pb.DetectionSubscriberServiceHandler{
+					BroadcastDetection: sdk.detectionEventHandlers.handle,
+				},
+			)
+			return
+		})
+	}
 
-	g.Go(func() (err error) {
-		sdk.pointAggregator, sdk.pointAggregatorRcs, err = newSubscribingClient(
-			ctx,
-			logger,
-			options,
-			services.PointAggregator,
-			point_aggregator_service_pb.NewPointAggregatorServiceClient,
-			&point_aggregator_service_pb.PointAggregatorSubscriberServiceHandler{
-				BroadcastProcessedPoints: sdk.pointFrameHandlers.handle,
-			},
-		)
-		return
-	})
+	if services.PointAggregator != nil {
+		g.Go(func() (err error) {
+			sdk.pointAggregator, sdk.pointAggregatorRcs, err = newSubscribingClient(
+				ctx,
+				logger,
+				options,
+				*services.PointAggregator,
+				point_aggregator_service_pb.NewPointAggregatorServiceClient,
+				&point_aggregator_service_pb.PointAggregatorSubscriberServiceHandler{
+					BroadcastProcessedPoints: sdk.pointFrameHandlers.handle,
+				},
+			)
+			return
+		})
+	}
 
-	g.Go(func() (err error) {
-		sdk.projectManager, err = newClient(
-			ctx,
-			logger,
-			options,
-			services.ProjectManager,
-			project_manager_service_pb.NewProjectManagerServiceClient,
-			&project_manager_service_pb.ProjectManagerServiceHandler{},
-		)
-		return
-	})
+	if services.ProjectManager != nil {
+		g.Go(func() (err error) {
+			sdk.projectManager, err = newClient(
+				ctx,
+				logger,
+				options,
+				*services.ProjectManager,
+				project_manager_service_pb.NewProjectManagerServiceClient,
+				&project_manager_service_pb.ProjectManagerServiceHandler{},
+			)
+			return
+		})
+	}
 
 	err := g.Wait()
 	if err != nil {
@@ -123,6 +131,10 @@ func NewSdk(ctx context.Context, options SdkOptions) (*Sdk, error) {
 }
 
 func (sdk *Sdk) GetHealthStatus(req GetHealthStatusRequest) (*HealthStatus, error) {
+	if sdk.projectManager == nil {
+		return nil, errors.New("SDK is not configured to connect to the project manager service")
+	}
+
 	ctx := context.Background()
 
 	pbHealthStatus, err := sdk.projectManager.GetHealthStatus(ctx, req.toPb())
@@ -139,14 +151,22 @@ func (sdk *Sdk) GetHealthStatus(req GetHealthStatusRequest) (*HealthStatus, erro
 }
 
 // SubscribeToObjects subscribes to object detection events and calls f for each event received.
-func (sdk *Sdk) SubscribeToObjects(f func(*detection_pb.DetectionEvent)) *Subscription {
+func (sdk *Sdk) SubscribeToObjects(f func(*detection_pb.DetectionEvent)) (*Subscription, error) {
+	if sdk.detection == nil {
+		return nil, errors.New("SDK is not configured to connect to the detection service")
+	}
+
 	cb := &f
 	sdk.detectionEventHandlers.addHandler(cb)
-	return sdk.detectionRcs.addSubscription(func() { sdk.detectionEventHandlers.removeHandler(cb) })
+	return sdk.detectionRcs.addSubscription(func() { sdk.detectionEventHandlers.removeHandler(cb) }), nil
 }
 
 // SubscribeToPointClouds subscribes to point cloud broadcasts and calls f for each frame received.
-func (sdk *Sdk) SubscribeToPointClouds(f func(*point_message_pb.PointFrame)) *Subscription {
+func (sdk *Sdk) SubscribeToPointClouds(f func(*point_message_pb.PointFrame)) (*Subscription, error) {
+	if sdk.pointAggregator == nil {
+		return nil, errors.New("SDK is not configured to connect to the detection service")
+	}
+
 	cbf := func(req *point_message_pb.AggregatedPointEvents) {
 		for _, event := range req.GetEvents() {
 			f(event.GetPointFrame())
@@ -154,7 +174,7 @@ func (sdk *Sdk) SubscribeToPointClouds(f func(*point_message_pb.PointFrame)) *Su
 	}
 	cb := &cbf
 	sdk.pointFrameHandlers.addHandler(cb)
-	return sdk.pointAggregatorRcs.addSubscription(func() { sdk.pointFrameHandlers.removeHandler(cb) })
+	return sdk.pointAggregatorRcs.addSubscription(func() { sdk.pointFrameHandlers.removeHandler(cb) }), nil
 }
 
 // Close closes all current connections used by the SDK.

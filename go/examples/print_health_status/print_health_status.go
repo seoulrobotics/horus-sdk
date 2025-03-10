@@ -46,7 +46,7 @@ func printHealthStatus(healthStatus *horus.HealthStatus) {
 		fmt.Printf("%s:", sensorStatus.LidarId)
 
 		if sensorStatus.IsUnreachable() {
-			fmt.Printf(" Unreachable!: %s\n\n", sensorStatus.UnreachableReason)
+			fmt.Printf(" Unreachable: %s\n\n", sensorStatus.UnreachableReason)
 			continue
 		}
 
@@ -94,7 +94,10 @@ func printHealthStatus(healthStatus *horus.HealthStatus) {
 func main() {
 	ctx := context.Background()
 
-	sdk, err := horus.NewSdk(ctx, horus.SdkOptions{})
+	// Only create connection to the project manager service
+	onlyProjectManagerServices := horus.Services{}.WithProjectManager(*horus.DefaultServices().ProjectManager)
+
+	sdk, err := horus.NewSdk(ctx, horus.SdkOptions{Services: &onlyProjectManagerServices})
 	if err != nil {
 		fmt.Printf("Error while creating the SDK: %s", err)
 		os.Exit(1)

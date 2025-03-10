@@ -26,58 +26,58 @@ func (si ServiceInfo) WithPort(port uint16) ServiceInfo {
 
 // Services provides the [ServiceInfo] of the Horus RPC services.
 type Services struct {
-	Detection ServiceInfo
-	Notification ServiceInfo
-	PointAggregator ServiceInfo
-	ProjectManager ServiceInfo
+	Detection *ServiceInfo
+	Notification *ServiceInfo
+	PointAggregator *ServiceInfo
+	ProjectManager *ServiceInfo
 }
 
 // WithDetection returns a copy of s with its [Services.Detection] set to si.
 func (s Services) WithDetection(si ServiceInfo) Services {
-	s.Detection = si
+	s.Detection = &si
 	return s
 }
 
 // WithNotification returns a copy of s with its [Services.Notification] set to si.
 func (s Services) WithNotification(si ServiceInfo) Services {
-	s.Notification = si
+	s.Notification = &si
 	return s
 }
 
 // WithPointAggregator returns a copy of s with its [Services.PointAggregator] set to si.
 func (s Services) WithPointAggregator(si ServiceInfo) Services {
-	s.PointAggregator = si
+	s.PointAggregator = &si
 	return s
 }
 
 // WithProjectManager returns a copy of s with its [Services.ProjectManager] set to si.
 func (s Services) WithProjectManager(si ServiceInfo) Services {
-	s.ProjectManager = si
+	s.ProjectManager = &si
 	return s
 }
 
 // DefaultServices returns the default configuration of [Services].
 func DefaultServices() Services {
 	return Services{
-		Detection: ServiceInfo{
+		Detection: &ServiceInfo{
 			FullName: "horus.pb.DetectionService",
 			Id: 7,
 			Host: "127.0.0.1",
 			Port: 40007,
 		},
-		Notification: ServiceInfo{
+		Notification: &ServiceInfo{
 			FullName: "horus.pb.NotificationService",
 			Id: 2,
 			Host: "127.0.0.1",
 			Port: 40002,
 		},
-		PointAggregator: ServiceInfo{
+		PointAggregator: &ServiceInfo{
 			FullName: "horus.pb.PointAggregatorService",
 			Id: 6,
 			Host: "127.0.0.1",
 			Port: 40006,
 		},
-		ProjectManager: ServiceInfo{
+		ProjectManager: &ServiceInfo{
 			FullName: "horus.pb.ProjectManagerService",
 			Id: 3,
 			Host: "127.0.0.1",
