@@ -14,20 +14,30 @@ import (
 func main() {
 	ctx := context.Background()
 
+	// Only create connection to the detection service
+	onlyDetectionService := horus.Services{}.WithDetection(*horus.DefaultServices().Detection)
+
 	// Create SDK.
-	sdk, err := horus.NewSdk(ctx, horus.SdkOptions{})
+	sdk, err := horus.NewSdk(ctx, horus.SdkOptions{
+		Services: &onlyDetectionService,
+	})
 	if err != nil {
 		panic(err)
 	}
 
 	// Subscribe to detection events.
-	subscription := sdk.SubscribeToObjects(func(e *detection_pb.DetectionEvent) {
+	subscription, err := sdk.SubscribeToObjects(func(e *detection_pb.DetectionEvent) {
 		fmt.Printf("%d detected object(s):\n", len(e.GetObjects()))
 
 		for _, obj := range e.GetObjects() {
 			fmt.Println(prototext.MarshalOptions{Multiline: true}.Format(obj))
 		}
 	})
+
+	if err != nil {
+		panic(err)
+	}
+
 	defer subscription.Close()
 
 	// Wait until end of program.
