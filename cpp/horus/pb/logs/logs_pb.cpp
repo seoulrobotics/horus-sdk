@@ -4379,6 +4379,32 @@ void LicenseForbiddenFeature::DeserializeFrom(PbReader& reader) noexcept(false) 
   }
 }
 
+FailedToUpdateConfiguration::FailedToUpdateConfiguration(const FailedToUpdateConfiguration& other) noexcept(false)
+    : details_{other.details_}
+    , set_fields_{other.set_fields_} {}
+
+void FailedToUpdateConfiguration::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, details_);
+  }
+}
+
+void FailedToUpdateConfiguration::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, details_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
 }  // namespace logs
 }  // namespace pb
 }  // namespace sdk

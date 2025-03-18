@@ -59,7 +59,7 @@ class BaseHandle {
 };
 
 /// A list of `BaseHandle`s.
-using HandleList = IntrusiveList<BaseHandle, &BaseHandle::Link>;
+using HandleList = IntrusiveListByMethod<BaseHandle, &BaseHandle::Link>;
 
 /// Core state of a `FutureOwner<F>`. For more information, see `FutureOwner<F>`.
 ///
@@ -119,7 +119,7 @@ class CoreFutureOwner {
   /// The link of this owner in its parent's `children_`, if it is not the root.
   IntrusiveListLink<CoreFutureOwner> parent_link_;
   /// The list of `CoreFutureOwner`s owned by this owner.
-  IntrusiveList<CoreFutureOwner, &CoreFutureOwner::ParentLink> children_;
+  IntrusiveListByMethod<CoreFutureOwner, &CoreFutureOwner::ParentLink> children_;
   /// The list of handles managed by this owner.
   HandleList handles_;
   /// Whether `PollDestroy()` was called at least once.
