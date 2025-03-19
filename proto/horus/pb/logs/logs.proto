@@ -1218,3 +1218,10 @@ message FileWriteError {
 message LicenseForbiddenFeature {
   string feature_name = 1;
 }
+
+// Log #168.
+//
+// > Failed to update the configuration: $details.
+message FailedToUpdateConfiguration {
+  string details = 1;
+}

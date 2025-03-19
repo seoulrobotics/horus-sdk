@@ -78,6 +78,8 @@ class DetectedObject_Kinematics;
 class DetectedObject_Shape;
 class DetectedObject_Status;
 class DetectedObject;
+class DeepLearningObject_Classification;
+class DeepLearningObject;
 class DetectionEvent_FrameInfo;
 class DetectionEvent;
 
@@ -541,17 +543,57 @@ class DetectedObject_Classification final : public PbMessage {
     return std::move(set_class_label(class_label));
   }
 
+  // Field `class_confidence` (no 2).
+  // -----
+
+  /// The confidence of the detected object.
+  ///
+  /// Field no: 2.
+  constexpr float class_confidence() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return class_confidence_;
+  }
+
+  /// The confidence of the detected object.
+  ///
+  /// Field no: 2.
+  float& mutable_class_confidence() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return class_confidence_;
+  }
+
+  /// Returns whether `class_confidence` (no 2) is set.
+  constexpr bool has_class_confidence() const noexcept { return set_fields_[1]; }
+
+  /// Clears `class_confidence` (no 2).
+  void clear_class_confidence() & noexcept {
+    set_fields_[1] = false;
+    class_confidence_ = {};
+  }
+
+  /// Sets `class_confidence` (no 2) and returns `*this`.
+  DetectedObject_Classification& set_class_confidence(float class_confidence) & noexcept {
+    set_fields_[1] = true;
+    class_confidence_ = class_confidence;
+    return *this;
+  }
+  /// Sets `class_confidence` (no 2) and returns `*this`.
+  DetectedObject_Classification&& set_class_confidence(float class_confidence) && noexcept {
+    return std::move(set_class_confidence(class_confidence));
+  }
+
  private:
   /// @see class_label()
   ObjectLabel class_label_{};
+  /// @see class_confidence()
+  float class_confidence_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:54:3
+/// Source: horus/pb/detection_service/detection.proto:56:3
 class DetectedObject_Kinematics final : public PbMessage {
  public:
 
@@ -705,7 +747,7 @@ class DetectedObject_Kinematics final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:64:3
+/// Source: horus/pb/detection_service/detection.proto:66:3
 class DetectedObject_Shape final : public PbMessage {
  public:
 
@@ -815,7 +857,7 @@ class DetectedObject_Shape final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:69:3
+/// Source: horus/pb/detection_service/detection.proto:71:3
 class DetectedObject_Status final : public PbMessage {
  public:
 
@@ -1229,7 +1271,309 @@ class DetectedObject final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:86:3
+/// Source: horus/pb/detection_service/detection.proto:88:3
+class DeepLearningObject_Classification final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `DeepLearningObject_Classification`.
+  DeepLearningObject_Classification() noexcept = default;
+
+  /// Move constructor.
+  DeepLearningObject_Classification(DeepLearningObject_Classification&&) noexcept = default;
+  /// Move assignment operator.
+  DeepLearningObject_Classification& operator=(DeepLearningObject_Classification&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit DeepLearningObject_Classification(const DeepLearningObject_Classification& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  DeepLearningObject_Classification& operator=(const DeepLearningObject_Classification&) = delete;
+
+  /// Default destructor.
+  ~DeepLearningObject_Classification() noexcept final = default;
+
+  /// Creates a `DeepLearningObject_Classification` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit DeepLearningObject_Classification(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.DeepLearningObject.Classification`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.DeepLearningObject.Classification"; }
+
+  /// The full name of the message: `horus.pb.DeepLearningObject.Classification`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `class_label` (no 1).
+  // -----
+
+  /// The label of the detected object.
+  ///
+  /// Field no: 1.
+  constexpr ObjectLabel class_label() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return class_label_;
+  }
+
+  /// The label of the detected object.
+  ///
+  /// Field no: 1.
+  ObjectLabel& mutable_class_label() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return class_label_;
+  }
+
+  /// Returns whether `class_label` (no 1) is set.
+  constexpr bool has_class_label() const noexcept { return set_fields_[0]; }
+
+  /// Clears `class_label` (no 1).
+  void clear_class_label() & noexcept {
+    set_fields_[0] = false;
+    class_label_ = {};
+  }
+
+  /// Sets `class_label` (no 1) and returns `*this`.
+  DeepLearningObject_Classification& set_class_label(ObjectLabel class_label) & noexcept {
+    set_fields_[0] = true;
+    class_label_ = class_label;
+    return *this;
+  }
+  /// Sets `class_label` (no 1) and returns `*this`.
+  DeepLearningObject_Classification&& set_class_label(ObjectLabel class_label) && noexcept {
+    return std::move(set_class_label(class_label));
+  }
+
+  // Field `class_confidence` (no 2).
+  // -----
+
+  /// The confidence of the detected object.
+  ///
+  /// Field no: 2.
+  constexpr float class_confidence() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return class_confidence_;
+  }
+
+  /// The confidence of the detected object.
+  ///
+  /// Field no: 2.
+  float& mutable_class_confidence() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return class_confidence_;
+  }
+
+  /// Returns whether `class_confidence` (no 2) is set.
+  constexpr bool has_class_confidence() const noexcept { return set_fields_[1]; }
+
+  /// Clears `class_confidence` (no 2).
+  void clear_class_confidence() & noexcept {
+    set_fields_[1] = false;
+    class_confidence_ = {};
+  }
+
+  /// Sets `class_confidence` (no 2) and returns `*this`.
+  DeepLearningObject_Classification& set_class_confidence(float class_confidence) & noexcept {
+    set_fields_[1] = true;
+    class_confidence_ = class_confidence;
+    return *this;
+  }
+  /// Sets `class_confidence` (no 2) and returns `*this`.
+  DeepLearningObject_Classification&& set_class_confidence(float class_confidence) && noexcept {
+    return std::move(set_class_confidence(class_confidence));
+  }
+
+ private:
+  /// @see class_label()
+  ObjectLabel class_label_{};
+  /// @see class_confidence()
+  float class_confidence_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// / A deep learning object message.
+///
+/// Source: horus/pb/detection_service/detection.proto:87:1
+class DeepLearningObject final : public PbMessage {
+ public:
+  /// @see DeepLearningObject_Classification
+  using Classification = DeepLearningObject_Classification;
+
+  /// Constructs a default-initialized `DeepLearningObject`.
+  DeepLearningObject() noexcept = default;
+
+  /// Move constructor.
+  DeepLearningObject(DeepLearningObject&&) noexcept = default;
+  /// Move assignment operator.
+  DeepLearningObject& operator=(DeepLearningObject&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit DeepLearningObject(const DeepLearningObject& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  DeepLearningObject& operator=(const DeepLearningObject&) = delete;
+
+  /// Default destructor.
+  ~DeepLearningObject() noexcept final = default;
+
+  /// Creates a `DeepLearningObject` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit DeepLearningObject(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.DeepLearningObject`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.DeepLearningObject"; }
+
+  /// The full name of the message: `horus.pb.DeepLearningObject`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `classification` (no 1).
+  // -----
+
+  /// The label of the detected object.
+  ///
+  /// Field no: 1.
+  constexpr const DeepLearningObject_Classification& classification() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return classification_;
+  }
+
+  /// If `classification` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  DeepLearningObject_Classification classification() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(classification_);
+  }
+
+  /// The label of the detected object.
+  ///
+  /// Field no: 1.
+  DeepLearningObject_Classification& mutable_classification() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return classification_;
+  }
+
+  /// Returns whether `classification` (no 1) is set.
+  constexpr bool has_classification() const noexcept { return set_fields_[0]; }
+
+  /// Clears `classification` (no 1).
+  void clear_classification() & noexcept {
+    set_fields_[0] = false;
+    classification_ = {};
+  }
+
+  /// Sets `classification` (no 1) and returns `*this`.
+  DeepLearningObject& set_classification(DeepLearningObject_Classification&& classification) & noexcept {
+    set_fields_[0] = true;
+    classification_ = std::move(classification);
+    return *this;
+  }
+  /// Sets `classification` (no 1) and returns `*this`.
+  DeepLearningObject&& set_classification(DeepLearningObject_Classification&& classification) && noexcept {
+    return std::move(set_classification(std::move(classification)));
+  }
+
+  // Field `bounding_box` (no 2).
+  // -----
+
+  /// The bounding box of the detected object.
+  ///
+  /// Field no: 2.
+  constexpr const BoundingBox& bounding_box() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return bounding_box_;
+  }
+
+  /// If `bounding_box` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  BoundingBox bounding_box() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(bounding_box_);
+  }
+
+  /// The bounding box of the detected object.
+  ///
+  /// Field no: 2.
+  BoundingBox& mutable_bounding_box() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return bounding_box_;
+  }
+
+  /// Returns whether `bounding_box` (no 2) is set.
+  constexpr bool has_bounding_box() const noexcept { return set_fields_[1]; }
+
+  /// Clears `bounding_box` (no 2).
+  void clear_bounding_box() & noexcept {
+    set_fields_[1] = false;
+    bounding_box_ = {};
+  }
+
+  /// Sets `bounding_box` (no 2) and returns `*this`.
+  DeepLearningObject& set_bounding_box(BoundingBox&& bounding_box) & noexcept {
+    set_fields_[1] = true;
+    bounding_box_ = std::move(bounding_box);
+    return *this;
+  }
+  /// Sets `bounding_box` (no 2) and returns `*this`.
+  DeepLearningObject&& set_bounding_box(BoundingBox&& bounding_box) && noexcept {
+    return std::move(set_bounding_box(std::move(bounding_box)));
+  }
+
+ private:
+  /// @see classification()
+  DeepLearningObject_Classification classification_{};
+  /// @see bounding_box()
+  BoundingBox bounding_box_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// No documentation.
+///
+/// Source: horus/pb/detection_service/detection.proto:103:3
 class DetectionEvent_FrameInfo final : public PbMessage {
  public:
 
@@ -1339,7 +1683,7 @@ class DetectionEvent_FrameInfo final : public PbMessage {
 
 /// A detection event message.
 ///
-/// Source: horus/pb/detection_service/detection.proto:85:1
+/// Source: horus/pb/detection_service/detection.proto:102:1
 class DetectionEvent final : public PbMessage {
  public:
   /// @see DetectionEvent_FrameInfo
@@ -1541,6 +1885,56 @@ class DetectionEvent final : public PbMessage {
     return std::move(set_frame_info(std::move(frame_info)));
   }
 
+  // Field `raw_deep_learning_objects` (no 4).
+  // -----
+
+  /// The raw deep learning bounding boxes.
+  ///
+  /// Field no: 4.
+  constexpr const CowRepeated<DeepLearningObject>& raw_deep_learning_objects() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return raw_deep_learning_objects_;
+  }
+
+  /// If `raw_deep_learning_objects` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  CowRepeated<DeepLearningObject> raw_deep_learning_objects() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(raw_deep_learning_objects_);
+  }
+
+  /// The raw deep learning bounding boxes.
+  ///
+  /// Field no: 4.
+  CowRepeated<DeepLearningObject>& mutable_raw_deep_learning_objects() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return raw_deep_learning_objects_;
+  }
+
+  /// Returns whether `raw_deep_learning_objects` (no 4) is set.
+  constexpr bool has_raw_deep_learning_objects() const noexcept { return set_fields_[3]; }
+
+  /// Clears `raw_deep_learning_objects` (no 4).
+  void clear_raw_deep_learning_objects() & noexcept {
+    set_fields_[3] = false;
+    raw_deep_learning_objects_ = {};
+  }
+
+  /// Sets `raw_deep_learning_objects` (no 4) and returns `*this`.
+  DetectionEvent& set_raw_deep_learning_objects(CowRepeated<DeepLearningObject>&& raw_deep_learning_objects) & noexcept {
+    set_fields_[3] = true;
+    raw_deep_learning_objects_ = std::move(raw_deep_learning_objects);
+    return *this;
+  }
+  /// Sets `raw_deep_learning_objects` (no 4) and returns `*this`.
+  DetectionEvent&& set_raw_deep_learning_objects(CowRepeated<DeepLearningObject>&& raw_deep_learning_objects) && noexcept {
+    return std::move(set_raw_deep_learning_objects(std::move(raw_deep_learning_objects)));
+  }
+
  private:
   /// @see objects()
   CowRepeated<DetectedObject> objects_{};
@@ -1548,9 +1942,11 @@ class DetectionEvent final : public PbMessage {
   CowRepeated<LabeledPointCloud> labeled_point_clouds_{};
   /// @see frame_info()
   DetectionEvent_FrameInfo frame_info_{};
+  /// @see raw_deep_learning_objects()
+  CowRepeated<DeepLearningObject> raw_deep_learning_objects_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<3> set_fields_;
+  std::bitset<4> set_fields_;
 };
 
 }  // namespace pb

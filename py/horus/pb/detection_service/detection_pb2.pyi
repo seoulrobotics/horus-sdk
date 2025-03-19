@@ -55,10 +55,12 @@ class LabeledPointCloud(_message.Message):
 class DetectedObject(_message.Message):
     __slots__ = ("classification", "kinematics", "shape", "status")
     class Classification(_message.Message):
-        __slots__ = ("class_label",)
+        __slots__ = ("class_label", "class_confidence")
         CLASS_LABEL_FIELD_NUMBER: _ClassVar[int]
+        CLASS_CONFIDENCE_FIELD_NUMBER: _ClassVar[int]
         class_label: ObjectLabel
-        def __init__(self, class_label: _Optional[_Union[ObjectLabel, str]] = ...) -> None: ...
+        class_confidence: float
+        def __init__(self, class_label: _Optional[_Union[ObjectLabel, str]] = ..., class_confidence: _Optional[float] = ...) -> None: ...
     class Kinematics(_message.Message):
         __slots__ = ("linear_velocity", "yaw_rate")
         LINEAR_VELOCITY_FIELD_NUMBER: _ClassVar[int]
@@ -88,8 +90,23 @@ class DetectedObject(_message.Message):
     status: DetectedObject.Status
     def __init__(self, classification: _Optional[_Union[DetectedObject.Classification, _Mapping]] = ..., kinematics: _Optional[_Union[DetectedObject.Kinematics, _Mapping]] = ..., shape: _Optional[_Union[DetectedObject.Shape, _Mapping]] = ..., status: _Optional[_Union[DetectedObject.Status, _Mapping]] = ...) -> None: ...
 
+class DeepLearningObject(_message.Message):
+    __slots__ = ("classification", "bounding_box")
+    class Classification(_message.Message):
+        __slots__ = ("class_label", "class_confidence")
+        CLASS_LABEL_FIELD_NUMBER: _ClassVar[int]
+        CLASS_CONFIDENCE_FIELD_NUMBER: _ClassVar[int]
+        class_label: ObjectLabel
+        class_confidence: float
+        def __init__(self, class_label: _Optional[_Union[ObjectLabel, str]] = ..., class_confidence: _Optional[float] = ...) -> None: ...
+    CLASSIFICATION_FIELD_NUMBER: _ClassVar[int]
+    BOUNDING_BOX_FIELD_NUMBER: _ClassVar[int]
+    classification: DeepLearningObject.Classification
+    bounding_box: BoundingBox
+    def __init__(self, classification: _Optional[_Union[DeepLearningObject.Classification, _Mapping]] = ..., bounding_box: _Optional[_Union[BoundingBox, _Mapping]] = ...) -> None: ...
+
 class DetectionEvent(_message.Message):
-    __slots__ = ("objects", "labeled_point_clouds", "frame_info")
+    __slots__ = ("objects", "labeled_point_clouds", "frame_info", "raw_deep_learning_objects")
     class FrameInfo(_message.Message):
         __slots__ = ("frame_timestamp",)
         FRAME_TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
@@ -98,7 +115,9 @@ class DetectionEvent(_message.Message):
     OBJECTS_FIELD_NUMBER: _ClassVar[int]
     LABELED_POINT_CLOUDS_FIELD_NUMBER: _ClassVar[int]
     FRAME_INFO_FIELD_NUMBER: _ClassVar[int]
+    RAW_DEEP_LEARNING_OBJECTS_FIELD_NUMBER: _ClassVar[int]
     objects: _containers.RepeatedCompositeFieldContainer[DetectedObject]
     labeled_point_clouds: _containers.RepeatedCompositeFieldContainer[LabeledPointCloud]
     frame_info: DetectionEvent.FrameInfo
-    def __init__(self, objects: _Optional[_Iterable[_Union[DetectedObject, _Mapping]]] = ..., labeled_point_clouds: _Optional[_Iterable[_Union[LabeledPointCloud, _Mapping]]] = ..., frame_info: _Optional[_Union[DetectionEvent.FrameInfo, _Mapping]] = ...) -> None: ...
+    raw_deep_learning_objects: _containers.RepeatedCompositeFieldContainer[DeepLearningObject]
+    def __init__(self, objects: _Optional[_Iterable[_Union[DetectedObject, _Mapping]]] = ..., labeled_point_clouds: _Optional[_Iterable[_Union[LabeledPointCloud, _Mapping]]] = ..., frame_info: _Optional[_Union[DetectionEvent.FrameInfo, _Mapping]] = ..., raw_deep_learning_objects: _Optional[_Iterable[_Union[DeepLearningObject, _Mapping]]] = ...) -> None: ...
