@@ -114,6 +114,8 @@ FetchContent_Declare(
     sed -Ei "s/find_program\\\\(([A-Z_]+) .+\\\\)/set(\\\\1 0)/g" CMakeLists.txt &&
     # Disable testing in Protozero only.
     sed -i "s/if(BUILD_TESTING)/if(0)/g" CMakeLists.txt &&
+    # Expose `basic_pbf_writer` internals to be able to serialize buffers in-place.
+    sed -i "s/^class basic_pbf_writer {$/class basic_pbf_writer { public:/g" include/protozero/basic_pbf_writer.hpp &&
     # Don't import Protobuf.
     sed -i "s/find_package(Protobuf)//" CMakeLists.txt
   EXCLUDE_FROM_ALL

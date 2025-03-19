@@ -26,17 +26,17 @@ from horus.pb.config import metadata_pb2 as horus_dot_pb_dot_config_dot_metadata
 from horus.pb.point import point_message_pb2 as horus_dot_pb_dot_point_dot_point__message__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n*horus/pb/detection_service/detection.proto\x12\x08horus.pb\x1a\x1ehorus/pb/config/metadata.proto\x1a\"horus/pb/point/point_message.proto\"^\n\x0b\x42oundingBox\x12 \n\x04\x62\x61se\x18\x01 \x01(\x0b\x32\x12.horus.pb.Vector3f\x12 \n\x04size\x18\x02 \x01(\x0b\x32\x12.horus.pb.Vector3f\x12\x0b\n\x03yaw\x18\x03 \x01(\x02\"v\n\x11LabeledPointCloud\x12)\n\x0bpoint_cloud\x18\x01 \x01(\x0b\x32\x14.horus.pb.PointFrame\x12\x36\n\x18point_index_to_object_id\x18\x02 \x01(\x0b\x32\x14.horus.pb.UInt32List\"\x92\x04\n\x0e\x44\x65tectedObject\x12?\n\x0e\x63lassification\x18\x01 \x01(\x0b\x32\'.horus.pb.DetectedObject.Classification\x12\x37\n\nkinematics\x18\x02 \x01(\x0b\x32#.horus.pb.DetectedObject.Kinematics\x12-\n\x05shape\x18\x03 \x01(\x0b\x32\x1e.horus.pb.DetectedObject.Shape\x12/\n\x06status\x18\x04 \x01(\x0b\x32\x1f.horus.pb.DetectedObject.Status\x1a<\n\x0e\x43lassification\x12*\n\x0b\x63lass_label\x18\x01 \x01(\x0e\x32\x15.horus.pb.ObjectLabel\x1a]\n\nKinematics\x12+\n\x0flinear_velocity\x18\x01 \x01(\x0b\x32\x12.horus.pb.Vector2f\x12\x15\n\x08yaw_rate\x18\x02 \x01(\x02H\x00\x88\x01\x01\x42\x0b\n\t_yaw_rate\x1a\x34\n\x05Shape\x12+\n\x0c\x62ounding_box\x18\x01 \x01(\x0b\x32\x15.horus.pb.BoundingBox\x1aS\n\x06Status\x12\x0f\n\x02id\x18\x01 \x01(\rH\x00\x88\x01\x01\x12\x31\n\x0ftracking_status\x18\x02 \x01(\x0e\x32\x18.horus.pb.TrackingStatusB\x05\n\x03_id\"\xe9\x01\n\x0e\x44\x65tectionEvent\x12)\n\x07objects\x18\x01 \x03(\x0b\x32\x18.horus.pb.DetectedObject\x12\x39\n\x14labeled_point_clouds\x18\x02 \x03(\x0b\x32\x1b.horus.pb.LabeledPointCloud\x12\x36\n\nframe_info\x18\x03 \x01(\x0b\x32\".horus.pb.DetectionEvent.FrameInfo\x1a\x39\n\tFrameInfo\x12,\n\x0f\x66rame_timestamp\x18\x01 \x01(\x0b\x32\x13.horus.pb.Timestamp*T\n\x0bObjectLabel\x12\x15\n\x11LABEL_UNSPECIFIED\x10\x00\x12\x08\n\x04MISC\x10\x01\x12\x07\n\x03\x43\x41R\x10\x02\x12\x0b\n\x07\x43YCLIST\x10\x03\x12\x0e\n\nPEDESTRIAN\x10\x04*o\n\x0eTrackingStatus\x12\x1f\n\x1bTRACKING_STATUS_UNSPECIFIED\x10\x00\x12\x10\n\x0cINVALIDATING\x10\x01\x12\x0e\n\nVALIDATING\x10\x02\x12\x0c\n\x08\x44RIFTING\x10\x03\x12\x0c\n\x08TRACKING\x10\x04\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n*horus/pb/detection_service/detection.proto\x12\x08horus.pb\x1a\x1ehorus/pb/config/metadata.proto\x1a\"horus/pb/point/point_message.proto\"^\n\x0b\x42oundingBox\x12 \n\x04\x62\x61se\x18\x01 \x01(\x0b\x32\x12.horus.pb.Vector3f\x12 \n\x04size\x18\x02 \x01(\x0b\x32\x12.horus.pb.Vector3f\x12\x0b\n\x03yaw\x18\x03 \x01(\x02\"v\n\x11LabeledPointCloud\x12)\n\x0bpoint_cloud\x18\x01 \x01(\x0b\x32\x14.horus.pb.PointFrame\x12\x36\n\x18point_index_to_object_id\x18\x02 \x01(\x0b\x32\x14.horus.pb.UInt32List\"\x92\x04\n\x0e\x44\x65tectedObject\x12?\n\x0e\x63lassification\x18\x01 \x01(\x0b\x32\'.horus.pb.DetectedObject.Classification\x12\x37\n\nkinematics\x18\x02 \x01(\x0b\x32#.horus.pb.DetectedObject.Kinematics\x12-\n\x05shape\x18\x03 \x01(\x0b\x32\x1e.horus.pb.DetectedObject.Shape\x12/\n\x06status\x18\x04 \x01(\x0b\x32\x1f.horus.pb.DetectedObject.Status\x1a<\n\x0e\x43lassification\x12*\n\x0b\x63lass_label\x18\x01 \x01(\x0e\x32\x15.horus.pb.ObjectLabel\x1a]\n\nKinematics\x12+\n\x0flinear_velocity\x18\x01 \x01(\x0b\x32\x12.horus.pb.Vector2f\x12\x15\n\x08yaw_rate\x18\x02 \x01(\x02H\x00\x88\x01\x01\x42\x0b\n\t_yaw_rate\x1a\x34\n\x05Shape\x12+\n\x0c\x62ounding_box\x18\x01 \x01(\x0b\x32\x15.horus.pb.BoundingBox\x1aS\n\x06Status\x12\x0f\n\x02id\x18\x01 \x01(\rH\x00\x88\x01\x01\x12\x31\n\x0ftracking_status\x18\x02 \x01(\x0e\x32\x18.horus.pb.TrackingStatusB\x05\n\x03_id\"\xaa\x02\n\x0e\x44\x65tectionEvent\x12)\n\x07objects\x18\x01 \x03(\x0b\x32\x18.horus.pb.DetectedObject\x12\x39\n\x14labeled_point_clouds\x18\x02 \x03(\x0b\x32\x1b.horus.pb.LabeledPointCloud\x12\x36\n\nframe_info\x18\x03 \x01(\x0b\x32\".horus.pb.DetectionEvent.FrameInfo\x12?\n raw_deep_learning_bounding_boxes\x18\x04 \x03(\x0b\x32\x15.horus.pb.BoundingBox\x1a\x39\n\tFrameInfo\x12,\n\x0f\x66rame_timestamp\x18\x01 \x01(\x0b\x32\x13.horus.pb.Timestamp*T\n\x0bObjectLabel\x12\x15\n\x11LABEL_UNSPECIFIED\x10\x00\x12\x08\n\x04MISC\x10\x01\x12\x07\n\x03\x43\x41R\x10\x02\x12\x0b\n\x07\x43YCLIST\x10\x03\x12\x0e\n\nPEDESTRIAN\x10\x04*o\n\x0eTrackingStatus\x12\x1f\n\x1bTRACKING_STATUS_UNSPECIFIED\x10\x00\x12\x10\n\x0cINVALIDATING\x10\x01\x12\x0e\n\nVALIDATING\x10\x02\x12\x0c\n\x08\x44RIFTING\x10\x03\x12\x0c\n\x08TRACKING\x10\x04\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'horus.pb.detection_service.detection_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_OBJECTLABEL']._serialized_start=1109
-  _globals['_OBJECTLABEL']._serialized_end=1193
-  _globals['_TRACKINGSTATUS']._serialized_start=1195
-  _globals['_TRACKINGSTATUS']._serialized_end=1306
+  _globals['_OBJECTLABEL']._serialized_start=1174
+  _globals['_OBJECTLABEL']._serialized_end=1258
+  _globals['_TRACKINGSTATUS']._serialized_start=1260
+  _globals['_TRACKINGSTATUS']._serialized_end=1371
   _globals['_BOUNDINGBOX']._serialized_start=124
   _globals['_BOUNDINGBOX']._serialized_end=218
   _globals['_LABELEDPOINTCLOUD']._serialized_start=220
@@ -52,7 +52,7 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_DETECTEDOBJECT_STATUS']._serialized_start=788
   _globals['_DETECTEDOBJECT_STATUS']._serialized_end=871
   _globals['_DETECTIONEVENT']._serialized_start=874
-  _globals['_DETECTIONEVENT']._serialized_end=1107
-  _globals['_DETECTIONEVENT_FRAMEINFO']._serialized_start=1050
-  _globals['_DETECTIONEVENT_FRAMEINFO']._serialized_end=1107
+  _globals['_DETECTIONEVENT']._serialized_end=1172
+  _globals['_DETECTIONEVENT_FRAMEINFO']._serialized_start=1115
+  _globals['_DETECTIONEVENT_FRAMEINFO']._serialized_end=1172
 # @@protoc_insertion_point(module_scope)

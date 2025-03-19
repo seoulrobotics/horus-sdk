@@ -1098,3 +1098,9 @@ class LicenseForbiddenFeature(_message.Message):
     FEATURE_NAME_FIELD_NUMBER: _ClassVar[int]
     feature_name: str
     def __init__(self, feature_name: _Optional[str] = ...) -> None: ...
+
+class FailedToUpdateConfiguration(_message.Message):
+    __slots__ = ("details",)
+    DETAILS_FIELD_NUMBER: _ClassVar[int]
+    details: str
+    def __init__(self, details: _Optional[str] = ...) -> None: ...

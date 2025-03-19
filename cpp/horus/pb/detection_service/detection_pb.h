@@ -1541,6 +1541,56 @@ class DetectionEvent final : public PbMessage {
     return std::move(set_frame_info(std::move(frame_info)));
   }
 
+  // Field `raw_deep_learning_bounding_boxes` (no 4).
+  // -----
+
+  /// The raw deep learning bounding boxes.
+  ///
+  /// Field no: 4.
+  constexpr const CowRepeated<BoundingBox>& raw_deep_learning_bounding_boxes() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return raw_deep_learning_bounding_boxes_;
+  }
+
+  /// If `raw_deep_learning_bounding_boxes` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  CowRepeated<BoundingBox> raw_deep_learning_bounding_boxes() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(raw_deep_learning_bounding_boxes_);
+  }
+
+  /// The raw deep learning bounding boxes.
+  ///
+  /// Field no: 4.
+  CowRepeated<BoundingBox>& mutable_raw_deep_learning_bounding_boxes() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return raw_deep_learning_bounding_boxes_;
+  }
+
+  /// Returns whether `raw_deep_learning_bounding_boxes` (no 4) is set.
+  constexpr bool has_raw_deep_learning_bounding_boxes() const noexcept { return set_fields_[3]; }
+
+  /// Clears `raw_deep_learning_bounding_boxes` (no 4).
+  void clear_raw_deep_learning_bounding_boxes() & noexcept {
+    set_fields_[3] = false;
+    raw_deep_learning_bounding_boxes_ = {};
+  }
+
+  /// Sets `raw_deep_learning_bounding_boxes` (no 4) and returns `*this`.
+  DetectionEvent& set_raw_deep_learning_bounding_boxes(CowRepeated<BoundingBox>&& raw_deep_learning_bounding_boxes) & noexcept {
+    set_fields_[3] = true;
+    raw_deep_learning_bounding_boxes_ = std::move(raw_deep_learning_bounding_boxes);
+    return *this;
+  }
+  /// Sets `raw_deep_learning_bounding_boxes` (no 4) and returns `*this`.
+  DetectionEvent&& set_raw_deep_learning_bounding_boxes(CowRepeated<BoundingBox>&& raw_deep_learning_bounding_boxes) && noexcept {
+    return std::move(set_raw_deep_learning_bounding_boxes(std::move(raw_deep_learning_bounding_boxes)));
+  }
+
  private:
   /// @see objects()
   CowRepeated<DetectedObject> objects_{};
@@ -1548,9 +1598,11 @@ class DetectionEvent final : public PbMessage {
   CowRepeated<LabeledPointCloud> labeled_point_clouds_{};
   /// @see frame_info()
   DetectionEvent_FrameInfo frame_info_{};
+  /// @see raw_deep_learning_bounding_boxes()
+  CowRepeated<BoundingBox> raw_deep_learning_bounding_boxes_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<3> set_fields_;
+  std::bitset<4> set_fields_;
 };
 
 }  // namespace pb
