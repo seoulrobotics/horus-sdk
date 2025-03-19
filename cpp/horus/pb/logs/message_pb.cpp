@@ -174,6 +174,7 @@ LogData::LogData(const LogData& other) noexcept(false)
     , sparse_noise_filter_usage_non_rotational_lidars_{other.sparse_noise_filter_usage_non_rotational_lidars_}
     , file_write_error_{other.file_write_error_}
     , license_forbidden_feature_{other.license_forbidden_feature_}
+    , failed_to_update_configuration_{other.failed_to_update_configuration_}
     , data_{other.data_}
     , set_fields_{other.set_fields_} {}
 
@@ -678,6 +679,9 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[166]) {
     SerializeField<logs::LicenseForbiddenFeature>(writer, /*tag=*/ 167, license_forbidden_feature_);
+  }
+  if (set_fields_[167]) {
+    SerializeField<logs::FailedToUpdateConfiguration>(writer, /*tag=*/ 168, failed_to_update_configuration_);
   }
 }
 
@@ -1851,6 +1855,13 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
         data_ = DataOneof::kLicenseForbiddenFeature;
         DeserializeField<logs::LicenseForbiddenFeature>(reader, license_forbidden_feature_);
         set_fields_[166] = true;
+        break;
+      }
+      case 168: {
+        clear_data();
+        data_ = DataOneof::kFailedToUpdateConfiguration;
+        DeserializeField<logs::FailedToUpdateConfiguration>(reader, failed_to_update_configuration_);
+        set_fields_[167] = true;
         break;
       }
       default: {

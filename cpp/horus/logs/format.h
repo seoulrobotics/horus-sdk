@@ -532,6 +532,9 @@ void HorusStringify(const ErasedSink& sink, const FileWriteError& data);
 /// Formats the log `logs::LicenseForbiddenFeature` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const LicenseForbiddenFeature& data);
 
+/// Formats the log `logs::FailedToUpdateConfiguration` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const FailedToUpdateConfiguration& data);
+
 }  // namespace logs
 
 }  // namespace pb

@@ -170,6 +170,7 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.SPARSE_NOISE_FILTER_USAGE_NON_ROTATIONAL_LIDARS_FIELD_NUMBER: lambda m: format_sparse_noise_filter_usage_non_rotational_lidars(m.sparse_noise_filter_usage_non_rotational_lidars),
     LogData.FILE_WRITE_ERROR_FIELD_NUMBER: lambda m: format_file_write_error(m.file_write_error),
     LogData.LICENSE_FORBIDDEN_FEATURE_FIELD_NUMBER: lambda m: format_license_forbidden_feature(m.license_forbidden_feature),
+    LogData.FAILED_TO_UPDATE_CONFIGURATION_FIELD_NUMBER: lambda m: format_failed_to_update_configuration(m.failed_to_update_configuration),
 }
 
 def _unknown_format(data: LogData) -> str:
@@ -854,3 +855,7 @@ def format_file_write_error(log: _logs_pb.FileWriteError) -> str:
 def format_license_forbidden_feature(log: _logs_pb.LicenseForbiddenFeature) -> str:
     """Formats log `LicenseForbiddenFeature` to a string."""
     return f"{log.feature_name} is not allowed by the current license."
+
+def format_failed_to_update_configuration(log: _logs_pb.FailedToUpdateConfiguration) -> str:
+    """Formats log `FailedToUpdateConfiguration` to a string."""
+    return f"Failed to update the configuration: {log.details}."

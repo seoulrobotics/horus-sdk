@@ -87,11 +87,15 @@ void LabeledPointCloud::DeserializeFrom(PbReader& reader) noexcept(false) {
 
 DetectedObject_Classification::DetectedObject_Classification(const DetectedObject_Classification& other) noexcept(false)
     : class_label_{other.class_label_}
+    , class_confidence_{other.class_confidence_}
     , set_fields_{other.set_fields_} {}
 
 void DetectedObject_Classification::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<ObjectLabel>(writer, /*tag=*/ 1, class_label_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<float, PbDeserFlags::kFixed>(writer, /*tag=*/ 2, class_confidence_);
   }
 }
 
@@ -101,6 +105,11 @@ void DetectedObject_Classification::DeserializeFrom(PbReader& reader) noexcept(f
       case 1: {
         DeserializeField<ObjectLabel>(reader, class_label_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<float, PbDeserFlags::kFixed>(reader, class_confidence_);
+        set_fields_[1] = true;
         break;
       }
       default: {
@@ -260,6 +269,76 @@ void DetectedObject::DeserializeFrom(PbReader& reader) noexcept(false) {
   }
 }
 
+DeepLearningObject_Classification::DeepLearningObject_Classification(const DeepLearningObject_Classification& other) noexcept(false)
+    : class_label_{other.class_label_}
+    , class_confidence_{other.class_confidence_}
+    , set_fields_{other.set_fields_} {}
+
+void DeepLearningObject_Classification::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<ObjectLabel>(writer, /*tag=*/ 1, class_label_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<float, PbDeserFlags::kFixed>(writer, /*tag=*/ 2, class_confidence_);
+  }
+}
+
+void DeepLearningObject_Classification::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<ObjectLabel>(reader, class_label_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<float, PbDeserFlags::kFixed>(reader, class_confidence_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+DeepLearningObject::DeepLearningObject(const DeepLearningObject& other) noexcept(false)
+    : classification_{other.classification_}
+    , bounding_box_{other.bounding_box_}
+    , set_fields_{other.set_fields_} {}
+
+void DeepLearningObject::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<DeepLearningObject_Classification>(writer, /*tag=*/ 1, classification_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<BoundingBox>(writer, /*tag=*/ 2, bounding_box_);
+  }
+}
+
+void DeepLearningObject::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<DeepLearningObject_Classification>(reader, classification_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<BoundingBox>(reader, bounding_box_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
 DetectionEvent_FrameInfo::DetectionEvent_FrameInfo(const DetectionEvent_FrameInfo& other) noexcept(false)
     : frame_timestamp_{other.frame_timestamp_}
     , set_fields_{other.set_fields_} {}
@@ -290,6 +369,7 @@ DetectionEvent::DetectionEvent(const DetectionEvent& other) noexcept(false)
     : objects_{other.objects_}
     , labeled_point_clouds_{other.labeled_point_clouds_}
     , frame_info_{other.frame_info_}
+    , raw_deep_learning_objects_{other.raw_deep_learning_objects_}
     , set_fields_{other.set_fields_} {}
 
 void DetectionEvent::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -301,6 +381,9 @@ void DetectionEvent::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[2]) {
     SerializeField<DetectionEvent_FrameInfo>(writer, /*tag=*/ 3, frame_info_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<CowRepeated<DeepLearningObject>>(writer, /*tag=*/ 4, raw_deep_learning_objects_);
   }
 }
 
@@ -320,6 +403,11 @@ void DetectionEvent::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 3: {
         DeserializeField<DetectionEvent_FrameInfo>(reader, frame_info_);
         set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        DeserializeField<CowRepeated<DeepLearningObject>>(reader, raw_deep_learning_objects_);
+        set_fields_[3] = true;
         break;
       }
       default: {

@@ -19,13 +19,10 @@ struct IntrusiveListLink {
   T* prev{nullptr};
   /// A pointer to the next node. If null, the owning node is the `head_`.
   T* next{nullptr};
-
-  /// Returns whether the link belongs to an `IntrusiveList`.
-  constexpr bool IsLinked() const noexcept { return prev != nullptr || next != nullptr; }
 };
 
 /// A doubly linked list whose (immovable) items are stored inline in owner structures.
-template <class T, IntrusiveListLink<T>& (T::*LinkField)()& noexcept>
+template <class T, IntrusiveListLink<T>& (*GetLink)(T&) noexcept>
 class IntrusiveList final {
  public:
   /// Constructs an empty list.
@@ -44,7 +41,7 @@ class IntrusiveList final {
     if (front == nullptr) {
       return nullptr;
     }
-    IntrusiveListLink<T>& link{(front->*LinkField)()};
+    IntrusiveListLink<T>& link{GetLink(*front)};
     assert(link.prev == nullptr);
     head_ = link.next;
     if (head_ == nullptr) {
@@ -52,7 +49,7 @@ class IntrusiveList final {
       assert(tail_ == front);
       tail_ = nullptr;
     } else {
-      (head_->*LinkField)().prev = nullptr;
+      GetLink(*head_).prev = nullptr;
     }
     link.prev = nullptr;
     link.next = nullptr;
@@ -62,7 +59,7 @@ class IntrusiveList final {
   /// Pushes `node` to the end of the list. If it already belongs to a list, it will be removed from
   /// it.
   void PushBack(T& node HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
-    IntrusiveListLink<T>& link{(node.*LinkField)()};
+    IntrusiveListLink<T>& link{GetLink(node)};
     if ((link.prev != nullptr) || (link.next != nullptr) || (tail_ == &node)) {
       // Node is in a list (has siblings or is the only member of its list).
       Remove(node);
@@ -75,14 +72,35 @@ class IntrusiveList final {
     } else {
       assert(head_ != nullptr);
       link.prev = tail_;
-      (tail_->*LinkField)().next = &node;
+      GetLink(*tail_).next = &node;
       tail_ = &node;
     }
   }
 
-  /// Removes `node` from the list.
+  /// Pushes `node` to the start of the list. If it already belongs to a list, it will be removed
+  /// from it.
+  void PushFront(T& node HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+    IntrusiveListLink<T>& link{GetLink(node)};
+    if ((link.prev != nullptr) || (link.next != nullptr) || (tail_ == &node)) {
+      // Node is in a list (has siblings or is the only member of its list).
+      Remove(node);
+    }
+    if (tail_ == nullptr) {
+      // Insert first node.
+      assert(head_ == nullptr);
+      head_ = &node;
+      tail_ = &node;
+    } else {
+      assert(head_ != nullptr);
+      link.next = head_;
+      GetLink(*head_).prev = &node;
+      head_ = &node;
+    }
+  }
+
+  /// Removes `node` from the list. No-op if `node` is not part of the list.
   void Remove(T& node) noexcept {
-    IntrusiveListLink<T>& link{(node.*LinkField)()};
+    IntrusiveListLink<T>& link{GetLink(node)};
 
     // Update previous link (and `head_` if this node is the first one).
     if (head_ == &node) {
@@ -91,7 +109,7 @@ class IntrusiveList final {
       head_ = link.next;
     } else if (link.prev != nullptr) {
       // Node is within the list, but not the first.
-      (link.prev->*LinkField)().next = link.next;
+      GetLink(*link.prev).next = link.next;
     } else {
       // Node is not part of the list.
       assert(link.next == nullptr);
@@ -104,7 +122,7 @@ class IntrusiveList final {
       tail_ = link.prev;
     } else if (link.next != nullptr) {
       // Node is within the list, but not the last.
-      (link.next->*LinkField)().prev = link.prev;
+      GetLink(*link.next).prev = link.prev;
     } else {
       // Node is not part of the list.
       assert(link.prev == nullptr);
@@ -119,6 +137,28 @@ class IntrusiveList final {
   /// A pointer to the last node, aka the back/tail. Null iff `head_` is null.
   T* tail_{nullptr};
 };
+
+/// Returns the `IntrusiveListLink` of a node given a field. Prefer using `IntrusiveListByField`
+/// directly instead.
+template <class T, IntrusiveListLink<T>(T::*LinkField)>
+constexpr IntrusiveListLink<T>& IntrusiveListLinkFromField(T& node) noexcept {
+  return node.*LinkField;
+}
+
+/// An `IntrusiveList` whose link is made available by a field of `T`.
+template <class T, IntrusiveListLink<T>(T::*LinkField) = &T::link>
+using IntrusiveListByField = IntrusiveList<T, &IntrusiveListLinkFromField<T, LinkField>>;
+
+/// Returns the `IntrusiveListLink` of a node given a field. Prefer using `IntrusiveListByField`
+/// directly instead.
+template <class T, IntrusiveListLink<T>& (T::*LinkMethod)() & noexcept>
+constexpr IntrusiveListLink<T>& IntrusiveListLinkFromMethod(T& node) noexcept {
+  return (node.*LinkMethod)();
+}
+
+/// An `IntrusiveList` whose link is made available by a field of `T`.
+template <class T, IntrusiveListLink<T>& (T::*LinkMethod)()& noexcept = &T::Link>
+using IntrusiveListByMethod = IntrusiveList<T, &IntrusiveListLinkFromMethod<T, LinkMethod>>;
 
 }  // namespace horus_internal
 }  // namespace horus

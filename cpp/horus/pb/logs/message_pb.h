@@ -36,7 +36,7 @@ class LogMessage;
 
 /// Data attached to a `LogMessage`.
 /// 
-///  This is automatically generated from `docs/logs.yaml`.
+///  This is automatically generated from `/home/runner/work/horus/horus/common/logs/db.yml`.
 ///
 /// Source: horus/pb/logs/message.proto:17:1
 class LogData final : public PbMessage {
@@ -9273,6 +9273,61 @@ class LogData final : public PbMessage {
     return std::move(set_license_forbidden_feature(std::move(license_forbidden_feature)));
   }
 
+  // Field `failed_to_update_configuration` (no 168).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 168.
+  constexpr const logs::FailedToUpdateConfiguration& failed_to_update_configuration() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return failed_to_update_configuration_;
+  }
+
+  /// If `failed_to_update_configuration` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 168.
+  logs::FailedToUpdateConfiguration failed_to_update_configuration() && noexcept {
+    if (!set_fields_[167]) {
+      return {};
+    }
+    return std::move(failed_to_update_configuration_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 168.
+  logs::FailedToUpdateConfiguration& mutable_failed_to_update_configuration() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kFailedToUpdateConfiguration;
+    set_fields_[167] = true;
+    return failed_to_update_configuration_;
+  }
+
+  /// Returns whether `failed_to_update_configuration` (no 168) is set.
+  constexpr bool has_failed_to_update_configuration() const noexcept { return set_fields_[167]; }
+
+  /// Clears `failed_to_update_configuration` (no 168).
+  void clear_failed_to_update_configuration() & noexcept {
+    data_ = {};
+    set_fields_[167] = false;
+    failed_to_update_configuration_ = {};
+  }
+
+  /// Sets `failed_to_update_configuration` (no 168) and returns `*this`.
+  LogData& set_failed_to_update_configuration(logs::FailedToUpdateConfiguration&& failed_to_update_configuration) & noexcept {
+    clear_data();
+    data_ = DataOneof::kFailedToUpdateConfiguration;
+    set_fields_[167] = true;
+    failed_to_update_configuration_ = std::move(failed_to_update_configuration);
+    return *this;
+  }
+  /// Sets `failed_to_update_configuration` (no 168) and returns `*this`.
+  LogData&& set_failed_to_update_configuration(logs::FailedToUpdateConfiguration&& failed_to_update_configuration) && noexcept {
+    return std::move(set_failed_to_update_configuration(std::move(failed_to_update_configuration)));
+  }
+
   // Oneof `data`.
   // -----
 
@@ -9614,6 +9669,8 @@ class LogData final : public PbMessage {
     kFileWriteError = 166,
     /// @see license_forbidden_feature()
     kLicenseForbiddenFeature = 167,
+    /// @see failed_to_update_configuration()
+    kFailedToUpdateConfiguration = 168,
   };
 
   /// Returns the current case set in `data`.
@@ -10292,6 +10349,10 @@ class LogData final : public PbMessage {
         clear_license_forbidden_feature();
         break;
       }
+      case DataOneof::kFailedToUpdateConfiguration: {
+        clear_failed_to_update_configuration();
+        break;
+      }
       case DataOneof::kNotSet:
       default:
         break;
@@ -10633,12 +10694,14 @@ class LogData final : public PbMessage {
   logs::FileWriteError file_write_error_{};
   /// @see license_forbidden_feature()
   logs::LicenseForbiddenFeature license_forbidden_feature_{};
+  /// @see failed_to_update_configuration()
+  logs::FailedToUpdateConfiguration failed_to_update_configuration_{};
 
   /// @see data_case()
   DataOneof data_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<167> set_fields_;
+  std::bitset<168> set_fields_;
 };
 
 /// A log message notifying users about some status.

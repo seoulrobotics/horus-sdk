@@ -46,10 +46,24 @@ class Classification:
     """The classification of an object."""
 
     class_label: ObjectLabel
+    class_confidence: float
 
     @staticmethod
-    def _from_pb(pb: detection_pb2.DetectedObject.Classification) -> "Classification":
-        return Classification(class_label=ObjectLabel(int(pb.class_label)))
+    def _from_pb(
+        pb: typing.Union[
+            detection_pb2.DetectedObject.Classification,
+            detection_pb2.DeepLearningObject.Classification,
+        ]
+    ) -> "Classification":
+        if isinstance(pb, detection_pb2.DetectedObject.Classification) or isinstance(
+            pb, detection_pb2.DeepLearningObject.Classification
+        ):
+            return Classification(
+                class_label=ObjectLabel(int(pb.class_label)),
+                class_confidence=pb.class_confidence,
+            )
+        else:
+            raise TypeError(f"Unsupported type: {type(pb)}")
 
 
 @dataclasses.dataclass(frozen=True)
@@ -137,12 +151,28 @@ class LabeledPointCloud:
 
 
 @dataclasses.dataclass(frozen=True)
+class DeepLearningObject:
+    """A deep learning object."""
+
+    bounding_box: BoundingBox
+    classification: Classification
+
+    @staticmethod
+    def _from_pb(pb: detection_pb2.DeepLearningObject) -> "DeepLearningObject":
+        return DeepLearningObject(
+            bounding_box=BoundingBox._from_pb(pb.bounding_box),
+            classification=Classification._from_pb(pb.classification),
+        )
+
+
+@dataclasses.dataclass(frozen=True)
 class DetectionEvent:
     """A detection event."""
 
     frame_info: FrameInfo
     objects: typing.List[DetectedObject]
     labeled_point_clouds: typing.List[LabeledPointCloud]
+    raw_deep_learning_objects: typing.List[DeepLearningObject]
 
     @staticmethod
     def _from_pb(pb: detection_pb2.DetectionEvent) -> "DetectionEvent":
@@ -152,5 +182,9 @@ class DetectionEvent:
             labeled_point_clouds=[
                 LabeledPointCloud._from_pb(labeled_cloud)
                 for labeled_cloud in pb.labeled_point_clouds
+            ],
+            raw_deep_learning_objects=[
+                DeepLearningObject._from_pb(dl_object)
+                for dl_object in pb.raw_deep_learning_objects
             ],
         )
