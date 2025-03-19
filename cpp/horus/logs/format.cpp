@@ -699,6 +699,10 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     logs::HorusStringify(sink, log_data.license_forbidden_feature());
     break;
   }
+  case LogData::DataOneof::kFailedToUpdateConfiguration: {
+    logs::HorusStringify(sink, log_data.failed_to_update_configuration());
+    break;
+  }
   case LogData::DataOneof::kNotSet:
   default: {
     sink.Append("Unknown log message");
@@ -1375,6 +1379,10 @@ void HorusStringify(const ErasedSink& sink, const FileWriteError& data) {
 
 void HorusStringify(const ErasedSink& sink, const LicenseForbiddenFeature& data) {
   StrAppendToSink(sink, data.feature_name(), " is not allowed by the current license.");
+}
+
+void HorusStringify(const ErasedSink& sink, const FailedToUpdateConfiguration& data) {
+  StrAppendToSink(sink, "Failed to update the configuration: ", data.details(), ".");
 }
 
 }  // namespace logs

@@ -143,6 +143,7 @@ class DetectionEvent:
     frame_info: FrameInfo
     objects: typing.List[DetectedObject]
     labeled_point_clouds: typing.List[LabeledPointCloud]
+    raw_deep_learning_bounding_boxes: typing.List[BoundingBox]
 
     @staticmethod
     def _from_pb(pb: detection_pb2.DetectionEvent) -> "DetectionEvent":
@@ -152,5 +153,9 @@ class DetectionEvent:
             labeled_point_clouds=[
                 LabeledPointCloud._from_pb(labeled_cloud)
                 for labeled_cloud in pb.labeled_point_clouds
+            ],
+            raw_deep_learning_bounding_boxes=[
+                BoundingBox._from_pb(bounding_box)
+                for bounding_box in pb.raw_deep_learning_bounding_boxes
             ],
         )

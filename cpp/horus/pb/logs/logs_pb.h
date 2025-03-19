@@ -199,6 +199,7 @@ class CalibrationAccumulatingPointsInfo;
 class SparseNoiseFilterUsageNonRotationalLidars;
 class FileWriteError;
 class LicenseForbiddenFeature;
+class FailedToUpdateConfiguration;
 
 // MARK: Message declarations
 
@@ -21137,6 +21138,118 @@ class LicenseForbiddenFeature final : public PbMessage {
  private:
   /// @see feature_name()
   CowBytes feature_name_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
+};
+
+/// Log #168.
+/// 
+///  > Failed to update the configuration: $details.
+///
+/// Source: horus/pb/logs/logs.proto:1225:1
+class FailedToUpdateConfiguration final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `FailedToUpdateConfiguration`.
+  FailedToUpdateConfiguration() noexcept = default;
+
+  /// Move constructor.
+  FailedToUpdateConfiguration(FailedToUpdateConfiguration&&) noexcept = default;
+  /// Move assignment operator.
+  FailedToUpdateConfiguration& operator=(FailedToUpdateConfiguration&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit FailedToUpdateConfiguration(const FailedToUpdateConfiguration& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  FailedToUpdateConfiguration& operator=(const FailedToUpdateConfiguration&) = delete;
+
+  /// Default destructor.
+  ~FailedToUpdateConfiguration() noexcept final = default;
+
+  /// Creates a `FailedToUpdateConfiguration` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit FailedToUpdateConfiguration(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.FailedToUpdateConfiguration`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.FailedToUpdateConfiguration"; }
+
+  /// The full name of the message: `horus.pb.logs.FailedToUpdateConfiguration`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `details` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& details() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    return details_;
+  }
+
+  /// If `details` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes details() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(details_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_details() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return details_;
+  }
+
+  /// Returns whether `details` (no 1) is set.
+  constexpr bool has_details() const noexcept { return set_fields_[0]; }
+
+  /// Clears `details` (no 1).
+  void clear_details() & noexcept {
+    set_fields_[0] = false;
+    details_ = {};
+  }
+
+  /// Sets `details` (no 1) and returns `*this`.
+  FailedToUpdateConfiguration& set_details(CowBytes&& details) & noexcept {
+    set_fields_[0] = true;
+    details_ = std::move(details);
+    return *this;
+  }
+  /// Sets `details` (no 1) and returns `*this`.
+  FailedToUpdateConfiguration&& set_details(CowBytes&& details) && noexcept {
+    return std::move(set_details(std::move(details)));
+  }
+
+ private:
+  /// @see details()
+  CowBytes details_{};
 
   /// The set of fields that have been given an explicit value.
   std::bitset<1> set_fields_;

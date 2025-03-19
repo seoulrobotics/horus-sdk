@@ -94,4 +94,6 @@ message DetectionEvent {
   repeated LabeledPointCloud labeled_point_clouds = 2;
   // The frame info of the detection event.
   FrameInfo frame_info = 3;
+  // The raw deep learning bounding boxes.
+  repeated BoundingBox raw_deep_learning_bounding_boxes = 4;
 }

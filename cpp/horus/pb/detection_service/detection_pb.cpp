@@ -290,6 +290,7 @@ DetectionEvent::DetectionEvent(const DetectionEvent& other) noexcept(false)
     : objects_{other.objects_}
     , labeled_point_clouds_{other.labeled_point_clouds_}
     , frame_info_{other.frame_info_}
+    , raw_deep_learning_bounding_boxes_{other.raw_deep_learning_bounding_boxes_}
     , set_fields_{other.set_fields_} {}
 
 void DetectionEvent::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -301,6 +302,9 @@ void DetectionEvent::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[2]) {
     SerializeField<DetectionEvent_FrameInfo>(writer, /*tag=*/ 3, frame_info_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<CowRepeated<BoundingBox>>(writer, /*tag=*/ 4, raw_deep_learning_bounding_boxes_);
   }
 }
 
@@ -320,6 +324,11 @@ void DetectionEvent::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 3: {
         DeserializeField<DetectionEvent_FrameInfo>(reader, frame_info_);
         set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        DeserializeField<CowRepeated<BoundingBox>>(reader, raw_deep_learning_bounding_boxes_);
+        set_fields_[3] = true;
         break;
       }
       default: {
