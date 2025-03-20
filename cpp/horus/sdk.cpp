@@ -41,6 +41,8 @@
 #include "horus/pb/project_manager/service_client.h"
 #include "horus/pb/project_manager/service_pb.h"
 #include "horus/pb/rpc_pb.h"
+#include "horus/pb/status_service/service_client.h"
+#include "horus/pb/status_service/service_pb.h"
 #include "horus/rpc/base_client.h"
 #include "horus/rpc/client_handler.h"
 #include "horus/rpc/endpoint.h"
@@ -52,6 +54,7 @@
 #include "horus/sdk/point_clouds.h"
 #include "horus/sdk/profiling.h"
 #include "horus/sdk/sensor.h"
+#include "horus/sdk/version.h"
 #include "horus/strings/logging.h"
 #include "horus/types/in_place.h"
 
@@ -257,17 +260,40 @@ Sdk::Future<sdk::HealthStatus> Sdk::GetHealthStatus(sdk::GetHealthStatusRequest&
                                          service_map_.project_manager.port, CreateClientHandler()) |
                       Then([](std::shared_ptr<RpcEndpoint>&& endpoint)
                                -> AnyFuture<sdk::pb::GetHealthStatusResponse> {
+                        constexpr std::chrono::milliseconds kTimeout{500};
                         sdk::pb::ProjectManagerServiceClient client{endpoint};
-                        return client.GetHealthStatus(
-                                   sdk::pb::GetHealthStatusRequest{},
-                                   RetryClientDefault().WithTimeout(std::chrono::seconds{2})) |
+                        return client.GetHealthStatus(sdk::pb::GetHealthStatusRequest{},
+                                                      RetryClientDefault().WithTimeout(kTimeout)) |
                                Attach(std::move(endpoint));
                       }) |
+                      // clang-tidy wants us to move rpc_response, which would have no effect,
+                      // since it is trivially copyable
+                      // NOLINTNEXTLINE(*-not-moved)
                       Map([](sdk::pb::GetHealthStatusResponse&& rpc_response) -> sdk::HealthStatus {
-                        // clang-tidy wants us to move rpc_response, which would have no effect,
-                        // since it is trivially copyable NOLINTNEXTLINE(*-move-const-arg)
-                        return sdk::HealthStatus{std::move(rpc_response)};
+                        return sdk::HealthStatus{rpc_response};
                       }));
+}
+
+Sdk::Future<sdk::Version> Sdk::GetVersion(sdk::GetVersionRequest&& request) {
+  // clang tidy triggers an error because request is trivially copyable
+  static_cast<void>(sdk::GetVersionRequest{std::move(request)});  // NOLINT (hicpp-move-const-arg)
+  return CreateFuture(
+      ConnectedWebSocket(service_map_.project_manager.host, service_map_.project_manager.port,
+                         CreateClientHandler()) |
+      Then([](std::shared_ptr<RpcEndpoint>&& endpoint) -> AnyFuture<pb::GetVersionResponse> {
+        constexpr std::chrono::milliseconds kTimeout{500};
+        sdk::pb::StatusServiceClient client{endpoint};
+        return client.GetVersion(
+                   sdk::pb::GetVersionRequest{},
+                   RetryClientDefault().WithTimeout(std::chrono::milliseconds{kTimeout})) |
+               Attach(std::move(endpoint));
+      }) |
+      // clang-tidy wants us to move rpc_response, which would have no effect,
+      // since it is trivially copyable
+      // NOLINTNEXTLINE(*-not-moved)
+      Map([](sdk::pb::GetVersionResponse&& rpc_response) -> sdk::Version {
+        return sdk::Version{rpc_response};
+      }));
 }
 
 // static

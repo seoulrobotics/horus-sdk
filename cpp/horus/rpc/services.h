@@ -93,6 +93,16 @@ class RpcServices final {
     };
   }
 
+  /// Returns default static information about the `StatusService`.
+  static constexpr ServiceInfo StatusService() noexcept {
+    return ServiceInfo{
+        /*   full_name=*/"horus.pb.StatusService",
+        /*          id=*/15U,
+        /*  default_ip=*/"127.0.0.1",
+        /*default_port=*/40015U,
+    };
+  }
+
   /// A map from service to URL where it can be resolved.
   struct ServiceResolutionMap {
     /// Entry of the map, representing a Host.
@@ -109,6 +119,9 @@ class RpcServices final {
 
     /// How to resolve the project_manager service.
     Entry project_manager{RpcServices::ProjectManagerService().DefaultHost()};
+
+    /// How to resolve the status service.
+    Entry status{RpcServices::StatusService().DefaultHost()};
   };
 };
 

@@ -13,7 +13,7 @@ message LogMessage {
 
 // Data attached to a `LogMessage`.
 //
-// This is automatically generated from `docs/logs.yaml`.
+// This is automatically generated from `/home/runner/work/horus/horus/common/logs/db.yml`.
 message LogData {
   oneof data {
     logs.Generic generic = 1;
@@ -183,5 +183,6 @@ message LogData {
     logs.SparseNoiseFilterUsageNonRotationalLidars sparse_noise_filter_usage_non_rotational_lidars = 165;
     logs.FileWriteError file_write_error = 166;
     logs.LicenseForbiddenFeature license_forbidden_feature = 167;
+    logs.FailedToUpdateConfiguration failed_to_update_configuration = 168;
   }
 }

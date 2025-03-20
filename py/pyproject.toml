@@ -33,6 +33,7 @@ ignore_errors = true
 module = [
   "print_all",
   "print_logs",
+  "print_dl_boxes",
   "print_object_counts",
   "print_occupancy_map",
   "profile_detection",

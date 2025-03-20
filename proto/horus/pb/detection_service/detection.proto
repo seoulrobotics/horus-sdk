@@ -49,6 +49,8 @@ message DetectedObject {
   message Classification {
     // The label of the detected object.
     ObjectLabel class_label = 1;
+    // The confidence of the detected object.
+    float class_confidence = 2;
   }
 
   message Kinematics {
@@ -81,6 +83,21 @@ message DetectedObject {
   Status status = 4;
 }
 
+/// A deep learning object message.
+message DeepLearningObject {
+  message Classification {
+    // The label of the detected object.
+    ObjectLabel class_label = 1;
+    // The confidence of the detected object.
+    float class_confidence = 2;
+  }
+
+  // The label of the detected object.
+  Classification classification = 1;
+  // The bounding box of the detected object.
+  BoundingBox bounding_box = 2;
+}
+
 // A detection event message.
 message DetectionEvent {
   message FrameInfo {
@@ -94,4 +111,6 @@ message DetectionEvent {
   repeated LabeledPointCloud labeled_point_clouds = 2;
   // The frame info of the detection event.
   FrameInfo frame_info = 3;
+  // The raw deep learning bounding boxes.
+  repeated DeepLearningObject raw_deep_learning_objects = 4;
 }

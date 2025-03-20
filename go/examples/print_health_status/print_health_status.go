@@ -103,6 +103,13 @@ func main() {
 		os.Exit(1)
 	}
 
+	version, err := sdk.GetHorusVersion(horus.GetVersionRequest{})
+	if err != nil {
+		fmt.Printf("Error while creating the horus version: %s", err)
+		os.Exit(1)
+	}
+	fmt.Printf("Horus version: %s\n\n", version.String())
+
 	healthStatus, err := sdk.GetHealthStatus(horus.GetHealthStatusRequest{})
 	if err != nil {
 		fmt.Printf("Error while getting health status: %s", err)
