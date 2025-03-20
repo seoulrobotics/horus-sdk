@@ -72,12 +72,9 @@ class Channel final {
     horus_internal::FutureWaker waker;
     /// A link to its `WakerList`.
     horus_internal::IntrusiveListLink<WakerNode> link;
-
-    /// Returns a reference to `link`.
-    constexpr horus_internal::IntrusiveListLink<WakerNode>& Link() & noexcept { return link; }
   };
   /// A list of `WakerNode`s.
-  using WakerList = horus_internal::IntrusiveList<WakerNode, &WakerNode::Link>;
+  using WakerList = horus_internal::IntrusiveListByField<WakerNode, &WakerNode::link>;
 
   /// Data shared between both ends of the channel.
   struct Shared {

@@ -30,13 +30,6 @@ FetchContent_MakeAvailable(horus)
 # dependency), and its `SOURCE_DIR` to `target_include_directories()` in order to include
 # `horus/sdk.h`.
 
-add_executable(print_health_status
-  helpers.cpp
-  helpers.h
-  print_health_status.cpp
-)
-target_link_libraries(print_health_status horus::sdk)
-
 add_executable(print_events
   helpers.cpp
   helpers.h
@@ -44,7 +37,14 @@ add_executable(print_events
 )
 target_link_libraries(print_events horus::sdk)
 
-# Same as above, but for `print_logs`.
+
+add_executable(print_health_status
+  helpers.cpp
+  helpers.h
+  print_health_status.cpp
+)
+target_link_libraries(print_health_status horus::sdk)
+
 add_executable(print_logs
   helpers.cpp
   helpers.h

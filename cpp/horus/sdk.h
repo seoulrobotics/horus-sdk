@@ -30,6 +30,7 @@
 #include "horus/sdk/point_clouds.h"
 #include "horus/sdk/profiling.h"
 #include "horus/sdk/sensor.h"
+#include "horus/sdk/version.h"
 #include "horus/types/in_place.h"
 #include "horus/types/one_of.h"
 
@@ -107,6 +108,9 @@ class Sdk final {
   /// Warning: this function or its underlying future could potentially throw other exceptions, not
   /// listed here.
   Future<sdk::HealthStatus> GetHealthStatus(sdk::GetHealthStatusRequest&& request);
+
+  /// Fetches horus current software version.
+  Future<sdk::Version> GetVersion(sdk::GetVersionRequest&& request);
 
  private:
   /// A task to perform on the event loop.

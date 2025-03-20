@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package horus.pb;
+
+import "horus/pb/rpc.proto";
+import "horus/pb/status_service/messages.proto";
+
+service StatusService {
+  option (service_options) = {
+    id: 15
+    description: "Service running in every binary, returning status information."
+  };
+
+  rpc GetVersion(GetVersionRequest) returns (GetVersionResponse) {
+    option (method_options) = {
+      id: 1
+      description: "Returns the current version of horus."
+    };
+  }
+}
+
+message GetVersionRequest {}
+
+message GetVersionResponse {
+  Version version = 1;
+}

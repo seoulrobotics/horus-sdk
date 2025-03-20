@@ -286,6 +286,12 @@ constexpr void HorusStringify(Sink& sink, const T* value) noexcept(IsNoexceptSin
   HorusStringify(sink, static_cast<const void*>(value));
 }
 
+/// Appends `value` into `sink` as a hexadecimal number.
+template <class Sink, class T, std::enable_if_t<std::is_pointer<T>::value>* = nullptr>
+constexpr void HorusStringify(Sink& sink, HexFormat<T> value) noexcept(IsNoexceptSink<Sink>()) {
+  HorusStringify(sink, value.value);
+}
+
 // MARK: Sink functions
 
 /// Base recursive case of `StrAppendToSink()`.

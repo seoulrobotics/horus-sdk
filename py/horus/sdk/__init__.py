@@ -7,12 +7,6 @@ if typing.TYPE_CHECKING:
 else:
     Self = None
 
-from horus.pb.project_manager.service_pb2 import (
-    GetHealthStatusRequest as _GetHealthStatusRequest,
-)
-from horus.pb.project_manager.service_client import (
-    ProjectManagerServiceClient as _ProjectManagerServiceClient,
-)
 from horus.pb.detection_service.detection_service_client import (
     DetectionServiceClient as _DetectionServiceClient,
 )
@@ -22,6 +16,16 @@ from horus.pb.detection_service.detection_service_client import (
 )
 from horus.pb.notification_service.service_client import (
     NotificationServiceClient as _NotificationServiceClient,
+)
+from horus.pb.project_manager.service_pb2 import (
+    GetHealthStatusRequest as _GetHealthStatusRequest,
+)
+from horus.pb.project_manager.service_client import (
+    ProjectManagerServiceClient as _ProjectManagerServiceClient,
+)
+from horus.pb.status_service.service_client import (
+    StatusServiceClient as _StatusServiceClient,
+    GetVersionRequest as _GetVersionRequest,
 )
 from horus.pb.rpc_pb2 import DefaultSubscribeRequest as _DefaultSubscribeRequest
 from horus.pb.rpc_pb2 import DefaultUnsubscribeRequest as _DefaultUnsubscribeRequest
@@ -46,6 +50,7 @@ from horus.proto import *
 from horus.sdk.health import (
     HealthStatus,
 )
+from horus.sdk.version import Version
 
 _T = typing.TypeVar("_T")
 
@@ -107,6 +112,10 @@ class Sdk:
             services.project_manager.url,
             logger,
             _ProjectManagerServiceClient,
+        )
+
+        self._status_service_client = _Client(
+            services.project_manager.url, logger, _StatusServiceClient
         )
 
     def subscribe_to_detections(
@@ -177,10 +186,10 @@ class Sdk:
             await client.get_health_status(_GetHealthStatusRequest())
         )
 
-    async def _ensure_project_manager_service(
-        self,
-    ) -> _ProjectManagerServiceClient:
-        return await self._project_manager_service_client.connect()
+    async def get_version(self) -> Version:
+        """Retrieve horus version."""
+        client = await self._ensure_status_service()
+        return Version._from_pb(await client.get_version(_GetVersionRequest()))
 
     async def _ensure_detection_service(
         self,
@@ -202,6 +211,16 @@ class Sdk:
         return await self._point_aggregator_service.connect_and_subscribe(
             _DefaultSubscribeRequest(), _DefaultUnsubscribeRequest()
         )
+
+    async def _ensure_project_manager_service(
+        self,
+    ) -> _ProjectManagerServiceClient:
+        return await self._project_manager_service_client.connect()
+
+    async def _ensure_status_service(
+        self,
+    ) -> _StatusServiceClient:
+        return await self._status_service_client.connect()
 
     async def _subscribe_to_detections_async(
         self, on_detection_event: typing.Callable[[DetectionEvent], None]

@@ -1,3 +1,8 @@
+/// @file
+///
+/// A command line executable which connects to a Horus project manager service and prints the
+/// current health status of the system.
+
 #include <chrono>
 #include <cstddef>
 #include <cstdio>
@@ -12,6 +17,7 @@
 #include "horus/sdk.h"
 #include "horus/sdk/errors.h"
 #include "horus/sdk/health.h"
+#include "horus/sdk/version.h"
 #include "horus/strings//str_cat.h"
 #include "horus/strings/chrono.h"
 #include "horus/strings/logging.h"
@@ -205,6 +211,10 @@ int main(int argc, const char* argv[]) {
 
   try {
     horus::StrAppendToSink(horus::StdoutSink(), "Sending RPC request...\n");
+    const horus::sdk::Version version{sdk.GetVersion({}).Wait()};
+
+    horus::StrAppendToSink(horus::StdoutSink(), "Horus version: ", version.ToString(), "\n\n");
+
     const horus::sdk::HealthStatus health_status{sdk.GetHealthStatus({}).Wait()};
 
     horus::StrAppendToSink(horus::StdoutSink(), "---- License status ----\n");

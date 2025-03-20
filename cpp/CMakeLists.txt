@@ -114,6 +114,8 @@ FetchContent_Declare(
     sed -Ei "s/find_program\\\\(([A-Z_]+) .+\\\\)/set(\\\\1 0)/g" CMakeLists.txt &&
     # Disable testing in Protozero only.
     sed -i "s/if(BUILD_TESTING)/if(0)/g" CMakeLists.txt &&
+    # Expose `basic_pbf_writer` internals to be able to serialize buffers in-place.
+    sed -i "s/^class basic_pbf_writer {$/class basic_pbf_writer { public:/g" include/protozero/basic_pbf_writer.hpp &&
     # Don't import Protobuf.
     sed -i "s/find_package(Protobuf)//" CMakeLists.txt
   EXCLUDE_FROM_ALL
@@ -278,6 +280,8 @@ add_library(horus_sdk
   horus/sdk/profiling.cpp
   horus/sdk/profiling.h
   horus/sdk/sensor.h
+  horus/sdk/version.cpp
+  horus/sdk/version.h
 )
 add_library(horus::sdk ALIAS horus_sdk)
 target_link_libraries(horus_sdk PUBLIC horus::core)
@@ -340,7 +344,7 @@ endif()
 if(HORUS_SDK_BUILD_EXAMPLES)
   set(horus_examples_targets)
 
-  foreach(example print_logs print_events print_health_status print_occupancy_map)
+  foreach(example print_events print_health_status print_logs print_occupancy_map)
     add_executable(horus_example_${example}
       examples/${example}.cpp
       examples/helpers.cpp

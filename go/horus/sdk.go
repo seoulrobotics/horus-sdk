@@ -16,6 +16,7 @@ import (
 	"github.com/seoulrobotics/horus-sdk/go/proto/point_aggregator/point_aggregator_service_pb"
 	project_manager_service_pb "github.com/seoulrobotics/horus-sdk/go/proto/project_manager/service_pb"
 	"github.com/seoulrobotics/horus-sdk/go/proto/rpc_pb"
+	status_service_pb "github.com/seoulrobotics/horus-sdk/go/proto/status_service/service_pb"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/protobuf/proto"
 )
@@ -27,6 +28,7 @@ type Sdk struct {
 	detection       *detection_service_pb.DetectionServiceClient
 	pointAggregator *point_aggregator_service_pb.PointAggregatorServiceClient
 	projectManager  *project_manager_service_pb.ProjectManagerServiceClient
+	statusService   *status_service_pb.StatusServiceClient
 
 	detectionRcs       *rcSubscription
 	pointAggregatorRcs *rcSubscription
@@ -127,7 +129,32 @@ func NewSdk(ctx context.Context, options SdkOptions) (*Sdk, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// Find first non nil client and create a StatusServiceClient on its endpoint
+	var statusServiceEndpoint *rpc.Endpoint
+	if sdk.detection != nil {
+		statusServiceEndpoint = sdk.detection.Endpoint()
+	} else if sdk.pointAggregator != nil {
+		statusServiceEndpoint = sdk.pointAggregator.Endpoint()
+	} else if sdk.projectManager != nil {
+		statusServiceEndpoint = sdk.projectManager.Endpoint()
+	}
+	if statusServiceEndpoint != nil {
+		sdk.statusService = status_service_pb.NewStatusServiceClient(statusServiceEndpoint)
+	}
 	return sdk, nil
+}
+
+func (sdk *Sdk) GetHorusVersion(req GetVersionRequest) (*Version, error) {
+	if sdk.statusService == nil {
+		return nil, errors.New("SDK has no service available for fetching version")
+	}
+	ctx := context.Background()
+	response, err := sdk.statusService.GetVersion(ctx, req.toPb())
+	if err != nil {
+		return nil, err
+	}
+	return newVersionFromPb(response.GetVersion()), nil
 }
 
 func (sdk *Sdk) GetHealthStatus(req GetHealthStatusRequest) (*HealthStatus, error) {
@@ -179,13 +206,21 @@ func (sdk *Sdk) SubscribeToPointClouds(f func(*point_message_pb.PointFrame)) (*S
 
 // Close closes all current connections used by the SDK.
 func (sdk *Sdk) Close() error {
-	clear(sdk.detectionRcs.handlers)
-	clear(sdk.pointAggregatorRcs.handlers)
+	if sdk.detectionRcs != nil {
+		clear(sdk.detectionRcs.handlers)
+	}
+	if sdk.pointAggregatorRcs != nil {
+		clear(sdk.pointAggregatorRcs.handlers)
+	}
 
 	var g errgroup.Group
 
-	g.Go(sdk.detection.Endpoint().Close)
-	g.Go(sdk.pointAggregator.Endpoint().Close)
+	if sdk.detection != nil {
+		g.Go(sdk.detection.Endpoint().Close)
+	}
+	if sdk.pointAggregator != nil {
+		g.Go(sdk.pointAggregator.Endpoint().Close)
+	}
 
 	return g.Wait()
 }
@@ -356,6 +391,7 @@ func newClient[C rpcClient](
 		onDisconnected,
 		onError,
 	)
+
 	if err != nil {
 		return *new(C), err
 	}

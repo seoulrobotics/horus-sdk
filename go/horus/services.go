@@ -30,6 +30,7 @@ type Services struct {
 	Notification *ServiceInfo
 	PointAggregator *ServiceInfo
 	ProjectManager *ServiceInfo
+	Status *ServiceInfo
 }
 
 // WithDetection returns a copy of s with its [Services.Detection] set to si.
@@ -53,6 +54,12 @@ func (s Services) WithPointAggregator(si ServiceInfo) Services {
 // WithProjectManager returns a copy of s with its [Services.ProjectManager] set to si.
 func (s Services) WithProjectManager(si ServiceInfo) Services {
 	s.ProjectManager = &si
+	return s
+}
+
+// WithStatus returns a copy of s with its [Services.Status] set to si.
+func (s Services) WithStatus(si ServiceInfo) Services {
+	s.Status = &si
 	return s
 }
 
@@ -82,6 +89,12 @@ func DefaultServices() Services {
 			Id: 3,
 			Host: "127.0.0.1",
 			Port: 40003,
+		},
+		Status: &ServiceInfo{
+			FullName: "horus.pb.StatusService",
+			Id: 15,
+			Host: "127.0.0.1",
+			Port: 40015,
 		},
 	}
 }

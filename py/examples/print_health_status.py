@@ -4,12 +4,17 @@ from horus.sdk.health import (
     LicensePrivilege,
     NodeHealth,
 )
+from horus.sdk.version import Version
 
 
 async def print_health_status() -> None:
     health_status: HealthStatus
+    version: Version
     async with horus.Sdk() as sdk:
         health_status = await sdk.get_health_status()
+        version = await sdk.get_version()
+
+    print(f"Horus version: {version}\n")
 
     print("---- License status ----")
     print(f"Licence level: {health_status.license_status.level}")
