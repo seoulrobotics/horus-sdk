@@ -7,12 +7,14 @@
 
 #include <cassert>
 #include <cstddef>
+#include <cstdint>
 #include <cstring>
 #include <protozero/iterators.hpp>
 #include <protozero/pbf_reader.hpp>
 #include <protozero/pbf_writer.hpp>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "horus/internal/attributes.h"
 #include "horus/pb/buffer.h"
@@ -32,20 +34,26 @@ namespace horus {
 /// mutated) will make a copy of the string.
 class CowBytes final {
   /// Type of the inner `data_`.
-  using Data = OneOf<PbView, std::string>;
+  using Data = OneOf<PbView, std::vector<std::uint8_t>>;
 
  public:
+  /// The type of an owned buffer.
+  using Owned = std::vector<std::uint8_t>;
+
   /// Returns a `CowBytes` container which refers to the data in `string`.
   static CowBytes Borrowed(StringView string HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
     return CowBytes{string};
   }
 
-  /// Returns a `CowBytes` container which contains a copy of the given `string`.
+  /// Returns a `CowBytes` container which contains an owned copy of the given `string`.
   ///
   /// @throws std::bad_alloc If the copy fails.
-  static CowBytes Copied(StringView string) noexcept(false) {
-    return CowBytes{std::string{string}};
-  }
+  static CowBytes OwnedCopy(StringView string) noexcept(false);
+
+  /// Returns a `CowBytes` container which contains a shared copy of the given `string`.
+  ///
+  /// @throws std::bad_alloc If the copy fails.
+  static CowBytes SharedCopy(StringView string) noexcept(false);
 
   /// Creates an empty bytes container.
   CowBytes() noexcept : data_{InPlaceType<PbView>, PbBuffer{}} {}
@@ -54,8 +62,7 @@ class CowBytes final {
   explicit CowBytes(PbView&& view) noexcept : data_{InPlaceType<PbView>, std::move(view)} {}
 
   /// Creates a `CowBytes` container with its own mutable data.
-  explicit CowBytes(std::string&& string) noexcept
-      : data_{InPlaceType<std::string>, std::move(string)} {}
+  explicit CowBytes(Owned&& data) noexcept : data_{InPlaceType<Owned>, std::move(data)} {}
 
   /// Creates a `CowBytes` by deserializing from `reader`.
   explicit CowBytes(PbReader& reader) noexcept : CowBytes{reader.View()} {}
@@ -74,7 +81,7 @@ class CowBytes final {
   ///
   /// @throws std::bad_alloc If the contents of the string had to be copied and the allocation
   /// failed.
-  std::string& String() noexcept(false) HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
+  Owned& String() noexcept(false) HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
 
   /// Returns a view of the stored bytes, making a copy of the inner string first if necessary.
   ///

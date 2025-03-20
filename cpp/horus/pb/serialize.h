@@ -8,17 +8,20 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <protozero/basic_pbf_writer.hpp>
 #include <protozero/data_view.hpp>
 #include <protozero/pbf_reader.hpp>
-#include <protozero/pbf_writer.hpp>
 #include <protozero/types.hpp>
 #include <protozero/varint.hpp>
 #include <string>
 #include <type_traits>
 #include <utility>
+#include <vector>
 
+#include "horus/internal/attributes.h"
 #include "horus/internal/pointer_arithmetic.h"
 #include "horus/pb/buffer.h"
+#include "horus/pb/pbf_buffer_specialization.h"  // IWYU pragma: keep
 #include "horus/pb/types.h"
 
 namespace horus {
@@ -98,11 +101,16 @@ class PbReader final {
 /// Helper class used to serialize Protobuf messages to a `PbBuffer`.
 class PbWriter final {
  public:
+  /// The output buffer type.
+  using Buffer = std::vector<std::uint8_t>;
+  /// The Protobuf writer type.
+  using PbfWriter = protozero::basic_pbf_writer<Buffer>;
+
   /// Constructs an empty `PbWriter`.
   PbWriter() noexcept : writer_{buffer_} {}
 
   /// Constructs a `PbWriter` which will append its content to the given `output`.
-  explicit PbWriter(std::string&& output) noexcept : buffer_{std::move(output)}, writer_{buffer_} {}
+  explicit PbWriter(Buffer&& output) noexcept : buffer_{std::move(output)}, writer_{buffer_} {}
 
   /// Constructs an empty `PbWriter` with the given `initial_capacity`.
   explicit PbWriter(std::size_t initial_capacity) noexcept(false) : PbWriter{} {
@@ -131,19 +139,19 @@ class PbWriter final {
   /// See
   /// https://github.com/mapbox/protozero/blob/master/doc/tutorial.md#writing-protobuf-encoded-messages
   /// for documentation.
-  constexpr protozero::pbf_writer& Writer() noexcept { return writer_; }
+  constexpr PbfWriter& Writer() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND { return writer_; }
 
   /// Returns the resulting string.
-  std::string ToString() && noexcept { return std::move(buffer_); }
+  Buffer ToVector() && noexcept { return std::move(buffer_); }
 
   /// Returns the resulting buffer as a `PbBuffer`.
   PbBuffer ToBuffer() && noexcept(false) { return PbBuffer{std::move(buffer_)}; }
 
  private:
   /// The output string buffer.
-  std::string buffer_;
+  Buffer buffer_;
   /// The output `pbf_writer`.
-  protozero::pbf_writer writer_;
+  PbfWriter writer_;
 };
 
 /// Compile-time flags for Protobuf deserialization.
