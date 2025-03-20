@@ -25,6 +25,7 @@
 #include <thread>
 #include <type_traits>
 #include <utility>
+#include <vector>
 
 #include "horus/event_loop/event_loop.h"
 #include "horus/functional/move_only_function.h"
@@ -625,14 +626,14 @@ void WebSocketRpcEndpoint::RunSendThread() noexcept {
     };
 
     // Serialize request.
-    std::string data;
+    std::vector<std::uint8_t> data;
     for (;;) {
       if (!keep_trying()) {
         give_up = true;
         continue;
       }
       try {
-        data = to_send.message.SerializeToString();
+        data = to_send.message.SerializeToBuffer();
         break;
       } catch (const std::bad_alloc& e) {
         if (!keep_retrying()) {

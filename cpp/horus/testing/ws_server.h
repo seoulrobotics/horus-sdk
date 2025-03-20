@@ -17,6 +17,7 @@
 #include <stdexcept>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "horus/future/any.h"
 #include "horus/future/resolved.h"
@@ -41,7 +42,7 @@ class BasicWebSocketEndpoint final : public RpcEndpoint {
     if (websocket == nullptr) {
       throw std::runtime_error{"websocket disconnected"};
     }
-    std::string const data{message.SerializeToString()};
+    std::vector<std::uint8_t> const data{message.SerializeToBuffer()};
     EXPECT_TRUE(websocket->sendBinary(data).success);
     static_cast<void>(pb::RpcMessage{std::move(message)});
     return ResolvedFuture<void>{};

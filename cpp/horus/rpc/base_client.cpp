@@ -24,7 +24,7 @@ StringView RpcBaseClient::ServiceName() const noexcept {
 
 sdk::pb::RpcMessage RpcBaseClient::MakeRequestMessage(std::uint16_t method_id,
                                                       const PbMessage& request) const {
-  CowBytes request_bytes{request.SerializeToString()};
+  CowBytes request_bytes{request.SerializeToBuffer()};
   return sdk::pb::RpcMessage{}
       .set_version(sdk::pb::RpcMessage::Version::kOne)
       .set_service_id(ServiceId())

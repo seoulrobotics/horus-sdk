@@ -1,22 +1,23 @@
 #include "horus/pb/message.h"
 
-#include <string>
+#include <cstdint>
 #include <utility>
+#include <vector>
 
 #include "horus/pb/serialize.h"
 
 namespace horus {
 
-std::string PbMessage::SerializeToString() const noexcept(false) {
+std::vector<std::uint8_t> PbMessage::SerializeToBuffer() const noexcept(false) {
   PbWriter writer;
   SerializeTo(writer);
-  return std::move(writer).ToString();
+  return std::move(writer).ToVector();
 }
 
-void PbMessage::SerializeToString(std::string& string) const noexcept(false) {
-  PbWriter writer{std::move(string)};
+void PbMessage::SerializeToBuffer(std::vector<std::uint8_t>& buffer) const noexcept(false) {
+  PbWriter writer{std::move(buffer)};
   SerializeTo(writer);
-  string = std::move(writer).ToString();
+  buffer = std::move(writer).ToVector();
 }
 
 }  // namespace horus

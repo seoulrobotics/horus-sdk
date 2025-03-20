@@ -35,7 +35,7 @@ namespace logs {
 void HorusStringify(const ErasedSink& sink, const Generic& data);
 
 /// Formats the log `logs::Oom` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const Oom& );
+void HorusStringify(const ErasedSink& sink, const Oom& /*data*/);
 
 /// Formats the log `logs::RpcConnectionError` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const RpcConnectionError& data);
@@ -50,13 +50,13 @@ void HorusStringify(const ErasedSink& sink, const ProjectNotFound& data);
 void HorusStringify(const ErasedSink& sink, const ProjectAlreadyExists& data);
 
 /// Formats the log `logs::InvalidConfiguration` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const InvalidConfiguration& );
+void HorusStringify(const ErasedSink& sink, const InvalidConfiguration& /*data*/);
 
 /// Formats the log `logs::EntityNotFound` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const EntityNotFound& data);
 
 /// Formats the log `logs::ActiveProjectCannotBeDeleted` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const ActiveProjectCannotBeDeleted& );
+void HorusStringify(const ErasedSink& sink, const ActiveProjectCannotBeDeleted& /*data*/);
 
 /// Formats the log `logs::RpcDisconnectionError` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const RpcDisconnectionError& data);
@@ -71,7 +71,7 @@ void HorusStringify(const ErasedSink& sink, const OpenedProject& data);
 void HorusStringify(const ErasedSink& sink, const CreatedProject& data);
 
 /// Formats the log `logs::ConfigUnavailable` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const ConfigUnavailable& );
+void HorusStringify(const ErasedSink& sink, const ConfigUnavailable& /*data*/);
 
 /// Formats the log `logs::InvalidRequest` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const InvalidRequest& data);
@@ -113,7 +113,7 @@ void HorusStringify(const ErasedSink& sink, const LicenseServerConnectionError& 
 void HorusStringify(const ErasedSink& sink, const LicenseError& data);
 
 /// Formats the log `logs::LicenseNotFoundError` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const LicenseNotFoundError& );
+void HorusStringify(const ErasedSink& sink, const LicenseNotFoundError& /*data*/);
 
 /// Formats the log `logs::LicenseExpiredError` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const LicenseExpiredError& data);
@@ -128,7 +128,7 @@ void HorusStringify(const ErasedSink& sink, const LicenseHostMachineError& data)
 void HorusStringify(const ErasedSink& sink, const LicensePrivilegeError& data);
 
 /// Formats the log `logs::LicenseActiveInfo` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const LicenseActiveInfo& );
+void HorusStringify(const ErasedSink& sink, const LicenseActiveInfo& /*data*/);
 
 /// Formats the log `logs::MultipleLicensesWarning` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const MultipleLicensesWarning& data);
@@ -146,7 +146,7 @@ void HorusStringify(const ErasedSink& sink, const BagRecordingFailedToStart& dat
 void HorusStringify(const ErasedSink& sink, const BagRecordingStartedInfo& data);
 
 /// Formats the log `logs::ReplayRestartedInfo` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const ReplayRestartedInfo& );
+void HorusStringify(const ErasedSink& sink, const ReplayRestartedInfo& /*data*/);
 
 /// Formats the log `logs::InputSourceChangeRequestedInfo` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const InputSourceChangeRequestedInfo& data);
@@ -206,7 +206,7 @@ void HorusStringify(const ErasedSink& sink, const ComponentInitializationFailure
 void HorusStringify(const ErasedSink& sink, const UnhandledEnumCaseError& data);
 
 /// Formats the log `logs::BagEmptyError` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const BagEmptyError& );
+void HorusStringify(const ErasedSink& sink, const BagEmptyError& /*data*/);
 
 /// Formats the log `logs::DiscardingDataError` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const DiscardingDataError& data);
@@ -245,7 +245,7 @@ void HorusStringify(const ErasedSink& sink, const ModelInitializationFailureWarn
 void HorusStringify(const ErasedSink& sink, const RosSpinnerStoppedWarning& data);
 
 /// Formats the log `logs::ActorSystemUnavailableError` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const ActorSystemUnavailableError& );
+void HorusStringify(const ErasedSink& sink, const ActorSystemUnavailableError& /*data*/);
 
 /// Formats the log `logs::ConfigNodeNotFoundError` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const ConfigNodeNotFoundError& data);
@@ -272,10 +272,10 @@ void HorusStringify(const ErasedSink& sink, const ThreadPoolSlowingDownWarning& 
 void HorusStringify(const ErasedSink& sink, const ThreadPoolNotRespondingWarning& data);
 
 /// Formats the log `logs::ThreadPoolBrokenPromiseWarning` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const ThreadPoolBrokenPromiseWarning& );
+void HorusStringify(const ErasedSink& sink, const ThreadPoolBrokenPromiseWarning& /*data*/);
 
 /// Formats the log `logs::BoxFittingPointsBelowBaseWarning` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const BoxFittingPointsBelowBaseWarning& );
+void HorusStringify(const ErasedSink& sink, const BoxFittingPointsBelowBaseWarning& /*data*/);
 
 /// Formats the log `logs::FailedToRemoveStalePointsWarning` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const FailedToRemoveStalePointsWarning& data);
@@ -356,10 +356,10 @@ void HorusStringify(const ErasedSink& sink, const ConfigSubscriptionFailedWarnin
 void HorusStringify(const ErasedSink& sink, const ThreadPoolClampedWorkersWarning& data);
 
 /// Formats the log `logs::StoppingHorusBagRecorderAlreadyStopped` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const StoppingHorusBagRecorderAlreadyStopped& );
+void HorusStringify(const ErasedSink& sink, const StoppingHorusBagRecorderAlreadyStopped& /*data*/);
 
 /// Formats the log `logs::RecorderConfigUpdateWhileRunning` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const RecorderConfigUpdateWhileRunning& );
+void HorusStringify(const ErasedSink& sink, const RecorderConfigUpdateWhileRunning& /*data*/);
 
 /// Formats the log `logs::ClampingDataWarning` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const ClampingDataWarning& data);
@@ -422,10 +422,10 @@ void HorusStringify(const ErasedSink& sink, const TimeDiffOutOfRangeWarning& dat
 void HorusStringify(const ErasedSink& sink, const TensorrtLog& data);
 
 /// Formats the log `logs::BuildingTensorrtEngineInfo` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const BuildingTensorrtEngineInfo& );
+void HorusStringify(const ErasedSink& sink, const BuildingTensorrtEngineInfo& /*data*/);
 
 /// Formats the log `logs::LoadingTensorrtEngineInfo` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const LoadingTensorrtEngineInfo& );
+void HorusStringify(const ErasedSink& sink, const LoadingTensorrtEngineInfo& /*data*/);
 
 /// Formats the log `logs::CalibrationMapNotFound` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const CalibrationMapNotFound& data);
@@ -446,13 +446,13 @@ void HorusStringify(const ErasedSink& sink, const FailedToRemoveCalibrationMap& 
 void HorusStringify(const ErasedSink& sink, const FailedToIterateInDirectory& data);
 
 /// Formats the log `logs::MapBasedCalibrationWithoutMapLoading` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const MapBasedCalibrationWithoutMapLoading& );
+void HorusStringify(const ErasedSink& sink, const MapBasedCalibrationWithoutMapLoading& /*data*/);
 
 /// Formats the log `logs::MapBasedCalibrationAlreadyRunning` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const MapBasedCalibrationAlreadyRunning& );
+void HorusStringify(const ErasedSink& sink, const MapBasedCalibrationAlreadyRunning& /*data*/);
 
 /// Formats the log `logs::CancelMapBasedCalibrationNotRunning` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const CancelMapBasedCalibrationNotRunning& );
+void HorusStringify(const ErasedSink& sink, const CancelMapBasedCalibrationNotRunning& /*data*/);
 
 /// Formats the log `logs::BagStreamNotFound` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const BagStreamNotFound& data);
@@ -473,19 +473,19 @@ void HorusStringify(const ErasedSink& sink, const BuildingPipelineInfo& data);
 void HorusStringify(const ErasedSink& sink, const BagIsNotEvaluation& data);
 
 /// Formats the log `logs::HorusBagRunning` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const HorusBagRunning& );
+void HorusStringify(const ErasedSink& sink, const HorusBagRunning& /*data*/);
 
 /// Formats the log `logs::AutoGroundCalibrationWarning` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const AutoGroundCalibrationWarning& data);
 
 /// Formats the log `logs::AutoGroundCalibrationError` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const AutoGroundCalibrationError& );
+void HorusStringify(const ErasedSink& sink, const AutoGroundCalibrationError& /*data*/);
 
 /// Formats the log `logs::ObjectDetectorNotLoadedWarning` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const ObjectDetectorNotLoadedWarning& );
+void HorusStringify(const ErasedSink& sink, const ObjectDetectorNotLoadedWarning& /*data*/);
 
 /// Formats the log `logs::CalibrationIsRunningError` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const CalibrationIsRunningError& );
+void HorusStringify(const ErasedSink& sink, const CalibrationIsRunningError& /*data*/);
 
 /// Formats the log `logs::ModelInitInProgressInfo` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const ModelInitInProgressInfo& data);
@@ -509,13 +509,13 @@ void HorusStringify(const ErasedSink& sink, const PreprocessingServicePipelineUn
 void HorusStringify(const ErasedSink& sink, const CircularRecordingDisabledWarning& data);
 
 /// Formats the log `logs::SnapshotAlreadyRunningWarning` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const SnapshotAlreadyRunningWarning& );
+void HorusStringify(const ErasedSink& sink, const SnapshotAlreadyRunningWarning& /*data*/);
 
 /// Formats the log `logs::ActiveProjectChangedInfo` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const ActiveProjectChangedInfo& );
+void HorusStringify(const ErasedSink& sink, const ActiveProjectChangedInfo& /*data*/);
 
 /// Formats the log `logs::ProjectConfigUpdatedInfo` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const ProjectConfigUpdatedInfo& );
+void HorusStringify(const ErasedSink& sink, const ProjectConfigUpdatedInfo& /*data*/);
 
 /// Formats the log `logs::InvalidLidarTimestamp` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const InvalidLidarTimestamp& data);
@@ -524,7 +524,7 @@ void HorusStringify(const ErasedSink& sink, const InvalidLidarTimestamp& data);
 void HorusStringify(const ErasedSink& sink, const CalibrationAccumulatingPointsInfo& data);
 
 /// Formats the log `logs::SparseNoiseFilterUsageNonRotationalLidars` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const SparseNoiseFilterUsageNonRotationalLidars& );
+void HorusStringify(const ErasedSink& sink, const SparseNoiseFilterUsageNonRotationalLidars& /*data*/);
 
 /// Formats the log `logs::FileWriteError` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const FileWriteError& data);

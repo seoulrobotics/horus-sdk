@@ -149,42 +149,42 @@ template <>
 class FixedPackedFns<float> {
  public:
   constexpr static auto kAddPacked =
-      &protozero::pbf_writer::add_packed_float<typename CowSpan<float>::const_iterator>;
+      &PbWriter::PbfWriter::add_packed_float<typename CowSpan<float>::const_iterator>;
   constexpr static auto kGetPacked = &protozero::pbf_reader::get_packed_float;
 };
 template <>
 class FixedPackedFns<double> {
  public:
   constexpr static auto kAddPacked =
-      &protozero::pbf_writer::add_packed_double<typename CowSpan<double>::const_iterator>;
+      &PbWriter::PbfWriter::add_packed_double<typename CowSpan<double>::const_iterator>;
   constexpr static auto kGetPacked = &protozero::pbf_reader::get_packed_double;
 };
 template <>
 class FixedPackedFns<std::uint32_t> {
  public:
   constexpr static auto kAddPacked =
-      &protozero::pbf_writer::add_packed_fixed32<typename CowSpan<std::uint32_t>::const_iterator>;
+      &PbWriter::PbfWriter::add_packed_fixed32<typename CowSpan<std::uint32_t>::const_iterator>;
   constexpr static auto kGetPacked = &protozero::pbf_reader::get_packed_fixed32;
 };
 template <>
 class FixedPackedFns<std::uint64_t> {
  public:
   constexpr static auto kAddPacked =
-      &protozero::pbf_writer::add_packed_fixed64<typename CowSpan<std::uint64_t>::const_iterator>;
+      &PbWriter::PbfWriter::add_packed_fixed64<typename CowSpan<std::uint64_t>::const_iterator>;
   constexpr static auto kGetPacked = &protozero::pbf_reader::get_packed_fixed64;
 };
 template <>
 class FixedPackedFns<std::int32_t> {
  public:
   constexpr static auto kAddPacked =
-      &protozero::pbf_writer::add_packed_sfixed32<typename CowSpan<std::int32_t>::const_iterator>;
+      &PbWriter::PbfWriter::add_packed_sfixed32<typename CowSpan<std::int32_t>::const_iterator>;
   constexpr static auto kGetPacked = &protozero::pbf_reader::get_packed_sfixed32;
 };
 template <>
 class FixedPackedFns<std::int64_t> {
  public:
   constexpr static auto kAddPacked =
-      &protozero::pbf_writer::add_packed_sfixed64<typename CowSpan<std::int64_t>::const_iterator>;
+      &PbWriter::PbfWriter::add_packed_sfixed64<typename CowSpan<std::int64_t>::const_iterator>;
   constexpr static auto kGetPacked = &protozero::pbf_reader::get_packed_sfixed64;
 };
 

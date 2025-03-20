@@ -13,6 +13,7 @@
 #include <stdexcept>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "horus/pb/buffer.h"
 #include "horus/pb/cow_bytes.h"
@@ -30,7 +31,7 @@ using ::testing::Eq;
 // spell-checker: ignore textpb
 
 /// Converts a textproto string to a binpb string.
-std::string ToBinpb(StringView textpb) {
+std::vector<std::uint8_t> ToBinpb(StringView textpb) {
   if (textpb.contains('\'')) {
     throw std::logic_error{"textpb cannot contain '"};
   }
@@ -41,11 +42,12 @@ std::string ToBinpb(StringView textpb) {
   command.append(
       "' | protoc -I proto horus/pb/testing/messages.proto --encode=horus.pb.TestMessage");
   std::FILE* command_file{popen(command.c_str(), "r")};  // NOLINT(cert-env33-c, *-include-cleaner)
-  std::string command_output;
+  std::vector<std::uint8_t> command_output;
   std::array<char, 256> buffer{};
   for (;;) {
     std::size_t const read{std::fread(buffer.data(), 1, buffer.size(), command_file)};
-    command_output.append(buffer.data(), read);
+    // NOLINTNEXTLINE(*-constant-array-index)
+    command_output.insert(command_output.end(), buffer.data(), &buffer[read]);
     if (std::feof(command_file) == 0) {
       continue;
     }
@@ -65,7 +67,7 @@ TEST(ToBinpb, Example) {
   // clang-format off
   // echo 'u32: 42' | protoc -I proto horus/pb/testing/messages.proto --encode=horus.pb.TestMessage | xxd --include
   // clang-format on
-  ASSERT_EQ(ToBinpb(R"pb(u32: 42)pb"), (std::string{0x28, 0x2a}));
+  ASSERT_EQ(ToBinpb(R"pb(u32: 42)pb"), (std::vector<std::uint8_t>{0x28, 0x2a}));
 }
 
 /// Ensures that the serialized representation of `message` matches the serialized `textpb`, and
@@ -73,8 +75,8 @@ TEST(ToBinpb, Example) {
 /// deserialized version.
 void TestSerialize(const pb::TestMessage& message, StringView textpb,
                    const std::function<void(const pb::TestMessage&)>& check) {
-  std::string const encoded{message.SerializeToString()};
-  std::string expected{ToBinpb(textpb)};
+  std::vector<std::uint8_t> const encoded{message.SerializeToBuffer()};
+  std::vector<std::uint8_t> expected{ToBinpb(textpb)};
 
   EXPECT_EQ(encoded, expected);
 

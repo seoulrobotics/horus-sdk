@@ -132,7 +132,7 @@ inline pb::logs::RpcDisconnectionError CreateMissingSubscriberResponse(
     const RpcContext& context, StringView service_name) noexcept(false) {
   return pb::logs::RpcDisconnectionError{}
       .set_target_service(CowBytes::Borrowed(service_name))
-      .set_target_uri(CowBytes::Copied(context.Endpoint()->Uri()))
+      .set_target_uri(CowBytes::OwnedCopy(context.Endpoint()->Uri()))
       .set_details(CowBytes::Borrowed("could not find corresponding subscriber"));
 }
 
