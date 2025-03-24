@@ -90,7 +90,7 @@ class RpcBaseHandler {
     return Map((static_cast<Self*>(this)->*handle)(context, Request{reader}),
                [inner_response_message{std::move(response_message)}](
                    const Response& response) mutable -> sdk::pb::RpcMessage {
-                 inner_response_message.set_message_bytes(CowBytes{response.SerializeToString()});
+                 inner_response_message.set_message_bytes(CowBytes{response.SerializeToBuffer()});
                  return std::move(inner_response_message);
                });
   }

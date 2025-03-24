@@ -201,6 +201,7 @@ add_library(horus_core
   horus/internal/unsafe_union.h
   horus/internal/void.h
   horus/pb/alias.h
+  horus/pb/buffer.cpp
   horus/pb/buffer.h
   horus/pb/cow_bytes.cpp
   horus/pb/cow_bytes.h
@@ -209,6 +210,7 @@ add_library(horus_core
   horus/pb/cow.h
   horus/pb/message.cpp
   horus/pb/message.h
+  horus/pb/pbf_buffer_specialization.h
   horus/pb/repeated_iterator.h
   horus/pb/serialize.cpp
   horus/pb/serialize.h

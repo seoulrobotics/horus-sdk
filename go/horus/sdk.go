@@ -191,7 +191,7 @@ func (sdk *Sdk) SubscribeToObjects(f func(*detection_pb.DetectionEvent)) (*Subsc
 // SubscribeToPointClouds subscribes to point cloud broadcasts and calls f for each frame received.
 func (sdk *Sdk) SubscribeToPointClouds(f func(*point_message_pb.PointFrame)) (*Subscription, error) {
 	if sdk.pointAggregator == nil {
-		return nil, errors.New("SDK is not configured to connect to the detection service")
+		return nil, errors.New("SDK is not configured to connect to the point aggregator service")
 	}
 
 	cbf := func(req *point_message_pb.AggregatedPointEvents) {
@@ -368,7 +368,9 @@ func newClient[C rpcClient](
 ) (C, error) {
 	onConnected := func() {}
 	if options.OnConnected != nil {
-		onConnected = func() { options.OnConnected(si) }
+		onConnected = func() {
+			options.OnConnected(si)
+		}
 	}
 
 	onDisconnected := func(error) {}
@@ -421,9 +423,10 @@ func newSubscribingClient[S defaultSubscribable](
 		subscription.onConnected()
 	}
 	if options.OnConnected != nil {
+		onConnectedStore := options.OnConnected
 		onConnected = func(ServiceInfo) {
 			subscription.onConnected()
-			options.OnConnected(si)
+			onConnectedStore(si)
 		}
 	}
 	options.OnConnected = onConnected

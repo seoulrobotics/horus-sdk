@@ -1,15 +1,17 @@
 /// @file
 ///
-///
+/// The `PbMessage` class.
 
 #ifndef HORUS_PB_MESSAGE_H_
 #define HORUS_PB_MESSAGE_H_
 
 #include <bitset>
 #include <cstddef>
+#include <cstdint>
 #include <string>
 #include <type_traits>
 #include <utility>
+#include <vector>
 
 #include "horus/pb/serialize.h"
 #include "horus/pb/types.h"
@@ -50,10 +52,10 @@ class PbMessage {
   /// Destroys the message.
   virtual ~PbMessage() = default;
 
-  /// Serializes the message to a `std::string`.
-  std::string SerializeToString() const noexcept(false);
-  /// Serializes the message to a `std::string`.
-  void SerializeToString(std::string& string) const noexcept(false);
+  /// Serializes the message to a `std::vector<std::uint8_t>`.
+  std::vector<std::uint8_t> SerializeToBuffer() const noexcept(false);
+  /// Serializes the message to a `std::vector<std::uint8_t>`.
+  void SerializeToBuffer(std::vector<std::uint8_t>& buffer) const noexcept(false);
 
  protected:
   /// Serializes a field of type `T`.
