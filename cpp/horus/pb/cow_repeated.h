@@ -13,7 +13,6 @@
 #include <protozero/exception.hpp>
 #include <protozero/iterators.hpp>
 #include <protozero/pbf_reader.hpp>
-#include <protozero/pbf_writer.hpp>
 #include <protozero/varint.hpp>
 #include <stdexcept>
 #include <type_traits>
@@ -341,42 +340,42 @@ template <>
 class PackedFns<bool> {
  public:
   constexpr static auto kAddPacked =
-      &protozero::pbf_writer::add_packed_bool<CowRepeated<bool, true>::const_iterator>;
+      &PbWriter::PbfWriter::add_packed_bool<CowRepeated<bool, true>::const_iterator>;
   constexpr static auto kGetPacked = &protozero::pbf_reader::get_packed_bool;
 };
 template <>
 class PackedFns<std::uint32_t> {
  public:
   constexpr static auto kAddPacked =
-      &protozero::pbf_writer::add_packed_uint32<CowRepeated<std::uint32_t, true>::const_iterator>;
+      &PbWriter::PbfWriter::add_packed_uint32<CowRepeated<std::uint32_t, true>::const_iterator>;
   constexpr static auto kGetPacked = &protozero::pbf_reader::get_packed_uint32;
 };
 template <>
 class PackedFns<std::uint64_t> {
  public:
   constexpr static auto kAddPacked =
-      &protozero::pbf_writer::add_packed_uint64<CowRepeated<std::uint64_t, true>::const_iterator>;
+      &PbWriter::PbfWriter::add_packed_uint64<CowRepeated<std::uint64_t, true>::const_iterator>;
   constexpr static auto kGetPacked = &protozero::pbf_reader::get_packed_uint64;
 };
 template <>
 class PackedFns<std::int32_t> {
  public:
   constexpr static auto kAddPacked =
-      &protozero::pbf_writer::add_packed_int32<CowRepeated<std::int32_t, true>::const_iterator>;
+      &PbWriter::PbfWriter::add_packed_int32<CowRepeated<std::int32_t, true>::const_iterator>;
   constexpr static auto kGetPacked = &protozero::pbf_reader::get_packed_int32;
 };
 template <>
 class PackedFns<std::int64_t> {
  public:
   constexpr static auto kAddPacked =
-      &protozero::pbf_writer::add_packed_int64<CowRepeated<std::int64_t, true>::const_iterator>;
+      &PbWriter::PbfWriter::add_packed_int64<CowRepeated<std::int64_t, true>::const_iterator>;
   constexpr static auto kGetPacked = &protozero::pbf_reader::get_packed_int64;
 };
 template <class T>
 class PackedFns<T, VoidT<PbEnumTraits<T>>> {
  public:
   constexpr static auto kAddPacked =
-      &protozero::pbf_writer::add_packed_enum<typename CowRepeated<T, true>::const_iterator>;
+      &PbWriter::PbfWriter::add_packed_enum<typename CowRepeated<T, true>::const_iterator>;
   constexpr static auto kGetPacked = &protozero::pbf_reader::get_packed_enum;
 };
 

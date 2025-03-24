@@ -7,9 +7,12 @@
 
 #include <cassert>
 #include <cstddef>
+#include <cstdint>
+#include <cstring>
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "horus/internal/attributes.h"
 #include "horus/types/string_view.h"
@@ -27,21 +30,23 @@ class PbBuffer final {
   }
 
   /// Constructs a `PbBuffer` which refers to the copy of the given string.
-  static PbBuffer Copy(StringView borrowed) noexcept(false) {
-    return PbBuffer{std::string{borrowed}};
-  }
+  static PbBuffer Copy(StringView string) noexcept(false);
 
   /// Constructs an empty `PbBuffer`.
-  PbBuffer() noexcept : ownership_{nullptr}, str_{} {}
+  PbBuffer() noexcept : buffer_{nullptr}, size_{0} {}
 
   /// Constructs a `PbBuffer` which refers to a `std::string`.
   ///
   /// @throws std::bad_alloc If the shared state cannot be allocated.
-  explicit PbBuffer(std::string&& buffer) noexcept(false)
-      : ownership_{std::make_shared<std::string>(std::move(buffer))}, str_{*ownership_} {}
+  explicit PbBuffer(std::string&& buffer) noexcept(false);
+
+  /// Constructs a `PbBuffer` which refers to a `std::vector<std::uint8_t>`.
+  ///
+  /// @throws std::bad_alloc If the shared state cannot be allocated.
+  explicit PbBuffer(std::vector<std::uint8_t>&& buffer) noexcept(false);
 
   /// Returns a read-only view into the buffer.
-  constexpr StringView Str() const noexcept { return str_; }
+  StringView Str() const noexcept { return {buffer_.get(), size_}; }
 
   /// Returns a view into the whole buffer.
   inline PbView View() const noexcept;
@@ -51,14 +56,22 @@ class PbBuffer final {
 
  private:
   /// Constructs a `PbBuffer` which refers to a borrowed string.
-  explicit PbBuffer(StringView borrowed) noexcept : ownership_{nullptr}, str_{borrowed} {}
+  ///
+  /// This uses the _aliasing constructor_ of `std::shared_ptr` with an empty source
+  /// `std::shared_ptr`. This is valid, and leads to a `std::shared_ptr` that simply refers to
+  /// `borrowed.data()` without allocating or managing any memory.
+  explicit PbBuffer(StringView borrowed) noexcept
+      : buffer_{std::shared_ptr<void>{}, borrowed.data()}, size_{borrowed.size()} {}
 
-  /// A shared pointer to the string referenced by `str_`. This may be `nullptr`, in which case the
-  /// string is borrowed.
-  std::shared_ptr<const std::string> ownership_;
+  /// Constructs a `PbBuffer` which refers to a string.
+  explicit PbBuffer(std::shared_ptr<const char>&& buffer, std::size_t size) noexcept
+      : buffer_{std::move(buffer)}, size_{size} {}
 
-  /// A view into the buffer.
-  StringView str_;
+  /// A shared pointer to the underlying buffer.
+  std::shared_ptr<const char> buffer_;
+
+  /// The size of the buffer.
+  std::size_t size_;
 };
 
 /// A view into a `PbBuffer`.
@@ -82,7 +95,7 @@ class PbView final {
 
   /// Returns the view as a `StringView`.
   // NOLINTNEXTLINE(*-exception-escape): `offset_`/`size_` are checked in constructor
-  constexpr StringView Str() const noexcept { return buffer_.Str().substr(offset_, size_); }
+  StringView Str() const noexcept { return buffer_.Str().substr(offset_, size_); }
 
   /// Returns the offset in `Buffer()` where the view begins.
   constexpr std::size_t Offset() const noexcept { return offset_; }
