@@ -110,15 +110,10 @@ FetchContent_Declare(
   protozero
   URL       https://github.com/mapbox/protozero/archive/542fcf7dd228672b775eb283d18ccd94c4e682d9.zip  # v1.7.1
   PATCH_COMMAND
-    # Prevent protozero from defining targets `clang-tidy`.
-    sed -Ei "s/find_program\\\\(([A-Z_]+) .+\\\\)/set(\\\\1 0)/g" CMakeLists.txt &&
-    # Disable testing in Protozero only.
-    sed -i "s/if(BUILD_TESTING)/if(0)/g" CMakeLists.txt &&
     # Expose `basic_pbf_writer` internals to be able to serialize buffers in-place.
-    sed -i "s/^class basic_pbf_writer {$/class basic_pbf_writer { public:/g" include/protozero/basic_pbf_writer.hpp &&
-    # Don't import Protobuf.
-    sed -i "s/find_package(Protobuf)//" CMakeLists.txt
-  EXCLUDE_FROM_ALL
+    sed -i "s/^class basic_pbf_writer {$/class basic_pbf_writer { public:/g" include/protozero/basic_pbf_writer.hpp
+    # Remove CMakeLists.txt to treat the dependency as a plain folder, since it is a header-only library.
+    && rm -f CMakeLists.txt
 )
 
 FetchContent_MakeAvailable(IXWebSocket libuv protozero)
@@ -474,7 +469,3 @@ target_compile_options(ixwebsocket PRIVATE
   -Wno-unused-parameter
   -Wno-unused-private-field
 )
-
-# `FetchContent_Declare()` only supports `EXCLUDE_FROM_ALL` starting from CMake 3.28. Manually
-# exclude some external targets from ALL here.
-set_property(DIRECTORY "${protozero_SOURCE_DIR}" PROPERTY EXCLUDE_FROM_ALL ON)
