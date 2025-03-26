@@ -4,14 +4,13 @@ For installation instructions, see [main README](../README.md).
 
 ## File organization
 
-- `CMakeLists.txt`: CMake definition of `horus::core`, `horus::sdk` and all
-  tests.
+- `CMakeLists.txt`: CMake definition of `horus::sdk` and `horus::sdk_test`.
 
 - `cmake/`: helpers used by CMake.
 
 - `examples/`: examples which use the Horus SDK.
 
-- `horus/`: headers, source files, and tests for `horus::core` and `horus::sdk`.
+- `horus/`: headers, source files, and tests for `horus::sdk`.
 
   - `sdk.h`: the main entry point of the Horus SDK.
 
@@ -38,7 +37,7 @@ For installation instructions, see [main README](../README.md).
 
   - `testing/`: helpers used in tests.
 
-  - `types/`: general-purpose types used throughout `horus::core`.
+  - `types/`: general-purpose types used throughout `horus::sdk`.
 
 ## Linting
 
@@ -61,6 +60,6 @@ $ clang-format -Werror --dry-run $(find ./ \( -name '*.h' -or -name '*.cpp' \) -
 Tests can be run using:
 
 ```sh
-$ cmake --build ../build/current --target horus_core_test horus_sdk_test \
-  && (cd ../build/current && ./horus_core_test && ./horus_sdk_test)
+$ cmake --build ../build/current --target horus_sdk_test \
+  && (cd ../build/current && ./horus_sdk_test)
 ```

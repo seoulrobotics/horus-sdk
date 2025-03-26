@@ -13,7 +13,7 @@
 #include "horus/event_loop/event_loop.h"
 #include "horus/future/any.h"
 #include "horus/rpc/endpoint.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 namespace horus {
 namespace horus_internal {

@@ -9,7 +9,7 @@
 #include <memory>
 
 #include "horus/event_loop/uv.h"
-#include "horus/internal/source_location.h"
+#include "horus/source_location.h"
 
 namespace horus {
 namespace horus_internal {

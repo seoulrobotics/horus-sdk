@@ -7,7 +7,7 @@
 
 #include "horus/pb/logs/message_pb.h"
 #include "horus/pb/logs/metadata_pb.h"
-#include "horus/strings/str_sink_erased.h"
+#include "horus/strings/erased_sink.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export

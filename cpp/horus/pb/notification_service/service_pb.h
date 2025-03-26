@@ -11,13 +11,14 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/attributes.h"
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/logs/message_pb.h"
 #include "horus/pb/message.h"
 #include "horus/pb/preprocessing/messages_pb.h"
 #include "horus/pb/profiling_pb.h"
 #include "horus/pb/serialize.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -96,7 +97,7 @@ class LogMessageRequest final : public PbMessage {
   /// The message to log.
   ///
   /// Field no: 1.
-  constexpr const LogMessage& log_message() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const LogMessage& log_message() const& noexcept HORUS_LIFETIME_BOUND {
     return log_message_;
   }
 
@@ -115,7 +116,7 @@ class LogMessageRequest final : public PbMessage {
   /// The message to log.
   ///
   /// Field no: 1.
-  LogMessage& mutable_log_message() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  LogMessage& mutable_log_message() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return log_message_;
   }
@@ -206,7 +207,7 @@ class LogMessageEvent final : public PbMessage {
   /// The logged message.
   ///
   /// Field no: 1.
-  constexpr const LogMessage& log_message() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const LogMessage& log_message() const& noexcept HORUS_LIFETIME_BOUND {
     return log_message_;
   }
 
@@ -225,7 +226,7 @@ class LogMessageEvent final : public PbMessage {
   /// The logged message.
   ///
   /// Field no: 1.
-  LogMessage& mutable_log_message() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  LogMessage& mutable_log_message() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return log_message_;
   }
@@ -316,7 +317,7 @@ class ProfilingInfoEvent final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const ProfilingInfo& profiling_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const ProfilingInfo& profiling_info() const& noexcept HORUS_LIFETIME_BOUND {
     return profiling_info_;
   }
 
@@ -335,7 +336,7 @@ class ProfilingInfoEvent final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  ProfilingInfo& mutable_profiling_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  ProfilingInfo& mutable_profiling_info() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return profiling_info_;
   }
@@ -426,7 +427,7 @@ class SensorInfoEvent final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const CowRepeated<SensorInfo>& sensor_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowRepeated<SensorInfo>& sensor_info() const& noexcept HORUS_LIFETIME_BOUND {
     return sensor_info_;
   }
 
@@ -445,7 +446,7 @@ class SensorInfoEvent final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  CowRepeated<SensorInfo>& mutable_sensor_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowRepeated<SensorInfo>& mutable_sensor_info() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return sensor_info_;
   }

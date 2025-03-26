@@ -48,10 +48,10 @@
 #include "horus/rpc/retry_policy.h"
 #include "horus/strings/logging.h"
 #include "horus/strings/str_cat.h"
+#include "horus/strings/string_view.h"
 #include "horus/types/in_place.h"
 #include "horus/types/one_of.h"
 #include "horus/types/scope_guard.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 namespace horus_internal {

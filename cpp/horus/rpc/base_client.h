@@ -16,7 +16,7 @@
 #include "horus/pb/rpc/message_pb.h"
 #include "horus/pb/serialize.h"
 #include "horus/rpc/endpoint.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 namespace horus {
 namespace horus_internal {

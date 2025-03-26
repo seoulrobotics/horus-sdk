@@ -7,8 +7,8 @@
 
 #include <functional>
 
+#include "horus/attributes.h"
 #include "horus/future/future.h"
-#include "horus/internal/attributes.h"
 
 namespace horus {
 
@@ -19,7 +19,7 @@ template <class F>
 class ByRefFuture final : public Future<FutureResult<F>> {
  public:
   /// Constructs the future.
-  explicit ByRefFuture(F& future HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept : future_{future} {}
+  explicit ByRefFuture(F& future HORUS_LIFETIME_BOUND) noexcept : future_{future} {}
 
   /// Polls the referenced future until completion.
   PollResult<FutureResult<F>> UnsafePoll(PollContext& context) final {
@@ -33,7 +33,7 @@ class ByRefFuture final : public Future<FutureResult<F>> {
 
 /// Returns a future which polls `future` by reference.
 template <class F>
-inline ByRefFuture<F> ByRef(F& future HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+inline ByRefFuture<F> ByRef(F& future HORUS_LIFETIME_BOUND) noexcept {
   return ByRefFuture<F>{future};
 }
 

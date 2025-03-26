@@ -12,8 +12,8 @@
 #include <utility>
 
 #include "horus/rpc/services.h"
+#include "horus/strings/string_view.h"
 #include "horus/types/span.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 namespace {

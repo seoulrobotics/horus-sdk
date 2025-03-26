@@ -3,7 +3,7 @@
 #include <string>
 
 #include "horus/strings/str_cat.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 namespace horus {
 namespace sdk {

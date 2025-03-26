@@ -13,9 +13,9 @@
 #include <type_traits>
 #include <utility>
 
-#include "horus/internal/attributes.h"
-#include "horus/internal/pointer_arithmetic.h"
-#include "horus/internal/pointer_cast.h"
+#include "horus/attributes.h"
+#include "horus/pointer/arithmetic.h"
+#include "horus/pointer/unsafe_cast.h"
 
 namespace horus {
 
@@ -40,15 +40,14 @@ class UnalignedSpan final {
 
     /// Constructs a `begin()` or `end()` iterator over the items in `span`.
     constexpr const_iterator(const UnalignedSpan& span, bool is_end) noexcept
-        : ptr_{is_end ? horus_internal::PointerAdd(span.begin_, span.size_ * sizeof(T))
-                      : span.begin_} {}
+        : ptr_{is_end ? PointerAdd(span.begin_, span.size_ * sizeof(T)) : span.begin_} {}
 
     /// Returns the current value.
     T operator*() const noexcept { return ReadValue(ptr_); }
 
     /// Advances to the next value (`++it`).
     constexpr const_iterator& operator++() noexcept {
-      ptr_ = horus_internal::PointerAdd(ptr_, sizeof(T));
+      ptr_ = PointerAdd(ptr_, sizeof(T));
       return *this;
     }
 
@@ -84,9 +83,8 @@ class UnalignedSpan final {
   /// Constructs a span pointing to the values starting at `begin` and ending at `end` (excluded).
   ///
   /// `begin` and `end` must either both be null, or both be non-null.
-  UnalignedSpan(const T* begin HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND,
-                const T* end HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept
-      : begin_{horus_internal::UnsafePointerCast<const char>(begin)}, size_{end - begin} {
+  UnalignedSpan(const T* begin HORUS_LIFETIME_BOUND, const T* end HORUS_LIFETIME_BOUND) noexcept
+      : begin_{UnsafePointerCast<const char>(begin)}, size_{end - begin} {
     assert((begin == nullptr) == (end == nullptr));
     assert(end >= begin);
   }
@@ -94,24 +92,23 @@ class UnalignedSpan final {
   /// Constructs a span pointing to the values starting at `begin` and ending at `end` (excluded).
   ///
   /// `begin` and `end` must either both be null, or both be non-null.
-  constexpr UnalignedSpan(const char* begin HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND,
-                          const char* end HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept
+  constexpr UnalignedSpan(const char* begin HORUS_LIFETIME_BOUND,
+                          const char* end HORUS_LIFETIME_BOUND) noexcept
       : begin_{begin}, size_{(end - begin) / sizeof(T)} {
     assert((begin == nullptr) == (end == nullptr));
     assert(end >= begin && (end - begin) % sizeof(T) == 0);
   }
 
   /// Constructs a span pointing to the values starting at `begin` and ending at `end` (excluded).
-  UnalignedSpan(const T* begin HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND, std::size_t size) noexcept
-      : begin_{horus_internal::UnsafePointerCast<const char>(begin)}, size_{size} {
+  UnalignedSpan(const T* begin HORUS_LIFETIME_BOUND, std::size_t size) noexcept
+      : begin_{UnsafePointerCast<const char>(begin)}, size_{size} {
     assert(begin != nullptr || size == 0);
   }
 
   /// Constructs a span pointing to the values starting at `begin` and with size `size`.
   ///
   /// `begin` may be null iff `size` is `0`.
-  constexpr UnalignedSpan(const char* begin HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND,
-                          std::size_t size) noexcept
+  constexpr UnalignedSpan(const char* begin HORUS_LIFETIME_BOUND, std::size_t size) noexcept
       : begin_{begin}, size_{size} {
     assert(begin != nullptr || size == 0);
   }
@@ -124,19 +121,19 @@ class UnalignedSpan final {
   /// Returns a copy of the value at the given index.
   T operator[](std::size_t index) const noexcept {
     assert(index < size());
-    return ReadValue(horus_internal::PointerAdd(begin_, index * sizeof(T)));
+    return ReadValue(PointerAdd(begin_, index * sizeof(T)));
   }
 
   /// Returns a span starting at `begin() + offset`.
   constexpr UnalignedSpan subspan(std::size_t offset) const noexcept {
     assert(offset <= size());
-    return UnalignedSpan{horus_internal::PointerAdd(begin_, offset * sizeof(T)), size() - offset};
+    return UnalignedSpan{PointerAdd(begin_, offset * sizeof(T)), size() - offset};
   }
   /// Returns a span starting at `begin() + offset` and with size `count`.
   constexpr UnalignedSpan subspan(std::size_t offset, std::size_t count) const noexcept {
     assert(offset + count <= size());
-    return UnalignedSpan{horus_internal::PointerAdd(begin_, offset * sizeof(T)),
-                         horus_internal::PointerAdd(begin_, (offset + count) * sizeof(T))};
+    return UnalignedSpan{PointerAdd(begin_, offset * sizeof(T)),
+                         PointerAdd(begin_, (offset + count) * sizeof(T))};
   }
 
   /// Returns a `const_iterator` pointing to the first item of the span.
@@ -157,10 +154,9 @@ class UnalignedSpan final {
     if (!kIsLittleEndian && std::is_integral<T>::value && sizeof(T) > 1) {
       // Protobuf fixed values are encoded in little-endian byte order, so we byte-swap them in big
       // endian platforms: https://protobuf.dev/programming-guides/encoding/#cheat-sheet
-      std::uint8_t* const result_bytes{horus_internal::UnsafePointerCast<std::uint8_t>(&result)};
+      std::uint8_t* const result_bytes{UnsafePointerCast<std::uint8_t>(&result)};
       for (std::size_t i{0}; i < sizeof(T) / 2; ++i) {
-        std::swap(*horus_internal::PointerAdd(result_bytes, i),
-                  *horus_internal::PointerAdd(result_bytes, sizeof(T) - i - 1));
+        std::swap(*PointerAdd(result_bytes, i), *PointerAdd(result_bytes, sizeof(T) - i - 1));
       }
     }
     return result;

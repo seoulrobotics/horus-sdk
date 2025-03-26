@@ -15,13 +15,13 @@
 #include <stdexcept>
 #include <utility>
 
+#include "horus/attributes.h"
 #include "horus/event_loop/waker.h"
 #include "horus/future/future.h"
 #include "horus/future/info.h"
 #include "horus/future/poll.h"
-#include "horus/internal/attributes.h"
 #include "horus/types/in_place.h"
-#include "horus/types/list.h"
+#include "horus/types/intrusive_list.h"
 #include "horus/types/one_of.h"
 
 namespace horus {
@@ -58,12 +58,12 @@ class Channel final {
   /// Returns the `Sender` for this channel.
   ///
   /// The `Sender` may be moved out of its current location.
-  Sender& GetSender() noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND { return sender_; }
+  Sender& GetSender() noexcept HORUS_LIFETIME_BOUND { return sender_; }
 
   /// Returns the `Receiver` for this channel.
   ///
   /// The `Receiver` may be moved out of its current location.
-  Receiver& GetReceiver() noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND { return receiver_; }
+  Receiver& GetReceiver() noexcept HORUS_LIFETIME_BOUND { return receiver_; }
 
  private:
   /// Type of `Shared::{first,last}_send_waker` and `SendFuture::waker_`.
@@ -71,10 +71,10 @@ class Channel final {
     /// The actual waker value.
     horus_internal::FutureWaker waker;
     /// A link to its `WakerList`.
-    horus_internal::IntrusiveListLink<WakerNode> link;
+    IntrusiveListLink<WakerNode> link;
   };
   /// A list of `WakerNode`s.
-  using WakerList = horus_internal::IntrusiveListByField<WakerNode, &WakerNode::link>;
+  using WakerList = IntrusiveListByField<WakerNode, &WakerNode::link>;
 
   /// Data shared between both ends of the channel.
   struct Shared {

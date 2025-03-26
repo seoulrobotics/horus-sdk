@@ -11,11 +11,12 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/attributes.h"
 #include "horus/pb/cow_bytes.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
 #include "horus/pb/types.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -119,7 +120,7 @@ class LogMetadata_SourceLocation final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const CowBytes& file() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& file() const& noexcept HORUS_LIFETIME_BOUND {
     return file_;
   }
 
@@ -138,7 +139,7 @@ class LogMetadata_SourceLocation final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  CowBytes& mutable_file() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_file() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return file_;
   }
@@ -169,14 +170,14 @@ class LogMetadata_SourceLocation final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr std::uint32_t line() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint32_t line() const& noexcept HORUS_LIFETIME_BOUND {
     return line_;
   }
 
   /// No documentation.
   ///
   /// Field no: 2.
-  std::uint32_t& mutable_line() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint32_t& mutable_line() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return line_;
   }
@@ -269,14 +270,14 @@ class LogMetadata_Duration final : public PbMessage {
   /// We don't care about sub-ms accuracy.
   ///
   /// Field no: 1.
-  constexpr std::uint64_t ms() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint64_t ms() const& noexcept HORUS_LIFETIME_BOUND {
     return ms_;
   }
 
   /// We don't care about sub-ms accuracy.
   ///
   /// Field no: 1.
-  std::uint64_t& mutable_ms() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint64_t& mutable_ms() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return ms_;
   }
@@ -367,14 +368,14 @@ class LogMetadata_Timestamp final : public PbMessage {
   /// We don't care about sub-ms accuracy.
   ///
   /// Field no: 1.
-  constexpr std::uint64_t ms_since_epoch() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint64_t ms_since_epoch() const& noexcept HORUS_LIFETIME_BOUND {
     return ms_since_epoch_;
   }
 
   /// We don't care about sub-ms accuracy.
   ///
   /// Field no: 1.
-  std::uint64_t& mutable_ms_since_epoch() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint64_t& mutable_ms_since_epoch() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return ms_since_epoch_;
   }
@@ -477,7 +478,7 @@ class LogMetadata final : public PbMessage {
   ///  depends on `horus::common`, which depends on this file.
   ///
   /// Field no: 1.
-  constexpr std::uint64_t ms_since_epoch() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint64_t ms_since_epoch() const& noexcept HORUS_LIFETIME_BOUND {
     return ms_since_epoch_;
   }
 
@@ -488,7 +489,7 @@ class LogMetadata final : public PbMessage {
   ///  depends on `horus::common`, which depends on this file.
   ///
   /// Field no: 1.
-  std::uint64_t& mutable_ms_since_epoch() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint64_t& mutable_ms_since_epoch() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return ms_since_epoch_;
   }
@@ -519,14 +520,14 @@ class LogMetadata final : public PbMessage {
   /// Severity of the log.
   ///
   /// Field no: 2.
-  constexpr LogMetadata_Severity severity() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr LogMetadata_Severity severity() const& noexcept HORUS_LIFETIME_BOUND {
     return severity_;
   }
 
   /// Severity of the log.
   ///
   /// Field no: 2.
-  LogMetadata_Severity& mutable_severity() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  LogMetadata_Severity& mutable_severity() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return severity_;
   }
@@ -557,7 +558,7 @@ class LogMetadata final : public PbMessage {
   /// Identifier of the node that sent the log.
   ///
   /// Field no: 3.
-  constexpr const CowBytes& node_id() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& node_id() const& noexcept HORUS_LIFETIME_BOUND {
     return node_id_;
   }
 
@@ -576,7 +577,7 @@ class LogMetadata final : public PbMessage {
   /// Identifier of the node that sent the log.
   ///
   /// Field no: 3.
-  CowBytes& mutable_node_id() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_node_id() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return node_id_;
   }

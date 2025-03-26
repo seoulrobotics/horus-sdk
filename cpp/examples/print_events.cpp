@@ -23,60 +23,60 @@
 #include "horus/strings/ansi.h"
 #include "horus/strings/chrono.h"  // IWYU pragma: keep
 #include "horus/strings/stdio.h"
-#include "horus/strings/str_sink.h"
+#include "horus/strings/string_view.h"
+#include "horus/strings/stringify.h"
 #include "horus/types/span.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 namespace {
 
 void PrintObject(const pb::DetectedObject& object) {
-  StrAppendToSink(StdoutSink(), "id=", object.status().id(),
-                  ", label=", object.classification().class_label());
+  StringifyTo(StdoutSink(), "id=", object.status().id(),
+              ", label=", object.classification().class_label());
 }
 
 void PrintDetectionResults(const pb::DetectionEvent& event) {
-  StrAppendToSink(StdoutSink(), event.objects().size(), " object(s) in ",
-                  event.labeled_point_clouds().size(), " point cloud(s)",
-                  event.objects().empty() ? "" : ":", "\n");
+  StringifyTo(StdoutSink(), event.objects().size(), " object(s) in ",
+              event.labeled_point_clouds().size(), " point cloud(s)",
+              event.objects().empty() ? "" : ":", "\n");
   for (const Cow<pb::DetectedObject>& object : event.objects()) {
-    StrAppendToSink(StdoutSink(), "  ");
+    StringifyTo(StdoutSink(), "  ");
     PrintObject(object.Ref());
-    StrAppendToSink(StdoutSink(), "\n");
+    StringifyTo(StdoutSink(), "\n");
   }
 }
 
 void PrintLogMessage(const pb::LogMessage& log_message) {
-  StrAppendToSink(StdoutSink(), log_message.metadata().severity(), " log message from ",
-                  log_message.metadata().node_id(), ": ", log_message.data(), "\n");
+  StringifyTo(StdoutSink(), log_message.metadata().severity(), " log message from ",
+              log_message.metadata().node_id(), ": ", log_message.data(), "\n");
 }
 
 void PrintPointCloud(const pb::PointFrame& point_cloud) {
-  StrAppendToSink(StdoutSink(),
-                  "points=", point_cloud.points().flattened_points().Span().size() / 3, "\n");
+  StringifyTo(StdoutSink(), "points=", point_cloud.points().flattened_points().Span().size() / 3,
+              "\n");
 }
 
 void PrintProfilingInformation(const pb::ProfilingInfo& profiling_info) {
   switch (profiling_info.profiling_set_case()) {
     case pb::ProfilingInfo::ProfilingSetOneof::kNotSet:
-      StrAppendToSink(StdoutSink(), "(empty)\n");
+      StringifyTo(StdoutSink(), "(empty)\n");
       break;
     case pb::ProfilingInfo::ProfilingSetOneof::kGeneralProfilingSet:
-      StrAppendToSink(StdoutSink(), "general profiling set for ",
-                      profiling_info.general_profiling_set().profiled_service(), "\n");
+      StringifyTo(StdoutSink(), "general profiling set for ",
+                  profiling_info.general_profiling_set().profiled_service(), "\n");
       break;
     case pb::ProfilingInfo::ProfilingSetOneof::kBundledFrameProfilingSet:
-      StrAppendToSink(StdoutSink(), "bundled frame profiling set\n");
+      StringifyTo(StdoutSink(), "bundled frame profiling set\n");
       break;
     default:
-      StrAppendToSink(StdoutSink(), "(unknown)\n");
+      StringifyTo(StdoutSink(), "(unknown)\n");
       break;
   }
 }
 
 void PrintHeader(StringView event_type, ColoredFormat<StringView> (*color)(const StringView&)) {
-  StrAppendToSink(StdoutSink(), Iso8601{std::chrono::system_clock::now()}, " ", color(event_type),
-                  " | ");
+  StringifyTo(StdoutSink(), Iso8601{std::chrono::system_clock::now()}, " ", color(event_type),
+              " | ");
 }
 
 }  // namespace

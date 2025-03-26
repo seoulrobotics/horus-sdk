@@ -12,7 +12,7 @@
 #include <protozero/buffer_tmpl.hpp>
 #include <vector>
 
-#include "horus/internal/pointer_cast.h"
+#include "horus/pointer/cast.h"
 
 namespace protozero {
 
@@ -56,7 +56,7 @@ struct buffer_customization<std::vector<std::uint8_t>> {
   static char* at_pos(std::vector<std::uint8_t>* buffer, std::size_t pos) {
     assert(pos <= buffer->size());
     // NOLINTNEXTLINE(*-pointer-arithmetic)
-    return horus::horus_internal::UnsafePointerCast<char>(buffer->data() + pos);
+    return horus::SafePointerCast<char>(buffer->data() + pos);
   }
 
   // NOLINTNEXTLINE(*-identifier-length)

@@ -13,8 +13,8 @@
 #include <ratio>
 
 #include "horus/strings/pad.h"
-#include "horus/strings/str_sink.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
+#include "horus/strings/stringify.h"
 
 namespace horus {
 
@@ -34,11 +34,10 @@ constexpr void HorusStringify(
   } else if (Denom == 1'000'000'000L) {
     suffix = "ns";
   } else {
-    StrAppendToSink(sink, std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count(),
-                    "ns");
+    StringifyTo(sink, std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count(), "ns");
     return;
   }
-  StrAppendToSink(sink, duration.count(), suffix);
+  StringifyTo(sink, duration.count(), suffix);
 }
 
 /// A UTC date in the ISO-8601 format with 'T' replaced with ' '.
@@ -71,11 +70,11 @@ constexpr void Iso8601::InternalStringify(Sink& sink) const& noexcept(IsNoexcept
   /// https://en.cppreference.com/w/c/chrono/tm.
   constexpr std::int32_t kStartYear{1900};
 
-  StrAppendToSink(
-      sink, PadLeftBy(4, kStartYear + timestamp_tm.tm_year, '0'), "-",
-      PadLeftBy(2, timestamp_tm.tm_mon + 1, '0'), "-", PadLeftBy(2, timestamp_tm.tm_mday, '0'), " ",
-      PadLeftBy(2, timestamp_tm.tm_hour, '0'), ":", PadLeftBy(2, timestamp_tm.tm_min, '0'), ":",
-      PadLeftBy(2, timestamp_tm.tm_sec, '0'), ".", PadLeftBy(3, last_ms, '0'), "Z");
+  StringifyTo(sink, PadLeftBy(4, kStartYear + timestamp_tm.tm_year, '0'), "-",
+              PadLeftBy(2, timestamp_tm.tm_mon + 1, '0'), "-",
+              PadLeftBy(2, timestamp_tm.tm_mday, '0'), " ", PadLeftBy(2, timestamp_tm.tm_hour, '0'),
+              ":", PadLeftBy(2, timestamp_tm.tm_min, '0'), ":",
+              PadLeftBy(2, timestamp_tm.tm_sec, '0'), ".", PadLeftBy(3, last_ms, '0'), "Z");
 }
 
 /// Appends a `timestamp` to `sink`.
@@ -108,7 +107,7 @@ class AnyDuration final {
 template <class Sink>
 constexpr void AnyDuration::InternalStringify(Sink& sink) const& noexcept(IsNoexceptSink<Sink>()) {
   if (ms_ == 0) {
-    StrAppendToSink(sink, "0s");
+    StringifyTo(sink, "0s");
     return;
   }
 
@@ -128,14 +127,14 @@ constexpr void AnyDuration::InternalStringify(Sink& sink) const& noexcept(IsNoex
   constexpr std::uint64_t kThousand{1'000UL};
 
   if (abs < kThousand) {
-    StrAppendToSink(sink, minus, abs, "ms");
+    StringifyTo(sink, minus, abs, "ms");
   } else if (abs % kThousand == 0) {
-    StrAppendToSink(sink, minus, abs / kThousand, "s");
+    StringifyTo(sink, minus, abs / kThousand, "s");
   } else if (abs % kHundred == 0) {
-    StrAppendToSink(sink, minus, abs / kThousand, ".", (abs % kThousand) / kHundred, "s");
+    StringifyTo(sink, minus, abs / kThousand, ".", (abs % kThousand) / kHundred, "s");
   } else {
     constexpr std::uint64_t kTen{10UL};
-    StrAppendToSink(sink, minus, abs / kThousand, ".", (abs % kThousand) / kTen, "s");
+    StringifyTo(sink, minus, abs / kThousand, ".", (abs % kThousand) / kTen, "s");
   }
 }
 

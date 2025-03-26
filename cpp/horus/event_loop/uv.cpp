@@ -6,8 +6,6 @@
 #include <new>
 #include <system_error>
 
-#include "horus/internal/pointer_cast.h"
-
 namespace horus {
 namespace horus_internal {
 
