@@ -34,6 +34,7 @@ Checks: >
 CheckOptions:
   misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic: true
   performance-unnecessary-value-param.AllowedTypes: "std::shared_ptr" # Compliance with A8-4-13
+  readability-identifier-length.IgnoredParameterNames: "^to$"
 
 WarningsAsErrors: >
   *,

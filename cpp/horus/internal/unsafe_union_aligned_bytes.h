@@ -9,8 +9,8 @@
 #include <cstddef>
 #include <cstdint>
 
-#include "horus/internal/pointer_cast.h"
 #include "horus/internal/type_traits.h"
+#include "horus/pointer/unsafe_cast.h"
 
 namespace horus {
 namespace horus_internal {

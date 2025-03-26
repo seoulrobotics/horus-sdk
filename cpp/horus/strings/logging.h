@@ -8,10 +8,10 @@
 #include <exception>
 #include <utility>
 
-#include "horus/internal/attributes.h"
-#include "horus/internal/pointer_cast.h"
-#include "horus/strings/str_sink.h"
-#include "horus/strings/str_sink_erased.h"
+#include "horus/attributes.h"
+#include "horus/pointer/unsafe_cast.h"
+#include "horus/strings/erased_sink.h"
+#include "horus/strings/stringify.h"
 
 namespace horus {
 
@@ -25,7 +25,7 @@ class ScopedLogger final {
   /// with `F` a noexcept closure which accepts a `const ErasedSink&`. That is, `logger([](const
   /// ErasedSink&) noexcept {})` must be valid and noexcept.
   template <class F>
-  explicit ScopedLogger(F& logger HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept;
+  explicit ScopedLogger(F& logger HORUS_LIFETIME_BOUND) noexcept;
 
   /// Cannot copy/move.
   ScopedLogger(const ScopedLogger&) = delete;
@@ -45,7 +45,7 @@ class ScopedLogger final {
     LogWith(
         &invocable, +[](const void* data, const ErasedSink& sink) noexcept {
           try {
-            (*horus_internal::UnsafePointerCast<const F>(data))(sink);
+            (*UnsafePointerCast<const F>(data))(sink);
           } catch (const std::exception& e) {
             sink.Append("log function threw an exception: ");
             sink.Append(e.what());
@@ -76,7 +76,7 @@ ScopedLogger::ScopedLogger(F& logger) noexcept
     : logger_{&logger},
       log_with_{+[](void* logger_ptr, const void* data,
                     void (*log)(const void* data, const ErasedSink& sink)) noexcept {
-        (*horus_internal::UnsafePointerCast<F>(logger_ptr))(
+        (*UnsafePointerCast<F>(logger_ptr))(
             [data, log](const ErasedSink& sink) noexcept { log(data, sink); });
       }} {
   class NoExceptLog final {
@@ -90,7 +90,7 @@ ScopedLogger::ScopedLogger(F& logger) noexcept
 /// (as specified by `ScopedLogger`), defaulting to `stderr`.
 template <class... Args>
 void Log(const Args&... args) noexcept {
-  ScopedLogger::LogWith([&args...](auto& sink) { StrAppendToSink(sink, args...); });
+  ScopedLogger::LogWith([&args...](auto& sink) { StringifyTo(sink, args...); });
 }
 
 }  // namespace horus

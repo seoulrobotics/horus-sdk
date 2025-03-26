@@ -14,7 +14,7 @@
 #include "horus/rpc/base_handler.h"
 #include "horus/rpc/endpoint.h"
 #include "horus/rpc/internal/subscriber_set.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export

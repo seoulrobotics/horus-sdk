@@ -12,9 +12,9 @@
 #include <utility>
 #include <vector>
 
+#include "horus/attributes.h"
 #include "horus/future/future.h"
 #include "horus/future/info.h"
-#include "horus/internal/attributes.h"
 #include "horus/internal/void.h"
 #include "horus/types/in_place.h"
 #include "horus/types/one_of.h"
@@ -134,7 +134,7 @@ using RaceSpanFuture = RaceVectorFuture<Span<F>>;
 
 /// Returns a future which will complete when any of the given futures completes.
 template <class F>
-inline RaceSpanFuture<F> Race(Span<F> futures HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND,
+inline RaceSpanFuture<F> Race(Span<F> futures HORUS_LIFETIME_BOUND,
                               const FutureInfo& info = CurrentFutureInfo()) noexcept {
   return RaceSpanFuture<F>{futures, info};
 }

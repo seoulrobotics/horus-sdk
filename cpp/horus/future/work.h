@@ -19,7 +19,7 @@
 #include "horus/future/info.h"
 #include "horus/future/poll.h"
 #include "horus/internal/enum.h"
-#include "horus/internal/pointer_cast.h"
+#include "horus/pointer/unsafe_cast.h"
 #include "horus/types/in_place.h"
 #include "horus/types/one_of.h"
 
@@ -184,7 +184,7 @@ auto WorkFuture<F>::UnsafePoll(PollContext& context) -> PollResult<Result> {
     uv_work_cb const work_cb{[](uv_work_t* work_handle) noexcept {
       // If this function is called, then the `work` still exists and it will not be
       // destroyed until closed (which requires this function to return).
-      Work& work{*horus_internal::UnsafePointerCast<Work>(work_handle)};
+      Work& work{*UnsafePointerCast<Work>(work_handle)};
 
       CancelFlag cancel_flag;  // Allow cancellation while running.
       std::unique_lock<std::mutex> lock{work.mutex};
@@ -218,7 +218,7 @@ auto WorkFuture<F>::UnsafePoll(PollContext& context) -> PollResult<Result> {
       }
     }};
     uv_after_work_cb const after_work_cb{[](uv_work_t* work_handle, std::int32_t status) noexcept {
-      Work* maybe_work{horus_internal::UnsafePointerCast<Work>(work_handle)};
+      Work* maybe_work{UnsafePointerCast<Work>(work_handle)};
       if (status == horus_internal::UvErrors::kCanceled) {
         // Work never started.
         std::unique_ptr<Work>(maybe_work).reset();
@@ -230,7 +230,7 @@ auto WorkFuture<F>::UnsafePoll(PollContext& context) -> PollResult<Result> {
         return;
       }
 
-      Work& work{*horus_internal::UnsafePointerCast<Work>(work_handle)};
+      Work& work{*UnsafePointerCast<Work>(work_handle)};
       if (work.state.template Is<Result>() || work.state.template Is<std::exception_ptr>()) {
         // Work completed without a cancellation, so we can wake up the event loop.
         work.waker.Wake();
