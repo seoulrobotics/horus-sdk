@@ -11,7 +11,7 @@
 #include <type_traits>
 
 #include "horus/future/future.h"
-#include "horus/internal/pointer_cast.h"
+#include "horus/pointer/unsafe_cast.h"
 
 namespace horus {
 
@@ -144,7 +144,7 @@ class AnyFuture final : public Future<T> {
   }
 
   /// Returns the stored data as a pointer to the virtual `Future<T>` class.
-  Future<T>* AsVirtual() noexcept { return horus_internal::UnsafePointerCast<Future<T>>(data_[0]); }
+  Future<T>* AsVirtual() noexcept { return UnsafePointerCast<Future<T>>(data_[0]); }
 
   /// Returns the stored data as a pointer to a concrete `Future` class.
   ///
@@ -153,7 +153,7 @@ class AnyFuture final : public Future<T> {
   static Future* AsConcrete(void* data) noexcept {
     static_assert(horus_internal::CanStoreFutureInline<Future>(),
                   "AsConcrete() should only be called with classes stored inline");
-    return horus_internal::UnsafePointerCast<Future>(data);
+    return UnsafePointerCast<Future>(data);
   }
 
   /// Returns the pointer which refers to the data of the concrete future, as used when calling

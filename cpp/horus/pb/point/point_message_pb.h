@@ -11,6 +11,7 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/attributes.h"
 #include "horus/pb/config/metadata_pb.h"
 #include "horus/pb/cow_bytes.h"
 #include "horus/pb/cow_repeated.h"
@@ -18,7 +19,7 @@
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
 #include "horus/pb/types.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -137,7 +138,7 @@ class PointFrame_Header final : public PbMessage {
   /// / The calibration transformation (from sensor to origin coordinates)
   ///
   /// Field no: 1.
-  constexpr const AffineTransform3f& calibration_transform() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const AffineTransform3f& calibration_transform() const& noexcept HORUS_LIFETIME_BOUND {
     return calibration_transform_;
   }
 
@@ -156,7 +157,7 @@ class PointFrame_Header final : public PbMessage {
   /// / The calibration transformation (from sensor to origin coordinates)
   ///
   /// Field no: 1.
-  AffineTransform3f& mutable_calibration_transform() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  AffineTransform3f& mutable_calibration_transform() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return calibration_transform_;
   }
@@ -187,7 +188,7 @@ class PointFrame_Header final : public PbMessage {
   /// Lidar ID should be unique among all lidars in the project.
   ///
   /// Field no: 2.
-  constexpr const CowBytes& lidar_id() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
     return lidar_id_;
   }
 
@@ -206,7 +207,7 @@ class PointFrame_Header final : public PbMessage {
   /// Lidar ID should be unique among all lidars in the project.
   ///
   /// Field no: 2.
-  CowBytes& mutable_lidar_id() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return lidar_id_;
   }
@@ -237,7 +238,7 @@ class PointFrame_Header final : public PbMessage {
   /// / The point cloud creation timestamp.
   ///
   /// Field no: 4.
-  constexpr const Timestamp& point_cloud_creation_timestamp() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Timestamp& point_cloud_creation_timestamp() const& noexcept HORUS_LIFETIME_BOUND {
     return point_cloud_creation_timestamp_;
   }
 
@@ -256,7 +257,7 @@ class PointFrame_Header final : public PbMessage {
   /// / The point cloud creation timestamp.
   ///
   /// Field no: 4.
-  Timestamp& mutable_point_cloud_creation_timestamp() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Timestamp& mutable_point_cloud_creation_timestamp() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return point_cloud_creation_timestamp_;
   }
@@ -287,14 +288,14 @@ class PointFrame_Header final : public PbMessage {
   /// / Static environment learning progress.
   ///
   /// Field no: 5.
-  constexpr std::uint32_t static_env_learning_progress() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint32_t static_env_learning_progress() const& noexcept HORUS_LIFETIME_BOUND {
     return static_env_learning_progress_;
   }
 
   /// / Static environment learning progress.
   ///
   /// Field no: 5.
-  std::uint32_t& mutable_static_env_learning_progress() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint32_t& mutable_static_env_learning_progress() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[3] = true;
     return static_env_learning_progress_;
   }
@@ -338,7 +339,7 @@ class PointFrame_Header final : public PbMessage {
 /// / @note The attributes are all or none. If the attributes are nonempty, the
 /// / number of attributes should be equal to the number of points.
 ///
-/// Source: horus/pb/point/point_message.proto:66:1
+/// Source: horus/pb/point/point_message.proto:67:1
 class AttributedPoints final : public PbMessage {
  public:
 
@@ -394,7 +395,7 @@ class AttributedPoints final : public PbMessage {
   /// 3D point buffer of which stride length is 3 floats (12 bytes).
   ///
   /// Field no: 1.
-  constexpr const CowSpan<float>& flattened_points() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowSpan<float>& flattened_points() const& noexcept HORUS_LIFETIME_BOUND {
     return flattened_points_;
   }
 
@@ -413,7 +414,7 @@ class AttributedPoints final : public PbMessage {
   /// 3D point buffer of which stride length is 3 floats (12 bytes).
   ///
   /// Field no: 1.
-  CowSpan<float>& mutable_flattened_points() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowSpan<float>& mutable_flattened_points() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return flattened_points_;
   }
@@ -458,7 +459,7 @@ class AttributedPoints final : public PbMessage {
   ///  ```
   ///
   /// Field no: 2.
-  constexpr const CowSpan<std::uint32_t>& attributes() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowSpan<std::uint32_t>& attributes() const& noexcept HORUS_LIFETIME_BOUND {
     return attributes_;
   }
 
@@ -491,7 +492,7 @@ class AttributedPoints final : public PbMessage {
   ///  ```
   ///
   /// Field no: 2.
-  CowSpan<std::uint32_t>& mutable_attributes() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowSpan<std::uint32_t>& mutable_attributes() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return attributes_;
   }
@@ -523,7 +524,7 @@ class AttributedPoints final : public PbMessage {
   /// / We have to use fixed32 as uint16 is not available in Protobuf.
   ///
   /// Field no: 3.
-  constexpr const CowSpan<std::uint32_t>& intensities() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowSpan<std::uint32_t>& intensities() const& noexcept HORUS_LIFETIME_BOUND {
     return intensities_;
   }
 
@@ -543,7 +544,7 @@ class AttributedPoints final : public PbMessage {
   /// / We have to use fixed32 as uint16 is not available in Protobuf.
   ///
   /// Field no: 3.
-  CowSpan<std::uint32_t>& mutable_intensities() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowSpan<std::uint32_t>& mutable_intensities() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return intensities_;
   }
@@ -575,7 +576,7 @@ class AttributedPoints final : public PbMessage {
   /// / We have to use fixed32 as uint16 is not available in Protobuf.
   ///
   /// Field no: 5.
-  constexpr const CowBytes& ring_indices() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& ring_indices() const& noexcept HORUS_LIFETIME_BOUND {
     return ring_indices_;
   }
 
@@ -595,7 +596,7 @@ class AttributedPoints final : public PbMessage {
   /// / We have to use fixed32 as uint16 is not available in Protobuf.
   ///
   /// Field no: 5.
-  CowBytes& mutable_ring_indices() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_ring_indices() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[3] = true;
     return ring_indices_;
   }
@@ -699,7 +700,7 @@ class PointFrame final : public PbMessage {
   ///  CompositeKey(id, header.lidar_id) uniquely id this object.
   ///
   /// Field no: 1.
-  constexpr std::uint32_t id() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint32_t id() const& noexcept HORUS_LIFETIME_BOUND {
     return id_;
   }
 
@@ -707,7 +708,7 @@ class PointFrame final : public PbMessage {
   ///  CompositeKey(id, header.lidar_id) uniquely id this object.
   ///
   /// Field no: 1.
-  std::uint32_t& mutable_id() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint32_t& mutable_id() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return id_;
   }
@@ -738,7 +739,7 @@ class PointFrame final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr const PointFrame_Header& header() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const PointFrame_Header& header() const& noexcept HORUS_LIFETIME_BOUND {
     return header_;
   }
 
@@ -757,7 +758,7 @@ class PointFrame final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  PointFrame_Header& mutable_header() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  PointFrame_Header& mutable_header() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return header_;
   }
@@ -789,7 +790,7 @@ class PointFrame final : public PbMessage {
   ///  decompression/dequantization
   ///
   /// Field no: 9.
-  constexpr const AttributedPoints& points() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const AttributedPoints& points() const& noexcept HORUS_LIFETIME_BOUND {
     return points_;
   }
 
@@ -809,7 +810,7 @@ class PointFrame final : public PbMessage {
   ///  decompression/dequantization
   ///
   /// Field no: 9.
-  AttributedPoints& mutable_points() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  AttributedPoints& mutable_points() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return points_;
   }
@@ -848,7 +849,7 @@ class PointFrame final : public PbMessage {
 
 /// Processed point cloud data from a single lidar.
 ///
-/// Source: horus/pb/point/point_message.proto:100:1
+/// Source: horus/pb/point/point_message.proto:101:1
 class ProcessedPointsEvent final : public PbMessage {
  public:
 
@@ -904,7 +905,7 @@ class ProcessedPointsEvent final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const PointFrame& point_frame() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const PointFrame& point_frame() const& noexcept HORUS_LIFETIME_BOUND {
     return point_frame_;
   }
 
@@ -923,7 +924,7 @@ class ProcessedPointsEvent final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  PointFrame& mutable_point_frame() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  PointFrame& mutable_point_frame() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return point_frame_;
   }
@@ -958,7 +959,7 @@ class ProcessedPointsEvent final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/point/point_message.proto:104:1
+/// Source: horus/pb/point/point_message.proto:105:1
 class AggregatedPointEvents final : public PbMessage {
  public:
 
@@ -1014,7 +1015,7 @@ class AggregatedPointEvents final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const CowRepeated<ProcessedPointsEvent>& events() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowRepeated<ProcessedPointsEvent>& events() const& noexcept HORUS_LIFETIME_BOUND {
     return events_;
   }
 
@@ -1033,7 +1034,7 @@ class AggregatedPointEvents final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  CowRepeated<ProcessedPointsEvent>& mutable_events() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowRepeated<ProcessedPointsEvent>& mutable_events() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return events_;
   }

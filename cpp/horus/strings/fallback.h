@@ -8,7 +8,7 @@
 #include <type_traits>
 #include <utility>
 
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 namespace horus {
 namespace horus_internal {

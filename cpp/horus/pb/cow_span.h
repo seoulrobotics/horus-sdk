@@ -18,15 +18,15 @@
 #include <utility>
 #include <vector>
 
-#include "horus/internal/attributes.h"
-#include "horus/internal/pointer_arithmetic.h"
-#include "horus/internal/pointer_cast.h"
+#include "horus/attributes.h"
 #include "horus/pb/buffer.h"
 #include "horus/pb/serialize.h"
 #include "horus/pb/unaligned_span.h"
+#include "horus/pointer/arithmetic.h"
+#include "horus/pointer/unsafe_cast.h"
+#include "horus/strings/string_view.h"
 #include "horus/types/one_of.h"
 #include "horus/types/span.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 
@@ -46,8 +46,7 @@ class CowSpan final {
   using value_type = const T;
 
   /// Returns a `CowSpan` container which refers to the data in `span`.
-  static CowSpan<T> Borrowed(
-      horus::Span<const T> span HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+  static CowSpan<T> Borrowed(horus::Span<const T> span HORUS_LIFETIME_BOUND) noexcept {
     return CowSpan<T>{span};
   }
 
@@ -68,12 +67,12 @@ class CowSpan final {
       : data_{InPlaceType<std::vector<T>>, std::move(data)} {}
 
   /// Returns a `Span` over the elements.
-  UnalignedSpan<T> Span() const noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
+  UnalignedSpan<T> Span() const noexcept HORUS_LIFETIME_BOUND;
 
   /// Returns a mutable reference to the vector of elements.
   ///
   /// @throws std::bad_alloc If the contents of the span had to be copied and the allocation failed.
-  std::vector<T>& Vector() noexcept(false) HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
+  std::vector<T>& Vector() noexcept(false) HORUS_LIFETIME_BOUND;
 
   /// Returns a `const_iterator` pointing to the first item of the container.
   const_iterator begin() const noexcept { return Span().begin(); }
@@ -97,9 +96,8 @@ class CowSpan final {
   /// Constructs a `CowSpan` which refers to a borrowed span.
   explicit CowSpan(horus::Span<const T> span) noexcept
       : data_{InPlaceType<PbView>,
-              PbBuffer::Borrowed(
-                  StringView{horus_internal::UnsafePointerCast<const char>(span.begin()),
-                             horus_internal::UnsafePointerCast<const char>(span.end())})} {}
+              PbBuffer::Borrowed(StringView{UnsafePointerCast<const char>(span.begin()),
+                                            UnsafePointerCast<const char>(span.end())})} {}
 
   /// The actual data.
   Data data_;
@@ -206,7 +204,7 @@ class PbTraits<CowSpan<T>, PbDeserFlags::kFixed> final {
     // from the exposed APIs...
     std::size_t const size{(reader.Reader().*kGet)().size()};  // `kGet()` will skip the span.
     const char* const span_end{reader.Reader().data().data()};
-    const char* const span_start{horus_internal::PointerSub(span_end, sizeof(T) * size)};
+    const char* const span_start{PointerSub(span_end, sizeof(T) * size)};
     const char* const buffer_start{reader.Buffer().Str().data()};
     std::size_t const buffer_offset{static_cast<std::size_t>(span_start - buffer_start)};
 

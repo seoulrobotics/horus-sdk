@@ -12,6 +12,7 @@ service DetectionService {
   option (service_options) = {
     id: 7
     description: "Service for receiving pre-processed foreground points and sending detection results."
+    reserved_ids: [7]
   };
 
   rpc Subscribe(DefaultSubscribeRequest) returns (DefaultSubscribeResponse) {

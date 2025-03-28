@@ -10,7 +10,7 @@
 #include <type_traits>
 #include <typeinfo>
 
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 namespace horus {
 namespace horus_internal {

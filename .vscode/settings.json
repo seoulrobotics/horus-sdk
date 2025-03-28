@@ -35,7 +35,7 @@
 
   "testMate.cpp.test.advancedExecutables": [
     {
-      "pattern": "{build}/current/horus_{core,sdk}_test",
+      "pattern": "{build}/current/horus_sdk_test",
       "gtest": {
         "debug.enableOutputColouring": true // spell-checker: disable-line
       },

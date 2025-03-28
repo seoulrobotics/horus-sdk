@@ -14,6 +14,7 @@
 #include <string>
 #include <vector>
 
+#include "horus/attributes.h"
 #include "horus/logs/format.h"
 #include "horus/pb/cow_bytes.h"
 #include "horus/pb/license_server/messages_pb.h"
@@ -21,7 +22,7 @@
 #include "horus/pb/preprocessing/messages_pb.h"
 #include "horus/pb/project_manager/service_pb.h"
 #include "horus/strings/str_cat.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 namespace horus {
 namespace sdk {
@@ -57,8 +58,7 @@ class LicenseStatus final {
     constexpr std::uint32_t NumberOfLidars() const noexcept { return number_of_lidars_; }
 
     /// Returns a ref to the allowed features.
-    Span<const pb::LicenseFeature> AllowedFeatures() const noexcept
-        HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+    Span<const pb::LicenseFeature> AllowedFeatures() const noexcept HORUS_LIFETIME_BOUND {
       return {allowed_features_.begin().base(), allowed_features_.end().base()};
     }
 
@@ -75,17 +75,17 @@ class LicenseStatus final {
   std::uint16_t LicenseLevel() const { return license_level_; }
 
   /// Returns a ref to the license level reason.
-  StringView Reason() const noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND { return reason_; }
+  StringView Reason() const noexcept HORUS_LIFETIME_BOUND { return reason_; }
 
   /// Returns a ref to the privileges.
-  Span<const Privilege> Privileges() const noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Span<const Privilege> Privileges() const noexcept HORUS_LIFETIME_BOUND {
     return {privileges_.begin().base(), privileges_.end().base()};
   }
 
   /// Returns a ref to the license info.
   ///
   /// @throws `std::logic_error` if `HasLicenseInfo()` is false.
-  const LicenseInfo& GetLicenseInfo() const HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
+  const LicenseInfo& GetLicenseInfo() const HORUS_LIFETIME_BOUND;
 
   /// Returns whether a license info is carred by the license status.
   bool HasLicenseInfo() const noexcept { return license_level_ > 2; }
@@ -116,12 +116,12 @@ class SensorInfo final {
   explicit SensorInfo(const pb::SensorInfo& pb_sensor_info, bool is_unreachable);
 
   /// Returns a view to lidar id.
-  StringView LidarId() const noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND { return lidar_id_; }
+  StringView LidarId() const noexcept HORUS_LIFETIME_BOUND { return lidar_id_; }
 
   /// Returns a span containing the status.
   ///
   /// Returns an empty span if `IsUnreachable()` returns true.
-  Span<const SensorStatus> Status() const noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
+  Span<const SensorStatus> Status() const noexcept HORUS_LIFETIME_BOUND;
 
   /// Returns the frequency.
   double MeasuredFrequencyHz() const noexcept { return measured_frequency_; };
@@ -165,17 +165,17 @@ class SensorHealth final {
   }
 
   /// Returns a view to the preprocessing node id.
-  StringView PreprocessingNodeId() const noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  StringView PreprocessingNodeId() const noexcept HORUS_LIFETIME_BOUND {
     return preprocessing_node_id_;
   }
 
   /// Returns a reference to sensor info.
-  const SensorInfo& Info() const noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND { return info_; };
+  const SensorInfo& Info() const noexcept HORUS_LIFETIME_BOUND { return info_; };
 
   /// Returns a reference to the unreachable error message.
   ///
   /// @throws `std::logic_error` if `NodeIsUnreachable()` is false.
-  StringView NodeUnreachableErrorMessage() const HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
+  StringView NodeUnreachableErrorMessage() const HORUS_LIFETIME_BOUND;
 
   /// Returns whether node is unreachable, i.e a error message is set.
   bool IsNodeUnreachable() const noexcept { return !node_unreachable_error_message_.empty(); }
@@ -220,20 +220,19 @@ class HealthStatus final {
   explicit HealthStatus(const pb::GetHealthStatusResponse& pb_response);
 
   /// Returns a reference to the license status.
-  constexpr const LicenseStatus& GetLicenseStatus() const noexcept
-      HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const LicenseStatus& GetLicenseStatus() const noexcept HORUS_LIFETIME_BOUND {
     return license_status_;
   }
 
   /// Returns a span to the sensor statuses.
   ///
   /// Returns empty span if `HasReadPrivilege()` returns false.
-  Span<const SensorHealth> SensorStatuses() const HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
+  Span<const SensorHealth> SensorStatuses() const HORUS_LIFETIME_BOUND;
 
   /// Returns a span to the service statuses.
   ///
   /// Returns empty span if `HasReadPrivilege()` returns false.
-  Span<const NodeHealth> ServiceStatuses() const HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
+  Span<const NodeHealth> ServiceStatuses() const HORUS_LIFETIME_BOUND;
 
   /// Returns true if the current license level grants READ privilege.
   bool HasReadPrivilege() const noexcept {

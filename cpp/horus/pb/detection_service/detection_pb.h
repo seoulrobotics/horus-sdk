@@ -11,13 +11,14 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/attributes.h"
 #include "horus/pb/config/metadata_pb.h"
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/message.h"
 #include "horus/pb/point/point_message_pb.h"
 #include "horus/pb/serialize.h"
 #include "horus/pb/types.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -144,7 +145,7 @@ class BoundingBox final : public PbMessage {
   ///  relevant to the global origin.
   ///
   /// Field no: 1.
-  constexpr const Vector3f& base() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Vector3f& base() const& noexcept HORUS_LIFETIME_BOUND {
     return base_;
   }
 
@@ -164,7 +165,7 @@ class BoundingBox final : public PbMessage {
   ///  relevant to the global origin.
   ///
   /// Field no: 1.
-  Vector3f& mutable_base() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Vector3f& mutable_base() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return base_;
   }
@@ -195,7 +196,7 @@ class BoundingBox final : public PbMessage {
   /// The size is defined by the width, height and depth of the box in meters.
   ///
   /// Field no: 2.
-  constexpr const Vector3f& size() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Vector3f& size() const& noexcept HORUS_LIFETIME_BOUND {
     return size_;
   }
 
@@ -214,7 +215,7 @@ class BoundingBox final : public PbMessage {
   /// The size is defined by the width, height and depth of the box in meters.
   ///
   /// Field no: 2.
-  Vector3f& mutable_size() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Vector3f& mutable_size() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return size_;
   }
@@ -245,14 +246,14 @@ class BoundingBox final : public PbMessage {
   /// The yaw of the box in radians.
   ///
   /// Field no: 3.
-  constexpr float yaw() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr float yaw() const& noexcept HORUS_LIFETIME_BOUND {
     return yaw_;
   }
 
   /// The yaw of the box in radians.
   ///
   /// Field no: 3.
-  float& mutable_yaw() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  float& mutable_yaw() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return yaw_;
   }
@@ -347,7 +348,7 @@ class LabeledPointCloud final : public PbMessage {
   /// The point cloud and its metadata.
   ///
   /// Field no: 1.
-  constexpr const PointFrame& point_cloud() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const PointFrame& point_cloud() const& noexcept HORUS_LIFETIME_BOUND {
     return point_cloud_;
   }
 
@@ -366,7 +367,7 @@ class LabeledPointCloud final : public PbMessage {
   /// The point cloud and its metadata.
   ///
   /// Field no: 1.
-  PointFrame& mutable_point_cloud() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  PointFrame& mutable_point_cloud() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return point_cloud_;
   }
@@ -398,7 +399,7 @@ class LabeledPointCloud final : public PbMessage {
   ///  to. The int32_t::max is reserved for unassigned points.
   ///
   /// Field no: 2.
-  constexpr const UInt32List& point_index_to_object_id() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const UInt32List& point_index_to_object_id() const& noexcept HORUS_LIFETIME_BOUND {
     return point_index_to_object_id_;
   }
 
@@ -418,7 +419,7 @@ class LabeledPointCloud final : public PbMessage {
   ///  to. The int32_t::max is reserved for unassigned points.
   ///
   /// Field no: 2.
-  UInt32List& mutable_point_index_to_object_id() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  UInt32List& mutable_point_index_to_object_id() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return point_index_to_object_id_;
   }
@@ -511,14 +512,14 @@ class DetectedObject_Classification final : public PbMessage {
   /// The label of the detected object.
   ///
   /// Field no: 1.
-  constexpr ObjectLabel class_label() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr ObjectLabel class_label() const& noexcept HORUS_LIFETIME_BOUND {
     return class_label_;
   }
 
   /// The label of the detected object.
   ///
   /// Field no: 1.
-  ObjectLabel& mutable_class_label() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  ObjectLabel& mutable_class_label() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return class_label_;
   }
@@ -549,14 +550,14 @@ class DetectedObject_Classification final : public PbMessage {
   /// The confidence of the detected object.
   ///
   /// Field no: 2.
-  constexpr float class_confidence() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr float class_confidence() const& noexcept HORUS_LIFETIME_BOUND {
     return class_confidence_;
   }
 
   /// The confidence of the detected object.
   ///
   /// Field no: 2.
-  float& mutable_class_confidence() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  float& mutable_class_confidence() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return class_confidence_;
   }
@@ -649,7 +650,7 @@ class DetectedObject_Kinematics final : public PbMessage {
   /// The (X, Y) linear velocity in m/s.
   ///
   /// Field no: 1.
-  constexpr const Vector2f& linear_velocity() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Vector2f& linear_velocity() const& noexcept HORUS_LIFETIME_BOUND {
     return linear_velocity_;
   }
 
@@ -668,7 +669,7 @@ class DetectedObject_Kinematics final : public PbMessage {
   /// The (X, Y) linear velocity in m/s.
   ///
   /// Field no: 1.
-  Vector2f& mutable_linear_velocity() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Vector2f& mutable_linear_velocity() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return linear_velocity_;
   }
@@ -701,7 +702,7 @@ class DetectedObject_Kinematics final : public PbMessage {
   ///  motion model.
   ///
   /// Field no: 2.
-  constexpr float yaw_rate() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr float yaw_rate() const& noexcept HORUS_LIFETIME_BOUND {
     return yaw_rate_;
   }
 
@@ -710,7 +711,7 @@ class DetectedObject_Kinematics final : public PbMessage {
   ///  motion model.
   ///
   /// Field no: 2.
-  float& mutable_yaw_rate() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  float& mutable_yaw_rate() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return yaw_rate_;
   }
@@ -803,7 +804,7 @@ class DetectedObject_Shape final : public PbMessage {
   /// The bounding box of the detected object.
   ///
   /// Field no: 1.
-  constexpr const BoundingBox& bounding_box() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const BoundingBox& bounding_box() const& noexcept HORUS_LIFETIME_BOUND {
     return bounding_box_;
   }
 
@@ -822,7 +823,7 @@ class DetectedObject_Shape final : public PbMessage {
   /// The bounding box of the detected object.
   ///
   /// Field no: 1.
-  BoundingBox& mutable_bounding_box() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  BoundingBox& mutable_bounding_box() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return bounding_box_;
   }
@@ -914,7 +915,7 @@ class DetectedObject_Status final : public PbMessage {
   ///  Set optional to avoid field ellision for id 0 after serialization.
   ///
   /// Field no: 1.
-  constexpr std::uint32_t id() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint32_t id() const& noexcept HORUS_LIFETIME_BOUND {
     return id_;
   }
 
@@ -922,7 +923,7 @@ class DetectedObject_Status final : public PbMessage {
   ///  Set optional to avoid field ellision for id 0 after serialization.
   ///
   /// Field no: 1.
-  std::uint32_t& mutable_id() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint32_t& mutable_id() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return id_;
   }
@@ -953,14 +954,14 @@ class DetectedObject_Status final : public PbMessage {
   /// The tracking status of the detected object.
   ///
   /// Field no: 2.
-  constexpr TrackingStatus tracking_status() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr TrackingStatus tracking_status() const& noexcept HORUS_LIFETIME_BOUND {
     return tracking_status_;
   }
 
   /// The tracking status of the detected object.
   ///
   /// Field no: 2.
-  TrackingStatus& mutable_tracking_status() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  TrackingStatus& mutable_tracking_status() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return tracking_status_;
   }
@@ -1061,7 +1062,7 @@ class DetectedObject final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const DetectedObject_Classification& classification() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const DetectedObject_Classification& classification() const& noexcept HORUS_LIFETIME_BOUND {
     return classification_;
   }
 
@@ -1080,7 +1081,7 @@ class DetectedObject final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  DetectedObject_Classification& mutable_classification() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  DetectedObject_Classification& mutable_classification() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return classification_;
   }
@@ -1111,7 +1112,7 @@ class DetectedObject final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr const DetectedObject_Kinematics& kinematics() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const DetectedObject_Kinematics& kinematics() const& noexcept HORUS_LIFETIME_BOUND {
     return kinematics_;
   }
 
@@ -1130,7 +1131,7 @@ class DetectedObject final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  DetectedObject_Kinematics& mutable_kinematics() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  DetectedObject_Kinematics& mutable_kinematics() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return kinematics_;
   }
@@ -1161,7 +1162,7 @@ class DetectedObject final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 3.
-  constexpr const DetectedObject_Shape& shape() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const DetectedObject_Shape& shape() const& noexcept HORUS_LIFETIME_BOUND {
     return shape_;
   }
 
@@ -1180,7 +1181,7 @@ class DetectedObject final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 3.
-  DetectedObject_Shape& mutable_shape() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  DetectedObject_Shape& mutable_shape() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return shape_;
   }
@@ -1211,7 +1212,7 @@ class DetectedObject final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 4.
-  constexpr const DetectedObject_Status& status() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const DetectedObject_Status& status() const& noexcept HORUS_LIFETIME_BOUND {
     return status_;
   }
 
@@ -1230,7 +1231,7 @@ class DetectedObject final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 4.
-  DetectedObject_Status& mutable_status() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  DetectedObject_Status& mutable_status() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[3] = true;
     return status_;
   }
@@ -1327,14 +1328,14 @@ class DeepLearningObject_Classification final : public PbMessage {
   /// The label of the detected object.
   ///
   /// Field no: 1.
-  constexpr ObjectLabel class_label() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr ObjectLabel class_label() const& noexcept HORUS_LIFETIME_BOUND {
     return class_label_;
   }
 
   /// The label of the detected object.
   ///
   /// Field no: 1.
-  ObjectLabel& mutable_class_label() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  ObjectLabel& mutable_class_label() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return class_label_;
   }
@@ -1365,14 +1366,14 @@ class DeepLearningObject_Classification final : public PbMessage {
   /// The confidence of the detected object.
   ///
   /// Field no: 2.
-  constexpr float class_confidence() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr float class_confidence() const& noexcept HORUS_LIFETIME_BOUND {
     return class_confidence_;
   }
 
   /// The confidence of the detected object.
   ///
   /// Field no: 2.
-  float& mutable_class_confidence() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  float& mutable_class_confidence() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return class_confidence_;
   }
@@ -1467,7 +1468,7 @@ class DeepLearningObject final : public PbMessage {
   /// The label of the detected object.
   ///
   /// Field no: 1.
-  constexpr const DeepLearningObject_Classification& classification() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const DeepLearningObject_Classification& classification() const& noexcept HORUS_LIFETIME_BOUND {
     return classification_;
   }
 
@@ -1486,7 +1487,7 @@ class DeepLearningObject final : public PbMessage {
   /// The label of the detected object.
   ///
   /// Field no: 1.
-  DeepLearningObject_Classification& mutable_classification() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  DeepLearningObject_Classification& mutable_classification() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return classification_;
   }
@@ -1517,7 +1518,7 @@ class DeepLearningObject final : public PbMessage {
   /// The bounding box of the detected object.
   ///
   /// Field no: 2.
-  constexpr const BoundingBox& bounding_box() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const BoundingBox& bounding_box() const& noexcept HORUS_LIFETIME_BOUND {
     return bounding_box_;
   }
 
@@ -1536,7 +1537,7 @@ class DeepLearningObject final : public PbMessage {
   /// The bounding box of the detected object.
   ///
   /// Field no: 2.
-  BoundingBox& mutable_bounding_box() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  BoundingBox& mutable_bounding_box() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return bounding_box_;
   }
@@ -1629,7 +1630,7 @@ class DetectionEvent_FrameInfo final : public PbMessage {
   /// The detection frame timestamp.
   ///
   /// Field no: 1.
-  constexpr const Timestamp& frame_timestamp() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Timestamp& frame_timestamp() const& noexcept HORUS_LIFETIME_BOUND {
     return frame_timestamp_;
   }
 
@@ -1648,7 +1649,7 @@ class DetectionEvent_FrameInfo final : public PbMessage {
   /// The detection frame timestamp.
   ///
   /// Field no: 1.
-  Timestamp& mutable_frame_timestamp() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Timestamp& mutable_frame_timestamp() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return frame_timestamp_;
   }
@@ -1741,7 +1742,7 @@ class DetectionEvent final : public PbMessage {
   /// The detected objects.
   ///
   /// Field no: 1.
-  constexpr const CowRepeated<DetectedObject>& objects() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowRepeated<DetectedObject>& objects() const& noexcept HORUS_LIFETIME_BOUND {
     return objects_;
   }
 
@@ -1760,7 +1761,7 @@ class DetectionEvent final : public PbMessage {
   /// The detected objects.
   ///
   /// Field no: 1.
-  CowRepeated<DetectedObject>& mutable_objects() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowRepeated<DetectedObject>& mutable_objects() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return objects_;
   }
@@ -1791,7 +1792,7 @@ class DetectionEvent final : public PbMessage {
   /// The labeled point clouds.
   ///
   /// Field no: 2.
-  constexpr const CowRepeated<LabeledPointCloud>& labeled_point_clouds() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowRepeated<LabeledPointCloud>& labeled_point_clouds() const& noexcept HORUS_LIFETIME_BOUND {
     return labeled_point_clouds_;
   }
 
@@ -1810,7 +1811,7 @@ class DetectionEvent final : public PbMessage {
   /// The labeled point clouds.
   ///
   /// Field no: 2.
-  CowRepeated<LabeledPointCloud>& mutable_labeled_point_clouds() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowRepeated<LabeledPointCloud>& mutable_labeled_point_clouds() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return labeled_point_clouds_;
   }
@@ -1841,7 +1842,7 @@ class DetectionEvent final : public PbMessage {
   /// The frame info of the detection event.
   ///
   /// Field no: 3.
-  constexpr const DetectionEvent_FrameInfo& frame_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const DetectionEvent_FrameInfo& frame_info() const& noexcept HORUS_LIFETIME_BOUND {
     return frame_info_;
   }
 
@@ -1860,7 +1861,7 @@ class DetectionEvent final : public PbMessage {
   /// The frame info of the detection event.
   ///
   /// Field no: 3.
-  DetectionEvent_FrameInfo& mutable_frame_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  DetectionEvent_FrameInfo& mutable_frame_info() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return frame_info_;
   }
@@ -1891,7 +1892,7 @@ class DetectionEvent final : public PbMessage {
   /// The raw deep learning bounding boxes.
   ///
   /// Field no: 4.
-  constexpr const CowRepeated<DeepLearningObject>& raw_deep_learning_objects() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowRepeated<DeepLearningObject>& raw_deep_learning_objects() const& noexcept HORUS_LIFETIME_BOUND {
     return raw_deep_learning_objects_;
   }
 
@@ -1910,7 +1911,7 @@ class DetectionEvent final : public PbMessage {
   /// The raw deep learning bounding boxes.
   ///
   /// Field no: 4.
-  CowRepeated<DeepLearningObject>& mutable_raw_deep_learning_objects() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowRepeated<DeepLearningObject>& mutable_raw_deep_learning_objects() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[3] = true;
     return raw_deep_learning_objects_;
   }
