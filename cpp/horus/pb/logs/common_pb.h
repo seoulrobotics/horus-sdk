@@ -11,10 +11,11 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/attributes.h"
 #include "horus/pb/cow_bytes.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -91,7 +92,7 @@ class ValidationError final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const CowBytes& path() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& path() const& noexcept HORUS_LIFETIME_BOUND {
     return path_;
   }
 
@@ -110,7 +111,7 @@ class ValidationError final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  CowBytes& mutable_path() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_path() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return path_;
   }
@@ -141,7 +142,7 @@ class ValidationError final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr const CowBytes& message() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& message() const& noexcept HORUS_LIFETIME_BOUND {
     return message_;
   }
 
@@ -160,7 +161,7 @@ class ValidationError final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  CowBytes& mutable_message() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_message() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return message_;
   }

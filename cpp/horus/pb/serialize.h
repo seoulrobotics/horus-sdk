@@ -18,11 +18,11 @@
 #include <utility>
 #include <vector>
 
-#include "horus/internal/attributes.h"
-#include "horus/internal/pointer_arithmetic.h"
+#include "horus/attributes.h"
 #include "horus/pb/buffer.h"
 #include "horus/pb/pbf_buffer_specialization.h"  // IWYU pragma: keep
 #include "horus/pb/types.h"
+#include "horus/pointer/arithmetic.h"
 
 namespace horus {
 
@@ -40,7 +40,7 @@ class PbReader final {
     std::size_t const offset{view.Offset()};
     std::size_t const size{view.Size()};
     buffer_ = std::move(view).Buffer();  // NOLINT(*-prefer-member-initializer): cannot due to move
-    reader_ = {horus_internal::PointerAdd(buffer_.Str().data(), offset), size};
+    reader_ = {PointerAdd(buffer_.Str().data(), offset), size};
   }
 
   /// Constructs a `PbReader` which deserializes a submessage of `parent`.
@@ -139,7 +139,7 @@ class PbWriter final {
   /// See
   /// https://github.com/mapbox/protozero/blob/master/doc/tutorial.md#writing-protobuf-encoded-messages
   /// for documentation.
-  constexpr PbfWriter& Writer() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND { return writer_; }
+  constexpr PbfWriter& Writer() & noexcept HORUS_LIFETIME_BOUND { return writer_; }
 
   /// Returns the resulting string.
   Buffer ToVector() && noexcept { return std::move(buffer_); }

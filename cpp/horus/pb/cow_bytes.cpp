@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "horus/pb/buffer.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 namespace horus {
 namespace {
@@ -44,7 +44,7 @@ StringView CowBytes::Str() const noexcept {
   }
 }
 
-CowBytes::Owned& CowBytes::String() noexcept(false) {
+CowBytes::Owned& CowBytes::String() & noexcept(false) {
   switch (data_.Tag()) {
     case Data::kTagFor<Owned>: {
       return *data_.TryAs<Owned>();

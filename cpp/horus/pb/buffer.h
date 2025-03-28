@@ -14,8 +14,8 @@
 #include <utility>
 #include <vector>
 
-#include "horus/internal/attributes.h"
-#include "horus/types/string_view.h"
+#include "horus/attributes.h"
+#include "horus/strings/string_view.h"
 
 namespace horus {
 
@@ -25,7 +25,7 @@ class PbView;
 class PbBuffer final {
  public:
   /// Constructs a `PbBuffer` which refers to an existing buffer without copying it.
-  static PbBuffer Borrowed(StringView borrowed HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+  static PbBuffer Borrowed(StringView borrowed HORUS_LIFETIME_BOUND) noexcept {
     return PbBuffer{borrowed};
   }
 

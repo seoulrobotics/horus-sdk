@@ -11,7 +11,7 @@
 #include "horus/future/any.h"
 #include "horus/future/resolved.h"
 #include "horus/pb/rpc/message_pb.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 namespace horus {
 namespace {

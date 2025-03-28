@@ -6,14 +6,12 @@
 #define HORUS_EVENT_LOOP_UV_H_
 
 #include <array>
-#include <cassert>
-#include <cstddef>
 #include <cstdint>
 #include <cstring>
 #include <type_traits>
 
+#include "horus/attributes.h"
 #include "horus/event_loop/uv_handles.h"  // IWYU pragma: export
-#include "horus/internal/attributes.h"
 
 // MARK: Forward declarations
 //
@@ -103,26 +101,26 @@ struct UvIsHandleType<uv_timer_t> : std::true_type {};
 
 /// Casts `handle` to `H const*`.
 template <class H>
-H const& UvFromHandle(uv_handle_t const& handle HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+H const& UvFromHandle(uv_handle_t const& handle HORUS_LIFETIME_BOUND) noexcept {
   static_assert(UvIsHandleType<H>::value, "");
   return *UvUnsafeCast<H const>(&handle);
 }
 /// Casts `handle` to `H*`.
 template <class H>
-H& UvFromHandle(uv_handle_t& handle HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+H& UvFromHandle(uv_handle_t& handle HORUS_LIFETIME_BOUND) noexcept {
   static_assert(UvIsHandleType<H>::value, "");
   return *UvUnsafeCast<H>(&handle);
 }
 
 /// Casts `handle` to `uv_handle_t const*`.
 template <class H>
-uv_handle_t const& UvToHandle(H const& handle HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+uv_handle_t const& UvToHandle(H const& handle HORUS_LIFETIME_BOUND) noexcept {
   static_assert(UvIsHandleType<H>::value, "");
   return *UvUnsafeCast<uv_handle_t const>(&handle);
 }
 /// Casts `handle` to `uv_handle_t*`.
 template <class H>
-uv_handle_t& UvToHandle(H& handle HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+uv_handle_t& UvToHandle(H& handle HORUS_LIFETIME_BOUND) noexcept {
   static_assert(UvIsHandleType<H>::value, "");
   return *UvUnsafeCast<uv_handle_t>(&handle);
 }
@@ -140,26 +138,26 @@ struct UvIsReqType<uv_work_t> : std::true_type {};
 
 /// Casts `req` to `R const*`.
 template <class R>
-R const& UvFromReq(uv_req_t const& req HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+R const& UvFromReq(uv_req_t const& req HORUS_LIFETIME_BOUND) noexcept {
   static_assert(UvIsReqType<R>::value, "");
   return *UvUnsafeCast<R const>(&req);
 }
 /// Casts `req` to `R*`.
 template <class R>
-R& UvFromReq(uv_req_t& req HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+R& UvFromReq(uv_req_t& req HORUS_LIFETIME_BOUND) noexcept {
   static_assert(UvIsReqType<R>::value, "");
   return *UvUnsafeCast<R>(&req);
 }
 
 /// Casts `req` to `uv_req_t const*`.
 template <class R>
-uv_req_t const& UvToReq(R const& req HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+uv_req_t const& UvToReq(R const& req HORUS_LIFETIME_BOUND) noexcept {
   static_assert(UvIsReqType<R>::value, "");
   return *UvUnsafeCast<uv_req_t const>(&req);
 }
 /// Casts `req` to `uv_req_t*`.
 template <class R>
-uv_req_t& UvToReq(R& req HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+uv_req_t& UvToReq(R& req HORUS_LIFETIME_BOUND) noexcept {
   static_assert(UvIsReqType<R>::value, "");
   return *UvUnsafeCast<uv_req_t>(&req);
 }
@@ -182,11 +180,11 @@ class Uv final {
   Uv() noexcept;
 
   /// Returns a reference to the inner value.
-  T const& Get() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  T const& Get() const& noexcept HORUS_LIFETIME_BOUND {
     return *UvUnsafeCast<T const>(data_.data());
   }
   /// Returns a reference to the inner value.
-  T& Get() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND { return *UvUnsafeCast<T>(data_.data()); }
+  T& Get() & noexcept HORUS_LIFETIME_BOUND { return *UvUnsafeCast<T>(data_.data()); }
 
  private:
   /// Actual data needed by the wrapper.
@@ -195,23 +193,23 @@ class Uv final {
 
 /// Casts `handle` to `uv_handle_t const*`.
 template <class H>
-uv_handle_t const& UvToHandle(Uv<H> const& handle HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+uv_handle_t const& UvToHandle(Uv<H> const& handle HORUS_LIFETIME_BOUND) noexcept {
   return UvToHandle(handle.Get());
 }
 /// Casts `handle` to `uv_handle_t*`.
 template <class H>
-uv_handle_t& UvToHandle(Uv<H>& handle HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+uv_handle_t& UvToHandle(Uv<H>& handle HORUS_LIFETIME_BOUND) noexcept {
   return UvToHandle(handle.Get());
 }
 
 /// Casts `req` to `uv_req_t const*`.
 template <class R>
-uv_req_t const& UvToReq(Uv<R> const& req HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+uv_req_t const& UvToReq(Uv<R> const& req HORUS_LIFETIME_BOUND) noexcept {
   return UvToReq(req.Get());
 }
 /// Casts `req` to `uv_req_t*`.
 template <class R>
-uv_req_t& UvToReq(Uv<R>& req HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+uv_req_t& UvToReq(Uv<R>& req HORUS_LIFETIME_BOUND) noexcept {
   return UvToReq(req.Get());
 }
 

@@ -13,7 +13,7 @@
 #include <utility>
 
 #include "horus/internal/attributes.h"
-#include "horus/internal/source_location.h"
+#include "horus/source_location.h"
 #include "horus/types/in_place.h"
 
 namespace horus {

@@ -9,11 +9,11 @@
 #include <array>
 #include <cstddef>
 
-#include "horus/internal/attributes.h"
+#include "horus/attributes.h"
 #include "horus/strings/str_cat.h"
-#include "horus/strings/str_sink.h"
+#include "horus/strings/string_view.h"
+#include "horus/strings/stringify.h"
 #include "horus/types/span.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 
@@ -33,8 +33,7 @@ struct PadFormat {
 /// Returns an object which, when formatted, will pad `value` left to make sure at least
 /// `full_width` characters are written.
 template <class T>
-constexpr PadFormat<T> PadLeftBy(std::size_t full_width,
-                                 const T& value HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND,
+constexpr PadFormat<T> PadLeftBy(std::size_t full_width, const T& value HORUS_LIFETIME_BOUND,
                                  char pad_with = ' ') noexcept {
   return {value, full_width, /*before=*/true, pad_with};
 }
@@ -42,8 +41,7 @@ constexpr PadFormat<T> PadLeftBy(std::size_t full_width,
 /// Returns an object which, when formatted, will pad `value` right to make sure at least
 /// `full_width` characters are written.
 template <class T>
-constexpr PadFormat<T> PadRightBy(std::size_t full_width,
-                                  const T& value HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND,
+constexpr PadFormat<T> PadRightBy(std::size_t full_width, const T& value HORUS_LIFETIME_BOUND,
                                   char pad_with = ' ') noexcept {
   return {value, full_width, /*before=*/false, pad_with};
 }
@@ -85,7 +83,7 @@ constexpr void HorusStringify(Sink& sink, const PadFormat<T>& value) noexcept(
   if (size < value.full_width && value.before) {
     horus_internal::AppendPadding(sink, value.full_width - size, value.pad_with);
   }
-  StrAppendToSink(sink, value.value);
+  StringifyTo(sink, value.value);
   if (size < value.full_width && !value.before) {
     horus_internal::AppendPadding(sink, value.full_width - size, value.pad_with);
   }

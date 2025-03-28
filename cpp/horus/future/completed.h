@@ -11,7 +11,7 @@
 #include <utility>
 
 #include "horus/future/future.h"
-#include "horus/internal/pointer_cast.h"
+#include "horus/pointer/unsafe_cast.h"
 
 namespace horus {
 
@@ -84,7 +84,7 @@ class CompletedFuture final : public Future<T> {
     if (exception_ != nullptr) {
       return nullptr;
     }
-    return horus_internal::UnsafePointerCast<T>(&result_);
+    return UnsafePointerCast<T>(&result_);
   }
 
   /// The exception to throw in `UnsafePoll()` if not `nullptr`.

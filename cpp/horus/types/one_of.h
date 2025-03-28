@@ -13,12 +13,13 @@
 #include <type_traits>
 #include <utility>
 
-#include "horus/internal/attributes.h"
+#include "horus/attributes.h"
 #include "horus/internal/type_traits.h"
 #include "horus/internal/unsafe_union.h"
 #include "horus/strings/fallback.h"
+#include "horus/strings/string_view.h"
+#include "horus/type_traits/conjunction.h"
 #include "horus/types/in_place.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 namespace horus_internal {
@@ -136,7 +137,7 @@ class OneOf final {
   /// `std::nullptr_t`.
   template <template <class T> class Check>
   static constexpr bool TypesSatisfy() noexcept {
-    return horus_internal::Conjunction<
+    return Conjunction<
         Check<std::conditional_t<std::is_void<Ts>::value, std::nullptr_t, Ts>>...>::value;
   }
 
@@ -324,7 +325,7 @@ class OneOf final {
   ///
   /// @throws InvalidUnionAccess
   template <std::size_t I, std::enable_if_t<!std::is_void<TypeAt<I>>::value>* = nullptr>
-  TypeAt<I>& As() & noexcept(false) HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  TypeAt<I>& As() & noexcept(false) HORUS_LIFETIME_BOUND {
     EnsureIs<I>();
     return *union_.template As<TypeAt<I>>();
   }
@@ -334,7 +335,7 @@ class OneOf final {
   ///
   /// @throws InvalidUnionAccess
   template <class T, std::enable_if_t<!std::is_void<T>::value>* = nullptr>
-  T& As() & noexcept(false) HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  T& As() & noexcept(false) HORUS_LIFETIME_BOUND {
     return As<kIndexOf<T>>();
   }
 
@@ -343,7 +344,7 @@ class OneOf final {
   ///
   /// @throws InvalidUnionAccess
   template <std::size_t I, std::enable_if_t<!std::is_void<TypeAt<I>>::value>* = nullptr>
-  const TypeAt<I>& As() const& noexcept(false) HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  const TypeAt<I>& As() const& noexcept(false) HORUS_LIFETIME_BOUND {
     EnsureIs<I>();
     return *union_.template As<TypeAt<I>>();
   }
@@ -353,7 +354,7 @@ class OneOf final {
   ///
   /// @throws InvalidUnionAccess
   template <class T, std::enable_if_t<!std::is_void<T>::value>* = nullptr>
-  const T& As() const& noexcept(false) HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  const T& As() const& noexcept(false) HORUS_LIFETIME_BOUND {
     return As<kIndexOf<T>>();
   }
 
@@ -362,7 +363,7 @@ class OneOf final {
   ///
   /// @throws InvalidUnionAccess
   template <std::size_t I, std::enable_if_t<!std::is_void<TypeAt<I>>::value>* = nullptr>
-  TypeAt<I>&& As() && noexcept(false) HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  TypeAt<I>&& As() && noexcept(false) HORUS_LIFETIME_BOUND {
     return std::move(As<I>());
   }
 
@@ -371,7 +372,7 @@ class OneOf final {
   ///
   /// @throws InvalidUnionAccess
   template <class T, std::enable_if_t<!std::is_void<T>::value>* = nullptr>
-  T&& As() && noexcept(false) HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  T&& As() && noexcept(false) HORUS_LIFETIME_BOUND {
     return std::move(As<T>());
   }
 
@@ -399,7 +400,7 @@ class OneOf final {
   /// @note If the inner type is `void`, a non-null pointer to an arbitrary value will be returned
   /// if the tag matches.
   template <std::size_t I>
-  TypeAt<I>* TryAs() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  TypeAt<I>* TryAs() & noexcept HORUS_LIFETIME_BOUND {
     return Is<I>() ? union_.template As<TypeAt<I>>() : nullptr;
   }
 
@@ -409,7 +410,7 @@ class OneOf final {
   /// @note If the inner type is `void`, a non-null pointer to an arbitrary value will be returned
   /// if the type matches.
   template <class T>
-  T* TryAs() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  T* TryAs() & noexcept HORUS_LIFETIME_BOUND {
     return TryAs<kIndexOf<T>>();
   }
 
@@ -419,7 +420,7 @@ class OneOf final {
   /// @note If the inner type is `void`, a non-null pointer to an arbitrary value will be returned
   /// if the tag matches.
   template <std::size_t I>
-  const TypeAt<I>* TryAs() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  const TypeAt<I>* TryAs() const& noexcept HORUS_LIFETIME_BOUND {
     return Is<I>() ? union_.template As<TypeAt<I>>() : nullptr;
   }
 
@@ -429,7 +430,7 @@ class OneOf final {
   /// @note If the inner type is `void`, a non-null pointer to an arbitrary value will be returned
   /// if the type matches.
   template <class T>
-  const T* TryAs() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  const T* TryAs() const& noexcept HORUS_LIFETIME_BOUND {
     return TryAs<kIndexOf<T>>();
   }
 
@@ -438,7 +439,7 @@ class OneOf final {
   /// Replaces the stored value with a new value of type `T` constructed with `args`.
   template <std::size_t I, class... Args,
             std::enable_if_t<!std::is_void<TypeAt<I>>::value>* = nullptr>
-  TypeAt<I>& Emplace(Args&&... args) & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  TypeAt<I>& Emplace(Args&&... args) & noexcept HORUS_LIFETIME_BOUND {
     using T = TypeAt<I>;
 
     static_assert(
@@ -453,7 +454,7 @@ class OneOf final {
 
   /// Replaces the stored value with a new value of type `T` constructed with `args`.
   template <class T, class... Args, std::enable_if_t<!std::is_void<T>::value>* = nullptr>
-  T& Emplace(Args&&... args) & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  T& Emplace(Args&&... args) & noexcept HORUS_LIFETIME_BOUND {
     return Emplace<kIndexOf<T>>(std::forward<Args>(args)...);
   }
 
@@ -475,7 +476,7 @@ class OneOf final {
   /// Invokes `F` with a reference to the inner value.
   template <class F>
   horus_internal::CommonResultTypeT<F, Ts...> InvokeWith(F&& invocable) noexcept(
-      horus_internal::ConjunctionOf({horus_internal::ResultType<F, Ts>::kIsNoExcept...})) {
+      ConjunctionOf({horus_internal::ResultType<F, Ts>::kIsNoExcept...})) {
     using R = horus_internal::CommonResultTypeT<F, Ts...>;
 
     return InvokeWithInner<0, R>(*this, std::forward<F>(invocable));
@@ -486,8 +487,8 @@ class OneOf final {
   /// @note In theory this could be an overload of `InvokeWith()` above, but for some reason clang
   /// prefers this overload to the one above even though it is `const`.
   template <class F>
-  horus_internal::CommonResultTypeT<F, const Ts...> InvokeWithConst(F&& invocable) const noexcept(
-      horus_internal::ConjunctionOf({horus_internal::ResultType<F, const Ts>::kIsNoExcept...})) {
+  horus_internal::CommonResultTypeT<F, const Ts...> InvokeWithConst(F&& invocable) const
+      noexcept(ConjunctionOf({horus_internal::ResultType<F, const Ts>::kIsNoExcept...})) {
     using R = horus_internal::CommonResultTypeT<F, const Ts...>;
 
     return InvokeWithInner<0, R>(*this, std::forward<F>(invocable));

@@ -26,9 +26,9 @@
 #include "horus/rpc/client_handler.h"
 #include "horus/rpc/endpoint.h"
 #include "horus/rpc/retry_policy.h"
+#include "horus/strings/string_view.h"
 #include "horus/testing/event_loop.h"
 #include "horus/testing/ws_server.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 namespace {

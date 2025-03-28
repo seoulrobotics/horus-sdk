@@ -11,11 +11,12 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/attributes.h"
 #include "horus/pb/cow_bytes.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
 #include "horus/pb/types.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -109,14 +110,14 @@ class RpcMessage final : public PbMessage {
   /// The version of the message.
   ///
   /// Field no: 1.
-  constexpr RpcMessage_Version version() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr RpcMessage_Version version() const& noexcept HORUS_LIFETIME_BOUND {
     return version_;
   }
 
   /// The version of the message.
   ///
   /// Field no: 1.
-  RpcMessage_Version& mutable_version() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  RpcMessage_Version& mutable_version() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return version_;
   }
@@ -147,14 +148,14 @@ class RpcMessage final : public PbMessage {
   /// The ID of the service being talked to.
   ///
   /// Field no: 2.
-  constexpr std::uint32_t service_id() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint32_t service_id() const& noexcept HORUS_LIFETIME_BOUND {
     return service_id_;
   }
 
   /// The ID of the service being talked to.
   ///
   /// Field no: 2.
-  std::uint32_t& mutable_service_id() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint32_t& mutable_service_id() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return service_id_;
   }
@@ -186,7 +187,7 @@ class RpcMessage final : public PbMessage {
   ///  receiver.
   ///
   /// Field no: 3.
-  constexpr const CowBytes& message_bytes() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& message_bytes() const& noexcept HORUS_LIFETIME_BOUND {
     return message_bytes_;
   }
 
@@ -206,7 +207,7 @@ class RpcMessage final : public PbMessage {
   ///  receiver.
   ///
   /// Field no: 3.
-  CowBytes& mutable_message_bytes() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_message_bytes() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return message_bytes_;
   }
@@ -239,7 +240,7 @@ class RpcMessage final : public PbMessage {
   ///  response.
   ///
   /// Field no: 4.
-  constexpr std::uint32_t request_id() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint32_t request_id() const& noexcept HORUS_LIFETIME_BOUND {
     return request_id_;
   }
 
@@ -248,7 +249,7 @@ class RpcMessage final : public PbMessage {
   ///  response.
   ///
   /// Field no: 4.
-  std::uint32_t& mutable_request_id() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint32_t& mutable_request_id() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[3] = true;
     return request_id_;
   }
@@ -279,14 +280,14 @@ class RpcMessage final : public PbMessage {
   /// The ID of the method being called. Only set in requests.
   ///
   /// Field no: 5.
-  constexpr std::uint32_t method_id() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint32_t method_id() const& noexcept HORUS_LIFETIME_BOUND {
     return method_id_;
   }
 
   /// The ID of the method being called. Only set in requests.
   ///
   /// Field no: 5.
-  std::uint32_t& mutable_method_id() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint32_t& mutable_method_id() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[4] = true;
     return method_id_;
   }
@@ -321,7 +322,7 @@ class RpcMessage final : public PbMessage {
   ///  pending requests in case of error, which this field provides.
   ///
   /// Field no: 6.
-  constexpr const CowBytes& error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& error() const& noexcept HORUS_LIFETIME_BOUND {
     return error_;
   }
 
@@ -344,7 +345,7 @@ class RpcMessage final : public PbMessage {
   ///  pending requests in case of error, which this field provides.
   ///
   /// Field no: 6.
-  CowBytes& mutable_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_error() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[5] = true;
     return error_;
   }
@@ -390,7 +391,7 @@ class RpcMessage final : public PbMessage {
   ///  6. Alice receives a FooResponse while it expects a BarResponse.
   ///
   /// Field no: 7.
-  constexpr bool cancel() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr bool cancel() const& noexcept HORUS_LIFETIME_BOUND {
     return cancel_;
   }
 
@@ -412,7 +413,7 @@ class RpcMessage final : public PbMessage {
   ///  6. Alice receives a FooResponse while it expects a BarResponse.
   ///
   /// Field no: 7.
-  bool& mutable_cancel() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  bool& mutable_cancel() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[6] = true;
     return cancel_;
   }

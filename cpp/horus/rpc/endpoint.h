@@ -13,14 +13,14 @@
 #include <string>
 #include <utility>
 
+#include "horus/attributes.h"
 #include "horus/functional/move_only_function.h"
 #include "horus/future/any.h"
-#include "horus/internal/attributes.h"
-#include "horus/internal/pointer_cast.h"
 #include "horus/pb/rpc/message_pb.h"
+#include "horus/pointer/unsafe_cast.h"
 #include "horus/rpc/retry_policy.h"
+#include "horus/strings/string_view.h"
 #include "horus/types/one_of.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 
@@ -147,9 +147,9 @@ class RpcEndpoint {
   ///
   /// The reference to the `receiver` must outlive the `RpcEndpoint`.
   template <class Receiver, void (Receiver::*OnEvent)(LifecycleEvent&& event) noexcept>
-  void SetLifecycleEventCallback(Receiver& receiver HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+  void SetLifecycleEventCallback(Receiver& receiver HORUS_LIFETIME_BOUND) noexcept {
     SetLifecycleEventCallback(&receiver, [](void* receiver_ptr, LifecycleEvent&& event) {
-      (horus_internal::UnsafePointerCast<Receiver>(receiver_ptr)->*OnEvent)(std::move(event));
+      (UnsafePointerCast<Receiver>(receiver_ptr)->*OnEvent)(std::move(event));
     });
   }
 
@@ -157,7 +157,7 @@ class RpcEndpoint {
   ///
   /// The reference to `on_event` must outlive the `RpcEndpoint`.
   template <class OnEvent>
-  void SetLifecycleEventCallback(OnEvent& on_event HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+  void SetLifecycleEventCallback(OnEvent& on_event HORUS_LIFETIME_BOUND) noexcept {
     SetLifecycleEventCallback<OnEvent, &OnEvent::operator()>(on_event);
   }
 

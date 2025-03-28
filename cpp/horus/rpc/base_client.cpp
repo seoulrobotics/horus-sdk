@@ -10,7 +10,7 @@
 #include "horus/pb/cow_bytes.h"
 #include "horus/pb/message.h"
 #include "horus/pb/rpc/message_pb.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 namespace horus {
 namespace horus_internal {

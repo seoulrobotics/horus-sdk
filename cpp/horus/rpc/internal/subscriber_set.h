@@ -21,11 +21,11 @@
 #include "horus/pb/logs/logs_pb.h"
 #include "horus/rpc/endpoint.h"
 #include "horus/strings/logging.h"
+#include "horus/strings/string_view.h"
 #include "horus/types/in_place.h"
 #include "horus/types/one_of.h"
 #include "horus/types/owned.h"
 #include "horus/types/span.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 namespace horus_internal {

@@ -4,8 +4,8 @@
 #include <iostream>
 #include <mutex>
 
-#include "horus/strings/str_sink_erased.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/erased_sink.h"
+#include "horus/strings/string_view.h"
 
 namespace horus {
 namespace {

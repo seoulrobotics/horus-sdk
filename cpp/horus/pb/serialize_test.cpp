@@ -20,7 +20,7 @@
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/cow_span.h"
 #include "horus/pb/testing/messages_pb.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 namespace horus {
 namespace {

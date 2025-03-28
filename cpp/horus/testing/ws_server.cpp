@@ -15,10 +15,10 @@
 #include <utility>
 
 #include "horus/event_loop/uv.h"
-#include "horus/internal/pointer_cast.h"
 #include "horus/pb/buffer.h"
 #include "horus/pb/rpc/message_pb.h"
 #include "horus/pb/serialize.h"
+#include "horus/pointer/unsafe_cast.h"
 #include "horus/rpc/base_handler.h"
 #include "horus/rpc/endpoint.h"
 #include "horus/rpc/retry_policy.h"
@@ -43,14 +43,13 @@ std::uint16_t FindFreePort() noexcept {
   horus_internal::UvAssert(uv_tcp_init(&loop, &tcp_handle));
   sockaddr_in addr{};
   horus_internal::UvAssert(uv_ip4_addr("127.0.0.1", 0, &addr));
-  horus_internal::UvAssert(
-      uv_tcp_bind(&tcp_handle, horus_internal::UnsafePointerCast<sockaddr>(&addr), 0));
+  horus_internal::UvAssert(uv_tcp_bind(&tcp_handle, UnsafePointerCast<sockaddr>(&addr), 0));
   horus_internal::UvAssert(uv_run(&loop, UV_RUN_DEFAULT));
 
   // Get address of bound TCP server.
   std::int32_t addr_len{sizeof(addr)};
-  horus_internal::UvAssert(uv_tcp_getsockname(
-      &tcp_handle, horus_internal::UnsafePointerCast<sockaddr>(&addr), &addr_len));
+  horus_internal::UvAssert(
+      uv_tcp_getsockname(&tcp_handle, UnsafePointerCast<sockaddr>(&addr), &addr_len));
   horus_internal::UvAssert(uv_run(&loop, UV_RUN_DEFAULT));
 
   // Get port assigned to server.

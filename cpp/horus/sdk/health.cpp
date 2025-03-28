@@ -17,8 +17,8 @@
 #include "horus/pb/project_manager/service_pb.h"
 #include "horus/sdk/errors.h"
 #include "horus/strings/str_cat.h"
+#include "horus/strings/string_view.h"
 #include "horus/types/span.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 namespace sdk {
