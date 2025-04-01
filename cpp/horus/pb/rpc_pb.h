@@ -11,12 +11,14 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/attributes.h"
+#include "horus/internal/attributes.h"
 #include "horus/pb/cow_bytes.h"
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/logs/logs_pb.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -171,7 +173,7 @@ class RpcServiceOptions final : public PbMessage {
   ///    horus cat service_ids.txt
   ///
   /// Field no: 1.
-  constexpr std::uint32_t id() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint32_t id() const& noexcept HORUS_LIFETIME_BOUND {
     return id_;
   }
 
@@ -186,7 +188,7 @@ class RpcServiceOptions final : public PbMessage {
   ///    horus cat service_ids.txt
   ///
   /// Field no: 1.
-  std::uint32_t& mutable_id() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint32_t& mutable_id() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return id_;
   }
@@ -217,7 +219,7 @@ class RpcServiceOptions final : public PbMessage {
   /// The description of the service shown in the generated code.
   ///
   /// Field no: 2.
-  constexpr const CowBytes& description() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& description() const& noexcept HORUS_LIFETIME_BOUND {
     return description_;
   }
 
@@ -236,7 +238,7 @@ class RpcServiceOptions final : public PbMessage {
   /// The description of the service shown in the generated code.
   ///
   /// Field no: 2.
-  CowBytes& mutable_description() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_description() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return description_;
   }
@@ -267,7 +269,7 @@ class RpcServiceOptions final : public PbMessage {
   /// Identifiers which are on longer available for methods in a service.
   ///
   /// Field no: 3.
-  constexpr const CowRepeated<std::uint32_t>& reserved_ids() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowRepeated<std::uint32_t>& reserved_ids() const& noexcept HORUS_LIFETIME_BOUND {
     return reserved_ids_;
   }
 
@@ -286,7 +288,7 @@ class RpcServiceOptions final : public PbMessage {
   /// Identifiers which are on longer available for methods in a service.
   ///
   /// Field no: 3.
-  CowRepeated<std::uint32_t>& mutable_reserved_ids() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowRepeated<std::uint32_t>& mutable_reserved_ids() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return reserved_ids_;
   }
@@ -381,7 +383,7 @@ class RpcMethodOptions_SubscribeMethod final : public PbMessage {
   /// The type name of the subscriber.
   ///
   /// Field no: 1.
-  constexpr const CowBytes& subscriber_name() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& subscriber_name() const& noexcept HORUS_LIFETIME_BOUND {
     return subscriber_name_;
   }
 
@@ -400,7 +402,7 @@ class RpcMethodOptions_SubscribeMethod final : public PbMessage {
   /// The type name of the subscriber.
   ///
   /// Field no: 1.
-  CowBytes& mutable_subscriber_name() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_subscriber_name() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return subscriber_name_;
   }
@@ -491,7 +493,7 @@ class RpcMethodOptions_UnsubscribeMethod final : public PbMessage {
   /// The type name of the subscriber.
   ///
   /// Field no: 1.
-  constexpr const CowBytes& subscriber_name() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& subscriber_name() const& noexcept HORUS_LIFETIME_BOUND {
     return subscriber_name_;
   }
 
@@ -510,7 +512,7 @@ class RpcMethodOptions_UnsubscribeMethod final : public PbMessage {
   /// The type name of the subscriber.
   ///
   /// Field no: 1.
-  CowBytes& mutable_subscriber_name() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_subscriber_name() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return subscriber_name_;
   }
@@ -609,7 +611,7 @@ class RpcMethodOptions final : public PbMessage {
   ///  Cannot be 0.
   ///
   /// Field no: 1.
-  constexpr std::uint32_t id() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint32_t id() const& noexcept HORUS_LIFETIME_BOUND {
     return id_;
   }
 
@@ -620,7 +622,7 @@ class RpcMethodOptions final : public PbMessage {
   ///  Cannot be 0.
   ///
   /// Field no: 1.
-  std::uint32_t& mutable_id() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint32_t& mutable_id() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return id_;
   }
@@ -651,7 +653,7 @@ class RpcMethodOptions final : public PbMessage {
   /// The description of the service or method shown in the generated code.
   ///
   /// Field no: 2.
-  constexpr const CowBytes& description() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& description() const& noexcept HORUS_LIFETIME_BOUND {
     return description_;
   }
 
@@ -670,7 +672,7 @@ class RpcMethodOptions final : public PbMessage {
   /// The description of the service or method shown in the generated code.
   ///
   /// Field no: 2.
-  CowBytes& mutable_description() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_description() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return description_;
   }
@@ -702,7 +704,7 @@ class RpcMethodOptions final : public PbMessage {
   ///  implementation in C++.
   ///
   /// Field no: 3.
-  constexpr const RpcMethodOptions_SubscribeMethod& subscribe() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const RpcMethodOptions_SubscribeMethod& subscribe() const& noexcept HORUS_LIFETIME_BOUND {
     return subscribe_;
   }
 
@@ -722,7 +724,7 @@ class RpcMethodOptions final : public PbMessage {
   ///  implementation in C++.
   ///
   /// Field no: 3.
-  RpcMethodOptions_SubscribeMethod& mutable_subscribe() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  RpcMethodOptions_SubscribeMethod& mutable_subscribe() & noexcept HORUS_LIFETIME_BOUND {
     clear_type();
     type_ = TypeOneof::kSubscribe;
     set_fields_[2] = true;
@@ -759,7 +761,7 @@ class RpcMethodOptions final : public PbMessage {
   ///  implementation in C++.
   ///
   /// Field no: 4.
-  constexpr const RpcMethodOptions_UnsubscribeMethod& unsubscribe() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const RpcMethodOptions_UnsubscribeMethod& unsubscribe() const& noexcept HORUS_LIFETIME_BOUND {
     return unsubscribe_;
   }
 
@@ -779,7 +781,7 @@ class RpcMethodOptions final : public PbMessage {
   ///  implementation in C++.
   ///
   /// Field no: 4.
-  RpcMethodOptions_UnsubscribeMethod& mutable_unsubscribe() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  RpcMethodOptions_UnsubscribeMethod& mutable_unsubscribe() & noexcept HORUS_LIFETIME_BOUND {
     clear_type();
     type_ = TypeOneof::kUnsubscribe;
     set_fields_[3] = true;
@@ -981,7 +983,7 @@ class DefaultSubscribeResponse final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const logs::RpcConnectionError& connection_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::RpcConnectionError& connection_error() const& noexcept HORUS_LIFETIME_BOUND {
     return connection_error_;
   }
 
@@ -1000,7 +1002,7 @@ class DefaultSubscribeResponse final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  logs::RpcConnectionError& mutable_connection_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::RpcConnectionError& mutable_connection_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_error();
     error_ = ErrorOneof::kConnectionError;
     set_fields_[0] = true;
@@ -1190,7 +1192,7 @@ class DefaultUnsubscribeResponse final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const logs::RpcDisconnectionError& disconnection_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::RpcDisconnectionError& disconnection_error() const& noexcept HORUS_LIFETIME_BOUND {
     return disconnection_error_;
   }
 
@@ -1209,7 +1211,7 @@ class DefaultUnsubscribeResponse final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  logs::RpcDisconnectionError& mutable_disconnection_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::RpcDisconnectionError& mutable_disconnection_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_error();
     error_ = ErrorOneof::kDisconnectionError;
     set_fields_[0] = true;

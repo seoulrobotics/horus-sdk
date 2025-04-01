@@ -59,10 +59,8 @@ Examples for using the SDK exist in [`cpp/examples`](cpp/examples).
 
 > [!NOTE]
 >
-> The SDK is implemented using a library called `horus::core`, which defines all
-> the RPC, concurrency, and Protobuf helpers used by the SDK. Unlike
-> `horus::sdk`, this library makes no compatibility guarantees, and its API may
-> change at any time.
+> The SDK includes many implementation details not part of the `horus::sdk`
+> public API, and these details may change at any time.
 >
 > Generally, APIs defined in `horus/sdk.h` and `horus/sdk/*.h`, as well as APIs
 > indirectly exposed by these headers (e.g. `pb::Log` in

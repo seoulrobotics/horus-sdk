@@ -7,8 +7,8 @@
 
 #include <cstdint>
 
-#include "horus/internal/source_location.h"
-#include "horus/strings/str_sink.h"
+#include "horus/source_location.h"
+#include "horus/strings/stringify.h"
 
 namespace horus {
 
@@ -37,7 +37,7 @@ constexpr FutureInfo UnknownFutureInfo(const char* function_name = __builtin_FUN
 template <class Sink>
 constexpr void HorusStringify(Sink& sink,
                               const FutureInfo& future_info) noexcept(IsNoexceptSink<Sink>()) {
-  StrAppendToSink(sink, future_info.function_name, " ", future_info.source_location);
+  StringifyTo(sink, future_info.function_name, " ", future_info.source_location);
 }
 
 }  // namespace horus

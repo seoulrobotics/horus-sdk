@@ -11,13 +11,15 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/attributes.h"
+#include "horus/internal/attributes.h"
 #include "horus/pb/config/metadata_pb.h"
 #include "horus/pb/cow_bytes.h"
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
 #include "horus/pb/types.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -137,14 +139,14 @@ class ProfilingSet_ProfiledDuration_PerformanceHint final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr ProfilingSet_ProfiledDuration_PerformanceHint_ConfigParameterAction config_parameter_action() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr ProfilingSet_ProfiledDuration_PerformanceHint_ConfigParameterAction config_parameter_action() const& noexcept HORUS_LIFETIME_BOUND {
     return config_parameter_action_;
   }
 
   /// No documentation.
   ///
   /// Field no: 1.
-  ProfilingSet_ProfiledDuration_PerformanceHint_ConfigParameterAction& mutable_config_parameter_action() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  ProfilingSet_ProfiledDuration_PerformanceHint_ConfigParameterAction& mutable_config_parameter_action() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return config_parameter_action_;
   }
@@ -175,7 +177,7 @@ class ProfilingSet_ProfiledDuration_PerformanceHint final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr const CowBytes& config_parameter_name() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& config_parameter_name() const& noexcept HORUS_LIFETIME_BOUND {
     return config_parameter_name_;
   }
 
@@ -194,7 +196,7 @@ class ProfilingSet_ProfiledDuration_PerformanceHint final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  CowBytes& mutable_config_parameter_name() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_config_parameter_name() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return config_parameter_name_;
   }
@@ -289,7 +291,7 @@ class ProfilingSet_ProfiledDuration final : public PbMessage {
   /// / The duration of the profiled section.
   ///
   /// Field no: 1.
-  constexpr const Duration& duration() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Duration& duration() const& noexcept HORUS_LIFETIME_BOUND {
     return duration_;
   }
 
@@ -308,7 +310,7 @@ class ProfilingSet_ProfiledDuration final : public PbMessage {
   /// / The duration of the profiled section.
   ///
   /// Field no: 1.
-  Duration& mutable_duration() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Duration& mutable_duration() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return duration_;
   }
@@ -339,7 +341,7 @@ class ProfilingSet_ProfiledDuration final : public PbMessage {
   /// / A list of hints on how to improve the profiled section.
   ///
   /// Field no: 2.
-  constexpr const CowRepeated<ProfilingSet_ProfiledDuration_PerformanceHint>& performance_hints() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowRepeated<ProfilingSet_ProfiledDuration_PerformanceHint>& performance_hints() const& noexcept HORUS_LIFETIME_BOUND {
     return performance_hints_;
   }
 
@@ -358,7 +360,7 @@ class ProfilingSet_ProfiledDuration final : public PbMessage {
   /// / A list of hints on how to improve the profiled section.
   ///
   /// Field no: 2.
-  CowRepeated<ProfilingSet_ProfiledDuration_PerformanceHint>& mutable_performance_hints() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowRepeated<ProfilingSet_ProfiledDuration_PerformanceHint>& mutable_performance_hints() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return performance_hints_;
   }
@@ -451,7 +453,7 @@ class ProfilingSet_ProfiledDurationMapEntry final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const CowBytes& key() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& key() const& noexcept HORUS_LIFETIME_BOUND {
     return key_;
   }
 
@@ -470,7 +472,7 @@ class ProfilingSet_ProfiledDurationMapEntry final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  CowBytes& mutable_key() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_key() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return key_;
   }
@@ -501,7 +503,7 @@ class ProfilingSet_ProfiledDurationMapEntry final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr const ProfilingSet_ProfiledDuration& value() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const ProfilingSet_ProfiledDuration& value() const& noexcept HORUS_LIFETIME_BOUND {
     return value_;
   }
 
@@ -520,7 +522,7 @@ class ProfilingSet_ProfiledDurationMapEntry final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  ProfilingSet_ProfiledDuration& mutable_value() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  ProfilingSet_ProfiledDuration& mutable_value() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return value_;
   }
@@ -614,7 +616,7 @@ class ProfilingSet_ResourceUsage final : public PbMessage {
   /// / The percentage can be above 100% if multiple cores are used.
   ///
   /// Field no: 1.
-  constexpr std::uint32_t cpu_usage_percentage() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint32_t cpu_usage_percentage() const& noexcept HORUS_LIFETIME_BOUND {
     return cpu_usage_percentage_;
   }
 
@@ -622,7 +624,7 @@ class ProfilingSet_ResourceUsage final : public PbMessage {
   /// / The percentage can be above 100% if multiple cores are used.
   ///
   /// Field no: 1.
-  std::uint32_t& mutable_cpu_usage_percentage() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint32_t& mutable_cpu_usage_percentage() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return cpu_usage_percentage_;
   }
@@ -653,14 +655,14 @@ class ProfilingSet_ResourceUsage final : public PbMessage {
   /// / Memory usage of the service in bytes.
   ///
   /// Field no: 2.
-  constexpr std::uint64_t memory_usage() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint64_t memory_usage() const& noexcept HORUS_LIFETIME_BOUND {
     return memory_usage_;
   }
 
   /// / Memory usage of the service in bytes.
   ///
   /// Field no: 2.
-  std::uint64_t& mutable_memory_usage() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint64_t& mutable_memory_usage() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return memory_usage_;
   }
@@ -761,14 +763,14 @@ class ProfilingSet final : public PbMessage {
   /// / The profiled service.
   ///
   /// Field no: 1.
-  constexpr ProfilingSet_ProfiledService profiled_service() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr ProfilingSet_ProfiledService profiled_service() const& noexcept HORUS_LIFETIME_BOUND {
     return profiled_service_;
   }
 
   /// / The profiled service.
   ///
   /// Field no: 1.
-  ProfilingSet_ProfiledService& mutable_profiled_service() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  ProfilingSet_ProfiledService& mutable_profiled_service() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return profiled_service_;
   }
@@ -799,7 +801,7 @@ class ProfilingSet final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr const CowRepeated<ProfilingSet_ProfiledDurationMapEntry>& processing_times() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowRepeated<ProfilingSet_ProfiledDurationMapEntry>& processing_times() const& noexcept HORUS_LIFETIME_BOUND {
     return processing_times_;
   }
 
@@ -818,7 +820,7 @@ class ProfilingSet final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  CowRepeated<ProfilingSet_ProfiledDurationMapEntry>& mutable_processing_times() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowRepeated<ProfilingSet_ProfiledDurationMapEntry>& mutable_processing_times() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return processing_times_;
   }
@@ -849,7 +851,7 @@ class ProfilingSet final : public PbMessage {
   /// / Resource usage profiling of the service.
   ///
   /// Field no: 3.
-  constexpr const ProfilingSet_ResourceUsage& resource_usage() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const ProfilingSet_ResourceUsage& resource_usage() const& noexcept HORUS_LIFETIME_BOUND {
     return resource_usage_;
   }
 
@@ -868,7 +870,7 @@ class ProfilingSet final : public PbMessage {
   /// / Resource usage profiling of the service.
   ///
   /// Field no: 3.
-  ProfilingSet_ResourceUsage& mutable_resource_usage() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  ProfilingSet_ResourceUsage& mutable_resource_usage() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return resource_usage_;
   }
@@ -964,7 +966,7 @@ class ServiceProfiling final : public PbMessage {
   /// / The profiling details.
   ///
   /// Field no: 1.
-  constexpr const ProfilingSet& details_profiling_set() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const ProfilingSet& details_profiling_set() const& noexcept HORUS_LIFETIME_BOUND {
     return details_profiling_set_;
   }
 
@@ -983,7 +985,7 @@ class ServiceProfiling final : public PbMessage {
   /// / The profiling details.
   ///
   /// Field no: 1.
-  ProfilingSet& mutable_details_profiling_set() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  ProfilingSet& mutable_details_profiling_set() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return details_profiling_set_;
   }
@@ -1015,7 +1017,7 @@ class ServiceProfiling final : public PbMessage {
   /// / total processing time (when the data is actually being processed)
   ///
   /// Field no: 2.
-  constexpr const Duration& total_service_latency() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Duration& total_service_latency() const& noexcept HORUS_LIFETIME_BOUND {
     return total_service_latency_;
   }
 
@@ -1035,7 +1037,7 @@ class ServiceProfiling final : public PbMessage {
   /// / total processing time (when the data is actually being processed)
   ///
   /// Field no: 2.
-  Duration& mutable_total_service_latency() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Duration& mutable_total_service_latency() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return total_service_latency_;
   }
@@ -1067,7 +1069,7 @@ class ServiceProfiling final : public PbMessage {
   /// / bundle time to the first processing time.
   ///
   /// Field no: 4.
-  constexpr const Duration& idle_time_before_processing() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Duration& idle_time_before_processing() const& noexcept HORUS_LIFETIME_BOUND {
     return idle_time_before_processing_;
   }
 
@@ -1087,7 +1089,7 @@ class ServiceProfiling final : public PbMessage {
   /// / bundle time to the first processing time.
   ///
   /// Field no: 4.
-  Duration& mutable_idle_time_before_processing() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Duration& mutable_idle_time_before_processing() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return idle_time_before_processing_;
   }
@@ -1119,7 +1121,7 @@ class ServiceProfiling final : public PbMessage {
   /// / between two processing times).
   ///
   /// Field no: 5.
-  constexpr const Duration& intra_component_idle_time() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Duration& intra_component_idle_time() const& noexcept HORUS_LIFETIME_BOUND {
     return intra_component_idle_time_;
   }
 
@@ -1139,7 +1141,7 @@ class ServiceProfiling final : public PbMessage {
   /// / between two processing times).
   ///
   /// Field no: 5.
-  Duration& mutable_intra_component_idle_time() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Duration& mutable_intra_component_idle_time() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[3] = true;
     return intra_component_idle_time_;
   }
@@ -1236,7 +1238,7 @@ class PreprocessingServicePointCloudProfiling final : public PbMessage {
   /// / The preprocessing service profiling for a given point cloud.
   ///
   /// Field no: 1.
-  constexpr const ServiceProfiling& service_profiling() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const ServiceProfiling& service_profiling() const& noexcept HORUS_LIFETIME_BOUND {
     return service_profiling_;
   }
 
@@ -1255,7 +1257,7 @@ class PreprocessingServicePointCloudProfiling final : public PbMessage {
   /// / The preprocessing service profiling for a given point cloud.
   ///
   /// Field no: 1.
-  ServiceProfiling& mutable_service_profiling() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  ServiceProfiling& mutable_service_profiling() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return service_profiling_;
   }
@@ -1287,7 +1289,7 @@ class PreprocessingServicePointCloudProfiling final : public PbMessage {
   /// / service to the detection service.
   ///
   /// Field no: 2.
-  constexpr const Duration& point_cloud_sending_latency() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Duration& point_cloud_sending_latency() const& noexcept HORUS_LIFETIME_BOUND {
     return point_cloud_sending_latency_;
   }
 
@@ -1307,7 +1309,7 @@ class PreprocessingServicePointCloudProfiling final : public PbMessage {
   /// / service to the detection service.
   ///
   /// Field no: 2.
-  Duration& mutable_point_cloud_sending_latency() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Duration& mutable_point_cloud_sending_latency() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return point_cloud_sending_latency_;
   }
@@ -1402,7 +1404,7 @@ class FrameProfiling final : public PbMessage {
   /// / inside the frame to the publishing of the frame).
   ///
   /// Field no: 1.
-  constexpr const Duration& overall_frame_latency() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Duration& overall_frame_latency() const& noexcept HORUS_LIFETIME_BOUND {
     return overall_frame_latency_;
   }
 
@@ -1422,7 +1424,7 @@ class FrameProfiling final : public PbMessage {
   /// / inside the frame to the publishing of the frame).
   ///
   /// Field no: 1.
-  Duration& mutable_overall_frame_latency() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Duration& mutable_overall_frame_latency() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return overall_frame_latency_;
   }
@@ -1457,7 +1459,7 @@ class FrameProfiling final : public PbMessage {
   /// / overhead of our pipeline for the frame.
   ///
   /// Field no: 2.
-  constexpr const Duration& frame_bundling_latency() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Duration& frame_bundling_latency() const& noexcept HORUS_LIFETIME_BOUND {
     return frame_bundling_latency_;
   }
 
@@ -1480,7 +1482,7 @@ class FrameProfiling final : public PbMessage {
   /// / overhead of our pipeline for the frame.
   ///
   /// Field no: 2.
-  Duration& mutable_frame_bundling_latency() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Duration& mutable_frame_bundling_latency() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return frame_bundling_latency_;
   }
@@ -1573,7 +1575,7 @@ class BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry f
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const CowBytes& key() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& key() const& noexcept HORUS_LIFETIME_BOUND {
     return key_;
   }
 
@@ -1592,7 +1594,7 @@ class BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry f
   /// No documentation.
   ///
   /// Field no: 1.
-  CowBytes& mutable_key() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_key() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return key_;
   }
@@ -1623,7 +1625,7 @@ class BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry f
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr const PreprocessingServicePointCloudProfiling& value() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const PreprocessingServicePointCloudProfiling& value() const& noexcept HORUS_LIFETIME_BOUND {
     return value_;
   }
 
@@ -1642,7 +1644,7 @@ class BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry f
   /// No documentation.
   ///
   /// Field no: 2.
-  PreprocessingServicePointCloudProfiling& mutable_value() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  PreprocessingServicePointCloudProfiling& mutable_value() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return value_;
   }
@@ -1740,7 +1742,7 @@ class BundledFrameProfilingSet final : public PbMessage {
   /// / that the frame contains).
   ///
   /// Field no: 3.
-  constexpr const Timestamp& frame_timestamp() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Timestamp& frame_timestamp() const& noexcept HORUS_LIFETIME_BOUND {
     return frame_timestamp_;
   }
 
@@ -1760,7 +1762,7 @@ class BundledFrameProfilingSet final : public PbMessage {
   /// / that the frame contains).
   ///
   /// Field no: 3.
-  Timestamp& mutable_frame_timestamp() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Timestamp& mutable_frame_timestamp() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return frame_timestamp_;
   }
@@ -1791,7 +1793,7 @@ class BundledFrameProfilingSet final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 4.
-  constexpr const FrameProfiling& frame_profiling() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const FrameProfiling& frame_profiling() const& noexcept HORUS_LIFETIME_BOUND {
     return frame_profiling_;
   }
 
@@ -1810,7 +1812,7 @@ class BundledFrameProfilingSet final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 4.
-  FrameProfiling& mutable_frame_profiling() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  FrameProfiling& mutable_frame_profiling() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return frame_profiling_;
   }
@@ -1841,7 +1843,7 @@ class BundledFrameProfilingSet final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 5.
-  constexpr const ServiceProfiling& detection_service_profiling() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const ServiceProfiling& detection_service_profiling() const& noexcept HORUS_LIFETIME_BOUND {
     return detection_service_profiling_;
   }
 
@@ -1860,7 +1862,7 @@ class BundledFrameProfilingSet final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 5.
-  ServiceProfiling& mutable_detection_service_profiling() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  ServiceProfiling& mutable_detection_service_profiling() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return detection_service_profiling_;
   }
@@ -1891,7 +1893,7 @@ class BundledFrameProfilingSet final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 7.
-  constexpr const CowRepeated<BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry>& preprocessing_service_point_cloud_profiling() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowRepeated<BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry>& preprocessing_service_point_cloud_profiling() const& noexcept HORUS_LIFETIME_BOUND {
     return preprocessing_service_point_cloud_profiling_;
   }
 
@@ -1910,7 +1912,7 @@ class BundledFrameProfilingSet final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 7.
-  CowRepeated<BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry>& mutable_preprocessing_service_point_cloud_profiling() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowRepeated<BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry>& mutable_preprocessing_service_point_cloud_profiling() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[3] = true;
     return preprocessing_service_point_cloud_profiling_;
   }
@@ -2008,7 +2010,7 @@ class ProfilingInfo final : public PbMessage {
   /// / General profiling set of a service.
   ///
   /// Field no: 1.
-  constexpr const ProfilingSet& general_profiling_set() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const ProfilingSet& general_profiling_set() const& noexcept HORUS_LIFETIME_BOUND {
     return general_profiling_set_;
   }
 
@@ -2027,7 +2029,7 @@ class ProfilingInfo final : public PbMessage {
   /// / General profiling set of a service.
   ///
   /// Field no: 1.
-  ProfilingSet& mutable_general_profiling_set() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  ProfilingSet& mutable_general_profiling_set() & noexcept HORUS_LIFETIME_BOUND {
     clear_profiling_set();
     profiling_set_ = ProfilingSetOneof::kGeneralProfilingSet;
     set_fields_[0] = true;
@@ -2064,7 +2066,7 @@ class ProfilingInfo final : public PbMessage {
   /// / and preprocessing services).
   ///
   /// Field no: 2.
-  constexpr const BundledFrameProfilingSet& bundled_frame_profiling_set() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const BundledFrameProfilingSet& bundled_frame_profiling_set() const& noexcept HORUS_LIFETIME_BOUND {
     return bundled_frame_profiling_set_;
   }
 
@@ -2084,7 +2086,7 @@ class ProfilingInfo final : public PbMessage {
   /// / and preprocessing services).
   ///
   /// Field no: 2.
-  BundledFrameProfilingSet& mutable_bundled_frame_profiling_set() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  BundledFrameProfilingSet& mutable_bundled_frame_profiling_set() & noexcept HORUS_LIFETIME_BOUND {
     clear_profiling_set();
     profiling_set_ = ProfilingSetOneof::kBundledFrameProfilingSet;
     set_fields_[1] = true;

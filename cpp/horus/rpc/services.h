@@ -7,7 +7,8 @@
 
 #include <cstdint>
 
-#include "horus/types/string_view.h"
+#include "horus/attributes.h"
+#include "horus/strings/string_view.h"
 
 namespace horus {
 
@@ -34,7 +35,7 @@ class RpcServices final {
 
       /// Constructs a host pointing to a `<given_host>:<given_port>` pair. `given_host` will
       /// *not* be copied.
-      constexpr Host(StringView given_host HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND,
+      constexpr Host(StringView given_host HORUS_LIFETIME_BOUND,
                       std::uint16_t given_port) noexcept
           : host{given_host}, port{given_port} {}
 
