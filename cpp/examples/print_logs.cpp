@@ -17,7 +17,7 @@
 #include "horus/strings/chrono.h"  // IWYU pragma: keep
 #include "horus/strings/pad.h"
 #include "horus/strings/stdio.h"
-#include "horus/strings/str_sink.h"
+#include "horus/strings/stringify.h"
 #include "horus/types/span.h"
 
 int main(int argc, const char* argv[]) {
@@ -68,9 +68,9 @@ int main(int argc, const char* argv[]) {
            constexpr auto kSep = " | ";
            const horus::ColoredFormat<const char*> sep{format(kSep)};
 
-           horus::StrAppendToSink(horus::StdoutSink(), horus::Iso8601{log.time}, sep, "#",
-                                  horus::PadLeftBy(3, log.id, '0'), sep, log.node_id, sep,
-                                  horus::Char{chr}, sep, log.message, "\n");
+           horus::StringifyTo(horus::StdoutSink(), horus::Iso8601{log.time}, sep, "#",
+                              horus::PadLeftBy(3, log.id, '0'), sep, log.node_id, sep,
+                              horus::Char{chr}, sep, log.message, "\n");
          }})
           .Wait()};
 

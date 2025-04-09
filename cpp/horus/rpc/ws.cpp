@@ -48,10 +48,10 @@
 #include "horus/rpc/retry_policy.h"
 #include "horus/strings/logging.h"
 #include "horus/strings/str_cat.h"
+#include "horus/strings/string_view.h"
 #include "horus/types/in_place.h"
 #include "horus/types/one_of.h"
 #include "horus/types/scope_guard.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 namespace horus_internal {
@@ -618,11 +618,15 @@ void WebSocketRpcEndpoint::RunSendThread() noexcept {
 
     /// Checks whether we should keep trying to send this message *before* attempting to do so.
     const auto keep_trying = [&to_send]() noexcept -> bool {
-      bool result{true};  // Defaults to true for the case where we have no continuation, i.e. this
-                          // is a response.
-      to_send.continuation.InvokeWithConst(
-          [&result](const auto& continuation) noexcept { result = !continuation.WasCancelled(); });
-      return result;
+      // Defaults to true for the case where we have no continuation, i.e. this is a response.
+      HORUS_ONEOF_SWITCH(to_send.continuation) {
+        HORUS_ONEOF_CASE_DISCARD(void) { return true; }
+        HORUS_ONEOF_CASE(continuation, Continuation<pb::RpcMessage>) {
+          return !continuation.WasCancelled();
+        }
+        HORUS_ONEOF_CASE(continuation, Continuation<void>) { return !continuation.WasCancelled(); }
+      }
+      HORUS_ONEOF_RETURN_NOT_HANDLED;
     };
 
     // Serialize request.
@@ -637,8 +641,15 @@ void WebSocketRpcEndpoint::RunSendThread() noexcept {
         break;
       } catch (const std::bad_alloc& e) {
         if (!keep_retrying()) {
-          to_send.continuation.InvokeWith(
-              [&e](auto& continuation) noexcept { static_cast<void>(continuation.FailWith(e)); });
+          HORUS_ONEOF_SWITCH(to_send.continuation) {
+            HORUS_ONEOF_CASE_DISCARD(void) {}
+            HORUS_ONEOF_CASE(continuation, Continuation<pb::RpcMessage>) {
+              static_cast<void>(continuation.FailWith(e));
+            }
+            HORUS_ONEOF_CASE(continuation, Continuation<void>) {
+              static_cast<void>(continuation.FailWith(e));
+            }
+          }
           give_up = true;
           break;
         }
@@ -659,8 +670,15 @@ void WebSocketRpcEndpoint::RunSendThread() noexcept {
         break;
       } catch (const std::exception& e) {
         if (!keep_retrying()) {
-          to_send.continuation.InvokeWith(
-              [&e](auto& continuation) noexcept { static_cast<void>(continuation.FailWith(e)); });
+          HORUS_ONEOF_SWITCH(to_send.continuation) {
+            HORUS_ONEOF_CASE_DISCARD(void) {}
+            HORUS_ONEOF_CASE(continuation, Continuation<pb::RpcMessage>) {
+              static_cast<void>(continuation.FailWith(e));
+            }
+            HORUS_ONEOF_CASE(continuation, Continuation<void>) {
+              static_cast<void>(continuation.FailWith(e));
+            }
+          }
           give_up = true;
           break;
         }
@@ -670,30 +688,24 @@ void WebSocketRpcEndpoint::RunSendThread() noexcept {
       continue;
     }
 
-    using ContinuationType = decltype(to_send.continuation);
-
-    switch (to_send.continuation.Tag()) {
-      case ContinuationType::kTagFor<Continuation<pb::RpcMessage>>: {
+    HORUS_ONEOF_SWITCH(to_send.continuation) {
+      HORUS_ONEOF_CASE(continuation, Continuation<pb::RpcMessage>) {
         // If a response is expected, set it up. Note that at this point we allocated a request ID
         // for the response, so we have no choice but to wait for it even if we reached the
         // deadline.
         const std::unique_lock<std::mutex> lock{send_mtx_};
         // NOLINTNEXTLINE(*-constant-array-index)
-        pending_responses_[req_index].continuation =
-            std::move(to_send.continuation).As<Continuation<pb::RpcMessage>>();
-        break;
+        pending_responses_[req_index].continuation = std::move(continuation);
+        break;  // We need an explicit break here because the `HORUS_ONEOF_CASE` macro uses a `for`
+                // loop in C++14.
       }
-      case ContinuationType::kTagFor<Continuation<void>>: {
-        static_cast<void>(to_send.continuation.As<Continuation<void>>().ContinueWith());
-        break;
+      HORUS_ONEOF_CASE(continuation, Continuation<void>) {
+        static_cast<void>(continuation.ContinueWith());
       }
-      case ContinuationType::kTagFor<void>:
+      HORUS_ONEOF_CASE_DISCARD(void) {
         // We are sending a response, and don't need to send a continuation.
-        break;
-      default: {
-        assert(false);
-        break;
       }
+      HORUS_ONEOF_DEFAULT_NOT_HANDLED;
     }
   }
 }
@@ -714,15 +726,15 @@ class WebSocketConnectLifecycleCallback final {
     const RpcEndpoint::LifecycleEvent lifecycle_event{std::move(lifecycle_event_rvalue)};
 
     switch (lifecycle_event.Tag()) {
-      case RpcEndpoint::LifecycleEvent::kTagFor<RpcEndpoint::ConnectedEvent>: {
+      case OneOfTagFor<RpcEndpoint::LifecycleEvent, RpcEndpoint::ConnectedEvent>(): {
         static_cast<void>(continuation_.ContinueWith(endpoint_));
         break;
       }
-      case RpcEndpoint::LifecycleEvent::kTagFor<RpcEndpoint::DisconnectedEvent>: {
+      case OneOfTagFor<RpcEndpoint::LifecycleEvent, RpcEndpoint::DisconnectedEvent>(): {
         static_cast<void>(continuation_.FailWith(RpcEndpointDisconnectedError{}));
         break;
       }
-      case RpcEndpoint::LifecycleEvent::kTagFor<RpcEndpoint::ErrorEvent>: {
+      case OneOfTagFor<RpcEndpoint::LifecycleEvent, RpcEndpoint::ErrorEvent>(): {
         if (failures_ == kMaxFailures) {
           // We cannot properly connect -> return a disconnected error.
           static_cast<void>(continuation_.FailWith(RpcEndpointDisconnectedError{}));
@@ -732,7 +744,7 @@ class WebSocketConnectLifecycleCallback final {
         }
         break;
       }
-      case RpcEndpoint::LifecycleEvent::kTagFor<RpcEndpoint::ShutdownEvent>: {
+      case OneOfTagFor<RpcEndpoint::LifecycleEvent, RpcEndpoint::ShutdownEvent>(): {
         static_cast<void>(continuation_.FailWith(CancellationError{}));
         break;
       }

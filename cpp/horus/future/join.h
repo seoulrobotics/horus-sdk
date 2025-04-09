@@ -18,8 +18,8 @@
 #include "horus/future/info.h"
 #include "horus/future/poll.h"
 #include "horus/internal/tuple.h"
-#include "horus/internal/unsafe_union.h"
 #include "horus/types/span.h"
+#include "horus/types/union.h"
 
 namespace horus {
 namespace horus_internal {
@@ -103,7 +103,7 @@ class JoinFuture final : public Future<std::tuple<FutureResult<Futures>...>> {
   /// Implementation of the future.
   horus_internal::JoinFutureImpl<
       /*I=*/std::tuple<Futures...>, /*O=*/std::tuple<FutureResult<Futures>...>,
-      /*Unions=*/std::tuple<horus_internal::UnsafeUnion<Futures, FutureResult<Futures>>...>>
+      /*Unions=*/std::tuple<UnsafeUnion<Futures, FutureResult<Futures>>...>>
       impl_;
   /// Future information.
   FutureInfo info_;
@@ -136,7 +136,7 @@ class JoinArrayFuture final : public Future<std::array<FutureResult<F>, N>> {
   /// Implementation of the future.
   horus_internal::JoinFutureImpl<
       /*I=*/std::array<F, N>, /*O=*/std::array<FutureResult<F>, N>,
-      /*Unions=*/std::array<horus_internal::UnsafeUnion<F, FutureResult<F>>, N>>
+      /*Unions=*/std::array<UnsafeUnion<F, FutureResult<F>>, N>>
       impl_;
   /// Future information.
   FutureInfo info_;

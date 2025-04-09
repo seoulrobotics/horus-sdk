@@ -21,11 +21,11 @@
 #include "horus/pb/logs/logs_pb.h"
 #include "horus/rpc/endpoint.h"
 #include "horus/strings/logging.h"
+#include "horus/strings/string_view.h"
 #include "horus/types/in_place.h"
 #include "horus/types/one_of.h"
 #include "horus/types/owned.h"
 #include "horus/types/span.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 namespace horus_internal {
@@ -45,10 +45,10 @@ class SubscriberSet final {
   template <class F>
   auto WithSubscribers(const F& invocable) const noexcept(false)
       -> decltype(invocable(std::declval<Span<const SubscriberClient>>())) {
-    if (subscribers_.template Is<void>()) {
-      return invocable(Span<const SubscriberClient>{});
-    }
-    return invocable(Span<const SubscriberClient>{*subscribers_.template As<0>()});
+    OwnedSubscribers* const owned_subscribers{subscribers_.template As<OwnedSubscribers>()};
+    return owned_subscribers == nullptr
+               ? invocable(Span<const SubscriberClient>{})
+               : invocable(Span<const SubscriberClient>{*owned_subscribers});
   }
 
   /// Calls `invocable(subscriber)` for each `SubscriberClient` in the set, then awaits completion
@@ -61,7 +61,7 @@ class SubscriberSet final {
     if (subscribers_.template Is<void>()) {
       return CompletedFuture<void>{};
     }
-    OwnedSubscribers& owned_subscribers{subscribers_.template As<0>()};
+    OwnedSubscribers& owned_subscribers{subscribers_.template As<OwnedSubscribers>()};
     std::vector<AnyFuture<void>> tasks;
     tasks.reserve(owned_subscribers->size());
     for (const SubscriberClient& subscriber : owned_subscribers.Get()) {
@@ -117,9 +117,10 @@ Response SubscriberSet<SubscriberClient>::Add(const RpcContext& context) {
     // Do not emplace directly since the `Owned` constructor can throw and `Emplace()`
     // requires a noexcept constructor.
     OwnedSubscribers owned_subscribers;
-    static_cast<void>(subscribers_.template Emplace<0>(std::move(owned_subscribers)));
+    static_cast<void>(
+        subscribers_.template Emplace<OwnedSubscribers>(std::move(owned_subscribers)));
   }
-  std::vector<SubscriberClient>& subscribers{*subscribers_.template As<0>()};
+  std::vector<SubscriberClient>& subscribers{*subscribers_.template As<OwnedSubscribers>()};
   if (FindSubscriber(subscribers, *context.Endpoint()) == subscribers.size()) {
     subscribers.emplace_back(context.Endpoint());
   }
@@ -143,7 +144,7 @@ Response SubscriberSet<SubscriberClient>::Remove(const RpcContext& context) {
     return Response{}.set_disconnection_error(
         CreateMissingSubscriberResponse(context, SubscriberClient{nullptr}.ServiceName()));
   }
-  std::vector<SubscriberClient>& subscribers{*subscribers_.template As<0>()};
+  std::vector<SubscriberClient>& subscribers{*subscribers_.template As<OwnedSubscribers>()};
   std::size_t const subscriber_index{FindSubscriber(subscribers, *context.Endpoint())};
   if (subscriber_index == subscribers.size()) {
     return Response{}.set_disconnection_error(

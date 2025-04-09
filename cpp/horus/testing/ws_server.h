@@ -19,9 +19,9 @@
 #include <utility>
 #include <vector>
 
+#include "horus/attributes.h"
 #include "horus/future/any.h"
 #include "horus/future/resolved.h"
-#include "horus/internal/attributes.h"
 #include "horus/pb/rpc/message_pb.h"
 #include "horus/rpc/base_handler.h"
 #include "horus/rpc/endpoint.h"
@@ -93,7 +93,7 @@ class WebSocketServer final {
 
 /// Returns a `MessageHandler` which handles incoming messages using the given RPC `handler`.
 WebSocketServer::MessageHandler HandleMessagesWith(
-    horus_internal::RpcBaseHandler& handler HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND);
+    horus_internal::RpcBaseHandler& handler HORUS_LIFETIME_BOUND);
 
 }  // namespace horus
 

@@ -80,13 +80,14 @@ BundledFrameProfilingSet::BundledFrameProfilingSet(
 }
 
 ProfilingInfo::ProfilingInfo(const pb::ProfilingInfo& profiling_info_pb)
-    : profile_type_{profiling_info_pb.profiling_set_case()}, profiling_set_{InPlaceIndex<2>} {
+    : profile_type_{profiling_info_pb.profiling_set_case()}, profiling_set_{InPlaceType<void>} {
   switch (profile_type_) {
     case ProfilingSetOneof::kGeneralProfilingSet:
-      profiling_set_.Emplace<0>(profiling_info_pb.general_profiling_set());
+      profiling_set_.Emplace<ProfilingSet>(profiling_info_pb.general_profiling_set());
       break;
     case ProfilingSetOneof::kBundledFrameProfilingSet:
-      profiling_set_.Emplace<1>(profiling_info_pb.bundled_frame_profiling_set());
+      profiling_set_.Emplace<BundledFrameProfilingSet>(
+          profiling_info_pb.bundled_frame_profiling_set());
       break;
     case ProfilingSetOneof::kNotSet:
     default:
@@ -95,18 +96,20 @@ ProfilingInfo::ProfilingInfo(const pb::ProfilingInfo& profiling_info_pb)
 }
 
 OneOf<ProfilingSet, void> ProfilingInfo::GeneralProfile() const {
-  if (profiling_set_.Is<0>()) {
-    return OneOf<ProfilingSet, void>{InPlaceIndex<0>, profiling_set_.As<ProfilingSet>()};
+  ProfilingSet const* const profiling_set{profiling_set_.TryAs<ProfilingSet>()};
+  if (profiling_set != nullptr) {
+    return *profiling_set;
   }
-  return OneOf<ProfilingSet, void>{InPlaceIndex<1>};
+  return OneOf<ProfilingSet, void>{InPlaceType<void>};
 }
 
 OneOf<BundledFrameProfilingSet, void> ProfilingInfo::BundledFrameProfile() const {
-  if (profiling_set_.Is<1>()) {
-    return OneOf<BundledFrameProfilingSet, void>{InPlaceIndex<0>,
-                                                 profiling_set_.As<BundledFrameProfilingSet>()};
+  BundledFrameProfilingSet const* const profiling_set{
+      profiling_set_.TryAs<BundledFrameProfilingSet>()};
+  if (profiling_set != nullptr) {
+    return *profiling_set;
   }
-  return OneOf<BundledFrameProfilingSet, void>{InPlaceIndex<1>};
+  return OneOf<BundledFrameProfilingSet, void>{InPlaceType<void>};
 }
 
 }  // namespace sdk

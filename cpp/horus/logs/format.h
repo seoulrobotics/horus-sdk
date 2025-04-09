@@ -7,7 +7,7 @@
 
 #include "horus/pb/logs/message_pb.h"
 #include "horus/pb/logs/metadata_pb.h"
-#include "horus/strings/str_sink_erased.h"
+#include "horus/strings/erased_sink.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -534,6 +534,9 @@ void HorusStringify(const ErasedSink& sink, const LicenseForbiddenFeature& data)
 
 /// Formats the log `logs::FailedToUpdateConfiguration` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const FailedToUpdateConfiguration& data);
+
+/// Formats the log `logs::ObstructionDetectorBadReferenceWarning` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const ObstructionDetectorBadReferenceWarning& /*data*/);
 
 }  // namespace logs
 

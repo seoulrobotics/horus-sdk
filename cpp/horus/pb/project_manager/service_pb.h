@@ -11,6 +11,8 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/attributes.h"
+#include "horus/internal/attributes.h"
 #include "horus/pb/cow_bytes.h"
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/license_server/messages_pb.h"
@@ -19,7 +21,7 @@
 #include "horus/pb/preprocessing/messages_pb.h"
 #include "horus/pb/serialize.h"
 #include "horus/pb/types.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -171,7 +173,7 @@ class LicenseLevel_Level1 final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const logs::LicenseServerConnectionError& license_server_unreachable() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicenseServerConnectionError& license_server_unreachable() const& noexcept HORUS_LIFETIME_BOUND {
     return license_server_unreachable_;
   }
 
@@ -190,7 +192,7 @@ class LicenseLevel_Level1 final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  logs::LicenseServerConnectionError& mutable_license_server_unreachable() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicenseServerConnectionError& mutable_license_server_unreachable() & noexcept HORUS_LIFETIME_BOUND {
     clear_reason();
     reason_ = ReasonOneof::kLicenseServerUnreachable;
     set_fields_[0] = true;
@@ -318,7 +320,7 @@ class LicenseLevel_Level2 final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const logs::LicenseNotFoundError& license_not_found() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicenseNotFoundError& license_not_found() const& noexcept HORUS_LIFETIME_BOUND {
     return license_not_found_;
   }
 
@@ -337,7 +339,7 @@ class LicenseLevel_Level2 final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  logs::LicenseNotFoundError& mutable_license_not_found() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicenseNotFoundError& mutable_license_not_found() & noexcept HORUS_LIFETIME_BOUND {
     clear_reason();
     reason_ = ReasonOneof::kLicenseNotFound;
     set_fields_[0] = true;
@@ -465,7 +467,7 @@ class LicenseLevel_Level3 final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const logs::LicenseExpiredError& license_expired() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicenseExpiredError& license_expired() const& noexcept HORUS_LIFETIME_BOUND {
     return license_expired_;
   }
 
@@ -484,7 +486,7 @@ class LicenseLevel_Level3 final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  logs::LicenseExpiredError& mutable_license_expired() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicenseExpiredError& mutable_license_expired() & noexcept HORUS_LIFETIME_BOUND {
     clear_reason();
     reason_ = ReasonOneof::kLicenseExpired;
     set_fields_[0] = true;
@@ -520,7 +522,7 @@ class LicenseLevel_Level3 final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr const logs::LicenseServerConnectionError& license_server_disconnected() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicenseServerConnectionError& license_server_disconnected() const& noexcept HORUS_LIFETIME_BOUND {
     return license_server_disconnected_;
   }
 
@@ -539,7 +541,7 @@ class LicenseLevel_Level3 final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  logs::LicenseServerConnectionError& mutable_license_server_disconnected() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicenseServerConnectionError& mutable_license_server_disconnected() & noexcept HORUS_LIFETIME_BOUND {
     clear_reason();
     reason_ = ReasonOneof::kLicenseServerDisconnected;
     set_fields_[1] = true;
@@ -675,7 +677,7 @@ class LicenseLevel_Level4 final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const logs::LicenseActiveInfo& license_active() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicenseActiveInfo& license_active() const& noexcept HORUS_LIFETIME_BOUND {
     return license_active_;
   }
 
@@ -694,7 +696,7 @@ class LicenseLevel_Level4 final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  logs::LicenseActiveInfo& mutable_license_active() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicenseActiveInfo& mutable_license_active() & noexcept HORUS_LIFETIME_BOUND {
     clear_reason();
     reason_ = ReasonOneof::kLicenseActive;
     set_fields_[0] = true;
@@ -830,7 +832,7 @@ class LicenseLevel final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 10.
-  constexpr const LicenseLevel_Level1& level_1() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const LicenseLevel_Level1& level_1() const& noexcept HORUS_LIFETIME_BOUND {
     return level_1_;
   }
 
@@ -849,7 +851,7 @@ class LicenseLevel final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 10.
-  LicenseLevel_Level1& mutable_level_1() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  LicenseLevel_Level1& mutable_level_1() & noexcept HORUS_LIFETIME_BOUND {
     clear_level();
     level_ = LevelOneof::kLevel1;
     set_fields_[0] = true;
@@ -885,7 +887,7 @@ class LicenseLevel final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 20.
-  constexpr const LicenseLevel_Level2& level_2() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const LicenseLevel_Level2& level_2() const& noexcept HORUS_LIFETIME_BOUND {
     return level_2_;
   }
 
@@ -904,7 +906,7 @@ class LicenseLevel final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 20.
-  LicenseLevel_Level2& mutable_level_2() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  LicenseLevel_Level2& mutable_level_2() & noexcept HORUS_LIFETIME_BOUND {
     clear_level();
     level_ = LevelOneof::kLevel2;
     set_fields_[1] = true;
@@ -940,7 +942,7 @@ class LicenseLevel final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 30.
-  constexpr const LicenseLevel_Level3& level_3() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const LicenseLevel_Level3& level_3() const& noexcept HORUS_LIFETIME_BOUND {
     return level_3_;
   }
 
@@ -959,7 +961,7 @@ class LicenseLevel final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 30.
-  LicenseLevel_Level3& mutable_level_3() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  LicenseLevel_Level3& mutable_level_3() & noexcept HORUS_LIFETIME_BOUND {
     clear_level();
     level_ = LevelOneof::kLevel3;
     set_fields_[2] = true;
@@ -995,7 +997,7 @@ class LicenseLevel final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 40.
-  constexpr const LicenseLevel_Level4& level_4() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const LicenseLevel_Level4& level_4() const& noexcept HORUS_LIFETIME_BOUND {
     return level_4_;
   }
 
@@ -1014,7 +1016,7 @@ class LicenseLevel final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 40.
-  LicenseLevel_Level4& mutable_level_4() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  LicenseLevel_Level4& mutable_level_4() & noexcept HORUS_LIFETIME_BOUND {
     clear_level();
     level_ = LevelOneof::kLevel4;
     set_fields_[3] = true;
@@ -1051,7 +1053,7 @@ class LicenseLevel final : public PbMessage {
   ///  Refers to LicensePrivilege.
   ///
   /// Field no: 60.
-  constexpr std::uint32_t privilege() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint32_t privilege() const& noexcept HORUS_LIFETIME_BOUND {
     return privilege_;
   }
 
@@ -1059,7 +1061,7 @@ class LicenseLevel final : public PbMessage {
   ///  Refers to LicensePrivilege.
   ///
   /// Field no: 60.
-  std::uint32_t& mutable_privilege() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint32_t& mutable_privilege() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[4] = true;
     return privilege_;
   }
@@ -1208,7 +1210,7 @@ class LicenseStatus final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const LicenseLevel& license_level() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const LicenseLevel& license_level() const& noexcept HORUS_LIFETIME_BOUND {
     return license_level_;
   }
 
@@ -1227,7 +1229,7 @@ class LicenseStatus final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  LicenseLevel& mutable_license_level() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  LicenseLevel& mutable_license_level() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return license_level_;
   }
@@ -1258,7 +1260,7 @@ class LicenseStatus final : public PbMessage {
   /// If level is inferior to 3, this field is unset
   ///
   /// Field no: 2.
-  constexpr const LicenseInfo& license_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const LicenseInfo& license_info() const& noexcept HORUS_LIFETIME_BOUND {
     return license_info_;
   }
 
@@ -1277,7 +1279,7 @@ class LicenseStatus final : public PbMessage {
   /// If level is inferior to 3, this field is unset
   ///
   /// Field no: 2.
-  LicenseInfo& mutable_license_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  LicenseInfo& mutable_license_info() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return license_info_;
   }
@@ -1436,14 +1438,14 @@ class GetHealthStatusResponse_NodeHealth final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr GetHealthStatusResponse_NodeHealth_Service service() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr GetHealthStatusResponse_NodeHealth_Service service() const& noexcept HORUS_LIFETIME_BOUND {
     return service_;
   }
 
   /// No documentation.
   ///
   /// Field no: 1.
-  GetHealthStatusResponse_NodeHealth_Service& mutable_service() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  GetHealthStatusResponse_NodeHealth_Service& mutable_service() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return service_;
   }
@@ -1474,7 +1476,7 @@ class GetHealthStatusResponse_NodeHealth final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr const CowBytes& node_id() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& node_id() const& noexcept HORUS_LIFETIME_BOUND {
     return node_id_;
   }
 
@@ -1493,7 +1495,7 @@ class GetHealthStatusResponse_NodeHealth final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  CowBytes& mutable_node_id() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_node_id() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return node_id_;
   }
@@ -1524,14 +1526,14 @@ class GetHealthStatusResponse_NodeHealth final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 3.
-  constexpr GetHealthStatusResponse_NodeHealth_Status node_status() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr GetHealthStatusResponse_NodeHealth_Status node_status() const& noexcept HORUS_LIFETIME_BOUND {
     return node_status_;
   }
 
   /// No documentation.
   ///
   /// Field no: 3.
-  GetHealthStatusResponse_NodeHealth_Status& mutable_node_status() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  GetHealthStatusResponse_NodeHealth_Status& mutable_node_status() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return node_status_;
   }
@@ -1626,7 +1628,7 @@ class GetHealthStatusResponse_SensorHealth final : public PbMessage {
   /// ID of the preprocessing node managing the sensor
   ///
   /// Field no: 1.
-  constexpr const CowBytes& preprocessing_node_id() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& preprocessing_node_id() const& noexcept HORUS_LIFETIME_BOUND {
     return preprocessing_node_id_;
   }
 
@@ -1645,7 +1647,7 @@ class GetHealthStatusResponse_SensorHealth final : public PbMessage {
   /// ID of the preprocessing node managing the sensor
   ///
   /// Field no: 1.
-  CowBytes& mutable_preprocessing_node_id() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_preprocessing_node_id() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return preprocessing_node_id_;
   }
@@ -1676,7 +1678,7 @@ class GetHealthStatusResponse_SensorHealth final : public PbMessage {
   /// Info of the sensor
   ///
   /// Field no: 2.
-  constexpr const SensorInfo& info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const SensorInfo& info() const& noexcept HORUS_LIFETIME_BOUND {
     return info_;
   }
 
@@ -1695,7 +1697,7 @@ class GetHealthStatusResponse_SensorHealth final : public PbMessage {
   /// Info of the sensor
   ///
   /// Field no: 2.
-  SensorInfo& mutable_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  SensorInfo& mutable_info() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return info_;
   }
@@ -1726,7 +1728,7 @@ class GetHealthStatusResponse_SensorHealth final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 3.
-  constexpr const logs::ServiceConnectionTimedOut& timeout() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ServiceConnectionTimedOut& timeout() const& noexcept HORUS_LIFETIME_BOUND {
     return timeout_;
   }
 
@@ -1745,7 +1747,7 @@ class GetHealthStatusResponse_SensorHealth final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 3.
-  logs::ServiceConnectionTimedOut& mutable_timeout() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ServiceConnectionTimedOut& mutable_timeout() & noexcept HORUS_LIFETIME_BOUND {
     clear_node_unreachable_error();
     node_unreachable_error_ = NodeUnreachableErrorOneof::kTimeout;
     set_fields_[2] = true;
@@ -1885,7 +1887,7 @@ class GetHealthStatusResponse final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const LicenseStatus& license_status() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const LicenseStatus& license_status() const& noexcept HORUS_LIFETIME_BOUND {
     return license_status_;
   }
 
@@ -1904,7 +1906,7 @@ class GetHealthStatusResponse final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  LicenseStatus& mutable_license_status() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  LicenseStatus& mutable_license_status() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return license_status_;
   }
@@ -1939,7 +1941,7 @@ class GetHealthStatusResponse final : public PbMessage {
   ///  clients.
   ///
   /// Field no: 2.
-  constexpr const CowRepeated<GetHealthStatusResponse_SensorHealth>& sensor_statuses() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowRepeated<GetHealthStatusResponse_SensorHealth>& sensor_statuses() const& noexcept HORUS_LIFETIME_BOUND {
     return sensor_statuses_;
   }
 
@@ -1962,7 +1964,7 @@ class GetHealthStatusResponse final : public PbMessage {
   ///  clients.
   ///
   /// Field no: 2.
-  CowRepeated<GetHealthStatusResponse_SensorHealth>& mutable_sensor_statuses() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowRepeated<GetHealthStatusResponse_SensorHealth>& mutable_sensor_statuses() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return sensor_statuses_;
   }
@@ -1993,7 +1995,7 @@ class GetHealthStatusResponse final : public PbMessage {
   /// Connectivity status of each node.
   ///
   /// Field no: 3.
-  constexpr const CowRepeated<GetHealthStatusResponse_NodeHealth>& service_statuses() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowRepeated<GetHealthStatusResponse_NodeHealth>& service_statuses() const& noexcept HORUS_LIFETIME_BOUND {
     return service_statuses_;
   }
 
@@ -2012,7 +2014,7 @@ class GetHealthStatusResponse final : public PbMessage {
   /// Connectivity status of each node.
   ///
   /// Field no: 3.
-  CowRepeated<GetHealthStatusResponse_NodeHealth>& mutable_service_statuses() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowRepeated<GetHealthStatusResponse_NodeHealth>& mutable_service_statuses() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return service_statuses_;
   }

@@ -57,6 +57,7 @@
 #include "horus/sdk/version.h"
 #include "horus/strings/logging.h"
 #include "horus/types/in_place.h"
+#include "horus/types/one_of.h"
 
 namespace horus {
 
@@ -94,7 +95,7 @@ SdkFuture<FutureResult<F>> Sdk::CreateFuture(F&& future) noexcept(false) {
           return;
         }
         const std::unique_lock<std::mutex> lock{locked_state->mutex};
-        locked_state->value.template Emplace<1>(std::move(value));
+        static_cast<void>(locked_state->value.template Emplace<T>(std::move(value)));
         locked_state->completion_cv.notify_all();
         if (locked_state->on_completion != nullptr) {
           locked_state->on_completion(*locked_state);
@@ -107,15 +108,16 @@ SdkFuture<FutureResult<F>> Sdk::CreateFuture(F&& future) noexcept(false) {
           return;
         }
         const std::unique_lock<std::mutex> lock{locked_state->mutex};
-        locked_state->value.template Emplace<2>(exn);
+        static_cast<void>(locked_state->value.template Emplace<std::exception_ptr>(exn));
         locked_state->completion_cv.notify_all();
         if (locked_state->on_completion != nullptr) {
           locked_state->on_completion(*locked_state);
         }
       })};
-  state->value.template Emplace<0>(std::move(final_future));
-  task_channel_.GetSender().SendOrWait(
-      [state]() -> AnyFuture<void> { return std::move(state->value.template As<0>()); });
+  static_cast<void>(state->value.template Emplace<AnyFuture<void>>(std::move(final_future)));
+  task_channel_.GetSender().SendOrWait([state]() -> AnyFuture<void> {
+    return std::move(state->value.template As<AnyFuture<void>>());
+  });
   return SdkFuture<T>{std::move(state)};
 }
 
@@ -358,7 +360,7 @@ void Sdk::Subscription::State::HandleEvent(RpcEndpoint::LifecycleEvent&& event) 
     return;
   }
   switch (event.Tag()) {
-    case RpcEndpoint::LifecycleEvent::kTagFor<RpcEndpoint::ConnectedEvent>: {
+    case OneOfTagFor<RpcEndpoint::LifecycleEvent, RpcEndpoint::ConnectedEvent>(): {
       status_.store(Status::kConnected, std::memory_order_relaxed);
       try {
         sdk_.task_channel_.GetSender().SendOrWait([state{std::move(shared)}]() -> AnyFuture<void> {
@@ -377,13 +379,13 @@ void Sdk::Subscription::State::HandleEvent(RpcEndpoint::LifecycleEvent&& event) 
       }
       break;
     }
-    case RpcEndpoint::LifecycleEvent::kTagFor<RpcEndpoint::DisconnectedEvent>:
-    case RpcEndpoint::LifecycleEvent::kTagFor<RpcEndpoint::ErrorEvent>: {
+    case OneOfTagFor<RpcEndpoint::LifecycleEvent, RpcEndpoint::DisconnectedEvent>():
+    case OneOfTagFor<RpcEndpoint::LifecycleEvent, RpcEndpoint::ErrorEvent>(): {
       // We always reconnect.
       status_.store(Status::kConnecting, std::memory_order_relaxed);
       break;
     }
-    case RpcEndpoint::LifecycleEvent::kTagFor<RpcEndpoint::ShutdownEvent>:
+    case OneOfTagFor<RpcEndpoint::LifecycleEvent, RpcEndpoint::ShutdownEvent>():
       break;
     default: {
       assert(false);

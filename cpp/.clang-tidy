@@ -25,6 +25,7 @@ Checks: >
   -modernize-use-default-member-init,
   -modernize-use-nodiscard,
   -modernize-use-trailing-return-type,
+  -performance-enum-size,
   -readability-avoid-const-params-in-decls,
   -readability-function-cognitive-complexity,
   -readability-magic-numbers,
@@ -34,6 +35,7 @@ Checks: >
 CheckOptions:
   misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic: true
   performance-unnecessary-value-param.AllowedTypes: "std::shared_ptr" # Compliance with A8-4-13
+  readability-identifier-length.IgnoredParameterNames: "^to$"
 
 WarningsAsErrors: >
   *,

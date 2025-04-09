@@ -7,8 +7,8 @@
 #include <utility>
 #include <vector>
 
-#include "horus/internal/pointer_cast.h"
-#include "horus/types/string_view.h"
+#include "horus/pointer/cast.h"
+#include "horus/strings/string_view.h"
 
 namespace horus {
 
@@ -32,7 +32,7 @@ PbBuffer::PbBuffer(std::vector<std::uint8_t>&& buffer) noexcept(false)
   const std::shared_ptr<const std::vector<std::uint8_t>> shared_buffer{
       std::make_shared<std::vector<std::uint8_t>>(std::move(buffer))};
 
-  buffer_ = {shared_buffer, horus_internal::UnsafePointerCast<const char>(shared_buffer->data())};
+  buffer_ = {shared_buffer, SafePointerCast<char>(shared_buffer->data())};
 }
 
 PbBuffer::PbBuffer(std::string&& buffer) noexcept(false) : buffer_{nullptr}, size_{buffer.size()} {
