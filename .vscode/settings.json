@@ -18,8 +18,7 @@
     "-DCMAKE_CXX_COMPILER=clang++",
     "-DCMAKE_MAKE_PROGRAM=ninja",
 
-    "-DHORUS_SDK_BUILD_SYMLINK=${workspaceFolder}/build/current",
-    "-DHORUS_SDK_USE_UNION=ON"
+    "-DHORUS_SDK_BUILD_SYMLINK=${workspaceFolder}/build/current"
   ],
   "cmake.debugConfig": {
     "type": "lldb",
@@ -35,7 +34,7 @@
 
   "testMate.cpp.test.advancedExecutables": [
     {
-      "pattern": "{build}/current/horus_{core,sdk}_test",
+      "pattern": "{build}/current/horus_sdk_test",
       "gtest": {
         "debug.enableOutputColouring": true // spell-checker: disable-line
       },

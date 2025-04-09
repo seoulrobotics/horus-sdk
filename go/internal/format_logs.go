@@ -346,6 +346,8 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return fmt.Sprintf("%v is not allowed by the current license.", data.GetFeatureName())
 	case *logs_pb.FailedToUpdateConfiguration:
 		return fmt.Sprintf("Failed to update the configuration: %v.", data.GetDetails())
+	case *logs_pb.ObstructionDetectorBadReferenceWarning:
+		return "The obstruction detector reference is not valid since it contains zero points."
 	default:
 		return "unknown log message"
 	}

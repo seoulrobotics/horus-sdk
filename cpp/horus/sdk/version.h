@@ -9,7 +9,7 @@
 #include <string>
 
 #include "horus/pb/status_service/service_pb.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 namespace horus {
 namespace sdk {

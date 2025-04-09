@@ -171,6 +171,7 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.FILE_WRITE_ERROR_FIELD_NUMBER: lambda m: format_file_write_error(m.file_write_error),
     LogData.LICENSE_FORBIDDEN_FEATURE_FIELD_NUMBER: lambda m: format_license_forbidden_feature(m.license_forbidden_feature),
     LogData.FAILED_TO_UPDATE_CONFIGURATION_FIELD_NUMBER: lambda m: format_failed_to_update_configuration(m.failed_to_update_configuration),
+    LogData.OBSTRUCTION_DETECTOR_BAD_REFERENCE_WARNING_FIELD_NUMBER: lambda m: format_obstruction_detector_bad_reference_warning(m.obstruction_detector_bad_reference_warning),
 }
 
 def _unknown_format(data: LogData) -> str:
@@ -859,3 +860,7 @@ def format_license_forbidden_feature(log: _logs_pb.LicenseForbiddenFeature) -> s
 def format_failed_to_update_configuration(log: _logs_pb.FailedToUpdateConfiguration) -> str:
     """Formats log `FailedToUpdateConfiguration` to a string."""
     return f"Failed to update the configuration: {log.details}."
+
+def format_obstruction_detector_bad_reference_warning(log: _logs_pb.ObstructionDetectorBadReferenceWarning) -> str:
+    """Formats log `ObstructionDetectorBadReferenceWarning` to a string."""
+    return f"The obstruction detector reference is not valid since it contains zero points."

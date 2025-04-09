@@ -38,7 +38,6 @@ option(HORUS_SDK_TSAN "Enable thread sanitizer" OFF)
 option(HORUS_SDK_UBSAN "Enable undefined behavior sanitizer" OFF)
 option(HORUS_SDK_USE_LIBCXX "Enable usage of libc++ (and therefore thread safety analysis and hardening)" OFF)
 option(HORUS_SDK_USE_PB_NAMESPACE_ALIAS "Enable horus::pb = horus::sdk::pb alias" ON)
-option(HORUS_SDK_USE_UNION "Enable usage of unions for better debugging" OFF)
 
 set(HORUS_SDK_BUILD_SYMLINK "" CACHE FILEPATH "If not empty, create a symlink from the given path to the build directory")
 
@@ -47,10 +46,8 @@ if(HORUS_SDK_BUILD_SYMLINK)
 endif()
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-  set(HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND "[[clang::lifetimebound]]")
   set(HORUS_SDK_ATTRIBUTE_NO_UNIQUE_ADDRESS "[[no_unique_address]]")
   set(HORUS_SDK_ATTRIBUTE_TRIVIAL_ABI "[[clang::trivial_abi]]")
-  set(HORUS_SDK_NO_SANITIZE "__attribute__((no_sanitize(x)))")
   set(HORUS_SDK_USE_CLANG ON)
 
   if(HORUS_SDK_USE_LIBCXX)
@@ -101,24 +98,19 @@ set(LIBUV_BUILD_TESTS  OFF)
 
 FetchContent_Declare(
   IXWebSocket
-  URL https://github.com/machinezone/IXWebSocket/archive/c5a02f1066fb0fde48f80f51178429a27f689a39.zip  # v11.4.5
+  URL https://github.com/machinezone/IXWebSocket/archive/9884c325dd0fa64b2b885b332e98118f60313208.zip  # 2024-05-17
   EXCLUDE_FROM_ALL
 )
 set(USE_ZLIB OFF)
 
 FetchContent_Declare(
   protozero
-  URL       https://github.com/mapbox/protozero/archive/542fcf7dd228672b775eb283d18ccd94c4e682d9.zip  # v1.7.1
+  URL       https://github.com/mapbox/protozero/archive/542fcf7dd228672b775eb283d18ccd94c4e682d9.zip  # v1.8.0
   PATCH_COMMAND
-    # Prevent protozero from defining targets `clang-tidy`.
-    sed -Ei "s/find_program\\\\(([A-Z_]+) .+\\\\)/set(\\\\1 0)/g" CMakeLists.txt &&
-    # Disable testing in Protozero only.
-    sed -i "s/if(BUILD_TESTING)/if(0)/g" CMakeLists.txt &&
     # Expose `basic_pbf_writer` internals to be able to serialize buffers in-place.
-    sed -i "s/^class basic_pbf_writer {$/class basic_pbf_writer { public:/g" include/protozero/basic_pbf_writer.hpp &&
-    # Don't import Protobuf.
-    sed -i "s/find_package(Protobuf)//" CMakeLists.txt
-  EXCLUDE_FROM_ALL
+    sed -i "s/^class basic_pbf_writer {$/class basic_pbf_writer { public:/g" include/protozero/basic_pbf_writer.hpp
+    # Remove CMakeLists.txt to treat the dependency as a plain folder, since it is a header-only library.
+    && rm -f CMakeLists.txt
 )
 
 FetchContent_MakeAvailable(IXWebSocket libuv protozero)
@@ -145,9 +137,10 @@ add_custom_command(
 # Library
 # -----
 
-set(horus_targets horus_core horus_sdk)
+set(horus_targets horus_sdk)
 
-add_library(horus_core
+add_library(horus_sdk
+  horus/attributes.h
   horus/event_loop/event_loop.cpp
   horus/event_loop/event_loop.h
   horus/event_loop/handle.h
@@ -156,7 +149,6 @@ add_library(horus_core
   horus/event_loop/waker.cpp
   horus/event_loop/waker.h
   horus/functional/move_only_function.h
-  horus/future/future.h
   horus/future/any.h
   horus/future/async.h
   horus/future/attach.h
@@ -168,10 +160,11 @@ add_library(horus_core
   horus/future/core_owner.h
   horus/future/from_continuation.h
   horus/future/from_poll.h
+  horus/future/future.h
   horus/future/join.h
   horus/future/loop.h
-  horus/future/map.h
   horus/future/map_to.h
+  horus/future/map.h
   horus/future/one_of.h
   horus/future/operator.h
   horus/future/owner.h
@@ -190,16 +183,17 @@ add_library(horus_core
   horus/future/time.h
   horus/future/try.h
   horus/future/work.h
+  horus/hash/fnv1a.h
+  horus/internal/attributes.h
   horus/internal/bitset.h
   horus/internal/enum.cpp
   horus/internal/enum.h
-  horus/internal/pointer_arithmetic.h
-  horus/internal/pointer_cast.h
-  horus/internal/source_location.h
   horus/internal/tuple.h
   horus/internal/type_traits.h
-  horus/internal/unsafe_union.h
   horus/internal/void.h
+  horus/logs/format.cpp
+  horus/logs/format.h
+  horus/optimization.h
   horus/pb/alias.h
   horus/pb/buffer.cpp
   horus/pb/buffer.h
@@ -216,6 +210,11 @@ add_library(horus_core
   horus/pb/serialize.h
   horus/pb/types.h
   horus/pb/unaligned_span.h
+  horus/pointer/arithmetic.h
+  horus/pointer/cast.h
+  horus/pointer/erased.cpp
+  horus/pointer/erased.h
+  horus/pointer/unsafe_cast.h
   horus/rpc/base_client.cpp
   horus/rpc/base_client.h
   horus/rpc/base_handler.cpp
@@ -224,52 +223,9 @@ add_library(horus_core
   horus/rpc/endpoint.h
   horus/rpc/internal/subscriber_set.h
   horus/rpc/retry_policy.h
+  horus/rpc/services.h
   horus/rpc/ws.cpp
   horus/rpc/ws.h
-  horus/strings/ansi.cpp
-  horus/strings/ansi.h
-  horus/strings/chrono.h
-  horus/strings/fallback.h
-  horus/strings/logging.cpp
-  horus/strings/logging.h
-  horus/strings/pad.h
-  horus/strings/stdio.h
-  horus/strings/str_cat.h
-  horus/strings/str_sink.cpp
-  horus/strings/str_sink.h
-  horus/strings/str_sink_erased.h
-  horus/types/in_place.h
-  horus/types/list.h
-  horus/types/one_of.h
-  horus/types/owned.h
-  horus/types/span.h
-  horus/types/string_view.cpp
-  horus/types/string_view.h
-
-  "${CMAKE_CURRENT_BINARY_DIR}/horus/event_loop/uv_handles.h"
-  "${CMAKE_CURRENT_BINARY_DIR}/horus/internal/attributes.h"
-)
-add_library(horus::core ALIAS horus_core)
-target_compile_features(horus_core PUBLIC cxx_std_14)
-target_include_directories(horus_core PUBLIC "${HORUS_SDK_SOURCE_DIR}" "${HORUS_SDK_BINARY_DIR}")
-
-target_include_directories(horus_core SYSTEM PUBLIC
-  "${ixwebsocket_SOURCE_DIR}"
-  "${protozero_SOURCE_DIR}/include"
-  $<TARGET_PROPERTY:uv_a,INTERFACE_INCLUDE_DIRECTORIES>
-)
-target_link_libraries(horus_core PUBLIC ixwebsocket::ixwebsocket uv_a)
-
-if(HORUS_SDK_USE_UNION)
-  target_sources(horus_core PRIVATE horus/internal/unsafe_union_union.h)
-else()
-  target_sources(horus_core PRIVATE horus/internal/unsafe_union_aligned_bytes.h)
-endif()
-
-add_library(horus_sdk
-  horus/logs/format.cpp
-  horus/logs/format.h
-  horus/rpc/services.h
   horus/sdk.cpp
   horus/sdk.h
   horus/sdk/errors.h
@@ -284,12 +240,46 @@ add_library(horus_sdk
   horus/sdk/sensor.h
   horus/sdk/version.cpp
   horus/sdk/version.h
+  horus/source_location.h
+  horus/strings/ansi.cpp
+  horus/strings/ansi.h
+  horus/strings/chrono.h
+  horus/strings/erased_sink.h
+  horus/strings/fallback.h
+  horus/strings/logging.cpp
+  horus/strings/logging.h
+  horus/strings/pad.h
+  horus/strings/stdio.h
+  horus/strings/str_cat.h
+  horus/strings/string_view.cpp
+  horus/strings/string_view.h
+  horus/strings/stringify.cpp
+  horus/strings/stringify.h
+  horus/type_traits/conjunction.h
+  horus/types/in_place.h
+  horus/types/intrusive_list.h
+  horus/types/one_of.h
+  horus/types/owned.h
+  horus/types/scope_guard.h
+  horus/types/span.h
+  horus/types/union.h
+
+  "${CMAKE_CURRENT_BINARY_DIR}/horus/event_loop/uv_handles.h"
+  "${CMAKE_CURRENT_BINARY_DIR}/horus/internal/attributes.h"
 )
 add_library(horus::sdk ALIAS horus_sdk)
-target_link_libraries(horus_sdk PUBLIC horus::core)
+
+target_compile_features(horus_sdk PUBLIC cxx_std_14)
+target_include_directories(horus_sdk PUBLIC "${HORUS_SDK_SOURCE_DIR}" "${HORUS_SDK_BINARY_DIR}")
+target_include_directories(horus_sdk SYSTEM PUBLIC
+  "${ixwebsocket_SOURCE_DIR}"
+  "${protozero_SOURCE_DIR}/include"
+  $<TARGET_PROPERTY:uv_a,INTERFACE_INCLUDE_DIRECTORIES>
+)
+target_link_libraries(horus_sdk PUBLIC ixwebsocket::ixwebsocket uv_a)
 
 include(cmake/HorusSdkProtobuf.cmake)
-target_sources(horus_core PRIVATE ${horus_core_pb_sources})
+target_sources(horus_sdk PRIVATE ${horus_sdk_pb_sources})
 
 
 # Tests
@@ -299,7 +289,7 @@ if(HORUS_SDK_BUILD_TESTING)
   include(CTest)
   enable_testing()
 
-  add_executable(horus_core_test
+  add_executable(horus_sdk_test
     horus/event_loop/event_loop_test.cpp
     horus/future/async_test.cpp
     horus/future/channel_test.cpp
@@ -319,27 +309,20 @@ if(HORUS_SDK_BUILD_TESTING)
     horus/pb/message_test.cpp
     horus/pb/serialize_test.cpp
     horus/rpc/ws_test.cpp
-    horus/strings/str_cat_test.cpp
+    horus/sdk_test.cpp
+    horus/strings/pad_test.cpp
     horus/testing/event_loop.h
     horus/testing/event_loop_test.cpp
     horus/testing/timing.h
     horus/testing/ws_server.cpp
     horus/testing/ws_server.h
   )
-  target_compile_definitions(horus_core_test PRIVATE "HORUS_SDK_ROOT_DIR=\"${HORUS_SDK_ROOT_DIR}\"")
-  target_link_libraries(horus_core_test PRIVATE horus::core GTest::gmock_main)
+  target_compile_definitions(horus_sdk_test PRIVATE "HORUS_SDK_ROOT_DIR=\"${HORUS_SDK_ROOT_DIR}\"")
+  target_link_libraries(horus_sdk_test PRIVATE horus::sdk GTest::gmock_main)
 
-  add_executable(horus_sdk_test
-    horus/sdk_test.cpp
-    horus/testing/ws_server.cpp
-    horus/testing/ws_server.h
-  )
-  target_link_libraries(horus_sdk_test PRIVATE horus::core horus::sdk GTest::gmock_main)
-
-  list(APPEND horus_targets horus_core_test horus_sdk_test)
+  list(APPEND horus_targets horus_sdk_test)
 
   include(GoogleTest)
-  gtest_discover_tests(horus_core_test)
   gtest_discover_tests(horus_sdk_test)
 endif()
 
@@ -353,7 +336,7 @@ if(HORUS_SDK_BUILD_EXAMPLES)
       examples/helpers.h
     )
 
-    target_link_libraries(horus_example_${example} PRIVATE horus::core horus::sdk)
+    target_link_libraries(horus_example_${example} PRIVATE horus::sdk)
     list(APPEND horus_targets horus_example_${example})
     list(APPEND horus_examples_targets horus_example_${example})
   endforeach()
@@ -474,7 +457,3 @@ target_compile_options(ixwebsocket PRIVATE
   -Wno-unused-parameter
   -Wno-unused-private-field
 )
-
-# `FetchContent_Declare()` only supports `EXCLUDE_FROM_ALL` starting from CMake 3.28. Manually
-# exclude some external targets from ALL here.
-set_property(DIRECTORY "${protozero_SOURCE_DIR}" PROPERTY EXCLUDE_FROM_ALL ON)

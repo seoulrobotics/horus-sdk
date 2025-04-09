@@ -11,6 +11,7 @@
 #include "horus/future/info.h"
 #include "horus/future/operator.h"
 #include "horus/future/poll.h"
+#include "horus/internal/attributes.h"
 
 namespace horus {
 

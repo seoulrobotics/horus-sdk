@@ -175,6 +175,7 @@ LogData::LogData(const LogData& other) noexcept(false)
     , file_write_error_{other.file_write_error_}
     , license_forbidden_feature_{other.license_forbidden_feature_}
     , failed_to_update_configuration_{other.failed_to_update_configuration_}
+    , obstruction_detector_bad_reference_warning_{other.obstruction_detector_bad_reference_warning_}
     , data_{other.data_}
     , set_fields_{other.set_fields_} {}
 
@@ -682,6 +683,9 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[167]) {
     SerializeField<logs::FailedToUpdateConfiguration>(writer, /*tag=*/ 168, failed_to_update_configuration_);
+  }
+  if (set_fields_[168]) {
+    SerializeField<logs::ObstructionDetectorBadReferenceWarning>(writer, /*tag=*/ 169, obstruction_detector_bad_reference_warning_);
   }
 }
 
@@ -1862,6 +1866,13 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
         data_ = DataOneof::kFailedToUpdateConfiguration;
         DeserializeField<logs::FailedToUpdateConfiguration>(reader, failed_to_update_configuration_);
         set_fields_[167] = true;
+        break;
+      }
+      case 169: {
+        clear_data();
+        data_ = DataOneof::kObstructionDetectorBadReferenceWarning;
+        DeserializeField<logs::ObstructionDetectorBadReferenceWarning>(reader, obstruction_detector_bad_reference_warning_);
+        set_fields_[168] = true;
         break;
       }
       default: {

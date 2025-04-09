@@ -19,18 +19,18 @@
 #include <utility>
 #include <vector>
 
-#include "horus/internal/attributes.h"
-#include "horus/internal/pointer_arithmetic.h"
-#include "horus/internal/pointer_cast.h"
+#include "horus/attributes.h"
 #include "horus/internal/type_traits.h"
 #include "horus/pb/buffer.h"
 #include "horus/pb/cow.h"
 #include "horus/pb/repeated_iterator.h"
 #include "horus/pb/serialize.h"
 #include "horus/pb/types.h"
+#include "horus/pointer/arithmetic.h"
+#include "horus/pointer/unsafe_cast.h"
+#include "horus/strings/string_view.h"
 #include "horus/types/in_place.h"
 #include "horus/types/one_of.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 namespace horus_internal {
@@ -209,7 +209,7 @@ class CowRepeated<T, /*kPacked=*/true> final {
   ///
   /// @throws std::bad_alloc If the contents of the repeated list had to be copied and the
   /// allocation failed.
-  VectorT& Vector() noexcept(false) HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
+  VectorT& Vector() noexcept(false) HORUS_LIFETIME_BOUND;
 
   /// Emplaces a new value at the end of the collection and returns a reference to it.
   template <class... Args>
@@ -270,8 +270,7 @@ auto CowRepeated<T, /*kPacked=*/true>::const_iterator::DataFrom(const CowRepeate
   switch (container.data_.Tag()) {
     case CowRepeated::Data::template kTagFor<VectorT>: {
       const VectorT& data{*container.data_.template TryAs<VectorT>()};
-      const T* const ptr{is_end ? horus_internal::PointerAdd(data.data(), data.size())
-                                : data.data()};
+      const T* const ptr{is_end ? PointerAdd(data.data(), data.size()) : data.data()};
       return Data{InPlaceType<const T*>, ptr};
     }
     case CowRepeated::Data::template kTagFor<PbView>:
@@ -398,8 +397,7 @@ class PbTraits<CowRepeated<T, /*kPacked=*/true>> final {
     const char* span_start{reader.Reader().data().data()};
     // Skip length.
     protozero::decode_varint(
-        &span_start,
-        horus_internal::PointerAdd(reader.Reader().data().data(), reader.Reader().data().size()));
+        &span_start, PointerAdd(reader.Reader().data().data(), reader.Reader().data().size()));
     // Skip items.
     static_cast<void>((reader.Reader().*kGet)());
     const char* const span_end{reader.Reader().data().data()};
@@ -435,7 +433,7 @@ class CowRepeated<T, /*kPacked=*/false> final {
         : data_{DataFrom(container, is_end)} {}
 
     /// Returns the current value.
-    Cow<T> operator*() const HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
+    Cow<T> operator*() const HORUS_LIFETIME_BOUND;
 
     /// Advances to the next value (`++it`).
     const_iterator& operator++() noexcept;
@@ -515,7 +513,7 @@ class CowRepeated<T, /*kPacked=*/false> final {
   ///
   /// @throws std::bad_alloc If the contents of the repeated list had to be copied and the
   /// allocation failed.
-  std::vector<T>& Vector() noexcept(false) HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
+  std::vector<T>& Vector() noexcept(false) HORUS_LIFETIME_BOUND;
 
   /// (Internal use only) Deserializes the repeated list from a `reader`.
   void InternalDeserialize(PbReader& reader) & noexcept(false);
@@ -565,8 +563,7 @@ auto CowRepeated<T, /*kPacked=*/false>::const_iterator::DataFrom(const CowRepeat
   switch (container.data_.Tag()) {
     case CowRepeated::Data::template kTagFor<std::vector<T>>: {
       const std::vector<T>& data{*container.data_.template TryAs<std::vector<T>>()};
-      const T* const ptr{is_end ? horus_internal::PointerAdd(data.data(), data.size())
-                                : data.data()};
+      const T* const ptr{is_end ? PointerAdd(data.data(), data.size()) : data.data()};
       return Data{InPlaceType<const T*>, ptr};
     }
     case CowRepeated::Data::template kTagFor<horus_internal::PbViewAndTag>:

@@ -8,14 +8,14 @@
 #include <type_traits>
 #include <utility>
 
+#include "horus/attributes.h"
 #include "horus/event_loop/event_loop.h"
 #include "horus/event_loop/waker.h"
 #include "horus/future/core_owner.h"
 #include "horus/future/info.h"
-#include "horus/internal/attributes.h"
-#include "horus/internal/pointer_cast.h"
+#include "horus/pointer/unsafe_cast.h"
+#include "horus/strings/string_view.h"
 #include "horus/types/one_of.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 
@@ -40,8 +40,8 @@ class PollContext final {
   class Trace;
 
   /// Initializes a new `PollContext`.
-  PollContext(horus_internal::EventLoop& loop HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND,
-              horus_internal::CoreFutureOwner& owner HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND,
+  PollContext(horus_internal::EventLoop& loop HORUS_LIFETIME_BOUND,
+              horus_internal::CoreFutureOwner& owner HORUS_LIFETIME_BOUND,
               horus_internal::FutureWaker&& waker) noexcept
       : loop_{loop},
         future_owner_{owner},
@@ -55,15 +55,14 @@ class PollContext final {
   /// When a future is entered, `trace(const char*, const FutureInfo*)` is called with the name and
   /// information of the future. When it is left, it is called again with `nullptr` arguments.
   template <class F>
-  PollContext(horus_internal::EventLoop& loop HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND,
-              horus_internal::CoreFutureOwner& owner HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND,
-              horus_internal::FutureWaker&& waker,
-              F& trace HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept
+  PollContext(horus_internal::EventLoop& loop HORUS_LIFETIME_BOUND,
+              horus_internal::CoreFutureOwner& owner HORUS_LIFETIME_BOUND,
+              horus_internal::FutureWaker&& waker, F& trace HORUS_LIFETIME_BOUND) noexcept
       : loop_{loop},
         future_owner_{owner},
         waker_{std::move(waker)},
         trace_{[](void* receiver, const char* type, const FutureInfo* info) {
-          (*horus_internal::UnsafePointerCast<F>(receiver))(type, info);
+          (*UnsafePointerCast<F>(receiver))(type, info);
         }},
         trace_receiver_{&trace} {}
 
@@ -108,7 +107,7 @@ class PollContext::Trace final {
  public:
   /// Creates a RAII future trace.
   Trace(PollContext& context, const char* type,
-        const FutureInfo& info HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept;
+        const FutureInfo& info HORUS_LIFETIME_BOUND) noexcept;
 
   /// Cannot move or copy.
   Trace(const Trace&) = delete;

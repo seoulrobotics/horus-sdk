@@ -18,8 +18,8 @@
 #include "horus/future/info.h"
 #include "horus/future/poll.h"
 #include "horus/internal/tuple.h"
-#include "horus/internal/unsafe_union.h"
 #include "horus/types/span.h"
+#include "horus/types/union.h"
 
 namespace horus {
 namespace horus_internal {
