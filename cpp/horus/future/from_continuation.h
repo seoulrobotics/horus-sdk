@@ -241,16 +241,16 @@ FromContinuationFuture<T>::~FromContinuationFuture() {
   if (shared_state_ != nullptr) {
     shared_state_->WithState([](State& state, bool& destroy) noexcept {
       switch (state.Tag()) {
-        case State::template kTagFor<Pending>:
-        case State::template kTagFor<horus_internal::FutureWaker>: {
+        case OneOfTagFor<State, Pending>():
+        case OneOfTagFor<State, horus_internal::FutureWaker>(): {
           // Sender is alive, and will destroy the future when it sees the receiver was destroyed.
           state.template Emplace<SoleOwnership>();
           break;
         }
 
-        case State::template kTagFor<SoleOwnership>:
-        case State::template kTagFor<T>:
-        case State::template kTagFor<std::exception_ptr>: {
+        case OneOfTagFor<State, SoleOwnership>():
+        case OneOfTagFor<State, T>():
+        case OneOfTagFor<State, std::exception_ptr>(): {
           // Sender was destroyed or gave up ownership by sending the result.
           destroy = true;
           break;
@@ -274,13 +274,13 @@ PollResult<T> FromContinuationFuture<T>::UnsafePoll(PollContext& context) {
   }
   return shared_state_->WithState([this, &context](State& state, bool& destroy) -> PollResult<T> {
     switch (state.Tag()) {
-      case State::template kTagFor<Pending>:
-      case State::template kTagFor<horus_internal::FutureWaker>: {
+      case OneOfTagFor<State, Pending>():
+      case OneOfTagFor<State, horus_internal::FutureWaker>(): {
         // Waiting for result.
         static_cast<void>(state.template Emplace<horus_internal::FutureWaker>(context.Waker()));
         break;
       }
-      case State::template kTagFor<T>: {
+      case OneOfTagFor<State, T>(): {
         // Result available.
         shared_state_ = nullptr;
         destroy = true;
@@ -293,14 +293,14 @@ PollResult<T> FromContinuationFuture<T>::UnsafePoll(PollContext& context) {
               return ReadyResult<T>(std::move(forward(state).template As<T>()));
             });
       }
-      case State::template kTagFor<std::exception_ptr>: {
+      case OneOfTagFor<State, std::exception_ptr>(): {
         // Exception available.
         shared_state_ = nullptr;
         destroy = true;
         std::rethrow_exception(state.template As<std::exception_ptr>());
         break;
       }
-      case State::template kTagFor<SoleOwnership>:
+      case OneOfTagFor<State, SoleOwnership>():
         // Sender was destroyed.
         throw BrokenContinuationError{};
       default:
@@ -315,8 +315,8 @@ FromContinuationFuture<T>::Continuation::~Continuation() noexcept {
   if (shared_state_ != nullptr) {
     shared_state_->WithState([](State& state, bool& destroy) noexcept {
       switch (state.Tag()) {
-        case State::template kTagFor<Pending>:
-        case State::template kTagFor<horus_internal::FutureWaker>: {
+        case OneOfTagFor<State, Pending>():
+        case OneOfTagFor<State, horus_internal::FutureWaker>(): {
           // Receiver is alive and waiting, and we're closing the channel.
           if (state.template Is<horus_internal::FutureWaker>()) {
             state.template As<horus_internal::FutureWaker>().Wake();
@@ -325,14 +325,14 @@ FromContinuationFuture<T>::Continuation::~Continuation() noexcept {
           break;
         }
 
-        case State::template kTagFor<SoleOwnership>: {
+        case OneOfTagFor<State, SoleOwnership>(): {
           // Receiver was destroyed.
           destroy = true;
           break;
         }
 
-        case State::template kTagFor<T>:
-        case State::template kTagFor<std::exception_ptr>:
+        case OneOfTagFor<State, T>():
+        case OneOfTagFor<State, std::exception_ptr>():
         default: {
           // This should not happen as we set `shared_state_` to null when completing the future.
           assert(false);
@@ -355,25 +355,25 @@ bool FromContinuationFuture<T>::Continuation::ContinueOrFailWith(const F& comple
   }
   return shared_state->WithState([&complete](State& state, bool& destroy) noexcept -> bool {
     switch (state.Tag()) {
-      case State::template kTagFor<Pending>: {
+      case OneOfTagFor<State, Pending>(): {
         // Receiver hasn't been polled yet, but we can still give it its result.
         complete(state);
         return true;
       }
-      case State::template kTagFor<horus_internal::FutureWaker>: {
+      case OneOfTagFor<State, horus_internal::FutureWaker>(): {
         // Receiver has been polled and is waiting to be woken up.
         horus_internal::FutureWaker& waker{*state.template TryAs<horus_internal::FutureWaker>()};
         waker.Wake();
         complete(state);
         return true;
       }
-      case State::template kTagFor<SoleOwnership>: {
+      case OneOfTagFor<State, SoleOwnership>(): {
         // Receiver was destroyed, and we're the only one alive.
         destroy = true;
         return false;
       }
-      case State::template kTagFor<T>:
-      case State::template kTagFor<std::exception_ptr>:
+      case OneOfTagFor<State, T>():
+      case OneOfTagFor<State, std::exception_ptr>():
       default: {
         assert(false);  // This should not happen; this was likely a data race as this class is not
                         // thread safe.

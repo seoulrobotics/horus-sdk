@@ -1225,3 +1225,16 @@ message LicenseForbiddenFeature {
 message FailedToUpdateConfiguration {
   string details = 1;
 }
+
+// Log #169.
+//
+// > The obstruction detector reference is not valid since it contains zero points.
+message ObstructionDetectorBadReferenceWarning {
+}
+
+// Log #170.
+//
+// > Project file "$filename" has invalid permissions. Please restart Horus to fix the issue.
+message ProjectFileInvalidPermissionsError {
+  string filename = 1;
+}

@@ -14,7 +14,7 @@
 #include "horus/event_loop/waker.h"
 #include "horus/future/core_owner.h"
 #include "horus/future/poll.h"
-#include "horus/internal/pointer_cast.h"
+#include "horus/pointer/unsafe_cast.h"
 
 namespace horus {
 namespace horus_internal {

@@ -18,8 +18,7 @@
 #include "horus/future/future.h"
 #include "horus/future/info.h"
 #include "horus/future/poll.h"
-#include "horus/internal/enum.h"
-#include "horus/internal/pointer_cast.h"
+#include "horus/pointer/unsafe_cast.h"
 #include "horus/types/in_place.h"
 #include "horus/types/one_of.h"
 
@@ -128,7 +127,7 @@ WorkFuture<F>::~WorkFuture() noexcept {
     Work& work{*maybe_work};
     const std::unique_lock<std::mutex> lock{work.mutex};
     switch (work.state.Tag()) {
-      case State::template kTagFor<F>: {
+      case OneOfTagFor<State, F>(): {
         // Work was scheduled, but not yet started.
         //
         // Remove `F` to tell the worker that the work was cancelled.
@@ -138,7 +137,7 @@ WorkFuture<F>::~WorkFuture() noexcept {
         free_work = false;
         break;
       }
-      case State::template kTagFor<CancelFlag*>: {
+      case OneOfTagFor<State, CancelFlag*>(): {
         // Work has started, but not yet completed.
         //
         // Update the `CancelFlag` to tell the worker that it should abort.
@@ -148,8 +147,8 @@ WorkFuture<F>::~WorkFuture() noexcept {
         free_work = false;
         break;
       }
-      case State::template kTagFor<Result>:
-      case State::template kTagFor<std::exception_ptr>: {
+      case OneOfTagFor<State, Result>():
+      case OneOfTagFor<State, std::exception_ptr>(): {
         // Work completed. The worker is closing or closed.
         if (horus_internal::UvGetData(work.handle) == nullptr) {
           // Work was closed.
@@ -184,7 +183,7 @@ auto WorkFuture<F>::UnsafePoll(PollContext& context) -> PollResult<Result> {
     uv_work_cb const work_cb{[](uv_work_t* work_handle) noexcept {
       // If this function is called, then the `work` still exists and it will not be
       // destroyed until closed (which requires this function to return).
-      Work& work{*horus_internal::UnsafePointerCast<Work>(work_handle)};
+      Work& work{*UnsafePointerCast<Work>(work_handle)};
 
       CancelFlag cancel_flag;  // Allow cancellation while running.
       std::unique_lock<std::mutex> lock{work.mutex};
@@ -218,7 +217,7 @@ auto WorkFuture<F>::UnsafePoll(PollContext& context) -> PollResult<Result> {
       }
     }};
     uv_after_work_cb const after_work_cb{[](uv_work_t* work_handle, std::int32_t status) noexcept {
-      Work* maybe_work{horus_internal::UnsafePointerCast<Work>(work_handle)};
+      Work* maybe_work{UnsafePointerCast<Work>(work_handle)};
       if (status == horus_internal::UvErrors::kCanceled) {
         // Work never started.
         std::unique_ptr<Work>(maybe_work).reset();
@@ -230,7 +229,7 @@ auto WorkFuture<F>::UnsafePoll(PollContext& context) -> PollResult<Result> {
         return;
       }
 
-      Work& work{*horus_internal::UnsafePointerCast<Work>(work_handle)};
+      Work& work{*UnsafePointerCast<Work>(work_handle)};
       if (work.state.template Is<Result>() || work.state.template Is<std::exception_ptr>()) {
         // Work completed without a cancellation, so we can wake up the event loop.
         work.waker.Wake();
@@ -256,25 +255,25 @@ auto WorkFuture<F>::UnsafePoll(PollContext& context) -> PollResult<Result> {
 
   Work& work{*maybe_work};
   const std::unique_lock<std::mutex> lock{work.mutex};
-  switch (work.state.Tag()) {
-    case State::template kTagFor<F>:
+  HORUS_ONEOF_SWITCH(work.state) {
+    HORUS_ONEOF_CASE_DISCARD(F) {
       // Work was scheduled, but not yet started.
-    case State::template kTagFor<CancelFlag*>: {
+    }
+    HORUS_ONEOF_CASE_DISCARD(CancelFlag*) {
       // Work has started, but not yet completed.
       return PendingResult<Result>();
     }
-    case State::template kTagFor<Result>: {
+    HORUS_ONEOF_CASE(result, Result) {
       // Work has completed with value.
-      return std::move(work.state).template As<Result>();
+      return std::move(result);
     }
-    case State::template kTagFor<std::exception_ptr>: {
+    HORUS_ONEOF_CASE(exception, std::exception_ptr) {
       // Work has completed with failure.
-      std::rethrow_exception(work.state.template As<std::exception_ptr>());
+      std::rethrow_exception(exception);
       return PendingResult<Result>();  // Unreachable.
     }
-    default:
-      throw horus_internal::UnhandledEnumValueError{work.state.Tag()};
   }
+  HORUS_ONEOF_RETURN_NOT_HANDLED;
 }
 
 }  // namespace horus

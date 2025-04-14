@@ -5,79 +5,11 @@
 #ifndef HORUS_INTERNAL_TYPE_TRAITS_H_
 #define HORUS_INTERNAL_TYPE_TRAITS_H_
 
-#include <cstddef>
-#include <initializer_list>
 #include <type_traits>
 #include <utility>
 
 namespace horus {
 namespace horus_internal {
-
-/// See https://en.cppreference.com/w/cpp/types/conjunction
-template <class... Ts>
-struct Conjunction : std::true_type {};
-template <class T>
-struct Conjunction<T> : T {};
-template <class T, class... Ts>
-struct Conjunction<T, Ts...> : std::conditional_t<T::value, Conjunction<Ts...>, T> {};
-
-/// Returns true if all the given `booleans` are true. If `booleans` is empty, returns true.
-constexpr bool ConjunctionOf(std::initializer_list<bool> booleans) noexcept {
-  for (const bool value : booleans) {  // NOLINT(*-use-anyofallof): not constexpr
-    if (!value) {
-      return false;
-    }
-  }
-  return true;
-}
-
-template <std::size_t I, class... Ts>
-struct TypeAt;
-template <class T, class... Rest>
-struct TypeAt<0, T, Rest...> {
-  using type = T;
-};
-template <std::size_t I, class T, class... Rest>
-struct TypeAt<I, T, Rest...> : TypeAt<I - 1, Rest...> {};
-
-template <std::size_t I, class... Ts>
-using TypeAtT = typename TypeAt<I, Ts...>::type;
-
-/// Returns the index of `T` in `Ts`, causing a compile-time error if it cannot be found.
-template <std::size_t I, class T, class... Ts>
-struct PackIndexOf;
-template <std::size_t I, class T, class... Rest>
-struct PackIndexOf<I, T, T, Rest...> : std::integral_constant<std::size_t, I> {};
-template <std::size_t I, class T, class U, class... Rest>
-struct PackIndexOf<I, T, U, Rest...> : PackIndexOf<I + 1, T, Rest...> {};
-
-/// Value used by `UniquePackIndexOf` to represent an unknown index.
-static constexpr std::size_t kNotFound{-1UL};
-
-/// Returns the index of `T` in `Ts`, causing a compile-time error if it cannot be found exactly
-/// once.
-template <std::size_t kFound, std::size_t I, class T, class... Ts>
-struct UniquePackIndexOf;
-
-template <std::size_t I, class T>
-struct UniquePackIndexOf<kNotFound, I, T> {
-  static_assert(!std::is_same<T, T>::value, "type T is not in parameter pack Ts...");
-};
-template <std::size_t kFound, std::size_t I, class T, class... Rest>
-struct UniquePackIndexOf<kFound, I, T, T, Rest...> {
-  static_assert(!std::is_same<T, T>::value, "type T found more than once in parameter pack Ts...");
-};
-template <std::size_t kFound, std::size_t I, class T>
-struct UniquePackIndexOf<kFound, I, T> : std::integral_constant<std::size_t, kFound> {};
-
-template <std::size_t I, class T, class... Rest>
-struct UniquePackIndexOf<kNotFound, I, T, T, Rest...> : UniquePackIndexOf<I, I + 1, T, Rest...> {};
-template <std::size_t kFound, std::size_t I, class T, class U, class... Rest>
-struct UniquePackIndexOf<kFound, I, T, U, Rest...> : UniquePackIndexOf<kFound, I + 1, T, Rest...> {
-};
-
-static_assert(std::is_same<TypeAtT<0, bool, float>, bool>::value, "");
-static_assert(std::is_same<TypeAtT<1, bool, float>, float>::value, "");
 
 /// Defines `Type = T`, ignoring @p Ignored....
 ///

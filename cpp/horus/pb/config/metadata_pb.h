@@ -11,11 +11,13 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/attributes.h"
+#include "horus/internal/attributes.h"
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/cow_span.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -98,14 +100,14 @@ class Vector2f final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr float x() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr float x() const& noexcept HORUS_LIFETIME_BOUND {
     return x_;
   }
 
   /// No documentation.
   ///
   /// Field no: 1.
-  float& mutable_x() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  float& mutable_x() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return x_;
   }
@@ -136,14 +138,14 @@ class Vector2f final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr float y() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr float y() const& noexcept HORUS_LIFETIME_BOUND {
     return y_;
   }
 
   /// No documentation.
   ///
   /// Field no: 2.
-  float& mutable_y() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  float& mutable_y() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return y_;
   }
@@ -236,14 +238,14 @@ class Vector3f final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr float x() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr float x() const& noexcept HORUS_LIFETIME_BOUND {
     return x_;
   }
 
   /// No documentation.
   ///
   /// Field no: 1.
-  float& mutable_x() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  float& mutable_x() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return x_;
   }
@@ -274,14 +276,14 @@ class Vector3f final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr float y() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr float y() const& noexcept HORUS_LIFETIME_BOUND {
     return y_;
   }
 
   /// No documentation.
   ///
   /// Field no: 2.
-  float& mutable_y() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  float& mutable_y() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return y_;
   }
@@ -312,14 +314,14 @@ class Vector3f final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 3.
-  constexpr float z() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr float z() const& noexcept HORUS_LIFETIME_BOUND {
     return z_;
   }
 
   /// No documentation.
   ///
   /// Field no: 3.
-  float& mutable_z() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  float& mutable_z() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return z_;
   }
@@ -414,14 +416,14 @@ class Quaterniond final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr double qw() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr double qw() const& noexcept HORUS_LIFETIME_BOUND {
     return qw_;
   }
 
   /// No documentation.
   ///
   /// Field no: 1.
-  double& mutable_qw() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  double& mutable_qw() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return qw_;
   }
@@ -452,14 +454,14 @@ class Quaterniond final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr double qx() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr double qx() const& noexcept HORUS_LIFETIME_BOUND {
     return qx_;
   }
 
   /// No documentation.
   ///
   /// Field no: 2.
-  double& mutable_qx() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  double& mutable_qx() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return qx_;
   }
@@ -490,14 +492,14 @@ class Quaterniond final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 3.
-  constexpr double qy() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr double qy() const& noexcept HORUS_LIFETIME_BOUND {
     return qy_;
   }
 
   /// No documentation.
   ///
   /// Field no: 3.
-  double& mutable_qy() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  double& mutable_qy() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return qy_;
   }
@@ -528,14 +530,14 @@ class Quaterniond final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 4.
-  constexpr double qz() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr double qz() const& noexcept HORUS_LIFETIME_BOUND {
     return qz_;
   }
 
   /// No documentation.
   ///
   /// Field no: 4.
-  double& mutable_qz() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  double& mutable_qz() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[3] = true;
     return qz_;
   }
@@ -633,14 +635,14 @@ class Range final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr double start() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr double start() const& noexcept HORUS_LIFETIME_BOUND {
     return start_;
   }
 
   /// No documentation.
   ///
   /// Field no: 1.
-  double& mutable_start() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  double& mutable_start() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return start_;
   }
@@ -671,14 +673,14 @@ class Range final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr double end() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr double end() const& noexcept HORUS_LIFETIME_BOUND {
     return end_;
   }
 
   /// No documentation.
   ///
   /// Field no: 2.
-  double& mutable_end() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  double& mutable_end() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return end_;
   }
@@ -772,7 +774,7 @@ class UInt32List final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const CowRepeated<std::uint32_t>& values() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowRepeated<std::uint32_t>& values() const& noexcept HORUS_LIFETIME_BOUND {
     return values_;
   }
 
@@ -791,7 +793,7 @@ class UInt32List final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  CowRepeated<std::uint32_t>& mutable_values() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowRepeated<std::uint32_t>& mutable_values() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return values_;
   }
@@ -887,7 +889,7 @@ class Timestamp final : public PbMessage {
   ///  (1970-01-01 00:00) in UTC.
   ///
   /// Field no: 1.
-  constexpr std::int64_t seconds() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::int64_t seconds() const& noexcept HORUS_LIFETIME_BOUND {
     return seconds_;
   }
 
@@ -895,7 +897,7 @@ class Timestamp final : public PbMessage {
   ///  (1970-01-01 00:00) in UTC.
   ///
   /// Field no: 1.
-  std::int64_t& mutable_seconds() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::int64_t& mutable_seconds() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return seconds_;
   }
@@ -926,14 +928,14 @@ class Timestamp final : public PbMessage {
   /// Non-negative fractions of a second at nanosecond resolution.
   ///
   /// Field no: 2.
-  constexpr std::int32_t nanos() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::int32_t nanos() const& noexcept HORUS_LIFETIME_BOUND {
     return nanos_;
   }
 
   /// Non-negative fractions of a second at nanosecond resolution.
   ///
   /// Field no: 2.
-  std::int32_t& mutable_nanos() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::int32_t& mutable_nanos() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return nanos_;
   }
@@ -1030,14 +1032,14 @@ class Duration final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr std::int64_t seconds() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::int64_t seconds() const& noexcept HORUS_LIFETIME_BOUND {
     return seconds_;
   }
 
   /// No documentation.
   ///
   /// Field no: 1.
-  std::int64_t& mutable_seconds() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::int64_t& mutable_seconds() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return seconds_;
   }
@@ -1068,14 +1070,14 @@ class Duration final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr std::int32_t nanos() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::int32_t nanos() const& noexcept HORUS_LIFETIME_BOUND {
     return nanos_;
   }
 
   /// No documentation.
   ///
   /// Field no: 2.
-  std::int32_t& mutable_nanos() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::int32_t& mutable_nanos() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return nanos_;
   }
@@ -1170,7 +1172,7 @@ class AffineTransform3f final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const CowSpan<float>& data() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowSpan<float>& data() const& noexcept HORUS_LIFETIME_BOUND {
     return data_;
   }
 
@@ -1189,7 +1191,7 @@ class AffineTransform3f final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  CowSpan<float>& mutable_data() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowSpan<float>& mutable_data() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return data_;
   }

@@ -11,10 +11,12 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/attributes.h"
+#include "horus/internal/attributes.h"
 #include "horus/pb/cow_span.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -90,7 +92,7 @@ class CalibrationMap final : public PbMessage {
   /// Packed 3D points (x, y, z)
   ///
   /// Field no: 2.
-  constexpr const CowSpan<float>& map_points() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowSpan<float>& map_points() const& noexcept HORUS_LIFETIME_BOUND {
     return map_points_;
   }
 
@@ -109,7 +111,7 @@ class CalibrationMap final : public PbMessage {
   /// Packed 3D points (x, y, z)
   ///
   /// Field no: 2.
-  CowSpan<float>& mutable_map_points() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowSpan<float>& mutable_map_points() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return map_points_;
   }

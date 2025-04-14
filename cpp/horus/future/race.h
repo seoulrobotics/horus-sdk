@@ -12,9 +12,9 @@
 #include <utility>
 #include <vector>
 
+#include "horus/attributes.h"
 #include "horus/future/future.h"
 #include "horus/future/info.h"
-#include "horus/internal/attributes.h"
 #include "horus/internal/void.h"
 #include "horus/types/in_place.h"
 #include "horus/types/one_of.h"
@@ -33,7 +33,7 @@ class RaceFuture final : public Future<OneOf<FutureResult<Futures>...>> {
 
   /// Constructs the future.
   explicit RaceFuture(Futures&&... futures, const FutureInfo& info = CurrentFutureInfo()) noexcept
-      : futures_{InPlaceIndex<0>, std::move(futures)...}, info_{info} {}
+      : futures_{InPlaceType<std::tuple<Futures...>>, std::move(futures)...}, info_{info} {}
 
   /// Polls the future until any of its inner futures has completed.
   PollResult<Result> UnsafePoll(PollContext& context) final {
@@ -76,7 +76,7 @@ class RaceArrayFuture final : public Future<FutureResult<F>> {
   /// Constructs the future.
   explicit RaceArrayFuture(std::array<F, N>&& futures,
                            const FutureInfo& info = CurrentFutureInfo()) noexcept
-      : futures_{InPlaceIndex<0>, std::move(futures)}, info_{info} {}
+      : futures_{InPlaceType<std::array<F, N>>, std::move(futures)}, info_{info} {}
 
   /// Polls the future until any of its inner futures has completed.
   PollResult<Result> UnsafePoll(PollContext& context) final;
@@ -134,7 +134,7 @@ using RaceSpanFuture = RaceVectorFuture<Span<F>>;
 
 /// Returns a future which will complete when any of the given futures completes.
 template <class F>
-inline RaceSpanFuture<F> Race(Span<F> futures HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND,
+inline RaceSpanFuture<F> Race(Span<F> futures HORUS_LIFETIME_BOUND,
                               const FutureInfo& info = CurrentFutureInfo()) noexcept {
   return RaceSpanFuture<F>{futures, info};
 }
@@ -148,20 +148,21 @@ auto RaceFuture<Futures...>::PollFutures(PollContext& context) -> PollResult<Res
 
   const PollContext::Trace trace{context, "Race", info_};
 
-  if (!futures_.template Is<0>()) {
+  std::tuple<Futures...>* const futures{futures_.template TryAs<std::tuple<Futures...>>()};
+  if (futures == nullptr) {
     throw PolledAfterCompletionError{};
   }
-  std::tuple<Futures...>& futures{futures_.template As<0>()};
-  PollResult<FutureResult> maybe_result{RaceFuture::PollFuture(std::get<I>(futures), context)};
+  PollResult<FutureResult> maybe_result{RaceFuture::PollFuture(std::get<I>(*futures), context)};
   FutureResult* result{maybe_result.template TryAs<FutureResult>()};
   if (result == nullptr) {
     return PollFutures<I + 1>(context);
   }
   return ReadyResult<Result>(horus_internal::SwitchVoid<FutureResult>(
-      /*if_void=*/[](auto forward) noexcept -> Result { return Result{InPlaceIndex<forward(I)>}; },
+      /*if_void=*/[](auto const& /*forward*/) noexcept
+      -> Result { return Result{InPlaceType<FutureResult>}; },
       /*if_not_void=*/
       [result](auto forward) noexcept -> Result {
-        return Result{InPlaceIndex<I>, std::move(*forward(result))};
+        return Result{InPlaceType<FutureResult>, std::move(*forward(result))};
       }));
 }
 
@@ -169,10 +170,11 @@ template <class F, std::size_t N>
 auto RaceArrayFuture<F, N>::UnsafePoll(PollContext& context) -> PollResult<Result> {
   const PollContext::Trace trace{context, "Join", info_};
 
-  if (!futures_.template Is<0>()) {
+  std::array<F, N>* const futures{futures_.template TryAs<std::array<F, N>>()};
+  if (futures == nullptr) {
     throw PolledAfterCompletionError{};
   }
-  for (F& future : futures_.template As<0>()) {
+  for (F& future : *futures) {
     PollResult<Result> maybe_result{RaceArrayFuture::PollFuture(future, context)};
     Result* result{maybe_result.template TryAs<Result>()};
     if (result != nullptr) {

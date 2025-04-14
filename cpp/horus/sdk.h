@@ -182,7 +182,7 @@ template <class T>
 struct Sdk::FutureState {
   /// Constructs the shared state.
   FutureState(Sdk& sdk_ref, AnyFuture<void>&& future) noexcept
-      : sdk{sdk_ref}, value{InPlaceIndex<0>, std::move(future)} {}
+      : sdk{sdk_ref}, value{std::move(future)} {}
 
   /// A reference to the SDK.
   Sdk& sdk;
@@ -251,7 +251,9 @@ class Sdk::Future final {
     State& state;
 
     /// Returns whether the wait can end.
-    constexpr bool operator()() const noexcept { return !state.value.template Is<0>(); }
+    constexpr bool operator()() const noexcept {
+      return !state.value.template Is<AnyFuture<void>>();
+    }
   };
 
   /// Implementation of `WaitFor()` and `WaitUntil()`.
@@ -273,13 +275,14 @@ template <class T>
 T Sdk::Future<T>::Wait() {
   State& state{*state_};
   std::unique_lock<std::mutex> lock{state.mutex};
-  if (state.value.template Is<0>()) {
+  if (state.value.template Is<AnyFuture<void>>()) {
     state.completion_cv.wait(lock, Predicate{state});
   }
-  if (state.value.template Is<2>()) {
-    std::rethrow_exception(state.value.template As<2>());
+  std::exception_ptr* const exception{state.value.template TryAs<std::exception_ptr>()};
+  if (exception != nullptr) {
+    std::rethrow_exception(*exception);
   }
-  return std::move(state.value.template As<1>());
+  return std::move(state.value.template As<T>());
 }
 
 template <class T>
@@ -292,12 +295,13 @@ OneOf<T, void> Sdk::Future<T>::TimedWait(
   std::unique_lock<std::mutex> lock{state.mutex};  // NOLINT(*-const-correctness): mutable ref below
   if (!(state.completion_cv.*wait)(lock, arg, Predicate{state})) {
     // Did not complete within deadline.
-    return OneOf<T, void>{InPlaceIndex<1>};
+    return OneOf<T, void>{InPlaceType<void>};
   }
-  if (state.value.template Is<2>()) {
-    std::rethrow_exception(state.value.template As<2>());
+  std::exception_ptr* const exception{state.value.template TryAs<std::exception_ptr>()};
+  if (exception != nullptr) {
+    std::rethrow_exception(*exception);
   }
-  return OneOf<T, void>{InPlaceIndex<0>, std::move(state.value.template As<1>())};
+  return OneOf<T, void>{InPlaceType<T>, std::move(state.value.template As<T>())};
 }
 
 template <class T>
@@ -305,23 +309,28 @@ template <class F, class E>
 void Sdk::Future<T>::OnCompletion(F&& on_completion, E&& on_error) {
   State& state{*state_};
   const std::unique_lock<std::mutex> lock{state.mutex};
-  if (state.value.template Is<1>()) {
-    // Already completed.
-    std::forward<F>(on_completion)(std::move(state.value.template As<1>()));
-  } else if (state.value.template Is<2>()) {
-    // Already encountered error.
-    std::forward<E>(on_error)(state.value.template As<2>());
-  } else {
-    state.on_completion = [complete{MoveOnlyFunction<void(T&&)>{std::forward<F>(on_completion)}},
-                           reject{MoveOnlyFunction<void(const std::exception_ptr&)>{
-                               std::forward<E>(on_error)}}](State& inner_state) mutable {
-      if (inner_state.value.template Is<1>()) {
-        inner_state.sdk.InvokeUserCallback(std::move(complete),
-                                           std::move(inner_state.value.template As<1>()));
-      } else {
-        inner_state.sdk.InvokeUserCallback(std::move(reject), inner_state.value.template As<2>());
-      }
-    };
+  HORUS_ONEOF_SWITCH(state.value) {
+    HORUS_ONEOF_CASE(value, T) {
+      // Already completed.
+      std::forward<F>(on_completion)(std::move(value));
+    }
+    HORUS_ONEOF_CASE(exception, std::exception_ptr) {
+      // Already encountered error.
+      std::forward<E>(on_error)(exception);
+    }
+    HORUS_ONEOF_CASE_DISCARD(AnyFuture<void>) {
+      state.on_completion = [complete{MoveOnlyFunction<void(T&&)>{std::forward<F>(on_completion)}},
+                             reject{MoveOnlyFunction<void(const std::exception_ptr&)>{
+                                 std::forward<E>(on_error)}}](State& inner_state) mutable {
+        T* const value{inner_state.value.template TryAs<T>()};
+        if (value != nullptr) {
+          inner_state.sdk.InvokeUserCallback(std::move(complete), std::move(*value));
+        } else {
+          inner_state.sdk.InvokeUserCallback(std::move(reject),
+                                             inner_state.value.template As<std::exception_ptr>());
+        }
+      };
+    }
   }
 }
 

@@ -19,6 +19,7 @@ namespace horus {
 /// @see `RejectedFuture` for futures which are always rejected.
 /// @see `CompletedFuture` for futures which are either resolved or rejected.
 template <class T>
+// NOLINTNEXTLINE(clang-analyzer-core.uninitialized.*): false positive in implicit move constructor
 class ResolvedFuture final : public Future<T> {
  public:
   /// Returns a future which immediately completes with a default-constructed `T` value.

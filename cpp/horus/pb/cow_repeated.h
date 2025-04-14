@@ -19,18 +19,18 @@
 #include <utility>
 #include <vector>
 
-#include "horus/internal/attributes.h"
-#include "horus/internal/pointer_arithmetic.h"
-#include "horus/internal/pointer_cast.h"
+#include "horus/attributes.h"
 #include "horus/internal/type_traits.h"
 #include "horus/pb/buffer.h"
 #include "horus/pb/cow.h"
 #include "horus/pb/repeated_iterator.h"
 #include "horus/pb/serialize.h"
 #include "horus/pb/types.h"
+#include "horus/pointer/arithmetic.h"
+#include "horus/pointer/unsafe_cast.h"
+#include "horus/strings/string_view.h"
 #include "horus/types/in_place.h"
 #include "horus/types/one_of.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 namespace horus_internal {
@@ -147,7 +147,7 @@ class CowRepeated<T, /*kPacked=*/true> final {
       if (lhs.data_.Tag() != rhs.data_.Tag()) {
         return false;
       }
-      return lhs.data_.InvokeWithConst([&rhs](auto iterator) noexcept -> bool {
+      return lhs.data_.VisitConst([&rhs](auto iterator) noexcept -> bool {
         return iterator == *rhs.data_.template TryAs<decltype(iterator)>();
       });
     }
@@ -166,7 +166,7 @@ class CowRepeated<T, /*kPacked=*/true> final {
         throw std::logic_error{
             "called lhs-rhs with iterators from different CowRepeated collections"};
       }
-      return lhs.data_.InvokeWithConst([&rhs](auto iterator) noexcept -> bool {
+      return lhs.data_.VisitConst([&rhs](auto iterator) noexcept -> bool {
         return iterator - *rhs.data_.template TryAs<decltype(iterator)>();
       });
     }
@@ -209,7 +209,7 @@ class CowRepeated<T, /*kPacked=*/true> final {
   ///
   /// @throws std::bad_alloc If the contents of the repeated list had to be copied and the
   /// allocation failed.
-  VectorT& Vector() noexcept(false) HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
+  VectorT& Vector() noexcept(false) HORUS_LIFETIME_BOUND;
 
   /// Emplaces a new value at the end of the collection and returns a reference to it.
   template <class... Args>
@@ -233,7 +233,7 @@ class CowRepeated<T, /*kPacked=*/true> final {
 
 template <class T>
 T CowRepeated<T, /*kPacked=*/true>::const_iterator::operator*() const noexcept {
-  return data_.InvokeWithConst([](const auto& iterator) noexcept -> T {
+  return data_.VisitConst([](const auto& iterator) noexcept -> T {
     try {
       return *iterator;
     } catch (const protozero::varint_too_long_exception&) {
@@ -249,7 +249,7 @@ T CowRepeated<T, /*kPacked=*/true>::const_iterator::operator*() const noexcept {
 
 template <class T>
 auto CowRepeated<T, /*kPacked=*/true>::const_iterator::operator++() noexcept -> const_iterator& {
-  data_.InvokeWith([](auto& iterator) noexcept {
+  data_.Visit([](auto& iterator) noexcept {
     try {
       ++iterator;
     } catch (const protozero::varint_too_long_exception&) {
@@ -267,32 +267,26 @@ auto CowRepeated<T, /*kPacked=*/true>::const_iterator::operator++() noexcept -> 
 template <class T>
 auto CowRepeated<T, /*kPacked=*/true>::const_iterator::DataFrom(const CowRepeated& container,
                                                                 bool is_end) noexcept -> Data {
-  switch (container.data_.Tag()) {
-    case CowRepeated::Data::template kTagFor<VectorT>: {
-      const VectorT& data{*container.data_.template TryAs<VectorT>()};
-      const T* const ptr{is_end ? horus_internal::PointerAdd(data.data(), data.size())
-                                : data.data()};
+  HORUS_ONEOF_SWITCH(container.data_) {
+    HORUS_ONEOF_CASE(data, VectorT) {
+      const T* const ptr{is_end ? PointerAdd(data.data(), data.size()) : data.data()};
       return Data{InPlaceType<const T*>, ptr};
     }
-    case CowRepeated::Data::template kTagFor<PbView>:
-    default: {
-      const PbView& data{*container.data_.template TryAs<PbView>()};
+    HORUS_ONEOF_CASE(data, PbView) {
       const protozero::const_varint_iterator<T> iterator{
           is_end ? data.Str().end() : data.Str().begin(), data.Str().end()};
       return Data{InPlaceType<protozero::const_varint_iterator<T>>, iterator};
     }
   }
+  HORUS_ONEOF_RETURN_NOT_HANDLED;
 }
 
 template <class T>
 std::size_t CowRepeated<T, /*kPacked=*/true>::size() const noexcept {
-  switch (data_.Tag()) {
-    case Data::template kTagFor<VectorT>: {
-      return data_.template TryAs<VectorT>()->size();
-    }
-    case Data::template kTagFor<PbView>:
-    default: {
-      const StringView data{data_.template TryAs<PbView>()->Str()};
+  HORUS_ONEOF_SWITCH(data_) {
+    HORUS_ONEOF_CASE(data, VectorT) { return data.size(); }
+    HORUS_ONEOF_CASE(view, PbView) {
+      const StringView data{view.Str()};
       const protozero::iterator_range<protozero::const_varint_iterator<T>> range{
           protozero::const_varint_iterator<T>{data.data(), data.end()},
           protozero::const_varint_iterator<T>{data.end(), data.end()},
@@ -300,19 +294,16 @@ std::size_t CowRepeated<T, /*kPacked=*/true>::size() const noexcept {
       return range.size();
     }
   }
+  HORUS_ONEOF_RETURN_NOT_HANDLED;
 }
 
 template <class T>
 bool CowRepeated<T, /*kPacked=*/true>::empty() const noexcept {
-  switch (data_.Tag()) {
-    case Data::template kTagFor<VectorT>: {
-      return data_.template TryAs<VectorT>()->empty();
-    }
-    case Data::template kTagFor<PbView>:
-    default: {
-      return data_.template TryAs<PbView>()->Str().empty();
-    }
+  HORUS_ONEOF_SWITCH(data_) {
+    HORUS_ONEOF_CASE(data, VectorT) { return data.empty(); }
+    HORUS_ONEOF_CASE(view, PbView) { return view.Str().empty(); }
   }
+  HORUS_ONEOF_RETURN_NOT_HANDLED;
 }
 
 template <class T>
@@ -398,8 +389,7 @@ class PbTraits<CowRepeated<T, /*kPacked=*/true>> final {
     const char* span_start{reader.Reader().data().data()};
     // Skip length.
     protozero::decode_varint(
-        &span_start,
-        horus_internal::PointerAdd(reader.Reader().data().data(), reader.Reader().data().size()));
+        &span_start, PointerAdd(reader.Reader().data().data(), reader.Reader().data().size()));
     // Skip items.
     static_cast<void>((reader.Reader().*kGet)());
     const char* const span_end{reader.Reader().data().data()};
@@ -435,7 +425,7 @@ class CowRepeated<T, /*kPacked=*/false> final {
         : data_{DataFrom(container, is_end)} {}
 
     /// Returns the current value.
-    Cow<T> operator*() const HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
+    Cow<T> operator*() const HORUS_LIFETIME_BOUND;
 
     /// Advances to the next value (`++it`).
     const_iterator& operator++() noexcept;
@@ -452,7 +442,7 @@ class CowRepeated<T, /*kPacked=*/false> final {
       if (lhs.data_.Tag() != rhs.data_.Tag()) {
         return false;
       }
-      return lhs.data_.InvokeWithConst([&rhs](auto iterator) noexcept -> bool {
+      return lhs.data_.VisitConst([&rhs](auto iterator) noexcept -> bool {
         return iterator == *rhs.data_.template TryAs<decltype(iterator)>();
       });
     }
@@ -469,7 +459,7 @@ class CowRepeated<T, /*kPacked=*/false> final {
         throw std::logic_error{
             "called 'lhs - rhs' with iterators from different CowRepeated collections"};
       }
-      return lhs.data_.InvokeWithConst([&rhs](auto iterator) noexcept -> bool {
+      return lhs.data_.VisitConst([&rhs](auto iterator) noexcept -> bool {
         return iterator - *rhs.data_.template TryAs<decltype(iterator)>();
       });
     }
@@ -515,7 +505,7 @@ class CowRepeated<T, /*kPacked=*/false> final {
   ///
   /// @throws std::bad_alloc If the contents of the repeated list had to be copied and the
   /// allocation failed.
-  std::vector<T>& Vector() noexcept(false) HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
+  std::vector<T>& Vector() noexcept(false) HORUS_LIFETIME_BOUND;
 
   /// (Internal use only) Deserializes the repeated list from a `reader`.
   void InternalDeserialize(PbReader& reader) & noexcept(false);
@@ -549,12 +539,12 @@ class CowRepeated<T, /*kPacked=*/false> final {
 template <class T>
 Cow<T> CowRepeated<T, /*kPacked=*/false>::const_iterator::operator*() const {
   static_assert(std::is_nothrow_move_constructible<T>::value, "");
-  return data_.InvokeWithConst([](const auto& iterator) -> Cow<T> { return *iterator; });
+  return data_.VisitConst([](const auto& iterator) -> Cow<T> { return *iterator; });
 }
 
 template <class T>
 auto CowRepeated<T, /*kPacked=*/false>::const_iterator::operator++() noexcept -> const_iterator& {
-  data_.InvokeWith([](auto& iterator) noexcept { ++iterator; });
+  data_.Visit([](auto& iterator) noexcept { ++iterator; });
   return *this;
 }
 
@@ -562,35 +552,26 @@ auto CowRepeated<T, /*kPacked=*/false>::const_iterator::operator++() noexcept ->
 template <class T>
 auto CowRepeated<T, /*kPacked=*/false>::const_iterator::DataFrom(const CowRepeated& container,
                                                                  bool is_end) noexcept -> Data {
-  switch (container.data_.Tag()) {
-    case CowRepeated::Data::template kTagFor<std::vector<T>>: {
-      const std::vector<T>& data{*container.data_.template TryAs<std::vector<T>>()};
-      const T* const ptr{is_end ? horus_internal::PointerAdd(data.data(), data.size())
-                                : data.data()};
+  HORUS_ONEOF_SWITCH(container.data_) {
+    HORUS_ONEOF_CASE(data, std::vector<T>) {
+      const T* const ptr{is_end ? PointerAdd(data.data(), data.size()) : data.data()};
       return Data{InPlaceType<const T*>, ptr};
     }
-    case CowRepeated::Data::template kTagFor<horus_internal::PbViewAndTag>:
-    default: {
+    HORUS_ONEOF_CASE(data, horus_internal::PbViewAndTag) {
       if (is_end) {
         return Data{InPlaceType<PbRepeatedIterator<T>>};
       }
-      const horus_internal::PbViewAndTag& data{
-          *container.data_.template TryAs<horus_internal::PbViewAndTag>()};
       return Data{InPlaceType<PbRepeatedIterator<T>>, data.tag, PbView{data.view}};
     }
   }
+  HORUS_ONEOF_RETURN_NOT_HANDLED;
 }
 
 template <class T>
 std::size_t CowRepeated<T, /*kPacked=*/false>::size() const {
-  switch (data_.Tag()) {
-    case Data::template kTagFor<std::vector<T>>: {
-      return data_.template TryAs<std::vector<T>>()->size();
-    }
-    case Data::template kTagFor<horus_internal::PbViewAndTag>:
-    default: {
-      const horus_internal::PbViewAndTag& data{
-          *data_.template TryAs<horus_internal::PbViewAndTag>()};
+  HORUS_ONEOF_SWITCH(data_) {
+    HORUS_ONEOF_CASE(data, std::vector<T>) { return data.size(); }
+    HORUS_ONEOF_CASE(data, horus_internal::PbViewAndTag) {
       protozero::pbf_reader reader{data.view.Str().data(), data.view.Str().size()};
       std::size_t length{0};
       while (reader.next(data.tag)) {
@@ -600,22 +581,19 @@ std::size_t CowRepeated<T, /*kPacked=*/false>::size() const {
       return length;
     }
   }
+  HORUS_ONEOF_RETURN_NOT_HANDLED;
 }
 
 template <class T>
 bool CowRepeated<T, /*kPacked=*/false>::empty() const {
-  switch (data_.Tag()) {
-    case Data::template kTagFor<std::vector<T>>: {
-      return data_.template TryAs<std::vector<T>>()->empty();
-    }
-    case Data::template kTagFor<horus_internal::PbViewAndTag>:
-    default: {
-      const horus_internal::PbViewAndTag& data{
-          *data_.template TryAs<horus_internal::PbViewAndTag>()};
+  HORUS_ONEOF_SWITCH(data_) {
+    HORUS_ONEOF_CASE(data, std::vector<T>) { return data.empty(); }
+    HORUS_ONEOF_CASE(data, horus_internal::PbViewAndTag) {
       protozero::pbf_reader reader{data.view.Str().data(), data.view.Str().size()};
       return !reader.next(data.tag);
     }
   }
+  HORUS_ONEOF_RETURN_NOT_HANDLED;
 }
 
 template <class T>
@@ -640,16 +618,13 @@ void CowRepeated<T, /*kPacked=*/false>::InternalDeserialize(PbReader& reader) & 
   // Get a reference to the underlying data, resetting the current state first if necessary.
   PbTag const reader_tag{reader.Reader().tag()};
   PbView reader_view{reader.ViewIncludingTag(reader_tag, reader.Reader().get_view())};
-  switch (data_.Tag()) {
-    case Data::template kTagFor<std::vector<T>>: {
+  HORUS_ONEOF_SWITCH(data_) {
+    HORUS_ONEOF_CASE_DISCARD(std::vector<T>) {
       // We owned a vector, but now we're deserializing from a stream so we can reset our state.
       static_cast<void>(
           data_.template Emplace<horus_internal::PbViewAndTag>(std::move(reader_view), reader_tag));
-      break;
     }
-    case Data::template kTagFor<horus_internal::PbViewAndTag>:
-    default: {
-      horus_internal::PbViewAndTag& data{*data_.template TryAs<horus_internal::PbViewAndTag>()};
+    HORUS_ONEOF_CASE(data, horus_internal::PbViewAndTag) {
       if ((data.tag != reader_tag) ||
           (data.view.Buffer().Str().data() != reader_view.Buffer().Str().data()) ||
           (data.view.Offset() >= reader_view.Offset())) {
@@ -663,7 +638,8 @@ void CowRepeated<T, /*kPacked=*/false>::InternalDeserialize(PbReader& reader) & 
         std::size_t const new_size{reader_view.Offset() - data.view.Offset() + reader_view.Size()};
         data.view = data.view.Buffer().View(data.view.Offset(), new_size);
       }
-      break;
+      break;  // We need an explicit break here because the `HORUS_ONEOF_CASE` macro uses a `for`
+              // loop in C++14.
     }
   }
   assert(size() >= 0);  // Make sure that whatever we deserialized is valid.

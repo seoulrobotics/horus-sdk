@@ -16,12 +16,12 @@
 #include <utility>
 #include <vector>
 
-#include "horus/internal/attributes.h"
+#include "horus/attributes.h"
 #include "horus/pb/buffer.h"
 #include "horus/pb/serialize.h"
-#include "horus/strings/str_sink.h"
+#include "horus/strings/string_view.h"
+#include "horus/strings/stringify.h"
 #include "horus/types/one_of.h"
-#include "horus/types/string_view.h"
 
 namespace horus {
 
@@ -41,7 +41,7 @@ class CowBytes final {
   using Owned = std::vector<std::uint8_t>;
 
   /// Returns a `CowBytes` container which refers to the data in `string`.
-  static CowBytes Borrowed(StringView string HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND) noexcept {
+  static CowBytes Borrowed(StringView string HORUS_LIFETIME_BOUND) noexcept {
     return CowBytes{string};
   }
 
@@ -75,13 +75,13 @@ class CowBytes final {
   }
 
   /// Returns a reference to the stored bytes.
-  StringView Str() const noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
+  StringView Str() const noexcept HORUS_LIFETIME_BOUND;
 
   /// Returns a mutable reference to the stored bytes.
   ///
   /// @throws std::bad_alloc If the contents of the string had to be copied and the allocation
   /// failed.
-  Owned& String() noexcept(false) HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND;
+  Owned& String() & noexcept(false) HORUS_LIFETIME_BOUND;
 
   /// Returns a view of the stored bytes, making a copy of the inner string first if necessary.
   ///

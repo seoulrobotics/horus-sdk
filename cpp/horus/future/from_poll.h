@@ -13,13 +13,28 @@
 #include "horus/future/poll.h"
 
 namespace horus {
+namespace horus_internal {
+
+/// See `PollFunctionResult`.
+template <class T>
+struct PollFunctionResultImpl;
+template <class T>
+struct PollFunctionResultImpl<PollResult<T>> {
+  using Type = T;
+};
+/// Yields `U` given `T = PollResult<U>`.
+template <class T>
+using PollFunctionResult = typename PollFunctionResultImpl<T>::Type;
+
+}  // namespace horus_internal
 
 // MARK: FromPoll()
 
 /// Future returned by `FromPoll()`.
 template <class F>
-class FromPollFuture final : public Future<typename decltype(std::declval<F&>()(
-                                 std::declval<PollContext&>()))::template TypeAt<0>> {
+class FromPollFuture final
+    : public Future<horus_internal::PollFunctionResult<decltype(std::declval<F&>()(
+          std::declval<PollContext&>()))>> {
   static_assert(std::is_nothrow_move_constructible<F>::value, "");
 
  public:

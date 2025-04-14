@@ -1662,6 +1662,24 @@ func (x *LogData) GetFailedToUpdateConfiguration() *logs_pb.FailedToUpdateConfig
 	return nil
 }
 
+func (x *LogData) GetObstructionDetectorBadReferenceWarning() *logs_pb.ObstructionDetectorBadReferenceWarning {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_ObstructionDetectorBadReferenceWarning); ok {
+			return x.ObstructionDetectorBadReferenceWarning
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetProjectFileInvalidPermissionsError() *logs_pb.ProjectFileInvalidPermissionsError {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_ProjectFileInvalidPermissionsError); ok {
+			return x.ProjectFileInvalidPermissionsError
+		}
+	}
+	return nil
+}
+
 func (x *LogData) SetGeneric(v *logs_pb.Generic) {
 	if v == nil {
 		x.xxx_hidden_Data = nil
@@ -3004,6 +3022,22 @@ func (x *LogData) SetFailedToUpdateConfiguration(v *logs_pb.FailedToUpdateConfig
 		return
 	}
 	x.xxx_hidden_Data = &logData_FailedToUpdateConfiguration{v}
+}
+
+func (x *LogData) SetObstructionDetectorBadReferenceWarning(v *logs_pb.ObstructionDetectorBadReferenceWarning) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_ObstructionDetectorBadReferenceWarning{v}
+}
+
+func (x *LogData) SetProjectFileInvalidPermissionsError(v *logs_pb.ProjectFileInvalidPermissionsError) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_ProjectFileInvalidPermissionsError{v}
 }
 
 func (x *LogData) HasData() bool {
@@ -4357,6 +4391,22 @@ func (x *LogData) HasFailedToUpdateConfiguration() bool {
 	return ok
 }
 
+func (x *LogData) HasObstructionDetectorBadReferenceWarning() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_ObstructionDetectorBadReferenceWarning)
+	return ok
+}
+
+func (x *LogData) HasProjectFileInvalidPermissionsError() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_ProjectFileInvalidPermissionsError)
+	return ok
+}
+
 func (x *LogData) ClearData() {
 	x.xxx_hidden_Data = nil
 }
@@ -5369,6 +5419,18 @@ func (x *LogData) ClearFailedToUpdateConfiguration() {
 	}
 }
 
+func (x *LogData) ClearObstructionDetectorBadReferenceWarning() {
+	if _, ok := x.xxx_hidden_Data.(*logData_ObstructionDetectorBadReferenceWarning); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearProjectFileInvalidPermissionsError() {
+	if _, ok := x.xxx_hidden_Data.(*logData_ProjectFileInvalidPermissionsError); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
 const LogData_Data_not_set_case case_LogData_Data = 0
 const LogData_Generic_case case_LogData_Data = 1
 const LogData_Oom_case case_LogData_Data = 2
@@ -5538,6 +5600,8 @@ const LogData_SparseNoiseFilterUsageNonRotationalLidars_case case_LogData_Data =
 const LogData_FileWriteError_case case_LogData_Data = 166
 const LogData_LicenseForbiddenFeature_case case_LogData_Data = 167
 const LogData_FailedToUpdateConfiguration_case case_LogData_Data = 168
+const LogData_ObstructionDetectorBadReferenceWarning_case case_LogData_Data = 169
+const LogData_ProjectFileInvalidPermissionsError_case case_LogData_Data = 170
 
 func (x *LogData) WhichData() case_LogData_Data {
 	if x == nil {
@@ -5880,6 +5944,10 @@ func (x *LogData) WhichData() case_LogData_Data {
 		return LogData_LicenseForbiddenFeature_case
 	case *logData_FailedToUpdateConfiguration:
 		return LogData_FailedToUpdateConfiguration_case
+	case *logData_ObstructionDetectorBadReferenceWarning:
+		return LogData_ObstructionDetectorBadReferenceWarning_case
+	case *logData_ProjectFileInvalidPermissionsError:
+		return LogData_ProjectFileInvalidPermissionsError_case
 	default:
 		return LogData_Data_not_set_case
 	}
@@ -6057,6 +6125,8 @@ type LogData_builder struct {
 	FileWriteError                              *logs_pb.FileWriteError
 	LicenseForbiddenFeature                     *logs_pb.LicenseForbiddenFeature
 	FailedToUpdateConfiguration                 *logs_pb.FailedToUpdateConfiguration
+	ObstructionDetectorBadReferenceWarning      *logs_pb.ObstructionDetectorBadReferenceWarning
+	ProjectFileInvalidPermissionsError          *logs_pb.ProjectFileInvalidPermissionsError
 	// -- end of xxx_hidden_Data
 }
 
@@ -6567,6 +6637,12 @@ func (b0 LogData_builder) Build() *LogData {
 	}
 	if b.FailedToUpdateConfiguration != nil {
 		x.xxx_hidden_Data = &logData_FailedToUpdateConfiguration{b.FailedToUpdateConfiguration}
+	}
+	if b.ObstructionDetectorBadReferenceWarning != nil {
+		x.xxx_hidden_Data = &logData_ObstructionDetectorBadReferenceWarning{b.ObstructionDetectorBadReferenceWarning}
+	}
+	if b.ProjectFileInvalidPermissionsError != nil {
+		x.xxx_hidden_Data = &logData_ProjectFileInvalidPermissionsError{b.ProjectFileInvalidPermissionsError}
 	}
 	return m0
 }
@@ -7257,6 +7333,14 @@ type logData_FailedToUpdateConfiguration struct {
 	FailedToUpdateConfiguration *logs_pb.FailedToUpdateConfiguration `protobuf:"bytes,168,opt,name=failed_to_update_configuration,json=failedToUpdateConfiguration,proto3,oneof"`
 }
 
+type logData_ObstructionDetectorBadReferenceWarning struct {
+	ObstructionDetectorBadReferenceWarning *logs_pb.ObstructionDetectorBadReferenceWarning `protobuf:"bytes,169,opt,name=obstruction_detector_bad_reference_warning,json=obstructionDetectorBadReferenceWarning,proto3,oneof"`
+}
+
+type logData_ProjectFileInvalidPermissionsError struct {
+	ProjectFileInvalidPermissionsError *logs_pb.ProjectFileInvalidPermissionsError `protobuf:"bytes,170,opt,name=project_file_invalid_permissions_error,json=projectFileInvalidPermissionsError,proto3,oneof"`
+}
+
 func (*logData_Generic) isLogData_Data() {}
 
 func (*logData_Oom) isLogData_Data() {}
@@ -7593,6 +7677,10 @@ func (*logData_LicenseForbiddenFeature) isLogData_Data() {}
 
 func (*logData_FailedToUpdateConfiguration) isLogData_Data() {}
 
+func (*logData_ObstructionDetectorBadReferenceWarning) isLogData_Data() {}
+
+func (*logData_ProjectFileInvalidPermissionsError) isLogData_Data() {}
+
 var File_horus_pb_logs_message_proto protoreflect.FileDescriptor
 
 var file_horus_pb_logs_message_proto_rawDesc = []byte{
@@ -7608,7 +7696,7 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
 	0x12, 0x25, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11,
 	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x6f, 0x67, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xca, 0x89, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
+	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xec, 0x8b, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
 	0x44, 0x61, 0x74, 0x61, 0x12, 0x32, 0x0a, 0x07, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62,
 	0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x48, 0x00, 0x52,
@@ -8708,8 +8796,26 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x67, 0x73, 0x2e, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x54, 0x6f, 0x55, 0x70, 0x64, 0x61, 0x74,
 	0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x48, 0x00,
 	0x52, 0x1b, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x54, 0x6f, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
-	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x06, 0x0a,
-	0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x94, 0x01,
+	0x0a, 0x2a, 0x6f, 0x62, 0x73, 0x74, 0x72, 0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x64, 0x65,
+	0x74, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x5f, 0x62, 0x61, 0x64, 0x5f, 0x72, 0x65, 0x66, 0x65, 0x72,
+	0x65, 0x6e, 0x63, 0x65, 0x5f, 0x77, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x18, 0xa9, 0x01, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x35, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c,
+	0x6f, 0x67, 0x73, 0x2e, 0x4f, 0x62, 0x73, 0x74, 0x72, 0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x44,
+	0x65, 0x74, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x42, 0x61, 0x64, 0x52, 0x65, 0x66, 0x65, 0x72, 0x65,
+	0x6e, 0x63, 0x65, 0x57, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x48, 0x00, 0x52, 0x26, 0x6f, 0x62,
+	0x73, 0x74, 0x72, 0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x6f,
+	0x72, 0x42, 0x61, 0x64, 0x52, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x57, 0x61, 0x72,
+	0x6e, 0x69, 0x6e, 0x67, 0x12, 0x88, 0x01, 0x0a, 0x26, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74,
+	0x5f, 0x66, 0x69, 0x6c, 0x65, 0x5f, 0x69, 0x6e, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x5f, 0x70, 0x65,
+	0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x5f, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18,
+	0xaa, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x31, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70,
+	0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x46, 0x69,
+	0x6c, 0x65, 0x49, 0x6e, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x50, 0x65, 0x72, 0x6d, 0x69, 0x73, 0x73,
+	0x69, 0x6f, 0x6e, 0x73, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x48, 0x00, 0x52, 0x22, 0x70, 0x72, 0x6f,
+	0x6a, 0x65, 0x63, 0x74, 0x46, 0x69, 0x6c, 0x65, 0x49, 0x6e, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x50,
+	0x65, 0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x42,
+	0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_horus_pb_logs_message_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
@@ -8885,6 +8991,8 @@ var file_horus_pb_logs_message_proto_goTypes = []any{
 	(*logs_pb.FileWriteError)(nil),                              // 168: horus.pb.logs.FileWriteError
 	(*logs_pb.LicenseForbiddenFeature)(nil),                     // 169: horus.pb.logs.LicenseForbiddenFeature
 	(*logs_pb.FailedToUpdateConfiguration)(nil),                 // 170: horus.pb.logs.FailedToUpdateConfiguration
+	(*logs_pb.ObstructionDetectorBadReferenceWarning)(nil),      // 171: horus.pb.logs.ObstructionDetectorBadReferenceWarning
+	(*logs_pb.ProjectFileInvalidPermissionsError)(nil),          // 172: horus.pb.logs.ProjectFileInvalidPermissionsError
 }
 var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	2,   // 0: horus.pb.LogMessage.metadata:type_name -> horus.pb.LogMetadata
@@ -9057,11 +9165,13 @@ var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	168, // 167: horus.pb.LogData.file_write_error:type_name -> horus.pb.logs.FileWriteError
 	169, // 168: horus.pb.LogData.license_forbidden_feature:type_name -> horus.pb.logs.LicenseForbiddenFeature
 	170, // 169: horus.pb.LogData.failed_to_update_configuration:type_name -> horus.pb.logs.FailedToUpdateConfiguration
-	170, // [170:170] is the sub-list for method output_type
-	170, // [170:170] is the sub-list for method input_type
-	170, // [170:170] is the sub-list for extension type_name
-	170, // [170:170] is the sub-list for extension extendee
-	0,   // [0:170] is the sub-list for field type_name
+	171, // 170: horus.pb.LogData.obstruction_detector_bad_reference_warning:type_name -> horus.pb.logs.ObstructionDetectorBadReferenceWarning
+	172, // 171: horus.pb.LogData.project_file_invalid_permissions_error:type_name -> horus.pb.logs.ProjectFileInvalidPermissionsError
+	172, // [172:172] is the sub-list for method output_type
+	172, // [172:172] is the sub-list for method input_type
+	172, // [172:172] is the sub-list for extension type_name
+	172, // [172:172] is the sub-list for extension extendee
+	0,   // [0:172] is the sub-list for field type_name
 }
 
 func init() { file_horus_pb_logs_message_proto_init() }
@@ -9238,6 +9348,8 @@ func file_horus_pb_logs_message_proto_init() {
 		(*logData_FileWriteError)(nil),
 		(*logData_LicenseForbiddenFeature)(nil),
 		(*logData_FailedToUpdateConfiguration)(nil),
+		(*logData_ObstructionDetectorBadReferenceWarning)(nil),
+		(*logData_ProjectFileInvalidPermissionsError)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

@@ -26,7 +26,7 @@ from horus.pb.detection_service import detection_pb2 as horus_dot_pb_dot_detecti
 from horus.pb import rpc_pb2 as horus_dot_pb_dot_rpc__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n2horus/pb/detection_service/detection_service.proto\x12\x08horus.pb\x1a*horus/pb/detection_service/detection.proto\x1a\x12horus/pb/rpc.proto2\xeb\x03\n\x10\x44\x65tectionService\x12\xc5\x01\n\tSubscribe\x12!.horus.pb.DefaultSubscribeRequest\x1a\".horus.pb.DefaultSubscribeResponse\"q\xc2\xab\xb1.l\x08\x02\x12JSubscribes to receive future detection results as they are made available.\x1a\x1c\n\x1a\x44\x65tectionSubscriberService\x12\xaf\x01\n\x0bUnsubscribe\x12#.horus.pb.DefaultUnsubscribeRequest\x1a$.horus.pb.DefaultUnsubscribeResponse\"U\xc2\xab\xb1.P\x08\x03\x12.Unsubscribe following a call to `Subscribe()`.\"\x1c\n\x1a\x44\x65tectionSubscriberService\x1a]\xc2\xab\xb1.X\x08\x07\x12TService for receiving pre-processed foreground points and sending detection results.2\x91\x02\n\x1a\x44\x65tectionSubscriberService\x12l\n\x12\x42roadcastDetection\x12\x18.horus.pb.DetectionEvent\x1a\x14.horus.pb.NoResponse\"&\xc2\xab\xb1.!\x08\x01\x12\x1dNotify new detection results.\x1a\x84\x01\xc2\xab\xb1.\x7f\x08\x0c\x12{Service exposed by clients of the `DetectionService` that wish to receive updates when new detection results are processed.b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n2horus/pb/detection_service/detection_service.proto\x12\x08horus.pb\x1a*horus/pb/detection_service/detection.proto\x1a\x12horus/pb/rpc.proto2\xee\x03\n\x10\x44\x65tectionService\x12\xc5\x01\n\tSubscribe\x12!.horus.pb.DefaultSubscribeRequest\x1a\".horus.pb.DefaultSubscribeResponse\"q\xc2\xab\xb1.l\x08\x02\x12JSubscribes to receive future detection results as they are made available.\x1a\x1c\n\x1a\x44\x65tectionSubscriberService\x12\xaf\x01\n\x0bUnsubscribe\x12#.horus.pb.DefaultUnsubscribeRequest\x1a$.horus.pb.DefaultUnsubscribeResponse\"U\xc2\xab\xb1.P\x08\x03\x12.Unsubscribe following a call to `Subscribe()`.\"\x1c\n\x1a\x44\x65tectionSubscriberService\x1a`\xc2\xab\xb1.[\x08\x07\x12TService for receiving pre-processed foreground points and sending detection results.\x1a\x01\x07\x32\x91\x02\n\x1a\x44\x65tectionSubscriberService\x12l\n\x12\x42roadcastDetection\x12\x18.horus.pb.DetectionEvent\x1a\x14.horus.pb.NoResponse\"&\xc2\xab\xb1.!\x08\x01\x12\x1dNotify new detection results.\x1a\x84\x01\xc2\xab\xb1.\x7f\x08\x0c\x12{Service exposed by clients of the `DetectionService` that wish to receive updates when new detection results are processed.b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -34,7 +34,7 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'horus.pb.detection_service.
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_DETECTIONSERVICE']._loaded_options = None
-  _globals['_DETECTIONSERVICE']._serialized_options = b'\302\253\261.X\010\007\022TService for receiving pre-processed foreground points and sending detection results.'
+  _globals['_DETECTIONSERVICE']._serialized_options = b'\302\253\261.[\010\007\022TService for receiving pre-processed foreground points and sending detection results.\032\001\007'
   _globals['_DETECTIONSERVICE'].methods_by_name['Subscribe']._loaded_options = None
   _globals['_DETECTIONSERVICE'].methods_by_name['Subscribe']._serialized_options = b'\302\253\261.l\010\002\022JSubscribes to receive future detection results as they are made available.\032\034\n\032DetectionSubscriberService'
   _globals['_DETECTIONSERVICE'].methods_by_name['Unsubscribe']._loaded_options = None
@@ -44,7 +44,7 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_DETECTIONSUBSCRIBERSERVICE'].methods_by_name['BroadcastDetection']._loaded_options = None
   _globals['_DETECTIONSUBSCRIBERSERVICE'].methods_by_name['BroadcastDetection']._serialized_options = b'\302\253\261.!\010\001\022\035Notify new detection results.'
   _globals['_DETECTIONSERVICE']._serialized_start=129
-  _globals['_DETECTIONSERVICE']._serialized_end=620
-  _globals['_DETECTIONSUBSCRIBERSERVICE']._serialized_start=623
-  _globals['_DETECTIONSUBSCRIBERSERVICE']._serialized_end=896
+  _globals['_DETECTIONSERVICE']._serialized_end=623
+  _globals['_DETECTIONSUBSCRIBERSERVICE']._serialized_start=626
+  _globals['_DETECTIONSUBSCRIBERSERVICE']._serialized_end=899
 # @@protoc_insertion_point(module_scope)
