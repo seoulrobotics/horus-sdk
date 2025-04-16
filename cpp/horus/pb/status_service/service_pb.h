@@ -11,10 +11,12 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/attributes.h"
+#include "horus/internal/attributes.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
 #include "horus/pb/status_service/messages_pb.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -153,7 +155,7 @@ class GetVersionResponse final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const Version& version() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Version& version() const& noexcept HORUS_LIFETIME_BOUND {
     return version_;
   }
 
@@ -172,7 +174,7 @@ class GetVersionResponse final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  Version& mutable_version() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Version& mutable_version() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return version_;
   }

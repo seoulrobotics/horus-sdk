@@ -21,8 +21,8 @@
 #include "horus/event_loop/uv.h"
 #include "horus/event_loop/waker.h"
 #include "horus/future/core_owner.h"
-#include "horus/internal/pointer_cast.h"
-#include "horus/internal/source_location.h"
+#include "horus/pointer/unsafe_cast.h"
+#include "horus/source_location.h"
 #include "horus/strings/logging.h"
 #include "horus/types/in_place.h"
 #include "horus/types/one_of.h"
@@ -30,6 +30,7 @@
 namespace horus {
 
 class PollContext;
+struct Pending;
 
 namespace horus_internal {
 
@@ -357,8 +358,6 @@ class EventLoop::RunFutureTask final : public Task {
   using T = typename F::Result;
   /// Result of `F::UnsafePoll()`.
   using PollResult = decltype(std::declval<F&>().UnsafePoll(std::declval<PollContext&>()));
-  /// Alias of `Pending` (using `PollResult` to avoid a header include cycle).
-  using Pending = typename PollResult::template TypeAt<1>;
 
  public:
   /// Constructs the task.
@@ -509,8 +508,6 @@ class EventLoop::AwaitFutureTask final : public AwaitTask {
   using T = typename F::Result;
   /// Result of `F::UnsafePoll()`.
   using PollResult = decltype(std::declval<F&>().UnsafePoll(std::declval<PollContext&>()));
-  /// Alias of `Pending` (using `PollResult` to avoid a header include cycle).
-  using Pending = typename PollResult::template TypeAt<1>;
 
  public:
   /// Constructs the task.

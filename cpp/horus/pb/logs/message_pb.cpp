@@ -175,6 +175,8 @@ LogData::LogData(const LogData& other) noexcept(false)
     , file_write_error_{other.file_write_error_}
     , license_forbidden_feature_{other.license_forbidden_feature_}
     , failed_to_update_configuration_{other.failed_to_update_configuration_}
+    , obstruction_detector_bad_reference_warning_{other.obstruction_detector_bad_reference_warning_}
+    , project_file_invalid_permissions_error_{other.project_file_invalid_permissions_error_}
     , data_{other.data_}
     , set_fields_{other.set_fields_} {}
 
@@ -682,6 +684,12 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[167]) {
     SerializeField<logs::FailedToUpdateConfiguration>(writer, /*tag=*/ 168, failed_to_update_configuration_);
+  }
+  if (set_fields_[168]) {
+    SerializeField<logs::ObstructionDetectorBadReferenceWarning>(writer, /*tag=*/ 169, obstruction_detector_bad_reference_warning_);
+  }
+  if (set_fields_[169]) {
+    SerializeField<logs::ProjectFileInvalidPermissionsError>(writer, /*tag=*/ 170, project_file_invalid_permissions_error_);
   }
 }
 
@@ -1862,6 +1870,20 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
         data_ = DataOneof::kFailedToUpdateConfiguration;
         DeserializeField<logs::FailedToUpdateConfiguration>(reader, failed_to_update_configuration_);
         set_fields_[167] = true;
+        break;
+      }
+      case 169: {
+        clear_data();
+        data_ = DataOneof::kObstructionDetectorBadReferenceWarning;
+        DeserializeField<logs::ObstructionDetectorBadReferenceWarning>(reader, obstruction_detector_bad_reference_warning_);
+        set_fields_[168] = true;
+        break;
+      }
+      case 170: {
+        clear_data();
+        data_ = DataOneof::kProjectFileInvalidPermissionsError;
+        DeserializeField<logs::ProjectFileInvalidPermissionsError>(reader, project_file_invalid_permissions_error_);
+        set_fields_[169] = true;
         break;
       }
       default: {

@@ -1104,3 +1104,13 @@ class FailedToUpdateConfiguration(_message.Message):
     DETAILS_FIELD_NUMBER: _ClassVar[int]
     details: str
     def __init__(self, details: _Optional[str] = ...) -> None: ...
+
+class ObstructionDetectorBadReferenceWarning(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
+
+class ProjectFileInvalidPermissionsError(_message.Message):
+    __slots__ = ("filename",)
+    FILENAME_FIELD_NUMBER: _ClassVar[int]
+    filename: str
+    def __init__(self, filename: _Optional[str] = ...) -> None: ...

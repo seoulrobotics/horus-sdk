@@ -10986,6 +10986,112 @@ func (b0 FailedToUpdateConfiguration_builder) Build() *FailedToUpdateConfigurati
 	return m0
 }
 
+// Log #169.
+//
+// > The obstruction detector reference is not valid since it contains zero points.
+type ObstructionDetectorBadReferenceWarning struct {
+	state         protoimpl.MessageState `protogen:"opaque.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ObstructionDetectorBadReferenceWarning) Reset() {
+	*x = ObstructionDetectorBadReferenceWarning{}
+	mi := &file_horus_pb_logs_logs_proto_msgTypes[168]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ObstructionDetectorBadReferenceWarning) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ObstructionDetectorBadReferenceWarning) ProtoMessage() {}
+
+func (x *ObstructionDetectorBadReferenceWarning) ProtoReflect() protoreflect.Message {
+	mi := &file_horus_pb_logs_logs_proto_msgTypes[168]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+type ObstructionDetectorBadReferenceWarning_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+}
+
+func (b0 ObstructionDetectorBadReferenceWarning_builder) Build() *ObstructionDetectorBadReferenceWarning {
+	m0 := &ObstructionDetectorBadReferenceWarning{}
+	b, x := &b0, m0
+	_, _ = b, x
+	return m0
+}
+
+// Log #170.
+//
+// > Project file "$filename" has invalid permissions. Please restart Horus to fix the issue.
+type ProjectFileInvalidPermissionsError struct {
+	state               protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Filename string                 `protobuf:"bytes,1,opt,name=filename,proto3" json:"filename,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *ProjectFileInvalidPermissionsError) Reset() {
+	*x = ProjectFileInvalidPermissionsError{}
+	mi := &file_horus_pb_logs_logs_proto_msgTypes[169]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ProjectFileInvalidPermissionsError) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ProjectFileInvalidPermissionsError) ProtoMessage() {}
+
+func (x *ProjectFileInvalidPermissionsError) ProtoReflect() protoreflect.Message {
+	mi := &file_horus_pb_logs_logs_proto_msgTypes[169]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *ProjectFileInvalidPermissionsError) GetFilename() string {
+	if x != nil {
+		return x.xxx_hidden_Filename
+	}
+	return ""
+}
+
+func (x *ProjectFileInvalidPermissionsError) SetFilename(v string) {
+	x.xxx_hidden_Filename = v
+}
+
+type ProjectFileInvalidPermissionsError_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Filename string
+}
+
+func (b0 ProjectFileInvalidPermissionsError_builder) Build() *ProjectFileInvalidPermissionsError {
+	m0 := &ProjectFileInvalidPermissionsError{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_Filename = b.Filename
+	return m0
+}
+
 var File_horus_pb_logs_logs_proto protoreflect.FileDescriptor
 
 var file_horus_pb_logs_logs_proto_rawDesc = []byte{
@@ -11717,10 +11823,17 @@ var file_horus_pb_logs_logs_proto_rawDesc = []byte{
 	0x6c, 0x65, 0x64, 0x54, 0x6f, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69,
 	0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x18, 0x0a, 0x07, 0x64, 0x65, 0x74, 0x61,
 	0x69, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x64, 0x65, 0x74, 0x61, 0x69,
-	0x6c, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6c, 0x73, 0x22, 0x28, 0x0a, 0x26, 0x4f, 0x62, 0x73, 0x74, 0x72, 0x75, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x42, 0x61, 0x64, 0x52, 0x65, 0x66, 0x65,
+	0x72, 0x65, 0x6e, 0x63, 0x65, 0x57, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x22, 0x40, 0x0a, 0x22,
+	0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x46, 0x69, 0x6c, 0x65, 0x49, 0x6e, 0x76, 0x61, 0x6c,
+	0x69, 0x64, 0x50, 0x65, 0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x45, 0x72, 0x72,
+	0x6f, 0x72, 0x12, 0x1a, 0x0a, 0x08, 0x66, 0x69, 0x6c, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x69, 0x6c, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
-var file_horus_pb_logs_logs_proto_msgTypes = make([]protoimpl.MessageInfo, 168)
+var file_horus_pb_logs_logs_proto_msgTypes = make([]protoimpl.MessageInfo, 170)
 var file_horus_pb_logs_logs_proto_goTypes = []any{
 	(*Generic)(nil),                                     // 0: horus.pb.logs.Generic
 	(*Oom)(nil),                                         // 1: horus.pb.logs.Oom
@@ -11890,36 +12003,38 @@ var file_horus_pb_logs_logs_proto_goTypes = []any{
 	(*FileWriteError)(nil),                              // 165: horus.pb.logs.FileWriteError
 	(*LicenseForbiddenFeature)(nil),                     // 166: horus.pb.logs.LicenseForbiddenFeature
 	(*FailedToUpdateConfiguration)(nil),                 // 167: horus.pb.logs.FailedToUpdateConfiguration
-	(*metadata_pb.LogMetadata_SourceLocation)(nil),      // 168: horus.pb.LogMetadata.SourceLocation
-	(*common_pb.ValidationError)(nil),                   // 169: horus.pb.logs.ValidationError
-	(*metadata_pb.LogMetadata_Timestamp)(nil),           // 170: horus.pb.LogMetadata.Timestamp
-	(*metadata_pb.LogMetadata_Duration)(nil),            // 171: horus.pb.LogMetadata.Duration
+	(*ObstructionDetectorBadReferenceWarning)(nil),      // 168: horus.pb.logs.ObstructionDetectorBadReferenceWarning
+	(*ProjectFileInvalidPermissionsError)(nil),          // 169: horus.pb.logs.ProjectFileInvalidPermissionsError
+	(*metadata_pb.LogMetadata_SourceLocation)(nil),      // 170: horus.pb.LogMetadata.SourceLocation
+	(*common_pb.ValidationError)(nil),                   // 171: horus.pb.logs.ValidationError
+	(*metadata_pb.LogMetadata_Timestamp)(nil),           // 172: horus.pb.LogMetadata.Timestamp
+	(*metadata_pb.LogMetadata_Duration)(nil),            // 173: horus.pb.LogMetadata.Duration
 }
 var file_horus_pb_logs_logs_proto_depIdxs = []int32{
-	168, // 0: horus.pb.logs.Generic.location:type_name -> horus.pb.LogMetadata.SourceLocation
-	169, // 1: horus.pb.logs.InvalidConfiguration.validation_errors:type_name -> horus.pb.logs.ValidationError
-	170, // 2: horus.pb.logs.LicenseExpiredError.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
-	170, // 3: horus.pb.logs.LicenseCurrentLicenseStatusInfo.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
-	171, // 4: horus.pb.logs.RpcTimeoutWarning.elapsed:type_name -> horus.pb.LogMetadata.Duration
-	168, // 5: horus.pb.logs.UnhandledEnumCaseError.location:type_name -> horus.pb.LogMetadata.SourceLocation
-	170, // 6: horus.pb.logs.BagTimestampOutOfOrderError.prior_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
-	170, // 7: horus.pb.logs.BagTimestampOutOfOrderError.current_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
-	170, // 8: horus.pb.logs.BagReplayUnexpectedTimestampError.expected_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
-	170, // 9: horus.pb.logs.BagReplayUnexpectedTimestampError.received_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
-	171, // 10: horus.pb.logs.ThreadPoolNotRespondingWarning.not_responding_for:type_name -> horus.pb.LogMetadata.Duration
-	171, // 11: horus.pb.logs.IrregularBroadcastingPeriodWarning.duration:type_name -> horus.pb.LogMetadata.Duration
-	171, // 12: horus.pb.logs.IrregularBroadcastingPeriodWarning.mean_deviation:type_name -> horus.pb.LogMetadata.Duration
-	170, // 13: horus.pb.logs.LicenseExpiredWarning.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
-	171, // 14: horus.pb.logs.StaticThreadPoolSlowTaskWarning.time_elapsed:type_name -> horus.pb.LogMetadata.Duration
-	168, // 15: horus.pb.logs.StaticThreadPoolSlowTaskWarning.enqueue_location:type_name -> horus.pb.LogMetadata.SourceLocation
-	171, // 16: horus.pb.logs.PreprocessingToPointAggregatorPointsSkipped.check_interval:type_name -> horus.pb.LogMetadata.Duration
-	171, // 17: horus.pb.logs.MinMsgIntervalLessThanThreshold.threshold:type_name -> horus.pb.LogMetadata.Duration
-	170, // 18: horus.pb.logs.TimeDiffOutOfRangeWarning.prev_time:type_name -> horus.pb.LogMetadata.Timestamp
-	170, // 19: horus.pb.logs.TimeDiffOutOfRangeWarning.curr_time:type_name -> horus.pb.LogMetadata.Timestamp
-	171, // 20: horus.pb.logs.TimeDiffOutOfRangeWarning.diff:type_name -> horus.pb.LogMetadata.Duration
-	171, // 21: horus.pb.logs.RpcTimeoutWithResolutionWarning.elapsed:type_name -> horus.pb.LogMetadata.Duration
-	170, // 22: horus.pb.logs.InvalidLidarTimestamp.timestamp:type_name -> horus.pb.LogMetadata.Timestamp
-	171, // 23: horus.pb.logs.CalibrationAccumulatingPointsInfo.time:type_name -> horus.pb.LogMetadata.Duration
+	170, // 0: horus.pb.logs.Generic.location:type_name -> horus.pb.LogMetadata.SourceLocation
+	171, // 1: horus.pb.logs.InvalidConfiguration.validation_errors:type_name -> horus.pb.logs.ValidationError
+	172, // 2: horus.pb.logs.LicenseExpiredError.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
+	172, // 3: horus.pb.logs.LicenseCurrentLicenseStatusInfo.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
+	173, // 4: horus.pb.logs.RpcTimeoutWarning.elapsed:type_name -> horus.pb.LogMetadata.Duration
+	170, // 5: horus.pb.logs.UnhandledEnumCaseError.location:type_name -> horus.pb.LogMetadata.SourceLocation
+	172, // 6: horus.pb.logs.BagTimestampOutOfOrderError.prior_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
+	172, // 7: horus.pb.logs.BagTimestampOutOfOrderError.current_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
+	172, // 8: horus.pb.logs.BagReplayUnexpectedTimestampError.expected_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
+	172, // 9: horus.pb.logs.BagReplayUnexpectedTimestampError.received_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
+	173, // 10: horus.pb.logs.ThreadPoolNotRespondingWarning.not_responding_for:type_name -> horus.pb.LogMetadata.Duration
+	173, // 11: horus.pb.logs.IrregularBroadcastingPeriodWarning.duration:type_name -> horus.pb.LogMetadata.Duration
+	173, // 12: horus.pb.logs.IrregularBroadcastingPeriodWarning.mean_deviation:type_name -> horus.pb.LogMetadata.Duration
+	172, // 13: horus.pb.logs.LicenseExpiredWarning.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
+	173, // 14: horus.pb.logs.StaticThreadPoolSlowTaskWarning.time_elapsed:type_name -> horus.pb.LogMetadata.Duration
+	170, // 15: horus.pb.logs.StaticThreadPoolSlowTaskWarning.enqueue_location:type_name -> horus.pb.LogMetadata.SourceLocation
+	173, // 16: horus.pb.logs.PreprocessingToPointAggregatorPointsSkipped.check_interval:type_name -> horus.pb.LogMetadata.Duration
+	173, // 17: horus.pb.logs.MinMsgIntervalLessThanThreshold.threshold:type_name -> horus.pb.LogMetadata.Duration
+	172, // 18: horus.pb.logs.TimeDiffOutOfRangeWarning.prev_time:type_name -> horus.pb.LogMetadata.Timestamp
+	172, // 19: horus.pb.logs.TimeDiffOutOfRangeWarning.curr_time:type_name -> horus.pb.LogMetadata.Timestamp
+	173, // 20: horus.pb.logs.TimeDiffOutOfRangeWarning.diff:type_name -> horus.pb.LogMetadata.Duration
+	173, // 21: horus.pb.logs.RpcTimeoutWithResolutionWarning.elapsed:type_name -> horus.pb.LogMetadata.Duration
+	172, // 22: horus.pb.logs.InvalidLidarTimestamp.timestamp:type_name -> horus.pb.LogMetadata.Timestamp
+	173, // 23: horus.pb.logs.CalibrationAccumulatingPointsInfo.time:type_name -> horus.pb.LogMetadata.Duration
 	24,  // [24:24] is the sub-list for method output_type
 	24,  // [24:24] is the sub-list for method input_type
 	24,  // [24:24] is the sub-list for extension type_name
@@ -11938,7 +12053,7 @@ func file_horus_pb_logs_logs_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_horus_pb_logs_logs_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   168,
+			NumMessages:   170,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

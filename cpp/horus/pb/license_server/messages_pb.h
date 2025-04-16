@@ -11,12 +11,14 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/attributes.h"
+#include "horus/internal/attributes.h"
 #include "horus/pb/config/metadata_pb.h"
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
 #include "horus/pb/types.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -118,14 +120,14 @@ class LicenseInfo_AllowedFeature final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr LicenseFeature feature() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr LicenseFeature feature() const& noexcept HORUS_LIFETIME_BOUND {
     return feature_;
   }
 
   /// No documentation.
   ///
   /// Field no: 1.
-  LicenseFeature& mutable_feature() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  LicenseFeature& mutable_feature() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return feature_;
   }
@@ -218,7 +220,7 @@ class LicenseInfo final : public PbMessage {
   /// Timestamp defining the license's end date of validity
   ///
   /// Field no: 1.
-  constexpr const Timestamp& expiration_date() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Timestamp& expiration_date() const& noexcept HORUS_LIFETIME_BOUND {
     return expiration_date_;
   }
 
@@ -237,7 +239,7 @@ class LicenseInfo final : public PbMessage {
   /// Timestamp defining the license's end date of validity
   ///
   /// Field no: 1.
-  Timestamp& mutable_expiration_date() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Timestamp& mutable_expiration_date() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return expiration_date_;
   }
@@ -268,14 +270,14 @@ class LicenseInfo final : public PbMessage {
   /// Number of LiDAR devices running at the same time allowed by the license
   ///
   /// Field no: 2.
-  constexpr std::uint32_t lidar_count() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint32_t lidar_count() const& noexcept HORUS_LIFETIME_BOUND {
     return lidar_count_;
   }
 
   /// Number of LiDAR devices running at the same time allowed by the license
   ///
   /// Field no: 2.
-  std::uint32_t& mutable_lidar_count() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint32_t& mutable_lidar_count() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return lidar_count_;
   }
@@ -306,7 +308,7 @@ class LicenseInfo final : public PbMessage {
   /// Features allowed by the license
   ///
   /// Field no: 3.
-  constexpr const CowRepeated<LicenseInfo_AllowedFeature>& allowed_features() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowRepeated<LicenseInfo_AllowedFeature>& allowed_features() const& noexcept HORUS_LIFETIME_BOUND {
     return allowed_features_;
   }
 
@@ -325,7 +327,7 @@ class LicenseInfo final : public PbMessage {
   /// Features allowed by the license
   ///
   /// Field no: 3.
-  CowRepeated<LicenseInfo_AllowedFeature>& mutable_allowed_features() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowRepeated<LicenseInfo_AllowedFeature>& mutable_allowed_features() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return allowed_features_;
   }

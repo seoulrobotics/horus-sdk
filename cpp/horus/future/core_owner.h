@@ -6,7 +6,7 @@
 #define HORUS_FUTURE_CORE_OWNER_H_
 
 #include "horus/event_loop/waker.h"
-#include "horus/types/list.h"
+#include "horus/types/intrusive_list.h"
 
 namespace horus {
 

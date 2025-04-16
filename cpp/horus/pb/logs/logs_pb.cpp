@@ -4405,6 +4405,34 @@ void FailedToUpdateConfiguration::DeserializeFrom(PbReader& reader) noexcept(fal
   }
 }
 
+
+
+ProjectFileInvalidPermissionsError::ProjectFileInvalidPermissionsError(const ProjectFileInvalidPermissionsError& other) noexcept(false)
+    : filename_{other.filename_}
+    , set_fields_{other.set_fields_} {}
+
+void ProjectFileInvalidPermissionsError::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, filename_);
+  }
+}
+
+void ProjectFileInvalidPermissionsError::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, filename_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
 }  // namespace logs
 }  // namespace pb
 }  // namespace sdk

@@ -11,13 +11,15 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/attributes.h"
+#include "horus/internal/attributes.h"
 #include "horus/pb/config/metadata_pb.h"
 #include "horus/pb/cow_bytes.h"
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
 #include "horus/pb/types.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -147,14 +149,14 @@ class OccupancyGrid final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr std::uint32_t rows() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint32_t rows() const& noexcept HORUS_LIFETIME_BOUND {
     return rows_;
   }
 
   /// No documentation.
   ///
   /// Field no: 1.
-  std::uint32_t& mutable_rows() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint32_t& mutable_rows() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return rows_;
   }
@@ -185,14 +187,14 @@ class OccupancyGrid final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr std::uint32_t cols() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint32_t cols() const& noexcept HORUS_LIFETIME_BOUND {
     return cols_;
   }
 
   /// No documentation.
   ///
   /// Field no: 2.
-  std::uint32_t& mutable_cols() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint32_t& mutable_cols() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return cols_;
   }
@@ -227,7 +229,7 @@ class OccupancyGrid final : public PbMessage {
   ///  @see `occupancy_map_constants` for more details.
   ///
   /// Field no: 3.
-  constexpr const CowRepeated<std::uint32_t>& cells() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowRepeated<std::uint32_t>& cells() const& noexcept HORUS_LIFETIME_BOUND {
     return cells_;
   }
 
@@ -250,7 +252,7 @@ class OccupancyGrid final : public PbMessage {
   ///  @see `occupancy_map_constants` for more details.
   ///
   /// Field no: 3.
-  CowRepeated<std::uint32_t>& mutable_cells() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowRepeated<std::uint32_t>& mutable_cells() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return cells_;
   }
@@ -359,7 +361,7 @@ class OccupancyGridEvent final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const OccupancyGrid& grid() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const OccupancyGrid& grid() const& noexcept HORUS_LIFETIME_BOUND {
     return grid_;
   }
 
@@ -378,7 +380,7 @@ class OccupancyGridEvent final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  OccupancyGrid& mutable_grid() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  OccupancyGrid& mutable_grid() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return grid_;
   }
@@ -409,14 +411,14 @@ class OccupancyGridEvent final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr float x_min() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr float x_min() const& noexcept HORUS_LIFETIME_BOUND {
     return x_min_;
   }
 
   /// No documentation.
   ///
   /// Field no: 2.
-  float& mutable_x_min() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  float& mutable_x_min() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return x_min_;
   }
@@ -447,14 +449,14 @@ class OccupancyGridEvent final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 3.
-  constexpr float x_max() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr float x_max() const& noexcept HORUS_LIFETIME_BOUND {
     return x_max_;
   }
 
   /// No documentation.
   ///
   /// Field no: 3.
-  float& mutable_x_max() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  float& mutable_x_max() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return x_max_;
   }
@@ -485,14 +487,14 @@ class OccupancyGridEvent final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 4.
-  constexpr float y_min() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr float y_min() const& noexcept HORUS_LIFETIME_BOUND {
     return y_min_;
   }
 
   /// No documentation.
   ///
   /// Field no: 4.
-  float& mutable_y_min() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  float& mutable_y_min() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[3] = true;
     return y_min_;
   }
@@ -523,14 +525,14 @@ class OccupancyGridEvent final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 5.
-  constexpr float y_max() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr float y_max() const& noexcept HORUS_LIFETIME_BOUND {
     return y_max_;
   }
 
   /// No documentation.
   ///
   /// Field no: 5.
-  float& mutable_y_max() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  float& mutable_y_max() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[4] = true;
     return y_max_;
   }
@@ -561,14 +563,14 @@ class OccupancyGridEvent final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 6.
-  constexpr float resolution() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr float resolution() const& noexcept HORUS_LIFETIME_BOUND {
     return resolution_;
   }
 
   /// No documentation.
   ///
   /// Field no: 6.
-  float& mutable_resolution() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  float& mutable_resolution() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[5] = true;
     return resolution_;
   }
@@ -599,7 +601,7 @@ class OccupancyGridEvent final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 7.
-  constexpr const Timestamp& timestamp() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Timestamp& timestamp() const& noexcept HORUS_LIFETIME_BOUND {
     return timestamp_;
   }
 
@@ -618,7 +620,7 @@ class OccupancyGridEvent final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 7.
-  Timestamp& mutable_timestamp() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Timestamp& mutable_timestamp() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[6] = true;
     return timestamp_;
   }
@@ -721,7 +723,7 @@ class SensorInfo_PoseCorrection final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const Vector3f& translation() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Vector3f& translation() const& noexcept HORUS_LIFETIME_BOUND {
     return translation_;
   }
 
@@ -740,7 +742,7 @@ class SensorInfo_PoseCorrection final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  Vector3f& mutable_translation() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Vector3f& mutable_translation() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return translation_;
   }
@@ -771,7 +773,7 @@ class SensorInfo_PoseCorrection final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr const Quaterniond& rotation() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Quaterniond& rotation() const& noexcept HORUS_LIFETIME_BOUND {
     return rotation_;
   }
 
@@ -790,7 +792,7 @@ class SensorInfo_PoseCorrection final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  Quaterniond& mutable_rotation() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Quaterniond& mutable_rotation() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return rotation_;
   }
@@ -885,7 +887,7 @@ class SensorInfo final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const CowBytes& lidar_id() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
     return lidar_id_;
   }
 
@@ -904,7 +906,7 @@ class SensorInfo final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  CowBytes& mutable_lidar_id() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return lidar_id_;
   }
@@ -935,14 +937,14 @@ class SensorInfo final : public PbMessage {
   /// Status as uint32, each status is combined using bitwise OR.
   ///
   /// Field no: 2.
-  constexpr std::uint32_t status() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr std::uint32_t status() const& noexcept HORUS_LIFETIME_BOUND {
     return status_;
   }
 
   /// Status as uint32, each status is combined using bitwise OR.
   ///
   /// Field no: 2.
-  std::uint32_t& mutable_status() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  std::uint32_t& mutable_status() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return status_;
   }
@@ -973,14 +975,14 @@ class SensorInfo final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 3.
-  constexpr double measured_frequency() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr double measured_frequency() const& noexcept HORUS_LIFETIME_BOUND {
     return measured_frequency_;
   }
 
   /// No documentation.
   ///
   /// Field no: 3.
-  double& mutable_measured_frequency() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  double& mutable_measured_frequency() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return measured_frequency_;
   }
@@ -1011,7 +1013,7 @@ class SensorInfo final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 4.
-  constexpr const SensorInfo_PoseCorrection& pose_correction() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const SensorInfo_PoseCorrection& pose_correction() const& noexcept HORUS_LIFETIME_BOUND {
     return pose_correction_;
   }
 
@@ -1030,7 +1032,7 @@ class SensorInfo final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 4.
-  SensorInfo_PoseCorrection& mutable_pose_correction() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  SensorInfo_PoseCorrection& mutable_pose_correction() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[3] = true;
     return pose_correction_;
   }

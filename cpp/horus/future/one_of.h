@@ -28,7 +28,7 @@ class OneFutureOfFuture final : public Future<std::common_type_t<FutureResult<Fu
   /// Polls the future until the inner future completes.
   PollResult<Result> UnsafePoll(PollContext& context) final {
     // We don't trace the future as it trivially executes its inner future.
-    return future_.InvokeWith([&context](auto& future) -> PollResult<Result> {
+    return future_.Visit([&context](auto& future) -> PollResult<Result> {
       return OneFutureOfFuture::PollFuture(future, context);
     });
   }

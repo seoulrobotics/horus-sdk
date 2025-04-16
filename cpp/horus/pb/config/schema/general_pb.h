@@ -11,10 +11,12 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/attributes.h"
+#include "horus/internal/attributes.h"
 #include "horus/pb/config/metadata_pb.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -90,7 +92,7 @@ class DetectionRange final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const Range& x_range() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Range& x_range() const& noexcept HORUS_LIFETIME_BOUND {
     return x_range_;
   }
 
@@ -109,7 +111,7 @@ class DetectionRange final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  Range& mutable_x_range() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Range& mutable_x_range() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return x_range_;
   }
@@ -140,7 +142,7 @@ class DetectionRange final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr const Range& y_range() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Range& y_range() const& noexcept HORUS_LIFETIME_BOUND {
     return y_range_;
   }
 
@@ -159,7 +161,7 @@ class DetectionRange final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  Range& mutable_y_range() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Range& mutable_y_range() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return y_range_;
   }
@@ -190,7 +192,7 @@ class DetectionRange final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 3.
-  constexpr const Range& z_range() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const Range& z_range() const& noexcept HORUS_LIFETIME_BOUND {
     return z_range_;
   }
 
@@ -209,7 +211,7 @@ class DetectionRange final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 3.
-  Range& mutable_z_range() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  Range& mutable_z_range() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return z_range_;
   }

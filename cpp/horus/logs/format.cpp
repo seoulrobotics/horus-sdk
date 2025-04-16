@@ -7,8 +7,8 @@
 #include "horus/pb/logs/message_pb.h"
 #include "horus/pb/logs/metadata_pb.h"
 #include "horus/strings/chrono.h"
-#include "horus/strings/str_sink.h"
-#include "horus/strings/str_sink_erased.h"
+#include "horus/strings/stringify.h"
+#include "horus/strings/erased_sink.h"
 
 namespace horus {
 namespace sdk {
@@ -20,7 +20,7 @@ void HorusStringify(const ErasedSink& sink, const LogMetadata_Duration& duration
 }
 
 void HorusStringify(const ErasedSink& sink, const LogMetadata_SourceLocation& source_location) {
-  StrAppendToSink(sink, source_location.file(), ":", source_location.line());
+  StringifyTo(sink, source_location.file(), ":", source_location.line());
 }
 
 void HorusStringify(const ErasedSink& sink, const LogMetadata_Timestamp& timestamp) {
@@ -703,6 +703,14 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     logs::HorusStringify(sink, log_data.failed_to_update_configuration());
     break;
   }
+  case LogData::DataOneof::kObstructionDetectorBadReferenceWarning: {
+    logs::HorusStringify(sink, log_data.obstruction_detector_bad_reference_warning());
+    break;
+  }
+  case LogData::DataOneof::kProjectFileInvalidPermissionsError: {
+    logs::HorusStringify(sink, log_data.project_file_invalid_permissions_error());
+    break;
+  }
   case LogData::DataOneof::kNotSet:
   default: {
     sink.Append("Unknown log message");
@@ -714,675 +722,683 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
 namespace logs {
 
 void HorusStringify(const ErasedSink& sink, const Generic& data) {
-  StrAppendToSink(sink, data.message());
+  StringifyTo(sink, data.message());
 }
 
 void HorusStringify(const ErasedSink& sink, const Oom& /*data*/) {
-  StrAppendToSink(sink, "Out of memory");
+  StringifyTo(sink, "Out of memory");
 }
 
 void HorusStringify(const ErasedSink& sink, const RpcConnectionError& data) {
-  StrAppendToSink(sink, "Cannot initiate connection to ", data.target_service(), " at ", data.target_uri(), ": ", data.details());
+  StringifyTo(sink, "Cannot initiate connection to ", data.target_service(), " at ", data.target_uri(), ": ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const InvalidProjectName& data) {
-  StrAppendToSink(sink, "Project name `", data.name(), "` is invalid: ", data.details());
+  StringifyTo(sink, "Project name `", data.name(), "` is invalid: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const ProjectNotFound& data) {
-  StrAppendToSink(sink, "Project `", data.name(), "` not found");
+  StringifyTo(sink, "Project `", data.name(), "` not found");
 }
 
 void HorusStringify(const ErasedSink& sink, const ProjectAlreadyExists& data) {
-  StrAppendToSink(sink, "Project `", data.name(), "` already exists");
+  StringifyTo(sink, "Project `", data.name(), "` already exists");
 }
 
 void HorusStringify(const ErasedSink& sink, const InvalidConfiguration& /*data*/) {
-  StrAppendToSink(sink, "Configuration is invalid");
+  StringifyTo(sink, "Configuration is invalid");
 }
 
 void HorusStringify(const ErasedSink& sink, const EntityNotFound& data) {
-  StrAppendToSink(sink, data.entity_type(), " `", data.id(), "` not found");
+  StringifyTo(sink, data.entity_type(), " `", data.id(), "` not found");
 }
 
 void HorusStringify(const ErasedSink& sink, const ActiveProjectCannotBeDeleted& /*data*/) {
-  StrAppendToSink(sink, "Active project cannot be deleted");
+  StringifyTo(sink, "Active project cannot be deleted");
 }
 
 void HorusStringify(const ErasedSink& sink, const RpcDisconnectionError& data) {
-  StrAppendToSink(sink, "Cannot terminate connection to ", data.target_service(), " at ", data.target_uri(), ": ", data.details());
+  StringifyTo(sink, "Cannot terminate connection to ", data.target_service(), " at ", data.target_uri(), ": ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const DroppedLogs& data) {
-  StrAppendToSink(sink, "Dropped ", data.n(), " log messages");
+  StringifyTo(sink, "Dropped ", data.n(), " log messages");
 }
 
 void HorusStringify(const ErasedSink& sink, const OpenedProject& data) {
-  StrAppendToSink(sink, "Opened project ", data.project_name());
+  StringifyTo(sink, "Opened project ", data.project_name());
 }
 
 void HorusStringify(const ErasedSink& sink, const CreatedProject& data) {
-  StrAppendToSink(sink, "Created project ", data.project_name(), " from ", data.source_name());
+  StringifyTo(sink, "Created project ", data.project_name(), " from ", data.source_name());
 }
 
 void HorusStringify(const ErasedSink& sink, const ConfigUnavailable& /*data*/) {
-  StrAppendToSink(sink, "Configuration is unavailable; request cannot be processed.");
+  StringifyTo(sink, "Configuration is unavailable; request cannot be processed.");
 }
 
 void HorusStringify(const ErasedSink& sink, const InvalidRequest& data) {
-  StrAppendToSink(sink, "Invalid request received: ", data.details());
+  StringifyTo(sink, "Invalid request received: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const SanityCheckError& data) {
-  StrAppendToSink(sink, data.sanity_check_name(), " failed: ", data.details());
+  StringifyTo(sink, data.sanity_check_name(), " failed: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const BagFailedToOpen& data) {
-  StrAppendToSink(sink, "The bag file (", data.horus_bag_path(), ") could not be opened: ", data.details());
+  StringifyTo(sink, "The bag file (", data.horus_bag_path(), ") could not be opened: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const BagFailedToClose& data) {
-  StrAppendToSink(sink, "Bag file could not be closed: ", data.details());
+  StringifyTo(sink, "Bag file could not be closed: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const BagConversionFailed& data) {
-  StrAppendToSink(sink, "Bag file conversion failed: ", data.details());
+  StringifyTo(sink, "Bag file conversion failed: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const BagFailedToWrite& data) {
-  StrAppendToSink(sink, "Bag file writing failed ", data.name(), ": ", data.details());
+  StringifyTo(sink, "Bag file writing failed ", data.name(), ": ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const CalibrationError& data) {
-  StrAppendToSink(sink, "Calibration failed: ", data.details());
+  StringifyTo(sink, "Calibration failed: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const ProjectManagerFailedToStartRecording& data) {
-  StrAppendToSink(sink, "Failed to start recording: ", data.details());
+  StringifyTo(sink, "Failed to start recording: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const ProjectManagerFailedToStopRecording& data) {
-  StrAppendToSink(sink, "Failed to stop recording: ", data.details());
+  StringifyTo(sink, "Failed to stop recording: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const ServiceConnectionTimedOut& data) {
-  StrAppendToSink(sink, "The connection with the requested ", data.node_type(), " node with ID ", data.node_id(), " timed out");
+  StringifyTo(sink, "The connection with the requested ", data.node_type(), " node with ID ", data.node_id(), " timed out");
 }
 
 void HorusStringify(const ErasedSink& sink, const BagRecorderAlreadyRunning& data) {
-  StrAppendToSink(sink, "Bag recorder is already running for ", data.path());
+  StringifyTo(sink, "Bag recorder is already running for ", data.path());
 }
 
 void HorusStringify(const ErasedSink& sink, const LicenseServerConnectionError& data) {
-  StrAppendToSink(sink, "Could not connect to license server: ", data.details(), ".");
+  StringifyTo(sink, "Could not connect to license server: ", data.details(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const LicenseError& data) {
-  StrAppendToSink(sink, "Could not read license: ", data.details(), ".");
+  StringifyTo(sink, "Could not read license: ", data.details(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const LicenseNotFoundError& /*data*/) {
-  StrAppendToSink(sink, "Found no valid license.");
+  StringifyTo(sink, "Found no valid license.");
 }
 
 void HorusStringify(const ErasedSink& sink, const LicenseExpiredError& data) {
-  StrAppendToSink(sink, "License expired on ", data.expiration_time(), ".");
+  StringifyTo(sink, "License expired on ", data.expiration_time(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const LicenseExceededError& data) {
-  StrAppendToSink(sink, "Project exceeds number of LiDARs allowed by license (", data.lidar_count(), " > ", data.max_lidar_count(), ").");
+  StringifyTo(sink, "Project exceeds number of LiDARs allowed by license (", data.lidar_count(), " > ", data.max_lidar_count(), ").");
 }
 
 void HorusStringify(const ErasedSink& sink, const LicenseHostMachineError& data) {
-  StrAppendToSink(sink, "Could not validate license with current hardware - ", data.details(), ".");
+  StringifyTo(sink, "Could not validate license with current hardware - ", data.details(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const LicensePrivilegeError& data) {
-  StrAppendToSink(sink, "Endpoint requires \"", data.missing_privilege(), "\" privilege: ", data.level_error(), ".");
+  StringifyTo(sink, "Endpoint requires \"", data.missing_privilege(), "\" privilege: ", data.level_error(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const LicenseActiveInfo& /*data*/) {
-  StrAppendToSink(sink, "License is active.");
+  StringifyTo(sink, "License is active.");
 }
 
 void HorusStringify(const ErasedSink& sink, const MultipleLicensesWarning& data) {
-  StrAppendToSink(sink, "Found ", data.non_expired_licenses_count(), " non-expired concurrent licenses. Only \"", data.active_license_filename(), "\" is used.");
+  StringifyTo(sink, "Found ", data.non_expired_licenses_count(), " non-expired concurrent licenses. Only \"", data.active_license_filename(), "\" is used.");
 }
 
 void HorusStringify(const ErasedSink& sink, const LicenseCurrentLicenseStatusInfo& data) {
-  StrAppendToSink(sink, "Current license accepts up to ", data.max_lidar_count(), " and expires on ", data.expiration_time(), ".");
+  StringifyTo(sink, "Current license accepts up to ", data.max_lidar_count(), " and expires on ", data.expiration_time(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const BagRecordingStoppedInfo& data) {
-  StrAppendToSink(sink, "Bag recording stopped for ", data.path(), ": ", data.details());
+  StringifyTo(sink, "Bag recording stopped for ", data.path(), ": ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const BagRecordingFailedToStart& data) {
-  StrAppendToSink(sink, "Bag recording failed to start: ", data.details());
+  StringifyTo(sink, "Bag recording failed to start: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const BagRecordingStartedInfo& data) {
-  StrAppendToSink(sink, "Bag recording started for ", data.path());
+  StringifyTo(sink, "Bag recording started for ", data.path());
 }
 
 void HorusStringify(const ErasedSink& sink, const ReplayRestartedInfo& /*data*/) {
-  StrAppendToSink(sink, "Replay Restarted");
+  StringifyTo(sink, "Replay Restarted");
 }
 
 void HorusStringify(const ErasedSink& sink, const InputSourceChangeRequestedInfo& data) {
-  StrAppendToSink(sink, "Input source ", data.source(), " requested");
+  StringifyTo(sink, "Input source ", data.source(), " requested");
 }
 
 void HorusStringify(const ErasedSink& sink, const InputSourceSwitchedInfo& data) {
-  StrAppendToSink(sink, "Input source changed to ", data.source());
+  StringifyTo(sink, "Input source changed to ", data.source());
 }
 
 void HorusStringify(const ErasedSink& sink, const RpcTimeoutWarning& data) {
-  StrAppendToSink(sink, "RPC request ", data.request_name(), " to ", data.endpoint(), " timed out after ", data.elapsed(), ".");
+  StringifyTo(sink, "RPC request ", data.request_name(), " to ", data.endpoint(), " timed out after ", data.elapsed(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const CannotWriteLogFile& data) {
-  StrAppendToSink(sink, "Notification service cannot write log in ", data.path(), ": ", data.details());
+  StringifyTo(sink, "Notification service cannot write log in ", data.path(), ": ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const PointCloudParsingFailureWarning& data) {
-  StrAppendToSink(sink, "Point cloud parsing failed: ", data.details());
+  StringifyTo(sink, "Point cloud parsing failed: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarIsDead& data) {
-  StrAppendToSink(sink, "The lidar ", data.lidar_id(), " is considered dead. No data has been received for a while.");
+  StringifyTo(sink, "The lidar ", data.lidar_id(), " is considered dead. No data has been received for a while.");
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarIsNotDeadAnymore& data) {
-  StrAppendToSink(sink, "The lidar ", data.lidar_id(), " is not considered dead anymore. A point cloud has been received again after some time.");
+  StringifyTo(sink, "The lidar ", data.lidar_id(), " is not considered dead anymore. A point cloud has been received again after some time.");
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarIsObstructed& data) {
-  StrAppendToSink(sink, "The lidar ", data.lidar_id(), " is obstructed.");
+  StringifyTo(sink, "The lidar ", data.lidar_id(), " is obstructed.");
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarIsNotObstructedAnymore& data) {
-  StrAppendToSink(sink, "The lidar ", data.lidar_id(), " is not obstructed anymore.");
+  StringifyTo(sink, "The lidar ", data.lidar_id(), " is not obstructed anymore.");
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarIsTilted& data) {
-  StrAppendToSink(sink, "The lidar ", data.lidar_id(), " is tilted.");
+  StringifyTo(sink, "The lidar ", data.lidar_id(), " is tilted.");
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarIsNotTiltedAnymore& data) {
-  StrAppendToSink(sink, "The lidar ", data.lidar_id(), " is not tilted anymore.");
+  StringifyTo(sink, "The lidar ", data.lidar_id(), " is not tilted anymore.");
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarHasBeenAutomaticallyRecalibrated& data) {
-  StrAppendToSink(sink, "The lidar ", data.lidar_id(), " has been automatically re-calibrated.");
+  StringifyTo(sink, "The lidar ", data.lidar_id(), " has been automatically re-calibrated.");
 }
 
 void HorusStringify(const ErasedSink& sink, const ReceivedFirstDataForLidar& data) {
-  StrAppendToSink(sink, "Data has been received for the first time for the lidar ", data.lidar_id(), ".");
+  StringifyTo(sink, "Data has been received for the first time for the lidar ", data.lidar_id(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const TerminationFailureError& data) {
-  StrAppendToSink(sink, "Failed to destruct ", data.component(), ": ", data.details());
+  StringifyTo(sink, "Failed to destruct ", data.component(), ": ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const FrameProcessingError& data) {
-  StrAppendToSink(sink, "The Frame Task Scheduler failed to process frame task: ", data.details());
+  StringifyTo(sink, "The Frame Task Scheduler failed to process frame task: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const ThreadPoolUnavailableError& data) {
-  StrAppendToSink(sink, "Thread pool is not available: ", data.consequence());
+  StringifyTo(sink, "Thread pool is not available: ", data.consequence());
 }
 
 void HorusStringify(const ErasedSink& sink, const InvalidArgument& data) {
-  StrAppendToSink(sink, "Invalid argument: ", data.details());
+  StringifyTo(sink, "Invalid argument: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const ComponentInitializationFailureFatal& data) {
-  StrAppendToSink(sink, "Failed to initialize ", data.component(), ": ", data.details());
+  StringifyTo(sink, "Failed to initialize ", data.component(), ": ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const UnhandledEnumCaseError& data) {
-  StrAppendToSink(sink, "Unhandled enum case ", data.case_name(), " at ", data.location());
+  StringifyTo(sink, "Unhandled enum case ", data.case_name(), " at ", data.location());
 }
 
 void HorusStringify(const ErasedSink& sink, const BagEmptyError& /*data*/) {
-  StrAppendToSink(sink, "The replay bag file is empty.");
+  StringifyTo(sink, "The replay bag file is empty.");
 }
 
 void HorusStringify(const ErasedSink& sink, const DiscardingDataError& data) {
-  StrAppendToSink(sink, "Discarding data in ", data.component(), ": ", data.details());
+  StringifyTo(sink, "Discarding data in ", data.component(), ": ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const DiscardingDataWarning& data) {
-  StrAppendToSink(sink, "Discarding data in ", data.component(), ": ", data.details(), ".");
+  StringifyTo(sink, "Discarding data in ", data.component(), ": ", data.details(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const NothingToProcess& data) {
-  StrAppendToSink(sink, "Nothing to process: ", data.details());
+  StringifyTo(sink, "Nothing to process: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const InvalidComponentConfiguration& data) {
-  StrAppendToSink(sink, "Invalid configuration for ", data.component(), ": ", data.details());
+  StringifyTo(sink, "Invalid configuration for ", data.component(), ": ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const ChannelReceiverNotFoundWarning& data) {
-  StrAppendToSink(sink, "Channel receiver ", data.key(), " not found");
+  StringifyTo(sink, "Channel receiver ", data.key(), " not found");
 }
 
 void HorusStringify(const ErasedSink& sink, const ModelLoadFailure& data) {
-  StrAppendToSink(sink, "Model ", data.model(), " failed to load: ", data.details());
+  StringifyTo(sink, "Model ", data.model(), " failed to load: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const ModelExecutionFailureError& data) {
-  StrAppendToSink(sink, "Model ", data.model(), " failed to execute: ", data.details());
+  StringifyTo(sink, "Model ", data.model(), " failed to execute: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const ServiceReadyInfo& data) {
-  StrAppendToSink(sink, data.service(), " service is ready");
+  StringifyTo(sink, data.service(), " service is ready");
 }
 
 void HorusStringify(const ErasedSink& sink, const ModelPreparingInfo& data) {
-  StrAppendToSink(sink, "Preparing model ", data.model(), ", it may take several seconds to stabilize.");
+  StringifyTo(sink, "Preparing model ", data.model(), ", it may take several seconds to stabilize.");
 }
 
 void HorusStringify(const ErasedSink& sink, const ModelInitializedInfo& data) {
-  StrAppendToSink(sink, data.name(), " model has been initialized and is ready for use.");
+  StringifyTo(sink, data.name(), " model has been initialized and is ready for use.");
 }
 
 void HorusStringify(const ErasedSink& sink, const ModelInitializationFailureWarning& data) {
-  StrAppendToSink(sink, "Failed to initialize model ", data.model(), ": ", data.details());
+  StringifyTo(sink, "Failed to initialize model ", data.model(), ": ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const RosSpinnerStoppedWarning& data) {
-  StrAppendToSink(sink, "ROS spinner stopped: ", data.details());
+  StringifyTo(sink, "ROS spinner stopped: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const ActorSystemUnavailableError& /*data*/) {
-  StrAppendToSink(sink, "Actor system is not available. Please reinstantiate the pipeline.");
+  StringifyTo(sink, "Actor system is not available. Please reinstantiate the pipeline.");
 }
 
 void HorusStringify(const ErasedSink& sink, const ConfigNodeNotFoundError& data) {
-  StrAppendToSink(sink, "Configuration for node ", data.node(), " is unavailable");
+  StringifyTo(sink, "Configuration for node ", data.node(), " is unavailable");
 }
 
 void HorusStringify(const ErasedSink& sink, const BagTimestampOutOfOrderError& data) {
-  StrAppendToSink(sink, "Timestamps are out of order: ", data.prior_timestamp(), " > ", data.current_timestamp());
+  StringifyTo(sink, "Timestamps are out of order: ", data.prior_timestamp(), " > ", data.current_timestamp());
 }
 
 void HorusStringify(const ErasedSink& sink, const BagReplayUnexpectedTimestampError& data) {
-  StrAppendToSink(sink, "Unexpected timestamp: expected ", data.expected_timestamp(), " but received ", data.received_timestamp());
+  StringifyTo(sink, "Unexpected timestamp: expected ", data.expected_timestamp(), " but received ", data.received_timestamp());
 }
 
 void HorusStringify(const ErasedSink& sink, const WebsocketClosedInfo& data) {
-  StrAppendToSink(sink, "WebSocket RPC connection to ", data.uri(), " closed");
+  StringifyTo(sink, "WebSocket RPC connection to ", data.uri(), " closed");
 }
 
 void HorusStringify(const ErasedSink& sink, const WebsocketOpenedInfo& data) {
-  StrAppendToSink(sink, "WebSocket RPC connection to ", data.uri(), " opened (as ", data.endpoint_is_server_client(), ")");
+  StringifyTo(sink, "WebSocket RPC connection to ", data.uri(), " opened (as ", data.endpoint_is_server_client(), ")");
 }
 
 void HorusStringify(const ErasedSink& sink, const SubscriberDisconnectedInfo& data) {
-  StrAppendToSink(sink, "Subscriber ", data.name(), " disconnected (", data.uri(), ")");
+  StringifyTo(sink, "Subscriber ", data.name(), " disconnected (", data.uri(), ")");
 }
 
 void HorusStringify(const ErasedSink& sink, const ThreadPoolSlowingDownWarning& data) {
-  StrAppendToSink(sink, "Thread pool is slowing down for ", data.number(), " times!");
+  StringifyTo(sink, "Thread pool is slowing down for ", data.number(), " times!");
 }
 
 void HorusStringify(const ErasedSink& sink, const ThreadPoolNotRespondingWarning& data) {
-  StrAppendToSink(sink, "Thread pool is not responding for ", data.not_responding_for(), ".");
+  StringifyTo(sink, "Thread pool is not responding for ", data.not_responding_for(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const ThreadPoolBrokenPromiseWarning& /*data*/) {
-  StrAppendToSink(sink, "Thread pool task future is no longer available. The thread pool might have been restarted during events such as input source change.");
+  StringifyTo(sink, "Thread pool task future is no longer available. The thread pool might have been restarted during events such as input source change.");
 }
 
 void HorusStringify(const ErasedSink& sink, const BoxFittingPointsBelowBaseWarning& /*data*/) {
-  StrAppendToSink(sink, "Some points are below the base Z-coordinate when fitting the box. This might affect the detection results.");
+  StringifyTo(sink, "Some points are below the base Z-coordinate when fitting the box. This might affect the detection results.");
 }
 
 void HorusStringify(const ErasedSink& sink, const FailedToRemoveStalePointsWarning& data) {
-  StrAppendToSink(sink, "Failed to remove stale points: ", data.details());
+  StringifyTo(sink, "Failed to remove stale points: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const IrregularBroadcastingPeriodWarning& data) {
-  StrAppendToSink(sink, data.num_irregular(), " irregular broadcast(s) detected in the last ", data.duration(), " (mean deviation: ", data.mean_deviation(), ").");
+  StringifyTo(sink, data.num_irregular(), " irregular broadcast(s) detected in the last ", data.duration(), " (mean deviation: ", data.mean_deviation(), ").");
 }
 
 void HorusStringify(const ErasedSink& sink, const ClustererPointsOutOfRangeWarning& data) {
-  StrAppendToSink(sink, "There are ", data.num_points(), " points out of range in the clusterer. Some points: ", data.sample_points(), ".");
+  StringifyTo(sink, "There are ", data.num_points(), " points out of range in the clusterer. Some points: ", data.sample_points(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const InternalError& data) {
-  StrAppendToSink(sink, "An internal error occurred: ", data.details());
+  StringifyTo(sink, "An internal error occurred: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const InternalFatal& data) {
-  StrAppendToSink(sink, "An internal fatal error occurred: ", data.details());
+  StringifyTo(sink, "An internal fatal error occurred: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const ServiceStartingInfo& data) {
-  StrAppendToSink(sink, data.service(), " is starting");
+  StringifyTo(sink, data.service(), " is starting");
 }
 
 void HorusStringify(const ErasedSink& sink, const ConfigNodeNotFoundFatal& data) {
-  StrAppendToSink(sink, "Configuration for node ", data.node(), " is unavailable");
+  StringifyTo(sink, "Configuration for node ", data.node(), " is unavailable");
 }
 
 void HorusStringify(const ErasedSink& sink, const ServiceSetupError& data) {
-  StrAppendToSink(sink, "Failed to setup: ", data.details());
+  StringifyTo(sink, "Failed to setup: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const FilesystemError& data) {
-  StrAppendToSink(sink, "Filesystem error: ", data.details());
+  StringifyTo(sink, "Filesystem error: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const InvalidPresetWarning& data) {
-  StrAppendToSink(sink, "Tried to apply invalid preset ", data.preset(), " due to ", data.reason(), ", falling back to ", data.fallback_name(), ".");
+  StringifyTo(sink, "Tried to apply invalid preset ", data.preset(), " due to ", data.reason(), ", falling back to ", data.fallback_name(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const WebsocketFailedClearPendingError& data) {
-  StrAppendToSink(sink, "WebSocket failed to clear pending queues: ", data.exception());
+  StringifyTo(sink, "WebSocket failed to clear pending queues: ", data.exception());
 }
 
 void HorusStringify(const ErasedSink& sink, const WebsocketFailedToStopError& data) {
-  StrAppendToSink(sink, "WebSocket failed to stop: ", data.exception());
+  StringifyTo(sink, "WebSocket failed to stop: ", data.exception());
 }
 
 void HorusStringify(const ErasedSink& sink, const WebsocketFailedToCreateError& data) {
-  StrAppendToSink(sink, "Failed to create RPC server ws://", data.host(), ":", data.port(), "/: ", data.exception());
+  StringifyTo(sink, "Failed to create RPC server ws://", data.host(), ":", data.port(), "/: ", data.exception());
 }
 
 void HorusStringify(const ErasedSink& sink, const UnexpectedRpcError& data) {
-  StrAppendToSink(sink, "Unexpected RPC error: ", data.details());
+  StringifyTo(sink, "Unexpected RPC error: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const LicensePollFailed& data) {
-  StrAppendToSink(sink, "Failed to poll license server: ", data.details());
+  StringifyTo(sink, "Failed to poll license server: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const LicenseExpiredWarning& data) {
-  StrAppendToSink(sink, "License expired on ", data.expiration_time(), ".");
+  StringifyTo(sink, "License expired on ", data.expiration_time(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const LicenseUsageExceededWarning& data) {
-  StrAppendToSink(sink, "License count of ", data.lidar_count(), " exceeds allowed usage of ", data.max_lidar_count());
+  StringifyTo(sink, "License count of ", data.lidar_count(), " exceeds allowed usage of ", data.max_lidar_count());
 }
 
 void HorusStringify(const ErasedSink& sink, const StaticThreadPoolSlowTaskWarning& data) {
-  StrAppendToSink(sink, "ThreadPool task took ", data.time_elapsed(), " to complete task enqueued in ", data.enqueue_location());
+  StringifyTo(sink, "ThreadPool task took ", data.time_elapsed(), " to complete task enqueued in ", data.enqueue_location());
 }
 
 void HorusStringify(const ErasedSink& sink, const RpcUnsupportedServiceWarning& data) {
-  StrAppendToSink(sink, "Received request for unsupported service: ", data.service_id());
+  StringifyTo(sink, "Received request for unsupported service: ", data.service_id());
 }
 
 void HorusStringify(const ErasedSink& sink, const WebsocketHandlerProblem& data) {
-  StrAppendToSink(sink, "WebSocket RPC handler encountered an error: ", data.what());
+  StringifyTo(sink, "WebSocket RPC handler encountered an error: ", data.what());
 }
 
 void HorusStringify(const ErasedSink& sink, const WebsocketDeserializeError& data) {
-  StrAppendToSink(sink, "WebSocket RPC received message cannot be deserialized: ", data.what());
+  StringifyTo(sink, "WebSocket RPC received message cannot be deserialized: ", data.what());
 }
 
 void HorusStringify(const ErasedSink& sink, const WebsocketExpiredRpcEndpointError& data) {
-  StrAppendToSink(sink, "Attempting to access expired WebSocket RPC endpoint ", data.uri());
+  StringifyTo(sink, "Attempting to access expired WebSocket RPC endpoint ", data.uri());
 }
 
 void HorusStringify(const ErasedSink& sink, const WebsocketQueueOverloadedWarning& data) {
-  StrAppendToSink(sink, "Websocket message queue overloaded: ", data.current(), " / ", data.max());
+  StringifyTo(sink, "Websocket message queue overloaded: ", data.current(), " / ", data.max());
 }
 
 void HorusStringify(const ErasedSink& sink, const RpcFailedToNotifyWarning& data) {
-  StrAppendToSink(sink, "Could not notify ", data.notification_name(), " to ", data.service(), " ", data.uri(), ": ", data.what());
+  StringifyTo(sink, "Could not notify ", data.notification_name(), " to ", data.service(), " ", data.uri(), ": ", data.what());
 }
 
 void HorusStringify(const ErasedSink& sink, const ConfigSubscriptionFailedWarning& data) {
-  StrAppendToSink(sink, "Failed to subscribe to config: ", data.details());
+  StringifyTo(sink, "Failed to subscribe to config: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const ThreadPoolClampedWorkersWarning& data) {
-  StrAppendToSink(sink, "Clamped thread pool workers to ", data.clamped(), " instead of ", data.requested());
+  StringifyTo(sink, "Clamped thread pool workers to ", data.clamped(), " instead of ", data.requested());
 }
 
 void HorusStringify(const ErasedSink& sink, const StoppingHorusBagRecorderAlreadyStopped& /*data*/) {
-  StrAppendToSink(sink, "Trying to stop the Horus bag recorder which is already stopped.");
+  StringifyTo(sink, "Trying to stop the Horus bag recorder which is already stopped.");
 }
 
 void HorusStringify(const ErasedSink& sink, const RecorderConfigUpdateWhileRunning& /*data*/) {
-  StrAppendToSink(sink, "An update for the Horus bag recorder has been received while it was running. This update will not be taken into account until the next recording.");
+  StringifyTo(sink, "An update for the Horus bag recorder has been received while it was running. This update will not be taken into account until the next recording.");
 }
 
 void HorusStringify(const ErasedSink& sink, const ClampingDataWarning& data) {
-  StrAppendToSink(sink, "Clamping point cloud: ", data.details());
+  StringifyTo(sink, "Clamping point cloud: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarIncompatibleValues& data) {
-  StrAppendToSink(sink, "Lidars ", data.lidar_ip1(), " and ", data.lidar_ip2(), " have incompatible ", data.value_names(), ": ", data.value1(), " vs. ", data.value2(), "; ", data.resolution(), ".");
+  StringifyTo(sink, "Lidars ", data.lidar_ip1(), " and ", data.lidar_ip2(), " have incompatible ", data.value_names(), ": ", data.value1(), " vs. ", data.value2(), "; ", data.resolution(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const CannotDetermineContainerIdError& data) {
-  StrAppendToSink(sink, "Cannot determine current Docker container ID; unknown ", data.container_id_file_path(), " format.");
+  StringifyTo(sink, "Cannot determine current Docker container ID; unknown ", data.container_id_file_path(), " format.");
 }
 
 void HorusStringify(const ErasedSink& sink, const StartedLidarDriver& data) {
-  StrAppendToSink(sink, "Started lidar driver container ", data.lidar_id(), ".");
+  StringifyTo(sink, "Started lidar driver container ", data.lidar_id(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const CannotStartLidarDriver& data) {
-  StrAppendToSink(sink, "Cannot start lidar driver container ", data.lidar_id(), ": ", data.details(), ".");
+  StringifyTo(sink, "Cannot start lidar driver container ", data.lidar_id(), ": ", data.details(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const StoppedLidarDriver& data) {
-  StrAppendToSink(sink, "Stopped lidar driver container ", data.lidar_id(), ".");
+  StringifyTo(sink, "Stopped lidar driver container ", data.lidar_id(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const CannotStopLidarDriver& data) {
-  StrAppendToSink(sink, "Cannot stop lidar driver container ", data.lidar_id(), ": ", data.details(), ".");
+  StringifyTo(sink, "Cannot stop lidar driver container ", data.lidar_id(), ": ", data.details(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const RestartedLidarDriver& data) {
-  StrAppendToSink(sink, "Restarted lidar driver container ", data.lidar_id(), ".");
+  StringifyTo(sink, "Restarted lidar driver container ", data.lidar_id(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const CannotRestartLidarDriver& data) {
-  StrAppendToSink(sink, "Cannot restart lidar driver container ", data.lidar_id(), ": ", data.details(), ".");
+  StringifyTo(sink, "Cannot restart lidar driver container ", data.lidar_id(), ": ", data.details(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const RemovedUnusedLidarDriver& data) {
-  StrAppendToSink(sink, "Removed unused lidar driver container ", data.lidar_id(), ".");
+  StringifyTo(sink, "Removed unused lidar driver container ", data.lidar_id(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const CannotRemoveUnusedLidarDriver& data) {
-  StrAppendToSink(sink, "Cannot remove unused lidar driver container ", data.lidar_id(), ": ", data.details(), ".");
+  StringifyTo(sink, "Cannot remove unused lidar driver container ", data.lidar_id(), ": ", data.details(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarDriverGcFailure& data) {
-  StrAppendToSink(sink, "Error encountered while removing unused lidar driver containers: ", data.details(), ".");
+  StringifyTo(sink, "Error encountered while removing unused lidar driver containers: ", data.details(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const IdSpaceExhausted& data) {
-  StrAppendToSink(sink, "Cannot allocate new identifier with prefix \"", data.prefix(), "\".");
+  StringifyTo(sink, "Cannot allocate new identifier with prefix \"", data.prefix(), "\".");
 }
 
 void HorusStringify(const ErasedSink& sink, const PreprocessingToPointAggregatorPointsSkipped& data) {
-  StrAppendToSink(sink, "The point cloud publishing to the point aggregator service has been skipped ", data.num_skipped_points(), " time(s) in the last ", data.check_interval(), ".");
+  StringifyTo(sink, "The point cloud publishing to the point aggregator service has been skipped ", data.num_skipped_points(), " time(s) in the last ", data.check_interval(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const MinMsgIntervalLessThanThreshold& data) {
-  StrAppendToSink(sink, "Discarding lidar points from ", data.lidar_id(), " since the time interval between two point-cloud messages is too close (<", data.threshold(), "). Adjust the Min-Message Interval parameter to change this behavior.");
+  StringifyTo(sink, "Discarding lidar points from ", data.lidar_id(), " since the time interval between two point-cloud messages is too close (<", data.threshold(), "). Adjust the Min-Message Interval parameter to change this behavior.");
 }
 
 void HorusStringify(const ErasedSink& sink, const FailedToCleanupRosWarning& data) {
-  StrAppendToSink(sink, "Failed to clean up ROS nodes and processes: ", data.details());
+  StringifyTo(sink, "Failed to clean up ROS nodes and processes: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const RpcDisconnectedWarning& data) {
-  StrAppendToSink(sink, "RPC request ", data.request_name(), " to ", data.endpoint(), " failed since endpoint is disconnected.");
+  StringifyTo(sink, "RPC request ", data.request_name(), " to ", data.endpoint(), " failed since endpoint is disconnected.");
 }
 
 void HorusStringify(const ErasedSink& sink, const RpcUnhandledError& data) {
-  StrAppendToSink(sink, "RPC request handler for ", data.request_name(), " failed due to an unhandled internal error: ", data.details(), ".");
+  StringifyTo(sink, "RPC request handler for ", data.request_name(), " failed due to an unhandled internal error: ", data.details(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const TimeDiffOutOfRangeWarning& data) {
-  StrAppendToSink(sink, "Time difference is out of range: ", data.diff(), ". Previous timestamp: ", data.prev_time(), ", Current timestamp: ", data.curr_time(), ".");
+  StringifyTo(sink, "Time difference is out of range: ", data.diff(), ". Previous timestamp: ", data.prev_time(), ", Current timestamp: ", data.curr_time(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const TensorrtLog& data) {
-  StrAppendToSink(sink, "[TensorRT] ", data.log());
+  StringifyTo(sink, "[TensorRT] ", data.log());
 }
 
 void HorusStringify(const ErasedSink& sink, const BuildingTensorrtEngineInfo& /*data*/) {
-  StrAppendToSink(sink, "Building TensorRT engine since the model has changed or the engine is not available. This may take a while.");
+  StringifyTo(sink, "Building TensorRT engine since the model has changed or the engine is not available. This may take a while.");
 }
 
 void HorusStringify(const ErasedSink& sink, const LoadingTensorrtEngineInfo& /*data*/) {
-  StrAppendToSink(sink, "Loading TensorRT engine. This may take a while.");
+  StringifyTo(sink, "Loading TensorRT engine. This may take a while.");
 }
 
 void HorusStringify(const ErasedSink& sink, const CalibrationMapNotFound& data) {
-  StrAppendToSink(sink, "The calibration map ", data.path(), " was not found.");
+  StringifyTo(sink, "The calibration map ", data.path(), " was not found.");
 }
 
 void HorusStringify(const ErasedSink& sink, const CalibrationMapNotValid& data) {
-  StrAppendToSink(sink, "The calibration map ", data.path(), " is not valid.");
+  StringifyTo(sink, "The calibration map ", data.path(), " is not valid.");
 }
 
 void HorusStringify(const ErasedSink& sink, const CalibrationMapPathAlreadyExists& data) {
-  StrAppendToSink(sink, "The calibration map path ", data.path(), " already exists.");
+  StringifyTo(sink, "The calibration map path ", data.path(), " already exists.");
 }
 
 void HorusStringify(const ErasedSink& sink, const FailedToSaveCalibrationMap& data) {
-  StrAppendToSink(sink, "Failed to save the calibration map to ", data.path(), ".");
+  StringifyTo(sink, "Failed to save the calibration map to ", data.path(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const FailedToRemoveCalibrationMap& data) {
-  StrAppendToSink(sink, "Failed to remove the calibration map at ", data.path(), ".");
+  StringifyTo(sink, "Failed to remove the calibration map at ", data.path(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const FailedToIterateInDirectory& data) {
-  StrAppendToSink(sink, "Failed to iterate in the ", data.directory_name(), " directory ", data.directory_path(), ": ", data.details(), ".");
+  StringifyTo(sink, "Failed to iterate in the ", data.directory_name(), " directory ", data.directory_path(), ": ", data.details(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const MapBasedCalibrationWithoutMapLoading& /*data*/) {
-  StrAppendToSink(sink, "The calibration map must be running before triggering the map-based calibration.");
+  StringifyTo(sink, "The calibration map must be running before triggering the map-based calibration.");
 }
 
 void HorusStringify(const ErasedSink& sink, const MapBasedCalibrationAlreadyRunning& /*data*/) {
-  StrAppendToSink(sink, "The map-based calibration is already running.");
+  StringifyTo(sink, "The map-based calibration is already running.");
 }
 
 void HorusStringify(const ErasedSink& sink, const CancelMapBasedCalibrationNotRunning& /*data*/) {
-  StrAppendToSink(sink, "A cancel map-based calibration request has been received while the calibration is not running.");
+  StringifyTo(sink, "A cancel map-based calibration request has been received while the calibration is not running.");
 }
 
 void HorusStringify(const ErasedSink& sink, const BagStreamNotFound& data) {
-  StrAppendToSink(sink, "The stream ", data.stream_id(), " was not found from ", data.bag_path(), ".");
+  StringifyTo(sink, "The stream ", data.stream_id(), " was not found from ", data.bag_path(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const EvaluationBagStartedInfo& data) {
-  StrAppendToSink(sink, "Evaluation bag started for ", data.bag_path());
+  StringifyTo(sink, "Evaluation bag started for ", data.bag_path());
 }
 
 void HorusStringify(const ErasedSink& sink, const EvaluationBagFinishedInfo& data) {
-  StrAppendToSink(sink, "Evaluation bag finished for ", data.bag_path());
+  StringifyTo(sink, "Evaluation bag finished for ", data.bag_path());
 }
 
 void HorusStringify(const ErasedSink& sink, const BagNotFound& data) {
-  StrAppendToSink(sink, "The bag ", data.bag_path(), " was not found.");
+  StringifyTo(sink, "The bag ", data.bag_path(), " was not found.");
 }
 
 void HorusStringify(const ErasedSink& sink, const BuildingPipelineInfo& data) {
-  StrAppendToSink(sink, "Building the ", data.pipeline_name(), " pipeline.");
+  StringifyTo(sink, "Building the ", data.pipeline_name(), " pipeline.");
 }
 
 void HorusStringify(const ErasedSink& sink, const BagIsNotEvaluation& data) {
-  StrAppendToSink(sink, "The bag ", data.bag_path(), " is not an evaluation bag.");
+  StringifyTo(sink, "The bag ", data.bag_path(), " is not an evaluation bag.");
 }
 
 void HorusStringify(const ErasedSink& sink, const HorusBagRunning& /*data*/) {
-  StrAppendToSink(sink, "A Horus bag is currently running.");
+  StringifyTo(sink, "A Horus bag is currently running.");
 }
 
 void HorusStringify(const ErasedSink& sink, const AutoGroundCalibrationWarning& data) {
-  StrAppendToSink(sink, "Automatic ground calibration failed for the following lidars: ", data.failed_lidar_ids(), ".");
+  StringifyTo(sink, "Automatic ground calibration failed for the following lidars: ", data.failed_lidar_ids(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const AutoGroundCalibrationError& /*data*/) {
-  StrAppendToSink(sink, "Automatic ground calibration failed for all lidars.");
+  StringifyTo(sink, "Automatic ground calibration failed for all lidars.");
 }
 
 void HorusStringify(const ErasedSink& sink, const ObjectDetectorNotLoadedWarning& /*data*/) {
-  StrAppendToSink(sink, "The object detector is not loaded yet. Temporarily using rule based detection which may result in degraded detection results.");
+  StringifyTo(sink, "The object detector is not loaded yet. Temporarily using rule based detection which may result in degraded detection results.");
 }
 
 void HorusStringify(const ErasedSink& sink, const CalibrationIsRunningError& /*data*/) {
-  StrAppendToSink(sink, "A calibration process is already running.");
+  StringifyTo(sink, "A calibration process is already running.");
 }
 
 void HorusStringify(const ErasedSink& sink, const ModelInitInProgressInfo& data) {
-  StrAppendToSink(sink, data.component(), " will start processing data once all models have finished initializing.");
+  StringifyTo(sink, data.component(), " will start processing data once all models have finished initializing.");
 }
 
 void HorusStringify(const ErasedSink& sink, const RpcTimeoutWithResolutionWarning& data) {
-  StrAppendToSink(sink, "RPC request \"", data.request_name(), "\" to \"", data.endpoint(), "\" timed out after ", data.elapsed(), ". Resolution: ", data.resolution());
+  StringifyTo(sink, "RPC request \"", data.request_name(), "\" to \"", data.endpoint(), "\" timed out after ", data.elapsed(), ". Resolution: ", data.resolution());
 }
 
 void HorusStringify(const ErasedSink& sink, const CalibrationWasCancelledInfo& data) {
-  StrAppendToSink(sink, "The ", data.calibration_process_name(), " process was cancelled.");
+  StringifyTo(sink, "The ", data.calibration_process_name(), " process was cancelled.");
 }
 
 void HorusStringify(const ErasedSink& sink, const CalibrationMapRecordingFailedToStart& data) {
-  StrAppendToSink(sink, "Failed to start recording the calibration map: ", data.path());
+  StringifyTo(sink, "Failed to start recording the calibration map: ", data.path());
 }
 
 void HorusStringify(const ErasedSink& sink, const DetectionPipelineRequestedResetInfo& data) {
-  StrAppendToSink(sink, "The detection pipeline has been requested to be reset because ", data.reason(), ".");
+  StringifyTo(sink, "The detection pipeline has been requested to be reset because ", data.reason(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const PreprocessingServicePipelineUnavailable& data) {
-  StrAppendToSink(sink, "Preprocessing service pipeline is not available yet due to ", data.reason(), ".");
+  StringifyTo(sink, "Preprocessing service pipeline is not available yet due to ", data.reason(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const CircularRecordingDisabledWarning& data) {
-  StrAppendToSink(sink, "The timeframe snapshot is disabled: ", data.reason());
+  StringifyTo(sink, "The timeframe snapshot is disabled: ", data.reason());
 }
 
 void HorusStringify(const ErasedSink& sink, const SnapshotAlreadyRunningWarning& /*data*/) {
-  StrAppendToSink(sink, "A snapshot is already running.");
+  StringifyTo(sink, "A snapshot is already running.");
 }
 
 void HorusStringify(const ErasedSink& sink, const ActiveProjectChangedInfo& /*data*/) {
-  StrAppendToSink(sink, "The active project has been changed.");
+  StringifyTo(sink, "The active project has been changed.");
 }
 
 void HorusStringify(const ErasedSink& sink, const ProjectConfigUpdatedInfo& /*data*/) {
-  StrAppendToSink(sink, "The project configuration has been updated.");
+  StringifyTo(sink, "The project configuration has been updated.");
 }
 
 void HorusStringify(const ErasedSink& sink, const InvalidLidarTimestamp& data) {
-  StrAppendToSink(sink, "Invalid timestamp ", data.timestamp(), " sent by lidar ", data.lidar_id(), ".");
+  StringifyTo(sink, "Invalid timestamp ", data.timestamp(), " sent by lidar ", data.lidar_id(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const CalibrationAccumulatingPointsInfo& data) {
-  StrAppendToSink(sink, "Calibration is accumulating points for ", data.time());
+  StringifyTo(sink, "Calibration is accumulating points for ", data.time());
 }
 
 void HorusStringify(const ErasedSink& sink, const SparseNoiseFilterUsageNonRotationalLidars& /*data*/) {
-  StrAppendToSink(sink, "The sparse noise filter cannot be used with non-rotational lidars.");
+  StringifyTo(sink, "The sparse noise filter cannot be used with non-rotational lidars.");
 }
 
 void HorusStringify(const ErasedSink& sink, const FileWriteError& data) {
-  StrAppendToSink(sink, "Failed to write to file \"", data.filename(), "\": \"", data.details(), "\".");
+  StringifyTo(sink, "Failed to write to file \"", data.filename(), "\": \"", data.details(), "\".");
 }
 
 void HorusStringify(const ErasedSink& sink, const LicenseForbiddenFeature& data) {
-  StrAppendToSink(sink, data.feature_name(), " is not allowed by the current license.");
+  StringifyTo(sink, data.feature_name(), " is not allowed by the current license.");
 }
 
 void HorusStringify(const ErasedSink& sink, const FailedToUpdateConfiguration& data) {
-  StrAppendToSink(sink, "Failed to update the configuration: ", data.details(), ".");
+  StringifyTo(sink, "Failed to update the configuration: ", data.details(), ".");
+}
+
+void HorusStringify(const ErasedSink& sink, const ObstructionDetectorBadReferenceWarning& /*data*/) {
+  StringifyTo(sink, "The obstruction detector reference is not valid since it contains zero points.");
+}
+
+void HorusStringify(const ErasedSink& sink, const ProjectFileInvalidPermissionsError& data) {
+  StringifyTo(sink, "Project file \"", data.filename(), "\" has invalid permissions. Please restart Horus to fix the issue.");
 }
 
 }  // namespace logs

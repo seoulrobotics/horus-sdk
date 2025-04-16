@@ -12,7 +12,7 @@
 #include <unordered_map>
 #include <utility>
 
-#include "horus/internal/attributes.h"
+#include "horus/attributes.h"
 #include "horus/pb/profiling_pb.h"
 #include "horus/types/one_of.h"
 
@@ -32,7 +32,7 @@ class ProfilingSet final {
 
   /// Returns the processing times.
   const std::unordered_map<std::string, std::chrono::nanoseconds>& ProcessingTimes() const noexcept
-      HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+      HORUS_LIFETIME_BOUND {
     return processing_times_;
   }
 
@@ -50,8 +50,7 @@ class ServiceProfiling final {
   explicit ServiceProfiling(const pb::ServiceProfiling& service_profiling_pb) noexcept;
 
   /// Returns the details profiling set.
-  constexpr const ProfilingSet& DetailsProfilingSet() const noexcept
-      HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const ProfilingSet& DetailsProfilingSet() const noexcept HORUS_LIFETIME_BOUND {
     return details_profiling_set_;
   }
 
@@ -97,7 +96,7 @@ class PreprocessingServicePointCloudProfiling final {
 
   /// The preprocessing service profiling.
   constexpr const ServiceProfiling& PreprocessingServiceProfiling() const noexcept
-      HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+      HORUS_LIFETIME_BOUND {
     return service_profiling_;
   }
 
@@ -144,7 +143,7 @@ class BundledFrameProfilingSet final {
       const pb::BundledFrameProfilingSet& bundled_profile_pb) noexcept;
 
   /// Returns the detection profiling set.
-  const ServiceProfiling& DetectionProfile() const HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  const ServiceProfiling& DetectionProfile() const HORUS_LIFETIME_BOUND {
     return detection_service_profiling_;
   }
 
@@ -155,7 +154,7 @@ class BundledFrameProfilingSet final {
 
   /// Returns the profiling set for the point cloud preprocessing.
   const std::unordered_map<std::string, sdk::PreprocessingServicePointCloudProfiling>&
-  PreprocessingServicePointCloudProfiling() const noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  PreprocessingServicePointCloudProfiling() const noexcept HORUS_LIFETIME_BOUND {
     return preprocessing_service_point_cloud_profiling_;
   }
 

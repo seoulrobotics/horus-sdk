@@ -5,7 +5,6 @@
 
 #include <chrono>
 #include <cstddef>
-#include <cstdio>
 #include <string>
 #include <utility>
 #include <vector>
@@ -18,13 +17,13 @@
 #include "horus/sdk/errors.h"
 #include "horus/sdk/health.h"
 #include "horus/sdk/version.h"
-#include "horus/strings//str_cat.h"
 #include "horus/strings/chrono.h"
 #include "horus/strings/logging.h"
 #include "horus/strings/stdio.h"
-#include "horus/strings/str_sink.h"
+#include "horus/strings/str_cat.h"
+#include "horus/strings/string_view.h"
+#include "horus/strings/stringify.h"
 #include "horus/types/span.h"
-#include "horus/types/string_view.h"
 
 namespace {
 
@@ -59,25 +58,24 @@ horus::StringView LicenseFeatureToString(
 
 /// Stringifies a `LicenseStatus`.
 void PrintLicenseStatus(const horus::sdk::LicenseStatus& license_status) {
-  horus::StrAppendToSink(horus::StdoutSink(), "- License level: ", license_status.LicenseLevel(),
-                         "\n");
-  horus::StrAppendToSink(horus::StdoutSink(), "- Reason: ", license_status.Reason(), "\n");
+  horus::StringifyTo(horus::StdoutSink(), "- License level: ", license_status.LicenseLevel(), "\n");
+  horus::StringifyTo(horus::StdoutSink(), "- Reason: ", license_status.Reason(), "\n");
 
-  horus::StrAppendToSink(horus::StdoutSink(), "- Privileges:\n");
+  horus::StringifyTo(horus::StdoutSink(), "- Privileges:\n");
   if (license_status.HasPrivilege(horus::sdk::LicenseStatus::Privilege::kLowest)) {
-    horus::StrAppendToSink(horus::StdoutSink(), "  - Lowest privilege\n");
+    horus::StringifyTo(horus::StdoutSink(), "  - Lowest privilege\n");
   }
   if (license_status.HasPrivilege(horus::sdk::LicenseStatus::Privilege::kSubscribe)) {
-    horus::StrAppendToSink(horus::StdoutSink(), "  - Subscribe to services\n");
+    horus::StringifyTo(horus::StdoutSink(), "  - Subscribe to services\n");
   }
   if (license_status.HasPrivilege(horus::sdk::LicenseStatus::Privilege::kLicenseActions)) {
-    horus::StrAppendToSink(horus::StdoutSink(), "  - Perform license actions\n");
+    horus::StringifyTo(horus::StdoutSink(), "  - Perform license actions\n");
   }
   if (license_status.HasPrivilege(horus::sdk::LicenseStatus::Privilege::kRead)) {
-    horus::StrAppendToSink(horus::StdoutSink(), "  - Read\n");
+    horus::StringifyTo(horus::StdoutSink(), "  - Read\n");
   }
   if (license_status.HasPrivilege(horus::sdk::LicenseStatus::Privilege::kWrite)) {
-    horus::StrAppendToSink(horus::StdoutSink(), "  - Write\n");
+    horus::StringifyTo(horus::StdoutSink(), "  - Write\n");
   }
 
   if (!license_status.HasLicenseInfo()) {
@@ -86,55 +84,56 @@ void PrintLicenseStatus(const horus::sdk::LicenseStatus& license_status) {
 
   const horus::sdk::LicenseStatus::LicenseInfo& license_info{license_status.GetLicenseInfo()};
 
-  horus::StrAppendToSink(horus::StdoutSink(), "- License info:\n");
-  horus::StrAppendToSink(horus::StdoutSink(), "  - Expiration date: ",
-                         horus::Iso8601{license_info.ExpirationTimestamp()}, "\n");
-  horus::StrAppendToSink(horus::StdoutSink(),
-                         "  - Number of lidars: ", license_info.NumberOfLidars(), "\n");
+  horus::StringifyTo(horus::StdoutSink(), "- License info:\n");
+  horus::StringifyTo(horus::StdoutSink(),
+                     "  - Expiration date: ", horus::Iso8601{license_info.ExpirationTimestamp()},
+                     "\n");
+  horus::StringifyTo(horus::StdoutSink(), "  - Number of lidars: ", license_info.NumberOfLidars(),
+                     "\n");
 
   if (!license_info.AllowedFeatures().empty()) {
-    horus::StrAppendToSink(horus::StdoutSink(), "  - Allowed features:\n");
+    horus::StringifyTo(horus::StdoutSink(), "  - Allowed features:\n");
     for (const horus::sdk::LicenseStatus::LicenseInfo::LicenseFeature feature :
          license_info.AllowedFeatures()) {
-      horus::StrAppendToSink(horus::StdoutSink(), "    - ", LicenseFeatureToString(feature), "\n");
+      horus::StringifyTo(horus::StdoutSink(), "    - ", LicenseFeatureToString(feature), "\n");
     }
   } else {
-    horus::StrAppendToSink(horus::StdoutSink(), "  - Allowed features: NONE!\n");
+    horus::StringifyTo(horus::StdoutSink(), "  - Allowed features: NONE!\n");
   }
 }
 
 void PrintSensorHealth(const horus::sdk::SensorHealth& sensor_health_status) {
   const horus::sdk::SensorInfo& sensor_info{sensor_health_status.Info()};
 
-  horus::StrAppendToSink(horus::StdoutSink(), sensor_info.LidarId(), ":");
+  horus::StringifyTo(horus::StdoutSink(), sensor_info.LidarId(), ":");
 
   if (sensor_health_status.IsNodeUnreachable()) {
     const horus::StringView error{sensor_health_status.NodeUnreachableErrorMessage()};
-    horus::StrAppendToSink(horus::StdoutSink(), " Unreachable! ", error, "\n");
+    horus::StringifyTo(horus::StdoutSink(), " Unreachable! ", error, "\n");
     return;
   }
 
-  horus::StrAppendToSink(horus::StdoutSink(), "\n- Frequency: ", sensor_info.MeasuredFrequencyHz(),
-                         "Hz\n");
+  horus::StringifyTo(horus::StdoutSink(), "\n- Frequency: ", sensor_info.MeasuredFrequencyHz(),
+                     "Hz\n");
 
-  horus::StrAppendToSink(horus::StdoutSink(), "- Status:\n");
+  horus::StringifyTo(horus::StdoutSink(), "- Status:\n");
   if (sensor_info.HasStatus(horus::sdk::SensorInfo::SensorStatus::kNoData)) {
-    horus::StrAppendToSink(horus::StdoutSink(), "  - No data\n");
+    horus::StringifyTo(horus::StdoutSink(), "  - No data\n");
   }
   if (sensor_info.HasStatus(horus::sdk::SensorInfo::SensorStatus::kReceivingData)) {
-    horus::StrAppendToSink(horus::StdoutSink(), "  - Receiving data\n");
+    horus::StringifyTo(horus::StdoutSink(), "  - Receiving data\n");
   }
   if (sensor_info.HasStatus(horus::sdk::SensorInfo::SensorStatus::kLowFrequency)) {
-    horus::StrAppendToSink(horus::StdoutSink(), "  - Low frequency\n");
+    horus::StringifyTo(horus::StdoutSink(), "  - Low frequency\n");
   }
   if (sensor_info.HasStatus(horus::sdk::SensorInfo::SensorStatus::kHighFrequency)) {
-    horus::StrAppendToSink(horus::StdoutSink(), "  - High frequency\n");
+    horus::StringifyTo(horus::StdoutSink(), "  - High frequency\n");
   }
   if (sensor_info.HasStatus(horus::sdk::SensorInfo::SensorStatus::kTilted)) {
-    horus::StrAppendToSink(horus::StdoutSink(), "  - Titled\n");
+    horus::StringifyTo(horus::StdoutSink(), "  - Titled\n");
   }
   if (sensor_info.HasStatus(horus::sdk::SensorInfo::SensorStatus::kObstructed)) {
-    horus::StrAppendToSink(horus::StdoutSink(), "  - Obstructed\n");
+    horus::StringifyTo(horus::StdoutSink(), "  - Obstructed\n");
   }
 }
 
@@ -158,11 +157,11 @@ void PrintServiceStatuses(horus::Span<const horus::sdk::NodeHealth> service_heal
     }
 
     if (service_nodes.empty()) {
-      horus::StrAppendToSink(horus::StdoutSink(), service_name, ": No node found!\n");
+      horus::StringifyTo(horus::StdoutSink(), service_name, ": No node found!\n");
       return;
     }
 
-    horus::StrAppendToSink(horus::StdoutSink(), service_name, ":\n");
+    horus::StringifyTo(horus::StdoutSink(), service_name, ":\n");
     for (const auto& node_status : service_nodes) {
       std::string str_status{};
       switch (node_status.node_status) {
@@ -180,10 +179,10 @@ void PrintServiceStatuses(horus::Span<const horus::sdk::NodeHealth> service_heal
           str_status = "unknown";
         }
       }
-      horus::StrAppendToSink(horus::StdoutSink(),
-                             horus::StrCat("  - ", node_status.node_id, ": ", str_status, "\n"));
+      horus::StringifyTo(horus::StdoutSink(),
+                         horus::StrCat("  - ", node_status.node_id, ": ", str_status, "\n"));
     }
-    horus::StrAppendToSink(horus::StdoutSink(), "\n");
+    horus::StringifyTo(horus::StdoutSink(), "\n");
   };
 
   stringify_service_health_status("Detection service", horus::sdk::NodeHealth::Service::kDetection);
@@ -210,19 +209,19 @@ int main(int argc, const char* argv[]) {
   horus::Sdk sdk{service_map};
 
   try {
-    horus::StrAppendToSink(horus::StdoutSink(), "Sending RPC request...\n");
+    horus::StringifyTo(horus::StdoutSink(), "Sending RPC request...\n");
     const horus::sdk::Version version{sdk.GetVersion({}).Wait()};
 
-    horus::StrAppendToSink(horus::StdoutSink(), "Horus version: ", version.ToString(), "\n\n");
+    horus::StringifyTo(horus::StdoutSink(), "Horus version: ", version.ToString(), "\n\n");
 
     const horus::sdk::HealthStatus health_status{sdk.GetHealthStatus({}).Wait()};
 
-    horus::StrAppendToSink(horus::StdoutSink(), "---- License status ----\n");
+    horus::StringifyTo(horus::StdoutSink(), "---- License status ----\n");
     PrintLicenseStatus(health_status.GetLicenseStatus());
 
-    horus::StrAppendToSink(horus::StdoutSink(), "\n");
+    horus::StringifyTo(horus::StdoutSink(), "\n");
     if (!health_status.HasReadPrivilege()) {
-      horus::StrAppendToSink(
+      horus::StringifyTo(
           horus::StdoutSink(),
           "Sensor and service statuses not received because license level does not grant the "
           "Read "
@@ -230,13 +229,13 @@ int main(int argc, const char* argv[]) {
       return 0;
     }
 
-    horus::StrAppendToSink(horus::StdoutSink(), "---- Lidar statuses ----\n");
+    horus::StringifyTo(horus::StdoutSink(), "---- Lidar statuses ----\n");
     for (const horus::sdk::SensorHealth& sensor_health_status : health_status.SensorStatuses()) {
       PrintSensorHealth(sensor_health_status);
-      horus::StrAppendToSink(horus::StdoutSink(), "\n");
+      horus::StringifyTo(horus::StdoutSink(), "\n");
     }
 
-    horus::StrAppendToSink(horus::StdoutSink(), "---- Service statuses ----\n");
+    horus::StringifyTo(horus::StdoutSink(), "---- Service statuses ----\n");
     PrintServiceStatuses(health_status.ServiceStatuses());
   } catch (const horus::RpcEndpointDisconnectedError&) {
     horus::Log("Cannot connect to the ProjectManager.");

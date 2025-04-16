@@ -19,7 +19,7 @@
 #include "horus/sdk.h"
 #include "horus/strings/chrono.h"  // IWYU pragma: keep
 #include "horus/strings/stdio.h"
-#include "horus/strings/str_sink.h"
+#include "horus/strings/stringify.h"
 #include "horus/types/span.h"
 
 int main(int argc, const char* argv[]) {
@@ -33,20 +33,18 @@ int main(int argc, const char* argv[]) {
   horus::SdkSubscription const subscription{
       sdk.SubscribeToOccupancyGrid(
              {/*on_occupancy_grid=*/[](horus::pb::OccupancyGridEvent const& event) {
-               horus::StrAppendToSink(horus::StdoutSink(), "Occupancy Grid received\n");
-               horus::StrAppendToSink(horus::StdoutSink(), "  resolution: ", event.resolution(),
-                                      "\n");
-               horus::StrAppendToSink(horus::StdoutSink(), "  rows: ", event.grid().rows(), "\n");
-               horus::StrAppendToSink(horus::StdoutSink(), "  cols: ", event.grid().cols(), "\n");
-               horus::StrAppendToSink(horus::StdoutSink(), "  cells: ", event.grid().cells().size(),
-                                      "\n");
-               horus::StrAppendToSink(horus::StdoutSink(), "  detection range x: ", event.x_min(),
-                                      " - ", event.x_min(), "\n");
-               horus::StrAppendToSink(horus::StdoutSink(), "  detection range y: ", event.y_min(),
-                                      " - ", event.y_min(), "\n");
-               horus::StrAppendToSink(horus::StdoutSink(),
-                                      "  timestamp: ", event.timestamp().seconds(), "s ",
-                                      event.timestamp().nanos(), "ns\n");
+               horus::StringifyTo(horus::StdoutSink(), "Occupancy Grid received\n");
+               horus::StringifyTo(horus::StdoutSink(), "  resolution: ", event.resolution(), "\n");
+               horus::StringifyTo(horus::StdoutSink(), "  rows: ", event.grid().rows(), "\n");
+               horus::StringifyTo(horus::StdoutSink(), "  cols: ", event.grid().cols(), "\n");
+               horus::StringifyTo(horus::StdoutSink(), "  cells: ", event.grid().cells().size(),
+                                  "\n");
+               horus::StringifyTo(horus::StdoutSink(), "  detection range x: ", event.x_min(),
+                                  " - ", event.x_min(), "\n");
+               horus::StringifyTo(horus::StdoutSink(), "  detection range y: ", event.y_min(),
+                                  " - ", event.y_min(), "\n");
+               horus::StringifyTo(horus::StdoutSink(), "  timestamp: ", event.timestamp().seconds(),
+                                  "s ", event.timestamp().nanos(), "ns\n");
 
                std::vector<horus::pb::OccupancyClassification> classifications;
 
@@ -76,9 +74,9 @@ int main(int argc, const char* argv[]) {
                                  });
                auto const num_free =
                    static_cast<std::uint32_t>(rows * cols) - num_occluded - num_static_occupied;
-               horus::StrAppendToSink(horus::StdoutSink(), "  num occluded: ", num_occluded,
-                                      " num static occupied: ", num_static_occupied,
-                                      " num free: ", num_free, "\n");
+               horus::StringifyTo(horus::StdoutSink(), "  num occluded: ", num_occluded,
+                                  " num static occupied: ", num_static_occupied,
+                                  " num free: ", num_free, "\n");
              }})
           .Wait()};
 

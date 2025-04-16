@@ -11,11 +11,13 @@
 #include <cstdint>
 #include <utility>
 
+#include "horus/attributes.h"
+#include "horus/internal/attributes.h"
 #include "horus/pb/logs/logs_pb.h"
 #include "horus/pb/logs/metadata_pb.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
 #include "horus/pb/alias.h"  // IWYU pragma: export
@@ -94,7 +96,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const logs::Generic& generic() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::Generic& generic() const& noexcept HORUS_LIFETIME_BOUND {
     return generic_;
   }
 
@@ -113,7 +115,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  logs::Generic& mutable_generic() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::Generic& mutable_generic() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kGeneric;
     set_fields_[0] = true;
@@ -149,7 +151,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr const logs::Oom& oom() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::Oom& oom() const& noexcept HORUS_LIFETIME_BOUND {
     return oom_;
   }
 
@@ -168,7 +170,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  logs::Oom& mutable_oom() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::Oom& mutable_oom() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kOom;
     set_fields_[1] = true;
@@ -204,7 +206,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 3.
-  constexpr const logs::RpcConnectionError& rpc_connection_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::RpcConnectionError& rpc_connection_error() const& noexcept HORUS_LIFETIME_BOUND {
     return rpc_connection_error_;
   }
 
@@ -223,7 +225,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 3.
-  logs::RpcConnectionError& mutable_rpc_connection_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::RpcConnectionError& mutable_rpc_connection_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRpcConnectionError;
     set_fields_[2] = true;
@@ -259,7 +261,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 4.
-  constexpr const logs::InvalidProjectName& invalid_project_name() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::InvalidProjectName& invalid_project_name() const& noexcept HORUS_LIFETIME_BOUND {
     return invalid_project_name_;
   }
 
@@ -278,7 +280,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 4.
-  logs::InvalidProjectName& mutable_invalid_project_name() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::InvalidProjectName& mutable_invalid_project_name() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInvalidProjectName;
     set_fields_[3] = true;
@@ -314,7 +316,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 5.
-  constexpr const logs::ProjectNotFound& project_not_found() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ProjectNotFound& project_not_found() const& noexcept HORUS_LIFETIME_BOUND {
     return project_not_found_;
   }
 
@@ -333,7 +335,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 5.
-  logs::ProjectNotFound& mutable_project_not_found() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ProjectNotFound& mutable_project_not_found() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kProjectNotFound;
     set_fields_[4] = true;
@@ -369,7 +371,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 6.
-  constexpr const logs::ProjectAlreadyExists& project_already_exists() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ProjectAlreadyExists& project_already_exists() const& noexcept HORUS_LIFETIME_BOUND {
     return project_already_exists_;
   }
 
@@ -388,7 +390,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 6.
-  logs::ProjectAlreadyExists& mutable_project_already_exists() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ProjectAlreadyExists& mutable_project_already_exists() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kProjectAlreadyExists;
     set_fields_[5] = true;
@@ -424,7 +426,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 7.
-  constexpr const logs::InvalidConfiguration& invalid_configuration() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::InvalidConfiguration& invalid_configuration() const& noexcept HORUS_LIFETIME_BOUND {
     return invalid_configuration_;
   }
 
@@ -443,7 +445,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 7.
-  logs::InvalidConfiguration& mutable_invalid_configuration() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::InvalidConfiguration& mutable_invalid_configuration() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInvalidConfiguration;
     set_fields_[6] = true;
@@ -479,7 +481,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 8.
-  constexpr const logs::EntityNotFound& entity_not_found() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::EntityNotFound& entity_not_found() const& noexcept HORUS_LIFETIME_BOUND {
     return entity_not_found_;
   }
 
@@ -498,7 +500,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 8.
-  logs::EntityNotFound& mutable_entity_not_found() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::EntityNotFound& mutable_entity_not_found() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kEntityNotFound;
     set_fields_[7] = true;
@@ -534,7 +536,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 9.
-  constexpr const logs::ActiveProjectCannotBeDeleted& active_project_cannot_be_deleted() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ActiveProjectCannotBeDeleted& active_project_cannot_be_deleted() const& noexcept HORUS_LIFETIME_BOUND {
     return active_project_cannot_be_deleted_;
   }
 
@@ -553,7 +555,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 9.
-  logs::ActiveProjectCannotBeDeleted& mutable_active_project_cannot_be_deleted() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ActiveProjectCannotBeDeleted& mutable_active_project_cannot_be_deleted() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kActiveProjectCannotBeDeleted;
     set_fields_[8] = true;
@@ -589,7 +591,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 10.
-  constexpr const logs::RpcDisconnectionError& rpc_disconnection_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::RpcDisconnectionError& rpc_disconnection_error() const& noexcept HORUS_LIFETIME_BOUND {
     return rpc_disconnection_error_;
   }
 
@@ -608,7 +610,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 10.
-  logs::RpcDisconnectionError& mutable_rpc_disconnection_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::RpcDisconnectionError& mutable_rpc_disconnection_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRpcDisconnectionError;
     set_fields_[9] = true;
@@ -644,7 +646,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 11.
-  constexpr const logs::DroppedLogs& dropped_logs() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::DroppedLogs& dropped_logs() const& noexcept HORUS_LIFETIME_BOUND {
     return dropped_logs_;
   }
 
@@ -663,7 +665,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 11.
-  logs::DroppedLogs& mutable_dropped_logs() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::DroppedLogs& mutable_dropped_logs() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kDroppedLogs;
     set_fields_[10] = true;
@@ -699,7 +701,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 12.
-  constexpr const logs::OpenedProject& opened_project() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::OpenedProject& opened_project() const& noexcept HORUS_LIFETIME_BOUND {
     return opened_project_;
   }
 
@@ -718,7 +720,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 12.
-  logs::OpenedProject& mutable_opened_project() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::OpenedProject& mutable_opened_project() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kOpenedProject;
     set_fields_[11] = true;
@@ -754,7 +756,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 13.
-  constexpr const logs::CreatedProject& created_project() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CreatedProject& created_project() const& noexcept HORUS_LIFETIME_BOUND {
     return created_project_;
   }
 
@@ -773,7 +775,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 13.
-  logs::CreatedProject& mutable_created_project() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CreatedProject& mutable_created_project() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCreatedProject;
     set_fields_[12] = true;
@@ -809,7 +811,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 14.
-  constexpr const logs::ConfigUnavailable& config_unavailable() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ConfigUnavailable& config_unavailable() const& noexcept HORUS_LIFETIME_BOUND {
     return config_unavailable_;
   }
 
@@ -828,7 +830,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 14.
-  logs::ConfigUnavailable& mutable_config_unavailable() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ConfigUnavailable& mutable_config_unavailable() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kConfigUnavailable;
     set_fields_[13] = true;
@@ -864,7 +866,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 15.
-  constexpr const logs::InvalidRequest& invalid_request() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::InvalidRequest& invalid_request() const& noexcept HORUS_LIFETIME_BOUND {
     return invalid_request_;
   }
 
@@ -883,7 +885,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 15.
-  logs::InvalidRequest& mutable_invalid_request() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::InvalidRequest& mutable_invalid_request() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInvalidRequest;
     set_fields_[14] = true;
@@ -919,7 +921,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 16.
-  constexpr const logs::SanityCheckError& sanity_check_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::SanityCheckError& sanity_check_error() const& noexcept HORUS_LIFETIME_BOUND {
     return sanity_check_error_;
   }
 
@@ -938,7 +940,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 16.
-  logs::SanityCheckError& mutable_sanity_check_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::SanityCheckError& mutable_sanity_check_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kSanityCheckError;
     set_fields_[15] = true;
@@ -974,7 +976,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 17.
-  constexpr const logs::BagFailedToOpen& bag_failed_to_open() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BagFailedToOpen& bag_failed_to_open() const& noexcept HORUS_LIFETIME_BOUND {
     return bag_failed_to_open_;
   }
 
@@ -993,7 +995,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 17.
-  logs::BagFailedToOpen& mutable_bag_failed_to_open() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BagFailedToOpen& mutable_bag_failed_to_open() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagFailedToOpen;
     set_fields_[16] = true;
@@ -1029,7 +1031,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 18.
-  constexpr const logs::BagFailedToClose& bag_failed_to_close() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BagFailedToClose& bag_failed_to_close() const& noexcept HORUS_LIFETIME_BOUND {
     return bag_failed_to_close_;
   }
 
@@ -1048,7 +1050,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 18.
-  logs::BagFailedToClose& mutable_bag_failed_to_close() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BagFailedToClose& mutable_bag_failed_to_close() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagFailedToClose;
     set_fields_[17] = true;
@@ -1084,7 +1086,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 19.
-  constexpr const logs::BagConversionFailed& bag_conversion_failed() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BagConversionFailed& bag_conversion_failed() const& noexcept HORUS_LIFETIME_BOUND {
     return bag_conversion_failed_;
   }
 
@@ -1103,7 +1105,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 19.
-  logs::BagConversionFailed& mutable_bag_conversion_failed() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BagConversionFailed& mutable_bag_conversion_failed() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagConversionFailed;
     set_fields_[18] = true;
@@ -1139,7 +1141,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 20.
-  constexpr const logs::BagFailedToWrite& bag_failed_to_write() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BagFailedToWrite& bag_failed_to_write() const& noexcept HORUS_LIFETIME_BOUND {
     return bag_failed_to_write_;
   }
 
@@ -1158,7 +1160,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 20.
-  logs::BagFailedToWrite& mutable_bag_failed_to_write() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BagFailedToWrite& mutable_bag_failed_to_write() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagFailedToWrite;
     set_fields_[19] = true;
@@ -1194,7 +1196,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 21.
-  constexpr const logs::CalibrationError& calibration_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CalibrationError& calibration_error() const& noexcept HORUS_LIFETIME_BOUND {
     return calibration_error_;
   }
 
@@ -1213,7 +1215,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 21.
-  logs::CalibrationError& mutable_calibration_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CalibrationError& mutable_calibration_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCalibrationError;
     set_fields_[20] = true;
@@ -1249,7 +1251,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 22.
-  constexpr const logs::ProjectManagerFailedToStartRecording& project_manager_failed_to_start_recording() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ProjectManagerFailedToStartRecording& project_manager_failed_to_start_recording() const& noexcept HORUS_LIFETIME_BOUND {
     return project_manager_failed_to_start_recording_;
   }
 
@@ -1268,7 +1270,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 22.
-  logs::ProjectManagerFailedToStartRecording& mutable_project_manager_failed_to_start_recording() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ProjectManagerFailedToStartRecording& mutable_project_manager_failed_to_start_recording() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kProjectManagerFailedToStartRecording;
     set_fields_[21] = true;
@@ -1304,7 +1306,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 23.
-  constexpr const logs::ProjectManagerFailedToStopRecording& project_manager_failed_to_stop_recording() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ProjectManagerFailedToStopRecording& project_manager_failed_to_stop_recording() const& noexcept HORUS_LIFETIME_BOUND {
     return project_manager_failed_to_stop_recording_;
   }
 
@@ -1323,7 +1325,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 23.
-  logs::ProjectManagerFailedToStopRecording& mutable_project_manager_failed_to_stop_recording() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ProjectManagerFailedToStopRecording& mutable_project_manager_failed_to_stop_recording() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kProjectManagerFailedToStopRecording;
     set_fields_[22] = true;
@@ -1359,7 +1361,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 24.
-  constexpr const logs::ServiceConnectionTimedOut& service_connection_timed_out() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ServiceConnectionTimedOut& service_connection_timed_out() const& noexcept HORUS_LIFETIME_BOUND {
     return service_connection_timed_out_;
   }
 
@@ -1378,7 +1380,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 24.
-  logs::ServiceConnectionTimedOut& mutable_service_connection_timed_out() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ServiceConnectionTimedOut& mutable_service_connection_timed_out() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kServiceConnectionTimedOut;
     set_fields_[23] = true;
@@ -1414,7 +1416,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 25.
-  constexpr const logs::BagRecorderAlreadyRunning& bag_recorder_already_running() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BagRecorderAlreadyRunning& bag_recorder_already_running() const& noexcept HORUS_LIFETIME_BOUND {
     return bag_recorder_already_running_;
   }
 
@@ -1433,7 +1435,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 25.
-  logs::BagRecorderAlreadyRunning& mutable_bag_recorder_already_running() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BagRecorderAlreadyRunning& mutable_bag_recorder_already_running() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagRecorderAlreadyRunning;
     set_fields_[24] = true;
@@ -1469,7 +1471,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 26.
-  constexpr const logs::LicenseServerConnectionError& license_server_connection_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicenseServerConnectionError& license_server_connection_error() const& noexcept HORUS_LIFETIME_BOUND {
     return license_server_connection_error_;
   }
 
@@ -1488,7 +1490,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 26.
-  logs::LicenseServerConnectionError& mutable_license_server_connection_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicenseServerConnectionError& mutable_license_server_connection_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicenseServerConnectionError;
     set_fields_[25] = true;
@@ -1524,7 +1526,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 27.
-  constexpr const logs::LicenseError& license_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicenseError& license_error() const& noexcept HORUS_LIFETIME_BOUND {
     return license_error_;
   }
 
@@ -1543,7 +1545,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 27.
-  logs::LicenseError& mutable_license_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicenseError& mutable_license_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicenseError;
     set_fields_[26] = true;
@@ -1579,7 +1581,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 145.
-  constexpr const logs::LicenseNotFoundError& license_not_found_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicenseNotFoundError& license_not_found_error() const& noexcept HORUS_LIFETIME_BOUND {
     return license_not_found_error_;
   }
 
@@ -1598,7 +1600,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 145.
-  logs::LicenseNotFoundError& mutable_license_not_found_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicenseNotFoundError& mutable_license_not_found_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicenseNotFoundError;
     set_fields_[27] = true;
@@ -1634,7 +1636,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 146.
-  constexpr const logs::LicenseExpiredError& license_expired_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicenseExpiredError& license_expired_error() const& noexcept HORUS_LIFETIME_BOUND {
     return license_expired_error_;
   }
 
@@ -1653,7 +1655,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 146.
-  logs::LicenseExpiredError& mutable_license_expired_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicenseExpiredError& mutable_license_expired_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicenseExpiredError;
     set_fields_[28] = true;
@@ -1689,7 +1691,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 147.
-  constexpr const logs::LicenseExceededError& license_exceeded_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicenseExceededError& license_exceeded_error() const& noexcept HORUS_LIFETIME_BOUND {
     return license_exceeded_error_;
   }
 
@@ -1708,7 +1710,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 147.
-  logs::LicenseExceededError& mutable_license_exceeded_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicenseExceededError& mutable_license_exceeded_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicenseExceededError;
     set_fields_[29] = true;
@@ -1744,7 +1746,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 28.
-  constexpr const logs::LicenseHostMachineError& license_host_machine_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicenseHostMachineError& license_host_machine_error() const& noexcept HORUS_LIFETIME_BOUND {
     return license_host_machine_error_;
   }
 
@@ -1763,7 +1765,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 28.
-  logs::LicenseHostMachineError& mutable_license_host_machine_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicenseHostMachineError& mutable_license_host_machine_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicenseHostMachineError;
     set_fields_[30] = true;
@@ -1799,7 +1801,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 148.
-  constexpr const logs::LicensePrivilegeError& license_privilege_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicensePrivilegeError& license_privilege_error() const& noexcept HORUS_LIFETIME_BOUND {
     return license_privilege_error_;
   }
 
@@ -1818,7 +1820,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 148.
-  logs::LicensePrivilegeError& mutable_license_privilege_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicensePrivilegeError& mutable_license_privilege_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicensePrivilegeError;
     set_fields_[31] = true;
@@ -1854,7 +1856,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 149.
-  constexpr const logs::LicenseActiveInfo& license_active_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicenseActiveInfo& license_active_info() const& noexcept HORUS_LIFETIME_BOUND {
     return license_active_info_;
   }
 
@@ -1873,7 +1875,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 149.
-  logs::LicenseActiveInfo& mutable_license_active_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicenseActiveInfo& mutable_license_active_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicenseActiveInfo;
     set_fields_[32] = true;
@@ -1909,7 +1911,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 150.
-  constexpr const logs::MultipleLicensesWarning& multiple_licenses_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::MultipleLicensesWarning& multiple_licenses_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return multiple_licenses_warning_;
   }
 
@@ -1928,7 +1930,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 150.
-  logs::MultipleLicensesWarning& mutable_multiple_licenses_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::MultipleLicensesWarning& mutable_multiple_licenses_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kMultipleLicensesWarning;
     set_fields_[33] = true;
@@ -1964,7 +1966,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 29.
-  constexpr const logs::LicenseCurrentLicenseStatusInfo& license_current_license_status_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicenseCurrentLicenseStatusInfo& license_current_license_status_info() const& noexcept HORUS_LIFETIME_BOUND {
     return license_current_license_status_info_;
   }
 
@@ -1983,7 +1985,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 29.
-  logs::LicenseCurrentLicenseStatusInfo& mutable_license_current_license_status_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicenseCurrentLicenseStatusInfo& mutable_license_current_license_status_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicenseCurrentLicenseStatusInfo;
     set_fields_[34] = true;
@@ -2019,7 +2021,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 30.
-  constexpr const logs::BagRecordingStoppedInfo& bag_recording_stopped_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BagRecordingStoppedInfo& bag_recording_stopped_info() const& noexcept HORUS_LIFETIME_BOUND {
     return bag_recording_stopped_info_;
   }
 
@@ -2038,7 +2040,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 30.
-  logs::BagRecordingStoppedInfo& mutable_bag_recording_stopped_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BagRecordingStoppedInfo& mutable_bag_recording_stopped_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagRecordingStoppedInfo;
     set_fields_[35] = true;
@@ -2074,7 +2076,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 31.
-  constexpr const logs::BagRecordingFailedToStart& bag_recording_failed_to_start() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BagRecordingFailedToStart& bag_recording_failed_to_start() const& noexcept HORUS_LIFETIME_BOUND {
     return bag_recording_failed_to_start_;
   }
 
@@ -2093,7 +2095,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 31.
-  logs::BagRecordingFailedToStart& mutable_bag_recording_failed_to_start() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BagRecordingFailedToStart& mutable_bag_recording_failed_to_start() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagRecordingFailedToStart;
     set_fields_[36] = true;
@@ -2129,7 +2131,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 32.
-  constexpr const logs::BagRecordingStartedInfo& bag_recording_started_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BagRecordingStartedInfo& bag_recording_started_info() const& noexcept HORUS_LIFETIME_BOUND {
     return bag_recording_started_info_;
   }
 
@@ -2148,7 +2150,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 32.
-  logs::BagRecordingStartedInfo& mutable_bag_recording_started_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BagRecordingStartedInfo& mutable_bag_recording_started_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagRecordingStartedInfo;
     set_fields_[37] = true;
@@ -2184,7 +2186,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 33.
-  constexpr const logs::ReplayRestartedInfo& replay_restarted_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ReplayRestartedInfo& replay_restarted_info() const& noexcept HORUS_LIFETIME_BOUND {
     return replay_restarted_info_;
   }
 
@@ -2203,7 +2205,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 33.
-  logs::ReplayRestartedInfo& mutable_replay_restarted_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ReplayRestartedInfo& mutable_replay_restarted_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kReplayRestartedInfo;
     set_fields_[38] = true;
@@ -2239,7 +2241,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 34.
-  constexpr const logs::InputSourceChangeRequestedInfo& input_source_change_requested_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::InputSourceChangeRequestedInfo& input_source_change_requested_info() const& noexcept HORUS_LIFETIME_BOUND {
     return input_source_change_requested_info_;
   }
 
@@ -2258,7 +2260,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 34.
-  logs::InputSourceChangeRequestedInfo& mutable_input_source_change_requested_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::InputSourceChangeRequestedInfo& mutable_input_source_change_requested_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInputSourceChangeRequestedInfo;
     set_fields_[39] = true;
@@ -2294,7 +2296,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 35.
-  constexpr const logs::InputSourceSwitchedInfo& input_source_switched_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::InputSourceSwitchedInfo& input_source_switched_info() const& noexcept HORUS_LIFETIME_BOUND {
     return input_source_switched_info_;
   }
 
@@ -2313,7 +2315,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 35.
-  logs::InputSourceSwitchedInfo& mutable_input_source_switched_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::InputSourceSwitchedInfo& mutable_input_source_switched_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInputSourceSwitchedInfo;
     set_fields_[40] = true;
@@ -2349,7 +2351,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 36.
-  constexpr const logs::RpcTimeoutWarning& rpc_timeout_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::RpcTimeoutWarning& rpc_timeout_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return rpc_timeout_warning_;
   }
 
@@ -2368,7 +2370,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 36.
-  logs::RpcTimeoutWarning& mutable_rpc_timeout_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::RpcTimeoutWarning& mutable_rpc_timeout_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRpcTimeoutWarning;
     set_fields_[41] = true;
@@ -2404,7 +2406,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 37.
-  constexpr const logs::CannotWriteLogFile& cannot_write_log_file() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CannotWriteLogFile& cannot_write_log_file() const& noexcept HORUS_LIFETIME_BOUND {
     return cannot_write_log_file_;
   }
 
@@ -2423,7 +2425,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 37.
-  logs::CannotWriteLogFile& mutable_cannot_write_log_file() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CannotWriteLogFile& mutable_cannot_write_log_file() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCannotWriteLogFile;
     set_fields_[42] = true;
@@ -2459,7 +2461,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 38.
-  constexpr const logs::PointCloudParsingFailureWarning& point_cloud_parsing_failure_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::PointCloudParsingFailureWarning& point_cloud_parsing_failure_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return point_cloud_parsing_failure_warning_;
   }
 
@@ -2478,7 +2480,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 38.
-  logs::PointCloudParsingFailureWarning& mutable_point_cloud_parsing_failure_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::PointCloudParsingFailureWarning& mutable_point_cloud_parsing_failure_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kPointCloudParsingFailureWarning;
     set_fields_[43] = true;
@@ -2514,7 +2516,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 39.
-  constexpr const logs::LidarIsDead& lidar_is_dead() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LidarIsDead& lidar_is_dead() const& noexcept HORUS_LIFETIME_BOUND {
     return lidar_is_dead_;
   }
 
@@ -2533,7 +2535,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 39.
-  logs::LidarIsDead& mutable_lidar_is_dead() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LidarIsDead& mutable_lidar_is_dead() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLidarIsDead;
     set_fields_[44] = true;
@@ -2569,7 +2571,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 40.
-  constexpr const logs::LidarIsNotDeadAnymore& lidar_is_not_dead_anymore() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LidarIsNotDeadAnymore& lidar_is_not_dead_anymore() const& noexcept HORUS_LIFETIME_BOUND {
     return lidar_is_not_dead_anymore_;
   }
 
@@ -2588,7 +2590,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 40.
-  logs::LidarIsNotDeadAnymore& mutable_lidar_is_not_dead_anymore() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LidarIsNotDeadAnymore& mutable_lidar_is_not_dead_anymore() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLidarIsNotDeadAnymore;
     set_fields_[45] = true;
@@ -2624,7 +2626,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 41.
-  constexpr const logs::LidarIsObstructed& lidar_is_obstructed() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LidarIsObstructed& lidar_is_obstructed() const& noexcept HORUS_LIFETIME_BOUND {
     return lidar_is_obstructed_;
   }
 
@@ -2643,7 +2645,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 41.
-  logs::LidarIsObstructed& mutable_lidar_is_obstructed() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LidarIsObstructed& mutable_lidar_is_obstructed() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLidarIsObstructed;
     set_fields_[46] = true;
@@ -2679,7 +2681,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 42.
-  constexpr const logs::LidarIsNotObstructedAnymore& lidar_is_not_obstructed_anymore() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LidarIsNotObstructedAnymore& lidar_is_not_obstructed_anymore() const& noexcept HORUS_LIFETIME_BOUND {
     return lidar_is_not_obstructed_anymore_;
   }
 
@@ -2698,7 +2700,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 42.
-  logs::LidarIsNotObstructedAnymore& mutable_lidar_is_not_obstructed_anymore() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LidarIsNotObstructedAnymore& mutable_lidar_is_not_obstructed_anymore() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLidarIsNotObstructedAnymore;
     set_fields_[47] = true;
@@ -2734,7 +2736,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 43.
-  constexpr const logs::LidarIsTilted& lidar_is_tilted() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LidarIsTilted& lidar_is_tilted() const& noexcept HORUS_LIFETIME_BOUND {
     return lidar_is_tilted_;
   }
 
@@ -2753,7 +2755,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 43.
-  logs::LidarIsTilted& mutable_lidar_is_tilted() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LidarIsTilted& mutable_lidar_is_tilted() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLidarIsTilted;
     set_fields_[48] = true;
@@ -2789,7 +2791,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 44.
-  constexpr const logs::LidarIsNotTiltedAnymore& lidar_is_not_tilted_anymore() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LidarIsNotTiltedAnymore& lidar_is_not_tilted_anymore() const& noexcept HORUS_LIFETIME_BOUND {
     return lidar_is_not_tilted_anymore_;
   }
 
@@ -2808,7 +2810,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 44.
-  logs::LidarIsNotTiltedAnymore& mutable_lidar_is_not_tilted_anymore() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LidarIsNotTiltedAnymore& mutable_lidar_is_not_tilted_anymore() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLidarIsNotTiltedAnymore;
     set_fields_[49] = true;
@@ -2844,7 +2846,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 45.
-  constexpr const logs::LidarHasBeenAutomaticallyRecalibrated& lidar_has_been_automatically_recalibrated() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LidarHasBeenAutomaticallyRecalibrated& lidar_has_been_automatically_recalibrated() const& noexcept HORUS_LIFETIME_BOUND {
     return lidar_has_been_automatically_recalibrated_;
   }
 
@@ -2863,7 +2865,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 45.
-  logs::LidarHasBeenAutomaticallyRecalibrated& mutable_lidar_has_been_automatically_recalibrated() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LidarHasBeenAutomaticallyRecalibrated& mutable_lidar_has_been_automatically_recalibrated() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLidarHasBeenAutomaticallyRecalibrated;
     set_fields_[50] = true;
@@ -2899,7 +2901,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 46.
-  constexpr const logs::ReceivedFirstDataForLidar& received_first_data_for_lidar() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ReceivedFirstDataForLidar& received_first_data_for_lidar() const& noexcept HORUS_LIFETIME_BOUND {
     return received_first_data_for_lidar_;
   }
 
@@ -2918,7 +2920,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 46.
-  logs::ReceivedFirstDataForLidar& mutable_received_first_data_for_lidar() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ReceivedFirstDataForLidar& mutable_received_first_data_for_lidar() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kReceivedFirstDataForLidar;
     set_fields_[51] = true;
@@ -2954,7 +2956,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 47.
-  constexpr const logs::TerminationFailureError& termination_failure_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::TerminationFailureError& termination_failure_error() const& noexcept HORUS_LIFETIME_BOUND {
     return termination_failure_error_;
   }
 
@@ -2973,7 +2975,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 47.
-  logs::TerminationFailureError& mutable_termination_failure_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::TerminationFailureError& mutable_termination_failure_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kTerminationFailureError;
     set_fields_[52] = true;
@@ -3009,7 +3011,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 48.
-  constexpr const logs::FrameProcessingError& frame_processing_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::FrameProcessingError& frame_processing_error() const& noexcept HORUS_LIFETIME_BOUND {
     return frame_processing_error_;
   }
 
@@ -3028,7 +3030,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 48.
-  logs::FrameProcessingError& mutable_frame_processing_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::FrameProcessingError& mutable_frame_processing_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFrameProcessingError;
     set_fields_[53] = true;
@@ -3064,7 +3066,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 49.
-  constexpr const logs::ThreadPoolUnavailableError& thread_pool_unavailable_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ThreadPoolUnavailableError& thread_pool_unavailable_error() const& noexcept HORUS_LIFETIME_BOUND {
     return thread_pool_unavailable_error_;
   }
 
@@ -3083,7 +3085,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 49.
-  logs::ThreadPoolUnavailableError& mutable_thread_pool_unavailable_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ThreadPoolUnavailableError& mutable_thread_pool_unavailable_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kThreadPoolUnavailableError;
     set_fields_[54] = true;
@@ -3119,7 +3121,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 50.
-  constexpr const logs::InvalidArgument& invalid_argument() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::InvalidArgument& invalid_argument() const& noexcept HORUS_LIFETIME_BOUND {
     return invalid_argument_;
   }
 
@@ -3138,7 +3140,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 50.
-  logs::InvalidArgument& mutable_invalid_argument() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::InvalidArgument& mutable_invalid_argument() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInvalidArgument;
     set_fields_[55] = true;
@@ -3174,7 +3176,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 51.
-  constexpr const logs::ComponentInitializationFailureFatal& component_initialization_failure_fatal() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ComponentInitializationFailureFatal& component_initialization_failure_fatal() const& noexcept HORUS_LIFETIME_BOUND {
     return component_initialization_failure_fatal_;
   }
 
@@ -3193,7 +3195,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 51.
-  logs::ComponentInitializationFailureFatal& mutable_component_initialization_failure_fatal() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ComponentInitializationFailureFatal& mutable_component_initialization_failure_fatal() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kComponentInitializationFailureFatal;
     set_fields_[56] = true;
@@ -3229,7 +3231,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 52.
-  constexpr const logs::UnhandledEnumCaseError& unhandled_enum_case_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::UnhandledEnumCaseError& unhandled_enum_case_error() const& noexcept HORUS_LIFETIME_BOUND {
     return unhandled_enum_case_error_;
   }
 
@@ -3248,7 +3250,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 52.
-  logs::UnhandledEnumCaseError& mutable_unhandled_enum_case_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::UnhandledEnumCaseError& mutable_unhandled_enum_case_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kUnhandledEnumCaseError;
     set_fields_[57] = true;
@@ -3284,7 +3286,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 53.
-  constexpr const logs::BagEmptyError& bag_empty_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BagEmptyError& bag_empty_error() const& noexcept HORUS_LIFETIME_BOUND {
     return bag_empty_error_;
   }
 
@@ -3303,7 +3305,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 53.
-  logs::BagEmptyError& mutable_bag_empty_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BagEmptyError& mutable_bag_empty_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagEmptyError;
     set_fields_[58] = true;
@@ -3339,7 +3341,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 54.
-  constexpr const logs::DiscardingDataError& discarding_data_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::DiscardingDataError& discarding_data_error() const& noexcept HORUS_LIFETIME_BOUND {
     return discarding_data_error_;
   }
 
@@ -3358,7 +3360,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 54.
-  logs::DiscardingDataError& mutable_discarding_data_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::DiscardingDataError& mutable_discarding_data_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kDiscardingDataError;
     set_fields_[59] = true;
@@ -3394,7 +3396,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 55.
-  constexpr const logs::DiscardingDataWarning& discarding_data_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::DiscardingDataWarning& discarding_data_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return discarding_data_warning_;
   }
 
@@ -3413,7 +3415,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 55.
-  logs::DiscardingDataWarning& mutable_discarding_data_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::DiscardingDataWarning& mutable_discarding_data_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kDiscardingDataWarning;
     set_fields_[60] = true;
@@ -3449,7 +3451,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 56.
-  constexpr const logs::NothingToProcess& nothing_to_process() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::NothingToProcess& nothing_to_process() const& noexcept HORUS_LIFETIME_BOUND {
     return nothing_to_process_;
   }
 
@@ -3468,7 +3470,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 56.
-  logs::NothingToProcess& mutable_nothing_to_process() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::NothingToProcess& mutable_nothing_to_process() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kNothingToProcess;
     set_fields_[61] = true;
@@ -3504,7 +3506,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 57.
-  constexpr const logs::InvalidComponentConfiguration& invalid_component_configuration() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::InvalidComponentConfiguration& invalid_component_configuration() const& noexcept HORUS_LIFETIME_BOUND {
     return invalid_component_configuration_;
   }
 
@@ -3523,7 +3525,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 57.
-  logs::InvalidComponentConfiguration& mutable_invalid_component_configuration() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::InvalidComponentConfiguration& mutable_invalid_component_configuration() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInvalidComponentConfiguration;
     set_fields_[62] = true;
@@ -3559,7 +3561,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 58.
-  constexpr const logs::ChannelReceiverNotFoundWarning& channel_receiver_not_found_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ChannelReceiverNotFoundWarning& channel_receiver_not_found_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return channel_receiver_not_found_warning_;
   }
 
@@ -3578,7 +3580,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 58.
-  logs::ChannelReceiverNotFoundWarning& mutable_channel_receiver_not_found_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ChannelReceiverNotFoundWarning& mutable_channel_receiver_not_found_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kChannelReceiverNotFoundWarning;
     set_fields_[63] = true;
@@ -3614,7 +3616,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 59.
-  constexpr const logs::ModelLoadFailure& model_load_failure() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ModelLoadFailure& model_load_failure() const& noexcept HORUS_LIFETIME_BOUND {
     return model_load_failure_;
   }
 
@@ -3633,7 +3635,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 59.
-  logs::ModelLoadFailure& mutable_model_load_failure() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ModelLoadFailure& mutable_model_load_failure() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kModelLoadFailure;
     set_fields_[64] = true;
@@ -3669,7 +3671,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 60.
-  constexpr const logs::ModelExecutionFailureError& model_execution_failure_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ModelExecutionFailureError& model_execution_failure_error() const& noexcept HORUS_LIFETIME_BOUND {
     return model_execution_failure_error_;
   }
 
@@ -3688,7 +3690,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 60.
-  logs::ModelExecutionFailureError& mutable_model_execution_failure_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ModelExecutionFailureError& mutable_model_execution_failure_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kModelExecutionFailureError;
     set_fields_[65] = true;
@@ -3724,7 +3726,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 61.
-  constexpr const logs::ServiceReadyInfo& service_ready_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ServiceReadyInfo& service_ready_info() const& noexcept HORUS_LIFETIME_BOUND {
     return service_ready_info_;
   }
 
@@ -3743,7 +3745,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 61.
-  logs::ServiceReadyInfo& mutable_service_ready_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ServiceReadyInfo& mutable_service_ready_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kServiceReadyInfo;
     set_fields_[66] = true;
@@ -3779,7 +3781,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 62.
-  constexpr const logs::ModelPreparingInfo& model_preparing_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ModelPreparingInfo& model_preparing_info() const& noexcept HORUS_LIFETIME_BOUND {
     return model_preparing_info_;
   }
 
@@ -3798,7 +3800,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 62.
-  logs::ModelPreparingInfo& mutable_model_preparing_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ModelPreparingInfo& mutable_model_preparing_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kModelPreparingInfo;
     set_fields_[67] = true;
@@ -3834,7 +3836,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 63.
-  constexpr const logs::ModelInitializedInfo& model_initialized_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ModelInitializedInfo& model_initialized_info() const& noexcept HORUS_LIFETIME_BOUND {
     return model_initialized_info_;
   }
 
@@ -3853,7 +3855,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 63.
-  logs::ModelInitializedInfo& mutable_model_initialized_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ModelInitializedInfo& mutable_model_initialized_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kModelInitializedInfo;
     set_fields_[68] = true;
@@ -3889,7 +3891,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 64.
-  constexpr const logs::ModelInitializationFailureWarning& model_initialization_failure_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ModelInitializationFailureWarning& model_initialization_failure_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return model_initialization_failure_warning_;
   }
 
@@ -3908,7 +3910,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 64.
-  logs::ModelInitializationFailureWarning& mutable_model_initialization_failure_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ModelInitializationFailureWarning& mutable_model_initialization_failure_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kModelInitializationFailureWarning;
     set_fields_[69] = true;
@@ -3944,7 +3946,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 65.
-  constexpr const logs::RosSpinnerStoppedWarning& ros_spinner_stopped_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::RosSpinnerStoppedWarning& ros_spinner_stopped_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return ros_spinner_stopped_warning_;
   }
 
@@ -3963,7 +3965,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 65.
-  logs::RosSpinnerStoppedWarning& mutable_ros_spinner_stopped_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::RosSpinnerStoppedWarning& mutable_ros_spinner_stopped_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRosSpinnerStoppedWarning;
     set_fields_[70] = true;
@@ -3999,7 +4001,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 66.
-  constexpr const logs::ActorSystemUnavailableError& actor_system_unavailable_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ActorSystemUnavailableError& actor_system_unavailable_error() const& noexcept HORUS_LIFETIME_BOUND {
     return actor_system_unavailable_error_;
   }
 
@@ -4018,7 +4020,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 66.
-  logs::ActorSystemUnavailableError& mutable_actor_system_unavailable_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ActorSystemUnavailableError& mutable_actor_system_unavailable_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kActorSystemUnavailableError;
     set_fields_[71] = true;
@@ -4054,7 +4056,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 67.
-  constexpr const logs::ConfigNodeNotFoundError& config_node_not_found_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ConfigNodeNotFoundError& config_node_not_found_error() const& noexcept HORUS_LIFETIME_BOUND {
     return config_node_not_found_error_;
   }
 
@@ -4073,7 +4075,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 67.
-  logs::ConfigNodeNotFoundError& mutable_config_node_not_found_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ConfigNodeNotFoundError& mutable_config_node_not_found_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kConfigNodeNotFoundError;
     set_fields_[72] = true;
@@ -4109,7 +4111,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 68.
-  constexpr const logs::BagTimestampOutOfOrderError& bag_timestamp_out_of_order_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BagTimestampOutOfOrderError& bag_timestamp_out_of_order_error() const& noexcept HORUS_LIFETIME_BOUND {
     return bag_timestamp_out_of_order_error_;
   }
 
@@ -4128,7 +4130,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 68.
-  logs::BagTimestampOutOfOrderError& mutable_bag_timestamp_out_of_order_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BagTimestampOutOfOrderError& mutable_bag_timestamp_out_of_order_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagTimestampOutOfOrderError;
     set_fields_[73] = true;
@@ -4164,7 +4166,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 69.
-  constexpr const logs::BagReplayUnexpectedTimestampError& bag_replay_unexpected_timestamp_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BagReplayUnexpectedTimestampError& bag_replay_unexpected_timestamp_error() const& noexcept HORUS_LIFETIME_BOUND {
     return bag_replay_unexpected_timestamp_error_;
   }
 
@@ -4183,7 +4185,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 69.
-  logs::BagReplayUnexpectedTimestampError& mutable_bag_replay_unexpected_timestamp_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BagReplayUnexpectedTimestampError& mutable_bag_replay_unexpected_timestamp_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagReplayUnexpectedTimestampError;
     set_fields_[74] = true;
@@ -4219,7 +4221,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 70.
-  constexpr const logs::WebsocketClosedInfo& websocket_closed_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::WebsocketClosedInfo& websocket_closed_info() const& noexcept HORUS_LIFETIME_BOUND {
     return websocket_closed_info_;
   }
 
@@ -4238,7 +4240,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 70.
-  logs::WebsocketClosedInfo& mutable_websocket_closed_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::WebsocketClosedInfo& mutable_websocket_closed_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketClosedInfo;
     set_fields_[75] = true;
@@ -4274,7 +4276,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 71.
-  constexpr const logs::WebsocketOpenedInfo& websocket_opened_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::WebsocketOpenedInfo& websocket_opened_info() const& noexcept HORUS_LIFETIME_BOUND {
     return websocket_opened_info_;
   }
 
@@ -4293,7 +4295,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 71.
-  logs::WebsocketOpenedInfo& mutable_websocket_opened_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::WebsocketOpenedInfo& mutable_websocket_opened_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketOpenedInfo;
     set_fields_[76] = true;
@@ -4329,7 +4331,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 72.
-  constexpr const logs::SubscriberDisconnectedInfo& subscriber_disconnected_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::SubscriberDisconnectedInfo& subscriber_disconnected_info() const& noexcept HORUS_LIFETIME_BOUND {
     return subscriber_disconnected_info_;
   }
 
@@ -4348,7 +4350,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 72.
-  logs::SubscriberDisconnectedInfo& mutable_subscriber_disconnected_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::SubscriberDisconnectedInfo& mutable_subscriber_disconnected_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kSubscriberDisconnectedInfo;
     set_fields_[77] = true;
@@ -4384,7 +4386,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 73.
-  constexpr const logs::ThreadPoolSlowingDownWarning& thread_pool_slowing_down_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ThreadPoolSlowingDownWarning& thread_pool_slowing_down_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return thread_pool_slowing_down_warning_;
   }
 
@@ -4403,7 +4405,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 73.
-  logs::ThreadPoolSlowingDownWarning& mutable_thread_pool_slowing_down_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ThreadPoolSlowingDownWarning& mutable_thread_pool_slowing_down_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kThreadPoolSlowingDownWarning;
     set_fields_[78] = true;
@@ -4439,7 +4441,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 74.
-  constexpr const logs::ThreadPoolNotRespondingWarning& thread_pool_not_responding_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ThreadPoolNotRespondingWarning& thread_pool_not_responding_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return thread_pool_not_responding_warning_;
   }
 
@@ -4458,7 +4460,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 74.
-  logs::ThreadPoolNotRespondingWarning& mutable_thread_pool_not_responding_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ThreadPoolNotRespondingWarning& mutable_thread_pool_not_responding_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kThreadPoolNotRespondingWarning;
     set_fields_[79] = true;
@@ -4494,7 +4496,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 75.
-  constexpr const logs::ThreadPoolBrokenPromiseWarning& thread_pool_broken_promise_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ThreadPoolBrokenPromiseWarning& thread_pool_broken_promise_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return thread_pool_broken_promise_warning_;
   }
 
@@ -4513,7 +4515,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 75.
-  logs::ThreadPoolBrokenPromiseWarning& mutable_thread_pool_broken_promise_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ThreadPoolBrokenPromiseWarning& mutable_thread_pool_broken_promise_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kThreadPoolBrokenPromiseWarning;
     set_fields_[80] = true;
@@ -4549,7 +4551,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 76.
-  constexpr const logs::BoxFittingPointsBelowBaseWarning& box_fitting_points_below_base_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BoxFittingPointsBelowBaseWarning& box_fitting_points_below_base_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return box_fitting_points_below_base_warning_;
   }
 
@@ -4568,7 +4570,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 76.
-  logs::BoxFittingPointsBelowBaseWarning& mutable_box_fitting_points_below_base_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BoxFittingPointsBelowBaseWarning& mutable_box_fitting_points_below_base_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBoxFittingPointsBelowBaseWarning;
     set_fields_[81] = true;
@@ -4604,7 +4606,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 77.
-  constexpr const logs::FailedToRemoveStalePointsWarning& failed_to_remove_stale_points_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::FailedToRemoveStalePointsWarning& failed_to_remove_stale_points_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return failed_to_remove_stale_points_warning_;
   }
 
@@ -4623,7 +4625,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 77.
-  logs::FailedToRemoveStalePointsWarning& mutable_failed_to_remove_stale_points_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::FailedToRemoveStalePointsWarning& mutable_failed_to_remove_stale_points_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFailedToRemoveStalePointsWarning;
     set_fields_[82] = true;
@@ -4659,7 +4661,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 78.
-  constexpr const logs::IrregularBroadcastingPeriodWarning& irregular_broadcasting_period_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::IrregularBroadcastingPeriodWarning& irregular_broadcasting_period_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return irregular_broadcasting_period_warning_;
   }
 
@@ -4678,7 +4680,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 78.
-  logs::IrregularBroadcastingPeriodWarning& mutable_irregular_broadcasting_period_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::IrregularBroadcastingPeriodWarning& mutable_irregular_broadcasting_period_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kIrregularBroadcastingPeriodWarning;
     set_fields_[83] = true;
@@ -4714,7 +4716,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 79.
-  constexpr const logs::ClustererPointsOutOfRangeWarning& clusterer_points_out_of_range_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ClustererPointsOutOfRangeWarning& clusterer_points_out_of_range_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return clusterer_points_out_of_range_warning_;
   }
 
@@ -4733,7 +4735,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 79.
-  logs::ClustererPointsOutOfRangeWarning& mutable_clusterer_points_out_of_range_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ClustererPointsOutOfRangeWarning& mutable_clusterer_points_out_of_range_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kClustererPointsOutOfRangeWarning;
     set_fields_[84] = true;
@@ -4769,7 +4771,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 80.
-  constexpr const logs::InternalError& internal_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::InternalError& internal_error() const& noexcept HORUS_LIFETIME_BOUND {
     return internal_error_;
   }
 
@@ -4788,7 +4790,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 80.
-  logs::InternalError& mutable_internal_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::InternalError& mutable_internal_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInternalError;
     set_fields_[85] = true;
@@ -4824,7 +4826,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 81.
-  constexpr const logs::InternalFatal& internal_fatal() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::InternalFatal& internal_fatal() const& noexcept HORUS_LIFETIME_BOUND {
     return internal_fatal_;
   }
 
@@ -4843,7 +4845,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 81.
-  logs::InternalFatal& mutable_internal_fatal() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::InternalFatal& mutable_internal_fatal() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInternalFatal;
     set_fields_[86] = true;
@@ -4879,7 +4881,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 82.
-  constexpr const logs::ServiceStartingInfo& service_starting_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ServiceStartingInfo& service_starting_info() const& noexcept HORUS_LIFETIME_BOUND {
     return service_starting_info_;
   }
 
@@ -4898,7 +4900,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 82.
-  logs::ServiceStartingInfo& mutable_service_starting_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ServiceStartingInfo& mutable_service_starting_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kServiceStartingInfo;
     set_fields_[87] = true;
@@ -4934,7 +4936,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 83.
-  constexpr const logs::ConfigNodeNotFoundFatal& config_node_not_found_fatal() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ConfigNodeNotFoundFatal& config_node_not_found_fatal() const& noexcept HORUS_LIFETIME_BOUND {
     return config_node_not_found_fatal_;
   }
 
@@ -4953,7 +4955,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 83.
-  logs::ConfigNodeNotFoundFatal& mutable_config_node_not_found_fatal() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ConfigNodeNotFoundFatal& mutable_config_node_not_found_fatal() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kConfigNodeNotFoundFatal;
     set_fields_[88] = true;
@@ -4989,7 +4991,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 84.
-  constexpr const logs::ServiceSetupError& service_setup_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ServiceSetupError& service_setup_error() const& noexcept HORUS_LIFETIME_BOUND {
     return service_setup_error_;
   }
 
@@ -5008,7 +5010,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 84.
-  logs::ServiceSetupError& mutable_service_setup_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ServiceSetupError& mutable_service_setup_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kServiceSetupError;
     set_fields_[89] = true;
@@ -5044,7 +5046,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 85.
-  constexpr const logs::FilesystemError& filesystem_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::FilesystemError& filesystem_error() const& noexcept HORUS_LIFETIME_BOUND {
     return filesystem_error_;
   }
 
@@ -5063,7 +5065,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 85.
-  logs::FilesystemError& mutable_filesystem_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::FilesystemError& mutable_filesystem_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFilesystemError;
     set_fields_[90] = true;
@@ -5099,7 +5101,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 86.
-  constexpr const logs::InvalidPresetWarning& invalid_preset_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::InvalidPresetWarning& invalid_preset_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return invalid_preset_warning_;
   }
 
@@ -5118,7 +5120,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 86.
-  logs::InvalidPresetWarning& mutable_invalid_preset_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::InvalidPresetWarning& mutable_invalid_preset_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInvalidPresetWarning;
     set_fields_[91] = true;
@@ -5154,7 +5156,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 87.
-  constexpr const logs::WebsocketFailedClearPendingError& websocket_failed_clear_pending_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::WebsocketFailedClearPendingError& websocket_failed_clear_pending_error() const& noexcept HORUS_LIFETIME_BOUND {
     return websocket_failed_clear_pending_error_;
   }
 
@@ -5173,7 +5175,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 87.
-  logs::WebsocketFailedClearPendingError& mutable_websocket_failed_clear_pending_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::WebsocketFailedClearPendingError& mutable_websocket_failed_clear_pending_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketFailedClearPendingError;
     set_fields_[92] = true;
@@ -5209,7 +5211,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 88.
-  constexpr const logs::WebsocketFailedToStopError& websocket_failed_to_stop_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::WebsocketFailedToStopError& websocket_failed_to_stop_error() const& noexcept HORUS_LIFETIME_BOUND {
     return websocket_failed_to_stop_error_;
   }
 
@@ -5228,7 +5230,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 88.
-  logs::WebsocketFailedToStopError& mutable_websocket_failed_to_stop_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::WebsocketFailedToStopError& mutable_websocket_failed_to_stop_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketFailedToStopError;
     set_fields_[93] = true;
@@ -5264,7 +5266,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 89.
-  constexpr const logs::WebsocketFailedToCreateError& websocket_failed_to_create_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::WebsocketFailedToCreateError& websocket_failed_to_create_error() const& noexcept HORUS_LIFETIME_BOUND {
     return websocket_failed_to_create_error_;
   }
 
@@ -5283,7 +5285,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 89.
-  logs::WebsocketFailedToCreateError& mutable_websocket_failed_to_create_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::WebsocketFailedToCreateError& mutable_websocket_failed_to_create_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketFailedToCreateError;
     set_fields_[94] = true;
@@ -5319,7 +5321,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 90.
-  constexpr const logs::UnexpectedRpcError& unexpected_rpc_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::UnexpectedRpcError& unexpected_rpc_error() const& noexcept HORUS_LIFETIME_BOUND {
     return unexpected_rpc_error_;
   }
 
@@ -5338,7 +5340,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 90.
-  logs::UnexpectedRpcError& mutable_unexpected_rpc_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::UnexpectedRpcError& mutable_unexpected_rpc_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kUnexpectedRpcError;
     set_fields_[95] = true;
@@ -5374,7 +5376,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 91.
-  constexpr const logs::LicensePollFailed& license_poll_failed() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicensePollFailed& license_poll_failed() const& noexcept HORUS_LIFETIME_BOUND {
     return license_poll_failed_;
   }
 
@@ -5393,7 +5395,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 91.
-  logs::LicensePollFailed& mutable_license_poll_failed() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicensePollFailed& mutable_license_poll_failed() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicensePollFailed;
     set_fields_[96] = true;
@@ -5429,7 +5431,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 92.
-  constexpr const logs::LicenseExpiredWarning& license_expired_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicenseExpiredWarning& license_expired_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return license_expired_warning_;
   }
 
@@ -5448,7 +5450,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 92.
-  logs::LicenseExpiredWarning& mutable_license_expired_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicenseExpiredWarning& mutable_license_expired_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicenseExpiredWarning;
     set_fields_[97] = true;
@@ -5484,7 +5486,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 93.
-  constexpr const logs::LicenseUsageExceededWarning& license_usage_exceeded_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicenseUsageExceededWarning& license_usage_exceeded_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return license_usage_exceeded_warning_;
   }
 
@@ -5503,7 +5505,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 93.
-  logs::LicenseUsageExceededWarning& mutable_license_usage_exceeded_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicenseUsageExceededWarning& mutable_license_usage_exceeded_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicenseUsageExceededWarning;
     set_fields_[98] = true;
@@ -5539,7 +5541,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 94.
-  constexpr const logs::StaticThreadPoolSlowTaskWarning& static_thread_pool_slow_task_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::StaticThreadPoolSlowTaskWarning& static_thread_pool_slow_task_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return static_thread_pool_slow_task_warning_;
   }
 
@@ -5558,7 +5560,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 94.
-  logs::StaticThreadPoolSlowTaskWarning& mutable_static_thread_pool_slow_task_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::StaticThreadPoolSlowTaskWarning& mutable_static_thread_pool_slow_task_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kStaticThreadPoolSlowTaskWarning;
     set_fields_[99] = true;
@@ -5594,7 +5596,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 95.
-  constexpr const logs::RpcUnsupportedServiceWarning& rpc_unsupported_service_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::RpcUnsupportedServiceWarning& rpc_unsupported_service_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return rpc_unsupported_service_warning_;
   }
 
@@ -5613,7 +5615,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 95.
-  logs::RpcUnsupportedServiceWarning& mutable_rpc_unsupported_service_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::RpcUnsupportedServiceWarning& mutable_rpc_unsupported_service_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRpcUnsupportedServiceWarning;
     set_fields_[100] = true;
@@ -5649,7 +5651,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 96.
-  constexpr const logs::WebsocketHandlerProblem& websocket_handler_problem() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::WebsocketHandlerProblem& websocket_handler_problem() const& noexcept HORUS_LIFETIME_BOUND {
     return websocket_handler_problem_;
   }
 
@@ -5668,7 +5670,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 96.
-  logs::WebsocketHandlerProblem& mutable_websocket_handler_problem() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::WebsocketHandlerProblem& mutable_websocket_handler_problem() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketHandlerProblem;
     set_fields_[101] = true;
@@ -5704,7 +5706,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 97.
-  constexpr const logs::WebsocketDeserializeError& websocket_deserialize_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::WebsocketDeserializeError& websocket_deserialize_error() const& noexcept HORUS_LIFETIME_BOUND {
     return websocket_deserialize_error_;
   }
 
@@ -5723,7 +5725,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 97.
-  logs::WebsocketDeserializeError& mutable_websocket_deserialize_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::WebsocketDeserializeError& mutable_websocket_deserialize_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketDeserializeError;
     set_fields_[102] = true;
@@ -5759,7 +5761,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 98.
-  constexpr const logs::WebsocketExpiredRpcEndpointError& websocket_expired_rpc_endpoint_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::WebsocketExpiredRpcEndpointError& websocket_expired_rpc_endpoint_error() const& noexcept HORUS_LIFETIME_BOUND {
     return websocket_expired_rpc_endpoint_error_;
   }
 
@@ -5778,7 +5780,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 98.
-  logs::WebsocketExpiredRpcEndpointError& mutable_websocket_expired_rpc_endpoint_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::WebsocketExpiredRpcEndpointError& mutable_websocket_expired_rpc_endpoint_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketExpiredRpcEndpointError;
     set_fields_[103] = true;
@@ -5814,7 +5816,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 99.
-  constexpr const logs::WebsocketQueueOverloadedWarning& websocket_queue_overloaded_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::WebsocketQueueOverloadedWarning& websocket_queue_overloaded_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return websocket_queue_overloaded_warning_;
   }
 
@@ -5833,7 +5835,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 99.
-  logs::WebsocketQueueOverloadedWarning& mutable_websocket_queue_overloaded_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::WebsocketQueueOverloadedWarning& mutable_websocket_queue_overloaded_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketQueueOverloadedWarning;
     set_fields_[104] = true;
@@ -5869,7 +5871,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 100.
-  constexpr const logs::RpcFailedToNotifyWarning& rpc_failed_to_notify_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::RpcFailedToNotifyWarning& rpc_failed_to_notify_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return rpc_failed_to_notify_warning_;
   }
 
@@ -5888,7 +5890,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 100.
-  logs::RpcFailedToNotifyWarning& mutable_rpc_failed_to_notify_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::RpcFailedToNotifyWarning& mutable_rpc_failed_to_notify_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRpcFailedToNotifyWarning;
     set_fields_[105] = true;
@@ -5924,7 +5926,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 101.
-  constexpr const logs::ConfigSubscriptionFailedWarning& config_subscription_failed_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ConfigSubscriptionFailedWarning& config_subscription_failed_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return config_subscription_failed_warning_;
   }
 
@@ -5943,7 +5945,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 101.
-  logs::ConfigSubscriptionFailedWarning& mutable_config_subscription_failed_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ConfigSubscriptionFailedWarning& mutable_config_subscription_failed_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kConfigSubscriptionFailedWarning;
     set_fields_[106] = true;
@@ -5979,7 +5981,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 102.
-  constexpr const logs::ThreadPoolClampedWorkersWarning& thread_pool_clamped_workers_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ThreadPoolClampedWorkersWarning& thread_pool_clamped_workers_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return thread_pool_clamped_workers_warning_;
   }
 
@@ -5998,7 +6000,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 102.
-  logs::ThreadPoolClampedWorkersWarning& mutable_thread_pool_clamped_workers_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ThreadPoolClampedWorkersWarning& mutable_thread_pool_clamped_workers_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kThreadPoolClampedWorkersWarning;
     set_fields_[107] = true;
@@ -6034,7 +6036,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 103.
-  constexpr const logs::StoppingHorusBagRecorderAlreadyStopped& stopping_horus_bag_recorder_already_stopped() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::StoppingHorusBagRecorderAlreadyStopped& stopping_horus_bag_recorder_already_stopped() const& noexcept HORUS_LIFETIME_BOUND {
     return stopping_horus_bag_recorder_already_stopped_;
   }
 
@@ -6053,7 +6055,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 103.
-  logs::StoppingHorusBagRecorderAlreadyStopped& mutable_stopping_horus_bag_recorder_already_stopped() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::StoppingHorusBagRecorderAlreadyStopped& mutable_stopping_horus_bag_recorder_already_stopped() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kStoppingHorusBagRecorderAlreadyStopped;
     set_fields_[108] = true;
@@ -6089,7 +6091,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 104.
-  constexpr const logs::RecorderConfigUpdateWhileRunning& recorder_config_update_while_running() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::RecorderConfigUpdateWhileRunning& recorder_config_update_while_running() const& noexcept HORUS_LIFETIME_BOUND {
     return recorder_config_update_while_running_;
   }
 
@@ -6108,7 +6110,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 104.
-  logs::RecorderConfigUpdateWhileRunning& mutable_recorder_config_update_while_running() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::RecorderConfigUpdateWhileRunning& mutable_recorder_config_update_while_running() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRecorderConfigUpdateWhileRunning;
     set_fields_[109] = true;
@@ -6144,7 +6146,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 105.
-  constexpr const logs::ClampingDataWarning& clamping_data_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ClampingDataWarning& clamping_data_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return clamping_data_warning_;
   }
 
@@ -6163,7 +6165,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 105.
-  logs::ClampingDataWarning& mutable_clamping_data_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ClampingDataWarning& mutable_clamping_data_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kClampingDataWarning;
     set_fields_[110] = true;
@@ -6199,7 +6201,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 106.
-  constexpr const logs::LidarIncompatibleValues& lidar_incompatible_values() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LidarIncompatibleValues& lidar_incompatible_values() const& noexcept HORUS_LIFETIME_BOUND {
     return lidar_incompatible_values_;
   }
 
@@ -6218,7 +6220,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 106.
-  logs::LidarIncompatibleValues& mutable_lidar_incompatible_values() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LidarIncompatibleValues& mutable_lidar_incompatible_values() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLidarIncompatibleValues;
     set_fields_[111] = true;
@@ -6254,7 +6256,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 107.
-  constexpr const logs::CannotDetermineContainerIdError& cannot_determine_container_id_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CannotDetermineContainerIdError& cannot_determine_container_id_error() const& noexcept HORUS_LIFETIME_BOUND {
     return cannot_determine_container_id_error_;
   }
 
@@ -6273,7 +6275,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 107.
-  logs::CannotDetermineContainerIdError& mutable_cannot_determine_container_id_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CannotDetermineContainerIdError& mutable_cannot_determine_container_id_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCannotDetermineContainerIdError;
     set_fields_[112] = true;
@@ -6309,7 +6311,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 108.
-  constexpr const logs::StartedLidarDriver& started_lidar_driver() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::StartedLidarDriver& started_lidar_driver() const& noexcept HORUS_LIFETIME_BOUND {
     return started_lidar_driver_;
   }
 
@@ -6328,7 +6330,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 108.
-  logs::StartedLidarDriver& mutable_started_lidar_driver() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::StartedLidarDriver& mutable_started_lidar_driver() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kStartedLidarDriver;
     set_fields_[113] = true;
@@ -6364,7 +6366,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 109.
-  constexpr const logs::CannotStartLidarDriver& cannot_start_lidar_driver() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CannotStartLidarDriver& cannot_start_lidar_driver() const& noexcept HORUS_LIFETIME_BOUND {
     return cannot_start_lidar_driver_;
   }
 
@@ -6383,7 +6385,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 109.
-  logs::CannotStartLidarDriver& mutable_cannot_start_lidar_driver() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CannotStartLidarDriver& mutable_cannot_start_lidar_driver() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCannotStartLidarDriver;
     set_fields_[114] = true;
@@ -6419,7 +6421,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 110.
-  constexpr const logs::StoppedLidarDriver& stopped_lidar_driver() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::StoppedLidarDriver& stopped_lidar_driver() const& noexcept HORUS_LIFETIME_BOUND {
     return stopped_lidar_driver_;
   }
 
@@ -6438,7 +6440,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 110.
-  logs::StoppedLidarDriver& mutable_stopped_lidar_driver() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::StoppedLidarDriver& mutable_stopped_lidar_driver() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kStoppedLidarDriver;
     set_fields_[115] = true;
@@ -6474,7 +6476,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 111.
-  constexpr const logs::CannotStopLidarDriver& cannot_stop_lidar_driver() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CannotStopLidarDriver& cannot_stop_lidar_driver() const& noexcept HORUS_LIFETIME_BOUND {
     return cannot_stop_lidar_driver_;
   }
 
@@ -6493,7 +6495,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 111.
-  logs::CannotStopLidarDriver& mutable_cannot_stop_lidar_driver() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CannotStopLidarDriver& mutable_cannot_stop_lidar_driver() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCannotStopLidarDriver;
     set_fields_[116] = true;
@@ -6529,7 +6531,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 112.
-  constexpr const logs::RestartedLidarDriver& restarted_lidar_driver() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::RestartedLidarDriver& restarted_lidar_driver() const& noexcept HORUS_LIFETIME_BOUND {
     return restarted_lidar_driver_;
   }
 
@@ -6548,7 +6550,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 112.
-  logs::RestartedLidarDriver& mutable_restarted_lidar_driver() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::RestartedLidarDriver& mutable_restarted_lidar_driver() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRestartedLidarDriver;
     set_fields_[117] = true;
@@ -6584,7 +6586,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 113.
-  constexpr const logs::CannotRestartLidarDriver& cannot_restart_lidar_driver() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CannotRestartLidarDriver& cannot_restart_lidar_driver() const& noexcept HORUS_LIFETIME_BOUND {
     return cannot_restart_lidar_driver_;
   }
 
@@ -6603,7 +6605,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 113.
-  logs::CannotRestartLidarDriver& mutable_cannot_restart_lidar_driver() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CannotRestartLidarDriver& mutable_cannot_restart_lidar_driver() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCannotRestartLidarDriver;
     set_fields_[118] = true;
@@ -6639,7 +6641,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 114.
-  constexpr const logs::RemovedUnusedLidarDriver& removed_unused_lidar_driver() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::RemovedUnusedLidarDriver& removed_unused_lidar_driver() const& noexcept HORUS_LIFETIME_BOUND {
     return removed_unused_lidar_driver_;
   }
 
@@ -6658,7 +6660,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 114.
-  logs::RemovedUnusedLidarDriver& mutable_removed_unused_lidar_driver() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::RemovedUnusedLidarDriver& mutable_removed_unused_lidar_driver() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRemovedUnusedLidarDriver;
     set_fields_[119] = true;
@@ -6694,7 +6696,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 115.
-  constexpr const logs::CannotRemoveUnusedLidarDriver& cannot_remove_unused_lidar_driver() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CannotRemoveUnusedLidarDriver& cannot_remove_unused_lidar_driver() const& noexcept HORUS_LIFETIME_BOUND {
     return cannot_remove_unused_lidar_driver_;
   }
 
@@ -6713,7 +6715,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 115.
-  logs::CannotRemoveUnusedLidarDriver& mutable_cannot_remove_unused_lidar_driver() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CannotRemoveUnusedLidarDriver& mutable_cannot_remove_unused_lidar_driver() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCannotRemoveUnusedLidarDriver;
     set_fields_[120] = true;
@@ -6749,7 +6751,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 116.
-  constexpr const logs::LidarDriverGcFailure& lidar_driver_gc_failure() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LidarDriverGcFailure& lidar_driver_gc_failure() const& noexcept HORUS_LIFETIME_BOUND {
     return lidar_driver_gc_failure_;
   }
 
@@ -6768,7 +6770,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 116.
-  logs::LidarDriverGcFailure& mutable_lidar_driver_gc_failure() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LidarDriverGcFailure& mutable_lidar_driver_gc_failure() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLidarDriverGcFailure;
     set_fields_[121] = true;
@@ -6804,7 +6806,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 117.
-  constexpr const logs::IdSpaceExhausted& id_space_exhausted() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::IdSpaceExhausted& id_space_exhausted() const& noexcept HORUS_LIFETIME_BOUND {
     return id_space_exhausted_;
   }
 
@@ -6823,7 +6825,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 117.
-  logs::IdSpaceExhausted& mutable_id_space_exhausted() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::IdSpaceExhausted& mutable_id_space_exhausted() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kIdSpaceExhausted;
     set_fields_[122] = true;
@@ -6859,7 +6861,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 118.
-  constexpr const logs::PreprocessingToPointAggregatorPointsSkipped& preprocessing_to_point_aggregator_points_skipped() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::PreprocessingToPointAggregatorPointsSkipped& preprocessing_to_point_aggregator_points_skipped() const& noexcept HORUS_LIFETIME_BOUND {
     return preprocessing_to_point_aggregator_points_skipped_;
   }
 
@@ -6878,7 +6880,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 118.
-  logs::PreprocessingToPointAggregatorPointsSkipped& mutable_preprocessing_to_point_aggregator_points_skipped() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::PreprocessingToPointAggregatorPointsSkipped& mutable_preprocessing_to_point_aggregator_points_skipped() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kPreprocessingToPointAggregatorPointsSkipped;
     set_fields_[123] = true;
@@ -6914,7 +6916,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 119.
-  constexpr const logs::MinMsgIntervalLessThanThreshold& min_msg_interval_less_than_threshold() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::MinMsgIntervalLessThanThreshold& min_msg_interval_less_than_threshold() const& noexcept HORUS_LIFETIME_BOUND {
     return min_msg_interval_less_than_threshold_;
   }
 
@@ -6933,7 +6935,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 119.
-  logs::MinMsgIntervalLessThanThreshold& mutable_min_msg_interval_less_than_threshold() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::MinMsgIntervalLessThanThreshold& mutable_min_msg_interval_less_than_threshold() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kMinMsgIntervalLessThanThreshold;
     set_fields_[124] = true;
@@ -6969,7 +6971,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 120.
-  constexpr const logs::FailedToCleanupRosWarning& failed_to_cleanup_ros_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::FailedToCleanupRosWarning& failed_to_cleanup_ros_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return failed_to_cleanup_ros_warning_;
   }
 
@@ -6988,7 +6990,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 120.
-  logs::FailedToCleanupRosWarning& mutable_failed_to_cleanup_ros_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::FailedToCleanupRosWarning& mutable_failed_to_cleanup_ros_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFailedToCleanupRosWarning;
     set_fields_[125] = true;
@@ -7024,7 +7026,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 121.
-  constexpr const logs::RpcDisconnectedWarning& rpc_disconnected_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::RpcDisconnectedWarning& rpc_disconnected_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return rpc_disconnected_warning_;
   }
 
@@ -7043,7 +7045,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 121.
-  logs::RpcDisconnectedWarning& mutable_rpc_disconnected_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::RpcDisconnectedWarning& mutable_rpc_disconnected_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRpcDisconnectedWarning;
     set_fields_[126] = true;
@@ -7079,7 +7081,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 122.
-  constexpr const logs::RpcUnhandledError& rpc_unhandled_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::RpcUnhandledError& rpc_unhandled_error() const& noexcept HORUS_LIFETIME_BOUND {
     return rpc_unhandled_error_;
   }
 
@@ -7098,7 +7100,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 122.
-  logs::RpcUnhandledError& mutable_rpc_unhandled_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::RpcUnhandledError& mutable_rpc_unhandled_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRpcUnhandledError;
     set_fields_[127] = true;
@@ -7134,7 +7136,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 123.
-  constexpr const logs::TimeDiffOutOfRangeWarning& time_diff_out_of_range_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::TimeDiffOutOfRangeWarning& time_diff_out_of_range_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return time_diff_out_of_range_warning_;
   }
 
@@ -7153,7 +7155,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 123.
-  logs::TimeDiffOutOfRangeWarning& mutable_time_diff_out_of_range_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::TimeDiffOutOfRangeWarning& mutable_time_diff_out_of_range_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kTimeDiffOutOfRangeWarning;
     set_fields_[128] = true;
@@ -7189,7 +7191,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 124.
-  constexpr const logs::TensorrtLog& tensorrt_log() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::TensorrtLog& tensorrt_log() const& noexcept HORUS_LIFETIME_BOUND {
     return tensorrt_log_;
   }
 
@@ -7208,7 +7210,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 124.
-  logs::TensorrtLog& mutable_tensorrt_log() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::TensorrtLog& mutable_tensorrt_log() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kTensorrtLog;
     set_fields_[129] = true;
@@ -7244,7 +7246,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 125.
-  constexpr const logs::BuildingTensorrtEngineInfo& building_tensorrt_engine_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BuildingTensorrtEngineInfo& building_tensorrt_engine_info() const& noexcept HORUS_LIFETIME_BOUND {
     return building_tensorrt_engine_info_;
   }
 
@@ -7263,7 +7265,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 125.
-  logs::BuildingTensorrtEngineInfo& mutable_building_tensorrt_engine_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BuildingTensorrtEngineInfo& mutable_building_tensorrt_engine_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBuildingTensorrtEngineInfo;
     set_fields_[130] = true;
@@ -7299,7 +7301,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 126.
-  constexpr const logs::LoadingTensorrtEngineInfo& loading_tensorrt_engine_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LoadingTensorrtEngineInfo& loading_tensorrt_engine_info() const& noexcept HORUS_LIFETIME_BOUND {
     return loading_tensorrt_engine_info_;
   }
 
@@ -7318,7 +7320,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 126.
-  logs::LoadingTensorrtEngineInfo& mutable_loading_tensorrt_engine_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LoadingTensorrtEngineInfo& mutable_loading_tensorrt_engine_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLoadingTensorrtEngineInfo;
     set_fields_[131] = true;
@@ -7354,7 +7356,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 127.
-  constexpr const logs::CalibrationMapNotFound& calibration_map_not_found() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CalibrationMapNotFound& calibration_map_not_found() const& noexcept HORUS_LIFETIME_BOUND {
     return calibration_map_not_found_;
   }
 
@@ -7373,7 +7375,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 127.
-  logs::CalibrationMapNotFound& mutable_calibration_map_not_found() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CalibrationMapNotFound& mutable_calibration_map_not_found() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCalibrationMapNotFound;
     set_fields_[132] = true;
@@ -7409,7 +7411,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 128.
-  constexpr const logs::CalibrationMapNotValid& calibration_map_not_valid() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CalibrationMapNotValid& calibration_map_not_valid() const& noexcept HORUS_LIFETIME_BOUND {
     return calibration_map_not_valid_;
   }
 
@@ -7428,7 +7430,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 128.
-  logs::CalibrationMapNotValid& mutable_calibration_map_not_valid() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CalibrationMapNotValid& mutable_calibration_map_not_valid() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCalibrationMapNotValid;
     set_fields_[133] = true;
@@ -7464,7 +7466,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 129.
-  constexpr const logs::CalibrationMapPathAlreadyExists& calibration_map_path_already_exists() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CalibrationMapPathAlreadyExists& calibration_map_path_already_exists() const& noexcept HORUS_LIFETIME_BOUND {
     return calibration_map_path_already_exists_;
   }
 
@@ -7483,7 +7485,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 129.
-  logs::CalibrationMapPathAlreadyExists& mutable_calibration_map_path_already_exists() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CalibrationMapPathAlreadyExists& mutable_calibration_map_path_already_exists() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCalibrationMapPathAlreadyExists;
     set_fields_[134] = true;
@@ -7519,7 +7521,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 130.
-  constexpr const logs::FailedToSaveCalibrationMap& failed_to_save_calibration_map() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::FailedToSaveCalibrationMap& failed_to_save_calibration_map() const& noexcept HORUS_LIFETIME_BOUND {
     return failed_to_save_calibration_map_;
   }
 
@@ -7538,7 +7540,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 130.
-  logs::FailedToSaveCalibrationMap& mutable_failed_to_save_calibration_map() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::FailedToSaveCalibrationMap& mutable_failed_to_save_calibration_map() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFailedToSaveCalibrationMap;
     set_fields_[135] = true;
@@ -7574,7 +7576,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 131.
-  constexpr const logs::FailedToRemoveCalibrationMap& failed_to_remove_calibration_map() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::FailedToRemoveCalibrationMap& failed_to_remove_calibration_map() const& noexcept HORUS_LIFETIME_BOUND {
     return failed_to_remove_calibration_map_;
   }
 
@@ -7593,7 +7595,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 131.
-  logs::FailedToRemoveCalibrationMap& mutable_failed_to_remove_calibration_map() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::FailedToRemoveCalibrationMap& mutable_failed_to_remove_calibration_map() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFailedToRemoveCalibrationMap;
     set_fields_[136] = true;
@@ -7629,7 +7631,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 132.
-  constexpr const logs::FailedToIterateInDirectory& failed_to_iterate_in_directory() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::FailedToIterateInDirectory& failed_to_iterate_in_directory() const& noexcept HORUS_LIFETIME_BOUND {
     return failed_to_iterate_in_directory_;
   }
 
@@ -7648,7 +7650,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 132.
-  logs::FailedToIterateInDirectory& mutable_failed_to_iterate_in_directory() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::FailedToIterateInDirectory& mutable_failed_to_iterate_in_directory() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFailedToIterateInDirectory;
     set_fields_[137] = true;
@@ -7684,7 +7686,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 133.
-  constexpr const logs::MapBasedCalibrationWithoutMapLoading& map_based_calibration_without_map_loading() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::MapBasedCalibrationWithoutMapLoading& map_based_calibration_without_map_loading() const& noexcept HORUS_LIFETIME_BOUND {
     return map_based_calibration_without_map_loading_;
   }
 
@@ -7703,7 +7705,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 133.
-  logs::MapBasedCalibrationWithoutMapLoading& mutable_map_based_calibration_without_map_loading() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::MapBasedCalibrationWithoutMapLoading& mutable_map_based_calibration_without_map_loading() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kMapBasedCalibrationWithoutMapLoading;
     set_fields_[138] = true;
@@ -7739,7 +7741,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 134.
-  constexpr const logs::MapBasedCalibrationAlreadyRunning& map_based_calibration_already_running() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::MapBasedCalibrationAlreadyRunning& map_based_calibration_already_running() const& noexcept HORUS_LIFETIME_BOUND {
     return map_based_calibration_already_running_;
   }
 
@@ -7758,7 +7760,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 134.
-  logs::MapBasedCalibrationAlreadyRunning& mutable_map_based_calibration_already_running() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::MapBasedCalibrationAlreadyRunning& mutable_map_based_calibration_already_running() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kMapBasedCalibrationAlreadyRunning;
     set_fields_[139] = true;
@@ -7794,7 +7796,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 135.
-  constexpr const logs::CancelMapBasedCalibrationNotRunning& cancel_map_based_calibration_not_running() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CancelMapBasedCalibrationNotRunning& cancel_map_based_calibration_not_running() const& noexcept HORUS_LIFETIME_BOUND {
     return cancel_map_based_calibration_not_running_;
   }
 
@@ -7813,7 +7815,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 135.
-  logs::CancelMapBasedCalibrationNotRunning& mutable_cancel_map_based_calibration_not_running() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CancelMapBasedCalibrationNotRunning& mutable_cancel_map_based_calibration_not_running() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCancelMapBasedCalibrationNotRunning;
     set_fields_[140] = true;
@@ -7849,7 +7851,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 136.
-  constexpr const logs::BagStreamNotFound& bag_stream_not_found() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BagStreamNotFound& bag_stream_not_found() const& noexcept HORUS_LIFETIME_BOUND {
     return bag_stream_not_found_;
   }
 
@@ -7868,7 +7870,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 136.
-  logs::BagStreamNotFound& mutable_bag_stream_not_found() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BagStreamNotFound& mutable_bag_stream_not_found() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagStreamNotFound;
     set_fields_[141] = true;
@@ -7904,7 +7906,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 137.
-  constexpr const logs::EvaluationBagStartedInfo& evaluation_bag_started_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::EvaluationBagStartedInfo& evaluation_bag_started_info() const& noexcept HORUS_LIFETIME_BOUND {
     return evaluation_bag_started_info_;
   }
 
@@ -7923,7 +7925,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 137.
-  logs::EvaluationBagStartedInfo& mutable_evaluation_bag_started_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::EvaluationBagStartedInfo& mutable_evaluation_bag_started_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kEvaluationBagStartedInfo;
     set_fields_[142] = true;
@@ -7959,7 +7961,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 138.
-  constexpr const logs::EvaluationBagFinishedInfo& evaluation_bag_finished_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::EvaluationBagFinishedInfo& evaluation_bag_finished_info() const& noexcept HORUS_LIFETIME_BOUND {
     return evaluation_bag_finished_info_;
   }
 
@@ -7978,7 +7980,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 138.
-  logs::EvaluationBagFinishedInfo& mutable_evaluation_bag_finished_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::EvaluationBagFinishedInfo& mutable_evaluation_bag_finished_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kEvaluationBagFinishedInfo;
     set_fields_[143] = true;
@@ -8014,7 +8016,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 139.
-  constexpr const logs::BagNotFound& bag_not_found() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BagNotFound& bag_not_found() const& noexcept HORUS_LIFETIME_BOUND {
     return bag_not_found_;
   }
 
@@ -8033,7 +8035,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 139.
-  logs::BagNotFound& mutable_bag_not_found() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BagNotFound& mutable_bag_not_found() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagNotFound;
     set_fields_[144] = true;
@@ -8069,7 +8071,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 140.
-  constexpr const logs::BuildingPipelineInfo& building_pipeline_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BuildingPipelineInfo& building_pipeline_info() const& noexcept HORUS_LIFETIME_BOUND {
     return building_pipeline_info_;
   }
 
@@ -8088,7 +8090,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 140.
-  logs::BuildingPipelineInfo& mutable_building_pipeline_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BuildingPipelineInfo& mutable_building_pipeline_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBuildingPipelineInfo;
     set_fields_[145] = true;
@@ -8124,7 +8126,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 141.
-  constexpr const logs::BagIsNotEvaluation& bag_is_not_evaluation() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::BagIsNotEvaluation& bag_is_not_evaluation() const& noexcept HORUS_LIFETIME_BOUND {
     return bag_is_not_evaluation_;
   }
 
@@ -8143,7 +8145,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 141.
-  logs::BagIsNotEvaluation& mutable_bag_is_not_evaluation() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::BagIsNotEvaluation& mutable_bag_is_not_evaluation() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagIsNotEvaluation;
     set_fields_[146] = true;
@@ -8179,7 +8181,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 142.
-  constexpr const logs::HorusBagRunning& horus_bag_running() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::HorusBagRunning& horus_bag_running() const& noexcept HORUS_LIFETIME_BOUND {
     return horus_bag_running_;
   }
 
@@ -8198,7 +8200,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 142.
-  logs::HorusBagRunning& mutable_horus_bag_running() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::HorusBagRunning& mutable_horus_bag_running() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kHorusBagRunning;
     set_fields_[147] = true;
@@ -8234,7 +8236,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 143.
-  constexpr const logs::AutoGroundCalibrationWarning& auto_ground_calibration_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::AutoGroundCalibrationWarning& auto_ground_calibration_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return auto_ground_calibration_warning_;
   }
 
@@ -8253,7 +8255,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 143.
-  logs::AutoGroundCalibrationWarning& mutable_auto_ground_calibration_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::AutoGroundCalibrationWarning& mutable_auto_ground_calibration_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kAutoGroundCalibrationWarning;
     set_fields_[148] = true;
@@ -8289,7 +8291,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 144.
-  constexpr const logs::AutoGroundCalibrationError& auto_ground_calibration_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::AutoGroundCalibrationError& auto_ground_calibration_error() const& noexcept HORUS_LIFETIME_BOUND {
     return auto_ground_calibration_error_;
   }
 
@@ -8308,7 +8310,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 144.
-  logs::AutoGroundCalibrationError& mutable_auto_ground_calibration_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::AutoGroundCalibrationError& mutable_auto_ground_calibration_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kAutoGroundCalibrationError;
     set_fields_[149] = true;
@@ -8344,7 +8346,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 151.
-  constexpr const logs::ObjectDetectorNotLoadedWarning& object_detector_not_loaded_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ObjectDetectorNotLoadedWarning& object_detector_not_loaded_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return object_detector_not_loaded_warning_;
   }
 
@@ -8363,7 +8365,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 151.
-  logs::ObjectDetectorNotLoadedWarning& mutable_object_detector_not_loaded_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ObjectDetectorNotLoadedWarning& mutable_object_detector_not_loaded_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kObjectDetectorNotLoadedWarning;
     set_fields_[150] = true;
@@ -8399,7 +8401,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 152.
-  constexpr const logs::CalibrationIsRunningError& calibration_is_running_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CalibrationIsRunningError& calibration_is_running_error() const& noexcept HORUS_LIFETIME_BOUND {
     return calibration_is_running_error_;
   }
 
@@ -8418,7 +8420,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 152.
-  logs::CalibrationIsRunningError& mutable_calibration_is_running_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CalibrationIsRunningError& mutable_calibration_is_running_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCalibrationIsRunningError;
     set_fields_[151] = true;
@@ -8454,7 +8456,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 153.
-  constexpr const logs::ModelInitInProgressInfo& model_init_in_progress_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ModelInitInProgressInfo& model_init_in_progress_info() const& noexcept HORUS_LIFETIME_BOUND {
     return model_init_in_progress_info_;
   }
 
@@ -8473,7 +8475,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 153.
-  logs::ModelInitInProgressInfo& mutable_model_init_in_progress_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ModelInitInProgressInfo& mutable_model_init_in_progress_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kModelInitInProgressInfo;
     set_fields_[152] = true;
@@ -8509,7 +8511,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 154.
-  constexpr const logs::RpcTimeoutWithResolutionWarning& rpc_timeout_with_resolution_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::RpcTimeoutWithResolutionWarning& rpc_timeout_with_resolution_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return rpc_timeout_with_resolution_warning_;
   }
 
@@ -8528,7 +8530,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 154.
-  logs::RpcTimeoutWithResolutionWarning& mutable_rpc_timeout_with_resolution_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::RpcTimeoutWithResolutionWarning& mutable_rpc_timeout_with_resolution_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRpcTimeoutWithResolutionWarning;
     set_fields_[153] = true;
@@ -8564,7 +8566,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 155.
-  constexpr const logs::CalibrationWasCancelledInfo& calibration_was_cancelled_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CalibrationWasCancelledInfo& calibration_was_cancelled_info() const& noexcept HORUS_LIFETIME_BOUND {
     return calibration_was_cancelled_info_;
   }
 
@@ -8583,7 +8585,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 155.
-  logs::CalibrationWasCancelledInfo& mutable_calibration_was_cancelled_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CalibrationWasCancelledInfo& mutable_calibration_was_cancelled_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCalibrationWasCancelledInfo;
     set_fields_[154] = true;
@@ -8619,7 +8621,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 156.
-  constexpr const logs::CalibrationMapRecordingFailedToStart& calibration_map_recording_failed_to_start() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CalibrationMapRecordingFailedToStart& calibration_map_recording_failed_to_start() const& noexcept HORUS_LIFETIME_BOUND {
     return calibration_map_recording_failed_to_start_;
   }
 
@@ -8638,7 +8640,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 156.
-  logs::CalibrationMapRecordingFailedToStart& mutable_calibration_map_recording_failed_to_start() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CalibrationMapRecordingFailedToStart& mutable_calibration_map_recording_failed_to_start() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCalibrationMapRecordingFailedToStart;
     set_fields_[155] = true;
@@ -8674,7 +8676,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 157.
-  constexpr const logs::DetectionPipelineRequestedResetInfo& detection_pipeline_requested_reset_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::DetectionPipelineRequestedResetInfo& detection_pipeline_requested_reset_info() const& noexcept HORUS_LIFETIME_BOUND {
     return detection_pipeline_requested_reset_info_;
   }
 
@@ -8693,7 +8695,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 157.
-  logs::DetectionPipelineRequestedResetInfo& mutable_detection_pipeline_requested_reset_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::DetectionPipelineRequestedResetInfo& mutable_detection_pipeline_requested_reset_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kDetectionPipelineRequestedResetInfo;
     set_fields_[156] = true;
@@ -8729,7 +8731,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 158.
-  constexpr const logs::PreprocessingServicePipelineUnavailable& preprocessing_service_pipeline_unavailable() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::PreprocessingServicePipelineUnavailable& preprocessing_service_pipeline_unavailable() const& noexcept HORUS_LIFETIME_BOUND {
     return preprocessing_service_pipeline_unavailable_;
   }
 
@@ -8748,7 +8750,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 158.
-  logs::PreprocessingServicePipelineUnavailable& mutable_preprocessing_service_pipeline_unavailable() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::PreprocessingServicePipelineUnavailable& mutable_preprocessing_service_pipeline_unavailable() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kPreprocessingServicePipelineUnavailable;
     set_fields_[157] = true;
@@ -8784,7 +8786,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 159.
-  constexpr const logs::CircularRecordingDisabledWarning& circular_recording_disabled_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CircularRecordingDisabledWarning& circular_recording_disabled_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return circular_recording_disabled_warning_;
   }
 
@@ -8803,7 +8805,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 159.
-  logs::CircularRecordingDisabledWarning& mutable_circular_recording_disabled_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CircularRecordingDisabledWarning& mutable_circular_recording_disabled_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCircularRecordingDisabledWarning;
     set_fields_[158] = true;
@@ -8839,7 +8841,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 160.
-  constexpr const logs::SnapshotAlreadyRunningWarning& snapshot_already_running_warning() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::SnapshotAlreadyRunningWarning& snapshot_already_running_warning() const& noexcept HORUS_LIFETIME_BOUND {
     return snapshot_already_running_warning_;
   }
 
@@ -8858,7 +8860,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 160.
-  logs::SnapshotAlreadyRunningWarning& mutable_snapshot_already_running_warning() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::SnapshotAlreadyRunningWarning& mutable_snapshot_already_running_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kSnapshotAlreadyRunningWarning;
     set_fields_[159] = true;
@@ -8894,7 +8896,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 161.
-  constexpr const logs::ActiveProjectChangedInfo& active_project_changed_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ActiveProjectChangedInfo& active_project_changed_info() const& noexcept HORUS_LIFETIME_BOUND {
     return active_project_changed_info_;
   }
 
@@ -8913,7 +8915,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 161.
-  logs::ActiveProjectChangedInfo& mutable_active_project_changed_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ActiveProjectChangedInfo& mutable_active_project_changed_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kActiveProjectChangedInfo;
     set_fields_[160] = true;
@@ -8949,7 +8951,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 162.
-  constexpr const logs::ProjectConfigUpdatedInfo& project_config_updated_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::ProjectConfigUpdatedInfo& project_config_updated_info() const& noexcept HORUS_LIFETIME_BOUND {
     return project_config_updated_info_;
   }
 
@@ -8968,7 +8970,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 162.
-  logs::ProjectConfigUpdatedInfo& mutable_project_config_updated_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::ProjectConfigUpdatedInfo& mutable_project_config_updated_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kProjectConfigUpdatedInfo;
     set_fields_[161] = true;
@@ -9004,7 +9006,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 163.
-  constexpr const logs::InvalidLidarTimestamp& invalid_lidar_timestamp() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::InvalidLidarTimestamp& invalid_lidar_timestamp() const& noexcept HORUS_LIFETIME_BOUND {
     return invalid_lidar_timestamp_;
   }
 
@@ -9023,7 +9025,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 163.
-  logs::InvalidLidarTimestamp& mutable_invalid_lidar_timestamp() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::InvalidLidarTimestamp& mutable_invalid_lidar_timestamp() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInvalidLidarTimestamp;
     set_fields_[162] = true;
@@ -9059,7 +9061,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 164.
-  constexpr const logs::CalibrationAccumulatingPointsInfo& calibration_accumulating_points_info() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::CalibrationAccumulatingPointsInfo& calibration_accumulating_points_info() const& noexcept HORUS_LIFETIME_BOUND {
     return calibration_accumulating_points_info_;
   }
 
@@ -9078,7 +9080,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 164.
-  logs::CalibrationAccumulatingPointsInfo& mutable_calibration_accumulating_points_info() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::CalibrationAccumulatingPointsInfo& mutable_calibration_accumulating_points_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCalibrationAccumulatingPointsInfo;
     set_fields_[163] = true;
@@ -9114,7 +9116,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 165.
-  constexpr const logs::SparseNoiseFilterUsageNonRotationalLidars& sparse_noise_filter_usage_non_rotational_lidars() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::SparseNoiseFilterUsageNonRotationalLidars& sparse_noise_filter_usage_non_rotational_lidars() const& noexcept HORUS_LIFETIME_BOUND {
     return sparse_noise_filter_usage_non_rotational_lidars_;
   }
 
@@ -9133,7 +9135,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 165.
-  logs::SparseNoiseFilterUsageNonRotationalLidars& mutable_sparse_noise_filter_usage_non_rotational_lidars() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::SparseNoiseFilterUsageNonRotationalLidars& mutable_sparse_noise_filter_usage_non_rotational_lidars() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kSparseNoiseFilterUsageNonRotationalLidars;
     set_fields_[164] = true;
@@ -9169,7 +9171,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 166.
-  constexpr const logs::FileWriteError& file_write_error() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::FileWriteError& file_write_error() const& noexcept HORUS_LIFETIME_BOUND {
     return file_write_error_;
   }
 
@@ -9188,7 +9190,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 166.
-  logs::FileWriteError& mutable_file_write_error() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::FileWriteError& mutable_file_write_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFileWriteError;
     set_fields_[165] = true;
@@ -9224,7 +9226,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 167.
-  constexpr const logs::LicenseForbiddenFeature& license_forbidden_feature() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::LicenseForbiddenFeature& license_forbidden_feature() const& noexcept HORUS_LIFETIME_BOUND {
     return license_forbidden_feature_;
   }
 
@@ -9243,7 +9245,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 167.
-  logs::LicenseForbiddenFeature& mutable_license_forbidden_feature() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::LicenseForbiddenFeature& mutable_license_forbidden_feature() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicenseForbiddenFeature;
     set_fields_[166] = true;
@@ -9279,7 +9281,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 168.
-  constexpr const logs::FailedToUpdateConfiguration& failed_to_update_configuration() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const logs::FailedToUpdateConfiguration& failed_to_update_configuration() const& noexcept HORUS_LIFETIME_BOUND {
     return failed_to_update_configuration_;
   }
 
@@ -9298,7 +9300,7 @@ class LogData final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 168.
-  logs::FailedToUpdateConfiguration& mutable_failed_to_update_configuration() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  logs::FailedToUpdateConfiguration& mutable_failed_to_update_configuration() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFailedToUpdateConfiguration;
     set_fields_[167] = true;
@@ -9326,6 +9328,116 @@ class LogData final : public PbMessage {
   /// Sets `failed_to_update_configuration` (no 168) and returns `*this`.
   LogData&& set_failed_to_update_configuration(logs::FailedToUpdateConfiguration&& failed_to_update_configuration) && noexcept {
     return std::move(set_failed_to_update_configuration(std::move(failed_to_update_configuration)));
+  }
+
+  // Field `obstruction_detector_bad_reference_warning` (no 169).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 169.
+  constexpr const logs::ObstructionDetectorBadReferenceWarning& obstruction_detector_bad_reference_warning() const& noexcept HORUS_LIFETIME_BOUND {
+    return obstruction_detector_bad_reference_warning_;
+  }
+
+  /// If `obstruction_detector_bad_reference_warning` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 169.
+  logs::ObstructionDetectorBadReferenceWarning obstruction_detector_bad_reference_warning() && noexcept {
+    if (!set_fields_[168]) {
+      return {};
+    }
+    return std::move(obstruction_detector_bad_reference_warning_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 169.
+  logs::ObstructionDetectorBadReferenceWarning& mutable_obstruction_detector_bad_reference_warning() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kObstructionDetectorBadReferenceWarning;
+    set_fields_[168] = true;
+    return obstruction_detector_bad_reference_warning_;
+  }
+
+  /// Returns whether `obstruction_detector_bad_reference_warning` (no 169) is set.
+  constexpr bool has_obstruction_detector_bad_reference_warning() const noexcept { return set_fields_[168]; }
+
+  /// Clears `obstruction_detector_bad_reference_warning` (no 169).
+  void clear_obstruction_detector_bad_reference_warning() & noexcept {
+    data_ = {};
+    set_fields_[168] = false;
+    obstruction_detector_bad_reference_warning_ = {};
+  }
+
+  /// Sets `obstruction_detector_bad_reference_warning` (no 169) and returns `*this`.
+  LogData& set_obstruction_detector_bad_reference_warning(logs::ObstructionDetectorBadReferenceWarning&& obstruction_detector_bad_reference_warning) & noexcept {
+    clear_data();
+    data_ = DataOneof::kObstructionDetectorBadReferenceWarning;
+    set_fields_[168] = true;
+    obstruction_detector_bad_reference_warning_ = std::move(obstruction_detector_bad_reference_warning);
+    return *this;
+  }
+  /// Sets `obstruction_detector_bad_reference_warning` (no 169) and returns `*this`.
+  LogData&& set_obstruction_detector_bad_reference_warning(logs::ObstructionDetectorBadReferenceWarning&& obstruction_detector_bad_reference_warning) && noexcept {
+    return std::move(set_obstruction_detector_bad_reference_warning(std::move(obstruction_detector_bad_reference_warning)));
+  }
+
+  // Field `project_file_invalid_permissions_error` (no 170).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 170.
+  constexpr const logs::ProjectFileInvalidPermissionsError& project_file_invalid_permissions_error() const& noexcept HORUS_LIFETIME_BOUND {
+    return project_file_invalid_permissions_error_;
+  }
+
+  /// If `project_file_invalid_permissions_error` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 170.
+  logs::ProjectFileInvalidPermissionsError project_file_invalid_permissions_error() && noexcept {
+    if (!set_fields_[169]) {
+      return {};
+    }
+    return std::move(project_file_invalid_permissions_error_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 170.
+  logs::ProjectFileInvalidPermissionsError& mutable_project_file_invalid_permissions_error() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kProjectFileInvalidPermissionsError;
+    set_fields_[169] = true;
+    return project_file_invalid_permissions_error_;
+  }
+
+  /// Returns whether `project_file_invalid_permissions_error` (no 170) is set.
+  constexpr bool has_project_file_invalid_permissions_error() const noexcept { return set_fields_[169]; }
+
+  /// Clears `project_file_invalid_permissions_error` (no 170).
+  void clear_project_file_invalid_permissions_error() & noexcept {
+    data_ = {};
+    set_fields_[169] = false;
+    project_file_invalid_permissions_error_ = {};
+  }
+
+  /// Sets `project_file_invalid_permissions_error` (no 170) and returns `*this`.
+  LogData& set_project_file_invalid_permissions_error(logs::ProjectFileInvalidPermissionsError&& project_file_invalid_permissions_error) & noexcept {
+    clear_data();
+    data_ = DataOneof::kProjectFileInvalidPermissionsError;
+    set_fields_[169] = true;
+    project_file_invalid_permissions_error_ = std::move(project_file_invalid_permissions_error);
+    return *this;
+  }
+  /// Sets `project_file_invalid_permissions_error` (no 170) and returns `*this`.
+  LogData&& set_project_file_invalid_permissions_error(logs::ProjectFileInvalidPermissionsError&& project_file_invalid_permissions_error) && noexcept {
+    return std::move(set_project_file_invalid_permissions_error(std::move(project_file_invalid_permissions_error)));
   }
 
   // Oneof `data`.
@@ -9671,6 +9783,10 @@ class LogData final : public PbMessage {
     kLicenseForbiddenFeature = 167,
     /// @see failed_to_update_configuration()
     kFailedToUpdateConfiguration = 168,
+    /// @see obstruction_detector_bad_reference_warning()
+    kObstructionDetectorBadReferenceWarning = 169,
+    /// @see project_file_invalid_permissions_error()
+    kProjectFileInvalidPermissionsError = 170,
   };
 
   /// Returns the current case set in `data`.
@@ -10353,6 +10469,14 @@ class LogData final : public PbMessage {
         clear_failed_to_update_configuration();
         break;
       }
+      case DataOneof::kObstructionDetectorBadReferenceWarning: {
+        clear_obstruction_detector_bad_reference_warning();
+        break;
+      }
+      case DataOneof::kProjectFileInvalidPermissionsError: {
+        clear_project_file_invalid_permissions_error();
+        break;
+      }
       case DataOneof::kNotSet:
       default:
         break;
@@ -10696,12 +10820,16 @@ class LogData final : public PbMessage {
   logs::LicenseForbiddenFeature license_forbidden_feature_{};
   /// @see failed_to_update_configuration()
   logs::FailedToUpdateConfiguration failed_to_update_configuration_{};
+  /// @see obstruction_detector_bad_reference_warning()
+  logs::ObstructionDetectorBadReferenceWarning obstruction_detector_bad_reference_warning_{};
+  /// @see project_file_invalid_permissions_error()
+  logs::ProjectFileInvalidPermissionsError project_file_invalid_permissions_error_{};
 
   /// @see data_case()
   DataOneof data_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<168> set_fields_;
+  std::bitset<170> set_fields_;
 };
 
 /// A log message notifying users about some status.
@@ -10762,7 +10890,7 @@ class LogMessage final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const LogMetadata& metadata() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const LogMetadata& metadata() const& noexcept HORUS_LIFETIME_BOUND {
     return metadata_;
   }
 
@@ -10781,7 +10909,7 @@ class LogMessage final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 1.
-  LogMetadata& mutable_metadata() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  LogMetadata& mutable_metadata() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[0] = true;
     return metadata_;
   }
@@ -10812,7 +10940,7 @@ class LogMessage final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  constexpr const LogData& data() const& noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  constexpr const LogData& data() const& noexcept HORUS_LIFETIME_BOUND {
     return data_;
   }
 
@@ -10831,7 +10959,7 @@ class LogMessage final : public PbMessage {
   /// No documentation.
   ///
   /// Field no: 2.
-  LogData& mutable_data() & noexcept HORUS_SDK_ATTRIBUTE_LIFETIME_BOUND {
+  LogData& mutable_data() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
     return data_;
   }

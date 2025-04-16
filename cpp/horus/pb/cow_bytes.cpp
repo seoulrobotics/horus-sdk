@@ -6,7 +6,8 @@
 #include <vector>
 
 #include "horus/pb/buffer.h"
-#include "horus/types/string_view.h"
+#include "horus/strings/string_view.h"
+#include "horus/types/one_of.h"
 
 namespace horus {
 namespace {
@@ -32,59 +33,38 @@ CowBytes CowBytes::SharedCopy(StringView string) noexcept(false) {
 }
 
 StringView CowBytes::Str() const noexcept {
-  switch (data_.Tag()) {
-    case Data::kTagFor<Owned>: {
-      const Owned& data{*data_.TryAs<Owned>()};
-      return {data.data(), data.size()};
-    }
-    case Data::kTagFor<PbView>:
-    default: {
-      return data_.TryAs<PbView>()->Str();
-    }
+  HORUS_ONEOF_SWITCH(data_) {
+    HORUS_ONEOF_CASE(owned, Owned) { return {owned.data(), owned.size()}; }
+    HORUS_ONEOF_CASE(view, PbView) { return view.Str(); }
   }
+  HORUS_ONEOF_RETURN_NOT_HANDLED;
 }
 
-CowBytes::Owned& CowBytes::String() noexcept(false) {
-  switch (data_.Tag()) {
-    case Data::kTagFor<Owned>: {
-      return *data_.TryAs<Owned>();
-    }
-    case Data::kTagFor<PbView>:
-    default: {
-      Owned data{CopyToVector(data_.TryAs<PbView>()->Str())};
+CowBytes::Owned& CowBytes::String() & noexcept(false) {
+  HORUS_ONEOF_SWITCH(data_) {
+    HORUS_ONEOF_CASE(owned, Owned) { return owned; }
+    HORUS_ONEOF_CASE(view, PbView) {
+      Owned data{CopyToVector(view.Str())};
       return data_.Emplace<Owned>(std::move(data));
     }
   }
+  HORUS_ONEOF_RETURN_NOT_HANDLED;
 }
 
 PbView CowBytes::View() const& noexcept(false) {
-  switch (data_.Tag()) {
-    case Data::kTagFor<Owned>: {
-      return PbView{PbBuffer::Copy(Str())};
-    }
-    case Data::kTagFor<PbView>: {
-      return data_.As<PbView>();
-    }
-    default: {
-      assert(false);
-      return PbView{PbBuffer{}};
-    }
+  HORUS_ONEOF_SWITCH(data_) {
+    HORUS_ONEOF_CASE_DISCARD(Owned) { return PbView{PbBuffer::Copy(Str())}; }
+    HORUS_ONEOF_CASE(view, PbView) { return view; }
   }
+  HORUS_ONEOF_RETURN_NOT_HANDLED;
 }
 
 PbView CowBytes::View() && noexcept {
-  switch (data_.Tag()) {
-    case Data::kTagFor<Owned>: {
-      return PbView{PbBuffer{std::move(data_).As<Owned>()}};
-    }
-    case Data::kTagFor<PbView>: {
-      return std::move(data_).As<PbView>();
-    }
-    default: {
-      assert(false);
-      return PbView{PbBuffer{}};
-    }
+  HORUS_ONEOF_SWITCH(data_) {
+    HORUS_ONEOF_CASE(owned, Owned) { return PbView{PbBuffer{std::move(owned)}}; }
+    HORUS_ONEOF_CASE(view, PbView) { return std::move(view); }
   }
+  HORUS_ONEOF_RETURN_NOT_HANDLED;
 }
 
 }  // namespace horus
