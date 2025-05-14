@@ -350,6 +350,22 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return "The obstruction detector reference is not valid since it contains zero points."
 	case *logs_pb.ProjectFileInvalidPermissionsError:
 		return fmt.Sprintf("Project file \"%v\" has invalid permissions. Please restart Horus to fix the issue.", data.GetFilename())
+	case *logs_pb.PipelineSchedulerError:
+		return fmt.Sprintf("Pipeline scheduler error: %v.", data.GetDetails())
+	case *logs_pb.MultiLidarCalibrationWarning:
+		return fmt.Sprintf("Multi lidar calibration failed for the following lidars: %v.", data.GetFailedLidarIds())
+	case *logs_pb.MultiLidarCalibrationError:
+		return "Multi lidar calibration failed for all lidars."
+	case *logs_pb.OldBagWarning:
+		return fmt.Sprintf("The bag file %v with version %v is old. Please consider updating it with the API, refer to API documentation.", data.GetBagPath(), data.GetVersion())
+	case *logs_pb.UpgradingBagInfo:
+		return fmt.Sprintf("Upgrading bag file %v to latest version.", data.GetBagPath())
+	case *logs_pb.BagCalibrationSaveFailed:
+		return fmt.Sprintf("Failed to save the bag calibration: %v.", data.GetDetails())
+	case *logs_pb.BagUpgradeFailed:
+		return fmt.Sprintf("Failed to upgrade the bag file %v: %v.", data.GetBagPath(), data.GetDetails())
+	case *logs_pb.UnknownLidarError:
+		return fmt.Sprintf("Received points from unknown lidar %v.", data.GetLidarId())
 	default:
 		return "unknown log message"
 	}

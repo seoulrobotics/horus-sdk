@@ -16,6 +16,7 @@
 #include <type_traits>
 #include <utility>
 
+#include "horus/attributes.h"
 #include "horus/functional/move_only_function.h"
 #include "horus/future/any.h"
 #include "horus/future/channel.h"
@@ -200,7 +201,7 @@ struct Sdk::FutureState {
 };
 
 template <class T>
-class Sdk::Future final {
+class HORUS_NO_DISCARD Sdk::Future final {
   /// @see FutureState
   using State = FutureState<T>;
 
@@ -214,12 +215,12 @@ class Sdk::Future final {
   /// `Wait()` does *not* busy-wait; calling `Wait()` will yield the current thread. `Wait()` also
   /// does *not* block the SDK. That is, given two `Future`s, calling `Wait()` on one will not block
   /// progress on the other one.
-  T Wait();
+  HORUS_NO_DISCARD T Wait();
 
   /// Waits until the future resolves, then returns its result. If the future does not resolve
   /// within `duration`, returns `void`. If the future encountered an exception, `WaitFor()` will
   /// rethrow it.
-  OneOf<T, void> WaitFor(std::chrono::milliseconds duration) {
+  HORUS_NO_DISCARD OneOf<T, void> WaitFor(std::chrono::milliseconds duration) {
     return TimedWait(&std::condition_variable::wait_for, duration);
   }
 
@@ -227,7 +228,7 @@ class Sdk::Future final {
   /// before `deadline`, returns `void`. If the future encountered an exception, `WaitUntil()` will
   /// rethrow it.
   template <class Clock>
-  OneOf<T, void> WaitUntil(std::chrono::time_point<Clock> deadline) {
+  HORUS_NO_DISCARD OneOf<T, void> WaitUntil(std::chrono::time_point<Clock> deadline) {
     return TimedWait(&std::condition_variable::wait_until, deadline);
   }
 
@@ -335,7 +336,7 @@ void Sdk::Future<T>::OnCompletion(F&& on_completion, E&& on_error) {
 }
 
 /// A subscription to a stream of events made from the `Sdk`.
-class Sdk::Subscription final {
+class HORUS_NO_DISCARD Sdk::Subscription final {
   /// The type of the `subscribe` function.
   using Subscribe = MoveOnlyFunction<AnyFuture<void>(const std::shared_ptr<RpcEndpoint>&)>;
 

@@ -173,6 +173,14 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.FAILED_TO_UPDATE_CONFIGURATION_FIELD_NUMBER: lambda m: format_failed_to_update_configuration(m.failed_to_update_configuration),
     LogData.OBSTRUCTION_DETECTOR_BAD_REFERENCE_WARNING_FIELD_NUMBER: lambda m: format_obstruction_detector_bad_reference_warning(m.obstruction_detector_bad_reference_warning),
     LogData.PROJECT_FILE_INVALID_PERMISSIONS_ERROR_FIELD_NUMBER: lambda m: format_project_file_invalid_permissions_error(m.project_file_invalid_permissions_error),
+    LogData.PIPELINE_SCHEDULER_ERROR_FIELD_NUMBER: lambda m: format_pipeline_scheduler_error(m.pipeline_scheduler_error),
+    LogData.MULTI_LIDAR_CALIBRATION_WARNING_FIELD_NUMBER: lambda m: format_multi_lidar_calibration_warning(m.multi_lidar_calibration_warning),
+    LogData.MULTI_LIDAR_CALIBRATION_ERROR_FIELD_NUMBER: lambda m: format_multi_lidar_calibration_error(m.multi_lidar_calibration_error),
+    LogData.OLD_BAG_WARNING_FIELD_NUMBER: lambda m: format_old_bag_warning(m.old_bag_warning),
+    LogData.UPGRADING_BAG_INFO_FIELD_NUMBER: lambda m: format_upgrading_bag_info(m.upgrading_bag_info),
+    LogData.BAG_CALIBRATION_SAVE_FAILED_FIELD_NUMBER: lambda m: format_bag_calibration_save_failed(m.bag_calibration_save_failed),
+    LogData.BAG_UPGRADE_FAILED_FIELD_NUMBER: lambda m: format_bag_upgrade_failed(m.bag_upgrade_failed),
+    LogData.UNKNOWN_LIDAR_ERROR_FIELD_NUMBER: lambda m: format_unknown_lidar_error(m.unknown_lidar_error),
 }
 
 def _unknown_format(data: LogData) -> str:
@@ -869,3 +877,35 @@ def format_obstruction_detector_bad_reference_warning(log: _logs_pb.ObstructionD
 def format_project_file_invalid_permissions_error(log: _logs_pb.ProjectFileInvalidPermissionsError) -> str:
     """Formats log `ProjectFileInvalidPermissionsError` to a string."""
     return f"Project file \"{log.filename}\" has invalid permissions. Please restart Horus to fix the issue."
+
+def format_pipeline_scheduler_error(log: _logs_pb.PipelineSchedulerError) -> str:
+    """Formats log `PipelineSchedulerError` to a string."""
+    return f"Pipeline scheduler error: {log.details}."
+
+def format_multi_lidar_calibration_warning(log: _logs_pb.MultiLidarCalibrationWarning) -> str:
+    """Formats log `MultiLidarCalibrationWarning` to a string."""
+    return f"Multi lidar calibration failed for the following lidars: {log.failed_lidar_ids}."
+
+def format_multi_lidar_calibration_error(log: _logs_pb.MultiLidarCalibrationError) -> str:
+    """Formats log `MultiLidarCalibrationError` to a string."""
+    return f"Multi lidar calibration failed for all lidars."
+
+def format_old_bag_warning(log: _logs_pb.OldBagWarning) -> str:
+    """Formats log `OldBagWarning` to a string."""
+    return f"The bag file {log.bag_path} with version {log.version} is old. Please consider updating it with the API, refer to API documentation."
+
+def format_upgrading_bag_info(log: _logs_pb.UpgradingBagInfo) -> str:
+    """Formats log `UpgradingBagInfo` to a string."""
+    return f"Upgrading bag file {log.bag_path} to latest version."
+
+def format_bag_calibration_save_failed(log: _logs_pb.BagCalibrationSaveFailed) -> str:
+    """Formats log `BagCalibrationSaveFailed` to a string."""
+    return f"Failed to save the bag calibration: {log.details}."
+
+def format_bag_upgrade_failed(log: _logs_pb.BagUpgradeFailed) -> str:
+    """Formats log `BagUpgradeFailed` to a string."""
+    return f"Failed to upgrade the bag file {log.bag_path}: {log.details}."
+
+def format_unknown_lidar_error(log: _logs_pb.UnknownLidarError) -> str:
+    """Formats log `UnknownLidarError` to a string."""
+    return f"Received points from unknown lidar {log.lidar_id}."

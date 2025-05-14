@@ -30,6 +30,7 @@ service PointAggregatorService {
       unsubscribe { subscriber_name: "PointAggregatorSubscriberService" }
     };
   }
+
 }
 
 service PointAggregatorSubscriberService {

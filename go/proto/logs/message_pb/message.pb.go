@@ -117,7 +117,7 @@ func (b0 LogMessage_builder) Build() *LogMessage {
 
 // Data attached to a `LogMessage`.
 //
-// This is automatically generated from `/home/runner/work/horus/horus/common/logs/db.yml`.
+// This is automatically generated from `/opt/actions-runner/_work/horus/horus/common/logs/db.yml`.
 type LogData struct {
 	state           protoimpl.MessageState `protogen:"opaque.v1"`
 	xxx_hidden_Data isLogData_Data         `protobuf_oneof:"data"`
@@ -1680,6 +1680,78 @@ func (x *LogData) GetProjectFileInvalidPermissionsError() *logs_pb.ProjectFileIn
 	return nil
 }
 
+func (x *LogData) GetPipelineSchedulerError() *logs_pb.PipelineSchedulerError {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_PipelineSchedulerError); ok {
+			return x.PipelineSchedulerError
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetMultiLidarCalibrationWarning() *logs_pb.MultiLidarCalibrationWarning {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_MultiLidarCalibrationWarning); ok {
+			return x.MultiLidarCalibrationWarning
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetMultiLidarCalibrationError() *logs_pb.MultiLidarCalibrationError {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_MultiLidarCalibrationError); ok {
+			return x.MultiLidarCalibrationError
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetOldBagWarning() *logs_pb.OldBagWarning {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_OldBagWarning); ok {
+			return x.OldBagWarning
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetUpgradingBagInfo() *logs_pb.UpgradingBagInfo {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_UpgradingBagInfo); ok {
+			return x.UpgradingBagInfo
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetBagCalibrationSaveFailed() *logs_pb.BagCalibrationSaveFailed {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_BagCalibrationSaveFailed); ok {
+			return x.BagCalibrationSaveFailed
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetBagUpgradeFailed() *logs_pb.BagUpgradeFailed {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_BagUpgradeFailed); ok {
+			return x.BagUpgradeFailed
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetUnknownLidarError() *logs_pb.UnknownLidarError {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_UnknownLidarError); ok {
+			return x.UnknownLidarError
+		}
+	}
+	return nil
+}
+
 func (x *LogData) SetGeneric(v *logs_pb.Generic) {
 	if v == nil {
 		x.xxx_hidden_Data = nil
@@ -3038,6 +3110,70 @@ func (x *LogData) SetProjectFileInvalidPermissionsError(v *logs_pb.ProjectFileIn
 		return
 	}
 	x.xxx_hidden_Data = &logData_ProjectFileInvalidPermissionsError{v}
+}
+
+func (x *LogData) SetPipelineSchedulerError(v *logs_pb.PipelineSchedulerError) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_PipelineSchedulerError{v}
+}
+
+func (x *LogData) SetMultiLidarCalibrationWarning(v *logs_pb.MultiLidarCalibrationWarning) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_MultiLidarCalibrationWarning{v}
+}
+
+func (x *LogData) SetMultiLidarCalibrationError(v *logs_pb.MultiLidarCalibrationError) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_MultiLidarCalibrationError{v}
+}
+
+func (x *LogData) SetOldBagWarning(v *logs_pb.OldBagWarning) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_OldBagWarning{v}
+}
+
+func (x *LogData) SetUpgradingBagInfo(v *logs_pb.UpgradingBagInfo) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_UpgradingBagInfo{v}
+}
+
+func (x *LogData) SetBagCalibrationSaveFailed(v *logs_pb.BagCalibrationSaveFailed) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_BagCalibrationSaveFailed{v}
+}
+
+func (x *LogData) SetBagUpgradeFailed(v *logs_pb.BagUpgradeFailed) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_BagUpgradeFailed{v}
+}
+
+func (x *LogData) SetUnknownLidarError(v *logs_pb.UnknownLidarError) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_UnknownLidarError{v}
 }
 
 func (x *LogData) HasData() bool {
@@ -4407,6 +4543,70 @@ func (x *LogData) HasProjectFileInvalidPermissionsError() bool {
 	return ok
 }
 
+func (x *LogData) HasPipelineSchedulerError() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_PipelineSchedulerError)
+	return ok
+}
+
+func (x *LogData) HasMultiLidarCalibrationWarning() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_MultiLidarCalibrationWarning)
+	return ok
+}
+
+func (x *LogData) HasMultiLidarCalibrationError() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_MultiLidarCalibrationError)
+	return ok
+}
+
+func (x *LogData) HasOldBagWarning() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_OldBagWarning)
+	return ok
+}
+
+func (x *LogData) HasUpgradingBagInfo() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_UpgradingBagInfo)
+	return ok
+}
+
+func (x *LogData) HasBagCalibrationSaveFailed() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_BagCalibrationSaveFailed)
+	return ok
+}
+
+func (x *LogData) HasBagUpgradeFailed() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_BagUpgradeFailed)
+	return ok
+}
+
+func (x *LogData) HasUnknownLidarError() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_UnknownLidarError)
+	return ok
+}
+
 func (x *LogData) ClearData() {
 	x.xxx_hidden_Data = nil
 }
@@ -5431,6 +5631,54 @@ func (x *LogData) ClearProjectFileInvalidPermissionsError() {
 	}
 }
 
+func (x *LogData) ClearPipelineSchedulerError() {
+	if _, ok := x.xxx_hidden_Data.(*logData_PipelineSchedulerError); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearMultiLidarCalibrationWarning() {
+	if _, ok := x.xxx_hidden_Data.(*logData_MultiLidarCalibrationWarning); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearMultiLidarCalibrationError() {
+	if _, ok := x.xxx_hidden_Data.(*logData_MultiLidarCalibrationError); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearOldBagWarning() {
+	if _, ok := x.xxx_hidden_Data.(*logData_OldBagWarning); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearUpgradingBagInfo() {
+	if _, ok := x.xxx_hidden_Data.(*logData_UpgradingBagInfo); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearBagCalibrationSaveFailed() {
+	if _, ok := x.xxx_hidden_Data.(*logData_BagCalibrationSaveFailed); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearBagUpgradeFailed() {
+	if _, ok := x.xxx_hidden_Data.(*logData_BagUpgradeFailed); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearUnknownLidarError() {
+	if _, ok := x.xxx_hidden_Data.(*logData_UnknownLidarError); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
 const LogData_Data_not_set_case case_LogData_Data = 0
 const LogData_Generic_case case_LogData_Data = 1
 const LogData_Oom_case case_LogData_Data = 2
@@ -5602,6 +5850,14 @@ const LogData_LicenseForbiddenFeature_case case_LogData_Data = 167
 const LogData_FailedToUpdateConfiguration_case case_LogData_Data = 168
 const LogData_ObstructionDetectorBadReferenceWarning_case case_LogData_Data = 169
 const LogData_ProjectFileInvalidPermissionsError_case case_LogData_Data = 170
+const LogData_PipelineSchedulerError_case case_LogData_Data = 171
+const LogData_MultiLidarCalibrationWarning_case case_LogData_Data = 172
+const LogData_MultiLidarCalibrationError_case case_LogData_Data = 173
+const LogData_OldBagWarning_case case_LogData_Data = 174
+const LogData_UpgradingBagInfo_case case_LogData_Data = 175
+const LogData_BagCalibrationSaveFailed_case case_LogData_Data = 176
+const LogData_BagUpgradeFailed_case case_LogData_Data = 177
+const LogData_UnknownLidarError_case case_LogData_Data = 178
 
 func (x *LogData) WhichData() case_LogData_Data {
 	if x == nil {
@@ -5948,6 +6204,22 @@ func (x *LogData) WhichData() case_LogData_Data {
 		return LogData_ObstructionDetectorBadReferenceWarning_case
 	case *logData_ProjectFileInvalidPermissionsError:
 		return LogData_ProjectFileInvalidPermissionsError_case
+	case *logData_PipelineSchedulerError:
+		return LogData_PipelineSchedulerError_case
+	case *logData_MultiLidarCalibrationWarning:
+		return LogData_MultiLidarCalibrationWarning_case
+	case *logData_MultiLidarCalibrationError:
+		return LogData_MultiLidarCalibrationError_case
+	case *logData_OldBagWarning:
+		return LogData_OldBagWarning_case
+	case *logData_UpgradingBagInfo:
+		return LogData_UpgradingBagInfo_case
+	case *logData_BagCalibrationSaveFailed:
+		return LogData_BagCalibrationSaveFailed_case
+	case *logData_BagUpgradeFailed:
+		return LogData_BagUpgradeFailed_case
+	case *logData_UnknownLidarError:
+		return LogData_UnknownLidarError_case
 	default:
 		return LogData_Data_not_set_case
 	}
@@ -6127,6 +6399,14 @@ type LogData_builder struct {
 	FailedToUpdateConfiguration                 *logs_pb.FailedToUpdateConfiguration
 	ObstructionDetectorBadReferenceWarning      *logs_pb.ObstructionDetectorBadReferenceWarning
 	ProjectFileInvalidPermissionsError          *logs_pb.ProjectFileInvalidPermissionsError
+	PipelineSchedulerError                      *logs_pb.PipelineSchedulerError
+	MultiLidarCalibrationWarning                *logs_pb.MultiLidarCalibrationWarning
+	MultiLidarCalibrationError                  *logs_pb.MultiLidarCalibrationError
+	OldBagWarning                               *logs_pb.OldBagWarning
+	UpgradingBagInfo                            *logs_pb.UpgradingBagInfo
+	BagCalibrationSaveFailed                    *logs_pb.BagCalibrationSaveFailed
+	BagUpgradeFailed                            *logs_pb.BagUpgradeFailed
+	UnknownLidarError                           *logs_pb.UnknownLidarError
 	// -- end of xxx_hidden_Data
 }
 
@@ -6643,6 +6923,30 @@ func (b0 LogData_builder) Build() *LogData {
 	}
 	if b.ProjectFileInvalidPermissionsError != nil {
 		x.xxx_hidden_Data = &logData_ProjectFileInvalidPermissionsError{b.ProjectFileInvalidPermissionsError}
+	}
+	if b.PipelineSchedulerError != nil {
+		x.xxx_hidden_Data = &logData_PipelineSchedulerError{b.PipelineSchedulerError}
+	}
+	if b.MultiLidarCalibrationWarning != nil {
+		x.xxx_hidden_Data = &logData_MultiLidarCalibrationWarning{b.MultiLidarCalibrationWarning}
+	}
+	if b.MultiLidarCalibrationError != nil {
+		x.xxx_hidden_Data = &logData_MultiLidarCalibrationError{b.MultiLidarCalibrationError}
+	}
+	if b.OldBagWarning != nil {
+		x.xxx_hidden_Data = &logData_OldBagWarning{b.OldBagWarning}
+	}
+	if b.UpgradingBagInfo != nil {
+		x.xxx_hidden_Data = &logData_UpgradingBagInfo{b.UpgradingBagInfo}
+	}
+	if b.BagCalibrationSaveFailed != nil {
+		x.xxx_hidden_Data = &logData_BagCalibrationSaveFailed{b.BagCalibrationSaveFailed}
+	}
+	if b.BagUpgradeFailed != nil {
+		x.xxx_hidden_Data = &logData_BagUpgradeFailed{b.BagUpgradeFailed}
+	}
+	if b.UnknownLidarError != nil {
+		x.xxx_hidden_Data = &logData_UnknownLidarError{b.UnknownLidarError}
 	}
 	return m0
 }
@@ -7341,6 +7645,38 @@ type logData_ProjectFileInvalidPermissionsError struct {
 	ProjectFileInvalidPermissionsError *logs_pb.ProjectFileInvalidPermissionsError `protobuf:"bytes,170,opt,name=project_file_invalid_permissions_error,json=projectFileInvalidPermissionsError,proto3,oneof"`
 }
 
+type logData_PipelineSchedulerError struct {
+	PipelineSchedulerError *logs_pb.PipelineSchedulerError `protobuf:"bytes,171,opt,name=pipeline_scheduler_error,json=pipelineSchedulerError,proto3,oneof"`
+}
+
+type logData_MultiLidarCalibrationWarning struct {
+	MultiLidarCalibrationWarning *logs_pb.MultiLidarCalibrationWarning `protobuf:"bytes,172,opt,name=multi_lidar_calibration_warning,json=multiLidarCalibrationWarning,proto3,oneof"`
+}
+
+type logData_MultiLidarCalibrationError struct {
+	MultiLidarCalibrationError *logs_pb.MultiLidarCalibrationError `protobuf:"bytes,173,opt,name=multi_lidar_calibration_error,json=multiLidarCalibrationError,proto3,oneof"`
+}
+
+type logData_OldBagWarning struct {
+	OldBagWarning *logs_pb.OldBagWarning `protobuf:"bytes,174,opt,name=old_bag_warning,json=oldBagWarning,proto3,oneof"`
+}
+
+type logData_UpgradingBagInfo struct {
+	UpgradingBagInfo *logs_pb.UpgradingBagInfo `protobuf:"bytes,175,opt,name=upgrading_bag_info,json=upgradingBagInfo,proto3,oneof"`
+}
+
+type logData_BagCalibrationSaveFailed struct {
+	BagCalibrationSaveFailed *logs_pb.BagCalibrationSaveFailed `protobuf:"bytes,176,opt,name=bag_calibration_save_failed,json=bagCalibrationSaveFailed,proto3,oneof"`
+}
+
+type logData_BagUpgradeFailed struct {
+	BagUpgradeFailed *logs_pb.BagUpgradeFailed `protobuf:"bytes,177,opt,name=bag_upgrade_failed,json=bagUpgradeFailed,proto3,oneof"`
+}
+
+type logData_UnknownLidarError struct {
+	UnknownLidarError *logs_pb.UnknownLidarError `protobuf:"bytes,178,opt,name=unknown_lidar_error,json=unknownLidarError,proto3,oneof"`
+}
+
 func (*logData_Generic) isLogData_Data() {}
 
 func (*logData_Oom) isLogData_Data() {}
@@ -7681,6 +8017,22 @@ func (*logData_ObstructionDetectorBadReferenceWarning) isLogData_Data() {}
 
 func (*logData_ProjectFileInvalidPermissionsError) isLogData_Data() {}
 
+func (*logData_PipelineSchedulerError) isLogData_Data() {}
+
+func (*logData_MultiLidarCalibrationWarning) isLogData_Data() {}
+
+func (*logData_MultiLidarCalibrationError) isLogData_Data() {}
+
+func (*logData_OldBagWarning) isLogData_Data() {}
+
+func (*logData_UpgradingBagInfo) isLogData_Data() {}
+
+func (*logData_BagCalibrationSaveFailed) isLogData_Data() {}
+
+func (*logData_BagUpgradeFailed) isLogData_Data() {}
+
+func (*logData_UnknownLidarError) isLogData_Data() {}
+
 var File_horus_pb_logs_message_proto protoreflect.FileDescriptor
 
 var file_horus_pb_logs_message_proto_rawDesc = []byte{
@@ -7696,7 +8048,7 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
 	0x12, 0x25, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11,
 	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x6f, 0x67, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xec, 0x8b, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
+	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xe5, 0x91, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
 	0x44, 0x61, 0x74, 0x61, 0x12, 0x32, 0x0a, 0x07, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62,
 	0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x48, 0x00, 0x52,
@@ -8814,8 +9166,56 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x6c, 0x65, 0x49, 0x6e, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x50, 0x65, 0x72, 0x6d, 0x69, 0x73, 0x73,
 	0x69, 0x6f, 0x6e, 0x73, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x48, 0x00, 0x52, 0x22, 0x70, 0x72, 0x6f,
 	0x6a, 0x65, 0x63, 0x74, 0x46, 0x69, 0x6c, 0x65, 0x49, 0x6e, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x50,
-	0x65, 0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x42,
-	0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x12,
+	0x62, 0x0a, 0x18, 0x70, 0x69, 0x70, 0x65, 0x6c, 0x69, 0x6e, 0x65, 0x5f, 0x73, 0x63, 0x68, 0x65,
+	0x64, 0x75, 0x6c, 0x65, 0x72, 0x5f, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0xab, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x25, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f,
+	0x67, 0x73, 0x2e, 0x50, 0x69, 0x70, 0x65, 0x6c, 0x69, 0x6e, 0x65, 0x53, 0x63, 0x68, 0x65, 0x64,
+	0x75, 0x6c, 0x65, 0x72, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x48, 0x00, 0x52, 0x16, 0x70, 0x69, 0x70,
+	0x65, 0x6c, 0x69, 0x6e, 0x65, 0x53, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x45, 0x72,
+	0x72, 0x6f, 0x72, 0x12, 0x75, 0x0a, 0x1f, 0x6d, 0x75, 0x6c, 0x74, 0x69, 0x5f, 0x6c, 0x69, 0x64,
+	0x61, 0x72, 0x5f, 0x63, 0x61, 0x6c, 0x69, 0x62, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x77,
+	0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x18, 0xac, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2b, 0x2e,
+	0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x4d, 0x75,
+	0x6c, 0x74, 0x69, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x43, 0x61, 0x6c, 0x69, 0x62, 0x72, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x57, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x48, 0x00, 0x52, 0x1c, 0x6d, 0x75,
+	0x6c, 0x74, 0x69, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x43, 0x61, 0x6c, 0x69, 0x62, 0x72, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x57, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x12, 0x6f, 0x0a, 0x1d, 0x6d, 0x75,
+	0x6c, 0x74, 0x69, 0x5f, 0x6c, 0x69, 0x64, 0x61, 0x72, 0x5f, 0x63, 0x61, 0x6c, 0x69, 0x62, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0xad, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x29, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f,
+	0x67, 0x73, 0x2e, 0x4d, 0x75, 0x6c, 0x74, 0x69, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x43, 0x61, 0x6c,
+	0x69, 0x62, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x48, 0x00, 0x52,
+	0x1a, 0x6d, 0x75, 0x6c, 0x74, 0x69, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x43, 0x61, 0x6c, 0x69, 0x62,
+	0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x12, 0x47, 0x0a, 0x0f, 0x6f,
+	0x6c, 0x64, 0x5f, 0x62, 0x61, 0x67, 0x5f, 0x77, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x18, 0xae,
+	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62,
+	0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x4f, 0x6c, 0x64, 0x42, 0x61, 0x67, 0x57, 0x61, 0x72, 0x6e,
+	0x69, 0x6e, 0x67, 0x48, 0x00, 0x52, 0x0d, 0x6f, 0x6c, 0x64, 0x42, 0x61, 0x67, 0x57, 0x61, 0x72,
+	0x6e, 0x69, 0x6e, 0x67, 0x12, 0x50, 0x0a, 0x12, 0x75, 0x70, 0x67, 0x72, 0x61, 0x64, 0x69, 0x6e,
+	0x67, 0x5f, 0x62, 0x61, 0x67, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0xaf, 0x01, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x1f, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67,
+	0x73, 0x2e, 0x55, 0x70, 0x67, 0x72, 0x61, 0x64, 0x69, 0x6e, 0x67, 0x42, 0x61, 0x67, 0x49, 0x6e,
+	0x66, 0x6f, 0x48, 0x00, 0x52, 0x10, 0x75, 0x70, 0x67, 0x72, 0x61, 0x64, 0x69, 0x6e, 0x67, 0x42,
+	0x61, 0x67, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x69, 0x0a, 0x1b, 0x62, 0x61, 0x67, 0x5f, 0x63, 0x61,
+	0x6c, 0x69, 0x62, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x61, 0x76, 0x65, 0x5f, 0x66,
+	0x61, 0x69, 0x6c, 0x65, 0x64, 0x18, 0xb0, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x68,
+	0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x42, 0x61, 0x67,
+	0x43, 0x61, 0x6c, 0x69, 0x62, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x61, 0x76, 0x65, 0x46,
+	0x61, 0x69, 0x6c, 0x65, 0x64, 0x48, 0x00, 0x52, 0x18, 0x62, 0x61, 0x67, 0x43, 0x61, 0x6c, 0x69,
+	0x62, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x61, 0x76, 0x65, 0x46, 0x61, 0x69, 0x6c, 0x65,
+	0x64, 0x12, 0x50, 0x0a, 0x12, 0x62, 0x61, 0x67, 0x5f, 0x75, 0x70, 0x67, 0x72, 0x61, 0x64, 0x65,
+	0x5f, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x18, 0xb1, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f,
+	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x42,
+	0x61, 0x67, 0x55, 0x70, 0x67, 0x72, 0x61, 0x64, 0x65, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x48,
+	0x00, 0x52, 0x10, 0x62, 0x61, 0x67, 0x55, 0x70, 0x67, 0x72, 0x61, 0x64, 0x65, 0x46, 0x61, 0x69,
+	0x6c, 0x65, 0x64, 0x12, 0x53, 0x0a, 0x13, 0x75, 0x6e, 0x6b, 0x6e, 0x6f, 0x77, 0x6e, 0x5f, 0x6c,
+	0x69, 0x64, 0x61, 0x72, 0x5f, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0xb2, 0x01, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x20, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67,
+	0x73, 0x2e, 0x55, 0x6e, 0x6b, 0x6e, 0x6f, 0x77, 0x6e, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x45, 0x72,
+	0x72, 0x6f, 0x72, 0x48, 0x00, 0x52, 0x11, 0x75, 0x6e, 0x6b, 0x6e, 0x6f, 0x77, 0x6e, 0x4c, 0x69,
+	0x64, 0x61, 0x72, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_horus_pb_logs_message_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
@@ -8993,6 +9393,14 @@ var file_horus_pb_logs_message_proto_goTypes = []any{
 	(*logs_pb.FailedToUpdateConfiguration)(nil),                 // 170: horus.pb.logs.FailedToUpdateConfiguration
 	(*logs_pb.ObstructionDetectorBadReferenceWarning)(nil),      // 171: horus.pb.logs.ObstructionDetectorBadReferenceWarning
 	(*logs_pb.ProjectFileInvalidPermissionsError)(nil),          // 172: horus.pb.logs.ProjectFileInvalidPermissionsError
+	(*logs_pb.PipelineSchedulerError)(nil),                      // 173: horus.pb.logs.PipelineSchedulerError
+	(*logs_pb.MultiLidarCalibrationWarning)(nil),                // 174: horus.pb.logs.MultiLidarCalibrationWarning
+	(*logs_pb.MultiLidarCalibrationError)(nil),                  // 175: horus.pb.logs.MultiLidarCalibrationError
+	(*logs_pb.OldBagWarning)(nil),                               // 176: horus.pb.logs.OldBagWarning
+	(*logs_pb.UpgradingBagInfo)(nil),                            // 177: horus.pb.logs.UpgradingBagInfo
+	(*logs_pb.BagCalibrationSaveFailed)(nil),                    // 178: horus.pb.logs.BagCalibrationSaveFailed
+	(*logs_pb.BagUpgradeFailed)(nil),                            // 179: horus.pb.logs.BagUpgradeFailed
+	(*logs_pb.UnknownLidarError)(nil),                           // 180: horus.pb.logs.UnknownLidarError
 }
 var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	2,   // 0: horus.pb.LogMessage.metadata:type_name -> horus.pb.LogMetadata
@@ -9167,11 +9575,19 @@ var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	170, // 169: horus.pb.LogData.failed_to_update_configuration:type_name -> horus.pb.logs.FailedToUpdateConfiguration
 	171, // 170: horus.pb.LogData.obstruction_detector_bad_reference_warning:type_name -> horus.pb.logs.ObstructionDetectorBadReferenceWarning
 	172, // 171: horus.pb.LogData.project_file_invalid_permissions_error:type_name -> horus.pb.logs.ProjectFileInvalidPermissionsError
-	172, // [172:172] is the sub-list for method output_type
-	172, // [172:172] is the sub-list for method input_type
-	172, // [172:172] is the sub-list for extension type_name
-	172, // [172:172] is the sub-list for extension extendee
-	0,   // [0:172] is the sub-list for field type_name
+	173, // 172: horus.pb.LogData.pipeline_scheduler_error:type_name -> horus.pb.logs.PipelineSchedulerError
+	174, // 173: horus.pb.LogData.multi_lidar_calibration_warning:type_name -> horus.pb.logs.MultiLidarCalibrationWarning
+	175, // 174: horus.pb.LogData.multi_lidar_calibration_error:type_name -> horus.pb.logs.MultiLidarCalibrationError
+	176, // 175: horus.pb.LogData.old_bag_warning:type_name -> horus.pb.logs.OldBagWarning
+	177, // 176: horus.pb.LogData.upgrading_bag_info:type_name -> horus.pb.logs.UpgradingBagInfo
+	178, // 177: horus.pb.LogData.bag_calibration_save_failed:type_name -> horus.pb.logs.BagCalibrationSaveFailed
+	179, // 178: horus.pb.LogData.bag_upgrade_failed:type_name -> horus.pb.logs.BagUpgradeFailed
+	180, // 179: horus.pb.LogData.unknown_lidar_error:type_name -> horus.pb.logs.UnknownLidarError
+	180, // [180:180] is the sub-list for method output_type
+	180, // [180:180] is the sub-list for method input_type
+	180, // [180:180] is the sub-list for extension type_name
+	180, // [180:180] is the sub-list for extension extendee
+	0,   // [0:180] is the sub-list for field type_name
 }
 
 func init() { file_horus_pb_logs_message_proto_init() }
@@ -9350,6 +9766,14 @@ func file_horus_pb_logs_message_proto_init() {
 		(*logData_FailedToUpdateConfiguration)(nil),
 		(*logData_ObstructionDetectorBadReferenceWarning)(nil),
 		(*logData_ProjectFileInvalidPermissionsError)(nil),
+		(*logData_PipelineSchedulerError)(nil),
+		(*logData_MultiLidarCalibrationWarning)(nil),
+		(*logData_MultiLidarCalibrationError)(nil),
+		(*logData_OldBagWarning)(nil),
+		(*logData_UpgradingBagInfo)(nil),
+		(*logData_BagCalibrationSaveFailed)(nil),
+		(*logData_BagUpgradeFailed)(nil),
+		(*logData_UnknownLidarError)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

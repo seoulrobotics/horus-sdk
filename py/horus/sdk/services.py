@@ -28,17 +28,22 @@ else:
     TypeAliasType = lambda name, t: t
     override = lambda f: f
 
+# IMPORTANT: Python attributes, like Python arguments, share their default values across instances.
+# We must make sure to only set immutable values as default values, or to only set them in
+# `__init__()`.
+
 
 class DetectionServiceListener(DetectionSubscriberServiceHandler):
     """
     `DetectionSubscriberServiceHandler` implementation used by the `Sdk`.
     """
 
-    _on_detection_event: typing.Set[typing.Callable[[DetectionEvent], None]] = set()
-
     def __init__(self, ws: WebSocket, logger: logging.Logger) -> None:
         super().__init__(ws)
 
+        self._on_detection_event: typing.Set[
+            typing.Callable[[DetectionEvent], None]
+        ] = set()
         self._logger = logger
 
     @override
@@ -67,14 +72,16 @@ class NotificationServiceListener(NotificationListenerServiceHandler):
     `NotificationListenerServiceHandler` implementation used by the `Sdk`.
     """
 
-    _on_log_message: typing.Set[typing.Callable[[Log], None]] = set()
-    _on_profiling_info: typing.Set[typing.Callable[[ProfilingInfo], None]] = set()
-    _on_sensor_info_event: typing.Set[
-        typing.Callable[[sensor.SensorInfoEvent], None]
-    ] = set()
-
     def __init__(self, ws: WebSocket, logger: logging.Logger) -> None:
         super().__init__(ws)
+
+        self._on_log_message: typing.Set[typing.Callable[[Log], None]] = set()
+        self._on_profiling_info: typing.Set[typing.Callable[[ProfilingInfo], None]] = (
+            set()
+        )
+        self._on_sensor_info_event: typing.Set[
+            typing.Callable[[sensor.SensorInfoEvent], None]
+        ] = set()
 
         self._logger = logger
 
@@ -143,12 +150,12 @@ class PointAggregatorServiceListener(PointAggregatorSubscriberServiceHandler):
     `PointAggregatorServiceHandler` implementation used by the `Sdk`.
     """
 
-    _on_occupancy_grid_event: typing.Set[
-        typing.Callable[[sensor.OccupancyGridEvent], None]
-    ] = set()
-
     def __init__(self, ws: WebSocket, logger: logging.Logger) -> None:
         super().__init__(ws)
+
+        self._on_occupancy_grid_event: typing.Set[
+            typing.Callable[[sensor.OccupancyGridEvent], None]
+        ] = set()
 
         self._logger = logger
 
