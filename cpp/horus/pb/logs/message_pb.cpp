@@ -177,6 +177,14 @@ LogData::LogData(const LogData& other) noexcept(false)
     , failed_to_update_configuration_{other.failed_to_update_configuration_}
     , obstruction_detector_bad_reference_warning_{other.obstruction_detector_bad_reference_warning_}
     , project_file_invalid_permissions_error_{other.project_file_invalid_permissions_error_}
+    , pipeline_scheduler_error_{other.pipeline_scheduler_error_}
+    , multi_lidar_calibration_warning_{other.multi_lidar_calibration_warning_}
+    , multi_lidar_calibration_error_{other.multi_lidar_calibration_error_}
+    , old_bag_warning_{other.old_bag_warning_}
+    , upgrading_bag_info_{other.upgrading_bag_info_}
+    , bag_calibration_save_failed_{other.bag_calibration_save_failed_}
+    , bag_upgrade_failed_{other.bag_upgrade_failed_}
+    , unknown_lidar_error_{other.unknown_lidar_error_}
     , data_{other.data_}
     , set_fields_{other.set_fields_} {}
 
@@ -690,6 +698,30 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[169]) {
     SerializeField<logs::ProjectFileInvalidPermissionsError>(writer, /*tag=*/ 170, project_file_invalid_permissions_error_);
+  }
+  if (set_fields_[170]) {
+    SerializeField<logs::PipelineSchedulerError>(writer, /*tag=*/ 171, pipeline_scheduler_error_);
+  }
+  if (set_fields_[171]) {
+    SerializeField<logs::MultiLidarCalibrationWarning>(writer, /*tag=*/ 172, multi_lidar_calibration_warning_);
+  }
+  if (set_fields_[172]) {
+    SerializeField<logs::MultiLidarCalibrationError>(writer, /*tag=*/ 173, multi_lidar_calibration_error_);
+  }
+  if (set_fields_[173]) {
+    SerializeField<logs::OldBagWarning>(writer, /*tag=*/ 174, old_bag_warning_);
+  }
+  if (set_fields_[174]) {
+    SerializeField<logs::UpgradingBagInfo>(writer, /*tag=*/ 175, upgrading_bag_info_);
+  }
+  if (set_fields_[175]) {
+    SerializeField<logs::BagCalibrationSaveFailed>(writer, /*tag=*/ 176, bag_calibration_save_failed_);
+  }
+  if (set_fields_[176]) {
+    SerializeField<logs::BagUpgradeFailed>(writer, /*tag=*/ 177, bag_upgrade_failed_);
+  }
+  if (set_fields_[177]) {
+    SerializeField<logs::UnknownLidarError>(writer, /*tag=*/ 178, unknown_lidar_error_);
   }
 }
 
@@ -1884,6 +1916,62 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
         data_ = DataOneof::kProjectFileInvalidPermissionsError;
         DeserializeField<logs::ProjectFileInvalidPermissionsError>(reader, project_file_invalid_permissions_error_);
         set_fields_[169] = true;
+        break;
+      }
+      case 171: {
+        clear_data();
+        data_ = DataOneof::kPipelineSchedulerError;
+        DeserializeField<logs::PipelineSchedulerError>(reader, pipeline_scheduler_error_);
+        set_fields_[170] = true;
+        break;
+      }
+      case 172: {
+        clear_data();
+        data_ = DataOneof::kMultiLidarCalibrationWarning;
+        DeserializeField<logs::MultiLidarCalibrationWarning>(reader, multi_lidar_calibration_warning_);
+        set_fields_[171] = true;
+        break;
+      }
+      case 173: {
+        clear_data();
+        data_ = DataOneof::kMultiLidarCalibrationError;
+        DeserializeField<logs::MultiLidarCalibrationError>(reader, multi_lidar_calibration_error_);
+        set_fields_[172] = true;
+        break;
+      }
+      case 174: {
+        clear_data();
+        data_ = DataOneof::kOldBagWarning;
+        DeserializeField<logs::OldBagWarning>(reader, old_bag_warning_);
+        set_fields_[173] = true;
+        break;
+      }
+      case 175: {
+        clear_data();
+        data_ = DataOneof::kUpgradingBagInfo;
+        DeserializeField<logs::UpgradingBagInfo>(reader, upgrading_bag_info_);
+        set_fields_[174] = true;
+        break;
+      }
+      case 176: {
+        clear_data();
+        data_ = DataOneof::kBagCalibrationSaveFailed;
+        DeserializeField<logs::BagCalibrationSaveFailed>(reader, bag_calibration_save_failed_);
+        set_fields_[175] = true;
+        break;
+      }
+      case 177: {
+        clear_data();
+        data_ = DataOneof::kBagUpgradeFailed;
+        DeserializeField<logs::BagUpgradeFailed>(reader, bag_upgrade_failed_);
+        set_fields_[176] = true;
+        break;
+      }
+      case 178: {
+        clear_data();
+        data_ = DataOneof::kUnknownLidarError;
+        DeserializeField<logs::UnknownLidarError>(reader, unknown_lidar_error_);
+        set_fields_[177] = true;
         break;
       }
       default: {

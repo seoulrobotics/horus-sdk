@@ -13,7 +13,7 @@ message LogMessage {
 
 // Data attached to a `LogMessage`.
 //
-// This is automatically generated from `/home/runner/work/horus/horus/common/logs/db.yml`.
+// This is automatically generated from `/opt/actions-runner/_work/horus/horus/common/logs/db.yml`.
 message LogData {
   oneof data {
     logs.Generic generic = 1;
@@ -186,5 +186,13 @@ message LogData {
     logs.FailedToUpdateConfiguration failed_to_update_configuration = 168;
     logs.ObstructionDetectorBadReferenceWarning obstruction_detector_bad_reference_warning = 169;
     logs.ProjectFileInvalidPermissionsError project_file_invalid_permissions_error = 170;
+    logs.PipelineSchedulerError pipeline_scheduler_error = 171;
+    logs.MultiLidarCalibrationWarning multi_lidar_calibration_warning = 172;
+    logs.MultiLidarCalibrationError multi_lidar_calibration_error = 173;
+    logs.OldBagWarning old_bag_warning = 174;
+    logs.UpgradingBagInfo upgrading_bag_info = 175;
+    logs.BagCalibrationSaveFailed bag_calibration_save_failed = 176;
+    logs.BagUpgradeFailed bag_upgrade_failed = 177;
+    logs.UnknownLidarError unknown_lidar_error = 178;
   }
 }

@@ -1114,3 +1114,53 @@ class ProjectFileInvalidPermissionsError(_message.Message):
     FILENAME_FIELD_NUMBER: _ClassVar[int]
     filename: str
     def __init__(self, filename: _Optional[str] = ...) -> None: ...
+
+class PipelineSchedulerError(_message.Message):
+    __slots__ = ("details",)
+    DETAILS_FIELD_NUMBER: _ClassVar[int]
+    details: str
+    def __init__(self, details: _Optional[str] = ...) -> None: ...
+
+class MultiLidarCalibrationWarning(_message.Message):
+    __slots__ = ("failed_lidar_ids",)
+    FAILED_LIDAR_IDS_FIELD_NUMBER: _ClassVar[int]
+    failed_lidar_ids: str
+    def __init__(self, failed_lidar_ids: _Optional[str] = ...) -> None: ...
+
+class MultiLidarCalibrationError(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
+
+class OldBagWarning(_message.Message):
+    __slots__ = ("bag_path", "version")
+    BAG_PATH_FIELD_NUMBER: _ClassVar[int]
+    VERSION_FIELD_NUMBER: _ClassVar[int]
+    bag_path: str
+    version: int
+    def __init__(self, bag_path: _Optional[str] = ..., version: _Optional[int] = ...) -> None: ...
+
+class UpgradingBagInfo(_message.Message):
+    __slots__ = ("bag_path",)
+    BAG_PATH_FIELD_NUMBER: _ClassVar[int]
+    bag_path: str
+    def __init__(self, bag_path: _Optional[str] = ...) -> None: ...
+
+class BagCalibrationSaveFailed(_message.Message):
+    __slots__ = ("details",)
+    DETAILS_FIELD_NUMBER: _ClassVar[int]
+    details: str
+    def __init__(self, details: _Optional[str] = ...) -> None: ...
+
+class BagUpgradeFailed(_message.Message):
+    __slots__ = ("bag_path", "details")
+    BAG_PATH_FIELD_NUMBER: _ClassVar[int]
+    DETAILS_FIELD_NUMBER: _ClassVar[int]
+    bag_path: str
+    details: str
+    def __init__(self, bag_path: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+
+class UnknownLidarError(_message.Message):
+    __slots__ = ("lidar_id",)
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    lidar_id: str
+    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...

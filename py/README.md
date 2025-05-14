@@ -41,13 +41,13 @@ python3 -m pip install -e .
 [`mypy`](https://github.com/python/mypy) is used for type-checking:
 
 ```sh
-python3 -m pip install 'mypy>=1.11' 'types-protobuf>=5.27' 'typing-extensions>=4.6'
+python3 -m pip install 'mypy~=1.11' 'types-protobuf~=5.27' 'typing-extensions~=4.6'
 python3 -m mypy .
 ```
 
 [`black`](https://github.com/psf/black) is used for formatting:
 
 ```sh
-python3 -m pip install 'black>=24.8'
+python3 -m pip install 'black~=24.8'
 python3 -m black .
 ```

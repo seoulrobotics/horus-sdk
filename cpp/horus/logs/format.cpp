@@ -711,6 +711,38 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     logs::HorusStringify(sink, log_data.project_file_invalid_permissions_error());
     break;
   }
+  case LogData::DataOneof::kPipelineSchedulerError: {
+    logs::HorusStringify(sink, log_data.pipeline_scheduler_error());
+    break;
+  }
+  case LogData::DataOneof::kMultiLidarCalibrationWarning: {
+    logs::HorusStringify(sink, log_data.multi_lidar_calibration_warning());
+    break;
+  }
+  case LogData::DataOneof::kMultiLidarCalibrationError: {
+    logs::HorusStringify(sink, log_data.multi_lidar_calibration_error());
+    break;
+  }
+  case LogData::DataOneof::kOldBagWarning: {
+    logs::HorusStringify(sink, log_data.old_bag_warning());
+    break;
+  }
+  case LogData::DataOneof::kUpgradingBagInfo: {
+    logs::HorusStringify(sink, log_data.upgrading_bag_info());
+    break;
+  }
+  case LogData::DataOneof::kBagCalibrationSaveFailed: {
+    logs::HorusStringify(sink, log_data.bag_calibration_save_failed());
+    break;
+  }
+  case LogData::DataOneof::kBagUpgradeFailed: {
+    logs::HorusStringify(sink, log_data.bag_upgrade_failed());
+    break;
+  }
+  case LogData::DataOneof::kUnknownLidarError: {
+    logs::HorusStringify(sink, log_data.unknown_lidar_error());
+    break;
+  }
   case LogData::DataOneof::kNotSet:
   default: {
     sink.Append("Unknown log message");
@@ -1399,6 +1431,38 @@ void HorusStringify(const ErasedSink& sink, const ObstructionDetectorBadReferenc
 
 void HorusStringify(const ErasedSink& sink, const ProjectFileInvalidPermissionsError& data) {
   StringifyTo(sink, "Project file \"", data.filename(), "\" has invalid permissions. Please restart Horus to fix the issue.");
+}
+
+void HorusStringify(const ErasedSink& sink, const PipelineSchedulerError& data) {
+  StringifyTo(sink, "Pipeline scheduler error: ", data.details(), ".");
+}
+
+void HorusStringify(const ErasedSink& sink, const MultiLidarCalibrationWarning& data) {
+  StringifyTo(sink, "Multi lidar calibration failed for the following lidars: ", data.failed_lidar_ids(), ".");
+}
+
+void HorusStringify(const ErasedSink& sink, const MultiLidarCalibrationError& /*data*/) {
+  StringifyTo(sink, "Multi lidar calibration failed for all lidars.");
+}
+
+void HorusStringify(const ErasedSink& sink, const OldBagWarning& data) {
+  StringifyTo(sink, "The bag file ", data.bag_path(), " with version ", data.version(), " is old. Please consider updating it with the API, refer to API documentation.");
+}
+
+void HorusStringify(const ErasedSink& sink, const UpgradingBagInfo& data) {
+  StringifyTo(sink, "Upgrading bag file ", data.bag_path(), " to latest version.");
+}
+
+void HorusStringify(const ErasedSink& sink, const BagCalibrationSaveFailed& data) {
+  StringifyTo(sink, "Failed to save the bag calibration: ", data.details(), ".");
+}
+
+void HorusStringify(const ErasedSink& sink, const BagUpgradeFailed& data) {
+  StringifyTo(sink, "Failed to upgrade the bag file ", data.bag_path(), ": ", data.details(), ".");
+}
+
+void HorusStringify(const ErasedSink& sink, const UnknownLidarError& data) {
+  StringifyTo(sink, "Received points from unknown lidar ", data.lidar_id(), ".");
 }
 
 }  // namespace logs

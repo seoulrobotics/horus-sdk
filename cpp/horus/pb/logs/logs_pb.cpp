@@ -4433,6 +4433,208 @@ void ProjectFileInvalidPermissionsError::DeserializeFrom(PbReader& reader) noexc
   }
 }
 
+PipelineSchedulerError::PipelineSchedulerError(const PipelineSchedulerError& other) noexcept(false)
+    : details_{other.details_}
+    , set_fields_{other.set_fields_} {}
+
+void PipelineSchedulerError::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, details_);
+  }
+}
+
+void PipelineSchedulerError::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, details_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+MultiLidarCalibrationWarning::MultiLidarCalibrationWarning(const MultiLidarCalibrationWarning& other) noexcept(false)
+    : failed_lidar_ids_{other.failed_lidar_ids_}
+    , set_fields_{other.set_fields_} {}
+
+void MultiLidarCalibrationWarning::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, failed_lidar_ids_);
+  }
+}
+
+void MultiLidarCalibrationWarning::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, failed_lidar_ids_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+
+
+OldBagWarning::OldBagWarning(const OldBagWarning& other) noexcept(false)
+    : bag_path_{other.bag_path_}
+    , version_{other.version_}
+    , set_fields_{other.set_fields_} {}
+
+void OldBagWarning::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, bag_path_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<std::uint32_t>(writer, /*tag=*/ 2, version_);
+  }
+}
+
+void OldBagWarning::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, bag_path_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<std::uint32_t>(reader, version_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+UpgradingBagInfo::UpgradingBagInfo(const UpgradingBagInfo& other) noexcept(false)
+    : bag_path_{other.bag_path_}
+    , set_fields_{other.set_fields_} {}
+
+void UpgradingBagInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, bag_path_);
+  }
+}
+
+void UpgradingBagInfo::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, bag_path_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+BagCalibrationSaveFailed::BagCalibrationSaveFailed(const BagCalibrationSaveFailed& other) noexcept(false)
+    : details_{other.details_}
+    , set_fields_{other.set_fields_} {}
+
+void BagCalibrationSaveFailed::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, details_);
+  }
+}
+
+void BagCalibrationSaveFailed::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, details_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+BagUpgradeFailed::BagUpgradeFailed(const BagUpgradeFailed& other) noexcept(false)
+    : bag_path_{other.bag_path_}
+    , details_{other.details_}
+    , set_fields_{other.set_fields_} {}
+
+void BagUpgradeFailed::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, bag_path_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+}
+
+void BagUpgradeFailed::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, bag_path_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, details_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+UnknownLidarError::UnknownLidarError(const UnknownLidarError& other) noexcept(false)
+    : lidar_id_{other.lidar_id_}
+    , set_fields_{other.set_fields_} {}
+
+void UnknownLidarError::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+}
+
+void UnknownLidarError::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
 }  // namespace logs
 }  // namespace pb
 }  // namespace sdk

@@ -363,9 +363,10 @@ class Subscription:
         if not callable(self._unsubscribe):
             self._unsubscribe = await self._unsubscribe
 
-        await self._unsubscribe()
-
+        unsubscribe_awaitable = self._unsubscribe()
         self._unsubscribe = None
+
+        await unsubscribe_awaitable
 
     async def __aenter__(self) -> None:
         """Enters the "subscription context", equivalent to `await`ing it."""

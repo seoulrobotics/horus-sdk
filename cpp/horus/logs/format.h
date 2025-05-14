@@ -541,6 +541,30 @@ void HorusStringify(const ErasedSink& sink, const ObstructionDetectorBadReferenc
 /// Formats the log `logs::ProjectFileInvalidPermissionsError` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const ProjectFileInvalidPermissionsError& data);
 
+/// Formats the log `logs::PipelineSchedulerError` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const PipelineSchedulerError& data);
+
+/// Formats the log `logs::MultiLidarCalibrationWarning` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const MultiLidarCalibrationWarning& data);
+
+/// Formats the log `logs::MultiLidarCalibrationError` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const MultiLidarCalibrationError& /*data*/);
+
+/// Formats the log `logs::OldBagWarning` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const OldBagWarning& data);
+
+/// Formats the log `logs::UpgradingBagInfo` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const UpgradingBagInfo& data);
+
+/// Formats the log `logs::BagCalibrationSaveFailed` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const BagCalibrationSaveFailed& data);
+
+/// Formats the log `logs::BagUpgradeFailed` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const BagUpgradeFailed& data);
+
+/// Formats the log `logs::UnknownLidarError` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const UnknownLidarError& data);
+
 }  // namespace logs
 
 }  // namespace pb

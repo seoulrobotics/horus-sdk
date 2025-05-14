@@ -1238,3 +1238,60 @@ message ObstructionDetectorBadReferenceWarning {
 message ProjectFileInvalidPermissionsError {
   string filename = 1;
 }
+
+// Log #171.
+//
+// > Pipeline scheduler error: $details.
+message PipelineSchedulerError {
+  string details = 1;
+}
+
+// Log #172.
+//
+// > Multi lidar calibration failed for the following lidars: $failed_lidar_ids.
+message MultiLidarCalibrationWarning {
+  string failed_lidar_ids = 1;
+}
+
+// Log #173.
+//
+// > Multi lidar calibration failed for all lidars.
+message MultiLidarCalibrationError {
+}
+
+// Log #174.
+//
+// > The bag file $bag_path with version $version is old. Please consider updating it with the API, refer to API documentation.
+message OldBagWarning {
+  string bag_path = 1;
+  uint32 version = 2;
+}
+
+// Log #175.
+//
+// > Upgrading bag file $bag_path to latest version.
+message UpgradingBagInfo {
+  string bag_path = 1;
+}
+
+// Log #176.
+//
+// > Failed to save the bag calibration: $details.
+message BagCalibrationSaveFailed {
+  string details = 1;
+}
+
+// Log #177.
+//
+// > Failed to upgrade the bag file $bag_path: $details.
+message BagUpgradeFailed {
+  string bag_path = 1;
+  string details = 2;
+}
+
+// Log #178.
+//
+// > Received points from unknown lidar $lidar_id.
+message UnknownLidarError {
+  string lidar_id = 1;
+}

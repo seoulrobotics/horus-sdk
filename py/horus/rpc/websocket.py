@@ -32,17 +32,13 @@ class WebSocket:
     _connection: typing.Optional[CachedAwaitable[ClientConnection]] = None
     "The current connection, or None if currently disconnected."
 
-    _available_request_ids: typing.List[int] = []
+    _available_request_ids: typing.List[int]
     "List of request IDs assigned previously allocated and then freed (by receiving a response)."
 
-    _pending_responses: typing.Dict[
-        int, typing.Tuple[Message, "asyncio.Future[None]"]
-    ] = {}
+    _pending_responses: typing.Dict[int, typing.Tuple[Message, "asyncio.Future[None]"]]
     "Map from request ID to response message and future awaiting the response."
 
-    _services: typing.Dict[
-        int, typing.Callable[[RpcMessage], typing.Awaitable[None]]
-    ] = {}
+    _services: typing.Dict[int, typing.Callable[[RpcMessage], typing.Awaitable[None]]]
     "Map from service ID to message handler."
 
     def __init__(
@@ -51,6 +47,10 @@ class WebSocket:
         logger: logging.Logger,
         on_connected: typing.Callable[[], None] = lambda: None,
     ) -> None:
+        self._available_request_ids = []
+        self._pending_responses = {}
+        self._services = {}
+
         self._url = url
         self._logger = logger
         self._recv_task = asyncio.create_task(self._receiver())
