@@ -157,11 +157,15 @@ void DetectedObject_Kinematics::DeserializeFrom(PbReader& reader) noexcept(false
 
 DetectedObject_Shape::DetectedObject_Shape(const DetectedObject_Shape& other) noexcept(false)
     : bounding_box_{other.bounding_box_}
+    , tight_bounding_box_{other.tight_bounding_box_}
     , set_fields_{other.set_fields_} {}
 
 void DetectedObject_Shape::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<BoundingBox>(writer, /*tag=*/ 1, bounding_box_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<BoundingBox>(writer, /*tag=*/ 2, tight_bounding_box_);
   }
 }
 
@@ -171,6 +175,11 @@ void DetectedObject_Shape::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 1: {
         DeserializeField<BoundingBox>(reader, bounding_box_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<BoundingBox>(reader, tight_bounding_box_);
+        set_fields_[1] = true;
         break;
       }
       default: {
@@ -184,6 +193,7 @@ void DetectedObject_Shape::DeserializeFrom(PbReader& reader) noexcept(false) {
 DetectedObject_Status::DetectedObject_Status(const DetectedObject_Status& other) noexcept(false)
     : id_{other.id_}
     , tracking_status_{other.tracking_status_}
+    , last_seen_{other.last_seen_}
     , set_fields_{other.set_fields_} {}
 
 void DetectedObject_Status::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -192,6 +202,9 @@ void DetectedObject_Status::SerializeTo(PbWriter& writer) const noexcept(false) 
   }
   if (set_fields_[1]) {
     SerializeField<TrackingStatus>(writer, /*tag=*/ 2, tracking_status_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<Timestamp>(writer, /*tag=*/ 3, last_seen_);
   }
 }
 
@@ -206,6 +219,11 @@ void DetectedObject_Status::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 2: {
         DeserializeField<TrackingStatus>(reader, tracking_status_);
         set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<Timestamp>(reader, last_seen_);
+        set_fields_[2] = true;
         break;
       }
       default: {

@@ -849,17 +849,69 @@ class DetectedObject_Shape final : public PbMessage {
     return std::move(set_bounding_box(std::move(bounding_box)));
   }
 
+  // Field `tight_bounding_box` (no 2).
+  // -----
+
+  /// The tight bounding box around the object points.
+  ///
+  /// Field no: 2.
+  constexpr const BoundingBox& tight_bounding_box() const& noexcept HORUS_LIFETIME_BOUND {
+    return tight_bounding_box_;
+  }
+
+  /// If `tight_bounding_box` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  BoundingBox tight_bounding_box() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(tight_bounding_box_);
+  }
+
+  /// The tight bounding box around the object points.
+  ///
+  /// Field no: 2.
+  BoundingBox& mutable_tight_bounding_box() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return tight_bounding_box_;
+  }
+
+  /// Returns whether `tight_bounding_box` (no 2) is set.
+  constexpr bool has_tight_bounding_box() const noexcept { return set_fields_[1]; }
+
+  /// Clears `tight_bounding_box` (no 2).
+  void clear_tight_bounding_box() & noexcept {
+    set_fields_[1] = false;
+    tight_bounding_box_ = {};
+  }
+
+  /// Sets `tight_bounding_box` (no 2) and returns `*this`.
+  DetectedObject_Shape& set_tight_bounding_box(BoundingBox&& tight_bounding_box) & noexcept {
+    set_fields_[1] = true;
+    tight_bounding_box_ = std::move(tight_bounding_box);
+    return *this;
+  }
+  /// Sets `tight_bounding_box` (no 2) and returns `*this`.
+  DetectedObject_Shape&& set_tight_bounding_box(BoundingBox&& tight_bounding_box) && noexcept {
+    return std::move(set_tight_bounding_box(std::move(tight_bounding_box)));
+  }
+
  private:
   /// @see bounding_box()
   BoundingBox bounding_box_{};
+  /// @see tight_bounding_box()
+  BoundingBox tight_bounding_box_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:71:3
+/// Source: horus/pb/detection_service/detection.proto:73:3
 class DetectedObject_Status final : public PbMessage {
  public:
 
@@ -987,14 +1039,66 @@ class DetectedObject_Status final : public PbMessage {
     return std::move(set_tracking_status(tracking_status));
   }
 
+  // Field `last_seen` (no 3).
+  // -----
+
+  /// The timestamp at which the detected object was last seen.
+  ///
+  /// Field no: 3.
+  constexpr const Timestamp& last_seen() const& noexcept HORUS_LIFETIME_BOUND {
+    return last_seen_;
+  }
+
+  /// If `last_seen` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  Timestamp last_seen() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(last_seen_);
+  }
+
+  /// The timestamp at which the detected object was last seen.
+  ///
+  /// Field no: 3.
+  Timestamp& mutable_last_seen() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return last_seen_;
+  }
+
+  /// Returns whether `last_seen` (no 3) is set.
+  constexpr bool has_last_seen() const noexcept { return set_fields_[2]; }
+
+  /// Clears `last_seen` (no 3).
+  void clear_last_seen() & noexcept {
+    set_fields_[2] = false;
+    last_seen_ = {};
+  }
+
+  /// Sets `last_seen` (no 3) and returns `*this`.
+  DetectedObject_Status& set_last_seen(Timestamp&& last_seen) & noexcept {
+    set_fields_[2] = true;
+    last_seen_ = std::move(last_seen);
+    return *this;
+  }
+  /// Sets `last_seen` (no 3) and returns `*this`.
+  DetectedObject_Status&& set_last_seen(Timestamp&& last_seen) && noexcept {
+    return std::move(set_last_seen(std::move(last_seen)));
+  }
+
  private:
   /// @see id()
   std::uint32_t id_{};
   /// @see tracking_status()
   TrackingStatus tracking_status_{};
+  /// @see last_seen()
+  Timestamp last_seen_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 /// A singular detection object message.
@@ -1273,7 +1377,7 @@ class DetectedObject final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:88:3
+/// Source: horus/pb/detection_service/detection.proto:93:3
 class DeepLearningObject_Classification final : public PbMessage {
  public:
 
@@ -1411,7 +1515,7 @@ class DeepLearningObject_Classification final : public PbMessage {
 
 /// / A deep learning object message.
 ///
-/// Source: horus/pb/detection_service/detection.proto:87:1
+/// Source: horus/pb/detection_service/detection.proto:92:1
 class DeepLearningObject final : public PbMessage {
  public:
   /// @see DeepLearningObject_Classification
@@ -1575,7 +1679,7 @@ class DeepLearningObject final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:103:3
+/// Source: horus/pb/detection_service/detection.proto:108:3
 class DetectionEvent_FrameInfo final : public PbMessage {
  public:
 
@@ -1685,7 +1789,7 @@ class DetectionEvent_FrameInfo final : public PbMessage {
 
 /// A detection event message.
 ///
-/// Source: horus/pb/detection_service/detection.proto:102:1
+/// Source: horus/pb/detection_service/detection.proto:107:1
 class DetectionEvent final : public PbMessage {
  public:
   /// @see DetectionEvent_FrameInfo

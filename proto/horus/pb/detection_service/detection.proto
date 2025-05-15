@@ -66,6 +66,8 @@ message DetectedObject {
   message Shape {
     // The bounding box of the detected object.
     BoundingBox bounding_box = 1;
+    // The tight bounding box around the object points.
+    BoundingBox tight_bounding_box = 2;
   }
 
   message Status {
@@ -75,6 +77,9 @@ message DetectedObject {
 
     // The tracking status of the detected object.
     TrackingStatus tracking_status = 2;
+
+    // The timestamp at which the detected object was last seen.
+    Timestamp last_seen = 3;
   }
 
   Classification classification = 1;

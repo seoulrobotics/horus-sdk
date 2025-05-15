@@ -44,7 +44,7 @@ class LicenseStatus final {
     using LicenseFeature = pb::LicenseFeature;
 
     /// Default constructor, called if LicenseInfo is empty.
-    LicenseInfo() : expiration_timestamp_{}, number_of_lidars_{} {};
+    LicenseInfo() : expiration_timestamp_{}, number_of_lidars_{} {}
 
     /// Constructos from a `pb::LicenseInfo`.
     explicit LicenseInfo(const pb::LicenseInfo& pb_license_info);
@@ -124,7 +124,7 @@ class SensorInfo final {
   Span<const SensorStatus> Status() const noexcept HORUS_LIFETIME_BOUND;
 
   /// Returns the frequency.
-  double MeasuredFrequencyHz() const noexcept { return measured_frequency_; };
+  double MeasuredFrequencyHz() const noexcept { return measured_frequency_; }
 
   /// If the sensor is unreachable, status and measured_frequency are set to void.
   bool IsUnreachable() const { return status_.empty(); }
@@ -170,7 +170,7 @@ class SensorHealth final {
   }
 
   /// Returns a reference to sensor info.
-  const SensorInfo& Info() const noexcept HORUS_LIFETIME_BOUND { return info_; };
+  const SensorInfo& Info() const noexcept HORUS_LIFETIME_BOUND { return info_; }
 
   /// Returns a reference to the unreachable error message.
   ///

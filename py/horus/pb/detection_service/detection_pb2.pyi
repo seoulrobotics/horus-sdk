@@ -69,17 +69,21 @@ class DetectedObject(_message.Message):
         yaw_rate: float
         def __init__(self, linear_velocity: _Optional[_Union[_metadata_pb2.Vector2f, _Mapping]] = ..., yaw_rate: _Optional[float] = ...) -> None: ...
     class Shape(_message.Message):
-        __slots__ = ("bounding_box",)
+        __slots__ = ("bounding_box", "tight_bounding_box")
         BOUNDING_BOX_FIELD_NUMBER: _ClassVar[int]
+        TIGHT_BOUNDING_BOX_FIELD_NUMBER: _ClassVar[int]
         bounding_box: BoundingBox
-        def __init__(self, bounding_box: _Optional[_Union[BoundingBox, _Mapping]] = ...) -> None: ...
+        tight_bounding_box: BoundingBox
+        def __init__(self, bounding_box: _Optional[_Union[BoundingBox, _Mapping]] = ..., tight_bounding_box: _Optional[_Union[BoundingBox, _Mapping]] = ...) -> None: ...
     class Status(_message.Message):
-        __slots__ = ("id", "tracking_status")
+        __slots__ = ("id", "tracking_status", "last_seen")
         ID_FIELD_NUMBER: _ClassVar[int]
         TRACKING_STATUS_FIELD_NUMBER: _ClassVar[int]
+        LAST_SEEN_FIELD_NUMBER: _ClassVar[int]
         id: int
         tracking_status: TrackingStatus
-        def __init__(self, id: _Optional[int] = ..., tracking_status: _Optional[_Union[TrackingStatus, str]] = ...) -> None: ...
+        last_seen: _metadata_pb2.Timestamp
+        def __init__(self, id: _Optional[int] = ..., tracking_status: _Optional[_Union[TrackingStatus, str]] = ..., last_seen: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ...) -> None: ...
     CLASSIFICATION_FIELD_NUMBER: _ClassVar[int]
     KINEMATICS_FIELD_NUMBER: _ClassVar[int]
     SHAPE_FIELD_NUMBER: _ClassVar[int]
