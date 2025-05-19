@@ -4635,6 +4635,41 @@ void UnknownLidarError::DeserializeFrom(PbReader& reader) noexcept(false) {
   }
 }
 
+InvalidPointCloudWarning::InvalidPointCloudWarning(const InvalidPointCloudWarning& other) noexcept(false)
+    : lidar_id_{other.lidar_id_}
+    , reason_{other.reason_}
+    , set_fields_{other.set_fields_} {}
+
+void InvalidPointCloudWarning::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, reason_);
+  }
+}
+
+void InvalidPointCloudWarning::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, reason_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
 }  // namespace logs
 }  // namespace pb
 }  // namespace sdk

@@ -9880,6 +9880,61 @@ class LogData final : public PbMessage {
     return std::move(set_unknown_lidar_error(std::move(unknown_lidar_error)));
   }
 
+  // Field `invalid_point_cloud_warning` (no 179).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 179.
+  constexpr const logs::InvalidPointCloudWarning& invalid_point_cloud_warning() const& noexcept HORUS_LIFETIME_BOUND {
+    return invalid_point_cloud_warning_;
+  }
+
+  /// If `invalid_point_cloud_warning` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 179.
+  logs::InvalidPointCloudWarning invalid_point_cloud_warning() && noexcept {
+    if (!set_fields_[178]) {
+      return {};
+    }
+    return std::move(invalid_point_cloud_warning_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 179.
+  logs::InvalidPointCloudWarning& mutable_invalid_point_cloud_warning() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kInvalidPointCloudWarning;
+    set_fields_[178] = true;
+    return invalid_point_cloud_warning_;
+  }
+
+  /// Returns whether `invalid_point_cloud_warning` (no 179) is set.
+  constexpr bool has_invalid_point_cloud_warning() const noexcept { return set_fields_[178]; }
+
+  /// Clears `invalid_point_cloud_warning` (no 179).
+  void clear_invalid_point_cloud_warning() & noexcept {
+    data_ = {};
+    set_fields_[178] = false;
+    invalid_point_cloud_warning_ = {};
+  }
+
+  /// Sets `invalid_point_cloud_warning` (no 179) and returns `*this`.
+  LogData& set_invalid_point_cloud_warning(logs::InvalidPointCloudWarning&& invalid_point_cloud_warning) & noexcept {
+    clear_data();
+    data_ = DataOneof::kInvalidPointCloudWarning;
+    set_fields_[178] = true;
+    invalid_point_cloud_warning_ = std::move(invalid_point_cloud_warning);
+    return *this;
+  }
+  /// Sets `invalid_point_cloud_warning` (no 179) and returns `*this`.
+  LogData&& set_invalid_point_cloud_warning(logs::InvalidPointCloudWarning&& invalid_point_cloud_warning) && noexcept {
+    return std::move(set_invalid_point_cloud_warning(std::move(invalid_point_cloud_warning)));
+  }
+
   // Oneof `data`.
   // -----
 
@@ -10243,6 +10298,8 @@ class LogData final : public PbMessage {
     kBagUpgradeFailed = 177,
     /// @see unknown_lidar_error()
     kUnknownLidarError = 178,
+    /// @see invalid_point_cloud_warning()
+    kInvalidPointCloudWarning = 179,
   };
 
   /// Returns the current case set in `data`.
@@ -10965,6 +11022,10 @@ class LogData final : public PbMessage {
         clear_unknown_lidar_error();
         break;
       }
+      case DataOneof::kInvalidPointCloudWarning: {
+        clear_invalid_point_cloud_warning();
+        break;
+      }
       case DataOneof::kNotSet:
       default:
         break;
@@ -11328,12 +11389,14 @@ class LogData final : public PbMessage {
   logs::BagUpgradeFailed bag_upgrade_failed_{};
   /// @see unknown_lidar_error()
   logs::UnknownLidarError unknown_lidar_error_{};
+  /// @see invalid_point_cloud_warning()
+  logs::InvalidPointCloudWarning invalid_point_cloud_warning_{};
 
   /// @see data_case()
   DataOneof data_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<178> set_fields_;
+  std::bitset<179> set_fields_;
 };
 
 /// A log message notifying users about some status.

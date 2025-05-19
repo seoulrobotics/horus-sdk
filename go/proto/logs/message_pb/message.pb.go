@@ -1752,6 +1752,15 @@ func (x *LogData) GetUnknownLidarError() *logs_pb.UnknownLidarError {
 	return nil
 }
 
+func (x *LogData) GetInvalidPointCloudWarning() *logs_pb.InvalidPointCloudWarning {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_InvalidPointCloudWarning); ok {
+			return x.InvalidPointCloudWarning
+		}
+	}
+	return nil
+}
+
 func (x *LogData) SetGeneric(v *logs_pb.Generic) {
 	if v == nil {
 		x.xxx_hidden_Data = nil
@@ -3174,6 +3183,14 @@ func (x *LogData) SetUnknownLidarError(v *logs_pb.UnknownLidarError) {
 		return
 	}
 	x.xxx_hidden_Data = &logData_UnknownLidarError{v}
+}
+
+func (x *LogData) SetInvalidPointCloudWarning(v *logs_pb.InvalidPointCloudWarning) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_InvalidPointCloudWarning{v}
 }
 
 func (x *LogData) HasData() bool {
@@ -4607,6 +4624,14 @@ func (x *LogData) HasUnknownLidarError() bool {
 	return ok
 }
 
+func (x *LogData) HasInvalidPointCloudWarning() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_InvalidPointCloudWarning)
+	return ok
+}
+
 func (x *LogData) ClearData() {
 	x.xxx_hidden_Data = nil
 }
@@ -5679,6 +5704,12 @@ func (x *LogData) ClearUnknownLidarError() {
 	}
 }
 
+func (x *LogData) ClearInvalidPointCloudWarning() {
+	if _, ok := x.xxx_hidden_Data.(*logData_InvalidPointCloudWarning); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
 const LogData_Data_not_set_case case_LogData_Data = 0
 const LogData_Generic_case case_LogData_Data = 1
 const LogData_Oom_case case_LogData_Data = 2
@@ -5858,6 +5889,7 @@ const LogData_UpgradingBagInfo_case case_LogData_Data = 175
 const LogData_BagCalibrationSaveFailed_case case_LogData_Data = 176
 const LogData_BagUpgradeFailed_case case_LogData_Data = 177
 const LogData_UnknownLidarError_case case_LogData_Data = 178
+const LogData_InvalidPointCloudWarning_case case_LogData_Data = 179
 
 func (x *LogData) WhichData() case_LogData_Data {
 	if x == nil {
@@ -6220,6 +6252,8 @@ func (x *LogData) WhichData() case_LogData_Data {
 		return LogData_BagUpgradeFailed_case
 	case *logData_UnknownLidarError:
 		return LogData_UnknownLidarError_case
+	case *logData_InvalidPointCloudWarning:
+		return LogData_InvalidPointCloudWarning_case
 	default:
 		return LogData_Data_not_set_case
 	}
@@ -6407,6 +6441,7 @@ type LogData_builder struct {
 	BagCalibrationSaveFailed                    *logs_pb.BagCalibrationSaveFailed
 	BagUpgradeFailed                            *logs_pb.BagUpgradeFailed
 	UnknownLidarError                           *logs_pb.UnknownLidarError
+	InvalidPointCloudWarning                    *logs_pb.InvalidPointCloudWarning
 	// -- end of xxx_hidden_Data
 }
 
@@ -6947,6 +6982,9 @@ func (b0 LogData_builder) Build() *LogData {
 	}
 	if b.UnknownLidarError != nil {
 		x.xxx_hidden_Data = &logData_UnknownLidarError{b.UnknownLidarError}
+	}
+	if b.InvalidPointCloudWarning != nil {
+		x.xxx_hidden_Data = &logData_InvalidPointCloudWarning{b.InvalidPointCloudWarning}
 	}
 	return m0
 }
@@ -7677,6 +7715,10 @@ type logData_UnknownLidarError struct {
 	UnknownLidarError *logs_pb.UnknownLidarError `protobuf:"bytes,178,opt,name=unknown_lidar_error,json=unknownLidarError,proto3,oneof"`
 }
 
+type logData_InvalidPointCloudWarning struct {
+	InvalidPointCloudWarning *logs_pb.InvalidPointCloudWarning `protobuf:"bytes,179,opt,name=invalid_point_cloud_warning,json=invalidPointCloudWarning,proto3,oneof"`
+}
+
 func (*logData_Generic) isLogData_Data() {}
 
 func (*logData_Oom) isLogData_Data() {}
@@ -8033,6 +8075,8 @@ func (*logData_BagUpgradeFailed) isLogData_Data() {}
 
 func (*logData_UnknownLidarError) isLogData_Data() {}
 
+func (*logData_InvalidPointCloudWarning) isLogData_Data() {}
+
 var File_horus_pb_logs_message_proto protoreflect.FileDescriptor
 
 var file_horus_pb_logs_message_proto_rawDesc = []byte{
@@ -8048,7 +8092,7 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
 	0x12, 0x25, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11,
 	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x6f, 0x67, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xe5, 0x91, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
+	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xd0, 0x92, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
 	0x44, 0x61, 0x74, 0x61, 0x12, 0x32, 0x0a, 0x07, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62,
 	0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x48, 0x00, 0x52,
@@ -9214,8 +9258,15 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x0b, 0x32, 0x20, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67,
 	0x73, 0x2e, 0x55, 0x6e, 0x6b, 0x6e, 0x6f, 0x77, 0x6e, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x45, 0x72,
 	0x72, 0x6f, 0x72, 0x48, 0x00, 0x52, 0x11, 0x75, 0x6e, 0x6b, 0x6e, 0x6f, 0x77, 0x6e, 0x4c, 0x69,
-	0x64, 0x61, 0x72, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x64, 0x61, 0x72, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x12, 0x69, 0x0a, 0x1b, 0x69, 0x6e, 0x76, 0x61,
+	0x6c, 0x69, 0x64, 0x5f, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x5f, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x5f,
+	0x77, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x18, 0xb3, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27,
+	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x49,
+	0x6e, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x43, 0x6c, 0x6f, 0x75, 0x64,
+	0x57, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x48, 0x00, 0x52, 0x18, 0x69, 0x6e, 0x76, 0x61, 0x6c,
+	0x69, 0x64, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x43, 0x6c, 0x6f, 0x75, 0x64, 0x57, 0x61, 0x72, 0x6e,
+	0x69, 0x6e, 0x67, 0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var file_horus_pb_logs_message_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
@@ -9401,6 +9452,7 @@ var file_horus_pb_logs_message_proto_goTypes = []any{
 	(*logs_pb.BagCalibrationSaveFailed)(nil),                    // 178: horus.pb.logs.BagCalibrationSaveFailed
 	(*logs_pb.BagUpgradeFailed)(nil),                            // 179: horus.pb.logs.BagUpgradeFailed
 	(*logs_pb.UnknownLidarError)(nil),                           // 180: horus.pb.logs.UnknownLidarError
+	(*logs_pb.InvalidPointCloudWarning)(nil),                    // 181: horus.pb.logs.InvalidPointCloudWarning
 }
 var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	2,   // 0: horus.pb.LogMessage.metadata:type_name -> horus.pb.LogMetadata
@@ -9583,11 +9635,12 @@ var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	178, // 177: horus.pb.LogData.bag_calibration_save_failed:type_name -> horus.pb.logs.BagCalibrationSaveFailed
 	179, // 178: horus.pb.LogData.bag_upgrade_failed:type_name -> horus.pb.logs.BagUpgradeFailed
 	180, // 179: horus.pb.LogData.unknown_lidar_error:type_name -> horus.pb.logs.UnknownLidarError
-	180, // [180:180] is the sub-list for method output_type
-	180, // [180:180] is the sub-list for method input_type
-	180, // [180:180] is the sub-list for extension type_name
-	180, // [180:180] is the sub-list for extension extendee
-	0,   // [0:180] is the sub-list for field type_name
+	181, // 180: horus.pb.LogData.invalid_point_cloud_warning:type_name -> horus.pb.logs.InvalidPointCloudWarning
+	181, // [181:181] is the sub-list for method output_type
+	181, // [181:181] is the sub-list for method input_type
+	181, // [181:181] is the sub-list for extension type_name
+	181, // [181:181] is the sub-list for extension extendee
+	0,   // [0:181] is the sub-list for field type_name
 }
 
 func init() { file_horus_pb_logs_message_proto_init() }
@@ -9774,6 +9827,7 @@ func file_horus_pb_logs_message_proto_init() {
 		(*logData_BagCalibrationSaveFailed)(nil),
 		(*logData_BagUpgradeFailed)(nil),
 		(*logData_UnknownLidarError)(nil),
+		(*logData_InvalidPointCloudWarning)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

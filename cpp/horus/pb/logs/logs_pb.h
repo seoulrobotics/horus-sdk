@@ -212,6 +212,7 @@ class UpgradingBagInfo;
 class BagCalibrationSaveFailed;
 class BagUpgradeFailed;
 class UnknownLidarError;
+class InvalidPointCloudWarning;
 
 // MARK: Message declarations
 
@@ -22381,6 +22382,170 @@ class UnknownLidarError final : public PbMessage {
 
   /// The set of fields that have been given an explicit value.
   std::bitset<1> set_fields_;
+};
+
+/// Log #179.
+/// 
+///  > Invalid point cloud received from lidar $lidar_id: $reason
+///
+/// Source: horus/pb/logs/logs.proto:1302:1
+class InvalidPointCloudWarning final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `InvalidPointCloudWarning`.
+  InvalidPointCloudWarning() noexcept = default;
+
+  /// Move constructor.
+  InvalidPointCloudWarning(InvalidPointCloudWarning&&) noexcept = default;
+  /// Move assignment operator.
+  InvalidPointCloudWarning& operator=(InvalidPointCloudWarning&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit InvalidPointCloudWarning(const InvalidPointCloudWarning& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  InvalidPointCloudWarning& operator=(const InvalidPointCloudWarning&) = delete;
+
+  /// Default destructor.
+  ~InvalidPointCloudWarning() noexcept final = default;
+
+  /// Creates a `InvalidPointCloudWarning` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit InvalidPointCloudWarning(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.InvalidPointCloudWarning`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.InvalidPointCloudWarning"; }
+
+  /// The full name of the message: `horus.pb.logs.InvalidPointCloudWarning`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `lidar_id` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 1) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[0]; }
+
+  /// Clears `lidar_id` (no 1).
+  void clear_lidar_id() & noexcept {
+    set_fields_[0] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  InvalidPointCloudWarning& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[0] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  InvalidPointCloudWarning&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `reason` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& reason() const& noexcept HORUS_LIFETIME_BOUND {
+    return reason_;
+  }
+
+  /// If `reason` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes reason() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(reason_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_reason() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return reason_;
+  }
+
+  /// Returns whether `reason` (no 2) is set.
+  constexpr bool has_reason() const noexcept { return set_fields_[1]; }
+
+  /// Clears `reason` (no 2).
+  void clear_reason() & noexcept {
+    set_fields_[1] = false;
+    reason_ = {};
+  }
+
+  /// Sets `reason` (no 2) and returns `*this`.
+  InvalidPointCloudWarning& set_reason(CowBytes&& reason) & noexcept {
+    set_fields_[1] = true;
+    reason_ = std::move(reason);
+    return *this;
+  }
+  /// Sets `reason` (no 2) and returns `*this`.
+  InvalidPointCloudWarning&& set_reason(CowBytes&& reason) && noexcept {
+    return std::move(set_reason(std::move(reason)));
+  }
+
+ private:
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see reason()
+  CowBytes reason_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
 };
 
 }  // namespace logs

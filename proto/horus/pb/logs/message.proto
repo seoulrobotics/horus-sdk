@@ -194,5 +194,6 @@ message LogData {
     logs.BagCalibrationSaveFailed bag_calibration_save_failed = 176;
     logs.BagUpgradeFailed bag_upgrade_failed = 177;
     logs.UnknownLidarError unknown_lidar_error = 178;
+    logs.InvalidPointCloudWarning invalid_point_cloud_warning = 179;
   }
 }

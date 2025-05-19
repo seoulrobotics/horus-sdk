@@ -565,6 +565,9 @@ void HorusStringify(const ErasedSink& sink, const BagUpgradeFailed& data);
 /// Formats the log `logs::UnknownLidarError` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const UnknownLidarError& data);
 
+/// Formats the log `logs::InvalidPointCloudWarning` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const InvalidPointCloudWarning& data);
+
 }  // namespace logs
 
 }  // namespace pb

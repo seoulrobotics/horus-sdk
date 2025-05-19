@@ -1295,3 +1295,11 @@ message BagUpgradeFailed {
 message UnknownLidarError {
   string lidar_id = 1;
 }
+
+// Log #179.
+//
+// > Invalid point cloud received from lidar $lidar_id: $reason
+message InvalidPointCloudWarning {
+  string lidar_id = 1;
+  string reason = 2;
+}
