@@ -126,7 +126,9 @@
 /// `HORUS_ONEOF_SWITCH()` is exhaustive. This macro can be used to throw an exception following
 /// such a switch if the switch is expected to always return. In C++17, this macro does nothing as
 /// the compiler can correctly determine if the switch is non-exhaustive.
-#if __cplusplus >= 201703L
+///
+/// We only enable this for Clang since GCC (tested with 13.2) still emits -Werror=return-type.
+#if __cplusplus >= 201703L && defined(__clang__)
 #define HORUS_ONEOF_RETURN_NOT_HANDLED
 #else
 #define HORUS_ONEOF_RETURN_NOT_HANDLED           \

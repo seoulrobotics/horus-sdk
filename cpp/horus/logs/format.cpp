@@ -743,6 +743,10 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     logs::HorusStringify(sink, log_data.unknown_lidar_error());
     break;
   }
+  case LogData::DataOneof::kInvalidPointCloudWarning: {
+    logs::HorusStringify(sink, log_data.invalid_point_cloud_warning());
+    break;
+  }
   case LogData::DataOneof::kNotSet:
   default: {
     sink.Append("Unknown log message");
@@ -1463,6 +1467,10 @@ void HorusStringify(const ErasedSink& sink, const BagUpgradeFailed& data) {
 
 void HorusStringify(const ErasedSink& sink, const UnknownLidarError& data) {
   StringifyTo(sink, "Received points from unknown lidar ", data.lidar_id(), ".");
+}
+
+void HorusStringify(const ErasedSink& sink, const InvalidPointCloudWarning& data) {
+  StringifyTo(sink, "Invalid point cloud received from lidar ", data.lidar_id(), ": ", data.reason());
 }
 
 }  // namespace logs

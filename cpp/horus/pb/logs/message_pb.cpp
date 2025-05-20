@@ -185,6 +185,7 @@ LogData::LogData(const LogData& other) noexcept(false)
     , bag_calibration_save_failed_{other.bag_calibration_save_failed_}
     , bag_upgrade_failed_{other.bag_upgrade_failed_}
     , unknown_lidar_error_{other.unknown_lidar_error_}
+    , invalid_point_cloud_warning_{other.invalid_point_cloud_warning_}
     , data_{other.data_}
     , set_fields_{other.set_fields_} {}
 
@@ -722,6 +723,9 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[177]) {
     SerializeField<logs::UnknownLidarError>(writer, /*tag=*/ 178, unknown_lidar_error_);
+  }
+  if (set_fields_[178]) {
+    SerializeField<logs::InvalidPointCloudWarning>(writer, /*tag=*/ 179, invalid_point_cloud_warning_);
   }
 }
 
@@ -1972,6 +1976,13 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
         data_ = DataOneof::kUnknownLidarError;
         DeserializeField<logs::UnknownLidarError>(reader, unknown_lidar_error_);
         set_fields_[177] = true;
+        break;
+      }
+      case 179: {
+        clear_data();
+        data_ = DataOneof::kInvalidPointCloudWarning;
+        DeserializeField<logs::InvalidPointCloudWarning>(reader, invalid_point_cloud_warning_);
+        set_fields_[178] = true;
         break;
       }
       default: {

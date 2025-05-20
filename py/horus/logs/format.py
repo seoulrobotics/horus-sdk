@@ -181,6 +181,7 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.BAG_CALIBRATION_SAVE_FAILED_FIELD_NUMBER: lambda m: format_bag_calibration_save_failed(m.bag_calibration_save_failed),
     LogData.BAG_UPGRADE_FAILED_FIELD_NUMBER: lambda m: format_bag_upgrade_failed(m.bag_upgrade_failed),
     LogData.UNKNOWN_LIDAR_ERROR_FIELD_NUMBER: lambda m: format_unknown_lidar_error(m.unknown_lidar_error),
+    LogData.INVALID_POINT_CLOUD_WARNING_FIELD_NUMBER: lambda m: format_invalid_point_cloud_warning(m.invalid_point_cloud_warning),
 }
 
 def _unknown_format(data: LogData) -> str:
@@ -909,3 +910,7 @@ def format_bag_upgrade_failed(log: _logs_pb.BagUpgradeFailed) -> str:
 def format_unknown_lidar_error(log: _logs_pb.UnknownLidarError) -> str:
     """Formats log `UnknownLidarError` to a string."""
     return f"Received points from unknown lidar {log.lidar_id}."
+
+def format_invalid_point_cloud_warning(log: _logs_pb.InvalidPointCloudWarning) -> str:
+    """Formats log `InvalidPointCloudWarning` to a string."""
+    return f"Invalid point cloud received from lidar {log.lidar_id}: {log.reason}"

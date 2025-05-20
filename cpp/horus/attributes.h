@@ -84,7 +84,7 @@
 ///
 /// See
 /// https://github.com/abseil/abseil-cpp/blob/12f4be6805ea58052ecf764b381619632b061cbf/absl/base/nullability.h#L225-L237.
-#if __clang__
+#if defined(__clang__)
 #define HORUS_NONNULL _Nonnull
 #else
 #define HORUS_NONNULL
@@ -100,7 +100,7 @@
 ///
 /// See
 /// https://github.com/abseil/abseil-cpp/blob/12f4be6805ea58052ecf764b381619632b061cbf/absl/base/nullability.h#L242-L253.
-#if __clang__
+#if defined(__clang__)
 #define HORUS_NULLABLE _Nullable
 #else
 #define HORUS_NULLABLE

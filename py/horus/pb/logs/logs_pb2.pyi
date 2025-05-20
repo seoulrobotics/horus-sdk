@@ -1164,3 +1164,11 @@ class UnknownLidarError(_message.Message):
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
     def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+
+class InvalidPointCloudWarning(_message.Message):
+    __slots__ = ("lidar_id", "reason")
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    REASON_FIELD_NUMBER: _ClassVar[int]
+    lidar_id: str
+    reason: str
+    def __init__(self, lidar_id: _Optional[str] = ..., reason: _Optional[str] = ...) -> None: ...
