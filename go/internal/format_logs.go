@@ -366,6 +366,8 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return fmt.Sprintf("Failed to upgrade the bag file %v: %v.", data.GetBagPath(), data.GetDetails())
 	case *logs_pb.UnknownLidarError:
 		return fmt.Sprintf("Received points from unknown lidar %v.", data.GetLidarId())
+	case *logs_pb.InvalidPointCloudWarning:
+		return fmt.Sprintf("Invalid point cloud received from lidar %v: %v", data.GetLidarId(), data.GetReason())
 	default:
 		return "unknown log message"
 	}

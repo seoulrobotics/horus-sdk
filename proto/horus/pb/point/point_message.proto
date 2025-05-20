@@ -104,5 +104,3 @@ message ProcessedPointsEvent {
 message AggregatedPointEvents {
   repeated ProcessedPointsEvent events = 1;
 }
-
-// Unprocessed point cloud sent by a driver.
