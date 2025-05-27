@@ -379,8 +379,19 @@ void Sdk::Subscription::State::HandleEvent(RpcEndpoint::LifecycleEvent&& event) 
       }
       break;
     }
-    case OneOfTagFor<RpcEndpoint::LifecycleEvent, RpcEndpoint::DisconnectedEvent>():
+    case OneOfTagFor<RpcEndpoint::LifecycleEvent, RpcEndpoint::DisconnectedEvent>(): {
+      // We always reconnect.
+      status_.store(Status::kConnecting, std::memory_order_relaxed);
+      break;
+    }
     case OneOfTagFor<RpcEndpoint::LifecycleEvent, RpcEndpoint::ErrorEvent>(): {
+      try {
+        std::rethrow_exception(event.As<RpcEndpoint::ErrorEvent>().error);
+      } catch (const std::exception& e) {
+        Log("error occurred in SDK subscription: ", e.what());
+      } catch (...) {
+        Log("error occurred in SDK subscription: <unknown>");
+      }
       // We always reconnect.
       status_.store(Status::kConnecting, std::memory_order_relaxed);
       break;
