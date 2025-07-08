@@ -1172,3 +1172,31 @@ class InvalidPointCloudWarning(_message.Message):
     lidar_id: str
     reason: str
     def __init__(self, lidar_id: _Optional[str] = ..., reason: _Optional[str] = ...) -> None: ...
+
+class LidarIsDroppingPackets(_message.Message):
+    __slots__ = ("lidar_id", "num_total_dropped_packets", "num_total_expected_packets")
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    NUM_TOTAL_DROPPED_PACKETS_FIELD_NUMBER: _ClassVar[int]
+    NUM_TOTAL_EXPECTED_PACKETS_FIELD_NUMBER: _ClassVar[int]
+    lidar_id: str
+    num_total_dropped_packets: int
+    num_total_expected_packets: int
+    def __init__(self, lidar_id: _Optional[str] = ..., num_total_dropped_packets: _Optional[int] = ..., num_total_expected_packets: _Optional[int] = ...) -> None: ...
+
+class RemovedInvalidLidarsFromConfigWarning(_message.Message):
+    __slots__ = ("backup_path",)
+    BACKUP_PATH_FIELD_NUMBER: _ClassVar[int]
+    backup_path: str
+    def __init__(self, backup_path: _Optional[str] = ...) -> None: ...
+
+class CalibrationMapRecordingFailed(_message.Message):
+    __slots__ = ("message",)
+    MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    message: str
+    def __init__(self, message: _Optional[str] = ...) -> None: ...
+
+class DetectionNodeNotFoundError(_message.Message):
+    __slots__ = ("node_name",)
+    NODE_NAME_FIELD_NUMBER: _ClassVar[int]
+    node_name: str
+    def __init__(self, node_name: _Optional[str] = ...) -> None: ...

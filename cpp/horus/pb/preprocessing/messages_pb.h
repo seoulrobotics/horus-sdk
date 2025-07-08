@@ -74,9 +74,11 @@ enum class SensorStatus : PbEnum {  // NOLINT(*-enum-size)
   kTilted = 16,
   /// No documentation.
   kObstructed = 32,
+  /// No documentation.
+  kPacketDrop = 64,
 
   /// Unknown value read from the wire.
-  kUnknownWireValue = 33,
+  kUnknownWireValue = 65,
 };
 
 // MARK: Message forward declarations
@@ -667,7 +669,7 @@ class OccupancyGridEvent final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:80:3
+/// Source: horus/pb/preprocessing/messages.proto:84:3
 class SensorInfo_PoseCorrection final : public PbMessage {
  public:
 
@@ -829,7 +831,7 @@ class SensorInfo_PoseCorrection final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:72:1
+/// Source: horus/pb/preprocessing/messages.proto:73:1
 class SensorInfo final : public PbMessage {
  public:
   /// @see SensorInfo_PoseCorrection
@@ -1057,6 +1059,82 @@ class SensorInfo final : public PbMessage {
     return std::move(set_pose_correction(std::move(pose_correction)));
   }
 
+  // Field `num_total_dropped_packets` (no 5).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 5.
+  constexpr std::uint64_t num_total_dropped_packets() const& noexcept HORUS_LIFETIME_BOUND {
+    return num_total_dropped_packets_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 5.
+  std::uint64_t& mutable_num_total_dropped_packets() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[4] = true;
+    return num_total_dropped_packets_;
+  }
+
+  /// Returns whether `num_total_dropped_packets` (no 5) is set.
+  constexpr bool has_num_total_dropped_packets() const noexcept { return set_fields_[4]; }
+
+  /// Clears `num_total_dropped_packets` (no 5).
+  void clear_num_total_dropped_packets() & noexcept {
+    set_fields_[4] = false;
+    num_total_dropped_packets_ = {};
+  }
+
+  /// Sets `num_total_dropped_packets` (no 5) and returns `*this`.
+  SensorInfo& set_num_total_dropped_packets(std::uint64_t num_total_dropped_packets) & noexcept {
+    set_fields_[4] = true;
+    num_total_dropped_packets_ = num_total_dropped_packets;
+    return *this;
+  }
+  /// Sets `num_total_dropped_packets` (no 5) and returns `*this`.
+  SensorInfo&& set_num_total_dropped_packets(std::uint64_t num_total_dropped_packets) && noexcept {
+    return std::move(set_num_total_dropped_packets(num_total_dropped_packets));
+  }
+
+  // Field `num_total_expected_packets` (no 6).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 6.
+  constexpr std::uint64_t num_total_expected_packets() const& noexcept HORUS_LIFETIME_BOUND {
+    return num_total_expected_packets_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 6.
+  std::uint64_t& mutable_num_total_expected_packets() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[5] = true;
+    return num_total_expected_packets_;
+  }
+
+  /// Returns whether `num_total_expected_packets` (no 6) is set.
+  constexpr bool has_num_total_expected_packets() const noexcept { return set_fields_[5]; }
+
+  /// Clears `num_total_expected_packets` (no 6).
+  void clear_num_total_expected_packets() & noexcept {
+    set_fields_[5] = false;
+    num_total_expected_packets_ = {};
+  }
+
+  /// Sets `num_total_expected_packets` (no 6) and returns `*this`.
+  SensorInfo& set_num_total_expected_packets(std::uint64_t num_total_expected_packets) & noexcept {
+    set_fields_[5] = true;
+    num_total_expected_packets_ = num_total_expected_packets;
+    return *this;
+  }
+  /// Sets `num_total_expected_packets` (no 6) and returns `*this`.
+  SensorInfo&& set_num_total_expected_packets(std::uint64_t num_total_expected_packets) && noexcept {
+    return std::move(set_num_total_expected_packets(num_total_expected_packets));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
@@ -1066,9 +1144,13 @@ class SensorInfo final : public PbMessage {
   double measured_frequency_{};
   /// @see pose_correction()
   SensorInfo_PoseCorrection pose_correction_{};
+  /// @see num_total_dropped_packets()
+  std::uint64_t num_total_dropped_packets_{};
+  /// @see num_total_expected_packets()
+  std::uint64_t num_total_expected_packets_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<4> set_fields_;
+  std::bitset<6> set_fields_;
 };
 
 }  // namespace pb
@@ -1199,6 +1281,9 @@ class PbEnumTraits<horus::sdk::pb::SensorStatus> final {
       case horus::sdk::pb::SensorStatus::kObstructed: {
         return "OBSTRUCTED";
       }
+      case horus::sdk::pb::SensorStatus::kPacketDrop: {
+        return "PACKET_DROP";
+      }
       case horus::sdk::pb::SensorStatus::kUnknownWireValue:
       default: {
         return "";
@@ -1230,6 +1315,9 @@ class PbEnumTraits<horus::sdk::pb::SensorStatus> final {
       case 32: {
         return horus::sdk::pb::SensorStatus::kObstructed;
       }
+      case 64: {
+        return horus::sdk::pb::SensorStatus::kPacketDrop;
+      }
       default: {
         return default_value;
       }
@@ -1258,6 +1346,9 @@ class PbEnumTraits<horus::sdk::pb::SensorStatus> final {
     }
     if (name == "OBSTRUCTED") {
       return horus::sdk::pb::SensorStatus::kObstructed;
+    }
+    if (name == "PACKET_DROP") {
+      return horus::sdk::pb::SensorStatus::kPacketDrop;
     }
     return default_value;
   }

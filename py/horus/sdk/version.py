@@ -13,8 +13,6 @@ class Version:
 
     major: int
     """Major version."""
-    minor: int
-    """Minor version."""
     patch: int
     """Patch version."""
     pre: str
@@ -24,7 +22,6 @@ class Version:
     def _from_pb(pb: ss_pb.GetVersionResponse) -> "Version":
         return Version(
             major=pb.version.major,
-            minor=pb.version.minor,
             patch=pb.version.patch,
             pre=pb.version.pre,
         )
@@ -32,4 +29,4 @@ class Version:
     @override
     def __str__(self) -> str:
         preSep = "-" if len(self.pre) > 0 else ""
-        return f"{self.major}.{self.minor}.{self.patch}{preSep}{self.pre}"
+        return f"r{self.major}.{self.patch}{preSep}{self.pre}"

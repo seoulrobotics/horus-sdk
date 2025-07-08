@@ -170,6 +170,8 @@ SensorInfo::SensorInfo(const SensorInfo& other) noexcept(false)
     , status_{other.status_}
     , measured_frequency_{other.measured_frequency_}
     , pose_correction_{other.pose_correction_}
+    , num_total_dropped_packets_{other.num_total_dropped_packets_}
+    , num_total_expected_packets_{other.num_total_expected_packets_}
     , set_fields_{other.set_fields_} {}
 
 void SensorInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -184,6 +186,12 @@ void SensorInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[3]) {
     SerializeField<SensorInfo_PoseCorrection>(writer, /*tag=*/ 4, pose_correction_);
+  }
+  if (set_fields_[4]) {
+    SerializeField<std::uint64_t>(writer, /*tag=*/ 5, num_total_dropped_packets_);
+  }
+  if (set_fields_[5]) {
+    SerializeField<std::uint64_t>(writer, /*tag=*/ 6, num_total_expected_packets_);
   }
 }
 
@@ -208,6 +216,16 @@ void SensorInfo::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 4: {
         DeserializeField<SensorInfo_PoseCorrection>(reader, pose_correction_);
         set_fields_[3] = true;
+        break;
+      }
+      case 5: {
+        DeserializeField<std::uint64_t>(reader, num_total_dropped_packets_);
+        set_fields_[4] = true;
+        break;
+      }
+      case 6: {
+        DeserializeField<std::uint64_t>(reader, num_total_expected_packets_);
+        set_fields_[5] = true;
         break;
       }
       default: {

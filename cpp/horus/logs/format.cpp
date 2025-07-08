@@ -747,6 +747,22 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     logs::HorusStringify(sink, log_data.invalid_point_cloud_warning());
     break;
   }
+  case LogData::DataOneof::kLidarIsDroppingPackets: {
+    logs::HorusStringify(sink, log_data.lidar_is_dropping_packets());
+    break;
+  }
+  case LogData::DataOneof::kRemovedInvalidLidarsFromConfigWarning: {
+    logs::HorusStringify(sink, log_data.removed_invalid_lidars_from_config_warning());
+    break;
+  }
+  case LogData::DataOneof::kCalibrationMapRecordingFailed: {
+    logs::HorusStringify(sink, log_data.calibration_map_recording_failed());
+    break;
+  }
+  case LogData::DataOneof::kDetectionNodeNotFoundError: {
+    logs::HorusStringify(sink, log_data.detection_node_not_found_error());
+    break;
+  }
   case LogData::DataOneof::kNotSet:
   default: {
     sink.Append("Unknown log message");
@@ -1471,6 +1487,22 @@ void HorusStringify(const ErasedSink& sink, const UnknownLidarError& data) {
 
 void HorusStringify(const ErasedSink& sink, const InvalidPointCloudWarning& data) {
   StringifyTo(sink, "Invalid point cloud received from lidar ", data.lidar_id(), ": ", data.reason());
+}
+
+void HorusStringify(const ErasedSink& sink, const LidarIsDroppingPackets& data) {
+  StringifyTo(sink, "The lidar ", data.lidar_id(), " is dropping packets (dropped ", data.num_total_dropped_packets(), " packets out of ", data.num_total_expected_packets(), ").");
+}
+
+void HorusStringify(const ErasedSink& sink, const RemovedInvalidLidarsFromConfigWarning& data) {
+  StringifyTo(sink, "Some deprecated lidars have been found in the loaded project. These invalid lidars were removed from the active project but a backup config file has been saved in ", data.backup_path(), ".");
+}
+
+void HorusStringify(const ErasedSink& sink, const CalibrationMapRecordingFailed& data) {
+  StringifyTo(sink, "Failed recording the calibration map: ", data.message());
+}
+
+void HorusStringify(const ErasedSink& sink, const DetectionNodeNotFoundError& data) {
+  StringifyTo(sink, "Detection node ", data.node_name(), " not found.");
 }
 
 }  // namespace logs

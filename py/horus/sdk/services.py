@@ -4,8 +4,8 @@ from horus.pb.notification_service import service_pb2
 from horus.pb.detection_service import detection_pb2
 from horus.pb.preprocessing import messages_pb2
 
-from horus.pb.detection_service.detection_service_handler import (
-    DetectionSubscriberServiceHandler,
+from horus.pb.detection_merger.service_handler import (
+    DetectionMergerSubscriberServiceHandler,
 )
 from horus.pb.notification_service.service_handler import (
     NotificationListenerServiceHandler,
@@ -33,9 +33,9 @@ else:
 # `__init__()`.
 
 
-class DetectionServiceListener(DetectionSubscriberServiceHandler):
+class DetectionMergerServiceListener(DetectionMergerSubscriberServiceHandler):
     """
-    `DetectionSubscriberServiceHandler` implementation used by the `Sdk`.
+    `DetectionMergerSubscriberServiceHandler` implementation used by the `Sdk`.
     """
 
     def __init__(self, ws: WebSocket, logger: logging.Logger) -> None:

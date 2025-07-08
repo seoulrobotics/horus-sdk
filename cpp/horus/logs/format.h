@@ -568,6 +568,18 @@ void HorusStringify(const ErasedSink& sink, const UnknownLidarError& data);
 /// Formats the log `logs::InvalidPointCloudWarning` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const InvalidPointCloudWarning& data);
 
+/// Formats the log `logs::LidarIsDroppingPackets` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const LidarIsDroppingPackets& data);
+
+/// Formats the log `logs::RemovedInvalidLidarsFromConfigWarning` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const RemovedInvalidLidarsFromConfigWarning& data);
+
+/// Formats the log `logs::CalibrationMapRecordingFailed` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const CalibrationMapRecordingFailed& data);
+
+/// Formats the log `logs::DetectionNodeNotFoundError` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const DetectionNodeNotFoundError& data);
+
 }  // namespace logs
 
 }  // namespace pb
