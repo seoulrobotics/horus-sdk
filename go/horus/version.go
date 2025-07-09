@@ -10,8 +10,6 @@ import (
 type Version struct {
 	// Major version.
 	Major uint32
-	// Minor version.
-	Minor uint32
 	// Patch version.
 	Patch uint32
 	// pre-release version such as "beta". May be empty.
@@ -22,7 +20,6 @@ type Version struct {
 func newVersionFromPb(pb *status_service_messages_pb.Version) *Version {
 	return &Version{
 		Major: pb.GetMajor(),
-		Minor: pb.GetMinor(),
 		Patch: pb.GetPatch(),
 		Pre:   pb.GetPre(),
 	}
@@ -33,7 +30,7 @@ func (version Version) String() string {
 	if version.Pre != "" {
 		preSep = "-"
 	}
-	return fmt.Sprintf("%d.%d.%d%s%s", version.Major, version.Minor, version.Patch, preSep, version.Pre)
+	return fmt.Sprintf("r%d.%d%s%s", version.Major, version.Patch, preSep, version.Pre)
 }
 
 type GetVersionRequest struct {

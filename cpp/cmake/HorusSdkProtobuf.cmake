@@ -6,6 +6,11 @@ set(horus_sdk_pb_sources
   horus/pb/config/metadata_pb.h
   horus/pb/config/schema/general_pb.cpp
   horus/pb/config/schema/general_pb.h
+  horus/pb/detection_merger/service_client.h
+  horus/pb/detection_merger/service_handler.cpp
+  horus/pb/detection_merger/service_handler.h
+  horus/pb/detection_merger/service_pb.cpp
+  horus/pb/detection_merger/service_pb.h
   horus/pb/detection_service/detection_pb.cpp
   horus/pb/detection_service/detection_pb.h
   horus/pb/detection_service/detection_service_client.h

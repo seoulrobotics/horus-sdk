@@ -26,9 +26,9 @@
 #include "horus/future/try.h"
 #include "horus/logs/format.h"  // IWYU pragma: keep
 #include "horus/pb/cow.h"
+#include "horus/pb/detection_merger/service_client.h"
+#include "horus/pb/detection_merger/service_handler.h"
 #include "horus/pb/detection_service/detection_pb.h"
-#include "horus/pb/detection_service/detection_service_client.h"
-#include "horus/pb/detection_service/detection_service_handler.h"
 #include "horus/pb/logs/message_pb.h"
 #include "horus/pb/notification_service/service_client.h"
 #include "horus/pb/notification_service/service_handler.h"
@@ -190,7 +190,7 @@ SdkFuture<SdkSubscription> Sdk::SubscribeToProfiling(sdk::ProfilingSubscriptionR
 }
 
 SdkFuture<SdkSubscription> Sdk::SubscribeToObjects(sdk::ObjectSubscriptionRequest&& request) {
-  auto listener = pb::CreateFunctionalDetectionSubscriberService().BroadcastDetectionWith(
+  auto listener = pb::CreateFunctionalDetectionMergerSubscriberService().BroadcastDetectionWith(
       [this, user_callback{std::move(request).on_detection_results}](
           pb::DetectionEvent&& event) -> ChannelSendFuture<Task> {
         MoveOnlyFunction<void(pb::DetectionEvent&&)> move_only_user_callback{
@@ -199,8 +199,8 @@ SdkFuture<SdkSubscription> Sdk::SubscribeToObjects(sdk::ObjectSubscriptionReques
         return InvokeUserCallbackWithinEventLoop(std::move(move_only_user_callback),
                                                  std::move(event));
       });
-  return CreateSubscription<pb::DetectionServiceClient>(service_map_.detection, std::move(listener),
-                                                        pb::DefaultSubscribeRequest{});
+  return CreateSubscription<pb::DetectionMergerServiceClient>(
+      service_map_.detection_merger, std::move(listener), pb::DefaultSubscribeRequest{});
 }
 
 SdkFuture<SdkSubscription> Sdk::SubscribeToOccupancyGrid(

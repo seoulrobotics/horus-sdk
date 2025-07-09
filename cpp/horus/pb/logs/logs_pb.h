@@ -213,6 +213,10 @@ class BagCalibrationSaveFailed;
 class BagUpgradeFailed;
 class UnknownLidarError;
 class InvalidPointCloudWarning;
+class LidarIsDroppingPackets;
+class RemovedInvalidLidarsFromConfigWarning;
+class CalibrationMapRecordingFailed;
+class DetectionNodeNotFoundError;
 
 // MARK: Message declarations
 
@@ -22546,6 +22550,534 @@ class InvalidPointCloudWarning final : public PbMessage {
 
   /// The set of fields that have been given an explicit value.
   std::bitset<2> set_fields_;
+};
+
+/// Log #180.
+/// 
+///  > The lidar $lidar_id is dropping packets (dropped $num_total_dropped_packets packets out of $num_total_expected_packets).
+///
+/// Source: horus/pb/logs/logs.proto:1310:1
+class LidarIsDroppingPackets final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `LidarIsDroppingPackets`.
+  LidarIsDroppingPackets() noexcept = default;
+
+  /// Move constructor.
+  LidarIsDroppingPackets(LidarIsDroppingPackets&&) noexcept = default;
+  /// Move assignment operator.
+  LidarIsDroppingPackets& operator=(LidarIsDroppingPackets&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit LidarIsDroppingPackets(const LidarIsDroppingPackets& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  LidarIsDroppingPackets& operator=(const LidarIsDroppingPackets&) = delete;
+
+  /// Default destructor.
+  ~LidarIsDroppingPackets() noexcept final = default;
+
+  /// Creates a `LidarIsDroppingPackets` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit LidarIsDroppingPackets(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.LidarIsDroppingPackets`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.LidarIsDroppingPackets"; }
+
+  /// The full name of the message: `horus.pb.logs.LidarIsDroppingPackets`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `lidar_id` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 1) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[0]; }
+
+  /// Clears `lidar_id` (no 1).
+  void clear_lidar_id() & noexcept {
+    set_fields_[0] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  LidarIsDroppingPackets& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[0] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  LidarIsDroppingPackets&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `num_total_dropped_packets` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr std::uint64_t num_total_dropped_packets() const& noexcept HORUS_LIFETIME_BOUND {
+    return num_total_dropped_packets_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  std::uint64_t& mutable_num_total_dropped_packets() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return num_total_dropped_packets_;
+  }
+
+  /// Returns whether `num_total_dropped_packets` (no 2) is set.
+  constexpr bool has_num_total_dropped_packets() const noexcept { return set_fields_[1]; }
+
+  /// Clears `num_total_dropped_packets` (no 2).
+  void clear_num_total_dropped_packets() & noexcept {
+    set_fields_[1] = false;
+    num_total_dropped_packets_ = {};
+  }
+
+  /// Sets `num_total_dropped_packets` (no 2) and returns `*this`.
+  LidarIsDroppingPackets& set_num_total_dropped_packets(std::uint64_t num_total_dropped_packets) & noexcept {
+    set_fields_[1] = true;
+    num_total_dropped_packets_ = num_total_dropped_packets;
+    return *this;
+  }
+  /// Sets `num_total_dropped_packets` (no 2) and returns `*this`.
+  LidarIsDroppingPackets&& set_num_total_dropped_packets(std::uint64_t num_total_dropped_packets) && noexcept {
+    return std::move(set_num_total_dropped_packets(num_total_dropped_packets));
+  }
+
+  // Field `num_total_expected_packets` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr std::uint64_t num_total_expected_packets() const& noexcept HORUS_LIFETIME_BOUND {
+    return num_total_expected_packets_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  std::uint64_t& mutable_num_total_expected_packets() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return num_total_expected_packets_;
+  }
+
+  /// Returns whether `num_total_expected_packets` (no 3) is set.
+  constexpr bool has_num_total_expected_packets() const noexcept { return set_fields_[2]; }
+
+  /// Clears `num_total_expected_packets` (no 3).
+  void clear_num_total_expected_packets() & noexcept {
+    set_fields_[2] = false;
+    num_total_expected_packets_ = {};
+  }
+
+  /// Sets `num_total_expected_packets` (no 3) and returns `*this`.
+  LidarIsDroppingPackets& set_num_total_expected_packets(std::uint64_t num_total_expected_packets) & noexcept {
+    set_fields_[2] = true;
+    num_total_expected_packets_ = num_total_expected_packets;
+    return *this;
+  }
+  /// Sets `num_total_expected_packets` (no 3) and returns `*this`.
+  LidarIsDroppingPackets&& set_num_total_expected_packets(std::uint64_t num_total_expected_packets) && noexcept {
+    return std::move(set_num_total_expected_packets(num_total_expected_packets));
+  }
+
+ private:
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see num_total_dropped_packets()
+  std::uint64_t num_total_dropped_packets_{};
+  /// @see num_total_expected_packets()
+  std::uint64_t num_total_expected_packets_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<3> set_fields_;
+};
+
+/// Log #181.
+/// 
+///  > Some deprecated lidars have been found in the loaded project. These invalid lidars were removed from the active project but a backup config file has been saved in $backup_path.
+///
+/// Source: horus/pb/logs/logs.proto:1319:1
+class RemovedInvalidLidarsFromConfigWarning final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `RemovedInvalidLidarsFromConfigWarning`.
+  RemovedInvalidLidarsFromConfigWarning() noexcept = default;
+
+  /// Move constructor.
+  RemovedInvalidLidarsFromConfigWarning(RemovedInvalidLidarsFromConfigWarning&&) noexcept = default;
+  /// Move assignment operator.
+  RemovedInvalidLidarsFromConfigWarning& operator=(RemovedInvalidLidarsFromConfigWarning&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit RemovedInvalidLidarsFromConfigWarning(const RemovedInvalidLidarsFromConfigWarning& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  RemovedInvalidLidarsFromConfigWarning& operator=(const RemovedInvalidLidarsFromConfigWarning&) = delete;
+
+  /// Default destructor.
+  ~RemovedInvalidLidarsFromConfigWarning() noexcept final = default;
+
+  /// Creates a `RemovedInvalidLidarsFromConfigWarning` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit RemovedInvalidLidarsFromConfigWarning(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.RemovedInvalidLidarsFromConfigWarning`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.RemovedInvalidLidarsFromConfigWarning"; }
+
+  /// The full name of the message: `horus.pb.logs.RemovedInvalidLidarsFromConfigWarning`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `backup_path` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& backup_path() const& noexcept HORUS_LIFETIME_BOUND {
+    return backup_path_;
+  }
+
+  /// If `backup_path` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes backup_path() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(backup_path_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_backup_path() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return backup_path_;
+  }
+
+  /// Returns whether `backup_path` (no 1) is set.
+  constexpr bool has_backup_path() const noexcept { return set_fields_[0]; }
+
+  /// Clears `backup_path` (no 1).
+  void clear_backup_path() & noexcept {
+    set_fields_[0] = false;
+    backup_path_ = {};
+  }
+
+  /// Sets `backup_path` (no 1) and returns `*this`.
+  RemovedInvalidLidarsFromConfigWarning& set_backup_path(CowBytes&& backup_path) & noexcept {
+    set_fields_[0] = true;
+    backup_path_ = std::move(backup_path);
+    return *this;
+  }
+  /// Sets `backup_path` (no 1) and returns `*this`.
+  RemovedInvalidLidarsFromConfigWarning&& set_backup_path(CowBytes&& backup_path) && noexcept {
+    return std::move(set_backup_path(std::move(backup_path)));
+  }
+
+ private:
+  /// @see backup_path()
+  CowBytes backup_path_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
+};
+
+/// Log #182.
+/// 
+///  > Failed recording the calibration map: $message
+///
+/// Source: horus/pb/logs/logs.proto:1326:1
+class CalibrationMapRecordingFailed final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `CalibrationMapRecordingFailed`.
+  CalibrationMapRecordingFailed() noexcept = default;
+
+  /// Move constructor.
+  CalibrationMapRecordingFailed(CalibrationMapRecordingFailed&&) noexcept = default;
+  /// Move assignment operator.
+  CalibrationMapRecordingFailed& operator=(CalibrationMapRecordingFailed&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit CalibrationMapRecordingFailed(const CalibrationMapRecordingFailed& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  CalibrationMapRecordingFailed& operator=(const CalibrationMapRecordingFailed&) = delete;
+
+  /// Default destructor.
+  ~CalibrationMapRecordingFailed() noexcept final = default;
+
+  /// Creates a `CalibrationMapRecordingFailed` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit CalibrationMapRecordingFailed(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.CalibrationMapRecordingFailed`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.CalibrationMapRecordingFailed"; }
+
+  /// The full name of the message: `horus.pb.logs.CalibrationMapRecordingFailed`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `message` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& message() const& noexcept HORUS_LIFETIME_BOUND {
+    return message_;
+  }
+
+  /// If `message` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes message() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(message_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_message() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return message_;
+  }
+
+  /// Returns whether `message` (no 1) is set.
+  constexpr bool has_message() const noexcept { return set_fields_[0]; }
+
+  /// Clears `message` (no 1).
+  void clear_message() & noexcept {
+    set_fields_[0] = false;
+    message_ = {};
+  }
+
+  /// Sets `message` (no 1) and returns `*this`.
+  CalibrationMapRecordingFailed& set_message(CowBytes&& message) & noexcept {
+    set_fields_[0] = true;
+    message_ = std::move(message);
+    return *this;
+  }
+  /// Sets `message` (no 1) and returns `*this`.
+  CalibrationMapRecordingFailed&& set_message(CowBytes&& message) && noexcept {
+    return std::move(set_message(std::move(message)));
+  }
+
+ private:
+  /// @see message()
+  CowBytes message_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
+};
+
+/// Log #183.
+/// 
+///  > Detection node $node_name not found.
+///
+/// Source: horus/pb/logs/logs.proto:1333:1
+class DetectionNodeNotFoundError final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `DetectionNodeNotFoundError`.
+  DetectionNodeNotFoundError() noexcept = default;
+
+  /// Move constructor.
+  DetectionNodeNotFoundError(DetectionNodeNotFoundError&&) noexcept = default;
+  /// Move assignment operator.
+  DetectionNodeNotFoundError& operator=(DetectionNodeNotFoundError&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit DetectionNodeNotFoundError(const DetectionNodeNotFoundError& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  DetectionNodeNotFoundError& operator=(const DetectionNodeNotFoundError&) = delete;
+
+  /// Default destructor.
+  ~DetectionNodeNotFoundError() noexcept final = default;
+
+  /// Creates a `DetectionNodeNotFoundError` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit DetectionNodeNotFoundError(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.DetectionNodeNotFoundError`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.DetectionNodeNotFoundError"; }
+
+  /// The full name of the message: `horus.pb.logs.DetectionNodeNotFoundError`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `node_name` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& node_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return node_name_;
+  }
+
+  /// If `node_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes node_name() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(node_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_node_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return node_name_;
+  }
+
+  /// Returns whether `node_name` (no 1) is set.
+  constexpr bool has_node_name() const noexcept { return set_fields_[0]; }
+
+  /// Clears `node_name` (no 1).
+  void clear_node_name() & noexcept {
+    set_fields_[0] = false;
+    node_name_ = {};
+  }
+
+  /// Sets `node_name` (no 1) and returns `*this`.
+  DetectionNodeNotFoundError& set_node_name(CowBytes&& node_name) & noexcept {
+    set_fields_[0] = true;
+    node_name_ = std::move(node_name);
+    return *this;
+  }
+  /// Sets `node_name` (no 1) and returns `*this`.
+  DetectionNodeNotFoundError&& set_node_name(CowBytes&& node_name) && noexcept {
+    return std::move(set_node_name(std::move(node_name)));
+  }
+
+ private:
+  /// @see node_name()
+  CowBytes node_name_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
 };
 
 }  // namespace logs

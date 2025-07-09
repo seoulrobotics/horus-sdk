@@ -1761,6 +1761,42 @@ func (x *LogData) GetInvalidPointCloudWarning() *logs_pb.InvalidPointCloudWarnin
 	return nil
 }
 
+func (x *LogData) GetLidarIsDroppingPackets() *logs_pb.LidarIsDroppingPackets {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_LidarIsDroppingPackets); ok {
+			return x.LidarIsDroppingPackets
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetRemovedInvalidLidarsFromConfigWarning() *logs_pb.RemovedInvalidLidarsFromConfigWarning {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_RemovedInvalidLidarsFromConfigWarning); ok {
+			return x.RemovedInvalidLidarsFromConfigWarning
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetCalibrationMapRecordingFailed() *logs_pb.CalibrationMapRecordingFailed {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_CalibrationMapRecordingFailed); ok {
+			return x.CalibrationMapRecordingFailed
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetDetectionNodeNotFoundError() *logs_pb.DetectionNodeNotFoundError {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_DetectionNodeNotFoundError); ok {
+			return x.DetectionNodeNotFoundError
+		}
+	}
+	return nil
+}
+
 func (x *LogData) SetGeneric(v *logs_pb.Generic) {
 	if v == nil {
 		x.xxx_hidden_Data = nil
@@ -3191,6 +3227,38 @@ func (x *LogData) SetInvalidPointCloudWarning(v *logs_pb.InvalidPointCloudWarnin
 		return
 	}
 	x.xxx_hidden_Data = &logData_InvalidPointCloudWarning{v}
+}
+
+func (x *LogData) SetLidarIsDroppingPackets(v *logs_pb.LidarIsDroppingPackets) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_LidarIsDroppingPackets{v}
+}
+
+func (x *LogData) SetRemovedInvalidLidarsFromConfigWarning(v *logs_pb.RemovedInvalidLidarsFromConfigWarning) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_RemovedInvalidLidarsFromConfigWarning{v}
+}
+
+func (x *LogData) SetCalibrationMapRecordingFailed(v *logs_pb.CalibrationMapRecordingFailed) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_CalibrationMapRecordingFailed{v}
+}
+
+func (x *LogData) SetDetectionNodeNotFoundError(v *logs_pb.DetectionNodeNotFoundError) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_DetectionNodeNotFoundError{v}
 }
 
 func (x *LogData) HasData() bool {
@@ -4632,6 +4700,38 @@ func (x *LogData) HasInvalidPointCloudWarning() bool {
 	return ok
 }
 
+func (x *LogData) HasLidarIsDroppingPackets() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_LidarIsDroppingPackets)
+	return ok
+}
+
+func (x *LogData) HasRemovedInvalidLidarsFromConfigWarning() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_RemovedInvalidLidarsFromConfigWarning)
+	return ok
+}
+
+func (x *LogData) HasCalibrationMapRecordingFailed() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_CalibrationMapRecordingFailed)
+	return ok
+}
+
+func (x *LogData) HasDetectionNodeNotFoundError() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_DetectionNodeNotFoundError)
+	return ok
+}
+
 func (x *LogData) ClearData() {
 	x.xxx_hidden_Data = nil
 }
@@ -5710,6 +5810,30 @@ func (x *LogData) ClearInvalidPointCloudWarning() {
 	}
 }
 
+func (x *LogData) ClearLidarIsDroppingPackets() {
+	if _, ok := x.xxx_hidden_Data.(*logData_LidarIsDroppingPackets); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearRemovedInvalidLidarsFromConfigWarning() {
+	if _, ok := x.xxx_hidden_Data.(*logData_RemovedInvalidLidarsFromConfigWarning); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearCalibrationMapRecordingFailed() {
+	if _, ok := x.xxx_hidden_Data.(*logData_CalibrationMapRecordingFailed); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearDetectionNodeNotFoundError() {
+	if _, ok := x.xxx_hidden_Data.(*logData_DetectionNodeNotFoundError); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
 const LogData_Data_not_set_case case_LogData_Data = 0
 const LogData_Generic_case case_LogData_Data = 1
 const LogData_Oom_case case_LogData_Data = 2
@@ -5890,6 +6014,10 @@ const LogData_BagCalibrationSaveFailed_case case_LogData_Data = 176
 const LogData_BagUpgradeFailed_case case_LogData_Data = 177
 const LogData_UnknownLidarError_case case_LogData_Data = 178
 const LogData_InvalidPointCloudWarning_case case_LogData_Data = 179
+const LogData_LidarIsDroppingPackets_case case_LogData_Data = 180
+const LogData_RemovedInvalidLidarsFromConfigWarning_case case_LogData_Data = 181
+const LogData_CalibrationMapRecordingFailed_case case_LogData_Data = 182
+const LogData_DetectionNodeNotFoundError_case case_LogData_Data = 183
 
 func (x *LogData) WhichData() case_LogData_Data {
 	if x == nil {
@@ -6254,6 +6382,14 @@ func (x *LogData) WhichData() case_LogData_Data {
 		return LogData_UnknownLidarError_case
 	case *logData_InvalidPointCloudWarning:
 		return LogData_InvalidPointCloudWarning_case
+	case *logData_LidarIsDroppingPackets:
+		return LogData_LidarIsDroppingPackets_case
+	case *logData_RemovedInvalidLidarsFromConfigWarning:
+		return LogData_RemovedInvalidLidarsFromConfigWarning_case
+	case *logData_CalibrationMapRecordingFailed:
+		return LogData_CalibrationMapRecordingFailed_case
+	case *logData_DetectionNodeNotFoundError:
+		return LogData_DetectionNodeNotFoundError_case
 	default:
 		return LogData_Data_not_set_case
 	}
@@ -6442,6 +6578,10 @@ type LogData_builder struct {
 	BagUpgradeFailed                            *logs_pb.BagUpgradeFailed
 	UnknownLidarError                           *logs_pb.UnknownLidarError
 	InvalidPointCloudWarning                    *logs_pb.InvalidPointCloudWarning
+	LidarIsDroppingPackets                      *logs_pb.LidarIsDroppingPackets
+	RemovedInvalidLidarsFromConfigWarning       *logs_pb.RemovedInvalidLidarsFromConfigWarning
+	CalibrationMapRecordingFailed               *logs_pb.CalibrationMapRecordingFailed
+	DetectionNodeNotFoundError                  *logs_pb.DetectionNodeNotFoundError
 	// -- end of xxx_hidden_Data
 }
 
@@ -6985,6 +7125,18 @@ func (b0 LogData_builder) Build() *LogData {
 	}
 	if b.InvalidPointCloudWarning != nil {
 		x.xxx_hidden_Data = &logData_InvalidPointCloudWarning{b.InvalidPointCloudWarning}
+	}
+	if b.LidarIsDroppingPackets != nil {
+		x.xxx_hidden_Data = &logData_LidarIsDroppingPackets{b.LidarIsDroppingPackets}
+	}
+	if b.RemovedInvalidLidarsFromConfigWarning != nil {
+		x.xxx_hidden_Data = &logData_RemovedInvalidLidarsFromConfigWarning{b.RemovedInvalidLidarsFromConfigWarning}
+	}
+	if b.CalibrationMapRecordingFailed != nil {
+		x.xxx_hidden_Data = &logData_CalibrationMapRecordingFailed{b.CalibrationMapRecordingFailed}
+	}
+	if b.DetectionNodeNotFoundError != nil {
+		x.xxx_hidden_Data = &logData_DetectionNodeNotFoundError{b.DetectionNodeNotFoundError}
 	}
 	return m0
 }
@@ -7719,6 +7871,22 @@ type logData_InvalidPointCloudWarning struct {
 	InvalidPointCloudWarning *logs_pb.InvalidPointCloudWarning `protobuf:"bytes,179,opt,name=invalid_point_cloud_warning,json=invalidPointCloudWarning,proto3,oneof"`
 }
 
+type logData_LidarIsDroppingPackets struct {
+	LidarIsDroppingPackets *logs_pb.LidarIsDroppingPackets `protobuf:"bytes,180,opt,name=lidar_is_dropping_packets,json=lidarIsDroppingPackets,proto3,oneof"`
+}
+
+type logData_RemovedInvalidLidarsFromConfigWarning struct {
+	RemovedInvalidLidarsFromConfigWarning *logs_pb.RemovedInvalidLidarsFromConfigWarning `protobuf:"bytes,181,opt,name=removed_invalid_lidars_from_config_warning,json=removedInvalidLidarsFromConfigWarning,proto3,oneof"`
+}
+
+type logData_CalibrationMapRecordingFailed struct {
+	CalibrationMapRecordingFailed *logs_pb.CalibrationMapRecordingFailed `protobuf:"bytes,182,opt,name=calibration_map_recording_failed,json=calibrationMapRecordingFailed,proto3,oneof"`
+}
+
+type logData_DetectionNodeNotFoundError struct {
+	DetectionNodeNotFoundError *logs_pb.DetectionNodeNotFoundError `protobuf:"bytes,183,opt,name=detection_node_not_found_error,json=detectionNodeNotFoundError,proto3,oneof"`
+}
+
 func (*logData_Generic) isLogData_Data() {}
 
 func (*logData_Oom) isLogData_Data() {}
@@ -8077,6 +8245,14 @@ func (*logData_UnknownLidarError) isLogData_Data() {}
 
 func (*logData_InvalidPointCloudWarning) isLogData_Data() {}
 
+func (*logData_LidarIsDroppingPackets) isLogData_Data() {}
+
+func (*logData_RemovedInvalidLidarsFromConfigWarning) isLogData_Data() {}
+
+func (*logData_CalibrationMapRecordingFailed) isLogData_Data() {}
+
+func (*logData_DetectionNodeNotFoundError) isLogData_Data() {}
+
 var File_horus_pb_logs_message_proto protoreflect.FileDescriptor
 
 var file_horus_pb_logs_message_proto_rawDesc = []byte{
@@ -8092,7 +8268,7 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
 	0x12, 0x25, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11,
 	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x6f, 0x67, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xd0, 0x92, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
+	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xb6, 0x96, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
 	0x44, 0x61, 0x74, 0x61, 0x12, 0x32, 0x0a, 0x07, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62,
 	0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x48, 0x00, 0x52,
@@ -9265,8 +9441,38 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x6e, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x43, 0x6c, 0x6f, 0x75, 0x64,
 	0x57, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x48, 0x00, 0x52, 0x18, 0x69, 0x6e, 0x76, 0x61, 0x6c,
 	0x69, 0x64, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x43, 0x6c, 0x6f, 0x75, 0x64, 0x57, 0x61, 0x72, 0x6e,
-	0x69, 0x6e, 0x67, 0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x69, 0x6e, 0x67, 0x12, 0x63, 0x0a, 0x19, 0x6c, 0x69, 0x64, 0x61, 0x72, 0x5f, 0x69, 0x73, 0x5f,
+	0x64, 0x72, 0x6f, 0x70, 0x70, 0x69, 0x6e, 0x67, 0x5f, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x73,
+	0x18, 0xb4, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x25, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e,
+	0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x49, 0x73, 0x44,
+	0x72, 0x6f, 0x70, 0x70, 0x69, 0x6e, 0x67, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x48, 0x00,
+	0x52, 0x16, 0x6c, 0x69, 0x64, 0x61, 0x72, 0x49, 0x73, 0x44, 0x72, 0x6f, 0x70, 0x70, 0x69, 0x6e,
+	0x67, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x12, 0x92, 0x01, 0x0a, 0x2a, 0x72, 0x65, 0x6d,
+	0x6f, 0x76, 0x65, 0x64, 0x5f, 0x69, 0x6e, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x5f, 0x6c, 0x69, 0x64,
+	0x61, 0x72, 0x73, 0x5f, 0x66, 0x72, 0x6f, 0x6d, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x5f,
+	0x77, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x18, 0xb5, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x34,
+	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x52,
+	0x65, 0x6d, 0x6f, 0x76, 0x65, 0x64, 0x49, 0x6e, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x4c, 0x69, 0x64,
+	0x61, 0x72, 0x73, 0x46, 0x72, 0x6f, 0x6d, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x57, 0x61, 0x72,
+	0x6e, 0x69, 0x6e, 0x67, 0x48, 0x00, 0x52, 0x25, 0x72, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x64, 0x49,
+	0x6e, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x73, 0x46, 0x72, 0x6f, 0x6d,
+	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x57, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x12, 0x78, 0x0a,
+	0x20, 0x63, 0x61, 0x6c, 0x69, 0x62, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x6d, 0x61, 0x70,
+	0x5f, 0x72, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x69, 0x6e, 0x67, 0x5f, 0x66, 0x61, 0x69, 0x6c, 0x65,
+	0x64, 0x18, 0xb6, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2c, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73,
+	0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x43, 0x61, 0x6c, 0x69, 0x62, 0x72, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x4d, 0x61, 0x70, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x69, 0x6e, 0x67,
+	0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x48, 0x00, 0x52, 0x1d, 0x63, 0x61, 0x6c, 0x69, 0x62, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4d, 0x61, 0x70, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x69, 0x6e,
+	0x67, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x12, 0x70, 0x0a, 0x1e, 0x64, 0x65, 0x74, 0x65, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x6e, 0x6f, 0x64, 0x65, 0x5f, 0x6e, 0x6f, 0x74, 0x5f, 0x66, 0x6f,
+	0x75, 0x6e, 0x64, 0x5f, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0xb7, 0x01, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x29, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73,
+	0x2e, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4e, 0x6f, 0x64, 0x65, 0x4e, 0x6f,
+	0x74, 0x46, 0x6f, 0x75, 0x6e, 0x64, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x48, 0x00, 0x52, 0x1a, 0x64,
+	0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4e, 0x6f, 0x64, 0x65, 0x4e, 0x6f, 0x74, 0x46,
+	0x6f, 0x75, 0x6e, 0x64, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74,
+	0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_horus_pb_logs_message_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
@@ -9453,6 +9659,10 @@ var file_horus_pb_logs_message_proto_goTypes = []any{
 	(*logs_pb.BagUpgradeFailed)(nil),                            // 179: horus.pb.logs.BagUpgradeFailed
 	(*logs_pb.UnknownLidarError)(nil),                           // 180: horus.pb.logs.UnknownLidarError
 	(*logs_pb.InvalidPointCloudWarning)(nil),                    // 181: horus.pb.logs.InvalidPointCloudWarning
+	(*logs_pb.LidarIsDroppingPackets)(nil),                      // 182: horus.pb.logs.LidarIsDroppingPackets
+	(*logs_pb.RemovedInvalidLidarsFromConfigWarning)(nil),       // 183: horus.pb.logs.RemovedInvalidLidarsFromConfigWarning
+	(*logs_pb.CalibrationMapRecordingFailed)(nil),               // 184: horus.pb.logs.CalibrationMapRecordingFailed
+	(*logs_pb.DetectionNodeNotFoundError)(nil),                  // 185: horus.pb.logs.DetectionNodeNotFoundError
 }
 var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	2,   // 0: horus.pb.LogMessage.metadata:type_name -> horus.pb.LogMetadata
@@ -9636,11 +9846,15 @@ var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	179, // 178: horus.pb.LogData.bag_upgrade_failed:type_name -> horus.pb.logs.BagUpgradeFailed
 	180, // 179: horus.pb.LogData.unknown_lidar_error:type_name -> horus.pb.logs.UnknownLidarError
 	181, // 180: horus.pb.LogData.invalid_point_cloud_warning:type_name -> horus.pb.logs.InvalidPointCloudWarning
-	181, // [181:181] is the sub-list for method output_type
-	181, // [181:181] is the sub-list for method input_type
-	181, // [181:181] is the sub-list for extension type_name
-	181, // [181:181] is the sub-list for extension extendee
-	0,   // [0:181] is the sub-list for field type_name
+	182, // 181: horus.pb.LogData.lidar_is_dropping_packets:type_name -> horus.pb.logs.LidarIsDroppingPackets
+	183, // 182: horus.pb.LogData.removed_invalid_lidars_from_config_warning:type_name -> horus.pb.logs.RemovedInvalidLidarsFromConfigWarning
+	184, // 183: horus.pb.LogData.calibration_map_recording_failed:type_name -> horus.pb.logs.CalibrationMapRecordingFailed
+	185, // 184: horus.pb.LogData.detection_node_not_found_error:type_name -> horus.pb.logs.DetectionNodeNotFoundError
+	185, // [185:185] is the sub-list for method output_type
+	185, // [185:185] is the sub-list for method input_type
+	185, // [185:185] is the sub-list for extension type_name
+	185, // [185:185] is the sub-list for extension extendee
+	0,   // [0:185] is the sub-list for field type_name
 }
 
 func init() { file_horus_pb_logs_message_proto_init() }
@@ -9828,6 +10042,10 @@ func file_horus_pb_logs_message_proto_init() {
 		(*logData_BagUpgradeFailed)(nil),
 		(*logData_UnknownLidarError)(nil),
 		(*logData_InvalidPointCloudWarning)(nil),
+		(*logData_LidarIsDroppingPackets)(nil),
+		(*logData_RemovedInvalidLidarsFromConfigWarning)(nil),
+		(*logData_CalibrationMapRecordingFailed)(nil),
+		(*logData_DetectionNodeNotFoundError)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

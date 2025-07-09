@@ -34,7 +34,7 @@ class Version;
 
 // MARK: Message declarations
 
-/// Semver representation "major.minor.patch-pre+build"
+/// "r<major.patch>[-pre][+build]"
 ///
 /// Source: horus/pb/status_service/messages.proto:6:1
 class Version final : public PbMessage {
@@ -124,44 +124,6 @@ class Version final : public PbMessage {
     return std::move(set_major(major));
   }
 
-  // Field `minor` (no 2).
-  // -----
-
-  /// No documentation.
-  ///
-  /// Field no: 2.
-  constexpr std::uint32_t minor() const& noexcept HORUS_LIFETIME_BOUND {
-    return minor_;
-  }
-
-  /// No documentation.
-  ///
-  /// Field no: 2.
-  std::uint32_t& mutable_minor() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[1] = true;
-    return minor_;
-  }
-
-  /// Returns whether `minor` (no 2) is set.
-  constexpr bool has_minor() const noexcept { return set_fields_[1]; }
-
-  /// Clears `minor` (no 2).
-  void clear_minor() & noexcept {
-    set_fields_[1] = false;
-    minor_ = {};
-  }
-
-  /// Sets `minor` (no 2) and returns `*this`.
-  Version& set_minor(std::uint32_t minor) & noexcept {
-    set_fields_[1] = true;
-    minor_ = minor;
-    return *this;
-  }
-  /// Sets `minor` (no 2) and returns `*this`.
-  Version&& set_minor(std::uint32_t minor) && noexcept {
-    return std::move(set_minor(minor));
-  }
-
   // Field `patch` (no 3).
   // -----
 
@@ -176,22 +138,22 @@ class Version final : public PbMessage {
   ///
   /// Field no: 3.
   std::uint32_t& mutable_patch() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[2] = true;
+    set_fields_[1] = true;
     return patch_;
   }
 
   /// Returns whether `patch` (no 3) is set.
-  constexpr bool has_patch() const noexcept { return set_fields_[2]; }
+  constexpr bool has_patch() const noexcept { return set_fields_[1]; }
 
   /// Clears `patch` (no 3).
   void clear_patch() & noexcept {
-    set_fields_[2] = false;
+    set_fields_[1] = false;
     patch_ = {};
   }
 
   /// Sets `patch` (no 3) and returns `*this`.
   Version& set_patch(std::uint32_t patch) & noexcept {
-    set_fields_[2] = true;
+    set_fields_[1] = true;
     patch_ = patch;
     return *this;
   }
@@ -216,7 +178,7 @@ class Version final : public PbMessage {
   ///
   /// Field no: 4.
   CowBytes pre() && noexcept {
-    if (!set_fields_[3]) {
+    if (!set_fields_[2]) {
       return {};
     }
     return std::move(pre_);
@@ -226,22 +188,22 @@ class Version final : public PbMessage {
   ///
   /// Field no: 4.
   CowBytes& mutable_pre() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[3] = true;
+    set_fields_[2] = true;
     return pre_;
   }
 
   /// Returns whether `pre` (no 4) is set.
-  constexpr bool has_pre() const noexcept { return set_fields_[3]; }
+  constexpr bool has_pre() const noexcept { return set_fields_[2]; }
 
   /// Clears `pre` (no 4).
   void clear_pre() & noexcept {
-    set_fields_[3] = false;
+    set_fields_[2] = false;
     pre_ = {};
   }
 
   /// Sets `pre` (no 4) and returns `*this`.
   Version& set_pre(CowBytes&& pre) & noexcept {
-    set_fields_[3] = true;
+    set_fields_[2] = true;
     pre_ = std::move(pre);
     return *this;
   }
@@ -253,15 +215,13 @@ class Version final : public PbMessage {
  private:
   /// @see major()
   std::uint32_t major_{};
-  /// @see minor()
-  std::uint32_t minor_{};
   /// @see patch()
   std::uint32_t patch_{};
   /// @see pre()
   CowBytes pre_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<4> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 }  // namespace pb

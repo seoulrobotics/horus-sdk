@@ -182,6 +182,10 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.BAG_UPGRADE_FAILED_FIELD_NUMBER: lambda m: format_bag_upgrade_failed(m.bag_upgrade_failed),
     LogData.UNKNOWN_LIDAR_ERROR_FIELD_NUMBER: lambda m: format_unknown_lidar_error(m.unknown_lidar_error),
     LogData.INVALID_POINT_CLOUD_WARNING_FIELD_NUMBER: lambda m: format_invalid_point_cloud_warning(m.invalid_point_cloud_warning),
+    LogData.LIDAR_IS_DROPPING_PACKETS_FIELD_NUMBER: lambda m: format_lidar_is_dropping_packets(m.lidar_is_dropping_packets),
+    LogData.REMOVED_INVALID_LIDARS_FROM_CONFIG_WARNING_FIELD_NUMBER: lambda m: format_removed_invalid_lidars_from_config_warning(m.removed_invalid_lidars_from_config_warning),
+    LogData.CALIBRATION_MAP_RECORDING_FAILED_FIELD_NUMBER: lambda m: format_calibration_map_recording_failed(m.calibration_map_recording_failed),
+    LogData.DETECTION_NODE_NOT_FOUND_ERROR_FIELD_NUMBER: lambda m: format_detection_node_not_found_error(m.detection_node_not_found_error),
 }
 
 def _unknown_format(data: LogData) -> str:
@@ -914,3 +918,19 @@ def format_unknown_lidar_error(log: _logs_pb.UnknownLidarError) -> str:
 def format_invalid_point_cloud_warning(log: _logs_pb.InvalidPointCloudWarning) -> str:
     """Formats log `InvalidPointCloudWarning` to a string."""
     return f"Invalid point cloud received from lidar {log.lidar_id}: {log.reason}"
+
+def format_lidar_is_dropping_packets(log: _logs_pb.LidarIsDroppingPackets) -> str:
+    """Formats log `LidarIsDroppingPackets` to a string."""
+    return f"The lidar {log.lidar_id} is dropping packets (dropped {log.num_total_dropped_packets} packets out of {log.num_total_expected_packets})."
+
+def format_removed_invalid_lidars_from_config_warning(log: _logs_pb.RemovedInvalidLidarsFromConfigWarning) -> str:
+    """Formats log `RemovedInvalidLidarsFromConfigWarning` to a string."""
+    return f"Some deprecated lidars have been found in the loaded project. These invalid lidars were removed from the active project but a backup config file has been saved in {log.backup_path}."
+
+def format_calibration_map_recording_failed(log: _logs_pb.CalibrationMapRecordingFailed) -> str:
+    """Formats log `CalibrationMapRecordingFailed` to a string."""
+    return f"Failed recording the calibration map: {log.message}"
+
+def format_detection_node_not_found_error(log: _logs_pb.DetectionNodeNotFoundError) -> str:
+    """Formats log `DetectionNodeNotFoundError` to a string."""
+    return f"Detection node {log.node_name} not found."

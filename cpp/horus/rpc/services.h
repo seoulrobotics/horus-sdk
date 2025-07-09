@@ -54,6 +54,16 @@ class RpcServices final {
     }
   };
 
+  /// Returns default static information about the `DetectionMergerService`.
+  static constexpr ServiceInfo DetectionMergerService() noexcept {
+    return ServiceInfo{
+        /*   full_name=*/"horus.pb.DetectionMergerService",
+        /*          id=*/11U,
+        /*  default_ip=*/"127.0.0.1",
+        /*default_port=*/40011U,
+    };
+  }
+
   /// Returns default static information about the `DetectionService`.
   static constexpr ServiceInfo DetectionService() noexcept {
     return ServiceInfo{
@@ -108,6 +118,9 @@ class RpcServices final {
   struct ServiceResolutionMap {
     /// Entry of the map, representing a Host.
     using Entry = ServiceInfo::Host;
+
+    /// How to resolve the detection_merger service.
+    Entry detection_merger{RpcServices::DetectionMergerService().DefaultHost()};
 
     /// How to resolve the detection service.
     Entry detection{RpcServices::DetectionService().DefaultHost()};

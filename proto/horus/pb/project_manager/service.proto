@@ -6,6 +6,7 @@ import "horus/pb/logs/logs.proto";
 
 import "horus/pb/preprocessing/messages.proto";
 import "horus/pb/license_server/messages.proto";
+
 import "horus/pb/rpc.proto";
 
 service ProjectManagerService {

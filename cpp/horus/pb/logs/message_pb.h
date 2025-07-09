@@ -9935,6 +9935,226 @@ class LogData final : public PbMessage {
     return std::move(set_invalid_point_cloud_warning(std::move(invalid_point_cloud_warning)));
   }
 
+  // Field `lidar_is_dropping_packets` (no 180).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 180.
+  constexpr const logs::LidarIsDroppingPackets& lidar_is_dropping_packets() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_is_dropping_packets_;
+  }
+
+  /// If `lidar_is_dropping_packets` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 180.
+  logs::LidarIsDroppingPackets lidar_is_dropping_packets() && noexcept {
+    if (!set_fields_[179]) {
+      return {};
+    }
+    return std::move(lidar_is_dropping_packets_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 180.
+  logs::LidarIsDroppingPackets& mutable_lidar_is_dropping_packets() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kLidarIsDroppingPackets;
+    set_fields_[179] = true;
+    return lidar_is_dropping_packets_;
+  }
+
+  /// Returns whether `lidar_is_dropping_packets` (no 180) is set.
+  constexpr bool has_lidar_is_dropping_packets() const noexcept { return set_fields_[179]; }
+
+  /// Clears `lidar_is_dropping_packets` (no 180).
+  void clear_lidar_is_dropping_packets() & noexcept {
+    data_ = {};
+    set_fields_[179] = false;
+    lidar_is_dropping_packets_ = {};
+  }
+
+  /// Sets `lidar_is_dropping_packets` (no 180) and returns `*this`.
+  LogData& set_lidar_is_dropping_packets(logs::LidarIsDroppingPackets&& lidar_is_dropping_packets) & noexcept {
+    clear_data();
+    data_ = DataOneof::kLidarIsDroppingPackets;
+    set_fields_[179] = true;
+    lidar_is_dropping_packets_ = std::move(lidar_is_dropping_packets);
+    return *this;
+  }
+  /// Sets `lidar_is_dropping_packets` (no 180) and returns `*this`.
+  LogData&& set_lidar_is_dropping_packets(logs::LidarIsDroppingPackets&& lidar_is_dropping_packets) && noexcept {
+    return std::move(set_lidar_is_dropping_packets(std::move(lidar_is_dropping_packets)));
+  }
+
+  // Field `removed_invalid_lidars_from_config_warning` (no 181).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 181.
+  constexpr const logs::RemovedInvalidLidarsFromConfigWarning& removed_invalid_lidars_from_config_warning() const& noexcept HORUS_LIFETIME_BOUND {
+    return removed_invalid_lidars_from_config_warning_;
+  }
+
+  /// If `removed_invalid_lidars_from_config_warning` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 181.
+  logs::RemovedInvalidLidarsFromConfigWarning removed_invalid_lidars_from_config_warning() && noexcept {
+    if (!set_fields_[180]) {
+      return {};
+    }
+    return std::move(removed_invalid_lidars_from_config_warning_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 181.
+  logs::RemovedInvalidLidarsFromConfigWarning& mutable_removed_invalid_lidars_from_config_warning() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kRemovedInvalidLidarsFromConfigWarning;
+    set_fields_[180] = true;
+    return removed_invalid_lidars_from_config_warning_;
+  }
+
+  /// Returns whether `removed_invalid_lidars_from_config_warning` (no 181) is set.
+  constexpr bool has_removed_invalid_lidars_from_config_warning() const noexcept { return set_fields_[180]; }
+
+  /// Clears `removed_invalid_lidars_from_config_warning` (no 181).
+  void clear_removed_invalid_lidars_from_config_warning() & noexcept {
+    data_ = {};
+    set_fields_[180] = false;
+    removed_invalid_lidars_from_config_warning_ = {};
+  }
+
+  /// Sets `removed_invalid_lidars_from_config_warning` (no 181) and returns `*this`.
+  LogData& set_removed_invalid_lidars_from_config_warning(logs::RemovedInvalidLidarsFromConfigWarning&& removed_invalid_lidars_from_config_warning) & noexcept {
+    clear_data();
+    data_ = DataOneof::kRemovedInvalidLidarsFromConfigWarning;
+    set_fields_[180] = true;
+    removed_invalid_lidars_from_config_warning_ = std::move(removed_invalid_lidars_from_config_warning);
+    return *this;
+  }
+  /// Sets `removed_invalid_lidars_from_config_warning` (no 181) and returns `*this`.
+  LogData&& set_removed_invalid_lidars_from_config_warning(logs::RemovedInvalidLidarsFromConfigWarning&& removed_invalid_lidars_from_config_warning) && noexcept {
+    return std::move(set_removed_invalid_lidars_from_config_warning(std::move(removed_invalid_lidars_from_config_warning)));
+  }
+
+  // Field `calibration_map_recording_failed` (no 182).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 182.
+  constexpr const logs::CalibrationMapRecordingFailed& calibration_map_recording_failed() const& noexcept HORUS_LIFETIME_BOUND {
+    return calibration_map_recording_failed_;
+  }
+
+  /// If `calibration_map_recording_failed` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 182.
+  logs::CalibrationMapRecordingFailed calibration_map_recording_failed() && noexcept {
+    if (!set_fields_[181]) {
+      return {};
+    }
+    return std::move(calibration_map_recording_failed_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 182.
+  logs::CalibrationMapRecordingFailed& mutable_calibration_map_recording_failed() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kCalibrationMapRecordingFailed;
+    set_fields_[181] = true;
+    return calibration_map_recording_failed_;
+  }
+
+  /// Returns whether `calibration_map_recording_failed` (no 182) is set.
+  constexpr bool has_calibration_map_recording_failed() const noexcept { return set_fields_[181]; }
+
+  /// Clears `calibration_map_recording_failed` (no 182).
+  void clear_calibration_map_recording_failed() & noexcept {
+    data_ = {};
+    set_fields_[181] = false;
+    calibration_map_recording_failed_ = {};
+  }
+
+  /// Sets `calibration_map_recording_failed` (no 182) and returns `*this`.
+  LogData& set_calibration_map_recording_failed(logs::CalibrationMapRecordingFailed&& calibration_map_recording_failed) & noexcept {
+    clear_data();
+    data_ = DataOneof::kCalibrationMapRecordingFailed;
+    set_fields_[181] = true;
+    calibration_map_recording_failed_ = std::move(calibration_map_recording_failed);
+    return *this;
+  }
+  /// Sets `calibration_map_recording_failed` (no 182) and returns `*this`.
+  LogData&& set_calibration_map_recording_failed(logs::CalibrationMapRecordingFailed&& calibration_map_recording_failed) && noexcept {
+    return std::move(set_calibration_map_recording_failed(std::move(calibration_map_recording_failed)));
+  }
+
+  // Field `detection_node_not_found_error` (no 183).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 183.
+  constexpr const logs::DetectionNodeNotFoundError& detection_node_not_found_error() const& noexcept HORUS_LIFETIME_BOUND {
+    return detection_node_not_found_error_;
+  }
+
+  /// If `detection_node_not_found_error` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 183.
+  logs::DetectionNodeNotFoundError detection_node_not_found_error() && noexcept {
+    if (!set_fields_[182]) {
+      return {};
+    }
+    return std::move(detection_node_not_found_error_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 183.
+  logs::DetectionNodeNotFoundError& mutable_detection_node_not_found_error() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kDetectionNodeNotFoundError;
+    set_fields_[182] = true;
+    return detection_node_not_found_error_;
+  }
+
+  /// Returns whether `detection_node_not_found_error` (no 183) is set.
+  constexpr bool has_detection_node_not_found_error() const noexcept { return set_fields_[182]; }
+
+  /// Clears `detection_node_not_found_error` (no 183).
+  void clear_detection_node_not_found_error() & noexcept {
+    data_ = {};
+    set_fields_[182] = false;
+    detection_node_not_found_error_ = {};
+  }
+
+  /// Sets `detection_node_not_found_error` (no 183) and returns `*this`.
+  LogData& set_detection_node_not_found_error(logs::DetectionNodeNotFoundError&& detection_node_not_found_error) & noexcept {
+    clear_data();
+    data_ = DataOneof::kDetectionNodeNotFoundError;
+    set_fields_[182] = true;
+    detection_node_not_found_error_ = std::move(detection_node_not_found_error);
+    return *this;
+  }
+  /// Sets `detection_node_not_found_error` (no 183) and returns `*this`.
+  LogData&& set_detection_node_not_found_error(logs::DetectionNodeNotFoundError&& detection_node_not_found_error) && noexcept {
+    return std::move(set_detection_node_not_found_error(std::move(detection_node_not_found_error)));
+  }
+
   // Oneof `data`.
   // -----
 
@@ -10300,6 +10520,14 @@ class LogData final : public PbMessage {
     kUnknownLidarError = 178,
     /// @see invalid_point_cloud_warning()
     kInvalidPointCloudWarning = 179,
+    /// @see lidar_is_dropping_packets()
+    kLidarIsDroppingPackets = 180,
+    /// @see removed_invalid_lidars_from_config_warning()
+    kRemovedInvalidLidarsFromConfigWarning = 181,
+    /// @see calibration_map_recording_failed()
+    kCalibrationMapRecordingFailed = 182,
+    /// @see detection_node_not_found_error()
+    kDetectionNodeNotFoundError = 183,
   };
 
   /// Returns the current case set in `data`.
@@ -11026,6 +11254,22 @@ class LogData final : public PbMessage {
         clear_invalid_point_cloud_warning();
         break;
       }
+      case DataOneof::kLidarIsDroppingPackets: {
+        clear_lidar_is_dropping_packets();
+        break;
+      }
+      case DataOneof::kRemovedInvalidLidarsFromConfigWarning: {
+        clear_removed_invalid_lidars_from_config_warning();
+        break;
+      }
+      case DataOneof::kCalibrationMapRecordingFailed: {
+        clear_calibration_map_recording_failed();
+        break;
+      }
+      case DataOneof::kDetectionNodeNotFoundError: {
+        clear_detection_node_not_found_error();
+        break;
+      }
       case DataOneof::kNotSet:
       default:
         break;
@@ -11391,12 +11635,20 @@ class LogData final : public PbMessage {
   logs::UnknownLidarError unknown_lidar_error_{};
   /// @see invalid_point_cloud_warning()
   logs::InvalidPointCloudWarning invalid_point_cloud_warning_{};
+  /// @see lidar_is_dropping_packets()
+  logs::LidarIsDroppingPackets lidar_is_dropping_packets_{};
+  /// @see removed_invalid_lidars_from_config_warning()
+  logs::RemovedInvalidLidarsFromConfigWarning removed_invalid_lidars_from_config_warning_{};
+  /// @see calibration_map_recording_failed()
+  logs::CalibrationMapRecordingFailed calibration_map_recording_failed_{};
+  /// @see detection_node_not_found_error()
+  logs::DetectionNodeNotFoundError detection_node_not_found_error_{};
 
   /// @see data_case()
   DataOneof data_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<179> set_fields_;
+  std::bitset<183> set_fields_;
 };
 
 /// A log message notifying users about some status.

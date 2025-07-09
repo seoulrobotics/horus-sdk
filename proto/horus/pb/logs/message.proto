@@ -195,5 +195,9 @@ message LogData {
     logs.BagUpgradeFailed bag_upgrade_failed = 177;
     logs.UnknownLidarError unknown_lidar_error = 178;
     logs.InvalidPointCloudWarning invalid_point_cloud_warning = 179;
+    logs.LidarIsDroppingPackets lidar_is_dropping_packets = 180;
+    logs.RemovedInvalidLidarsFromConfigWarning removed_invalid_lidars_from_config_warning = 181;
+    logs.CalibrationMapRecordingFailed calibration_map_recording_failed = 182;
+    logs.DetectionNodeNotFoundError detection_node_not_found_error = 183;
   }
 }

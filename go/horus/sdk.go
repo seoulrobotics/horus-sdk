@@ -10,8 +10,8 @@ import (
 
 	"github.com/seoulrobotics/horus-sdk/go/internal"
 	"github.com/seoulrobotics/horus-sdk/go/internal/rpc"
+	detection_merger_service_pb "github.com/seoulrobotics/horus-sdk/go/proto/detection_merger/service_pb"
 	"github.com/seoulrobotics/horus-sdk/go/proto/detection_service/detection_pb"
-	"github.com/seoulrobotics/horus-sdk/go/proto/detection_service/detection_service_pb"
 	"github.com/seoulrobotics/horus-sdk/go/proto/point/point_message_pb"
 	"github.com/seoulrobotics/horus-sdk/go/proto/point_aggregator/point_aggregator_service_pb"
 	project_manager_service_pb "github.com/seoulrobotics/horus-sdk/go/proto/project_manager/service_pb"
@@ -25,7 +25,7 @@ import (
 type Sdk struct {
 	logger *slog.Logger
 
-	detection       *detection_service_pb.DetectionServiceClient
+	detectionMerger *detection_merger_service_pb.DetectionMergerServiceClient
 	pointAggregator *point_aggregator_service_pb.PointAggregatorServiceClient
 	projectManager  *project_manager_service_pb.ProjectManagerServiceClient
 	statusService   *status_service_pb.StatusServiceClient
@@ -79,15 +79,20 @@ func NewSdk(ctx context.Context, options SdkOptions) (*Sdk, error) {
 	// Connect to services. Use an errgroup to connect concurrently.
 	var g errgroup.Group
 
+	// Assert that services.Detection is nil, since DetectionMerger is used instead.
 	if services.Detection != nil {
+		panic("services.Detection must be nil; use services.DetectionMerger instead")
+	}
+
+	if services.DetectionMerger != nil {
 		g.Go(func() (err error) {
-			sdk.detection, sdk.detectionRcs, err = newSubscribingClient(
+			sdk.detectionMerger, sdk.detectionRcs, err = newSubscribingClient(
 				ctx,
 				logger,
 				options,
-				*services.Detection,
-				detection_service_pb.NewDetectionServiceClient,
-				&detection_service_pb.DetectionSubscriberServiceHandler{
+				*services.DetectionMerger,
+				detection_merger_service_pb.NewDetectionMergerServiceClient,
+				&detection_merger_service_pb.DetectionMergerSubscriberServiceHandler{
 					BroadcastDetection: sdk.detectionEventHandlers.handle,
 				},
 			)
@@ -132,8 +137,8 @@ func NewSdk(ctx context.Context, options SdkOptions) (*Sdk, error) {
 
 	// Find first non nil client and create a StatusServiceClient on its endpoint
 	var statusServiceEndpoint *rpc.Endpoint
-	if sdk.detection != nil {
-		statusServiceEndpoint = sdk.detection.Endpoint()
+	if sdk.detectionMerger != nil {
+		statusServiceEndpoint = sdk.detectionMerger.Endpoint()
 	} else if sdk.pointAggregator != nil {
 		statusServiceEndpoint = sdk.pointAggregator.Endpoint()
 	} else if sdk.projectManager != nil {
@@ -179,8 +184,8 @@ func (sdk *Sdk) GetHealthStatus(req GetHealthStatusRequest) (*HealthStatus, erro
 
 // SubscribeToObjects subscribes to object detection events and calls f for each event received.
 func (sdk *Sdk) SubscribeToObjects(f func(*detection_pb.DetectionEvent)) (*Subscription, error) {
-	if sdk.detection == nil {
-		return nil, errors.New("SDK is not configured to connect to the detection service")
+	if sdk.detectionMerger == nil {
+		return nil, errors.New("SDK is not configured to connect to the detection merger service")
 	}
 
 	cb := &f
@@ -215,8 +220,8 @@ func (sdk *Sdk) Close() error {
 
 	var g errgroup.Group
 
-	if sdk.detection != nil {
-		g.Go(sdk.detection.Endpoint().Close)
+	if sdk.detectionMerger != nil {
+		g.Go(sdk.detectionMerger.Endpoint().Close)
 	}
 	if sdk.pointAggregator != nil {
 		g.Go(sdk.pointAggregator.Endpoint().Close)

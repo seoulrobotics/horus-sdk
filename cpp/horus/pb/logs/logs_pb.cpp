@@ -4670,6 +4670,128 @@ void InvalidPointCloudWarning::DeserializeFrom(PbReader& reader) noexcept(false)
   }
 }
 
+LidarIsDroppingPackets::LidarIsDroppingPackets(const LidarIsDroppingPackets& other) noexcept(false)
+    : lidar_id_{other.lidar_id_}
+    , num_total_dropped_packets_{other.num_total_dropped_packets_}
+    , num_total_expected_packets_{other.num_total_expected_packets_}
+    , set_fields_{other.set_fields_} {}
+
+void LidarIsDroppingPackets::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<std::uint64_t>(writer, /*tag=*/ 2, num_total_dropped_packets_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<std::uint64_t>(writer, /*tag=*/ 3, num_total_expected_packets_);
+  }
+}
+
+void LidarIsDroppingPackets::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<std::uint64_t>(reader, num_total_dropped_packets_);
+        set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<std::uint64_t>(reader, num_total_expected_packets_);
+        set_fields_[2] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+RemovedInvalidLidarsFromConfigWarning::RemovedInvalidLidarsFromConfigWarning(const RemovedInvalidLidarsFromConfigWarning& other) noexcept(false)
+    : backup_path_{other.backup_path_}
+    , set_fields_{other.set_fields_} {}
+
+void RemovedInvalidLidarsFromConfigWarning::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, backup_path_);
+  }
+}
+
+void RemovedInvalidLidarsFromConfigWarning::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, backup_path_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+CalibrationMapRecordingFailed::CalibrationMapRecordingFailed(const CalibrationMapRecordingFailed& other) noexcept(false)
+    : message_{other.message_}
+    , set_fields_{other.set_fields_} {}
+
+void CalibrationMapRecordingFailed::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, message_);
+  }
+}
+
+void CalibrationMapRecordingFailed::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, message_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+DetectionNodeNotFoundError::DetectionNodeNotFoundError(const DetectionNodeNotFoundError& other) noexcept(false)
+    : node_name_{other.node_name_}
+    , set_fields_{other.set_fields_} {}
+
+void DetectionNodeNotFoundError::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, node_name_);
+  }
+}
+
+void DetectionNodeNotFoundError::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, node_name_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
 }  // namespace logs
 }  // namespace pb
 }  // namespace sdk

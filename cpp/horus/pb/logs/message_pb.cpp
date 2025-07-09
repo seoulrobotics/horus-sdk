@@ -186,6 +186,10 @@ LogData::LogData(const LogData& other) noexcept(false)
     , bag_upgrade_failed_{other.bag_upgrade_failed_}
     , unknown_lidar_error_{other.unknown_lidar_error_}
     , invalid_point_cloud_warning_{other.invalid_point_cloud_warning_}
+    , lidar_is_dropping_packets_{other.lidar_is_dropping_packets_}
+    , removed_invalid_lidars_from_config_warning_{other.removed_invalid_lidars_from_config_warning_}
+    , calibration_map_recording_failed_{other.calibration_map_recording_failed_}
+    , detection_node_not_found_error_{other.detection_node_not_found_error_}
     , data_{other.data_}
     , set_fields_{other.set_fields_} {}
 
@@ -726,6 +730,18 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[178]) {
     SerializeField<logs::InvalidPointCloudWarning>(writer, /*tag=*/ 179, invalid_point_cloud_warning_);
+  }
+  if (set_fields_[179]) {
+    SerializeField<logs::LidarIsDroppingPackets>(writer, /*tag=*/ 180, lidar_is_dropping_packets_);
+  }
+  if (set_fields_[180]) {
+    SerializeField<logs::RemovedInvalidLidarsFromConfigWarning>(writer, /*tag=*/ 181, removed_invalid_lidars_from_config_warning_);
+  }
+  if (set_fields_[181]) {
+    SerializeField<logs::CalibrationMapRecordingFailed>(writer, /*tag=*/ 182, calibration_map_recording_failed_);
+  }
+  if (set_fields_[182]) {
+    SerializeField<logs::DetectionNodeNotFoundError>(writer, /*tag=*/ 183, detection_node_not_found_error_);
   }
 }
 
@@ -1983,6 +1999,34 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
         data_ = DataOneof::kInvalidPointCloudWarning;
         DeserializeField<logs::InvalidPointCloudWarning>(reader, invalid_point_cloud_warning_);
         set_fields_[178] = true;
+        break;
+      }
+      case 180: {
+        clear_data();
+        data_ = DataOneof::kLidarIsDroppingPackets;
+        DeserializeField<logs::LidarIsDroppingPackets>(reader, lidar_is_dropping_packets_);
+        set_fields_[179] = true;
+        break;
+      }
+      case 181: {
+        clear_data();
+        data_ = DataOneof::kRemovedInvalidLidarsFromConfigWarning;
+        DeserializeField<logs::RemovedInvalidLidarsFromConfigWarning>(reader, removed_invalid_lidars_from_config_warning_);
+        set_fields_[180] = true;
+        break;
+      }
+      case 182: {
+        clear_data();
+        data_ = DataOneof::kCalibrationMapRecordingFailed;
+        DeserializeField<logs::CalibrationMapRecordingFailed>(reader, calibration_map_recording_failed_);
+        set_fields_[181] = true;
+        break;
+      }
+      case 183: {
+        clear_data();
+        data_ = DataOneof::kDetectionNodeNotFoundError;
+        DeserializeField<logs::DetectionNodeNotFoundError>(reader, detection_node_not_found_error_);
+        set_fields_[182] = true;
         break;
       }
       default: {
