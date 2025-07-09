@@ -1303,3 +1303,33 @@ message InvalidPointCloudWarning {
   string lidar_id = 1;
   string reason = 2;
 }
+
+// Log #180.
+//
+// > The lidar $lidar_id is dropping packets (dropped $num_total_dropped_packets packets out of $num_total_expected_packets).
+message LidarIsDroppingPackets {
+  string lidar_id = 1;
+  uint64 num_total_dropped_packets = 2;
+  uint64 num_total_expected_packets = 3;
+}
+
+// Log #181.
+//
+// > Some deprecated lidars have been found in the loaded project. These invalid lidars were removed from the active project but a backup config file has been saved in $backup_path.
+message RemovedInvalidLidarsFromConfigWarning {
+  string backup_path = 1;
+}
+
+// Log #182.
+//
+// > Failed recording the calibration map: $message
+message CalibrationMapRecordingFailed {
+  string message = 1;
+}
+
+// Log #183.
+//
+// > Detection node $node_name not found.
+message DetectionNodeNotFoundError {
+  string node_name = 1;
+}

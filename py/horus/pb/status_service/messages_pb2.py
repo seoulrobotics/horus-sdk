@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n&horus/pb/status_service/messages.proto\x12\x08horus.pb\"C\n\x07Version\x12\r\n\x05major\x18\x01 \x01(\r\x12\r\n\x05minor\x18\x02 \x01(\r\x12\r\n\x05patch\x18\x03 \x01(\r\x12\x0b\n\x03pre\x18\x04 \x01(\tb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n&horus/pb/status_service/messages.proto\x12\x08horus.pb\":\n\x07Version\x12\r\n\x05major\x18\x01 \x01(\r\x12\r\n\x05patch\x18\x03 \x01(\r\x12\x0b\n\x03pre\x18\x04 \x01(\tJ\x04\x08\x02\x10\x03\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,5 +32,5 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'horus.pb.status_service.mes
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_VERSION']._serialized_start=52
-  _globals['_VERSION']._serialized_end=119
+  _globals['_VERSION']._serialized_end=110
 # @@protoc_insertion_point(module_scope)

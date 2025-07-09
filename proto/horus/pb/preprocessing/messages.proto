@@ -67,6 +67,7 @@ enum SensorStatus {
   HIGH_FREQUENCY = 8;
   TILTED = 16;
   OBSTRUCTED = 32;
+  PACKET_DROP = 64;
 }
 
 message SensorInfo {
@@ -76,6 +77,9 @@ message SensorInfo {
   double measured_frequency = 3;
 
   optional PoseCorrection pose_correction = 4;
+
+  optional uint64 num_total_dropped_packets = 5;
+  optional uint64 num_total_expected_packets = 6;
 
   message PoseCorrection {
     Vector3f translation = 1;

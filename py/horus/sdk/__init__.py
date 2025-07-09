@@ -7,12 +7,9 @@ if typing.TYPE_CHECKING:
 else:
     Self = None
 
-from horus.pb.detection_service.detection_service_client import (
-    DetectionServiceClient as _DetectionServiceClient,
-)
 from horus.sdk.detection import DetectionEvent
-from horus.pb.detection_service.detection_service_client import (
-    DetectionServiceClient as _DetectionServiceClient,
+from horus.pb.detection_merger.service_client import (
+    DetectionMergerServiceClient as _DetectionMergerServiceClient,
 )
 from horus.pb.notification_service.service_client import (
     NotificationServiceClient as _NotificationServiceClient,
@@ -33,7 +30,9 @@ from horus.rpc.client_listener_pair import ClientListenerPair as _ClientListener
 from horus.rpc.client import Client as _Client
 from horus.rpc.services import RpcServices
 from horus.sdk.detection import DetectionEvent
-from horus.sdk.services import DetectionServiceListener as _DetectionServiceListener
+from horus.sdk.services import (
+    DetectionMergerServiceListener as _DetectionMergerServiceListener,
+)
 from horus.sdk.logs import Log, SensorInfoEvent
 from horus.sdk.services import (
     NotificationServiceListener as _NotificationServiceListener,
@@ -82,12 +81,12 @@ class Sdk:
         self._logger = logger
 
         self._detection_service = _ClientListenerPair(
-            services.detection.url,
+            services.detection_merger.url,
             logger,
-            _DetectionServiceClient,
-            _DetectionServiceListener,
-            _DetectionServiceClient.subscribe,
-            _DetectionServiceClient.unsubscribe,
+            _DetectionMergerServiceClient,
+            _DetectionMergerServiceListener,
+            _DetectionMergerServiceClient.subscribe,
+            _DetectionMergerServiceClient.unsubscribe,
         )
 
         self._notification_service = _ClientListenerPair(
@@ -193,7 +192,7 @@ class Sdk:
 
     async def _ensure_detection_service(
         self,
-    ) -> typing.Tuple[_DetectionServiceClient, _DetectionServiceListener]:
+    ) -> typing.Tuple[_DetectionMergerServiceClient, _DetectionMergerServiceListener]:
         return await self._detection_service.connect_and_subscribe(
             _DefaultSubscribeRequest(), _DefaultUnsubscribeRequest()
         )

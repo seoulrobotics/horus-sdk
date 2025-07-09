@@ -32,6 +32,13 @@ class RpcServiceInfo:
 class RpcServices:
     """Enumeration of the Horus RPC services."""
 
+    detection_merger: RpcServiceInfo = RpcServiceInfo(
+        full_name="horus.pb.DetectionMergerService",
+        id=11,
+        host="127.0.0.1",
+        port=40011,
+    )
+
     detection: RpcServiceInfo = RpcServiceInfo(
         full_name="horus.pb.DetectionService",
         id=7,
@@ -69,6 +76,7 @@ class RpcServices:
 
     def with_(self,
               /,
+              detection_merger: _Optional[RpcServiceInfo]=None,
               detection: _Optional[RpcServiceInfo]=None,
               notification: _Optional[RpcServiceInfo]=None,
               point_aggregator: _Optional[RpcServiceInfo]=None,
@@ -77,6 +85,7 @@ class RpcServices:
              ) -> "RpcServices":
         """Returns a copy of `self` with services replaced as specified."""
         return RpcServices(
+            detection_merger=detection_merger or self.detection_merger,
             detection=detection or self.detection,
             notification=notification or self.notification,
             point_aggregator=point_aggregator or self.point_aggregator,

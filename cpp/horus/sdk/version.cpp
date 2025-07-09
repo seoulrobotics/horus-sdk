@@ -10,7 +10,7 @@ namespace sdk {
 
 std::string Version::ToString() const {
   StringView const pre_separator{pre_.empty() ? "" : "-"};
-  return StrCat(major_, ".", minor_, ".", patch_, pre_separator, pre_);
+  return StrCat("r", major_, ".", patch_, pre_separator, pre_);
 }
 
 }  // namespace sdk

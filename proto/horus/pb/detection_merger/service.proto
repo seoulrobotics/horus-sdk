@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+import "horus/pb/detection_service/detection.proto";
+import "horus/pb/rpc.proto";
+
+package horus.pb;
+
+service DetectionMergerService {
+  option (service_options) = {
+    id: 11
+    description: "Service for merging detection results from multiple sources."
+  };
+
+  rpc Subscribe(DefaultSubscribeRequest) returns (DefaultSubscribeResponse) {
+    option (method_options) = {
+      id: 1
+      description: "Subscribe to receive merged detection results."
+      subscribe { subscriber_name: "DetectionMergerSubscriberService" }
+    };
+  }
+
+  rpc Unsubscribe(DefaultUnsubscribeRequest)
+      returns (DefaultUnsubscribeResponse) {
+    option (method_options) = {
+      id: 2
+      description: "Unsubscribe from merged detection results."
+      unsubscribe { subscriber_name: "DetectionMergerSubscriberService" }
+    };
+  }
+}
+
+service DetectionMergerSubscriberService {
+  option (service_options) = {
+    id: 16
+    description: "Service for receiving merged detection results."
+  };
+
+  rpc BroadcastDetection(DetectionEvent) returns (NoResponse) {
+    option (method_options) = {
+      id: 1
+      description: "Receive merged detection results."
+    };
+  }
+}

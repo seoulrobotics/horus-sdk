@@ -368,6 +368,14 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return fmt.Sprintf("Received points from unknown lidar %v.", data.GetLidarId())
 	case *logs_pb.InvalidPointCloudWarning:
 		return fmt.Sprintf("Invalid point cloud received from lidar %v: %v", data.GetLidarId(), data.GetReason())
+	case *logs_pb.LidarIsDroppingPackets:
+		return fmt.Sprintf("The lidar %v is dropping packets (dropped %v packets out of %v).", data.GetLidarId(), data.GetNumTotalDroppedPackets(), data.GetNumTotalExpectedPackets())
+	case *logs_pb.RemovedInvalidLidarsFromConfigWarning:
+		return fmt.Sprintf("Some deprecated lidars have been found in the loaded project. These invalid lidars were removed from the active project but a backup config file has been saved in %v.", data.GetBackupPath())
+	case *logs_pb.CalibrationMapRecordingFailed:
+		return fmt.Sprintf("Failed recording the calibration map: %v", data.GetMessage())
+	case *logs_pb.DetectionNodeNotFoundError:
+		return fmt.Sprintf("Detection node %v not found.", data.GetNodeName())
 	default:
 		return "unknown log message"
 	}

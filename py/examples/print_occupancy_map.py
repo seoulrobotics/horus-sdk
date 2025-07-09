@@ -1,8 +1,9 @@
 import asyncio, horus, signal
 
-import numpy as np  # type: ignore
-import matplotlib.pyplot as plt  # type: ignore
-from matplotlib import colors, patches
+# mypy: disable-error-code="import-not-found"
+import numpy as np  # type: ignore[unused-ignore, import-untyped]
+import matplotlib.pyplot as plt  # type: ignore[unused-ignore, import-untyped]
+from matplotlib import colors, patches  # type: ignore[unused-ignore, import-untyped]
 
 
 async def print_occupancy_grid() -> None:

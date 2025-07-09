@@ -26,11 +26,18 @@ func (si ServiceInfo) WithPort(port uint16) ServiceInfo {
 
 // Services provides the [ServiceInfo] of the Horus RPC services.
 type Services struct {
+	DetectionMerger *ServiceInfo
 	Detection *ServiceInfo
 	Notification *ServiceInfo
 	PointAggregator *ServiceInfo
 	ProjectManager *ServiceInfo
 	Status *ServiceInfo
+}
+
+// WithDetectionMerger returns a copy of s with its [Services.DetectionMerger] set to si.
+func (s Services) WithDetectionMerger(si ServiceInfo) Services {
+	s.DetectionMerger = &si
+	return s
 }
 
 // WithDetection returns a copy of s with its [Services.Detection] set to si.
@@ -66,6 +73,12 @@ func (s Services) WithStatus(si ServiceInfo) Services {
 // DefaultServices returns the default configuration of [Services].
 func DefaultServices() Services {
 	return Services{
+		DetectionMerger: &ServiceInfo{
+			FullName: "horus.pb.DetectionMergerService",
+			Id: 11,
+			Host: "127.0.0.1",
+			Port: 40011,
+		},
 		Detection: &ServiceInfo{
 			FullName: "horus.pb.DetectionService",
 			Id: 7,

@@ -11660,6 +11660,274 @@ func (b0 InvalidPointCloudWarning_builder) Build() *InvalidPointCloudWarning {
 	return m0
 }
 
+// Log #180.
+//
+// > The lidar $lidar_id is dropping packets (dropped $num_total_dropped_packets packets out of $num_total_expected_packets).
+type LidarIsDroppingPackets struct {
+	state                              protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_LidarId                 string                 `protobuf:"bytes,1,opt,name=lidar_id,json=lidarId,proto3" json:"lidar_id,omitempty"`
+	xxx_hidden_NumTotalDroppedPackets  uint64                 `protobuf:"varint,2,opt,name=num_total_dropped_packets,json=numTotalDroppedPackets,proto3" json:"num_total_dropped_packets,omitempty"`
+	xxx_hidden_NumTotalExpectedPackets uint64                 `protobuf:"varint,3,opt,name=num_total_expected_packets,json=numTotalExpectedPackets,proto3" json:"num_total_expected_packets,omitempty"`
+	unknownFields                      protoimpl.UnknownFields
+	sizeCache                          protoimpl.SizeCache
+}
+
+func (x *LidarIsDroppingPackets) Reset() {
+	*x = LidarIsDroppingPackets{}
+	mi := &file_horus_pb_logs_logs_proto_msgTypes[179]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LidarIsDroppingPackets) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LidarIsDroppingPackets) ProtoMessage() {}
+
+func (x *LidarIsDroppingPackets) ProtoReflect() protoreflect.Message {
+	mi := &file_horus_pb_logs_logs_proto_msgTypes[179]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *LidarIsDroppingPackets) GetLidarId() string {
+	if x != nil {
+		return x.xxx_hidden_LidarId
+	}
+	return ""
+}
+
+func (x *LidarIsDroppingPackets) GetNumTotalDroppedPackets() uint64 {
+	if x != nil {
+		return x.xxx_hidden_NumTotalDroppedPackets
+	}
+	return 0
+}
+
+func (x *LidarIsDroppingPackets) GetNumTotalExpectedPackets() uint64 {
+	if x != nil {
+		return x.xxx_hidden_NumTotalExpectedPackets
+	}
+	return 0
+}
+
+func (x *LidarIsDroppingPackets) SetLidarId(v string) {
+	x.xxx_hidden_LidarId = v
+}
+
+func (x *LidarIsDroppingPackets) SetNumTotalDroppedPackets(v uint64) {
+	x.xxx_hidden_NumTotalDroppedPackets = v
+}
+
+func (x *LidarIsDroppingPackets) SetNumTotalExpectedPackets(v uint64) {
+	x.xxx_hidden_NumTotalExpectedPackets = v
+}
+
+type LidarIsDroppingPackets_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	LidarId                 string
+	NumTotalDroppedPackets  uint64
+	NumTotalExpectedPackets uint64
+}
+
+func (b0 LidarIsDroppingPackets_builder) Build() *LidarIsDroppingPackets {
+	m0 := &LidarIsDroppingPackets{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_LidarId = b.LidarId
+	x.xxx_hidden_NumTotalDroppedPackets = b.NumTotalDroppedPackets
+	x.xxx_hidden_NumTotalExpectedPackets = b.NumTotalExpectedPackets
+	return m0
+}
+
+// Log #181.
+//
+// > Some deprecated lidars have been found in the loaded project. These invalid lidars were removed from the active project but a backup config file has been saved in $backup_path.
+type RemovedInvalidLidarsFromConfigWarning struct {
+	state                 protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_BackupPath string                 `protobuf:"bytes,1,opt,name=backup_path,json=backupPath,proto3" json:"backup_path,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *RemovedInvalidLidarsFromConfigWarning) Reset() {
+	*x = RemovedInvalidLidarsFromConfigWarning{}
+	mi := &file_horus_pb_logs_logs_proto_msgTypes[180]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RemovedInvalidLidarsFromConfigWarning) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemovedInvalidLidarsFromConfigWarning) ProtoMessage() {}
+
+func (x *RemovedInvalidLidarsFromConfigWarning) ProtoReflect() protoreflect.Message {
+	mi := &file_horus_pb_logs_logs_proto_msgTypes[180]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *RemovedInvalidLidarsFromConfigWarning) GetBackupPath() string {
+	if x != nil {
+		return x.xxx_hidden_BackupPath
+	}
+	return ""
+}
+
+func (x *RemovedInvalidLidarsFromConfigWarning) SetBackupPath(v string) {
+	x.xxx_hidden_BackupPath = v
+}
+
+type RemovedInvalidLidarsFromConfigWarning_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	BackupPath string
+}
+
+func (b0 RemovedInvalidLidarsFromConfigWarning_builder) Build() *RemovedInvalidLidarsFromConfigWarning {
+	m0 := &RemovedInvalidLidarsFromConfigWarning{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_BackupPath = b.BackupPath
+	return m0
+}
+
+// Log #182.
+//
+// > Failed recording the calibration map: $message
+type CalibrationMapRecordingFailed struct {
+	state              protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Message string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *CalibrationMapRecordingFailed) Reset() {
+	*x = CalibrationMapRecordingFailed{}
+	mi := &file_horus_pb_logs_logs_proto_msgTypes[181]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CalibrationMapRecordingFailed) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CalibrationMapRecordingFailed) ProtoMessage() {}
+
+func (x *CalibrationMapRecordingFailed) ProtoReflect() protoreflect.Message {
+	mi := &file_horus_pb_logs_logs_proto_msgTypes[181]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *CalibrationMapRecordingFailed) GetMessage() string {
+	if x != nil {
+		return x.xxx_hidden_Message
+	}
+	return ""
+}
+
+func (x *CalibrationMapRecordingFailed) SetMessage(v string) {
+	x.xxx_hidden_Message = v
+}
+
+type CalibrationMapRecordingFailed_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Message string
+}
+
+func (b0 CalibrationMapRecordingFailed_builder) Build() *CalibrationMapRecordingFailed {
+	m0 := &CalibrationMapRecordingFailed{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_Message = b.Message
+	return m0
+}
+
+// Log #183.
+//
+// > Detection node $node_name not found.
+type DetectionNodeNotFoundError struct {
+	state               protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_NodeName string                 `protobuf:"bytes,1,opt,name=node_name,json=nodeName,proto3" json:"node_name,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *DetectionNodeNotFoundError) Reset() {
+	*x = DetectionNodeNotFoundError{}
+	mi := &file_horus_pb_logs_logs_proto_msgTypes[182]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DetectionNodeNotFoundError) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DetectionNodeNotFoundError) ProtoMessage() {}
+
+func (x *DetectionNodeNotFoundError) ProtoReflect() protoreflect.Message {
+	mi := &file_horus_pb_logs_logs_proto_msgTypes[182]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *DetectionNodeNotFoundError) GetNodeName() string {
+	if x != nil {
+		return x.xxx_hidden_NodeName
+	}
+	return ""
+}
+
+func (x *DetectionNodeNotFoundError) SetNodeName(v string) {
+	x.xxx_hidden_NodeName = v
+}
+
+type DetectionNodeNotFoundError_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	NodeName string
+}
+
+func (b0 DetectionNodeNotFoundError_builder) Build() *DetectionNodeNotFoundError {
+	m0 := &DetectionNodeNotFoundError{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_NodeName = b.NodeName
+	return m0
+}
+
 var File_horus_pb_logs_logs_proto protoreflect.FileDescriptor
 
 var file_horus_pb_logs_logs_proto_rawDesc = []byte{
@@ -12430,11 +12698,34 @@ var file_horus_pb_logs_logs_proto_rawDesc = []byte{
 	0x6f, 0x75, 0x64, 0x57, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x12, 0x19, 0x0a, 0x08, 0x6c, 0x69,
 	0x64, 0x61, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6c, 0x69,
 	0x64, 0x61, 0x72, 0x49, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x22, 0xab, 0x01,
+	0x0a, 0x16, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x49, 0x73, 0x44, 0x72, 0x6f, 0x70, 0x70, 0x69, 0x6e,
+	0x67, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x12, 0x19, 0x0a, 0x08, 0x6c, 0x69, 0x64, 0x61,
+	0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6c, 0x69, 0x64, 0x61,
+	0x72, 0x49, 0x64, 0x12, 0x39, 0x0a, 0x19, 0x6e, 0x75, 0x6d, 0x5f, 0x74, 0x6f, 0x74, 0x61, 0x6c,
+	0x5f, 0x64, 0x72, 0x6f, 0x70, 0x70, 0x65, 0x64, 0x5f, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x73,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x16, 0x6e, 0x75, 0x6d, 0x54, 0x6f, 0x74, 0x61, 0x6c,
+	0x44, 0x72, 0x6f, 0x70, 0x70, 0x65, 0x64, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x12, 0x3b,
+	0x0a, 0x1a, 0x6e, 0x75, 0x6d, 0x5f, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x65, 0x78, 0x70, 0x65,
+	0x63, 0x74, 0x65, 0x64, 0x5f, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x04, 0x52, 0x17, 0x6e, 0x75, 0x6d, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x45, 0x78, 0x70, 0x65,
+	0x63, 0x74, 0x65, 0x64, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x22, 0x48, 0x0a, 0x25, 0x52,
+	0x65, 0x6d, 0x6f, 0x76, 0x65, 0x64, 0x49, 0x6e, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x4c, 0x69, 0x64,
+	0x61, 0x72, 0x73, 0x46, 0x72, 0x6f, 0x6d, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x57, 0x61, 0x72,
+	0x6e, 0x69, 0x6e, 0x67, 0x12, 0x1f, 0x0a, 0x0b, 0x62, 0x61, 0x63, 0x6b, 0x75, 0x70, 0x5f, 0x70,
+	0x61, 0x74, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x62, 0x61, 0x63, 0x6b, 0x75,
+	0x70, 0x50, 0x61, 0x74, 0x68, 0x22, 0x39, 0x0a, 0x1d, 0x43, 0x61, 0x6c, 0x69, 0x62, 0x72, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x4d, 0x61, 0x70, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x69, 0x6e, 0x67,
+	0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
+	0x22, 0x39, 0x0a, 0x1a, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4e, 0x6f, 0x64,
+	0x65, 0x4e, 0x6f, 0x74, 0x46, 0x6f, 0x75, 0x6e, 0x64, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x12, 0x1b,
+	0x0a, 0x09, 0x6e, 0x6f, 0x64, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x08, 0x6e, 0x6f, 0x64, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
-var file_horus_pb_logs_logs_proto_msgTypes = make([]protoimpl.MessageInfo, 179)
+var file_horus_pb_logs_logs_proto_msgTypes = make([]protoimpl.MessageInfo, 183)
 var file_horus_pb_logs_logs_proto_goTypes = []any{
 	(*Generic)(nil),                                     // 0: horus.pb.logs.Generic
 	(*Oom)(nil),                                         // 1: horus.pb.logs.Oom
@@ -12615,36 +12906,40 @@ var file_horus_pb_logs_logs_proto_goTypes = []any{
 	(*BagUpgradeFailed)(nil),                            // 176: horus.pb.logs.BagUpgradeFailed
 	(*UnknownLidarError)(nil),                           // 177: horus.pb.logs.UnknownLidarError
 	(*InvalidPointCloudWarning)(nil),                    // 178: horus.pb.logs.InvalidPointCloudWarning
-	(*metadata_pb.LogMetadata_SourceLocation)(nil),      // 179: horus.pb.LogMetadata.SourceLocation
-	(*common_pb.ValidationError)(nil),                   // 180: horus.pb.logs.ValidationError
-	(*metadata_pb.LogMetadata_Timestamp)(nil),           // 181: horus.pb.LogMetadata.Timestamp
-	(*metadata_pb.LogMetadata_Duration)(nil),            // 182: horus.pb.LogMetadata.Duration
+	(*LidarIsDroppingPackets)(nil),                      // 179: horus.pb.logs.LidarIsDroppingPackets
+	(*RemovedInvalidLidarsFromConfigWarning)(nil),       // 180: horus.pb.logs.RemovedInvalidLidarsFromConfigWarning
+	(*CalibrationMapRecordingFailed)(nil),               // 181: horus.pb.logs.CalibrationMapRecordingFailed
+	(*DetectionNodeNotFoundError)(nil),                  // 182: horus.pb.logs.DetectionNodeNotFoundError
+	(*metadata_pb.LogMetadata_SourceLocation)(nil),      // 183: horus.pb.LogMetadata.SourceLocation
+	(*common_pb.ValidationError)(nil),                   // 184: horus.pb.logs.ValidationError
+	(*metadata_pb.LogMetadata_Timestamp)(nil),           // 185: horus.pb.LogMetadata.Timestamp
+	(*metadata_pb.LogMetadata_Duration)(nil),            // 186: horus.pb.LogMetadata.Duration
 }
 var file_horus_pb_logs_logs_proto_depIdxs = []int32{
-	179, // 0: horus.pb.logs.Generic.location:type_name -> horus.pb.LogMetadata.SourceLocation
-	180, // 1: horus.pb.logs.InvalidConfiguration.validation_errors:type_name -> horus.pb.logs.ValidationError
-	181, // 2: horus.pb.logs.LicenseExpiredError.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
-	181, // 3: horus.pb.logs.LicenseCurrentLicenseStatusInfo.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
-	182, // 4: horus.pb.logs.RpcTimeoutWarning.elapsed:type_name -> horus.pb.LogMetadata.Duration
-	179, // 5: horus.pb.logs.UnhandledEnumCaseError.location:type_name -> horus.pb.LogMetadata.SourceLocation
-	181, // 6: horus.pb.logs.BagTimestampOutOfOrderError.prior_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
-	181, // 7: horus.pb.logs.BagTimestampOutOfOrderError.current_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
-	181, // 8: horus.pb.logs.BagReplayUnexpectedTimestampError.expected_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
-	181, // 9: horus.pb.logs.BagReplayUnexpectedTimestampError.received_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
-	182, // 10: horus.pb.logs.ThreadPoolNotRespondingWarning.not_responding_for:type_name -> horus.pb.LogMetadata.Duration
-	182, // 11: horus.pb.logs.IrregularBroadcastingPeriodWarning.duration:type_name -> horus.pb.LogMetadata.Duration
-	182, // 12: horus.pb.logs.IrregularBroadcastingPeriodWarning.mean_deviation:type_name -> horus.pb.LogMetadata.Duration
-	181, // 13: horus.pb.logs.LicenseExpiredWarning.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
-	182, // 14: horus.pb.logs.StaticThreadPoolSlowTaskWarning.time_elapsed:type_name -> horus.pb.LogMetadata.Duration
-	179, // 15: horus.pb.logs.StaticThreadPoolSlowTaskWarning.enqueue_location:type_name -> horus.pb.LogMetadata.SourceLocation
-	182, // 16: horus.pb.logs.PreprocessingToPointAggregatorPointsSkipped.check_interval:type_name -> horus.pb.LogMetadata.Duration
-	182, // 17: horus.pb.logs.MinMsgIntervalLessThanThreshold.threshold:type_name -> horus.pb.LogMetadata.Duration
-	181, // 18: horus.pb.logs.TimeDiffOutOfRangeWarning.prev_time:type_name -> horus.pb.LogMetadata.Timestamp
-	181, // 19: horus.pb.logs.TimeDiffOutOfRangeWarning.curr_time:type_name -> horus.pb.LogMetadata.Timestamp
-	182, // 20: horus.pb.logs.TimeDiffOutOfRangeWarning.diff:type_name -> horus.pb.LogMetadata.Duration
-	182, // 21: horus.pb.logs.RpcTimeoutWithResolutionWarning.elapsed:type_name -> horus.pb.LogMetadata.Duration
-	181, // 22: horus.pb.logs.InvalidLidarTimestamp.timestamp:type_name -> horus.pb.LogMetadata.Timestamp
-	182, // 23: horus.pb.logs.CalibrationAccumulatingPointsInfo.time:type_name -> horus.pb.LogMetadata.Duration
+	183, // 0: horus.pb.logs.Generic.location:type_name -> horus.pb.LogMetadata.SourceLocation
+	184, // 1: horus.pb.logs.InvalidConfiguration.validation_errors:type_name -> horus.pb.logs.ValidationError
+	185, // 2: horus.pb.logs.LicenseExpiredError.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
+	185, // 3: horus.pb.logs.LicenseCurrentLicenseStatusInfo.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
+	186, // 4: horus.pb.logs.RpcTimeoutWarning.elapsed:type_name -> horus.pb.LogMetadata.Duration
+	183, // 5: horus.pb.logs.UnhandledEnumCaseError.location:type_name -> horus.pb.LogMetadata.SourceLocation
+	185, // 6: horus.pb.logs.BagTimestampOutOfOrderError.prior_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
+	185, // 7: horus.pb.logs.BagTimestampOutOfOrderError.current_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
+	185, // 8: horus.pb.logs.BagReplayUnexpectedTimestampError.expected_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
+	185, // 9: horus.pb.logs.BagReplayUnexpectedTimestampError.received_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
+	186, // 10: horus.pb.logs.ThreadPoolNotRespondingWarning.not_responding_for:type_name -> horus.pb.LogMetadata.Duration
+	186, // 11: horus.pb.logs.IrregularBroadcastingPeriodWarning.duration:type_name -> horus.pb.LogMetadata.Duration
+	186, // 12: horus.pb.logs.IrregularBroadcastingPeriodWarning.mean_deviation:type_name -> horus.pb.LogMetadata.Duration
+	185, // 13: horus.pb.logs.LicenseExpiredWarning.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
+	186, // 14: horus.pb.logs.StaticThreadPoolSlowTaskWarning.time_elapsed:type_name -> horus.pb.LogMetadata.Duration
+	183, // 15: horus.pb.logs.StaticThreadPoolSlowTaskWarning.enqueue_location:type_name -> horus.pb.LogMetadata.SourceLocation
+	186, // 16: horus.pb.logs.PreprocessingToPointAggregatorPointsSkipped.check_interval:type_name -> horus.pb.LogMetadata.Duration
+	186, // 17: horus.pb.logs.MinMsgIntervalLessThanThreshold.threshold:type_name -> horus.pb.LogMetadata.Duration
+	185, // 18: horus.pb.logs.TimeDiffOutOfRangeWarning.prev_time:type_name -> horus.pb.LogMetadata.Timestamp
+	185, // 19: horus.pb.logs.TimeDiffOutOfRangeWarning.curr_time:type_name -> horus.pb.LogMetadata.Timestamp
+	186, // 20: horus.pb.logs.TimeDiffOutOfRangeWarning.diff:type_name -> horus.pb.LogMetadata.Duration
+	186, // 21: horus.pb.logs.RpcTimeoutWithResolutionWarning.elapsed:type_name -> horus.pb.LogMetadata.Duration
+	185, // 22: horus.pb.logs.InvalidLidarTimestamp.timestamp:type_name -> horus.pb.LogMetadata.Timestamp
+	186, // 23: horus.pb.logs.CalibrationAccumulatingPointsInfo.time:type_name -> horus.pb.LogMetadata.Duration
 	24,  // [24:24] is the sub-list for method output_type
 	24,  // [24:24] is the sub-list for method input_type
 	24,  // [24:24] is the sub-list for extension type_name
@@ -12663,7 +12958,7 @@ func file_horus_pb_logs_logs_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_horus_pb_logs_logs_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   179,
+			NumMessages:   183,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
