@@ -526,8 +526,8 @@ void HorusStringify(const ErasedSink& sink, const CalibrationAccumulatingPointsI
 /// Formats the log `logs::SparseNoiseFilterUsageNonRotationalLidars` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const SparseNoiseFilterUsageNonRotationalLidars& /*data*/);
 
-/// Formats the log `logs::FileWriteError` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const FileWriteError& data);
+/// Formats the log `logs::FileWriteWarning` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const FileWriteWarning& data);
 
 /// Formats the log `logs::LicenseForbiddenFeature` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const LicenseForbiddenFeature& data);
@@ -579,6 +579,33 @@ void HorusStringify(const ErasedSink& sink, const CalibrationMapRecordingFailed&
 
 /// Formats the log `logs::DetectionNodeNotFoundError` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const DetectionNodeNotFoundError& data);
+
+/// Formats the log `logs::CreatedVersionBackupInfo` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const CreatedVersionBackupInfo& data);
+
+/// Formats the log `logs::PlyFileLoadFailedError` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const PlyFileLoadFailedError& data);
+
+/// Formats the log `logs::HesaiDriverLifecycle` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const HesaiDriverLifecycle& data);
+
+/// Formats the log `logs::HesaiDriverError` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const HesaiDriverError& data);
+
+/// Formats the log `logs::HesaiPacketProcessingFailed` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const HesaiPacketProcessingFailed& data);
+
+/// Formats the log `logs::HesaiCorrectionFileError` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const HesaiCorrectionFileError& data);
+
+/// Formats the log `logs::HesaiPacketStatistics` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const HesaiPacketStatistics& data);
+
+/// Formats the log `logs::PlyFileWriteFailedError` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const PlyFileWriteFailedError& data);
+
+/// Formats the log `logs::ProjectSaveError` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const ProjectSaveError& data);
 
 }  // namespace logs
 

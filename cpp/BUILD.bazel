@@ -1,0 +1,47 @@
+load("@rules_foreign_cc//foreign_cc:defs.bzl", "cmake")
+
+# As a shortcut, we use `cmake()` instead of defining a proper `cc_library()`
+# target. The problem here is that the `CMakeLists.txt` file does a few
+# things that wouldn't be trivial to port to Bazel (depend on non-Bazel
+# projects, use code generation, use `configure_file()`).
+
+cmake(
+    name = "cpp",
+    lib_source = ":srcs",
+    cache_entries = {
+        # @dep//:srcs evaluates to a set of files, but we only want one in order to get the source
+        # directory. `$(srcs=(...) && dirname "$srcs")` assigns all sources to a Bash list `srcs`
+        # then gets the directory name of the first element in that list.
+        "FETCHCONTENT_SOURCE_DIR_ixwebsocket": "$$(srcs=($(execpaths @ixwebsocket//:srcs)) && dirname \"$$srcs\")",
+        "FETCHCONTENT_SOURCE_DIR_libuv": "$$(srcs=($(execpaths @libuv//:srcs)) && dirname \"$$srcs\")",
+        "FETCHCONTENT_SOURCE_DIR_protozero": "$$(srcs=($(execpaths @protozero//:srcs)) && dirname \"$$srcs\")",
+
+        "HORUS_SDK_BUILD_EXAMPLES": "OFF",
+        "HORUS_SDK_BUILD_TESTING": "OFF",
+    },
+    build_data = [
+        "@ixwebsocket//:srcs",
+        "@libuv//:srcs",
+        "@protozero//:srcs",
+    ],
+    build_args = ["-j"],
+    targets = ["horus_sdk"],
+    includes = ["third_party"],
+    out_static_libs = [
+        "libhorus_sdk.a",
+        "libixwebsocket.a",
+        "libuv.a",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "srcs",
+    srcs = glob([
+        "cmake/*",
+        "horus/**/*.cpp",
+        "horus/**/*.h",
+        "horus/**/*.in",
+        "CMakeLists.txt",
+    ]),
+)

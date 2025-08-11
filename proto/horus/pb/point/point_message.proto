@@ -94,6 +94,8 @@ message AttributedPoints {
   /// Bytes corresponding to packed uint16 ring index for each point.
   /// We have to use fixed32 as uint16 is not available in Protobuf.
   bytes ring_indices = 5;
+
+  repeated Timestamp timestamps = 6;
 }
 
 // Processed point cloud data from a single lidar.

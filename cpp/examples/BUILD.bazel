@@ -1,0 +1,24 @@
+[
+    cc_binary(
+        name = example,
+        srcs = ["{}.cpp".format(example)],
+        deps = [
+            ":helpers",
+            "//cpp",
+        ],
+    )
+    for example in [
+        "print_events",
+        "print_health_status",
+        "print_logs",
+        "print_occupancy_map",
+    ]
+]
+
+cc_library(
+    name = "helpers",
+    srcs = ["helpers.cpp"],
+    hdrs = ["helpers.h"],
+    deps = ["//cpp"],
+    strip_include_prefix = "/cpp",
+)

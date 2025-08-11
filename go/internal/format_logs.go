@@ -340,7 +340,7 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return fmt.Sprintf("Calibration is accumulating points for %v", data.GetTime())
 	case *logs_pb.SparseNoiseFilterUsageNonRotationalLidars:
 		return "The sparse noise filter cannot be used with non-rotational lidars."
-	case *logs_pb.FileWriteError:
+	case *logs_pb.FileWriteWarning:
 		return fmt.Sprintf("Failed to write to file \"%v\": \"%v\".", data.GetFilename(), data.GetDetails())
 	case *logs_pb.LicenseForbiddenFeature:
 		return fmt.Sprintf("%v is not allowed by the current license.", data.GetFeatureName())
@@ -376,6 +376,24 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return fmt.Sprintf("Failed recording the calibration map: %v", data.GetMessage())
 	case *logs_pb.DetectionNodeNotFoundError:
 		return fmt.Sprintf("Detection node %v not found.", data.GetNodeName())
+	case *logs_pb.CreatedVersionBackupInfo:
+		return fmt.Sprintf("Horus upgraded from %v to %v. The project was backed up to %v before being upgraded.", data.GetOldHorusVersion(), data.GetNewHorusVersion(), data.GetBackupPath())
+	case *logs_pb.PlyFileLoadFailedError:
+		return fmt.Sprintf("Failed to load PLY file %v: %v", data.GetFilePath(), data.GetDetails())
+	case *logs_pb.HesaiDriverLifecycle:
+		return fmt.Sprintf("Hesai XT32 driver %v for LiDAR %v.", data.GetAction(), data.GetLidarId())
+	case *logs_pb.HesaiDriverError:
+		return fmt.Sprintf("Hesai XT32 driver error: %v", data.GetDetails())
+	case *logs_pb.HesaiPacketProcessingFailed:
+		return fmt.Sprintf("Failed to process packet for Hesai LiDAR %v: %v", data.GetLidarId(), data.GetDetails())
+	case *logs_pb.HesaiCorrectionFileError:
+		return fmt.Sprintf("Failed to load Hesai XT32 correction file %v: %v", data.GetFileType(), data.GetDetails())
+	case *logs_pb.HesaiPacketStatistics:
+		return fmt.Sprintf("Hesai packet statistics - Received: %v, Published: %v, Dropped: %v, Decode Failed: %v, Success Rate: %v %%", data.GetPacketsReceived(), data.GetPacketsPublished(), data.GetPacketsDropped(), data.GetPacketsDecodeFailed(), data.GetSuccessRate())
+	case *logs_pb.PlyFileWriteFailedError:
+		return fmt.Sprintf("Failed to write PLY file %v: %v", data.GetFilePath(), data.GetDetails())
+	case *logs_pb.ProjectSaveError:
+		return fmt.Sprintf("Failed to save project: %v.", data.GetErrorMessage())
 	default:
 		return "unknown log message"
 	}
