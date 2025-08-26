@@ -68,6 +68,27 @@ Examples for using the SDK exist in [`cpp/examples`](cpp/examples).
 > external dependencies) are considered implementation details, and may change
 > without notice.
 
+### Installing the SDK
+
+Instead of using `FetchContent_Declare()`, the SDK may be installed with CMake.
+
+First, it must be built and installed with CMake:
+
+```sh
+cmake -S . -B build -D CMAKE_BUILD_TYPE=Release -D HORUS_SDK_BUILD_EXAMPLES=OFF -D HORUS_SDK_BUILD_TESTING=OFF
+cmake --build build --target horus_sdk
+cmake --install build --prefix install
+```
+
+It can then be loaded in CMake with (assuming that the install prefix is in the
+`CMAKE_PREFIX_PATH`):
+
+```cmake
+find_package(horus_sdk CONFIG REQUIRED)
+```
+
+And used with `horus::sdk`.
+
 ## Python
 
 The source code of the Python SDK lives in `py`, and uses `asyncio`. See

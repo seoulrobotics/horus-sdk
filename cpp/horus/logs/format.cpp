@@ -691,8 +691,8 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     logs::HorusStringify(sink, log_data.sparse_noise_filter_usage_non_rotational_lidars());
     break;
   }
-  case LogData::DataOneof::kFileWriteError: {
-    logs::HorusStringify(sink, log_data.file_write_error());
+  case LogData::DataOneof::kFileWriteWarning: {
+    logs::HorusStringify(sink, log_data.file_write_warning());
     break;
   }
   case LogData::DataOneof::kLicenseForbiddenFeature: {
@@ -761,6 +761,66 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
   }
   case LogData::DataOneof::kDetectionNodeNotFoundError: {
     logs::HorusStringify(sink, log_data.detection_node_not_found_error());
+    break;
+  }
+  case LogData::DataOneof::kCreatedVersionBackupInfo: {
+    logs::HorusStringify(sink, log_data.created_version_backup_info());
+    break;
+  }
+  case LogData::DataOneof::kPlyFileLoadFailedError: {
+    logs::HorusStringify(sink, log_data.ply_file_load_failed_error());
+    break;
+  }
+  case LogData::DataOneof::kHesaiDriverLifecycle: {
+    logs::HorusStringify(sink, log_data.hesai_driver_lifecycle());
+    break;
+  }
+  case LogData::DataOneof::kHesaiDriverError: {
+    logs::HorusStringify(sink, log_data.hesai_driver_error());
+    break;
+  }
+  case LogData::DataOneof::kHesaiPacketProcessingFailed: {
+    logs::HorusStringify(sink, log_data.hesai_packet_processing_failed());
+    break;
+  }
+  case LogData::DataOneof::kHesaiCorrectionFileError: {
+    logs::HorusStringify(sink, log_data.hesai_correction_file_error());
+    break;
+  }
+  case LogData::DataOneof::kHesaiPacketStatistics: {
+    logs::HorusStringify(sink, log_data.hesai_packet_statistics());
+    break;
+  }
+  case LogData::DataOneof::kPlyFileWriteFailedError: {
+    logs::HorusStringify(sink, log_data.ply_file_write_failed_error());
+    break;
+  }
+  case LogData::DataOneof::kProjectSaveError: {
+    logs::HorusStringify(sink, log_data.project_save_error());
+    break;
+  }
+  case LogData::DataOneof::kSaveStaticEnvironmentSuccess: {
+    logs::HorusStringify(sink, log_data.save_static_environment_success());
+    break;
+  }
+  case LogData::DataOneof::kSaveStaticEnvironmentFailed: {
+    logs::HorusStringify(sink, log_data.save_static_environment_failed());
+    break;
+  }
+  case LogData::DataOneof::kLoadStaticEnvironmentSuccess: {
+    logs::HorusStringify(sink, log_data.load_static_environment_success());
+    break;
+  }
+  case LogData::DataOneof::kLoadStaticEnvironmentFailed: {
+    logs::HorusStringify(sink, log_data.load_static_environment_failed());
+    break;
+  }
+  case LogData::DataOneof::kAttemptToInjectInvalidLidarIdWarning: {
+    logs::HorusStringify(sink, log_data.attempt_to_inject_invalid_lidar_id_warning());
+    break;
+  }
+  case LogData::DataOneof::kResetBundledPacketDueToUnexpectedPacket: {
+    logs::HorusStringify(sink, log_data.reset_bundled_packet_due_to_unexpected_packet());
     break;
   }
   case LogData::DataOneof::kNotSet:
@@ -1433,7 +1493,7 @@ void HorusStringify(const ErasedSink& sink, const SparseNoiseFilterUsageNonRotat
   StringifyTo(sink, "The sparse noise filter cannot be used with non-rotational lidars.");
 }
 
-void HorusStringify(const ErasedSink& sink, const FileWriteError& data) {
+void HorusStringify(const ErasedSink& sink, const FileWriteWarning& data) {
   StringifyTo(sink, "Failed to write to file \"", data.filename(), "\": \"", data.details(), "\".");
 }
 
@@ -1503,6 +1563,66 @@ void HorusStringify(const ErasedSink& sink, const CalibrationMapRecordingFailed&
 
 void HorusStringify(const ErasedSink& sink, const DetectionNodeNotFoundError& data) {
   StringifyTo(sink, "Detection node ", data.node_name(), " not found.");
+}
+
+void HorusStringify(const ErasedSink& sink, const CreatedVersionBackupInfo& data) {
+  StringifyTo(sink, "Horus upgraded from ", data.old_horus_version(), " to ", data.new_horus_version(), ". The project was backed up to ", data.backup_path(), " before being upgraded.");
+}
+
+void HorusStringify(const ErasedSink& sink, const PlyFileLoadFailedError& data) {
+  StringifyTo(sink, "Failed to load PLY file ", data.file_path(), ": ", data.details());
+}
+
+void HorusStringify(const ErasedSink& sink, const HesaiDriverLifecycle& data) {
+  StringifyTo(sink, "Hesai XT32 driver ", data.action(), " for LiDAR ", data.lidar_id(), ".");
+}
+
+void HorusStringify(const ErasedSink& sink, const HesaiDriverError& data) {
+  StringifyTo(sink, "Hesai XT32 driver error: ", data.details());
+}
+
+void HorusStringify(const ErasedSink& sink, const HesaiPacketProcessingFailed& data) {
+  StringifyTo(sink, "Failed to process packet for Hesai LiDAR ", data.lidar_id(), ": ", data.details());
+}
+
+void HorusStringify(const ErasedSink& sink, const HesaiCorrectionFileError& data) {
+  StringifyTo(sink, "Failed to load Hesai XT32 correction file ", data.file_type(), ": ", data.details());
+}
+
+void HorusStringify(const ErasedSink& sink, const HesaiPacketStatistics& data) {
+  StringifyTo(sink, "Hesai packet statistics - Received: ", data.packets_received(), ", Published: ", data.packets_published(), ", Dropped: ", data.packets_dropped(), ", Decode Failed: ", data.packets_decode_failed(), ", Success Rate: ", data.success_rate(), " %");
+}
+
+void HorusStringify(const ErasedSink& sink, const PlyFileWriteFailedError& data) {
+  StringifyTo(sink, "Failed to write PLY file ", data.file_path(), ": ", data.details());
+}
+
+void HorusStringify(const ErasedSink& sink, const ProjectSaveError& data) {
+  StringifyTo(sink, "Failed to save project: ", data.error_message(), ".");
+}
+
+void HorusStringify(const ErasedSink& sink, const SaveStaticEnvironmentSuccess& data) {
+  StringifyTo(sink, "Saved static environment to ", data.path());
+}
+
+void HorusStringify(const ErasedSink& sink, const SaveStaticEnvironmentFailed& data) {
+  StringifyTo(sink, "Failed to serialize static environment to ", data.path(), ": ", data.details());
+}
+
+void HorusStringify(const ErasedSink& sink, const LoadStaticEnvironmentSuccess& data) {
+  StringifyTo(sink, "Static environment loaded from ", data.path());
+}
+
+void HorusStringify(const ErasedSink& sink, const LoadStaticEnvironmentFailed& data) {
+  StringifyTo(sink, "Failed to load static environment from ", data.path(), ": ", data.details());
+}
+
+void HorusStringify(const ErasedSink& sink, const AttemptToInjectInvalidLidarIdWarning& data) {
+  StringifyTo(sink, "Attempt to inject invalid lidar ID ", data.lidar_id(), " into the system.");
+}
+
+void HorusStringify(const ErasedSink& sink, const ResetBundledPacketDueToUnexpectedPacket& data) {
+  StringifyTo(sink, "Resetting bundled packet due to unexpected packet from lidar ", data.lidar_id(), ".");
 }
 
 }  // namespace logs

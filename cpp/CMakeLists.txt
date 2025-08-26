@@ -33,6 +33,7 @@ endif()
 option(HORUS_SDK_BUILD_EXAMPLES "Enable Horus SDK examples" ${HORUS_SDK_IS_ROOT_PROJECT})
 option(HORUS_SDK_BUILD_TESTING "Enable Horus SDK tests" ${HORUS_SDK_IS_ROOT_PROJECT})
 option(HORUS_SDK_COVERAGE "Compile with coverage information" OFF)
+option(HORUS_SDK_INSTALL "Enable installation of the SDK" ${HORUS_SDK_IS_ROOT_PROJECT})
 option(HORUS_SDK_ASAN "Enable address sanitizer" OFF)
 option(HORUS_SDK_TSAN "Enable thread sanitizer" OFF)
 option(HORUS_SDK_UBSAN "Enable undefined behavior sanitizer" OFF)
@@ -78,7 +79,8 @@ set(horus_external_targets)
 if(HORUS_SDK_BUILD_TESTING)
   FetchContent_Declare(
     googletest
-    URL https://github.com/google/googletest/archive/f8d7d77c06936315286eb55f8de22cd23c188571.zip  # v1.14
+    URL       https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+    URL_HASH  SHA256=1f357c27ca988c3f7c6b4bf68a9395005ac6761f034046e9dde0896e3aba00e4
     EXCLUDE_FROM_ALL
   )
 
@@ -87,7 +89,8 @@ endif()
 
 FetchContent_Declare(
   libuv
-  URL https://github.com/libuv/libuv/archive/e9f29cb984231524e3931aa0ae2c5dae1a32884e.zip  # v1.48.0
+  URL       https://github.com/libuv/libuv/archive/refs/tags/v1.51.0.zip
+  URL_HASH  SHA256=54e1e108c54b2d1dcaee0d16721385404fc95cc2a2cd2deb51e3529c202d6455
   EXCLUDE_FROM_ALL
 )
 set(ASAN               ${HORUS_SDK_ASAN})
@@ -98,18 +101,22 @@ set(LIBUV_BUILD_TESTS  OFF)
 
 FetchContent_Declare(
   IXWebSocket
-  URL https://github.com/machinezone/IXWebSocket/archive/9884c325dd0fa64b2b885b332e98118f60313208.zip  # 2024-05-17
+  URL       https://github.com/machinezone/IXWebSocket/archive/refs/tags/v11.4.6.zip
+  URL_HASH  SHA256=99f9288e0f742ad08bc60d99abeef6169a3bf137f9c1ef1cca5d39ffbbe9d44b
   EXCLUDE_FROM_ALL
 )
 set(USE_ZLIB OFF)
 
 FetchContent_Declare(
   protozero
-  URL       https://github.com/mapbox/protozero/archive/542fcf7dd228672b775eb283d18ccd94c4e682d9.zip  # v1.8.0
+  URL       https://github.com/mapbox/protozero/archive/refs/tags/v1.8.1.zip
+  URL_HASH  SHA256=2cb2d3cb6af50c093a46752aa4e280bd34553f633867f938569a19820d8332b3
   PATCH_COMMAND
     # Expose `basic_pbf_writer` internals to be able to serialize buffers in-place.
     sed -i "s/^class basic_pbf_writer {$/class basic_pbf_writer { public:/g" include/protozero/basic_pbf_writer.hpp
-    # Remove CMakeLists.txt to treat the dependency as a plain folder, since it is a header-only library.
+    # Remove CMakeLists.txt to treat the dependency as a plain folder, since it is a header-only
+    # library. Alternatively we could set `SOURCE_SUBDIR` to a dummy directory, but this requires
+    # CMake 3.18.
     && rm -f CMakeLists.txt
 )
 
@@ -272,16 +279,88 @@ add_library(horus_sdk
 add_library(horus::sdk ALIAS horus_sdk)
 
 target_compile_features(horus_sdk PUBLIC cxx_std_14)
-target_include_directories(horus_sdk PUBLIC "${HORUS_SDK_SOURCE_DIR}" "${HORUS_SDK_BINARY_DIR}")
+target_link_libraries(horus_sdk PRIVATE
+  $<BUILD_INTERFACE:ixwebsocket::ixwebsocket>
+  $<BUILD_INTERFACE:uv_a>
+  $<INSTALL_INTERFACE:$<INSTALL_PREFIX>/lib/libixwebsocket.a>
+  $<INSTALL_INTERFACE:$<INSTALL_PREFIX>/lib/libuv.a>
+)
+
+# https://stackoverflow.com/a/25681179
+target_include_directories(horus_sdk PUBLIC
+  $<BUILD_INTERFACE:${HORUS_SDK_SOURCE_DIR}>
+  $<BUILD_INTERFACE:${HORUS_SDK_BINARY_DIR}>
+  $<INSTALL_INTERFACE:include>
+)
 target_include_directories(horus_sdk SYSTEM PUBLIC
+  $<BUILD_INTERFACE:${protozero_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include/third_party>
+)
+target_include_directories(horus_sdk SYSTEM PRIVATE
   "${ixwebsocket_SOURCE_DIR}"
-  "${protozero_SOURCE_DIR}/include"
   $<TARGET_PROPERTY:uv_a,INTERFACE_INCLUDE_DIRECTORIES>
 )
-target_link_libraries(horus_sdk PUBLIC ixwebsocket::ixwebsocket uv_a)
 
 include(cmake/HorusSdkProtobuf.cmake)
 target_sources(horus_sdk PRIVATE ${horus_sdk_pb_sources})
+
+
+# Install
+# -----
+
+if(HORUS_SDK_INSTALL)
+  install(
+    TARGETS horus_sdk
+    EXPORT ${PROJECT_NAME}Targets
+    ARCHIVE
+  )
+  install(
+    DIRECTORY horus
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+    FILES_MATCHING PATTERN "*.h"
+  )
+  install(
+    DIRECTORY "${protozero_SOURCE_DIR}/include/protozero"
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/third_party"
+  )
+  install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/horus/internal/attributes.h"
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/horus/internal"
+  )
+  install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/horus/event_loop/uv_handles.h"
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/horus/event_loop"
+  )
+  install(
+    FILES $<TARGET_FILE:ixwebsocket::ixwebsocket> $<TARGET_FILE:uv_a>
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+  )
+
+  include(CMakePackageConfigHelpers)
+
+  configure_package_config_file(
+    cmake/HorusSdkConfig.cmake.in
+    "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+    INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+  )
+  write_basic_package_version_file(
+    ${PROJECT_NAME}ConfigVersion.cmake
+    VERSION ${PACKAGE_VERSION}
+    COMPATIBILITY SameMajorVersion
+  )
+
+  include(GNUInstallDirs)
+
+  install(
+    EXPORT ${PROJECT_NAME}Targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+  )
+  install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+          "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+  )
+endif()
 
 
 # Tests
@@ -320,7 +399,7 @@ if(HORUS_SDK_BUILD_TESTING)
     horus/testing/ws_server.h
   )
   target_compile_definitions(horus_sdk_test PRIVATE "HORUS_SDK_ROOT_DIR=\"${HORUS_SDK_ROOT_DIR}\"")
-  target_link_libraries(horus_sdk_test PRIVATE horus::sdk GTest::gmock_main)
+  target_link_libraries(horus_sdk_test PRIVATE horus::sdk GTest::gmock_main ixwebsocket::ixwebsocket uv_a)
 
   list(APPEND horus_targets horus_sdk_test)
 

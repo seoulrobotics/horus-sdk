@@ -9165,59 +9165,59 @@ class LogData final : public PbMessage {
     return std::move(set_sparse_noise_filter_usage_non_rotational_lidars(std::move(sparse_noise_filter_usage_non_rotational_lidars)));
   }
 
-  // Field `file_write_error` (no 166).
+  // Field `file_write_warning` (no 166).
   // -----
 
   /// No documentation.
   ///
   /// Field no: 166.
-  constexpr const logs::FileWriteError& file_write_error() const& noexcept HORUS_LIFETIME_BOUND {
-    return file_write_error_;
+  constexpr const logs::FileWriteWarning& file_write_warning() const& noexcept HORUS_LIFETIME_BOUND {
+    return file_write_warning_;
   }
 
-  /// If `file_write_error` is set, moves it out of the message (without marking it as unset).
+  /// If `file_write_warning` is set, moves it out of the message (without marking it as unset).
   ///
   /// Otherwise, returns a default-initialized value.
   ///
   /// Field no: 166.
-  logs::FileWriteError file_write_error() && noexcept {
+  logs::FileWriteWarning file_write_warning() && noexcept {
     if (!set_fields_[165]) {
       return {};
     }
-    return std::move(file_write_error_);
+    return std::move(file_write_warning_);
   }
 
   /// No documentation.
   ///
   /// Field no: 166.
-  logs::FileWriteError& mutable_file_write_error() & noexcept HORUS_LIFETIME_BOUND {
+  logs::FileWriteWarning& mutable_file_write_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
-    data_ = DataOneof::kFileWriteError;
+    data_ = DataOneof::kFileWriteWarning;
     set_fields_[165] = true;
-    return file_write_error_;
+    return file_write_warning_;
   }
 
-  /// Returns whether `file_write_error` (no 166) is set.
-  constexpr bool has_file_write_error() const noexcept { return set_fields_[165]; }
+  /// Returns whether `file_write_warning` (no 166) is set.
+  constexpr bool has_file_write_warning() const noexcept { return set_fields_[165]; }
 
-  /// Clears `file_write_error` (no 166).
-  void clear_file_write_error() & noexcept {
+  /// Clears `file_write_warning` (no 166).
+  void clear_file_write_warning() & noexcept {
     data_ = {};
     set_fields_[165] = false;
-    file_write_error_ = {};
+    file_write_warning_ = {};
   }
 
-  /// Sets `file_write_error` (no 166) and returns `*this`.
-  LogData& set_file_write_error(logs::FileWriteError&& file_write_error) & noexcept {
+  /// Sets `file_write_warning` (no 166) and returns `*this`.
+  LogData& set_file_write_warning(logs::FileWriteWarning&& file_write_warning) & noexcept {
     clear_data();
-    data_ = DataOneof::kFileWriteError;
+    data_ = DataOneof::kFileWriteWarning;
     set_fields_[165] = true;
-    file_write_error_ = std::move(file_write_error);
+    file_write_warning_ = std::move(file_write_warning);
     return *this;
   }
-  /// Sets `file_write_error` (no 166) and returns `*this`.
-  LogData&& set_file_write_error(logs::FileWriteError&& file_write_error) && noexcept {
-    return std::move(set_file_write_error(std::move(file_write_error)));
+  /// Sets `file_write_warning` (no 166) and returns `*this`.
+  LogData&& set_file_write_warning(logs::FileWriteWarning&& file_write_warning) && noexcept {
+    return std::move(set_file_write_warning(std::move(file_write_warning)));
   }
 
   // Field `license_forbidden_feature` (no 167).
@@ -10155,6 +10155,831 @@ class LogData final : public PbMessage {
     return std::move(set_detection_node_not_found_error(std::move(detection_node_not_found_error)));
   }
 
+  // Field `created_version_backup_info` (no 184).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 184.
+  constexpr const logs::CreatedVersionBackupInfo& created_version_backup_info() const& noexcept HORUS_LIFETIME_BOUND {
+    return created_version_backup_info_;
+  }
+
+  /// If `created_version_backup_info` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 184.
+  logs::CreatedVersionBackupInfo created_version_backup_info() && noexcept {
+    if (!set_fields_[183]) {
+      return {};
+    }
+    return std::move(created_version_backup_info_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 184.
+  logs::CreatedVersionBackupInfo& mutable_created_version_backup_info() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kCreatedVersionBackupInfo;
+    set_fields_[183] = true;
+    return created_version_backup_info_;
+  }
+
+  /// Returns whether `created_version_backup_info` (no 184) is set.
+  constexpr bool has_created_version_backup_info() const noexcept { return set_fields_[183]; }
+
+  /// Clears `created_version_backup_info` (no 184).
+  void clear_created_version_backup_info() & noexcept {
+    data_ = {};
+    set_fields_[183] = false;
+    created_version_backup_info_ = {};
+  }
+
+  /// Sets `created_version_backup_info` (no 184) and returns `*this`.
+  LogData& set_created_version_backup_info(logs::CreatedVersionBackupInfo&& created_version_backup_info) & noexcept {
+    clear_data();
+    data_ = DataOneof::kCreatedVersionBackupInfo;
+    set_fields_[183] = true;
+    created_version_backup_info_ = std::move(created_version_backup_info);
+    return *this;
+  }
+  /// Sets `created_version_backup_info` (no 184) and returns `*this`.
+  LogData&& set_created_version_backup_info(logs::CreatedVersionBackupInfo&& created_version_backup_info) && noexcept {
+    return std::move(set_created_version_backup_info(std::move(created_version_backup_info)));
+  }
+
+  // Field `ply_file_load_failed_error` (no 185).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 185.
+  constexpr const logs::PlyFileLoadFailedError& ply_file_load_failed_error() const& noexcept HORUS_LIFETIME_BOUND {
+    return ply_file_load_failed_error_;
+  }
+
+  /// If `ply_file_load_failed_error` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 185.
+  logs::PlyFileLoadFailedError ply_file_load_failed_error() && noexcept {
+    if (!set_fields_[184]) {
+      return {};
+    }
+    return std::move(ply_file_load_failed_error_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 185.
+  logs::PlyFileLoadFailedError& mutable_ply_file_load_failed_error() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kPlyFileLoadFailedError;
+    set_fields_[184] = true;
+    return ply_file_load_failed_error_;
+  }
+
+  /// Returns whether `ply_file_load_failed_error` (no 185) is set.
+  constexpr bool has_ply_file_load_failed_error() const noexcept { return set_fields_[184]; }
+
+  /// Clears `ply_file_load_failed_error` (no 185).
+  void clear_ply_file_load_failed_error() & noexcept {
+    data_ = {};
+    set_fields_[184] = false;
+    ply_file_load_failed_error_ = {};
+  }
+
+  /// Sets `ply_file_load_failed_error` (no 185) and returns `*this`.
+  LogData& set_ply_file_load_failed_error(logs::PlyFileLoadFailedError&& ply_file_load_failed_error) & noexcept {
+    clear_data();
+    data_ = DataOneof::kPlyFileLoadFailedError;
+    set_fields_[184] = true;
+    ply_file_load_failed_error_ = std::move(ply_file_load_failed_error);
+    return *this;
+  }
+  /// Sets `ply_file_load_failed_error` (no 185) and returns `*this`.
+  LogData&& set_ply_file_load_failed_error(logs::PlyFileLoadFailedError&& ply_file_load_failed_error) && noexcept {
+    return std::move(set_ply_file_load_failed_error(std::move(ply_file_load_failed_error)));
+  }
+
+  // Field `hesai_driver_lifecycle` (no 186).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 186.
+  constexpr const logs::HesaiDriverLifecycle& hesai_driver_lifecycle() const& noexcept HORUS_LIFETIME_BOUND {
+    return hesai_driver_lifecycle_;
+  }
+
+  /// If `hesai_driver_lifecycle` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 186.
+  logs::HesaiDriverLifecycle hesai_driver_lifecycle() && noexcept {
+    if (!set_fields_[185]) {
+      return {};
+    }
+    return std::move(hesai_driver_lifecycle_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 186.
+  logs::HesaiDriverLifecycle& mutable_hesai_driver_lifecycle() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kHesaiDriverLifecycle;
+    set_fields_[185] = true;
+    return hesai_driver_lifecycle_;
+  }
+
+  /// Returns whether `hesai_driver_lifecycle` (no 186) is set.
+  constexpr bool has_hesai_driver_lifecycle() const noexcept { return set_fields_[185]; }
+
+  /// Clears `hesai_driver_lifecycle` (no 186).
+  void clear_hesai_driver_lifecycle() & noexcept {
+    data_ = {};
+    set_fields_[185] = false;
+    hesai_driver_lifecycle_ = {};
+  }
+
+  /// Sets `hesai_driver_lifecycle` (no 186) and returns `*this`.
+  LogData& set_hesai_driver_lifecycle(logs::HesaiDriverLifecycle&& hesai_driver_lifecycle) & noexcept {
+    clear_data();
+    data_ = DataOneof::kHesaiDriverLifecycle;
+    set_fields_[185] = true;
+    hesai_driver_lifecycle_ = std::move(hesai_driver_lifecycle);
+    return *this;
+  }
+  /// Sets `hesai_driver_lifecycle` (no 186) and returns `*this`.
+  LogData&& set_hesai_driver_lifecycle(logs::HesaiDriverLifecycle&& hesai_driver_lifecycle) && noexcept {
+    return std::move(set_hesai_driver_lifecycle(std::move(hesai_driver_lifecycle)));
+  }
+
+  // Field `hesai_driver_error` (no 187).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 187.
+  constexpr const logs::HesaiDriverError& hesai_driver_error() const& noexcept HORUS_LIFETIME_BOUND {
+    return hesai_driver_error_;
+  }
+
+  /// If `hesai_driver_error` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 187.
+  logs::HesaiDriverError hesai_driver_error() && noexcept {
+    if (!set_fields_[186]) {
+      return {};
+    }
+    return std::move(hesai_driver_error_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 187.
+  logs::HesaiDriverError& mutable_hesai_driver_error() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kHesaiDriverError;
+    set_fields_[186] = true;
+    return hesai_driver_error_;
+  }
+
+  /// Returns whether `hesai_driver_error` (no 187) is set.
+  constexpr bool has_hesai_driver_error() const noexcept { return set_fields_[186]; }
+
+  /// Clears `hesai_driver_error` (no 187).
+  void clear_hesai_driver_error() & noexcept {
+    data_ = {};
+    set_fields_[186] = false;
+    hesai_driver_error_ = {};
+  }
+
+  /// Sets `hesai_driver_error` (no 187) and returns `*this`.
+  LogData& set_hesai_driver_error(logs::HesaiDriverError&& hesai_driver_error) & noexcept {
+    clear_data();
+    data_ = DataOneof::kHesaiDriverError;
+    set_fields_[186] = true;
+    hesai_driver_error_ = std::move(hesai_driver_error);
+    return *this;
+  }
+  /// Sets `hesai_driver_error` (no 187) and returns `*this`.
+  LogData&& set_hesai_driver_error(logs::HesaiDriverError&& hesai_driver_error) && noexcept {
+    return std::move(set_hesai_driver_error(std::move(hesai_driver_error)));
+  }
+
+  // Field `hesai_packet_processing_failed` (no 188).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 188.
+  constexpr const logs::HesaiPacketProcessingFailed& hesai_packet_processing_failed() const& noexcept HORUS_LIFETIME_BOUND {
+    return hesai_packet_processing_failed_;
+  }
+
+  /// If `hesai_packet_processing_failed` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 188.
+  logs::HesaiPacketProcessingFailed hesai_packet_processing_failed() && noexcept {
+    if (!set_fields_[187]) {
+      return {};
+    }
+    return std::move(hesai_packet_processing_failed_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 188.
+  logs::HesaiPacketProcessingFailed& mutable_hesai_packet_processing_failed() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kHesaiPacketProcessingFailed;
+    set_fields_[187] = true;
+    return hesai_packet_processing_failed_;
+  }
+
+  /// Returns whether `hesai_packet_processing_failed` (no 188) is set.
+  constexpr bool has_hesai_packet_processing_failed() const noexcept { return set_fields_[187]; }
+
+  /// Clears `hesai_packet_processing_failed` (no 188).
+  void clear_hesai_packet_processing_failed() & noexcept {
+    data_ = {};
+    set_fields_[187] = false;
+    hesai_packet_processing_failed_ = {};
+  }
+
+  /// Sets `hesai_packet_processing_failed` (no 188) and returns `*this`.
+  LogData& set_hesai_packet_processing_failed(logs::HesaiPacketProcessingFailed&& hesai_packet_processing_failed) & noexcept {
+    clear_data();
+    data_ = DataOneof::kHesaiPacketProcessingFailed;
+    set_fields_[187] = true;
+    hesai_packet_processing_failed_ = std::move(hesai_packet_processing_failed);
+    return *this;
+  }
+  /// Sets `hesai_packet_processing_failed` (no 188) and returns `*this`.
+  LogData&& set_hesai_packet_processing_failed(logs::HesaiPacketProcessingFailed&& hesai_packet_processing_failed) && noexcept {
+    return std::move(set_hesai_packet_processing_failed(std::move(hesai_packet_processing_failed)));
+  }
+
+  // Field `hesai_correction_file_error` (no 189).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 189.
+  constexpr const logs::HesaiCorrectionFileError& hesai_correction_file_error() const& noexcept HORUS_LIFETIME_BOUND {
+    return hesai_correction_file_error_;
+  }
+
+  /// If `hesai_correction_file_error` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 189.
+  logs::HesaiCorrectionFileError hesai_correction_file_error() && noexcept {
+    if (!set_fields_[188]) {
+      return {};
+    }
+    return std::move(hesai_correction_file_error_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 189.
+  logs::HesaiCorrectionFileError& mutable_hesai_correction_file_error() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kHesaiCorrectionFileError;
+    set_fields_[188] = true;
+    return hesai_correction_file_error_;
+  }
+
+  /// Returns whether `hesai_correction_file_error` (no 189) is set.
+  constexpr bool has_hesai_correction_file_error() const noexcept { return set_fields_[188]; }
+
+  /// Clears `hesai_correction_file_error` (no 189).
+  void clear_hesai_correction_file_error() & noexcept {
+    data_ = {};
+    set_fields_[188] = false;
+    hesai_correction_file_error_ = {};
+  }
+
+  /// Sets `hesai_correction_file_error` (no 189) and returns `*this`.
+  LogData& set_hesai_correction_file_error(logs::HesaiCorrectionFileError&& hesai_correction_file_error) & noexcept {
+    clear_data();
+    data_ = DataOneof::kHesaiCorrectionFileError;
+    set_fields_[188] = true;
+    hesai_correction_file_error_ = std::move(hesai_correction_file_error);
+    return *this;
+  }
+  /// Sets `hesai_correction_file_error` (no 189) and returns `*this`.
+  LogData&& set_hesai_correction_file_error(logs::HesaiCorrectionFileError&& hesai_correction_file_error) && noexcept {
+    return std::move(set_hesai_correction_file_error(std::move(hesai_correction_file_error)));
+  }
+
+  // Field `hesai_packet_statistics` (no 190).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 190.
+  constexpr const logs::HesaiPacketStatistics& hesai_packet_statistics() const& noexcept HORUS_LIFETIME_BOUND {
+    return hesai_packet_statistics_;
+  }
+
+  /// If `hesai_packet_statistics` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 190.
+  logs::HesaiPacketStatistics hesai_packet_statistics() && noexcept {
+    if (!set_fields_[189]) {
+      return {};
+    }
+    return std::move(hesai_packet_statistics_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 190.
+  logs::HesaiPacketStatistics& mutable_hesai_packet_statistics() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kHesaiPacketStatistics;
+    set_fields_[189] = true;
+    return hesai_packet_statistics_;
+  }
+
+  /// Returns whether `hesai_packet_statistics` (no 190) is set.
+  constexpr bool has_hesai_packet_statistics() const noexcept { return set_fields_[189]; }
+
+  /// Clears `hesai_packet_statistics` (no 190).
+  void clear_hesai_packet_statistics() & noexcept {
+    data_ = {};
+    set_fields_[189] = false;
+    hesai_packet_statistics_ = {};
+  }
+
+  /// Sets `hesai_packet_statistics` (no 190) and returns `*this`.
+  LogData& set_hesai_packet_statistics(logs::HesaiPacketStatistics&& hesai_packet_statistics) & noexcept {
+    clear_data();
+    data_ = DataOneof::kHesaiPacketStatistics;
+    set_fields_[189] = true;
+    hesai_packet_statistics_ = std::move(hesai_packet_statistics);
+    return *this;
+  }
+  /// Sets `hesai_packet_statistics` (no 190) and returns `*this`.
+  LogData&& set_hesai_packet_statistics(logs::HesaiPacketStatistics&& hesai_packet_statistics) && noexcept {
+    return std::move(set_hesai_packet_statistics(std::move(hesai_packet_statistics)));
+  }
+
+  // Field `ply_file_write_failed_error` (no 191).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 191.
+  constexpr const logs::PlyFileWriteFailedError& ply_file_write_failed_error() const& noexcept HORUS_LIFETIME_BOUND {
+    return ply_file_write_failed_error_;
+  }
+
+  /// If `ply_file_write_failed_error` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 191.
+  logs::PlyFileWriteFailedError ply_file_write_failed_error() && noexcept {
+    if (!set_fields_[190]) {
+      return {};
+    }
+    return std::move(ply_file_write_failed_error_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 191.
+  logs::PlyFileWriteFailedError& mutable_ply_file_write_failed_error() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kPlyFileWriteFailedError;
+    set_fields_[190] = true;
+    return ply_file_write_failed_error_;
+  }
+
+  /// Returns whether `ply_file_write_failed_error` (no 191) is set.
+  constexpr bool has_ply_file_write_failed_error() const noexcept { return set_fields_[190]; }
+
+  /// Clears `ply_file_write_failed_error` (no 191).
+  void clear_ply_file_write_failed_error() & noexcept {
+    data_ = {};
+    set_fields_[190] = false;
+    ply_file_write_failed_error_ = {};
+  }
+
+  /// Sets `ply_file_write_failed_error` (no 191) and returns `*this`.
+  LogData& set_ply_file_write_failed_error(logs::PlyFileWriteFailedError&& ply_file_write_failed_error) & noexcept {
+    clear_data();
+    data_ = DataOneof::kPlyFileWriteFailedError;
+    set_fields_[190] = true;
+    ply_file_write_failed_error_ = std::move(ply_file_write_failed_error);
+    return *this;
+  }
+  /// Sets `ply_file_write_failed_error` (no 191) and returns `*this`.
+  LogData&& set_ply_file_write_failed_error(logs::PlyFileWriteFailedError&& ply_file_write_failed_error) && noexcept {
+    return std::move(set_ply_file_write_failed_error(std::move(ply_file_write_failed_error)));
+  }
+
+  // Field `project_save_error` (no 192).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 192.
+  constexpr const logs::ProjectSaveError& project_save_error() const& noexcept HORUS_LIFETIME_BOUND {
+    return project_save_error_;
+  }
+
+  /// If `project_save_error` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 192.
+  logs::ProjectSaveError project_save_error() && noexcept {
+    if (!set_fields_[191]) {
+      return {};
+    }
+    return std::move(project_save_error_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 192.
+  logs::ProjectSaveError& mutable_project_save_error() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kProjectSaveError;
+    set_fields_[191] = true;
+    return project_save_error_;
+  }
+
+  /// Returns whether `project_save_error` (no 192) is set.
+  constexpr bool has_project_save_error() const noexcept { return set_fields_[191]; }
+
+  /// Clears `project_save_error` (no 192).
+  void clear_project_save_error() & noexcept {
+    data_ = {};
+    set_fields_[191] = false;
+    project_save_error_ = {};
+  }
+
+  /// Sets `project_save_error` (no 192) and returns `*this`.
+  LogData& set_project_save_error(logs::ProjectSaveError&& project_save_error) & noexcept {
+    clear_data();
+    data_ = DataOneof::kProjectSaveError;
+    set_fields_[191] = true;
+    project_save_error_ = std::move(project_save_error);
+    return *this;
+  }
+  /// Sets `project_save_error` (no 192) and returns `*this`.
+  LogData&& set_project_save_error(logs::ProjectSaveError&& project_save_error) && noexcept {
+    return std::move(set_project_save_error(std::move(project_save_error)));
+  }
+
+  // Field `save_static_environment_success` (no 193).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 193.
+  constexpr const logs::SaveStaticEnvironmentSuccess& save_static_environment_success() const& noexcept HORUS_LIFETIME_BOUND {
+    return save_static_environment_success_;
+  }
+
+  /// If `save_static_environment_success` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 193.
+  logs::SaveStaticEnvironmentSuccess save_static_environment_success() && noexcept {
+    if (!set_fields_[192]) {
+      return {};
+    }
+    return std::move(save_static_environment_success_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 193.
+  logs::SaveStaticEnvironmentSuccess& mutable_save_static_environment_success() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kSaveStaticEnvironmentSuccess;
+    set_fields_[192] = true;
+    return save_static_environment_success_;
+  }
+
+  /// Returns whether `save_static_environment_success` (no 193) is set.
+  constexpr bool has_save_static_environment_success() const noexcept { return set_fields_[192]; }
+
+  /// Clears `save_static_environment_success` (no 193).
+  void clear_save_static_environment_success() & noexcept {
+    data_ = {};
+    set_fields_[192] = false;
+    save_static_environment_success_ = {};
+  }
+
+  /// Sets `save_static_environment_success` (no 193) and returns `*this`.
+  LogData& set_save_static_environment_success(logs::SaveStaticEnvironmentSuccess&& save_static_environment_success) & noexcept {
+    clear_data();
+    data_ = DataOneof::kSaveStaticEnvironmentSuccess;
+    set_fields_[192] = true;
+    save_static_environment_success_ = std::move(save_static_environment_success);
+    return *this;
+  }
+  /// Sets `save_static_environment_success` (no 193) and returns `*this`.
+  LogData&& set_save_static_environment_success(logs::SaveStaticEnvironmentSuccess&& save_static_environment_success) && noexcept {
+    return std::move(set_save_static_environment_success(std::move(save_static_environment_success)));
+  }
+
+  // Field `save_static_environment_failed` (no 194).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 194.
+  constexpr const logs::SaveStaticEnvironmentFailed& save_static_environment_failed() const& noexcept HORUS_LIFETIME_BOUND {
+    return save_static_environment_failed_;
+  }
+
+  /// If `save_static_environment_failed` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 194.
+  logs::SaveStaticEnvironmentFailed save_static_environment_failed() && noexcept {
+    if (!set_fields_[193]) {
+      return {};
+    }
+    return std::move(save_static_environment_failed_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 194.
+  logs::SaveStaticEnvironmentFailed& mutable_save_static_environment_failed() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kSaveStaticEnvironmentFailed;
+    set_fields_[193] = true;
+    return save_static_environment_failed_;
+  }
+
+  /// Returns whether `save_static_environment_failed` (no 194) is set.
+  constexpr bool has_save_static_environment_failed() const noexcept { return set_fields_[193]; }
+
+  /// Clears `save_static_environment_failed` (no 194).
+  void clear_save_static_environment_failed() & noexcept {
+    data_ = {};
+    set_fields_[193] = false;
+    save_static_environment_failed_ = {};
+  }
+
+  /// Sets `save_static_environment_failed` (no 194) and returns `*this`.
+  LogData& set_save_static_environment_failed(logs::SaveStaticEnvironmentFailed&& save_static_environment_failed) & noexcept {
+    clear_data();
+    data_ = DataOneof::kSaveStaticEnvironmentFailed;
+    set_fields_[193] = true;
+    save_static_environment_failed_ = std::move(save_static_environment_failed);
+    return *this;
+  }
+  /// Sets `save_static_environment_failed` (no 194) and returns `*this`.
+  LogData&& set_save_static_environment_failed(logs::SaveStaticEnvironmentFailed&& save_static_environment_failed) && noexcept {
+    return std::move(set_save_static_environment_failed(std::move(save_static_environment_failed)));
+  }
+
+  // Field `load_static_environment_success` (no 195).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 195.
+  constexpr const logs::LoadStaticEnvironmentSuccess& load_static_environment_success() const& noexcept HORUS_LIFETIME_BOUND {
+    return load_static_environment_success_;
+  }
+
+  /// If `load_static_environment_success` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 195.
+  logs::LoadStaticEnvironmentSuccess load_static_environment_success() && noexcept {
+    if (!set_fields_[194]) {
+      return {};
+    }
+    return std::move(load_static_environment_success_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 195.
+  logs::LoadStaticEnvironmentSuccess& mutable_load_static_environment_success() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kLoadStaticEnvironmentSuccess;
+    set_fields_[194] = true;
+    return load_static_environment_success_;
+  }
+
+  /// Returns whether `load_static_environment_success` (no 195) is set.
+  constexpr bool has_load_static_environment_success() const noexcept { return set_fields_[194]; }
+
+  /// Clears `load_static_environment_success` (no 195).
+  void clear_load_static_environment_success() & noexcept {
+    data_ = {};
+    set_fields_[194] = false;
+    load_static_environment_success_ = {};
+  }
+
+  /// Sets `load_static_environment_success` (no 195) and returns `*this`.
+  LogData& set_load_static_environment_success(logs::LoadStaticEnvironmentSuccess&& load_static_environment_success) & noexcept {
+    clear_data();
+    data_ = DataOneof::kLoadStaticEnvironmentSuccess;
+    set_fields_[194] = true;
+    load_static_environment_success_ = std::move(load_static_environment_success);
+    return *this;
+  }
+  /// Sets `load_static_environment_success` (no 195) and returns `*this`.
+  LogData&& set_load_static_environment_success(logs::LoadStaticEnvironmentSuccess&& load_static_environment_success) && noexcept {
+    return std::move(set_load_static_environment_success(std::move(load_static_environment_success)));
+  }
+
+  // Field `load_static_environment_failed` (no 196).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 196.
+  constexpr const logs::LoadStaticEnvironmentFailed& load_static_environment_failed() const& noexcept HORUS_LIFETIME_BOUND {
+    return load_static_environment_failed_;
+  }
+
+  /// If `load_static_environment_failed` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 196.
+  logs::LoadStaticEnvironmentFailed load_static_environment_failed() && noexcept {
+    if (!set_fields_[195]) {
+      return {};
+    }
+    return std::move(load_static_environment_failed_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 196.
+  logs::LoadStaticEnvironmentFailed& mutable_load_static_environment_failed() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kLoadStaticEnvironmentFailed;
+    set_fields_[195] = true;
+    return load_static_environment_failed_;
+  }
+
+  /// Returns whether `load_static_environment_failed` (no 196) is set.
+  constexpr bool has_load_static_environment_failed() const noexcept { return set_fields_[195]; }
+
+  /// Clears `load_static_environment_failed` (no 196).
+  void clear_load_static_environment_failed() & noexcept {
+    data_ = {};
+    set_fields_[195] = false;
+    load_static_environment_failed_ = {};
+  }
+
+  /// Sets `load_static_environment_failed` (no 196) and returns `*this`.
+  LogData& set_load_static_environment_failed(logs::LoadStaticEnvironmentFailed&& load_static_environment_failed) & noexcept {
+    clear_data();
+    data_ = DataOneof::kLoadStaticEnvironmentFailed;
+    set_fields_[195] = true;
+    load_static_environment_failed_ = std::move(load_static_environment_failed);
+    return *this;
+  }
+  /// Sets `load_static_environment_failed` (no 196) and returns `*this`.
+  LogData&& set_load_static_environment_failed(logs::LoadStaticEnvironmentFailed&& load_static_environment_failed) && noexcept {
+    return std::move(set_load_static_environment_failed(std::move(load_static_environment_failed)));
+  }
+
+  // Field `attempt_to_inject_invalid_lidar_id_warning` (no 197).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 197.
+  constexpr const logs::AttemptToInjectInvalidLidarIdWarning& attempt_to_inject_invalid_lidar_id_warning() const& noexcept HORUS_LIFETIME_BOUND {
+    return attempt_to_inject_invalid_lidar_id_warning_;
+  }
+
+  /// If `attempt_to_inject_invalid_lidar_id_warning` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 197.
+  logs::AttemptToInjectInvalidLidarIdWarning attempt_to_inject_invalid_lidar_id_warning() && noexcept {
+    if (!set_fields_[196]) {
+      return {};
+    }
+    return std::move(attempt_to_inject_invalid_lidar_id_warning_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 197.
+  logs::AttemptToInjectInvalidLidarIdWarning& mutable_attempt_to_inject_invalid_lidar_id_warning() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kAttemptToInjectInvalidLidarIdWarning;
+    set_fields_[196] = true;
+    return attempt_to_inject_invalid_lidar_id_warning_;
+  }
+
+  /// Returns whether `attempt_to_inject_invalid_lidar_id_warning` (no 197) is set.
+  constexpr bool has_attempt_to_inject_invalid_lidar_id_warning() const noexcept { return set_fields_[196]; }
+
+  /// Clears `attempt_to_inject_invalid_lidar_id_warning` (no 197).
+  void clear_attempt_to_inject_invalid_lidar_id_warning() & noexcept {
+    data_ = {};
+    set_fields_[196] = false;
+    attempt_to_inject_invalid_lidar_id_warning_ = {};
+  }
+
+  /// Sets `attempt_to_inject_invalid_lidar_id_warning` (no 197) and returns `*this`.
+  LogData& set_attempt_to_inject_invalid_lidar_id_warning(logs::AttemptToInjectInvalidLidarIdWarning&& attempt_to_inject_invalid_lidar_id_warning) & noexcept {
+    clear_data();
+    data_ = DataOneof::kAttemptToInjectInvalidLidarIdWarning;
+    set_fields_[196] = true;
+    attempt_to_inject_invalid_lidar_id_warning_ = std::move(attempt_to_inject_invalid_lidar_id_warning);
+    return *this;
+  }
+  /// Sets `attempt_to_inject_invalid_lidar_id_warning` (no 197) and returns `*this`.
+  LogData&& set_attempt_to_inject_invalid_lidar_id_warning(logs::AttemptToInjectInvalidLidarIdWarning&& attempt_to_inject_invalid_lidar_id_warning) && noexcept {
+    return std::move(set_attempt_to_inject_invalid_lidar_id_warning(std::move(attempt_to_inject_invalid_lidar_id_warning)));
+  }
+
+  // Field `reset_bundled_packet_due_to_unexpected_packet` (no 198).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 198.
+  constexpr const logs::ResetBundledPacketDueToUnexpectedPacket& reset_bundled_packet_due_to_unexpected_packet() const& noexcept HORUS_LIFETIME_BOUND {
+    return reset_bundled_packet_due_to_unexpected_packet_;
+  }
+
+  /// If `reset_bundled_packet_due_to_unexpected_packet` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 198.
+  logs::ResetBundledPacketDueToUnexpectedPacket reset_bundled_packet_due_to_unexpected_packet() && noexcept {
+    if (!set_fields_[197]) {
+      return {};
+    }
+    return std::move(reset_bundled_packet_due_to_unexpected_packet_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 198.
+  logs::ResetBundledPacketDueToUnexpectedPacket& mutable_reset_bundled_packet_due_to_unexpected_packet() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kResetBundledPacketDueToUnexpectedPacket;
+    set_fields_[197] = true;
+    return reset_bundled_packet_due_to_unexpected_packet_;
+  }
+
+  /// Returns whether `reset_bundled_packet_due_to_unexpected_packet` (no 198) is set.
+  constexpr bool has_reset_bundled_packet_due_to_unexpected_packet() const noexcept { return set_fields_[197]; }
+
+  /// Clears `reset_bundled_packet_due_to_unexpected_packet` (no 198).
+  void clear_reset_bundled_packet_due_to_unexpected_packet() & noexcept {
+    data_ = {};
+    set_fields_[197] = false;
+    reset_bundled_packet_due_to_unexpected_packet_ = {};
+  }
+
+  /// Sets `reset_bundled_packet_due_to_unexpected_packet` (no 198) and returns `*this`.
+  LogData& set_reset_bundled_packet_due_to_unexpected_packet(logs::ResetBundledPacketDueToUnexpectedPacket&& reset_bundled_packet_due_to_unexpected_packet) & noexcept {
+    clear_data();
+    data_ = DataOneof::kResetBundledPacketDueToUnexpectedPacket;
+    set_fields_[197] = true;
+    reset_bundled_packet_due_to_unexpected_packet_ = std::move(reset_bundled_packet_due_to_unexpected_packet);
+    return *this;
+  }
+  /// Sets `reset_bundled_packet_due_to_unexpected_packet` (no 198) and returns `*this`.
+  LogData&& set_reset_bundled_packet_due_to_unexpected_packet(logs::ResetBundledPacketDueToUnexpectedPacket&& reset_bundled_packet_due_to_unexpected_packet) && noexcept {
+    return std::move(set_reset_bundled_packet_due_to_unexpected_packet(std::move(reset_bundled_packet_due_to_unexpected_packet)));
+  }
+
   // Oneof `data`.
   // -----
 
@@ -10492,8 +11317,8 @@ class LogData final : public PbMessage {
     kCalibrationAccumulatingPointsInfo = 164,
     /// @see sparse_noise_filter_usage_non_rotational_lidars()
     kSparseNoiseFilterUsageNonRotationalLidars = 165,
-    /// @see file_write_error()
-    kFileWriteError = 166,
+    /// @see file_write_warning()
+    kFileWriteWarning = 166,
     /// @see license_forbidden_feature()
     kLicenseForbiddenFeature = 167,
     /// @see failed_to_update_configuration()
@@ -10528,6 +11353,36 @@ class LogData final : public PbMessage {
     kCalibrationMapRecordingFailed = 182,
     /// @see detection_node_not_found_error()
     kDetectionNodeNotFoundError = 183,
+    /// @see created_version_backup_info()
+    kCreatedVersionBackupInfo = 184,
+    /// @see ply_file_load_failed_error()
+    kPlyFileLoadFailedError = 185,
+    /// @see hesai_driver_lifecycle()
+    kHesaiDriverLifecycle = 186,
+    /// @see hesai_driver_error()
+    kHesaiDriverError = 187,
+    /// @see hesai_packet_processing_failed()
+    kHesaiPacketProcessingFailed = 188,
+    /// @see hesai_correction_file_error()
+    kHesaiCorrectionFileError = 189,
+    /// @see hesai_packet_statistics()
+    kHesaiPacketStatistics = 190,
+    /// @see ply_file_write_failed_error()
+    kPlyFileWriteFailedError = 191,
+    /// @see project_save_error()
+    kProjectSaveError = 192,
+    /// @see save_static_environment_success()
+    kSaveStaticEnvironmentSuccess = 193,
+    /// @see save_static_environment_failed()
+    kSaveStaticEnvironmentFailed = 194,
+    /// @see load_static_environment_success()
+    kLoadStaticEnvironmentSuccess = 195,
+    /// @see load_static_environment_failed()
+    kLoadStaticEnvironmentFailed = 196,
+    /// @see attempt_to_inject_invalid_lidar_id_warning()
+    kAttemptToInjectInvalidLidarIdWarning = 197,
+    /// @see reset_bundled_packet_due_to_unexpected_packet()
+    kResetBundledPacketDueToUnexpectedPacket = 198,
   };
 
   /// Returns the current case set in `data`.
@@ -11198,8 +12053,8 @@ class LogData final : public PbMessage {
         clear_sparse_noise_filter_usage_non_rotational_lidars();
         break;
       }
-      case DataOneof::kFileWriteError: {
-        clear_file_write_error();
+      case DataOneof::kFileWriteWarning: {
+        clear_file_write_warning();
         break;
       }
       case DataOneof::kLicenseForbiddenFeature: {
@@ -11268,6 +12123,66 @@ class LogData final : public PbMessage {
       }
       case DataOneof::kDetectionNodeNotFoundError: {
         clear_detection_node_not_found_error();
+        break;
+      }
+      case DataOneof::kCreatedVersionBackupInfo: {
+        clear_created_version_backup_info();
+        break;
+      }
+      case DataOneof::kPlyFileLoadFailedError: {
+        clear_ply_file_load_failed_error();
+        break;
+      }
+      case DataOneof::kHesaiDriverLifecycle: {
+        clear_hesai_driver_lifecycle();
+        break;
+      }
+      case DataOneof::kHesaiDriverError: {
+        clear_hesai_driver_error();
+        break;
+      }
+      case DataOneof::kHesaiPacketProcessingFailed: {
+        clear_hesai_packet_processing_failed();
+        break;
+      }
+      case DataOneof::kHesaiCorrectionFileError: {
+        clear_hesai_correction_file_error();
+        break;
+      }
+      case DataOneof::kHesaiPacketStatistics: {
+        clear_hesai_packet_statistics();
+        break;
+      }
+      case DataOneof::kPlyFileWriteFailedError: {
+        clear_ply_file_write_failed_error();
+        break;
+      }
+      case DataOneof::kProjectSaveError: {
+        clear_project_save_error();
+        break;
+      }
+      case DataOneof::kSaveStaticEnvironmentSuccess: {
+        clear_save_static_environment_success();
+        break;
+      }
+      case DataOneof::kSaveStaticEnvironmentFailed: {
+        clear_save_static_environment_failed();
+        break;
+      }
+      case DataOneof::kLoadStaticEnvironmentSuccess: {
+        clear_load_static_environment_success();
+        break;
+      }
+      case DataOneof::kLoadStaticEnvironmentFailed: {
+        clear_load_static_environment_failed();
+        break;
+      }
+      case DataOneof::kAttemptToInjectInvalidLidarIdWarning: {
+        clear_attempt_to_inject_invalid_lidar_id_warning();
+        break;
+      }
+      case DataOneof::kResetBundledPacketDueToUnexpectedPacket: {
+        clear_reset_bundled_packet_due_to_unexpected_packet();
         break;
       }
       case DataOneof::kNotSet:
@@ -11607,8 +12522,8 @@ class LogData final : public PbMessage {
   logs::CalibrationAccumulatingPointsInfo calibration_accumulating_points_info_{};
   /// @see sparse_noise_filter_usage_non_rotational_lidars()
   logs::SparseNoiseFilterUsageNonRotationalLidars sparse_noise_filter_usage_non_rotational_lidars_{};
-  /// @see file_write_error()
-  logs::FileWriteError file_write_error_{};
+  /// @see file_write_warning()
+  logs::FileWriteWarning file_write_warning_{};
   /// @see license_forbidden_feature()
   logs::LicenseForbiddenFeature license_forbidden_feature_{};
   /// @see failed_to_update_configuration()
@@ -11643,12 +12558,42 @@ class LogData final : public PbMessage {
   logs::CalibrationMapRecordingFailed calibration_map_recording_failed_{};
   /// @see detection_node_not_found_error()
   logs::DetectionNodeNotFoundError detection_node_not_found_error_{};
+  /// @see created_version_backup_info()
+  logs::CreatedVersionBackupInfo created_version_backup_info_{};
+  /// @see ply_file_load_failed_error()
+  logs::PlyFileLoadFailedError ply_file_load_failed_error_{};
+  /// @see hesai_driver_lifecycle()
+  logs::HesaiDriverLifecycle hesai_driver_lifecycle_{};
+  /// @see hesai_driver_error()
+  logs::HesaiDriverError hesai_driver_error_{};
+  /// @see hesai_packet_processing_failed()
+  logs::HesaiPacketProcessingFailed hesai_packet_processing_failed_{};
+  /// @see hesai_correction_file_error()
+  logs::HesaiCorrectionFileError hesai_correction_file_error_{};
+  /// @see hesai_packet_statistics()
+  logs::HesaiPacketStatistics hesai_packet_statistics_{};
+  /// @see ply_file_write_failed_error()
+  logs::PlyFileWriteFailedError ply_file_write_failed_error_{};
+  /// @see project_save_error()
+  logs::ProjectSaveError project_save_error_{};
+  /// @see save_static_environment_success()
+  logs::SaveStaticEnvironmentSuccess save_static_environment_success_{};
+  /// @see save_static_environment_failed()
+  logs::SaveStaticEnvironmentFailed save_static_environment_failed_{};
+  /// @see load_static_environment_success()
+  logs::LoadStaticEnvironmentSuccess load_static_environment_success_{};
+  /// @see load_static_environment_failed()
+  logs::LoadStaticEnvironmentFailed load_static_environment_failed_{};
+  /// @see attempt_to_inject_invalid_lidar_id_warning()
+  logs::AttemptToInjectInvalidLidarIdWarning attempt_to_inject_invalid_lidar_id_warning_{};
+  /// @see reset_bundled_packet_due_to_unexpected_packet()
+  logs::ResetBundledPacketDueToUnexpectedPacket reset_bundled_packet_due_to_unexpected_packet_{};
 
   /// @see data_case()
   DataOneof data_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<183> set_fields_;
+  std::bitset<198> set_fields_;
 };
 
 /// A log message notifying users about some status.
