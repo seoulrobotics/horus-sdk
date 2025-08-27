@@ -4,8 +4,8 @@ set(horus_sdk_pb_sources
   horus/pb/calibration_map_pb.h
   horus/pb/config/metadata_pb.cpp
   horus/pb/config/metadata_pb.h
-  horus/pb/config/schema/general_pb.cpp
-  horus/pb/config/schema/general_pb.h
+  horus/pb/config/schema/detection_range_pb.cpp
+  horus/pb/config/schema/detection_range_pb.h
   horus/pb/detection_merger/service_client.h
   horus/pb/detection_merger/service_handler.cpp
   horus/pb/detection_merger/service_handler.h

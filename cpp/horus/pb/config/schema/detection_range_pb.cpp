@@ -1,4 +1,4 @@
-#include "horus/pb/config/schema/general_pb.h"
+#include "horus/pb/config/schema/detection_range_pb.h"
 
 #include "horus/pb/serialize.h"
 

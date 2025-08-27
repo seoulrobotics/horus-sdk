@@ -504,10 +504,12 @@ class BagReplayUnexpectedTimestampError(_message.Message):
     def __init__(self, expected_timestamp: _Optional[_Union[_metadata_pb2.LogMetadata.Timestamp, _Mapping]] = ..., received_timestamp: _Optional[_Union[_metadata_pb2.LogMetadata.Timestamp, _Mapping]] = ...) -> None: ...
 
 class WebsocketClosedInfo(_message.Message):
-    __slots__ = ("uri",)
+    __slots__ = ("uri", "reason")
     URI_FIELD_NUMBER: _ClassVar[int]
+    REASON_FIELD_NUMBER: _ClassVar[int]
     uri: str
-    def __init__(self, uri: _Optional[str] = ...) -> None: ...
+    reason: str
+    def __init__(self, uri: _Optional[str] = ..., reason: _Optional[str] = ...) -> None: ...
 
 class WebsocketOpenedInfo(_message.Message):
     __slots__ = ("uri", "endpoint_is_server_client")
@@ -1085,7 +1087,7 @@ class SparseNoiseFilterUsageNonRotationalLidars(_message.Message):
     __slots__ = ()
     def __init__(self) -> None: ...
 
-class FileWriteError(_message.Message):
+class FileWriteWarning(_message.Message):
     __slots__ = ("filename", "details")
     FILENAME_FIELD_NUMBER: _ClassVar[int]
     DETAILS_FIELD_NUMBER: _ClassVar[int]
@@ -1200,3 +1202,119 @@ class DetectionNodeNotFoundError(_message.Message):
     NODE_NAME_FIELD_NUMBER: _ClassVar[int]
     node_name: str
     def __init__(self, node_name: _Optional[str] = ...) -> None: ...
+
+class CreatedVersionBackupInfo(_message.Message):
+    __slots__ = ("old_horus_version", "new_horus_version", "backup_path")
+    OLD_HORUS_VERSION_FIELD_NUMBER: _ClassVar[int]
+    NEW_HORUS_VERSION_FIELD_NUMBER: _ClassVar[int]
+    BACKUP_PATH_FIELD_NUMBER: _ClassVar[int]
+    old_horus_version: str
+    new_horus_version: str
+    backup_path: str
+    def __init__(self, old_horus_version: _Optional[str] = ..., new_horus_version: _Optional[str] = ..., backup_path: _Optional[str] = ...) -> None: ...
+
+class PlyFileLoadFailedError(_message.Message):
+    __slots__ = ("file_path", "details")
+    FILE_PATH_FIELD_NUMBER: _ClassVar[int]
+    DETAILS_FIELD_NUMBER: _ClassVar[int]
+    file_path: str
+    details: str
+    def __init__(self, file_path: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+
+class HesaiDriverLifecycle(_message.Message):
+    __slots__ = ("action", "lidar_id")
+    ACTION_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    action: str
+    lidar_id: str
+    def __init__(self, action: _Optional[str] = ..., lidar_id: _Optional[str] = ...) -> None: ...
+
+class HesaiDriverError(_message.Message):
+    __slots__ = ("details",)
+    DETAILS_FIELD_NUMBER: _ClassVar[int]
+    details: str
+    def __init__(self, details: _Optional[str] = ...) -> None: ...
+
+class HesaiPacketProcessingFailed(_message.Message):
+    __slots__ = ("lidar_id", "details")
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    DETAILS_FIELD_NUMBER: _ClassVar[int]
+    lidar_id: str
+    details: str
+    def __init__(self, lidar_id: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+
+class HesaiCorrectionFileError(_message.Message):
+    __slots__ = ("file_type", "details")
+    FILE_TYPE_FIELD_NUMBER: _ClassVar[int]
+    DETAILS_FIELD_NUMBER: _ClassVar[int]
+    file_type: str
+    details: str
+    def __init__(self, file_type: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+
+class HesaiPacketStatistics(_message.Message):
+    __slots__ = ("packets_received", "packets_published", "packets_dropped", "packets_decode_failed", "success_rate")
+    PACKETS_RECEIVED_FIELD_NUMBER: _ClassVar[int]
+    PACKETS_PUBLISHED_FIELD_NUMBER: _ClassVar[int]
+    PACKETS_DROPPED_FIELD_NUMBER: _ClassVar[int]
+    PACKETS_DECODE_FAILED_FIELD_NUMBER: _ClassVar[int]
+    SUCCESS_RATE_FIELD_NUMBER: _ClassVar[int]
+    packets_received: int
+    packets_published: int
+    packets_dropped: int
+    packets_decode_failed: int
+    success_rate: float
+    def __init__(self, packets_received: _Optional[int] = ..., packets_published: _Optional[int] = ..., packets_dropped: _Optional[int] = ..., packets_decode_failed: _Optional[int] = ..., success_rate: _Optional[float] = ...) -> None: ...
+
+class PlyFileWriteFailedError(_message.Message):
+    __slots__ = ("file_path", "details")
+    FILE_PATH_FIELD_NUMBER: _ClassVar[int]
+    DETAILS_FIELD_NUMBER: _ClassVar[int]
+    file_path: str
+    details: str
+    def __init__(self, file_path: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+
+class ProjectSaveError(_message.Message):
+    __slots__ = ("error_message",)
+    ERROR_MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    error_message: str
+    def __init__(self, error_message: _Optional[str] = ...) -> None: ...
+
+class SaveStaticEnvironmentSuccess(_message.Message):
+    __slots__ = ("path",)
+    PATH_FIELD_NUMBER: _ClassVar[int]
+    path: str
+    def __init__(self, path: _Optional[str] = ...) -> None: ...
+
+class SaveStaticEnvironmentFailed(_message.Message):
+    __slots__ = ("path", "details")
+    PATH_FIELD_NUMBER: _ClassVar[int]
+    DETAILS_FIELD_NUMBER: _ClassVar[int]
+    path: str
+    details: str
+    def __init__(self, path: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+
+class LoadStaticEnvironmentSuccess(_message.Message):
+    __slots__ = ("path",)
+    PATH_FIELD_NUMBER: _ClassVar[int]
+    path: str
+    def __init__(self, path: _Optional[str] = ...) -> None: ...
+
+class LoadStaticEnvironmentFailed(_message.Message):
+    __slots__ = ("path", "details")
+    PATH_FIELD_NUMBER: _ClassVar[int]
+    DETAILS_FIELD_NUMBER: _ClassVar[int]
+    path: str
+    details: str
+    def __init__(self, path: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+
+class AttemptToInjectInvalidLidarIdWarning(_message.Message):
+    __slots__ = ("lidar_id",)
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    lidar_id: str
+    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+
+class ResetBundledPacketDueToUnexpectedPacket(_message.Message):
+    __slots__ = ("lidar_id",)
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    lidar_id: str
+    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...

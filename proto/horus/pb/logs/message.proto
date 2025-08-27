@@ -181,7 +181,7 @@ message LogData {
     logs.InvalidLidarTimestamp invalid_lidar_timestamp = 163;
     logs.CalibrationAccumulatingPointsInfo calibration_accumulating_points_info = 164;
     logs.SparseNoiseFilterUsageNonRotationalLidars sparse_noise_filter_usage_non_rotational_lidars = 165;
-    logs.FileWriteError file_write_error = 166;
+    logs.FileWriteWarning file_write_warning = 166;
     logs.LicenseForbiddenFeature license_forbidden_feature = 167;
     logs.FailedToUpdateConfiguration failed_to_update_configuration = 168;
     logs.ObstructionDetectorBadReferenceWarning obstruction_detector_bad_reference_warning = 169;
@@ -199,5 +199,20 @@ message LogData {
     logs.RemovedInvalidLidarsFromConfigWarning removed_invalid_lidars_from_config_warning = 181;
     logs.CalibrationMapRecordingFailed calibration_map_recording_failed = 182;
     logs.DetectionNodeNotFoundError detection_node_not_found_error = 183;
+    logs.CreatedVersionBackupInfo created_version_backup_info = 184;
+    logs.PlyFileLoadFailedError ply_file_load_failed_error = 185;
+    logs.HesaiDriverLifecycle hesai_driver_lifecycle = 186;
+    logs.HesaiDriverError hesai_driver_error = 187;
+    logs.HesaiPacketProcessingFailed hesai_packet_processing_failed = 188;
+    logs.HesaiCorrectionFileError hesai_correction_file_error = 189;
+    logs.HesaiPacketStatistics hesai_packet_statistics = 190;
+    logs.PlyFileWriteFailedError ply_file_write_failed_error = 191;
+    logs.ProjectSaveError project_save_error = 192;
+    logs.SaveStaticEnvironmentSuccess save_static_environment_success = 193;
+    logs.SaveStaticEnvironmentFailed save_static_environment_failed = 194;
+    logs.LoadStaticEnvironmentSuccess load_static_environment_success = 195;
+    logs.LoadStaticEnvironmentFailed load_static_environment_failed = 196;
+    logs.AttemptToInjectInvalidLidarIdWarning attempt_to_inject_invalid_lidar_id_warning = 197;
+    logs.ResetBundledPacketDueToUnexpectedPacket reset_bundled_packet_due_to_unexpected_packet = 198;
   }
 }

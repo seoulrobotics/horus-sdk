@@ -38,6 +38,12 @@ do a change, you can use:
 python3 -m pip install -e .
 ```
 
+Alternatively, Horus can be used without installation:
+
+```sh
+PYTHONPATH=. python3 examples/print_logs.py
+```
+
 [`mypy`](https://github.com/python/mypy) is used for type-checking:
 
 ```sh

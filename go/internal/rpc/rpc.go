@@ -68,7 +68,7 @@ func newWebSocket(ctx context.Context, url string) (*websocket.Conn, error) {
 	if err != nil {
 		return nil, err
 	}
-	ws.SetReadLimit(-1)
+	ws.SetReadLimit(10 << 20) // 10 MB
 	return ws, nil
 }
 

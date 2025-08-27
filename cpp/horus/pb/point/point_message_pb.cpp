@@ -64,6 +64,7 @@ AttributedPoints::AttributedPoints(const AttributedPoints& other) noexcept(false
     , attributes_{other.attributes_}
     , intensities_{other.intensities_}
     , ring_indices_{other.ring_indices_}
+    , timestamps_{other.timestamps_}
     , set_fields_{other.set_fields_} {}
 
 void AttributedPoints::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -78,6 +79,9 @@ void AttributedPoints::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[3]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 5, ring_indices_);
+  }
+  if (set_fields_[4]) {
+    SerializeField<CowRepeated<Timestamp>>(writer, /*tag=*/ 6, timestamps_);
   }
 }
 
@@ -102,6 +106,11 @@ void AttributedPoints::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 5: {
         DeserializeField<CowBytes>(reader, ring_indices_);
         set_fields_[3] = true;
+        break;
+      }
+      case 6: {
+        DeserializeField<CowRepeated<Timestamp>>(reader, timestamps_);
+        set_fields_[4] = true;
         break;
       }
       default: {

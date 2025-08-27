@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1chorus/pb/logs/metadata.proto\x12\x08horus.pb\"\xdf\x02\n\x0bLogMetadata\x12\x16\n\x0ems_since_epoch\x18\x01 \x01(\x04\x12\x30\n\x08severity\x18\x02 \x01(\x0e\x32\x1e.horus.pb.LogMetadata.Severity\x12\x0f\n\x07node_id\x18\x03 \x01(\t\x1a,\n\x0eSourceLocation\x12\x0c\n\x04\x66ile\x18\x01 \x01(\t\x12\x0c\n\x04line\x18\x02 \x01(\r\x1a\x16\n\x08\x44uration\x12\n\n\x02ms\x18\x01 \x01(\x04\x1a#\n\tTimestamp\x12\x16\n\x0ems_since_epoch\x18\x01 \x01(\x04\"\x89\x01\n\x08Severity\x12\x18\n\x14SEVERITY_UNSPECIFIED\x10\x00\x12\x12\n\x0eSEVERITY_DEBUG\x10\x01\x12\x11\n\rSEVERITY_INFO\x10\x02\x12\x14\n\x10SEVERITY_WARNING\x10\x03\x12\x12\n\x0eSEVERITY_ERROR\x10\x04\x12\x12\n\x0eSEVERITY_FATAL\x10\x05\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1chorus/pb/logs/metadata.proto\x12\x08horus.pb\"\x9b\x03\n\x0bLogMetadata\x12\x16\n\x0ems_since_epoch\x18\x01 \x01(\x04\x12\x30\n\x08severity\x18\x02 \x01(\x0e\x32\x1e.horus.pb.LogMetadata.Severity\x12\x0f\n\x07node_id\x18\x03 \x01(\t\x12\x1c\n\x14\x65ncoded_stack_frames\x18\x04 \x03(\x06\x12\x1c\n\x14stack_frames_modules\x18\x05 \x03(\t\x1a,\n\x0eSourceLocation\x12\x0c\n\x04\x66ile\x18\x01 \x01(\t\x12\x0c\n\x04line\x18\x02 \x01(\r\x1a\x16\n\x08\x44uration\x12\n\n\x02ms\x18\x01 \x01(\x04\x1a#\n\tTimestamp\x12\x16\n\x0ems_since_epoch\x18\x01 \x01(\x04\"\x89\x01\n\x08Severity\x12\x18\n\x14SEVERITY_UNSPECIFIED\x10\x00\x12\x12\n\x0eSEVERITY_DEBUG\x10\x01\x12\x11\n\rSEVERITY_INFO\x10\x02\x12\x14\n\x10SEVERITY_WARNING\x10\x03\x12\x12\n\x0eSEVERITY_ERROR\x10\x04\x12\x12\n\x0eSEVERITY_FATAL\x10\x05\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,13 +32,13 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'horus.pb.logs.metadata_pb2'
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_LOGMETADATA']._serialized_start=43
-  _globals['_LOGMETADATA']._serialized_end=394
-  _globals['_LOGMETADATA_SOURCELOCATION']._serialized_start=149
-  _globals['_LOGMETADATA_SOURCELOCATION']._serialized_end=193
-  _globals['_LOGMETADATA_DURATION']._serialized_start=195
-  _globals['_LOGMETADATA_DURATION']._serialized_end=217
-  _globals['_LOGMETADATA_TIMESTAMP']._serialized_start=219
-  _globals['_LOGMETADATA_TIMESTAMP']._serialized_end=254
-  _globals['_LOGMETADATA_SEVERITY']._serialized_start=257
-  _globals['_LOGMETADATA_SEVERITY']._serialized_end=394
+  _globals['_LOGMETADATA']._serialized_end=454
+  _globals['_LOGMETADATA_SOURCELOCATION']._serialized_start=209
+  _globals['_LOGMETADATA_SOURCELOCATION']._serialized_end=253
+  _globals['_LOGMETADATA_DURATION']._serialized_start=255
+  _globals['_LOGMETADATA_DURATION']._serialized_end=277
+  _globals['_LOGMETADATA_TIMESTAMP']._serialized_start=279
+  _globals['_LOGMETADATA_TIMESTAMP']._serialized_end=314
+  _globals['_LOGMETADATA_SEVERITY']._serialized_start=317
+  _globals['_LOGMETADATA_SEVERITY']._serialized_end=454
 # @@protoc_insertion_point(module_scope)
