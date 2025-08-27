@@ -167,7 +167,9 @@ class WebSocket:
 
             async def connect_with_callback() -> ClientConnection:
                 ws = await connect(
-                    self._url, logger=self._logger.getChild("websockets")
+                    self._url,
+                    logger=self._logger.getChild("websockets"),
+                    max_size=10 << 20,  # 10 MB
                 )
 
                 if self._connection is cached:

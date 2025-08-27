@@ -2046,11 +2046,15 @@ void BagReplayUnexpectedTimestampError::DeserializeFrom(PbReader& reader) noexce
 
 WebsocketClosedInfo::WebsocketClosedInfo(const WebsocketClosedInfo& other) noexcept(false)
     : uri_{other.uri_}
+    , reason_{other.reason_}
     , set_fields_{other.set_fields_} {}
 
 void WebsocketClosedInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, uri_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, reason_);
   }
 }
 
@@ -2060,6 +2064,11 @@ void WebsocketClosedInfo::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 1: {
         DeserializeField<CowBytes>(reader, uri_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, reason_);
+        set_fields_[1] = true;
         break;
       }
       default: {
@@ -4318,12 +4327,12 @@ void CalibrationAccumulatingPointsInfo::DeserializeFrom(PbReader& reader) noexce
 
 
 
-FileWriteError::FileWriteError(const FileWriteError& other) noexcept(false)
+FileWriteWarning::FileWriteWarning(const FileWriteWarning& other) noexcept(false)
     : filename_{other.filename_}
     , details_{other.details_}
     , set_fields_{other.set_fields_} {}
 
-void FileWriteError::SerializeTo(PbWriter& writer) const noexcept(false) {
+void FileWriteWarning::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, filename_);
   }
@@ -4332,7 +4341,7 @@ void FileWriteError::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
 }
 
-void FileWriteError::DeserializeFrom(PbReader& reader) noexcept(false) {
+void FileWriteWarning::DeserializeFrom(PbReader& reader) noexcept(false) {
   while (reader.Reader().next()) {
     switch (reader.Reader().tag()) {
       case 1: {
@@ -4781,6 +4790,513 @@ void DetectionNodeNotFoundError::DeserializeFrom(PbReader& reader) noexcept(fals
     switch (reader.Reader().tag()) {
       case 1: {
         DeserializeField<CowBytes>(reader, node_name_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+CreatedVersionBackupInfo::CreatedVersionBackupInfo(const CreatedVersionBackupInfo& other) noexcept(false)
+    : old_horus_version_{other.old_horus_version_}
+    , new_horus_version_{other.new_horus_version_}
+    , backup_path_{other.backup_path_}
+    , set_fields_{other.set_fields_} {}
+
+void CreatedVersionBackupInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, old_horus_version_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, new_horus_version_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, backup_path_);
+  }
+}
+
+void CreatedVersionBackupInfo::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, old_horus_version_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, new_horus_version_);
+        set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<CowBytes>(reader, backup_path_);
+        set_fields_[2] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+PlyFileLoadFailedError::PlyFileLoadFailedError(const PlyFileLoadFailedError& other) noexcept(false)
+    : file_path_{other.file_path_}
+    , details_{other.details_}
+    , set_fields_{other.set_fields_} {}
+
+void PlyFileLoadFailedError::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, file_path_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+}
+
+void PlyFileLoadFailedError::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, file_path_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, details_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+HesaiDriverLifecycle::HesaiDriverLifecycle(const HesaiDriverLifecycle& other) noexcept(false)
+    : action_{other.action_}
+    , lidar_id_{other.lidar_id_}
+    , set_fields_{other.set_fields_} {}
+
+void HesaiDriverLifecycle::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, action_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_id_);
+  }
+}
+
+void HesaiDriverLifecycle::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, action_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+HesaiDriverError::HesaiDriverError(const HesaiDriverError& other) noexcept(false)
+    : details_{other.details_}
+    , set_fields_{other.set_fields_} {}
+
+void HesaiDriverError::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, details_);
+  }
+}
+
+void HesaiDriverError::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, details_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+HesaiPacketProcessingFailed::HesaiPacketProcessingFailed(const HesaiPacketProcessingFailed& other) noexcept(false)
+    : lidar_id_{other.lidar_id_}
+    , details_{other.details_}
+    , set_fields_{other.set_fields_} {}
+
+void HesaiPacketProcessingFailed::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+}
+
+void HesaiPacketProcessingFailed::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, details_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+HesaiCorrectionFileError::HesaiCorrectionFileError(const HesaiCorrectionFileError& other) noexcept(false)
+    : file_type_{other.file_type_}
+    , details_{other.details_}
+    , set_fields_{other.set_fields_} {}
+
+void HesaiCorrectionFileError::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, file_type_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+}
+
+void HesaiCorrectionFileError::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, file_type_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, details_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+HesaiPacketStatistics::HesaiPacketStatistics(const HesaiPacketStatistics& other) noexcept(false)
+    : packets_received_{other.packets_received_}
+    , packets_published_{other.packets_published_}
+    , packets_dropped_{other.packets_dropped_}
+    , packets_decode_failed_{other.packets_decode_failed_}
+    , success_rate_{other.success_rate_}
+    , set_fields_{other.set_fields_} {}
+
+void HesaiPacketStatistics::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<std::uint64_t>(writer, /*tag=*/ 1, packets_received_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<std::uint64_t>(writer, /*tag=*/ 2, packets_published_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<std::uint64_t>(writer, /*tag=*/ 3, packets_dropped_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<std::uint64_t>(writer, /*tag=*/ 4, packets_decode_failed_);
+  }
+  if (set_fields_[4]) {
+    SerializeField<double, PbDeserFlags::kFixed>(writer, /*tag=*/ 5, success_rate_);
+  }
+}
+
+void HesaiPacketStatistics::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<std::uint64_t>(reader, packets_received_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<std::uint64_t>(reader, packets_published_);
+        set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<std::uint64_t>(reader, packets_dropped_);
+        set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        DeserializeField<std::uint64_t>(reader, packets_decode_failed_);
+        set_fields_[3] = true;
+        break;
+      }
+      case 5: {
+        DeserializeField<double, PbDeserFlags::kFixed>(reader, success_rate_);
+        set_fields_[4] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+PlyFileWriteFailedError::PlyFileWriteFailedError(const PlyFileWriteFailedError& other) noexcept(false)
+    : file_path_{other.file_path_}
+    , details_{other.details_}
+    , set_fields_{other.set_fields_} {}
+
+void PlyFileWriteFailedError::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, file_path_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+}
+
+void PlyFileWriteFailedError::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, file_path_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, details_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+ProjectSaveError::ProjectSaveError(const ProjectSaveError& other) noexcept(false)
+    : error_message_{other.error_message_}
+    , set_fields_{other.set_fields_} {}
+
+void ProjectSaveError::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, error_message_);
+  }
+}
+
+void ProjectSaveError::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, error_message_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+SaveStaticEnvironmentSuccess::SaveStaticEnvironmentSuccess(const SaveStaticEnvironmentSuccess& other) noexcept(false)
+    : path_{other.path_}
+    , set_fields_{other.set_fields_} {}
+
+void SaveStaticEnvironmentSuccess::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, path_);
+  }
+}
+
+void SaveStaticEnvironmentSuccess::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, path_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+SaveStaticEnvironmentFailed::SaveStaticEnvironmentFailed(const SaveStaticEnvironmentFailed& other) noexcept(false)
+    : path_{other.path_}
+    , details_{other.details_}
+    , set_fields_{other.set_fields_} {}
+
+void SaveStaticEnvironmentFailed::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, path_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+}
+
+void SaveStaticEnvironmentFailed::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, path_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, details_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+LoadStaticEnvironmentSuccess::LoadStaticEnvironmentSuccess(const LoadStaticEnvironmentSuccess& other) noexcept(false)
+    : path_{other.path_}
+    , set_fields_{other.set_fields_} {}
+
+void LoadStaticEnvironmentSuccess::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, path_);
+  }
+}
+
+void LoadStaticEnvironmentSuccess::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, path_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+LoadStaticEnvironmentFailed::LoadStaticEnvironmentFailed(const LoadStaticEnvironmentFailed& other) noexcept(false)
+    : path_{other.path_}
+    , details_{other.details_}
+    , set_fields_{other.set_fields_} {}
+
+void LoadStaticEnvironmentFailed::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, path_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+}
+
+void LoadStaticEnvironmentFailed::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, path_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, details_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+AttemptToInjectInvalidLidarIdWarning::AttemptToInjectInvalidLidarIdWarning(const AttemptToInjectInvalidLidarIdWarning& other) noexcept(false)
+    : lidar_id_{other.lidar_id_}
+    , set_fields_{other.set_fields_} {}
+
+void AttemptToInjectInvalidLidarIdWarning::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+}
+
+void AttemptToInjectInvalidLidarIdWarning::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+ResetBundledPacketDueToUnexpectedPacket::ResetBundledPacketDueToUnexpectedPacket(const ResetBundledPacketDueToUnexpectedPacket& other) noexcept(false)
+    : lidar_id_{other.lidar_id_}
+    , set_fields_{other.set_fields_} {}
+
+void ResetBundledPacketDueToUnexpectedPacket::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+}
+
+void ResetBundledPacketDueToUnexpectedPacket::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
         set_fields_[0] = true;
         break;
       }

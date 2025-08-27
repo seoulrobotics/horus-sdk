@@ -14,6 +14,8 @@
 #include "horus/attributes.h"
 #include "horus/internal/attributes.h"
 #include "horus/pb/cow_bytes.h"
+#include "horus/pb/cow_repeated.h"
+#include "horus/pb/cow_span.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
 #include "horus/pb/types.h"
@@ -603,6 +605,116 @@ class LogMetadata final : public PbMessage {
     return std::move(set_node_id(std::move(node_id)));
   }
 
+  // Field `encoded_stack_frames` (no 4).
+  // -----
+
+  /// Stack frames where the log was emitted; from the closest to the call to the
+  ///  furthest. Each stack frame is encoded as (`stack_frames_modules_index |
+  ///  (stack_frame_offset << 8)`). We use this encoding since most frames will
+  ///  use the same module, and log messages should remain small. See
+  ///  `backend/common/logs/backtrace_decoder.ts` to decode log metadata stack
+  ///  frames.
+  ///
+  /// Field no: 4.
+  constexpr const CowSpan<std::uint64_t>& encoded_stack_frames() const& noexcept HORUS_LIFETIME_BOUND {
+    return encoded_stack_frames_;
+  }
+
+  /// If `encoded_stack_frames` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  CowSpan<std::uint64_t> encoded_stack_frames() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(encoded_stack_frames_);
+  }
+
+  /// Stack frames where the log was emitted; from the closest to the call to the
+  ///  furthest. Each stack frame is encoded as (`stack_frames_modules_index |
+  ///  (stack_frame_offset << 8)`). We use this encoding since most frames will
+  ///  use the same module, and log messages should remain small. See
+  ///  `backend/common/logs/backtrace_decoder.ts` to decode log metadata stack
+  ///  frames.
+  ///
+  /// Field no: 4.
+  CowSpan<std::uint64_t>& mutable_encoded_stack_frames() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return encoded_stack_frames_;
+  }
+
+  /// Returns whether `encoded_stack_frames` (no 4) is set.
+  constexpr bool has_encoded_stack_frames() const noexcept { return set_fields_[3]; }
+
+  /// Clears `encoded_stack_frames` (no 4).
+  void clear_encoded_stack_frames() & noexcept {
+    set_fields_[3] = false;
+    encoded_stack_frames_ = {};
+  }
+
+  /// Sets `encoded_stack_frames` (no 4) and returns `*this`.
+  LogMetadata& set_encoded_stack_frames(CowSpan<std::uint64_t>&& encoded_stack_frames) & noexcept {
+    set_fields_[3] = true;
+    encoded_stack_frames_ = std::move(encoded_stack_frames);
+    return *this;
+  }
+  /// Sets `encoded_stack_frames` (no 4) and returns `*this`.
+  LogMetadata&& set_encoded_stack_frames(CowSpan<std::uint64_t>&& encoded_stack_frames) && noexcept {
+    return std::move(set_encoded_stack_frames(std::move(encoded_stack_frames)));
+  }
+
+  // Field `stack_frames_modules` (no 5).
+  // -----
+
+  /// Names of modules referenced by `encoded_stack_frames`.
+  ///
+  /// Field no: 5.
+  constexpr const CowRepeated<CowBytes>& stack_frames_modules() const& noexcept HORUS_LIFETIME_BOUND {
+    return stack_frames_modules_;
+  }
+
+  /// If `stack_frames_modules` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 5.
+  CowRepeated<CowBytes> stack_frames_modules() && noexcept {
+    if (!set_fields_[4]) {
+      return {};
+    }
+    return std::move(stack_frames_modules_);
+  }
+
+  /// Names of modules referenced by `encoded_stack_frames`.
+  ///
+  /// Field no: 5.
+  CowRepeated<CowBytes>& mutable_stack_frames_modules() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[4] = true;
+    return stack_frames_modules_;
+  }
+
+  /// Returns whether `stack_frames_modules` (no 5) is set.
+  constexpr bool has_stack_frames_modules() const noexcept { return set_fields_[4]; }
+
+  /// Clears `stack_frames_modules` (no 5).
+  void clear_stack_frames_modules() & noexcept {
+    set_fields_[4] = false;
+    stack_frames_modules_ = {};
+  }
+
+  /// Sets `stack_frames_modules` (no 5) and returns `*this`.
+  LogMetadata& set_stack_frames_modules(CowRepeated<CowBytes>&& stack_frames_modules) & noexcept {
+    set_fields_[4] = true;
+    stack_frames_modules_ = std::move(stack_frames_modules);
+    return *this;
+  }
+  /// Sets `stack_frames_modules` (no 5) and returns `*this`.
+  LogMetadata&& set_stack_frames_modules(CowRepeated<CowBytes>&& stack_frames_modules) && noexcept {
+    return std::move(set_stack_frames_modules(std::move(stack_frames_modules)));
+  }
+
  private:
   /// @see ms_since_epoch()
   std::uint64_t ms_since_epoch_{};
@@ -610,9 +722,13 @@ class LogMetadata final : public PbMessage {
   LogMetadata_Severity severity_{};
   /// @see node_id()
   CowBytes node_id_{};
+  /// @see encoded_stack_frames()
+  CowSpan<std::uint64_t> encoded_stack_frames_{};
+  /// @see stack_frames_modules()
+  CowRepeated<CowBytes> stack_frames_modules_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<3> set_fields_;
+  std::bitset<5> set_fields_;
 };
 
 }  // namespace pb

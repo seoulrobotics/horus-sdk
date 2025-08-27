@@ -555,9 +555,10 @@ message BagReplayUnexpectedTimestampError {
 
 // Log #70.
 //
-// > WebSocket RPC connection to $uri closed
+// > WebSocket RPC connection to $uri closed: $reason
 message WebsocketClosedInfo {
   string uri = 1;
+  string reason = 2;
 }
 
 // Log #71.
@@ -1207,7 +1208,7 @@ message SparseNoiseFilterUsageNonRotationalLidars {
 // Log #166.
 //
 // > Failed to write to file "$filename": "$details".
-message FileWriteError {
+message FileWriteWarning {
   string filename = 1;
   string details = 2;
 }
@@ -1332,4 +1333,122 @@ message CalibrationMapRecordingFailed {
 // > Detection node $node_name not found.
 message DetectionNodeNotFoundError {
   string node_name = 1;
+}
+
+// Log #184.
+//
+// > Horus upgraded from $old_horus_version to $new_horus_version. The project was backed up to $backup_path before being upgraded.
+message CreatedVersionBackupInfo {
+  string old_horus_version = 1;
+  string new_horus_version = 2;
+  string backup_path = 3;
+}
+
+// Log #185.
+//
+// > Failed to load PLY file $file_path: $details
+message PlyFileLoadFailedError {
+  string file_path = 1;
+  string details = 2;
+}
+
+// Log #186.
+//
+// > Hesai XT32 driver $action for LiDAR $lidar_id.
+message HesaiDriverLifecycle {
+  string action = 1;
+  string lidar_id = 2;
+}
+
+// Log #187.
+//
+// > Hesai XT32 driver error: $details
+message HesaiDriverError {
+  string details = 1;
+}
+
+// Log #188.
+//
+// > Failed to process packet for Hesai LiDAR $lidar_id: $details
+message HesaiPacketProcessingFailed {
+  string lidar_id = 1;
+  string details = 2;
+}
+
+// Log #189.
+//
+// > Failed to load Hesai XT32 correction file $file_type: $details
+message HesaiCorrectionFileError {
+  string file_type = 1;
+  string details = 2;
+}
+
+// Log #190.
+//
+// > Hesai packet statistics - Received: $packets_received, Published: $packets_published, Dropped: $packets_dropped, Decode Failed: $packets_decode_failed, Success Rate: $success_rate %
+message HesaiPacketStatistics {
+  uint64 packets_received = 1;
+  uint64 packets_published = 2;
+  uint64 packets_dropped = 3;
+  uint64 packets_decode_failed = 4;
+  double success_rate = 5;
+}
+
+// Log #191.
+//
+// > Failed to write PLY file $file_path: $details
+message PlyFileWriteFailedError {
+  string file_path = 1;
+  string details = 2;
+}
+
+// Log #192.
+//
+// > Failed to save project: $error_message.
+message ProjectSaveError {
+  string error_message = 1;
+}
+
+// Log #193.
+//
+// > Saved static environment to $path
+message SaveStaticEnvironmentSuccess {
+  string path = 1;
+}
+
+// Log #194.
+//
+// > Failed to serialize static environment to $path: $details
+message SaveStaticEnvironmentFailed {
+  string path = 1;
+  string details = 2;
+}
+
+// Log #195.
+//
+// > Static environment loaded from $path
+message LoadStaticEnvironmentSuccess {
+  string path = 1;
+}
+
+// Log #196.
+//
+// > Failed to load static environment from $path: $details
+message LoadStaticEnvironmentFailed {
+  string path = 1;
+  string details = 2;
+}
+
+// Log #197.
+//
+// > Attempt to inject invalid lidar ID $lidar_id into the system.
+message AttemptToInjectInvalidLidarIdWarning {
+  string lidar_id = 1;
+}
+
+// Log #198.
+//
+// > Resetting bundled packet due to unexpected packet from lidar $lidar_id.
+message ResetBundledPacketDueToUnexpectedPacket {
+  string lidar_id = 1;
 }

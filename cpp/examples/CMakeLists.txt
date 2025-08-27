@@ -11,7 +11,7 @@ project(horus_sdk_examples LANGUAGES CXX)
 
 include(FetchContent)
 
-FetchContent_Declare(horus
+FetchContent_Declare(horus_sdk
   # We import from the root of the repository and specify a `SOURCE_SUBDIR` here, since that's
   # likely what clients will want to do (by referring to the root of the repository either with a
   # `GIT_REPOSITORY` or by downloading a zip of the repository with `URL`).
@@ -21,8 +21,13 @@ FetchContent_Declare(horus
 
   DOWNLOAD_COMMAND ""
   INSTALL_COMMAND  ""
+
+  FIND_PACKAGE_ARGS CONFIG
 )
-FetchContent_MakeAvailable(horus)
+FetchContent_MakeAvailable(horus_sdk)
+
+# Include `..` to `#include "examples/helpers.h"` in the examples.
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/..")
 
 # Create an executable which depends on `horus::sdk`.
 #

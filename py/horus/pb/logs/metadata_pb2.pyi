@@ -1,12 +1,13 @@
+from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
+from typing import ClassVar as _ClassVar, Iterable as _Iterable, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class LogMetadata(_message.Message):
-    __slots__ = ("ms_since_epoch", "severity", "node_id")
+    __slots__ = ("ms_since_epoch", "severity", "node_id", "encoded_stack_frames", "stack_frames_modules")
     class Severity(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         SEVERITY_UNSPECIFIED: _ClassVar[LogMetadata.Severity]
@@ -41,7 +42,11 @@ class LogMetadata(_message.Message):
     MS_SINCE_EPOCH_FIELD_NUMBER: _ClassVar[int]
     SEVERITY_FIELD_NUMBER: _ClassVar[int]
     NODE_ID_FIELD_NUMBER: _ClassVar[int]
+    ENCODED_STACK_FRAMES_FIELD_NUMBER: _ClassVar[int]
+    STACK_FRAMES_MODULES_FIELD_NUMBER: _ClassVar[int]
     ms_since_epoch: int
     severity: LogMetadata.Severity
     node_id: str
-    def __init__(self, ms_since_epoch: _Optional[int] = ..., severity: _Optional[_Union[LogMetadata.Severity, str]] = ..., node_id: _Optional[str] = ...) -> None: ...
+    encoded_stack_frames: _containers.RepeatedScalarFieldContainer[int]
+    stack_frames_modules: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, ms_since_epoch: _Optional[int] = ..., severity: _Optional[_Union[LogMetadata.Severity, str]] = ..., node_id: _Optional[str] = ..., encoded_stack_frames: _Optional[_Iterable[int]] = ..., stack_frames_modules: _Optional[_Iterable[str]] = ...) -> None: ...

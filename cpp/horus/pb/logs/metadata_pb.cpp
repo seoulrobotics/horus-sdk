@@ -97,6 +97,8 @@ LogMetadata::LogMetadata(const LogMetadata& other) noexcept(false)
     : ms_since_epoch_{other.ms_since_epoch_}
     , severity_{other.severity_}
     , node_id_{other.node_id_}
+    , encoded_stack_frames_{other.encoded_stack_frames_}
+    , stack_frames_modules_{other.stack_frames_modules_}
     , set_fields_{other.set_fields_} {}
 
 void LogMetadata::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -108,6 +110,12 @@ void LogMetadata::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[2]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 3, node_id_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<CowSpan<std::uint64_t>, PbDeserFlags::kFixed>(writer, /*tag=*/ 4, encoded_stack_frames_);
+  }
+  if (set_fields_[4]) {
+    SerializeField<CowRepeated<CowBytes>>(writer, /*tag=*/ 5, stack_frames_modules_);
   }
 }
 
@@ -127,6 +135,16 @@ void LogMetadata::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 3: {
         DeserializeField<CowBytes>(reader, node_id_);
         set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        DeserializeField<CowSpan<std::uint64_t>, PbDeserFlags::kFixed>(reader, encoded_stack_frames_);
+        set_fields_[3] = true;
+        break;
+      }
+      case 5: {
+        DeserializeField<CowRepeated<CowBytes>>(reader, stack_frames_modules_);
+        set_fields_[4] = true;
         break;
       }
       default: {

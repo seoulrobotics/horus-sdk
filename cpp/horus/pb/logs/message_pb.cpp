@@ -172,7 +172,7 @@ LogData::LogData(const LogData& other) noexcept(false)
     , invalid_lidar_timestamp_{other.invalid_lidar_timestamp_}
     , calibration_accumulating_points_info_{other.calibration_accumulating_points_info_}
     , sparse_noise_filter_usage_non_rotational_lidars_{other.sparse_noise_filter_usage_non_rotational_lidars_}
-    , file_write_error_{other.file_write_error_}
+    , file_write_warning_{other.file_write_warning_}
     , license_forbidden_feature_{other.license_forbidden_feature_}
     , failed_to_update_configuration_{other.failed_to_update_configuration_}
     , obstruction_detector_bad_reference_warning_{other.obstruction_detector_bad_reference_warning_}
@@ -190,6 +190,21 @@ LogData::LogData(const LogData& other) noexcept(false)
     , removed_invalid_lidars_from_config_warning_{other.removed_invalid_lidars_from_config_warning_}
     , calibration_map_recording_failed_{other.calibration_map_recording_failed_}
     , detection_node_not_found_error_{other.detection_node_not_found_error_}
+    , created_version_backup_info_{other.created_version_backup_info_}
+    , ply_file_load_failed_error_{other.ply_file_load_failed_error_}
+    , hesai_driver_lifecycle_{other.hesai_driver_lifecycle_}
+    , hesai_driver_error_{other.hesai_driver_error_}
+    , hesai_packet_processing_failed_{other.hesai_packet_processing_failed_}
+    , hesai_correction_file_error_{other.hesai_correction_file_error_}
+    , hesai_packet_statistics_{other.hesai_packet_statistics_}
+    , ply_file_write_failed_error_{other.ply_file_write_failed_error_}
+    , project_save_error_{other.project_save_error_}
+    , save_static_environment_success_{other.save_static_environment_success_}
+    , save_static_environment_failed_{other.save_static_environment_failed_}
+    , load_static_environment_success_{other.load_static_environment_success_}
+    , load_static_environment_failed_{other.load_static_environment_failed_}
+    , attempt_to_inject_invalid_lidar_id_warning_{other.attempt_to_inject_invalid_lidar_id_warning_}
+    , reset_bundled_packet_due_to_unexpected_packet_{other.reset_bundled_packet_due_to_unexpected_packet_}
     , data_{other.data_}
     , set_fields_{other.set_fields_} {}
 
@@ -690,7 +705,7 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
     SerializeField<logs::SparseNoiseFilterUsageNonRotationalLidars>(writer, /*tag=*/ 165, sparse_noise_filter_usage_non_rotational_lidars_);
   }
   if (set_fields_[165]) {
-    SerializeField<logs::FileWriteError>(writer, /*tag=*/ 166, file_write_error_);
+    SerializeField<logs::FileWriteWarning>(writer, /*tag=*/ 166, file_write_warning_);
   }
   if (set_fields_[166]) {
     SerializeField<logs::LicenseForbiddenFeature>(writer, /*tag=*/ 167, license_forbidden_feature_);
@@ -742,6 +757,51 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[182]) {
     SerializeField<logs::DetectionNodeNotFoundError>(writer, /*tag=*/ 183, detection_node_not_found_error_);
+  }
+  if (set_fields_[183]) {
+    SerializeField<logs::CreatedVersionBackupInfo>(writer, /*tag=*/ 184, created_version_backup_info_);
+  }
+  if (set_fields_[184]) {
+    SerializeField<logs::PlyFileLoadFailedError>(writer, /*tag=*/ 185, ply_file_load_failed_error_);
+  }
+  if (set_fields_[185]) {
+    SerializeField<logs::HesaiDriverLifecycle>(writer, /*tag=*/ 186, hesai_driver_lifecycle_);
+  }
+  if (set_fields_[186]) {
+    SerializeField<logs::HesaiDriverError>(writer, /*tag=*/ 187, hesai_driver_error_);
+  }
+  if (set_fields_[187]) {
+    SerializeField<logs::HesaiPacketProcessingFailed>(writer, /*tag=*/ 188, hesai_packet_processing_failed_);
+  }
+  if (set_fields_[188]) {
+    SerializeField<logs::HesaiCorrectionFileError>(writer, /*tag=*/ 189, hesai_correction_file_error_);
+  }
+  if (set_fields_[189]) {
+    SerializeField<logs::HesaiPacketStatistics>(writer, /*tag=*/ 190, hesai_packet_statistics_);
+  }
+  if (set_fields_[190]) {
+    SerializeField<logs::PlyFileWriteFailedError>(writer, /*tag=*/ 191, ply_file_write_failed_error_);
+  }
+  if (set_fields_[191]) {
+    SerializeField<logs::ProjectSaveError>(writer, /*tag=*/ 192, project_save_error_);
+  }
+  if (set_fields_[192]) {
+    SerializeField<logs::SaveStaticEnvironmentSuccess>(writer, /*tag=*/ 193, save_static_environment_success_);
+  }
+  if (set_fields_[193]) {
+    SerializeField<logs::SaveStaticEnvironmentFailed>(writer, /*tag=*/ 194, save_static_environment_failed_);
+  }
+  if (set_fields_[194]) {
+    SerializeField<logs::LoadStaticEnvironmentSuccess>(writer, /*tag=*/ 195, load_static_environment_success_);
+  }
+  if (set_fields_[195]) {
+    SerializeField<logs::LoadStaticEnvironmentFailed>(writer, /*tag=*/ 196, load_static_environment_failed_);
+  }
+  if (set_fields_[196]) {
+    SerializeField<logs::AttemptToInjectInvalidLidarIdWarning>(writer, /*tag=*/ 197, attempt_to_inject_invalid_lidar_id_warning_);
+  }
+  if (set_fields_[197]) {
+    SerializeField<logs::ResetBundledPacketDueToUnexpectedPacket>(writer, /*tag=*/ 198, reset_bundled_packet_due_to_unexpected_packet_);
   }
 }
 
@@ -1905,8 +1965,8 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
       }
       case 166: {
         clear_data();
-        data_ = DataOneof::kFileWriteError;
-        DeserializeField<logs::FileWriteError>(reader, file_write_error_);
+        data_ = DataOneof::kFileWriteWarning;
+        DeserializeField<logs::FileWriteWarning>(reader, file_write_warning_);
         set_fields_[165] = true;
         break;
       }
@@ -2027,6 +2087,111 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
         data_ = DataOneof::kDetectionNodeNotFoundError;
         DeserializeField<logs::DetectionNodeNotFoundError>(reader, detection_node_not_found_error_);
         set_fields_[182] = true;
+        break;
+      }
+      case 184: {
+        clear_data();
+        data_ = DataOneof::kCreatedVersionBackupInfo;
+        DeserializeField<logs::CreatedVersionBackupInfo>(reader, created_version_backup_info_);
+        set_fields_[183] = true;
+        break;
+      }
+      case 185: {
+        clear_data();
+        data_ = DataOneof::kPlyFileLoadFailedError;
+        DeserializeField<logs::PlyFileLoadFailedError>(reader, ply_file_load_failed_error_);
+        set_fields_[184] = true;
+        break;
+      }
+      case 186: {
+        clear_data();
+        data_ = DataOneof::kHesaiDriverLifecycle;
+        DeserializeField<logs::HesaiDriverLifecycle>(reader, hesai_driver_lifecycle_);
+        set_fields_[185] = true;
+        break;
+      }
+      case 187: {
+        clear_data();
+        data_ = DataOneof::kHesaiDriverError;
+        DeserializeField<logs::HesaiDriverError>(reader, hesai_driver_error_);
+        set_fields_[186] = true;
+        break;
+      }
+      case 188: {
+        clear_data();
+        data_ = DataOneof::kHesaiPacketProcessingFailed;
+        DeserializeField<logs::HesaiPacketProcessingFailed>(reader, hesai_packet_processing_failed_);
+        set_fields_[187] = true;
+        break;
+      }
+      case 189: {
+        clear_data();
+        data_ = DataOneof::kHesaiCorrectionFileError;
+        DeserializeField<logs::HesaiCorrectionFileError>(reader, hesai_correction_file_error_);
+        set_fields_[188] = true;
+        break;
+      }
+      case 190: {
+        clear_data();
+        data_ = DataOneof::kHesaiPacketStatistics;
+        DeserializeField<logs::HesaiPacketStatistics>(reader, hesai_packet_statistics_);
+        set_fields_[189] = true;
+        break;
+      }
+      case 191: {
+        clear_data();
+        data_ = DataOneof::kPlyFileWriteFailedError;
+        DeserializeField<logs::PlyFileWriteFailedError>(reader, ply_file_write_failed_error_);
+        set_fields_[190] = true;
+        break;
+      }
+      case 192: {
+        clear_data();
+        data_ = DataOneof::kProjectSaveError;
+        DeserializeField<logs::ProjectSaveError>(reader, project_save_error_);
+        set_fields_[191] = true;
+        break;
+      }
+      case 193: {
+        clear_data();
+        data_ = DataOneof::kSaveStaticEnvironmentSuccess;
+        DeserializeField<logs::SaveStaticEnvironmentSuccess>(reader, save_static_environment_success_);
+        set_fields_[192] = true;
+        break;
+      }
+      case 194: {
+        clear_data();
+        data_ = DataOneof::kSaveStaticEnvironmentFailed;
+        DeserializeField<logs::SaveStaticEnvironmentFailed>(reader, save_static_environment_failed_);
+        set_fields_[193] = true;
+        break;
+      }
+      case 195: {
+        clear_data();
+        data_ = DataOneof::kLoadStaticEnvironmentSuccess;
+        DeserializeField<logs::LoadStaticEnvironmentSuccess>(reader, load_static_environment_success_);
+        set_fields_[194] = true;
+        break;
+      }
+      case 196: {
+        clear_data();
+        data_ = DataOneof::kLoadStaticEnvironmentFailed;
+        DeserializeField<logs::LoadStaticEnvironmentFailed>(reader, load_static_environment_failed_);
+        set_fields_[195] = true;
+        break;
+      }
+      case 197: {
+        clear_data();
+        data_ = DataOneof::kAttemptToInjectInvalidLidarIdWarning;
+        DeserializeField<logs::AttemptToInjectInvalidLidarIdWarning>(reader, attempt_to_inject_invalid_lidar_id_warning_);
+        set_fields_[196] = true;
+        break;
+      }
+      case 198: {
+        clear_data();
+        data_ = DataOneof::kResetBundledPacketDueToUnexpectedPacket;
+        DeserializeField<logs::ResetBundledPacketDueToUnexpectedPacket>(reader, reset_bundled_packet_due_to_unexpected_packet_);
+        set_fields_[197] = true;
         break;
       }
       default: {

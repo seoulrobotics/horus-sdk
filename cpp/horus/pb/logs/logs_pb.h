@@ -199,7 +199,7 @@ class ProjectConfigUpdatedInfo;
 class InvalidLidarTimestamp;
 class CalibrationAccumulatingPointsInfo;
 class SparseNoiseFilterUsageNonRotationalLidars;
-class FileWriteError;
+class FileWriteWarning;
 class LicenseForbiddenFeature;
 class FailedToUpdateConfiguration;
 class ObstructionDetectorBadReferenceWarning;
@@ -217,6 +217,21 @@ class LidarIsDroppingPackets;
 class RemovedInvalidLidarsFromConfigWarning;
 class CalibrationMapRecordingFailed;
 class DetectionNodeNotFoundError;
+class CreatedVersionBackupInfo;
+class PlyFileLoadFailedError;
+class HesaiDriverLifecycle;
+class HesaiDriverError;
+class HesaiPacketProcessingFailed;
+class HesaiCorrectionFileError;
+class HesaiPacketStatistics;
+class PlyFileWriteFailedError;
+class ProjectSaveError;
+class SaveStaticEnvironmentSuccess;
+class SaveStaticEnvironmentFailed;
+class LoadStaticEnvironmentSuccess;
+class LoadStaticEnvironmentFailed;
+class AttemptToInjectInvalidLidarIdWarning;
+class ResetBundledPacketDueToUnexpectedPacket;
 
 // MARK: Message declarations
 
@@ -9790,7 +9805,7 @@ class BagReplayUnexpectedTimestampError final : public PbMessage {
 
 /// Log #70.
 /// 
-///  > WebSocket RPC connection to $uri closed
+///  > WebSocket RPC connection to $uri closed: $reason
 ///
 /// Source: horus/pb/logs/logs.proto:559:1
 class WebsocketClosedInfo final : public PbMessage {
@@ -9892,19 +9907,71 @@ class WebsocketClosedInfo final : public PbMessage {
     return std::move(set_uri(std::move(uri)));
   }
 
+  // Field `reason` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& reason() const& noexcept HORUS_LIFETIME_BOUND {
+    return reason_;
+  }
+
+  /// If `reason` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes reason() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(reason_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_reason() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return reason_;
+  }
+
+  /// Returns whether `reason` (no 2) is set.
+  constexpr bool has_reason() const noexcept { return set_fields_[1]; }
+
+  /// Clears `reason` (no 2).
+  void clear_reason() & noexcept {
+    set_fields_[1] = false;
+    reason_ = {};
+  }
+
+  /// Sets `reason` (no 2) and returns `*this`.
+  WebsocketClosedInfo& set_reason(CowBytes&& reason) & noexcept {
+    set_fields_[1] = true;
+    reason_ = std::move(reason);
+    return *this;
+  }
+  /// Sets `reason` (no 2) and returns `*this`.
+  WebsocketClosedInfo&& set_reason(CowBytes&& reason) && noexcept {
+    return std::move(set_reason(std::move(reason)));
+  }
+
  private:
   /// @see uri()
   CowBytes uri_{};
+  /// @see reason()
+  CowBytes reason_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// Log #71.
 /// 
 ///  > WebSocket RPC connection to $uri opened (as $endpoint_is_server_client)
 ///
-/// Source: horus/pb/logs/logs.proto:566:1
+/// Source: horus/pb/logs/logs.proto:567:1
 class WebsocketOpenedInfo final : public PbMessage {
  public:
 
@@ -10068,7 +10135,7 @@ class WebsocketOpenedInfo final : public PbMessage {
 /// 
 ///  > Subscriber $name disconnected ($uri)
 ///
-/// Source: horus/pb/logs/logs.proto:574:1
+/// Source: horus/pb/logs/logs.proto:575:1
 class SubscriberDisconnectedInfo final : public PbMessage {
  public:
 
@@ -10232,7 +10299,7 @@ class SubscriberDisconnectedInfo final : public PbMessage {
 /// 
 ///  > Thread pool is slowing down for $number times!
 ///
-/// Source: horus/pb/logs/logs.proto:582:1
+/// Source: horus/pb/logs/logs.proto:583:1
 class ThreadPoolSlowingDownWarning final : public PbMessage {
  public:
 
@@ -10332,7 +10399,7 @@ class ThreadPoolSlowingDownWarning final : public PbMessage {
 /// 
 ///  > Thread pool is not responding for $not_responding_for.
 ///
-/// Source: horus/pb/logs/logs.proto:589:1
+/// Source: horus/pb/logs/logs.proto:590:1
 class ThreadPoolNotRespondingWarning final : public PbMessage {
  public:
 
@@ -10444,7 +10511,7 @@ class ThreadPoolNotRespondingWarning final : public PbMessage {
 /// 
 ///  > Thread pool task future is no longer available. The thread pool might have been restarted during events such as input source change.
 ///
-/// Source: horus/pb/logs/logs.proto:596:1
+/// Source: horus/pb/logs/logs.proto:597:1
 class ThreadPoolBrokenPromiseWarning final : public PbMessage {
  public:
 
@@ -10508,7 +10575,7 @@ class ThreadPoolBrokenPromiseWarning final : public PbMessage {
 /// 
 ///  > Some points are below the base Z-coordinate when fitting the box. This might affect the detection results.
 ///
-/// Source: horus/pb/logs/logs.proto:602:1
+/// Source: horus/pb/logs/logs.proto:603:1
 class BoxFittingPointsBelowBaseWarning final : public PbMessage {
  public:
 
@@ -10572,7 +10639,7 @@ class BoxFittingPointsBelowBaseWarning final : public PbMessage {
 /// 
 ///  > Failed to remove stale points: $details
 ///
-/// Source: horus/pb/logs/logs.proto:608:1
+/// Source: horus/pb/logs/logs.proto:609:1
 class FailedToRemoveStalePointsWarning final : public PbMessage {
  public:
 
@@ -10684,7 +10751,7 @@ class FailedToRemoveStalePointsWarning final : public PbMessage {
 /// 
 ///  > $num_irregular irregular broadcast(s) detected in the last $duration (mean deviation: $mean_deviation).
 ///
-/// Source: horus/pb/logs/logs.proto:615:1
+/// Source: horus/pb/logs/logs.proto:616:1
 class IrregularBroadcastingPeriodWarning final : public PbMessage {
  public:
 
@@ -10888,7 +10955,7 @@ class IrregularBroadcastingPeriodWarning final : public PbMessage {
 /// 
 ///  > There are $num_points points out of range in the clusterer. Some points: $sample_points.
 ///
-/// Source: horus/pb/logs/logs.proto:624:1
+/// Source: horus/pb/logs/logs.proto:625:1
 class ClustererPointsOutOfRangeWarning final : public PbMessage {
  public:
 
@@ -11040,7 +11107,7 @@ class ClustererPointsOutOfRangeWarning final : public PbMessage {
 /// 
 ///  > An internal error occurred: $details
 ///
-/// Source: horus/pb/logs/logs.proto:632:1
+/// Source: horus/pb/logs/logs.proto:633:1
 class InternalError final : public PbMessage {
  public:
 
@@ -11152,7 +11219,7 @@ class InternalError final : public PbMessage {
 /// 
 ///  > An internal fatal error occurred: $details
 ///
-/// Source: horus/pb/logs/logs.proto:639:1
+/// Source: horus/pb/logs/logs.proto:640:1
 class InternalFatal final : public PbMessage {
  public:
 
@@ -11264,7 +11331,7 @@ class InternalFatal final : public PbMessage {
 /// 
 ///  > $service is starting
 ///
-/// Source: horus/pb/logs/logs.proto:646:1
+/// Source: horus/pb/logs/logs.proto:647:1
 class ServiceStartingInfo final : public PbMessage {
  public:
 
@@ -11376,7 +11443,7 @@ class ServiceStartingInfo final : public PbMessage {
 /// 
 ///  > Configuration for node $node is unavailable
 ///
-/// Source: horus/pb/logs/logs.proto:653:1
+/// Source: horus/pb/logs/logs.proto:654:1
 class ConfigNodeNotFoundFatal final : public PbMessage {
  public:
 
@@ -11488,7 +11555,7 @@ class ConfigNodeNotFoundFatal final : public PbMessage {
 /// 
 ///  > Failed to setup: $details
 ///
-/// Source: horus/pb/logs/logs.proto:660:1
+/// Source: horus/pb/logs/logs.proto:661:1
 class ServiceSetupError final : public PbMessage {
  public:
 
@@ -11600,7 +11667,7 @@ class ServiceSetupError final : public PbMessage {
 /// 
 ///  > Filesystem error: $details
 ///
-/// Source: horus/pb/logs/logs.proto:667:1
+/// Source: horus/pb/logs/logs.proto:668:1
 class FilesystemError final : public PbMessage {
  public:
 
@@ -11712,7 +11779,7 @@ class FilesystemError final : public PbMessage {
 /// 
 ///  > Tried to apply invalid preset $preset due to $reason, falling back to $fallback_name.
 ///
-/// Source: horus/pb/logs/logs.proto:674:1
+/// Source: horus/pb/logs/logs.proto:675:1
 class InvalidPresetWarning final : public PbMessage {
  public:
 
@@ -11928,7 +11995,7 @@ class InvalidPresetWarning final : public PbMessage {
 /// 
 ///  > WebSocket failed to clear pending queues: $exception
 ///
-/// Source: horus/pb/logs/logs.proto:683:1
+/// Source: horus/pb/logs/logs.proto:684:1
 class WebsocketFailedClearPendingError final : public PbMessage {
  public:
 
@@ -12040,7 +12107,7 @@ class WebsocketFailedClearPendingError final : public PbMessage {
 /// 
 ///  > WebSocket failed to stop: $exception
 ///
-/// Source: horus/pb/logs/logs.proto:690:1
+/// Source: horus/pb/logs/logs.proto:691:1
 class WebsocketFailedToStopError final : public PbMessage {
  public:
 
@@ -12152,7 +12219,7 @@ class WebsocketFailedToStopError final : public PbMessage {
 /// 
 ///  > Failed to create RPC server ws://$host:$port/: $exception
 ///
-/// Source: horus/pb/logs/logs.proto:697:1
+/// Source: horus/pb/logs/logs.proto:698:1
 class WebsocketFailedToCreateError final : public PbMessage {
  public:
 
@@ -12356,7 +12423,7 @@ class WebsocketFailedToCreateError final : public PbMessage {
 /// 
 ///  > Unexpected RPC error: $details
 ///
-/// Source: horus/pb/logs/logs.proto:706:1
+/// Source: horus/pb/logs/logs.proto:707:1
 class UnexpectedRpcError final : public PbMessage {
  public:
 
@@ -12468,7 +12535,7 @@ class UnexpectedRpcError final : public PbMessage {
 /// 
 ///  > Failed to poll license server: $details
 ///
-/// Source: horus/pb/logs/logs.proto:713:1
+/// Source: horus/pb/logs/logs.proto:714:1
 class LicensePollFailed final : public PbMessage {
  public:
 
@@ -12580,7 +12647,7 @@ class LicensePollFailed final : public PbMessage {
 /// 
 ///  > License expired on $expiration_time.
 ///
-/// Source: horus/pb/logs/logs.proto:720:1
+/// Source: horus/pb/logs/logs.proto:721:1
 class LicenseExpiredWarning final : public PbMessage {
  public:
 
@@ -12692,7 +12759,7 @@ class LicenseExpiredWarning final : public PbMessage {
 /// 
 ///  > License count of $lidar_count exceeds allowed usage of $max_lidar_count
 ///
-/// Source: horus/pb/logs/logs.proto:727:1
+/// Source: horus/pb/logs/logs.proto:728:1
 class LicenseUsageExceededWarning final : public PbMessage {
  public:
 
@@ -12832,7 +12899,7 @@ class LicenseUsageExceededWarning final : public PbMessage {
 /// 
 ///  > ThreadPool task took $time_elapsed to complete task enqueued in $enqueue_location
 ///
-/// Source: horus/pb/logs/logs.proto:735:1
+/// Source: horus/pb/logs/logs.proto:736:1
 class StaticThreadPoolSlowTaskWarning final : public PbMessage {
  public:
 
@@ -12996,7 +13063,7 @@ class StaticThreadPoolSlowTaskWarning final : public PbMessage {
 /// 
 ///  > Received request for unsupported service: $service_id
 ///
-/// Source: horus/pb/logs/logs.proto:743:1
+/// Source: horus/pb/logs/logs.proto:744:1
 class RpcUnsupportedServiceWarning final : public PbMessage {
  public:
 
@@ -13096,7 +13163,7 @@ class RpcUnsupportedServiceWarning final : public PbMessage {
 /// 
 ///  > WebSocket RPC handler encountered an error: $what
 ///
-/// Source: horus/pb/logs/logs.proto:750:1
+/// Source: horus/pb/logs/logs.proto:751:1
 class WebsocketHandlerProblem final : public PbMessage {
  public:
 
@@ -13208,7 +13275,7 @@ class WebsocketHandlerProblem final : public PbMessage {
 /// 
 ///  > WebSocket RPC received message cannot be deserialized: $what
 ///
-/// Source: horus/pb/logs/logs.proto:757:1
+/// Source: horus/pb/logs/logs.proto:758:1
 class WebsocketDeserializeError final : public PbMessage {
  public:
 
@@ -13320,7 +13387,7 @@ class WebsocketDeserializeError final : public PbMessage {
 /// 
 ///  > Attempting to access expired WebSocket RPC endpoint $uri
 ///
-/// Source: horus/pb/logs/logs.proto:764:1
+/// Source: horus/pb/logs/logs.proto:765:1
 class WebsocketExpiredRpcEndpointError final : public PbMessage {
  public:
 
@@ -13432,7 +13499,7 @@ class WebsocketExpiredRpcEndpointError final : public PbMessage {
 /// 
 ///  > Websocket message queue overloaded: $current / $max
 ///
-/// Source: horus/pb/logs/logs.proto:771:1
+/// Source: horus/pb/logs/logs.proto:772:1
 class WebsocketQueueOverloadedWarning final : public PbMessage {
  public:
 
@@ -13572,7 +13639,7 @@ class WebsocketQueueOverloadedWarning final : public PbMessage {
 /// 
 ///  > Could not notify $notification_name to $service $uri: $what
 ///
-/// Source: horus/pb/logs/logs.proto:779:1
+/// Source: horus/pb/logs/logs.proto:780:1
 class RpcFailedToNotifyWarning final : public PbMessage {
  public:
 
@@ -13840,7 +13907,7 @@ class RpcFailedToNotifyWarning final : public PbMessage {
 /// 
 ///  > Failed to subscribe to config: $details
 ///
-/// Source: horus/pb/logs/logs.proto:789:1
+/// Source: horus/pb/logs/logs.proto:790:1
 class ConfigSubscriptionFailedWarning final : public PbMessage {
  public:
 
@@ -13952,7 +14019,7 @@ class ConfigSubscriptionFailedWarning final : public PbMessage {
 /// 
 ///  > Clamped thread pool workers to $clamped instead of $requested
 ///
-/// Source: horus/pb/logs/logs.proto:796:1
+/// Source: horus/pb/logs/logs.proto:797:1
 class ThreadPoolClampedWorkersWarning final : public PbMessage {
  public:
 
@@ -14092,7 +14159,7 @@ class ThreadPoolClampedWorkersWarning final : public PbMessage {
 /// 
 ///  > Trying to stop the Horus bag recorder which is already stopped.
 ///
-/// Source: horus/pb/logs/logs.proto:804:1
+/// Source: horus/pb/logs/logs.proto:805:1
 class StoppingHorusBagRecorderAlreadyStopped final : public PbMessage {
  public:
 
@@ -14156,7 +14223,7 @@ class StoppingHorusBagRecorderAlreadyStopped final : public PbMessage {
 /// 
 ///  > An update for the Horus bag recorder has been received while it was running. This update will not be taken into account until the next recording.
 ///
-/// Source: horus/pb/logs/logs.proto:810:1
+/// Source: horus/pb/logs/logs.proto:811:1
 class RecorderConfigUpdateWhileRunning final : public PbMessage {
  public:
 
@@ -14220,7 +14287,7 @@ class RecorderConfigUpdateWhileRunning final : public PbMessage {
 /// 
 ///  > Clamping point cloud: $details
 ///
-/// Source: horus/pb/logs/logs.proto:816:1
+/// Source: horus/pb/logs/logs.proto:817:1
 class ClampingDataWarning final : public PbMessage {
  public:
 
@@ -14332,7 +14399,7 @@ class ClampingDataWarning final : public PbMessage {
 /// 
 ///  > Lidars $lidar_ip1 and $lidar_ip2 have incompatible $value_names: $value1 vs. $value2; $resolution.
 ///
-/// Source: horus/pb/logs/logs.proto:823:1
+/// Source: horus/pb/logs/logs.proto:824:1
 class LidarIncompatibleValues final : public PbMessage {
  public:
 
@@ -14704,7 +14771,7 @@ class LidarIncompatibleValues final : public PbMessage {
 /// 
 ///  > Cannot determine current Docker container ID; unknown $container_id_file_path format.
 ///
-/// Source: horus/pb/logs/logs.proto:835:1
+/// Source: horus/pb/logs/logs.proto:836:1
 class CannotDetermineContainerIdError final : public PbMessage {
  public:
 
@@ -14816,7 +14883,7 @@ class CannotDetermineContainerIdError final : public PbMessage {
 /// 
 ///  > Started lidar driver container $lidar_id.
 ///
-/// Source: horus/pb/logs/logs.proto:842:1
+/// Source: horus/pb/logs/logs.proto:843:1
 class StartedLidarDriver final : public PbMessage {
  public:
 
@@ -14928,7 +14995,7 @@ class StartedLidarDriver final : public PbMessage {
 /// 
 ///  > Cannot start lidar driver container $lidar_id: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:849:1
+/// Source: horus/pb/logs/logs.proto:850:1
 class CannotStartLidarDriver final : public PbMessage {
  public:
 
@@ -15092,7 +15159,7 @@ class CannotStartLidarDriver final : public PbMessage {
 /// 
 ///  > Stopped lidar driver container $lidar_id.
 ///
-/// Source: horus/pb/logs/logs.proto:857:1
+/// Source: horus/pb/logs/logs.proto:858:1
 class StoppedLidarDriver final : public PbMessage {
  public:
 
@@ -15204,7 +15271,7 @@ class StoppedLidarDriver final : public PbMessage {
 /// 
 ///  > Cannot stop lidar driver container $lidar_id: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:864:1
+/// Source: horus/pb/logs/logs.proto:865:1
 class CannotStopLidarDriver final : public PbMessage {
  public:
 
@@ -15368,7 +15435,7 @@ class CannotStopLidarDriver final : public PbMessage {
 /// 
 ///  > Restarted lidar driver container $lidar_id.
 ///
-/// Source: horus/pb/logs/logs.proto:872:1
+/// Source: horus/pb/logs/logs.proto:873:1
 class RestartedLidarDriver final : public PbMessage {
  public:
 
@@ -15480,7 +15547,7 @@ class RestartedLidarDriver final : public PbMessage {
 /// 
 ///  > Cannot restart lidar driver container $lidar_id: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:879:1
+/// Source: horus/pb/logs/logs.proto:880:1
 class CannotRestartLidarDriver final : public PbMessage {
  public:
 
@@ -15644,7 +15711,7 @@ class CannotRestartLidarDriver final : public PbMessage {
 /// 
 ///  > Removed unused lidar driver container $lidar_id.
 ///
-/// Source: horus/pb/logs/logs.proto:887:1
+/// Source: horus/pb/logs/logs.proto:888:1
 class RemovedUnusedLidarDriver final : public PbMessage {
  public:
 
@@ -15756,7 +15823,7 @@ class RemovedUnusedLidarDriver final : public PbMessage {
 /// 
 ///  > Cannot remove unused lidar driver container $lidar_id: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:894:1
+/// Source: horus/pb/logs/logs.proto:895:1
 class CannotRemoveUnusedLidarDriver final : public PbMessage {
  public:
 
@@ -15920,7 +15987,7 @@ class CannotRemoveUnusedLidarDriver final : public PbMessage {
 /// 
 ///  > Error encountered while removing unused lidar driver containers: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:902:1
+/// Source: horus/pb/logs/logs.proto:903:1
 class LidarDriverGcFailure final : public PbMessage {
  public:
 
@@ -16032,7 +16099,7 @@ class LidarDriverGcFailure final : public PbMessage {
 /// 
 ///  > Cannot allocate new identifier with prefix "$prefix".
 ///
-/// Source: horus/pb/logs/logs.proto:909:1
+/// Source: horus/pb/logs/logs.proto:910:1
 class IdSpaceExhausted final : public PbMessage {
  public:
 
@@ -16144,7 +16211,7 @@ class IdSpaceExhausted final : public PbMessage {
 /// 
 ///  > The point cloud publishing to the point aggregator service has been skipped $num_skipped_points time(s) in the last $check_interval.
 ///
-/// Source: horus/pb/logs/logs.proto:916:1
+/// Source: horus/pb/logs/logs.proto:917:1
 class PreprocessingToPointAggregatorPointsSkipped final : public PbMessage {
  public:
 
@@ -16296,7 +16363,7 @@ class PreprocessingToPointAggregatorPointsSkipped final : public PbMessage {
 /// 
 ///  > Discarding lidar points from $lidar_id since the time interval between two point-cloud messages is too close (<$threshold). Adjust the Min-Message Interval parameter to change this behavior.
 ///
-/// Source: horus/pb/logs/logs.proto:924:1
+/// Source: horus/pb/logs/logs.proto:925:1
 class MinMsgIntervalLessThanThreshold final : public PbMessage {
  public:
 
@@ -16460,7 +16527,7 @@ class MinMsgIntervalLessThanThreshold final : public PbMessage {
 /// 
 ///  > Failed to clean up ROS nodes and processes: $details
 ///
-/// Source: horus/pb/logs/logs.proto:932:1
+/// Source: horus/pb/logs/logs.proto:933:1
 class FailedToCleanupRosWarning final : public PbMessage {
  public:
 
@@ -16572,7 +16639,7 @@ class FailedToCleanupRosWarning final : public PbMessage {
 /// 
 ///  > RPC request $request_name to $endpoint failed since endpoint is disconnected.
 ///
-/// Source: horus/pb/logs/logs.proto:939:1
+/// Source: horus/pb/logs/logs.proto:940:1
 class RpcDisconnectedWarning final : public PbMessage {
  public:
 
@@ -16736,7 +16803,7 @@ class RpcDisconnectedWarning final : public PbMessage {
 /// 
 ///  > RPC request handler for $request_name failed due to an unhandled internal error: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:947:1
+/// Source: horus/pb/logs/logs.proto:948:1
 class RpcUnhandledError final : public PbMessage {
  public:
 
@@ -16900,7 +16967,7 @@ class RpcUnhandledError final : public PbMessage {
 /// 
 ///  > Time difference is out of range: $diff. Previous timestamp: $prev_time, Current timestamp: $curr_time.
 ///
-/// Source: horus/pb/logs/logs.proto:955:1
+/// Source: horus/pb/logs/logs.proto:956:1
 class TimeDiffOutOfRangeWarning final : public PbMessage {
  public:
 
@@ -17116,7 +17183,7 @@ class TimeDiffOutOfRangeWarning final : public PbMessage {
 /// 
 ///  > [TensorRT] $log
 ///
-/// Source: horus/pb/logs/logs.proto:964:1
+/// Source: horus/pb/logs/logs.proto:965:1
 class TensorrtLog final : public PbMessage {
  public:
 
@@ -17228,7 +17295,7 @@ class TensorrtLog final : public PbMessage {
 /// 
 ///  > Building TensorRT engine since the model has changed or the engine is not available. This may take a while.
 ///
-/// Source: horus/pb/logs/logs.proto:971:1
+/// Source: horus/pb/logs/logs.proto:972:1
 class BuildingTensorrtEngineInfo final : public PbMessage {
  public:
 
@@ -17292,7 +17359,7 @@ class BuildingTensorrtEngineInfo final : public PbMessage {
 /// 
 ///  > Loading TensorRT engine. This may take a while.
 ///
-/// Source: horus/pb/logs/logs.proto:977:1
+/// Source: horus/pb/logs/logs.proto:978:1
 class LoadingTensorrtEngineInfo final : public PbMessage {
  public:
 
@@ -17356,7 +17423,7 @@ class LoadingTensorrtEngineInfo final : public PbMessage {
 /// 
 ///  > The calibration map $path was not found.
 ///
-/// Source: horus/pb/logs/logs.proto:983:1
+/// Source: horus/pb/logs/logs.proto:984:1
 class CalibrationMapNotFound final : public PbMessage {
  public:
 
@@ -17468,7 +17535,7 @@ class CalibrationMapNotFound final : public PbMessage {
 /// 
 ///  > The calibration map $path is not valid.
 ///
-/// Source: horus/pb/logs/logs.proto:990:1
+/// Source: horus/pb/logs/logs.proto:991:1
 class CalibrationMapNotValid final : public PbMessage {
  public:
 
@@ -17580,7 +17647,7 @@ class CalibrationMapNotValid final : public PbMessage {
 /// 
 ///  > The calibration map path $path already exists.
 ///
-/// Source: horus/pb/logs/logs.proto:997:1
+/// Source: horus/pb/logs/logs.proto:998:1
 class CalibrationMapPathAlreadyExists final : public PbMessage {
  public:
 
@@ -17692,7 +17759,7 @@ class CalibrationMapPathAlreadyExists final : public PbMessage {
 /// 
 ///  > Failed to save the calibration map to $path.
 ///
-/// Source: horus/pb/logs/logs.proto:1004:1
+/// Source: horus/pb/logs/logs.proto:1005:1
 class FailedToSaveCalibrationMap final : public PbMessage {
  public:
 
@@ -17804,7 +17871,7 @@ class FailedToSaveCalibrationMap final : public PbMessage {
 /// 
 ///  > Failed to remove the calibration map at $path.
 ///
-/// Source: horus/pb/logs/logs.proto:1011:1
+/// Source: horus/pb/logs/logs.proto:1012:1
 class FailedToRemoveCalibrationMap final : public PbMessage {
  public:
 
@@ -17916,7 +17983,7 @@ class FailedToRemoveCalibrationMap final : public PbMessage {
 /// 
 ///  > Failed to iterate in the $directory_name directory $directory_path: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:1018:1
+/// Source: horus/pb/logs/logs.proto:1019:1
 class FailedToIterateInDirectory final : public PbMessage {
  public:
 
@@ -18132,7 +18199,7 @@ class FailedToIterateInDirectory final : public PbMessage {
 /// 
 ///  > The calibration map must be running before triggering the map-based calibration.
 ///
-/// Source: horus/pb/logs/logs.proto:1027:1
+/// Source: horus/pb/logs/logs.proto:1028:1
 class MapBasedCalibrationWithoutMapLoading final : public PbMessage {
  public:
 
@@ -18196,7 +18263,7 @@ class MapBasedCalibrationWithoutMapLoading final : public PbMessage {
 /// 
 ///  > The map-based calibration is already running.
 ///
-/// Source: horus/pb/logs/logs.proto:1033:1
+/// Source: horus/pb/logs/logs.proto:1034:1
 class MapBasedCalibrationAlreadyRunning final : public PbMessage {
  public:
 
@@ -18260,7 +18327,7 @@ class MapBasedCalibrationAlreadyRunning final : public PbMessage {
 /// 
 ///  > A cancel map-based calibration request has been received while the calibration is not running.
 ///
-/// Source: horus/pb/logs/logs.proto:1039:1
+/// Source: horus/pb/logs/logs.proto:1040:1
 class CancelMapBasedCalibrationNotRunning final : public PbMessage {
  public:
 
@@ -18324,7 +18391,7 @@ class CancelMapBasedCalibrationNotRunning final : public PbMessage {
 /// 
 ///  > The stream $stream_id was not found from $bag_path.
 ///
-/// Source: horus/pb/logs/logs.proto:1045:1
+/// Source: horus/pb/logs/logs.proto:1046:1
 class BagStreamNotFound final : public PbMessage {
  public:
 
@@ -18488,7 +18555,7 @@ class BagStreamNotFound final : public PbMessage {
 /// 
 ///  > Evaluation bag started for $bag_path
 ///
-/// Source: horus/pb/logs/logs.proto:1053:1
+/// Source: horus/pb/logs/logs.proto:1054:1
 class EvaluationBagStartedInfo final : public PbMessage {
  public:
 
@@ -18600,7 +18667,7 @@ class EvaluationBagStartedInfo final : public PbMessage {
 /// 
 ///  > Evaluation bag finished for $bag_path
 ///
-/// Source: horus/pb/logs/logs.proto:1060:1
+/// Source: horus/pb/logs/logs.proto:1061:1
 class EvaluationBagFinishedInfo final : public PbMessage {
  public:
 
@@ -18712,7 +18779,7 @@ class EvaluationBagFinishedInfo final : public PbMessage {
 /// 
 ///  > The bag $bag_path was not found.
 ///
-/// Source: horus/pb/logs/logs.proto:1067:1
+/// Source: horus/pb/logs/logs.proto:1068:1
 class BagNotFound final : public PbMessage {
  public:
 
@@ -18824,7 +18891,7 @@ class BagNotFound final : public PbMessage {
 /// 
 ///  > Building the $pipeline_name pipeline.
 ///
-/// Source: horus/pb/logs/logs.proto:1074:1
+/// Source: horus/pb/logs/logs.proto:1075:1
 class BuildingPipelineInfo final : public PbMessage {
  public:
 
@@ -18936,7 +19003,7 @@ class BuildingPipelineInfo final : public PbMessage {
 /// 
 ///  > The bag $bag_path is not an evaluation bag.
 ///
-/// Source: horus/pb/logs/logs.proto:1081:1
+/// Source: horus/pb/logs/logs.proto:1082:1
 class BagIsNotEvaluation final : public PbMessage {
  public:
 
@@ -19048,7 +19115,7 @@ class BagIsNotEvaluation final : public PbMessage {
 /// 
 ///  > A Horus bag is currently running.
 ///
-/// Source: horus/pb/logs/logs.proto:1088:1
+/// Source: horus/pb/logs/logs.proto:1089:1
 class HorusBagRunning final : public PbMessage {
  public:
 
@@ -19112,7 +19179,7 @@ class HorusBagRunning final : public PbMessage {
 /// 
 ///  > Automatic ground calibration failed for the following lidars: $failed_lidar_ids.
 ///
-/// Source: horus/pb/logs/logs.proto:1094:1
+/// Source: horus/pb/logs/logs.proto:1095:1
 class AutoGroundCalibrationWarning final : public PbMessage {
  public:
 
@@ -19224,7 +19291,7 @@ class AutoGroundCalibrationWarning final : public PbMessage {
 /// 
 ///  > Automatic ground calibration failed for all lidars.
 ///
-/// Source: horus/pb/logs/logs.proto:1101:1
+/// Source: horus/pb/logs/logs.proto:1102:1
 class AutoGroundCalibrationError final : public PbMessage {
  public:
 
@@ -19288,7 +19355,7 @@ class AutoGroundCalibrationError final : public PbMessage {
 /// 
 ///  > The object detector is not loaded yet. Temporarily using rule based detection which may result in degraded detection results.
 ///
-/// Source: horus/pb/logs/logs.proto:1107:1
+/// Source: horus/pb/logs/logs.proto:1108:1
 class ObjectDetectorNotLoadedWarning final : public PbMessage {
  public:
 
@@ -19352,7 +19419,7 @@ class ObjectDetectorNotLoadedWarning final : public PbMessage {
 /// 
 ///  > A calibration process is already running.
 ///
-/// Source: horus/pb/logs/logs.proto:1113:1
+/// Source: horus/pb/logs/logs.proto:1114:1
 class CalibrationIsRunningError final : public PbMessage {
  public:
 
@@ -19416,7 +19483,7 @@ class CalibrationIsRunningError final : public PbMessage {
 /// 
 ///  > $component will start processing data once all models have finished initializing.
 ///
-/// Source: horus/pb/logs/logs.proto:1119:1
+/// Source: horus/pb/logs/logs.proto:1120:1
 class ModelInitInProgressInfo final : public PbMessage {
  public:
 
@@ -19528,7 +19595,7 @@ class ModelInitInProgressInfo final : public PbMessage {
 /// 
 ///  > RPC request "$request_name" to "$endpoint" timed out after $elapsed. Resolution: $resolution
 ///
-/// Source: horus/pb/logs/logs.proto:1126:1
+/// Source: horus/pb/logs/logs.proto:1127:1
 class RpcTimeoutWithResolutionWarning final : public PbMessage {
  public:
 
@@ -19796,7 +19863,7 @@ class RpcTimeoutWithResolutionWarning final : public PbMessage {
 /// 
 ///  > The $calibration_process_name process was cancelled.
 ///
-/// Source: horus/pb/logs/logs.proto:1136:1
+/// Source: horus/pb/logs/logs.proto:1137:1
 class CalibrationWasCancelledInfo final : public PbMessage {
  public:
 
@@ -19908,7 +19975,7 @@ class CalibrationWasCancelledInfo final : public PbMessage {
 /// 
 ///  > Failed to start recording the calibration map: $path
 ///
-/// Source: horus/pb/logs/logs.proto:1143:1
+/// Source: horus/pb/logs/logs.proto:1144:1
 class CalibrationMapRecordingFailedToStart final : public PbMessage {
  public:
 
@@ -20020,7 +20087,7 @@ class CalibrationMapRecordingFailedToStart final : public PbMessage {
 /// 
 ///  > The detection pipeline has been requested to be reset because $reason.
 ///
-/// Source: horus/pb/logs/logs.proto:1150:1
+/// Source: horus/pb/logs/logs.proto:1151:1
 class DetectionPipelineRequestedResetInfo final : public PbMessage {
  public:
 
@@ -20132,7 +20199,7 @@ class DetectionPipelineRequestedResetInfo final : public PbMessage {
 /// 
 ///  > Preprocessing service pipeline is not available yet due to $reason.
 ///
-/// Source: horus/pb/logs/logs.proto:1157:1
+/// Source: horus/pb/logs/logs.proto:1158:1
 class PreprocessingServicePipelineUnavailable final : public PbMessage {
  public:
 
@@ -20244,7 +20311,7 @@ class PreprocessingServicePipelineUnavailable final : public PbMessage {
 /// 
 ///  > The timeframe snapshot is disabled: $reason
 ///
-/// Source: horus/pb/logs/logs.proto:1164:1
+/// Source: horus/pb/logs/logs.proto:1165:1
 class CircularRecordingDisabledWarning final : public PbMessage {
  public:
 
@@ -20356,7 +20423,7 @@ class CircularRecordingDisabledWarning final : public PbMessage {
 /// 
 ///  > A snapshot is already running.
 ///
-/// Source: horus/pb/logs/logs.proto:1171:1
+/// Source: horus/pb/logs/logs.proto:1172:1
 class SnapshotAlreadyRunningWarning final : public PbMessage {
  public:
 
@@ -20420,7 +20487,7 @@ class SnapshotAlreadyRunningWarning final : public PbMessage {
 /// 
 ///  > The active project has been changed.
 ///
-/// Source: horus/pb/logs/logs.proto:1177:1
+/// Source: horus/pb/logs/logs.proto:1178:1
 class ActiveProjectChangedInfo final : public PbMessage {
  public:
 
@@ -20484,7 +20551,7 @@ class ActiveProjectChangedInfo final : public PbMessage {
 /// 
 ///  > The project configuration has been updated.
 ///
-/// Source: horus/pb/logs/logs.proto:1183:1
+/// Source: horus/pb/logs/logs.proto:1184:1
 class ProjectConfigUpdatedInfo final : public PbMessage {
  public:
 
@@ -20548,7 +20615,7 @@ class ProjectConfigUpdatedInfo final : public PbMessage {
 /// 
 ///  > Invalid timestamp $timestamp sent by lidar $lidar_id.
 ///
-/// Source: horus/pb/logs/logs.proto:1189:1
+/// Source: horus/pb/logs/logs.proto:1190:1
 class InvalidLidarTimestamp final : public PbMessage {
  public:
 
@@ -20712,7 +20779,7 @@ class InvalidLidarTimestamp final : public PbMessage {
 /// 
 ///  > Calibration is accumulating points for $time
 ///
-/// Source: horus/pb/logs/logs.proto:1197:1
+/// Source: horus/pb/logs/logs.proto:1198:1
 class CalibrationAccumulatingPointsInfo final : public PbMessage {
  public:
 
@@ -20824,7 +20891,7 @@ class CalibrationAccumulatingPointsInfo final : public PbMessage {
 /// 
 ///  > The sparse noise filter cannot be used with non-rotational lidars.
 ///
-/// Source: horus/pb/logs/logs.proto:1204:1
+/// Source: horus/pb/logs/logs.proto:1205:1
 class SparseNoiseFilterUsageNonRotationalLidars final : public PbMessage {
  public:
 
@@ -20888,34 +20955,34 @@ class SparseNoiseFilterUsageNonRotationalLidars final : public PbMessage {
 /// 
 ///  > Failed to write to file "$filename": "$details".
 ///
-/// Source: horus/pb/logs/logs.proto:1210:1
-class FileWriteError final : public PbMessage {
+/// Source: horus/pb/logs/logs.proto:1211:1
+class FileWriteWarning final : public PbMessage {
  public:
 
-  /// Constructs a default-initialized `FileWriteError`.
-  FileWriteError() noexcept = default;
+  /// Constructs a default-initialized `FileWriteWarning`.
+  FileWriteWarning() noexcept = default;
 
   /// Move constructor.
-  FileWriteError(FileWriteError&&) noexcept = default;
+  FileWriteWarning(FileWriteWarning&&) noexcept = default;
   /// Move assignment operator.
-  FileWriteError& operator=(FileWriteError&&) noexcept = default;
+  FileWriteWarning& operator=(FileWriteWarning&&) noexcept = default;
 
   /// Constructs a clone of `other`.
   ///
   /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
   /// lack of available memory.
-  explicit FileWriteError(const FileWriteError& other) noexcept(false);  // NOLINT(*-explicit-*)
+  explicit FileWriteWarning(const FileWriteWarning& other) noexcept(false);  // NOLINT(*-explicit-*)
 
   /// Cannot copy-assign to avoid implicit allocations.
-  FileWriteError& operator=(const FileWriteError&) = delete;
+  FileWriteWarning& operator=(const FileWriteWarning&) = delete;
 
   /// Default destructor.
-  ~FileWriteError() noexcept final = default;
+  ~FileWriteWarning() noexcept final = default;
 
-  /// Creates a `FileWriteError` whose contents are read from `reader`.
+  /// Creates a `FileWriteWarning` whose contents are read from `reader`.
   ///
   /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
-  explicit FileWriteError(PbReader& reader) noexcept(false) : PbMessage{} {
+  explicit FileWriteWarning(PbReader& reader) noexcept(false) : PbMessage{} {
     DeserializeFrom(reader);
   }
 
@@ -20932,10 +20999,10 @@ class FileWriteError final : public PbMessage {
   /// Returns whether the message is empty.
   bool IsEmpty() const noexcept final { return set_fields_.none(); }
 
-  /// The full name of the message: `horus.pb.logs.FileWriteError`.
-  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.FileWriteError"; }
+  /// The full name of the message: `horus.pb.logs.FileWriteWarning`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.FileWriteWarning"; }
 
-  /// The full name of the message: `horus.pb.logs.FileWriteError`.
+  /// The full name of the message: `horus.pb.logs.FileWriteWarning`.
   StringView MessageTypeName() const noexcept final { return TypeName(); }
 
   // Field `filename` (no 1).
@@ -20978,13 +21045,13 @@ class FileWriteError final : public PbMessage {
   }
 
   /// Sets `filename` (no 1) and returns `*this`.
-  FileWriteError& set_filename(CowBytes&& filename) & noexcept {
+  FileWriteWarning& set_filename(CowBytes&& filename) & noexcept {
     set_fields_[0] = true;
     filename_ = std::move(filename);
     return *this;
   }
   /// Sets `filename` (no 1) and returns `*this`.
-  FileWriteError&& set_filename(CowBytes&& filename) && noexcept {
+  FileWriteWarning&& set_filename(CowBytes&& filename) && noexcept {
     return std::move(set_filename(std::move(filename)));
   }
 
@@ -21028,13 +21095,13 @@ class FileWriteError final : public PbMessage {
   }
 
   /// Sets `details` (no 2) and returns `*this`.
-  FileWriteError& set_details(CowBytes&& details) & noexcept {
+  FileWriteWarning& set_details(CowBytes&& details) & noexcept {
     set_fields_[1] = true;
     details_ = std::move(details);
     return *this;
   }
   /// Sets `details` (no 2) and returns `*this`.
-  FileWriteError&& set_details(CowBytes&& details) && noexcept {
+  FileWriteWarning&& set_details(CowBytes&& details) && noexcept {
     return std::move(set_details(std::move(details)));
   }
 
@@ -21052,7 +21119,7 @@ class FileWriteError final : public PbMessage {
 /// 
 ///  > $feature_name is not allowed by the current license.
 ///
-/// Source: horus/pb/logs/logs.proto:1218:1
+/// Source: horus/pb/logs/logs.proto:1219:1
 class LicenseForbiddenFeature final : public PbMessage {
  public:
 
@@ -21164,7 +21231,7 @@ class LicenseForbiddenFeature final : public PbMessage {
 /// 
 ///  > Failed to update the configuration: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:1225:1
+/// Source: horus/pb/logs/logs.proto:1226:1
 class FailedToUpdateConfiguration final : public PbMessage {
  public:
 
@@ -21276,7 +21343,7 @@ class FailedToUpdateConfiguration final : public PbMessage {
 /// 
 ///  > The obstruction detector reference is not valid since it contains zero points.
 ///
-/// Source: horus/pb/logs/logs.proto:1232:1
+/// Source: horus/pb/logs/logs.proto:1233:1
 class ObstructionDetectorBadReferenceWarning final : public PbMessage {
  public:
 
@@ -21340,7 +21407,7 @@ class ObstructionDetectorBadReferenceWarning final : public PbMessage {
 /// 
 ///  > Project file "$filename" has invalid permissions. Please restart Horus to fix the issue.
 ///
-/// Source: horus/pb/logs/logs.proto:1238:1
+/// Source: horus/pb/logs/logs.proto:1239:1
 class ProjectFileInvalidPermissionsError final : public PbMessage {
  public:
 
@@ -21452,7 +21519,7 @@ class ProjectFileInvalidPermissionsError final : public PbMessage {
 /// 
 ///  > Pipeline scheduler error: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:1245:1
+/// Source: horus/pb/logs/logs.proto:1246:1
 class PipelineSchedulerError final : public PbMessage {
  public:
 
@@ -21564,7 +21631,7 @@ class PipelineSchedulerError final : public PbMessage {
 /// 
 ///  > Multi lidar calibration failed for the following lidars: $failed_lidar_ids.
 ///
-/// Source: horus/pb/logs/logs.proto:1252:1
+/// Source: horus/pb/logs/logs.proto:1253:1
 class MultiLidarCalibrationWarning final : public PbMessage {
  public:
 
@@ -21676,7 +21743,7 @@ class MultiLidarCalibrationWarning final : public PbMessage {
 /// 
 ///  > Multi lidar calibration failed for all lidars.
 ///
-/// Source: horus/pb/logs/logs.proto:1259:1
+/// Source: horus/pb/logs/logs.proto:1260:1
 class MultiLidarCalibrationError final : public PbMessage {
  public:
 
@@ -21740,7 +21807,7 @@ class MultiLidarCalibrationError final : public PbMessage {
 /// 
 ///  > The bag file $bag_path with version $version is old. Please consider updating it with the API, refer to API documentation.
 ///
-/// Source: horus/pb/logs/logs.proto:1265:1
+/// Source: horus/pb/logs/logs.proto:1266:1
 class OldBagWarning final : public PbMessage {
  public:
 
@@ -21892,7 +21959,7 @@ class OldBagWarning final : public PbMessage {
 /// 
 ///  > Upgrading bag file $bag_path to latest version.
 ///
-/// Source: horus/pb/logs/logs.proto:1273:1
+/// Source: horus/pb/logs/logs.proto:1274:1
 class UpgradingBagInfo final : public PbMessage {
  public:
 
@@ -22004,7 +22071,7 @@ class UpgradingBagInfo final : public PbMessage {
 /// 
 ///  > Failed to save the bag calibration: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:1280:1
+/// Source: horus/pb/logs/logs.proto:1281:1
 class BagCalibrationSaveFailed final : public PbMessage {
  public:
 
@@ -22116,7 +22183,7 @@ class BagCalibrationSaveFailed final : public PbMessage {
 /// 
 ///  > Failed to upgrade the bag file $bag_path: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:1287:1
+/// Source: horus/pb/logs/logs.proto:1288:1
 class BagUpgradeFailed final : public PbMessage {
  public:
 
@@ -22280,7 +22347,7 @@ class BagUpgradeFailed final : public PbMessage {
 /// 
 ///  > Received points from unknown lidar $lidar_id.
 ///
-/// Source: horus/pb/logs/logs.proto:1295:1
+/// Source: horus/pb/logs/logs.proto:1296:1
 class UnknownLidarError final : public PbMessage {
  public:
 
@@ -22392,7 +22459,7 @@ class UnknownLidarError final : public PbMessage {
 /// 
 ///  > Invalid point cloud received from lidar $lidar_id: $reason
 ///
-/// Source: horus/pb/logs/logs.proto:1302:1
+/// Source: horus/pb/logs/logs.proto:1303:1
 class InvalidPointCloudWarning final : public PbMessage {
  public:
 
@@ -22556,7 +22623,7 @@ class InvalidPointCloudWarning final : public PbMessage {
 /// 
 ///  > The lidar $lidar_id is dropping packets (dropped $num_total_dropped_packets packets out of $num_total_expected_packets).
 ///
-/// Source: horus/pb/logs/logs.proto:1310:1
+/// Source: horus/pb/logs/logs.proto:1311:1
 class LidarIsDroppingPackets final : public PbMessage {
  public:
 
@@ -22748,7 +22815,7 @@ class LidarIsDroppingPackets final : public PbMessage {
 /// 
 ///  > Some deprecated lidars have been found in the loaded project. These invalid lidars were removed from the active project but a backup config file has been saved in $backup_path.
 ///
-/// Source: horus/pb/logs/logs.proto:1319:1
+/// Source: horus/pb/logs/logs.proto:1320:1
 class RemovedInvalidLidarsFromConfigWarning final : public PbMessage {
  public:
 
@@ -22860,7 +22927,7 @@ class RemovedInvalidLidarsFromConfigWarning final : public PbMessage {
 /// 
 ///  > Failed recording the calibration map: $message
 ///
-/// Source: horus/pb/logs/logs.proto:1326:1
+/// Source: horus/pb/logs/logs.proto:1327:1
 class CalibrationMapRecordingFailed final : public PbMessage {
  public:
 
@@ -22972,7 +23039,7 @@ class CalibrationMapRecordingFailed final : public PbMessage {
 /// 
 ///  > Detection node $node_name not found.
 ///
-/// Source: horus/pb/logs/logs.proto:1333:1
+/// Source: horus/pb/logs/logs.proto:1334:1
 class DetectionNodeNotFoundError final : public PbMessage {
  public:
 
@@ -23075,6 +23142,2302 @@ class DetectionNodeNotFoundError final : public PbMessage {
  private:
   /// @see node_name()
   CowBytes node_name_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
+};
+
+/// Log #184.
+/// 
+///  > Horus upgraded from $old_horus_version to $new_horus_version. The project was backed up to $backup_path before being upgraded.
+///
+/// Source: horus/pb/logs/logs.proto:1341:1
+class CreatedVersionBackupInfo final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `CreatedVersionBackupInfo`.
+  CreatedVersionBackupInfo() noexcept = default;
+
+  /// Move constructor.
+  CreatedVersionBackupInfo(CreatedVersionBackupInfo&&) noexcept = default;
+  /// Move assignment operator.
+  CreatedVersionBackupInfo& operator=(CreatedVersionBackupInfo&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit CreatedVersionBackupInfo(const CreatedVersionBackupInfo& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  CreatedVersionBackupInfo& operator=(const CreatedVersionBackupInfo&) = delete;
+
+  /// Default destructor.
+  ~CreatedVersionBackupInfo() noexcept final = default;
+
+  /// Creates a `CreatedVersionBackupInfo` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit CreatedVersionBackupInfo(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.CreatedVersionBackupInfo`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.CreatedVersionBackupInfo"; }
+
+  /// The full name of the message: `horus.pb.logs.CreatedVersionBackupInfo`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `old_horus_version` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& old_horus_version() const& noexcept HORUS_LIFETIME_BOUND {
+    return old_horus_version_;
+  }
+
+  /// If `old_horus_version` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes old_horus_version() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(old_horus_version_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_old_horus_version() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return old_horus_version_;
+  }
+
+  /// Returns whether `old_horus_version` (no 1) is set.
+  constexpr bool has_old_horus_version() const noexcept { return set_fields_[0]; }
+
+  /// Clears `old_horus_version` (no 1).
+  void clear_old_horus_version() & noexcept {
+    set_fields_[0] = false;
+    old_horus_version_ = {};
+  }
+
+  /// Sets `old_horus_version` (no 1) and returns `*this`.
+  CreatedVersionBackupInfo& set_old_horus_version(CowBytes&& old_horus_version) & noexcept {
+    set_fields_[0] = true;
+    old_horus_version_ = std::move(old_horus_version);
+    return *this;
+  }
+  /// Sets `old_horus_version` (no 1) and returns `*this`.
+  CreatedVersionBackupInfo&& set_old_horus_version(CowBytes&& old_horus_version) && noexcept {
+    return std::move(set_old_horus_version(std::move(old_horus_version)));
+  }
+
+  // Field `new_horus_version` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& new_horus_version() const& noexcept HORUS_LIFETIME_BOUND {
+    return new_horus_version_;
+  }
+
+  /// If `new_horus_version` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes new_horus_version() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(new_horus_version_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_new_horus_version() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return new_horus_version_;
+  }
+
+  /// Returns whether `new_horus_version` (no 2) is set.
+  constexpr bool has_new_horus_version() const noexcept { return set_fields_[1]; }
+
+  /// Clears `new_horus_version` (no 2).
+  void clear_new_horus_version() & noexcept {
+    set_fields_[1] = false;
+    new_horus_version_ = {};
+  }
+
+  /// Sets `new_horus_version` (no 2) and returns `*this`.
+  CreatedVersionBackupInfo& set_new_horus_version(CowBytes&& new_horus_version) & noexcept {
+    set_fields_[1] = true;
+    new_horus_version_ = std::move(new_horus_version);
+    return *this;
+  }
+  /// Sets `new_horus_version` (no 2) and returns `*this`.
+  CreatedVersionBackupInfo&& set_new_horus_version(CowBytes&& new_horus_version) && noexcept {
+    return std::move(set_new_horus_version(std::move(new_horus_version)));
+  }
+
+  // Field `backup_path` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& backup_path() const& noexcept HORUS_LIFETIME_BOUND {
+    return backup_path_;
+  }
+
+  /// If `backup_path` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes backup_path() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(backup_path_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_backup_path() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return backup_path_;
+  }
+
+  /// Returns whether `backup_path` (no 3) is set.
+  constexpr bool has_backup_path() const noexcept { return set_fields_[2]; }
+
+  /// Clears `backup_path` (no 3).
+  void clear_backup_path() & noexcept {
+    set_fields_[2] = false;
+    backup_path_ = {};
+  }
+
+  /// Sets `backup_path` (no 3) and returns `*this`.
+  CreatedVersionBackupInfo& set_backup_path(CowBytes&& backup_path) & noexcept {
+    set_fields_[2] = true;
+    backup_path_ = std::move(backup_path);
+    return *this;
+  }
+  /// Sets `backup_path` (no 3) and returns `*this`.
+  CreatedVersionBackupInfo&& set_backup_path(CowBytes&& backup_path) && noexcept {
+    return std::move(set_backup_path(std::move(backup_path)));
+  }
+
+ private:
+  /// @see old_horus_version()
+  CowBytes old_horus_version_{};
+  /// @see new_horus_version()
+  CowBytes new_horus_version_{};
+  /// @see backup_path()
+  CowBytes backup_path_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<3> set_fields_;
+};
+
+/// Log #185.
+/// 
+///  > Failed to load PLY file $file_path: $details
+///
+/// Source: horus/pb/logs/logs.proto:1350:1
+class PlyFileLoadFailedError final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `PlyFileLoadFailedError`.
+  PlyFileLoadFailedError() noexcept = default;
+
+  /// Move constructor.
+  PlyFileLoadFailedError(PlyFileLoadFailedError&&) noexcept = default;
+  /// Move assignment operator.
+  PlyFileLoadFailedError& operator=(PlyFileLoadFailedError&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit PlyFileLoadFailedError(const PlyFileLoadFailedError& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  PlyFileLoadFailedError& operator=(const PlyFileLoadFailedError&) = delete;
+
+  /// Default destructor.
+  ~PlyFileLoadFailedError() noexcept final = default;
+
+  /// Creates a `PlyFileLoadFailedError` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit PlyFileLoadFailedError(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.PlyFileLoadFailedError`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.PlyFileLoadFailedError"; }
+
+  /// The full name of the message: `horus.pb.logs.PlyFileLoadFailedError`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `file_path` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& file_path() const& noexcept HORUS_LIFETIME_BOUND {
+    return file_path_;
+  }
+
+  /// If `file_path` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes file_path() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(file_path_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_file_path() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return file_path_;
+  }
+
+  /// Returns whether `file_path` (no 1) is set.
+  constexpr bool has_file_path() const noexcept { return set_fields_[0]; }
+
+  /// Clears `file_path` (no 1).
+  void clear_file_path() & noexcept {
+    set_fields_[0] = false;
+    file_path_ = {};
+  }
+
+  /// Sets `file_path` (no 1) and returns `*this`.
+  PlyFileLoadFailedError& set_file_path(CowBytes&& file_path) & noexcept {
+    set_fields_[0] = true;
+    file_path_ = std::move(file_path);
+    return *this;
+  }
+  /// Sets `file_path` (no 1) and returns `*this`.
+  PlyFileLoadFailedError&& set_file_path(CowBytes&& file_path) && noexcept {
+    return std::move(set_file_path(std::move(file_path)));
+  }
+
+  // Field `details` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& details() const& noexcept HORUS_LIFETIME_BOUND {
+    return details_;
+  }
+
+  /// If `details` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes details() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(details_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_details() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return details_;
+  }
+
+  /// Returns whether `details` (no 2) is set.
+  constexpr bool has_details() const noexcept { return set_fields_[1]; }
+
+  /// Clears `details` (no 2).
+  void clear_details() & noexcept {
+    set_fields_[1] = false;
+    details_ = {};
+  }
+
+  /// Sets `details` (no 2) and returns `*this`.
+  PlyFileLoadFailedError& set_details(CowBytes&& details) & noexcept {
+    set_fields_[1] = true;
+    details_ = std::move(details);
+    return *this;
+  }
+  /// Sets `details` (no 2) and returns `*this`.
+  PlyFileLoadFailedError&& set_details(CowBytes&& details) && noexcept {
+    return std::move(set_details(std::move(details)));
+  }
+
+ private:
+  /// @see file_path()
+  CowBytes file_path_{};
+  /// @see details()
+  CowBytes details_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// Log #186.
+/// 
+///  > Hesai XT32 driver $action for LiDAR $lidar_id.
+///
+/// Source: horus/pb/logs/logs.proto:1358:1
+class HesaiDriverLifecycle final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `HesaiDriverLifecycle`.
+  HesaiDriverLifecycle() noexcept = default;
+
+  /// Move constructor.
+  HesaiDriverLifecycle(HesaiDriverLifecycle&&) noexcept = default;
+  /// Move assignment operator.
+  HesaiDriverLifecycle& operator=(HesaiDriverLifecycle&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit HesaiDriverLifecycle(const HesaiDriverLifecycle& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  HesaiDriverLifecycle& operator=(const HesaiDriverLifecycle&) = delete;
+
+  /// Default destructor.
+  ~HesaiDriverLifecycle() noexcept final = default;
+
+  /// Creates a `HesaiDriverLifecycle` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit HesaiDriverLifecycle(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.HesaiDriverLifecycle`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.HesaiDriverLifecycle"; }
+
+  /// The full name of the message: `horus.pb.logs.HesaiDriverLifecycle`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `action` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& action() const& noexcept HORUS_LIFETIME_BOUND {
+    return action_;
+  }
+
+  /// If `action` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes action() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(action_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_action() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return action_;
+  }
+
+  /// Returns whether `action` (no 1) is set.
+  constexpr bool has_action() const noexcept { return set_fields_[0]; }
+
+  /// Clears `action` (no 1).
+  void clear_action() & noexcept {
+    set_fields_[0] = false;
+    action_ = {};
+  }
+
+  /// Sets `action` (no 1) and returns `*this`.
+  HesaiDriverLifecycle& set_action(CowBytes&& action) & noexcept {
+    set_fields_[0] = true;
+    action_ = std::move(action);
+    return *this;
+  }
+  /// Sets `action` (no 1) and returns `*this`.
+  HesaiDriverLifecycle&& set_action(CowBytes&& action) && noexcept {
+    return std::move(set_action(std::move(action)));
+  }
+
+  // Field `lidar_id` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 2) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_id` (no 2).
+  void clear_lidar_id() & noexcept {
+    set_fields_[1] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 2) and returns `*this`.
+  HesaiDriverLifecycle& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[1] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 2) and returns `*this`.
+  HesaiDriverLifecycle&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+ private:
+  /// @see action()
+  CowBytes action_{};
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// Log #187.
+/// 
+///  > Hesai XT32 driver error: $details
+///
+/// Source: horus/pb/logs/logs.proto:1366:1
+class HesaiDriverError final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `HesaiDriverError`.
+  HesaiDriverError() noexcept = default;
+
+  /// Move constructor.
+  HesaiDriverError(HesaiDriverError&&) noexcept = default;
+  /// Move assignment operator.
+  HesaiDriverError& operator=(HesaiDriverError&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit HesaiDriverError(const HesaiDriverError& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  HesaiDriverError& operator=(const HesaiDriverError&) = delete;
+
+  /// Default destructor.
+  ~HesaiDriverError() noexcept final = default;
+
+  /// Creates a `HesaiDriverError` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit HesaiDriverError(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.HesaiDriverError`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.HesaiDriverError"; }
+
+  /// The full name of the message: `horus.pb.logs.HesaiDriverError`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `details` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& details() const& noexcept HORUS_LIFETIME_BOUND {
+    return details_;
+  }
+
+  /// If `details` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes details() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(details_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_details() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return details_;
+  }
+
+  /// Returns whether `details` (no 1) is set.
+  constexpr bool has_details() const noexcept { return set_fields_[0]; }
+
+  /// Clears `details` (no 1).
+  void clear_details() & noexcept {
+    set_fields_[0] = false;
+    details_ = {};
+  }
+
+  /// Sets `details` (no 1) and returns `*this`.
+  HesaiDriverError& set_details(CowBytes&& details) & noexcept {
+    set_fields_[0] = true;
+    details_ = std::move(details);
+    return *this;
+  }
+  /// Sets `details` (no 1) and returns `*this`.
+  HesaiDriverError&& set_details(CowBytes&& details) && noexcept {
+    return std::move(set_details(std::move(details)));
+  }
+
+ private:
+  /// @see details()
+  CowBytes details_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
+};
+
+/// Log #188.
+/// 
+///  > Failed to process packet for Hesai LiDAR $lidar_id: $details
+///
+/// Source: horus/pb/logs/logs.proto:1373:1
+class HesaiPacketProcessingFailed final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `HesaiPacketProcessingFailed`.
+  HesaiPacketProcessingFailed() noexcept = default;
+
+  /// Move constructor.
+  HesaiPacketProcessingFailed(HesaiPacketProcessingFailed&&) noexcept = default;
+  /// Move assignment operator.
+  HesaiPacketProcessingFailed& operator=(HesaiPacketProcessingFailed&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit HesaiPacketProcessingFailed(const HesaiPacketProcessingFailed& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  HesaiPacketProcessingFailed& operator=(const HesaiPacketProcessingFailed&) = delete;
+
+  /// Default destructor.
+  ~HesaiPacketProcessingFailed() noexcept final = default;
+
+  /// Creates a `HesaiPacketProcessingFailed` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit HesaiPacketProcessingFailed(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.HesaiPacketProcessingFailed`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.HesaiPacketProcessingFailed"; }
+
+  /// The full name of the message: `horus.pb.logs.HesaiPacketProcessingFailed`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `lidar_id` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 1) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[0]; }
+
+  /// Clears `lidar_id` (no 1).
+  void clear_lidar_id() & noexcept {
+    set_fields_[0] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  HesaiPacketProcessingFailed& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[0] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  HesaiPacketProcessingFailed&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `details` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& details() const& noexcept HORUS_LIFETIME_BOUND {
+    return details_;
+  }
+
+  /// If `details` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes details() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(details_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_details() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return details_;
+  }
+
+  /// Returns whether `details` (no 2) is set.
+  constexpr bool has_details() const noexcept { return set_fields_[1]; }
+
+  /// Clears `details` (no 2).
+  void clear_details() & noexcept {
+    set_fields_[1] = false;
+    details_ = {};
+  }
+
+  /// Sets `details` (no 2) and returns `*this`.
+  HesaiPacketProcessingFailed& set_details(CowBytes&& details) & noexcept {
+    set_fields_[1] = true;
+    details_ = std::move(details);
+    return *this;
+  }
+  /// Sets `details` (no 2) and returns `*this`.
+  HesaiPacketProcessingFailed&& set_details(CowBytes&& details) && noexcept {
+    return std::move(set_details(std::move(details)));
+  }
+
+ private:
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see details()
+  CowBytes details_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// Log #189.
+/// 
+///  > Failed to load Hesai XT32 correction file $file_type: $details
+///
+/// Source: horus/pb/logs/logs.proto:1381:1
+class HesaiCorrectionFileError final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `HesaiCorrectionFileError`.
+  HesaiCorrectionFileError() noexcept = default;
+
+  /// Move constructor.
+  HesaiCorrectionFileError(HesaiCorrectionFileError&&) noexcept = default;
+  /// Move assignment operator.
+  HesaiCorrectionFileError& operator=(HesaiCorrectionFileError&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit HesaiCorrectionFileError(const HesaiCorrectionFileError& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  HesaiCorrectionFileError& operator=(const HesaiCorrectionFileError&) = delete;
+
+  /// Default destructor.
+  ~HesaiCorrectionFileError() noexcept final = default;
+
+  /// Creates a `HesaiCorrectionFileError` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit HesaiCorrectionFileError(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.HesaiCorrectionFileError`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.HesaiCorrectionFileError"; }
+
+  /// The full name of the message: `horus.pb.logs.HesaiCorrectionFileError`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `file_type` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& file_type() const& noexcept HORUS_LIFETIME_BOUND {
+    return file_type_;
+  }
+
+  /// If `file_type` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes file_type() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(file_type_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_file_type() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return file_type_;
+  }
+
+  /// Returns whether `file_type` (no 1) is set.
+  constexpr bool has_file_type() const noexcept { return set_fields_[0]; }
+
+  /// Clears `file_type` (no 1).
+  void clear_file_type() & noexcept {
+    set_fields_[0] = false;
+    file_type_ = {};
+  }
+
+  /// Sets `file_type` (no 1) and returns `*this`.
+  HesaiCorrectionFileError& set_file_type(CowBytes&& file_type) & noexcept {
+    set_fields_[0] = true;
+    file_type_ = std::move(file_type);
+    return *this;
+  }
+  /// Sets `file_type` (no 1) and returns `*this`.
+  HesaiCorrectionFileError&& set_file_type(CowBytes&& file_type) && noexcept {
+    return std::move(set_file_type(std::move(file_type)));
+  }
+
+  // Field `details` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& details() const& noexcept HORUS_LIFETIME_BOUND {
+    return details_;
+  }
+
+  /// If `details` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes details() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(details_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_details() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return details_;
+  }
+
+  /// Returns whether `details` (no 2) is set.
+  constexpr bool has_details() const noexcept { return set_fields_[1]; }
+
+  /// Clears `details` (no 2).
+  void clear_details() & noexcept {
+    set_fields_[1] = false;
+    details_ = {};
+  }
+
+  /// Sets `details` (no 2) and returns `*this`.
+  HesaiCorrectionFileError& set_details(CowBytes&& details) & noexcept {
+    set_fields_[1] = true;
+    details_ = std::move(details);
+    return *this;
+  }
+  /// Sets `details` (no 2) and returns `*this`.
+  HesaiCorrectionFileError&& set_details(CowBytes&& details) && noexcept {
+    return std::move(set_details(std::move(details)));
+  }
+
+ private:
+  /// @see file_type()
+  CowBytes file_type_{};
+  /// @see details()
+  CowBytes details_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// Log #190.
+/// 
+///  > Hesai packet statistics - Received: $packets_received, Published: $packets_published, Dropped: $packets_dropped, Decode Failed: $packets_decode_failed, Success Rate: $success_rate %
+///
+/// Source: horus/pb/logs/logs.proto:1389:1
+class HesaiPacketStatistics final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `HesaiPacketStatistics`.
+  HesaiPacketStatistics() noexcept = default;
+
+  /// Move constructor.
+  HesaiPacketStatistics(HesaiPacketStatistics&&) noexcept = default;
+  /// Move assignment operator.
+  HesaiPacketStatistics& operator=(HesaiPacketStatistics&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit HesaiPacketStatistics(const HesaiPacketStatistics& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  HesaiPacketStatistics& operator=(const HesaiPacketStatistics&) = delete;
+
+  /// Default destructor.
+  ~HesaiPacketStatistics() noexcept final = default;
+
+  /// Creates a `HesaiPacketStatistics` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit HesaiPacketStatistics(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.HesaiPacketStatistics`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.HesaiPacketStatistics"; }
+
+  /// The full name of the message: `horus.pb.logs.HesaiPacketStatistics`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `packets_received` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr std::uint64_t packets_received() const& noexcept HORUS_LIFETIME_BOUND {
+    return packets_received_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  std::uint64_t& mutable_packets_received() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return packets_received_;
+  }
+
+  /// Returns whether `packets_received` (no 1) is set.
+  constexpr bool has_packets_received() const noexcept { return set_fields_[0]; }
+
+  /// Clears `packets_received` (no 1).
+  void clear_packets_received() & noexcept {
+    set_fields_[0] = false;
+    packets_received_ = {};
+  }
+
+  /// Sets `packets_received` (no 1) and returns `*this`.
+  HesaiPacketStatistics& set_packets_received(std::uint64_t packets_received) & noexcept {
+    set_fields_[0] = true;
+    packets_received_ = packets_received;
+    return *this;
+  }
+  /// Sets `packets_received` (no 1) and returns `*this`.
+  HesaiPacketStatistics&& set_packets_received(std::uint64_t packets_received) && noexcept {
+    return std::move(set_packets_received(packets_received));
+  }
+
+  // Field `packets_published` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr std::uint64_t packets_published() const& noexcept HORUS_LIFETIME_BOUND {
+    return packets_published_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  std::uint64_t& mutable_packets_published() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return packets_published_;
+  }
+
+  /// Returns whether `packets_published` (no 2) is set.
+  constexpr bool has_packets_published() const noexcept { return set_fields_[1]; }
+
+  /// Clears `packets_published` (no 2).
+  void clear_packets_published() & noexcept {
+    set_fields_[1] = false;
+    packets_published_ = {};
+  }
+
+  /// Sets `packets_published` (no 2) and returns `*this`.
+  HesaiPacketStatistics& set_packets_published(std::uint64_t packets_published) & noexcept {
+    set_fields_[1] = true;
+    packets_published_ = packets_published;
+    return *this;
+  }
+  /// Sets `packets_published` (no 2) and returns `*this`.
+  HesaiPacketStatistics&& set_packets_published(std::uint64_t packets_published) && noexcept {
+    return std::move(set_packets_published(packets_published));
+  }
+
+  // Field `packets_dropped` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr std::uint64_t packets_dropped() const& noexcept HORUS_LIFETIME_BOUND {
+    return packets_dropped_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  std::uint64_t& mutable_packets_dropped() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return packets_dropped_;
+  }
+
+  /// Returns whether `packets_dropped` (no 3) is set.
+  constexpr bool has_packets_dropped() const noexcept { return set_fields_[2]; }
+
+  /// Clears `packets_dropped` (no 3).
+  void clear_packets_dropped() & noexcept {
+    set_fields_[2] = false;
+    packets_dropped_ = {};
+  }
+
+  /// Sets `packets_dropped` (no 3) and returns `*this`.
+  HesaiPacketStatistics& set_packets_dropped(std::uint64_t packets_dropped) & noexcept {
+    set_fields_[2] = true;
+    packets_dropped_ = packets_dropped;
+    return *this;
+  }
+  /// Sets `packets_dropped` (no 3) and returns `*this`.
+  HesaiPacketStatistics&& set_packets_dropped(std::uint64_t packets_dropped) && noexcept {
+    return std::move(set_packets_dropped(packets_dropped));
+  }
+
+  // Field `packets_decode_failed` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr std::uint64_t packets_decode_failed() const& noexcept HORUS_LIFETIME_BOUND {
+    return packets_decode_failed_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  std::uint64_t& mutable_packets_decode_failed() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return packets_decode_failed_;
+  }
+
+  /// Returns whether `packets_decode_failed` (no 4) is set.
+  constexpr bool has_packets_decode_failed() const noexcept { return set_fields_[3]; }
+
+  /// Clears `packets_decode_failed` (no 4).
+  void clear_packets_decode_failed() & noexcept {
+    set_fields_[3] = false;
+    packets_decode_failed_ = {};
+  }
+
+  /// Sets `packets_decode_failed` (no 4) and returns `*this`.
+  HesaiPacketStatistics& set_packets_decode_failed(std::uint64_t packets_decode_failed) & noexcept {
+    set_fields_[3] = true;
+    packets_decode_failed_ = packets_decode_failed;
+    return *this;
+  }
+  /// Sets `packets_decode_failed` (no 4) and returns `*this`.
+  HesaiPacketStatistics&& set_packets_decode_failed(std::uint64_t packets_decode_failed) && noexcept {
+    return std::move(set_packets_decode_failed(packets_decode_failed));
+  }
+
+  // Field `success_rate` (no 5).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 5.
+  constexpr double success_rate() const& noexcept HORUS_LIFETIME_BOUND {
+    return success_rate_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 5.
+  double& mutable_success_rate() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[4] = true;
+    return success_rate_;
+  }
+
+  /// Returns whether `success_rate` (no 5) is set.
+  constexpr bool has_success_rate() const noexcept { return set_fields_[4]; }
+
+  /// Clears `success_rate` (no 5).
+  void clear_success_rate() & noexcept {
+    set_fields_[4] = false;
+    success_rate_ = {};
+  }
+
+  /// Sets `success_rate` (no 5) and returns `*this`.
+  HesaiPacketStatistics& set_success_rate(double success_rate) & noexcept {
+    set_fields_[4] = true;
+    success_rate_ = success_rate;
+    return *this;
+  }
+  /// Sets `success_rate` (no 5) and returns `*this`.
+  HesaiPacketStatistics&& set_success_rate(double success_rate) && noexcept {
+    return std::move(set_success_rate(success_rate));
+  }
+
+ private:
+  /// @see packets_received()
+  std::uint64_t packets_received_{};
+  /// @see packets_published()
+  std::uint64_t packets_published_{};
+  /// @see packets_dropped()
+  std::uint64_t packets_dropped_{};
+  /// @see packets_decode_failed()
+  std::uint64_t packets_decode_failed_{};
+  /// @see success_rate()
+  double success_rate_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<5> set_fields_;
+};
+
+/// Log #191.
+/// 
+///  > Failed to write PLY file $file_path: $details
+///
+/// Source: horus/pb/logs/logs.proto:1400:1
+class PlyFileWriteFailedError final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `PlyFileWriteFailedError`.
+  PlyFileWriteFailedError() noexcept = default;
+
+  /// Move constructor.
+  PlyFileWriteFailedError(PlyFileWriteFailedError&&) noexcept = default;
+  /// Move assignment operator.
+  PlyFileWriteFailedError& operator=(PlyFileWriteFailedError&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit PlyFileWriteFailedError(const PlyFileWriteFailedError& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  PlyFileWriteFailedError& operator=(const PlyFileWriteFailedError&) = delete;
+
+  /// Default destructor.
+  ~PlyFileWriteFailedError() noexcept final = default;
+
+  /// Creates a `PlyFileWriteFailedError` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit PlyFileWriteFailedError(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.PlyFileWriteFailedError`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.PlyFileWriteFailedError"; }
+
+  /// The full name of the message: `horus.pb.logs.PlyFileWriteFailedError`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `file_path` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& file_path() const& noexcept HORUS_LIFETIME_BOUND {
+    return file_path_;
+  }
+
+  /// If `file_path` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes file_path() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(file_path_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_file_path() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return file_path_;
+  }
+
+  /// Returns whether `file_path` (no 1) is set.
+  constexpr bool has_file_path() const noexcept { return set_fields_[0]; }
+
+  /// Clears `file_path` (no 1).
+  void clear_file_path() & noexcept {
+    set_fields_[0] = false;
+    file_path_ = {};
+  }
+
+  /// Sets `file_path` (no 1) and returns `*this`.
+  PlyFileWriteFailedError& set_file_path(CowBytes&& file_path) & noexcept {
+    set_fields_[0] = true;
+    file_path_ = std::move(file_path);
+    return *this;
+  }
+  /// Sets `file_path` (no 1) and returns `*this`.
+  PlyFileWriteFailedError&& set_file_path(CowBytes&& file_path) && noexcept {
+    return std::move(set_file_path(std::move(file_path)));
+  }
+
+  // Field `details` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& details() const& noexcept HORUS_LIFETIME_BOUND {
+    return details_;
+  }
+
+  /// If `details` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes details() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(details_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_details() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return details_;
+  }
+
+  /// Returns whether `details` (no 2) is set.
+  constexpr bool has_details() const noexcept { return set_fields_[1]; }
+
+  /// Clears `details` (no 2).
+  void clear_details() & noexcept {
+    set_fields_[1] = false;
+    details_ = {};
+  }
+
+  /// Sets `details` (no 2) and returns `*this`.
+  PlyFileWriteFailedError& set_details(CowBytes&& details) & noexcept {
+    set_fields_[1] = true;
+    details_ = std::move(details);
+    return *this;
+  }
+  /// Sets `details` (no 2) and returns `*this`.
+  PlyFileWriteFailedError&& set_details(CowBytes&& details) && noexcept {
+    return std::move(set_details(std::move(details)));
+  }
+
+ private:
+  /// @see file_path()
+  CowBytes file_path_{};
+  /// @see details()
+  CowBytes details_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// Log #192.
+/// 
+///  > Failed to save project: $error_message.
+///
+/// Source: horus/pb/logs/logs.proto:1408:1
+class ProjectSaveError final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `ProjectSaveError`.
+  ProjectSaveError() noexcept = default;
+
+  /// Move constructor.
+  ProjectSaveError(ProjectSaveError&&) noexcept = default;
+  /// Move assignment operator.
+  ProjectSaveError& operator=(ProjectSaveError&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit ProjectSaveError(const ProjectSaveError& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  ProjectSaveError& operator=(const ProjectSaveError&) = delete;
+
+  /// Default destructor.
+  ~ProjectSaveError() noexcept final = default;
+
+  /// Creates a `ProjectSaveError` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit ProjectSaveError(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.ProjectSaveError`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.ProjectSaveError"; }
+
+  /// The full name of the message: `horus.pb.logs.ProjectSaveError`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `error_message` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& error_message() const& noexcept HORUS_LIFETIME_BOUND {
+    return error_message_;
+  }
+
+  /// If `error_message` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes error_message() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(error_message_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_error_message() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return error_message_;
+  }
+
+  /// Returns whether `error_message` (no 1) is set.
+  constexpr bool has_error_message() const noexcept { return set_fields_[0]; }
+
+  /// Clears `error_message` (no 1).
+  void clear_error_message() & noexcept {
+    set_fields_[0] = false;
+    error_message_ = {};
+  }
+
+  /// Sets `error_message` (no 1) and returns `*this`.
+  ProjectSaveError& set_error_message(CowBytes&& error_message) & noexcept {
+    set_fields_[0] = true;
+    error_message_ = std::move(error_message);
+    return *this;
+  }
+  /// Sets `error_message` (no 1) and returns `*this`.
+  ProjectSaveError&& set_error_message(CowBytes&& error_message) && noexcept {
+    return std::move(set_error_message(std::move(error_message)));
+  }
+
+ private:
+  /// @see error_message()
+  CowBytes error_message_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
+};
+
+/// Log #193.
+/// 
+///  > Saved static environment to $path
+///
+/// Source: horus/pb/logs/logs.proto:1415:1
+class SaveStaticEnvironmentSuccess final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `SaveStaticEnvironmentSuccess`.
+  SaveStaticEnvironmentSuccess() noexcept = default;
+
+  /// Move constructor.
+  SaveStaticEnvironmentSuccess(SaveStaticEnvironmentSuccess&&) noexcept = default;
+  /// Move assignment operator.
+  SaveStaticEnvironmentSuccess& operator=(SaveStaticEnvironmentSuccess&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit SaveStaticEnvironmentSuccess(const SaveStaticEnvironmentSuccess& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  SaveStaticEnvironmentSuccess& operator=(const SaveStaticEnvironmentSuccess&) = delete;
+
+  /// Default destructor.
+  ~SaveStaticEnvironmentSuccess() noexcept final = default;
+
+  /// Creates a `SaveStaticEnvironmentSuccess` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit SaveStaticEnvironmentSuccess(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.SaveStaticEnvironmentSuccess`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.SaveStaticEnvironmentSuccess"; }
+
+  /// The full name of the message: `horus.pb.logs.SaveStaticEnvironmentSuccess`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `path` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& path() const& noexcept HORUS_LIFETIME_BOUND {
+    return path_;
+  }
+
+  /// If `path` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes path() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(path_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_path() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return path_;
+  }
+
+  /// Returns whether `path` (no 1) is set.
+  constexpr bool has_path() const noexcept { return set_fields_[0]; }
+
+  /// Clears `path` (no 1).
+  void clear_path() & noexcept {
+    set_fields_[0] = false;
+    path_ = {};
+  }
+
+  /// Sets `path` (no 1) and returns `*this`.
+  SaveStaticEnvironmentSuccess& set_path(CowBytes&& path) & noexcept {
+    set_fields_[0] = true;
+    path_ = std::move(path);
+    return *this;
+  }
+  /// Sets `path` (no 1) and returns `*this`.
+  SaveStaticEnvironmentSuccess&& set_path(CowBytes&& path) && noexcept {
+    return std::move(set_path(std::move(path)));
+  }
+
+ private:
+  /// @see path()
+  CowBytes path_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
+};
+
+/// Log #194.
+/// 
+///  > Failed to serialize static environment to $path: $details
+///
+/// Source: horus/pb/logs/logs.proto:1422:1
+class SaveStaticEnvironmentFailed final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `SaveStaticEnvironmentFailed`.
+  SaveStaticEnvironmentFailed() noexcept = default;
+
+  /// Move constructor.
+  SaveStaticEnvironmentFailed(SaveStaticEnvironmentFailed&&) noexcept = default;
+  /// Move assignment operator.
+  SaveStaticEnvironmentFailed& operator=(SaveStaticEnvironmentFailed&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit SaveStaticEnvironmentFailed(const SaveStaticEnvironmentFailed& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  SaveStaticEnvironmentFailed& operator=(const SaveStaticEnvironmentFailed&) = delete;
+
+  /// Default destructor.
+  ~SaveStaticEnvironmentFailed() noexcept final = default;
+
+  /// Creates a `SaveStaticEnvironmentFailed` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit SaveStaticEnvironmentFailed(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.SaveStaticEnvironmentFailed`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.SaveStaticEnvironmentFailed"; }
+
+  /// The full name of the message: `horus.pb.logs.SaveStaticEnvironmentFailed`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `path` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& path() const& noexcept HORUS_LIFETIME_BOUND {
+    return path_;
+  }
+
+  /// If `path` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes path() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(path_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_path() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return path_;
+  }
+
+  /// Returns whether `path` (no 1) is set.
+  constexpr bool has_path() const noexcept { return set_fields_[0]; }
+
+  /// Clears `path` (no 1).
+  void clear_path() & noexcept {
+    set_fields_[0] = false;
+    path_ = {};
+  }
+
+  /// Sets `path` (no 1) and returns `*this`.
+  SaveStaticEnvironmentFailed& set_path(CowBytes&& path) & noexcept {
+    set_fields_[0] = true;
+    path_ = std::move(path);
+    return *this;
+  }
+  /// Sets `path` (no 1) and returns `*this`.
+  SaveStaticEnvironmentFailed&& set_path(CowBytes&& path) && noexcept {
+    return std::move(set_path(std::move(path)));
+  }
+
+  // Field `details` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& details() const& noexcept HORUS_LIFETIME_BOUND {
+    return details_;
+  }
+
+  /// If `details` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes details() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(details_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_details() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return details_;
+  }
+
+  /// Returns whether `details` (no 2) is set.
+  constexpr bool has_details() const noexcept { return set_fields_[1]; }
+
+  /// Clears `details` (no 2).
+  void clear_details() & noexcept {
+    set_fields_[1] = false;
+    details_ = {};
+  }
+
+  /// Sets `details` (no 2) and returns `*this`.
+  SaveStaticEnvironmentFailed& set_details(CowBytes&& details) & noexcept {
+    set_fields_[1] = true;
+    details_ = std::move(details);
+    return *this;
+  }
+  /// Sets `details` (no 2) and returns `*this`.
+  SaveStaticEnvironmentFailed&& set_details(CowBytes&& details) && noexcept {
+    return std::move(set_details(std::move(details)));
+  }
+
+ private:
+  /// @see path()
+  CowBytes path_{};
+  /// @see details()
+  CowBytes details_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// Log #195.
+/// 
+///  > Static environment loaded from $path
+///
+/// Source: horus/pb/logs/logs.proto:1430:1
+class LoadStaticEnvironmentSuccess final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `LoadStaticEnvironmentSuccess`.
+  LoadStaticEnvironmentSuccess() noexcept = default;
+
+  /// Move constructor.
+  LoadStaticEnvironmentSuccess(LoadStaticEnvironmentSuccess&&) noexcept = default;
+  /// Move assignment operator.
+  LoadStaticEnvironmentSuccess& operator=(LoadStaticEnvironmentSuccess&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit LoadStaticEnvironmentSuccess(const LoadStaticEnvironmentSuccess& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  LoadStaticEnvironmentSuccess& operator=(const LoadStaticEnvironmentSuccess&) = delete;
+
+  /// Default destructor.
+  ~LoadStaticEnvironmentSuccess() noexcept final = default;
+
+  /// Creates a `LoadStaticEnvironmentSuccess` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit LoadStaticEnvironmentSuccess(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.LoadStaticEnvironmentSuccess`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.LoadStaticEnvironmentSuccess"; }
+
+  /// The full name of the message: `horus.pb.logs.LoadStaticEnvironmentSuccess`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `path` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& path() const& noexcept HORUS_LIFETIME_BOUND {
+    return path_;
+  }
+
+  /// If `path` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes path() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(path_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_path() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return path_;
+  }
+
+  /// Returns whether `path` (no 1) is set.
+  constexpr bool has_path() const noexcept { return set_fields_[0]; }
+
+  /// Clears `path` (no 1).
+  void clear_path() & noexcept {
+    set_fields_[0] = false;
+    path_ = {};
+  }
+
+  /// Sets `path` (no 1) and returns `*this`.
+  LoadStaticEnvironmentSuccess& set_path(CowBytes&& path) & noexcept {
+    set_fields_[0] = true;
+    path_ = std::move(path);
+    return *this;
+  }
+  /// Sets `path` (no 1) and returns `*this`.
+  LoadStaticEnvironmentSuccess&& set_path(CowBytes&& path) && noexcept {
+    return std::move(set_path(std::move(path)));
+  }
+
+ private:
+  /// @see path()
+  CowBytes path_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
+};
+
+/// Log #196.
+/// 
+///  > Failed to load static environment from $path: $details
+///
+/// Source: horus/pb/logs/logs.proto:1437:1
+class LoadStaticEnvironmentFailed final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `LoadStaticEnvironmentFailed`.
+  LoadStaticEnvironmentFailed() noexcept = default;
+
+  /// Move constructor.
+  LoadStaticEnvironmentFailed(LoadStaticEnvironmentFailed&&) noexcept = default;
+  /// Move assignment operator.
+  LoadStaticEnvironmentFailed& operator=(LoadStaticEnvironmentFailed&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit LoadStaticEnvironmentFailed(const LoadStaticEnvironmentFailed& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  LoadStaticEnvironmentFailed& operator=(const LoadStaticEnvironmentFailed&) = delete;
+
+  /// Default destructor.
+  ~LoadStaticEnvironmentFailed() noexcept final = default;
+
+  /// Creates a `LoadStaticEnvironmentFailed` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit LoadStaticEnvironmentFailed(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.LoadStaticEnvironmentFailed`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.LoadStaticEnvironmentFailed"; }
+
+  /// The full name of the message: `horus.pb.logs.LoadStaticEnvironmentFailed`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `path` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& path() const& noexcept HORUS_LIFETIME_BOUND {
+    return path_;
+  }
+
+  /// If `path` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes path() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(path_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_path() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return path_;
+  }
+
+  /// Returns whether `path` (no 1) is set.
+  constexpr bool has_path() const noexcept { return set_fields_[0]; }
+
+  /// Clears `path` (no 1).
+  void clear_path() & noexcept {
+    set_fields_[0] = false;
+    path_ = {};
+  }
+
+  /// Sets `path` (no 1) and returns `*this`.
+  LoadStaticEnvironmentFailed& set_path(CowBytes&& path) & noexcept {
+    set_fields_[0] = true;
+    path_ = std::move(path);
+    return *this;
+  }
+  /// Sets `path` (no 1) and returns `*this`.
+  LoadStaticEnvironmentFailed&& set_path(CowBytes&& path) && noexcept {
+    return std::move(set_path(std::move(path)));
+  }
+
+  // Field `details` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& details() const& noexcept HORUS_LIFETIME_BOUND {
+    return details_;
+  }
+
+  /// If `details` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes details() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(details_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_details() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return details_;
+  }
+
+  /// Returns whether `details` (no 2) is set.
+  constexpr bool has_details() const noexcept { return set_fields_[1]; }
+
+  /// Clears `details` (no 2).
+  void clear_details() & noexcept {
+    set_fields_[1] = false;
+    details_ = {};
+  }
+
+  /// Sets `details` (no 2) and returns `*this`.
+  LoadStaticEnvironmentFailed& set_details(CowBytes&& details) & noexcept {
+    set_fields_[1] = true;
+    details_ = std::move(details);
+    return *this;
+  }
+  /// Sets `details` (no 2) and returns `*this`.
+  LoadStaticEnvironmentFailed&& set_details(CowBytes&& details) && noexcept {
+    return std::move(set_details(std::move(details)));
+  }
+
+ private:
+  /// @see path()
+  CowBytes path_{};
+  /// @see details()
+  CowBytes details_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// Log #197.
+/// 
+///  > Attempt to inject invalid lidar ID $lidar_id into the system.
+///
+/// Source: horus/pb/logs/logs.proto:1445:1
+class AttemptToInjectInvalidLidarIdWarning final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `AttemptToInjectInvalidLidarIdWarning`.
+  AttemptToInjectInvalidLidarIdWarning() noexcept = default;
+
+  /// Move constructor.
+  AttemptToInjectInvalidLidarIdWarning(AttemptToInjectInvalidLidarIdWarning&&) noexcept = default;
+  /// Move assignment operator.
+  AttemptToInjectInvalidLidarIdWarning& operator=(AttemptToInjectInvalidLidarIdWarning&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit AttemptToInjectInvalidLidarIdWarning(const AttemptToInjectInvalidLidarIdWarning& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  AttemptToInjectInvalidLidarIdWarning& operator=(const AttemptToInjectInvalidLidarIdWarning&) = delete;
+
+  /// Default destructor.
+  ~AttemptToInjectInvalidLidarIdWarning() noexcept final = default;
+
+  /// Creates a `AttemptToInjectInvalidLidarIdWarning` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit AttemptToInjectInvalidLidarIdWarning(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.AttemptToInjectInvalidLidarIdWarning`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.AttemptToInjectInvalidLidarIdWarning"; }
+
+  /// The full name of the message: `horus.pb.logs.AttemptToInjectInvalidLidarIdWarning`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `lidar_id` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 1) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[0]; }
+
+  /// Clears `lidar_id` (no 1).
+  void clear_lidar_id() & noexcept {
+    set_fields_[0] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  AttemptToInjectInvalidLidarIdWarning& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[0] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  AttemptToInjectInvalidLidarIdWarning&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+ private:
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
+};
+
+/// Log #198.
+/// 
+///  > Resetting bundled packet due to unexpected packet from lidar $lidar_id.
+///
+/// Source: horus/pb/logs/logs.proto:1452:1
+class ResetBundledPacketDueToUnexpectedPacket final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `ResetBundledPacketDueToUnexpectedPacket`.
+  ResetBundledPacketDueToUnexpectedPacket() noexcept = default;
+
+  /// Move constructor.
+  ResetBundledPacketDueToUnexpectedPacket(ResetBundledPacketDueToUnexpectedPacket&&) noexcept = default;
+  /// Move assignment operator.
+  ResetBundledPacketDueToUnexpectedPacket& operator=(ResetBundledPacketDueToUnexpectedPacket&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit ResetBundledPacketDueToUnexpectedPacket(const ResetBundledPacketDueToUnexpectedPacket& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  ResetBundledPacketDueToUnexpectedPacket& operator=(const ResetBundledPacketDueToUnexpectedPacket&) = delete;
+
+  /// Default destructor.
+  ~ResetBundledPacketDueToUnexpectedPacket() noexcept final = default;
+
+  /// Creates a `ResetBundledPacketDueToUnexpectedPacket` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit ResetBundledPacketDueToUnexpectedPacket(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.ResetBundledPacketDueToUnexpectedPacket`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.ResetBundledPacketDueToUnexpectedPacket"; }
+
+  /// The full name of the message: `horus.pb.logs.ResetBundledPacketDueToUnexpectedPacket`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `lidar_id` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 1) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[0]; }
+
+  /// Clears `lidar_id` (no 1).
+  void clear_lidar_id() & noexcept {
+    set_fields_[0] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  ResetBundledPacketDueToUnexpectedPacket& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[0] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  ResetBundledPacketDueToUnexpectedPacket&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+ private:
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
 
   /// The set of fields that have been given an explicit value.
   std::bitset<1> set_fields_;

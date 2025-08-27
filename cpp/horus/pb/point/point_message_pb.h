@@ -622,6 +622,56 @@ class AttributedPoints final : public PbMessage {
     return std::move(set_ring_indices(std::move(ring_indices)));
   }
 
+  // Field `timestamps` (no 6).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 6.
+  constexpr const CowRepeated<Timestamp>& timestamps() const& noexcept HORUS_LIFETIME_BOUND {
+    return timestamps_;
+  }
+
+  /// If `timestamps` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 6.
+  CowRepeated<Timestamp> timestamps() && noexcept {
+    if (!set_fields_[4]) {
+      return {};
+    }
+    return std::move(timestamps_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 6.
+  CowRepeated<Timestamp>& mutable_timestamps() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[4] = true;
+    return timestamps_;
+  }
+
+  /// Returns whether `timestamps` (no 6) is set.
+  constexpr bool has_timestamps() const noexcept { return set_fields_[4]; }
+
+  /// Clears `timestamps` (no 6).
+  void clear_timestamps() & noexcept {
+    set_fields_[4] = false;
+    timestamps_ = {};
+  }
+
+  /// Sets `timestamps` (no 6) and returns `*this`.
+  AttributedPoints& set_timestamps(CowRepeated<Timestamp>&& timestamps) & noexcept {
+    set_fields_[4] = true;
+    timestamps_ = std::move(timestamps);
+    return *this;
+  }
+  /// Sets `timestamps` (no 6) and returns `*this`.
+  AttributedPoints&& set_timestamps(CowRepeated<Timestamp>&& timestamps) && noexcept {
+    return std::move(set_timestamps(std::move(timestamps)));
+  }
+
  private:
   /// @see flattened_points()
   CowSpan<float> flattened_points_{};
@@ -631,9 +681,11 @@ class AttributedPoints final : public PbMessage {
   CowSpan<std::uint32_t> intensities_{};
   /// @see ring_indices()
   CowBytes ring_indices_{};
+  /// @see timestamps()
+  CowRepeated<Timestamp> timestamps_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<4> set_fields_;
+  std::bitset<5> set_fields_;
 };
 
 /// Message frame for single point cloud.
@@ -850,7 +902,7 @@ class PointFrame final : public PbMessage {
 
 /// Processed point cloud data from a single lidar.
 ///
-/// Source: horus/pb/point/point_message.proto:100:1
+/// Source: horus/pb/point/point_message.proto:102:1
 class ProcessedPointsEvent final : public PbMessage {
  public:
 
@@ -960,7 +1012,7 @@ class ProcessedPointsEvent final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/point/point_message.proto:104:1
+/// Source: horus/pb/point/point_message.proto:106:1
 class AggregatedPointEvents final : public PbMessage {
  public:
 

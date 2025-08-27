@@ -168,7 +168,7 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.INVALID_LIDAR_TIMESTAMP_FIELD_NUMBER: lambda m: format_invalid_lidar_timestamp(m.invalid_lidar_timestamp),
     LogData.CALIBRATION_ACCUMULATING_POINTS_INFO_FIELD_NUMBER: lambda m: format_calibration_accumulating_points_info(m.calibration_accumulating_points_info),
     LogData.SPARSE_NOISE_FILTER_USAGE_NON_ROTATIONAL_LIDARS_FIELD_NUMBER: lambda m: format_sparse_noise_filter_usage_non_rotational_lidars(m.sparse_noise_filter_usage_non_rotational_lidars),
-    LogData.FILE_WRITE_ERROR_FIELD_NUMBER: lambda m: format_file_write_error(m.file_write_error),
+    LogData.FILE_WRITE_WARNING_FIELD_NUMBER: lambda m: format_file_write_warning(m.file_write_warning),
     LogData.LICENSE_FORBIDDEN_FEATURE_FIELD_NUMBER: lambda m: format_license_forbidden_feature(m.license_forbidden_feature),
     LogData.FAILED_TO_UPDATE_CONFIGURATION_FIELD_NUMBER: lambda m: format_failed_to_update_configuration(m.failed_to_update_configuration),
     LogData.OBSTRUCTION_DETECTOR_BAD_REFERENCE_WARNING_FIELD_NUMBER: lambda m: format_obstruction_detector_bad_reference_warning(m.obstruction_detector_bad_reference_warning),
@@ -186,6 +186,21 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.REMOVED_INVALID_LIDARS_FROM_CONFIG_WARNING_FIELD_NUMBER: lambda m: format_removed_invalid_lidars_from_config_warning(m.removed_invalid_lidars_from_config_warning),
     LogData.CALIBRATION_MAP_RECORDING_FAILED_FIELD_NUMBER: lambda m: format_calibration_map_recording_failed(m.calibration_map_recording_failed),
     LogData.DETECTION_NODE_NOT_FOUND_ERROR_FIELD_NUMBER: lambda m: format_detection_node_not_found_error(m.detection_node_not_found_error),
+    LogData.CREATED_VERSION_BACKUP_INFO_FIELD_NUMBER: lambda m: format_created_version_backup_info(m.created_version_backup_info),
+    LogData.PLY_FILE_LOAD_FAILED_ERROR_FIELD_NUMBER: lambda m: format_ply_file_load_failed_error(m.ply_file_load_failed_error),
+    LogData.HESAI_DRIVER_LIFECYCLE_FIELD_NUMBER: lambda m: format_hesai_driver_lifecycle(m.hesai_driver_lifecycle),
+    LogData.HESAI_DRIVER_ERROR_FIELD_NUMBER: lambda m: format_hesai_driver_error(m.hesai_driver_error),
+    LogData.HESAI_PACKET_PROCESSING_FAILED_FIELD_NUMBER: lambda m: format_hesai_packet_processing_failed(m.hesai_packet_processing_failed),
+    LogData.HESAI_CORRECTION_FILE_ERROR_FIELD_NUMBER: lambda m: format_hesai_correction_file_error(m.hesai_correction_file_error),
+    LogData.HESAI_PACKET_STATISTICS_FIELD_NUMBER: lambda m: format_hesai_packet_statistics(m.hesai_packet_statistics),
+    LogData.PLY_FILE_WRITE_FAILED_ERROR_FIELD_NUMBER: lambda m: format_ply_file_write_failed_error(m.ply_file_write_failed_error),
+    LogData.PROJECT_SAVE_ERROR_FIELD_NUMBER: lambda m: format_project_save_error(m.project_save_error),
+    LogData.SAVE_STATIC_ENVIRONMENT_SUCCESS_FIELD_NUMBER: lambda m: format_save_static_environment_success(m.save_static_environment_success),
+    LogData.SAVE_STATIC_ENVIRONMENT_FAILED_FIELD_NUMBER: lambda m: format_save_static_environment_failed(m.save_static_environment_failed),
+    LogData.LOAD_STATIC_ENVIRONMENT_SUCCESS_FIELD_NUMBER: lambda m: format_load_static_environment_success(m.load_static_environment_success),
+    LogData.LOAD_STATIC_ENVIRONMENT_FAILED_FIELD_NUMBER: lambda m: format_load_static_environment_failed(m.load_static_environment_failed),
+    LogData.ATTEMPT_TO_INJECT_INVALID_LIDAR_ID_WARNING_FIELD_NUMBER: lambda m: format_attempt_to_inject_invalid_lidar_id_warning(m.attempt_to_inject_invalid_lidar_id_warning),
+    LogData.RESET_BUNDLED_PACKET_DUE_TO_UNEXPECTED_PACKET_FIELD_NUMBER: lambda m: format_reset_bundled_packet_due_to_unexpected_packet(m.reset_bundled_packet_due_to_unexpected_packet),
 }
 
 def _unknown_format(data: LogData) -> str:
@@ -505,7 +520,7 @@ def format_bag_replay_unexpected_timestamp_error(log: _logs_pb.BagReplayUnexpect
 
 def format_websocket_closed_info(log: _logs_pb.WebsocketClosedInfo) -> str:
     """Formats log `WebsocketClosedInfo` to a string."""
-    return f"WebSocket RPC connection to {log.uri} closed"
+    return f"WebSocket RPC connection to {log.uri} closed: {log.reason}"
 
 def format_websocket_opened_info(log: _logs_pb.WebsocketOpenedInfo) -> str:
     """Formats log `WebsocketOpenedInfo` to a string."""
@@ -863,8 +878,8 @@ def format_sparse_noise_filter_usage_non_rotational_lidars(log: _logs_pb.SparseN
     """Formats log `SparseNoiseFilterUsageNonRotationalLidars` to a string."""
     return f"The sparse noise filter cannot be used with non-rotational lidars."
 
-def format_file_write_error(log: _logs_pb.FileWriteError) -> str:
-    """Formats log `FileWriteError` to a string."""
+def format_file_write_warning(log: _logs_pb.FileWriteWarning) -> str:
+    """Formats log `FileWriteWarning` to a string."""
     return f"Failed to write to file \"{log.filename}\": \"{log.details}\"."
 
 def format_license_forbidden_feature(log: _logs_pb.LicenseForbiddenFeature) -> str:
@@ -934,3 +949,63 @@ def format_calibration_map_recording_failed(log: _logs_pb.CalibrationMapRecordin
 def format_detection_node_not_found_error(log: _logs_pb.DetectionNodeNotFoundError) -> str:
     """Formats log `DetectionNodeNotFoundError` to a string."""
     return f"Detection node {log.node_name} not found."
+
+def format_created_version_backup_info(log: _logs_pb.CreatedVersionBackupInfo) -> str:
+    """Formats log `CreatedVersionBackupInfo` to a string."""
+    return f"Horus upgraded from {log.old_horus_version} to {log.new_horus_version}. The project was backed up to {log.backup_path} before being upgraded."
+
+def format_ply_file_load_failed_error(log: _logs_pb.PlyFileLoadFailedError) -> str:
+    """Formats log `PlyFileLoadFailedError` to a string."""
+    return f"Failed to load PLY file {log.file_path}: {log.details}"
+
+def format_hesai_driver_lifecycle(log: _logs_pb.HesaiDriverLifecycle) -> str:
+    """Formats log `HesaiDriverLifecycle` to a string."""
+    return f"Hesai XT32 driver {log.action} for LiDAR {log.lidar_id}."
+
+def format_hesai_driver_error(log: _logs_pb.HesaiDriverError) -> str:
+    """Formats log `HesaiDriverError` to a string."""
+    return f"Hesai XT32 driver error: {log.details}"
+
+def format_hesai_packet_processing_failed(log: _logs_pb.HesaiPacketProcessingFailed) -> str:
+    """Formats log `HesaiPacketProcessingFailed` to a string."""
+    return f"Failed to process packet for Hesai LiDAR {log.lidar_id}: {log.details}"
+
+def format_hesai_correction_file_error(log: _logs_pb.HesaiCorrectionFileError) -> str:
+    """Formats log `HesaiCorrectionFileError` to a string."""
+    return f"Failed to load Hesai XT32 correction file {log.file_type}: {log.details}"
+
+def format_hesai_packet_statistics(log: _logs_pb.HesaiPacketStatistics) -> str:
+    """Formats log `HesaiPacketStatistics` to a string."""
+    return f"Hesai packet statistics - Received: {log.packets_received}, Published: {log.packets_published}, Dropped: {log.packets_dropped}, Decode Failed: {log.packets_decode_failed}, Success Rate: {log.success_rate} %"
+
+def format_ply_file_write_failed_error(log: _logs_pb.PlyFileWriteFailedError) -> str:
+    """Formats log `PlyFileWriteFailedError` to a string."""
+    return f"Failed to write PLY file {log.file_path}: {log.details}"
+
+def format_project_save_error(log: _logs_pb.ProjectSaveError) -> str:
+    """Formats log `ProjectSaveError` to a string."""
+    return f"Failed to save project: {log.error_message}."
+
+def format_save_static_environment_success(log: _logs_pb.SaveStaticEnvironmentSuccess) -> str:
+    """Formats log `SaveStaticEnvironmentSuccess` to a string."""
+    return f"Saved static environment to {log.path}"
+
+def format_save_static_environment_failed(log: _logs_pb.SaveStaticEnvironmentFailed) -> str:
+    """Formats log `SaveStaticEnvironmentFailed` to a string."""
+    return f"Failed to serialize static environment to {log.path}: {log.details}"
+
+def format_load_static_environment_success(log: _logs_pb.LoadStaticEnvironmentSuccess) -> str:
+    """Formats log `LoadStaticEnvironmentSuccess` to a string."""
+    return f"Static environment loaded from {log.path}"
+
+def format_load_static_environment_failed(log: _logs_pb.LoadStaticEnvironmentFailed) -> str:
+    """Formats log `LoadStaticEnvironmentFailed` to a string."""
+    return f"Failed to load static environment from {log.path}: {log.details}"
+
+def format_attempt_to_inject_invalid_lidar_id_warning(log: _logs_pb.AttemptToInjectInvalidLidarIdWarning) -> str:
+    """Formats log `AttemptToInjectInvalidLidarIdWarning` to a string."""
+    return f"Attempt to inject invalid lidar ID {log.lidar_id} into the system."
+
+def format_reset_bundled_packet_due_to_unexpected_packet(log: _logs_pb.ResetBundledPacketDueToUnexpectedPacket) -> str:
+    """Formats log `ResetBundledPacketDueToUnexpectedPacket` to a string."""
+    return f"Resetting bundled packet due to unexpected packet from lidar {log.lidar_id}."
