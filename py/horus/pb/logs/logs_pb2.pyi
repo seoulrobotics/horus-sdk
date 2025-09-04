@@ -1318,3 +1318,37 @@ class ResetBundledPacketDueToUnexpectedPacket(_message.Message):
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
     def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+
+class PacketBundlerDroppedPacketsWarning(_message.Message):
+    __slots__ = ("lidar_id", "num_dropped", "duration")
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    NUM_DROPPED_FIELD_NUMBER: _ClassVar[int]
+    DURATION_FIELD_NUMBER: _ClassVar[int]
+    lidar_id: str
+    num_dropped: int
+    duration: _metadata_pb2.LogMetadata.Duration
+    def __init__(self, lidar_id: _Optional[str] = ..., num_dropped: _Optional[int] = ..., duration: _Optional[_Union[_metadata_pb2.LogMetadata.Duration, _Mapping]] = ...) -> None: ...
+
+class PacketBundlerFrameJumpWarning(_message.Message):
+    __slots__ = ("lidar_id", "frame_id", "next_frame_id")
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    FRAME_ID_FIELD_NUMBER: _ClassVar[int]
+    NEXT_FRAME_ID_FIELD_NUMBER: _ClassVar[int]
+    lidar_id: str
+    frame_id: int
+    next_frame_id: int
+    def __init__(self, lidar_id: _Optional[str] = ..., frame_id: _Optional[int] = ..., next_frame_id: _Optional[int] = ...) -> None: ...
+
+class LidarCorrectionLoadingSuccess(_message.Message):
+    __slots__ = ("correction_type",)
+    CORRECTION_TYPE_FIELD_NUMBER: _ClassVar[int]
+    correction_type: str
+    def __init__(self, correction_type: _Optional[str] = ...) -> None: ...
+
+class LidarCorrectionLoadingFailure(_message.Message):
+    __slots__ = ("correction_type", "details")
+    CORRECTION_TYPE_FIELD_NUMBER: _ClassVar[int]
+    DETAILS_FIELD_NUMBER: _ClassVar[int]
+    correction_type: str
+    details: str
+    def __init__(self, correction_type: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...

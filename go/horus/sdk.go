@@ -79,11 +79,6 @@ func NewSdk(ctx context.Context, options SdkOptions) (*Sdk, error) {
 	// Connect to services. Use an errgroup to connect concurrently.
 	var g errgroup.Group
 
-	// Assert that services.Detection is nil, since DetectionMerger is used instead.
-	if services.Detection != nil {
-		panic("services.Detection must be nil; use services.DetectionMerger instead")
-	}
-
 	if services.DetectionMerger != nil {
 		g.Go(func() (err error) {
 			sdk.detectionMerger, sdk.detectionRcs, err = newSubscribingClient(

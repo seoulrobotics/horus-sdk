@@ -823,6 +823,22 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     logs::HorusStringify(sink, log_data.reset_bundled_packet_due_to_unexpected_packet());
     break;
   }
+  case LogData::DataOneof::kPacketBundlerDroppedPacketsWarning: {
+    logs::HorusStringify(sink, log_data.packet_bundler_dropped_packets_warning());
+    break;
+  }
+  case LogData::DataOneof::kPacketBundlerFrameJumpWarning: {
+    logs::HorusStringify(sink, log_data.packet_bundler_frame_jump_warning());
+    break;
+  }
+  case LogData::DataOneof::kLidarCorrectionLoadingSuccess: {
+    logs::HorusStringify(sink, log_data.lidar_correction_loading_success());
+    break;
+  }
+  case LogData::DataOneof::kLidarCorrectionLoadingFailure: {
+    logs::HorusStringify(sink, log_data.lidar_correction_loading_failure());
+    break;
+  }
   case LogData::DataOneof::kNotSet:
   default: {
     sink.Append("Unknown log message");
@@ -1623,6 +1639,22 @@ void HorusStringify(const ErasedSink& sink, const AttemptToInjectInvalidLidarIdW
 
 void HorusStringify(const ErasedSink& sink, const ResetBundledPacketDueToUnexpectedPacket& data) {
   StringifyTo(sink, "Resetting bundled packet due to unexpected packet from lidar ", data.lidar_id(), ".");
+}
+
+void HorusStringify(const ErasedSink& sink, const PacketBundlerDroppedPacketsWarning& data) {
+  StringifyTo(sink, "Lidar ", data.lidar_id(), " dropped ", data.num_dropped(), " packets over ", data.duration());
+}
+
+void HorusStringify(const ErasedSink& sink, const PacketBundlerFrameJumpWarning& data) {
+  StringifyTo(sink, "Frame sequence jump detected on lidar ", data.lidar_id(), ": from ", data.frame_id(), " to ", data.next_frame_id());
+}
+
+void HorusStringify(const ErasedSink& sink, const LidarCorrectionLoadingSuccess& data) {
+  StringifyTo(sink, "Successfully loaded ", data.correction_type(), " corrections from the lidar");
+}
+
+void HorusStringify(const ErasedSink& sink, const LidarCorrectionLoadingFailure& data) {
+  StringifyTo(sink, "Failed to load ", data.correction_type(), " corrections from the lidar (", data.details(), "); using default correction values");
 }
 
 }  // namespace logs

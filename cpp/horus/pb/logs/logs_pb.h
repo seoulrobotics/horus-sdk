@@ -232,6 +232,10 @@ class LoadStaticEnvironmentSuccess;
 class LoadStaticEnvironmentFailed;
 class AttemptToInjectInvalidLidarIdWarning;
 class ResetBundledPacketDueToUnexpectedPacket;
+class PacketBundlerDroppedPacketsWarning;
+class PacketBundlerFrameJumpWarning;
+class LidarCorrectionLoadingSuccess;
+class LidarCorrectionLoadingFailure;
 
 // MARK: Message declarations
 
@@ -25441,6 +25445,678 @@ class ResetBundledPacketDueToUnexpectedPacket final : public PbMessage {
 
   /// The set of fields that have been given an explicit value.
   std::bitset<1> set_fields_;
+};
+
+/// Log #199.
+/// 
+///  > Lidar $lidar_id dropped $num_dropped packets over $duration
+///
+/// Source: horus/pb/logs/logs.proto:1459:1
+class PacketBundlerDroppedPacketsWarning final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `PacketBundlerDroppedPacketsWarning`.
+  PacketBundlerDroppedPacketsWarning() noexcept = default;
+
+  /// Move constructor.
+  PacketBundlerDroppedPacketsWarning(PacketBundlerDroppedPacketsWarning&&) noexcept = default;
+  /// Move assignment operator.
+  PacketBundlerDroppedPacketsWarning& operator=(PacketBundlerDroppedPacketsWarning&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit PacketBundlerDroppedPacketsWarning(const PacketBundlerDroppedPacketsWarning& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  PacketBundlerDroppedPacketsWarning& operator=(const PacketBundlerDroppedPacketsWarning&) = delete;
+
+  /// Default destructor.
+  ~PacketBundlerDroppedPacketsWarning() noexcept final = default;
+
+  /// Creates a `PacketBundlerDroppedPacketsWarning` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit PacketBundlerDroppedPacketsWarning(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.PacketBundlerDroppedPacketsWarning`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.PacketBundlerDroppedPacketsWarning"; }
+
+  /// The full name of the message: `horus.pb.logs.PacketBundlerDroppedPacketsWarning`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `lidar_id` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 1) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[0]; }
+
+  /// Clears `lidar_id` (no 1).
+  void clear_lidar_id() & noexcept {
+    set_fields_[0] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  PacketBundlerDroppedPacketsWarning& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[0] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  PacketBundlerDroppedPacketsWarning&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `num_dropped` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr std::uint64_t num_dropped() const& noexcept HORUS_LIFETIME_BOUND {
+    return num_dropped_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  std::uint64_t& mutable_num_dropped() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return num_dropped_;
+  }
+
+  /// Returns whether `num_dropped` (no 2) is set.
+  constexpr bool has_num_dropped() const noexcept { return set_fields_[1]; }
+
+  /// Clears `num_dropped` (no 2).
+  void clear_num_dropped() & noexcept {
+    set_fields_[1] = false;
+    num_dropped_ = {};
+  }
+
+  /// Sets `num_dropped` (no 2) and returns `*this`.
+  PacketBundlerDroppedPacketsWarning& set_num_dropped(std::uint64_t num_dropped) & noexcept {
+    set_fields_[1] = true;
+    num_dropped_ = num_dropped;
+    return *this;
+  }
+  /// Sets `num_dropped` (no 2) and returns `*this`.
+  PacketBundlerDroppedPacketsWarning&& set_num_dropped(std::uint64_t num_dropped) && noexcept {
+    return std::move(set_num_dropped(num_dropped));
+  }
+
+  // Field `duration` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const horus::pb::LogMetadata_Duration& duration() const& noexcept HORUS_LIFETIME_BOUND {
+    return duration_;
+  }
+
+  /// If `duration` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  horus::pb::LogMetadata_Duration duration() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(duration_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  horus::pb::LogMetadata_Duration& mutable_duration() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return duration_;
+  }
+
+  /// Returns whether `duration` (no 3) is set.
+  constexpr bool has_duration() const noexcept { return set_fields_[2]; }
+
+  /// Clears `duration` (no 3).
+  void clear_duration() & noexcept {
+    set_fields_[2] = false;
+    duration_ = {};
+  }
+
+  /// Sets `duration` (no 3) and returns `*this`.
+  PacketBundlerDroppedPacketsWarning& set_duration(horus::pb::LogMetadata_Duration&& duration) & noexcept {
+    set_fields_[2] = true;
+    duration_ = std::move(duration);
+    return *this;
+  }
+  /// Sets `duration` (no 3) and returns `*this`.
+  PacketBundlerDroppedPacketsWarning&& set_duration(horus::pb::LogMetadata_Duration&& duration) && noexcept {
+    return std::move(set_duration(std::move(duration)));
+  }
+
+ private:
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see num_dropped()
+  std::uint64_t num_dropped_{};
+  /// @see duration()
+  horus::pb::LogMetadata_Duration duration_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<3> set_fields_;
+};
+
+/// Log #200.
+/// 
+///  > Frame sequence jump detected on lidar $lidar_id: from $frame_id to $next_frame_id
+///
+/// Source: horus/pb/logs/logs.proto:1468:1
+class PacketBundlerFrameJumpWarning final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `PacketBundlerFrameJumpWarning`.
+  PacketBundlerFrameJumpWarning() noexcept = default;
+
+  /// Move constructor.
+  PacketBundlerFrameJumpWarning(PacketBundlerFrameJumpWarning&&) noexcept = default;
+  /// Move assignment operator.
+  PacketBundlerFrameJumpWarning& operator=(PacketBundlerFrameJumpWarning&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit PacketBundlerFrameJumpWarning(const PacketBundlerFrameJumpWarning& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  PacketBundlerFrameJumpWarning& operator=(const PacketBundlerFrameJumpWarning&) = delete;
+
+  /// Default destructor.
+  ~PacketBundlerFrameJumpWarning() noexcept final = default;
+
+  /// Creates a `PacketBundlerFrameJumpWarning` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit PacketBundlerFrameJumpWarning(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.PacketBundlerFrameJumpWarning`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.PacketBundlerFrameJumpWarning"; }
+
+  /// The full name of the message: `horus.pb.logs.PacketBundlerFrameJumpWarning`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `lidar_id` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 1) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[0]; }
+
+  /// Clears `lidar_id` (no 1).
+  void clear_lidar_id() & noexcept {
+    set_fields_[0] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  PacketBundlerFrameJumpWarning& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[0] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  PacketBundlerFrameJumpWarning&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `frame_id` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr std::uint64_t frame_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return frame_id_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  std::uint64_t& mutable_frame_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return frame_id_;
+  }
+
+  /// Returns whether `frame_id` (no 2) is set.
+  constexpr bool has_frame_id() const noexcept { return set_fields_[1]; }
+
+  /// Clears `frame_id` (no 2).
+  void clear_frame_id() & noexcept {
+    set_fields_[1] = false;
+    frame_id_ = {};
+  }
+
+  /// Sets `frame_id` (no 2) and returns `*this`.
+  PacketBundlerFrameJumpWarning& set_frame_id(std::uint64_t frame_id) & noexcept {
+    set_fields_[1] = true;
+    frame_id_ = frame_id;
+    return *this;
+  }
+  /// Sets `frame_id` (no 2) and returns `*this`.
+  PacketBundlerFrameJumpWarning&& set_frame_id(std::uint64_t frame_id) && noexcept {
+    return std::move(set_frame_id(frame_id));
+  }
+
+  // Field `next_frame_id` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr std::uint64_t next_frame_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return next_frame_id_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  std::uint64_t& mutable_next_frame_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return next_frame_id_;
+  }
+
+  /// Returns whether `next_frame_id` (no 3) is set.
+  constexpr bool has_next_frame_id() const noexcept { return set_fields_[2]; }
+
+  /// Clears `next_frame_id` (no 3).
+  void clear_next_frame_id() & noexcept {
+    set_fields_[2] = false;
+    next_frame_id_ = {};
+  }
+
+  /// Sets `next_frame_id` (no 3) and returns `*this`.
+  PacketBundlerFrameJumpWarning& set_next_frame_id(std::uint64_t next_frame_id) & noexcept {
+    set_fields_[2] = true;
+    next_frame_id_ = next_frame_id;
+    return *this;
+  }
+  /// Sets `next_frame_id` (no 3) and returns `*this`.
+  PacketBundlerFrameJumpWarning&& set_next_frame_id(std::uint64_t next_frame_id) && noexcept {
+    return std::move(set_next_frame_id(next_frame_id));
+  }
+
+ private:
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see frame_id()
+  std::uint64_t frame_id_{};
+  /// @see next_frame_id()
+  std::uint64_t next_frame_id_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<3> set_fields_;
+};
+
+/// Log #201.
+/// 
+///  > Successfully loaded $correction_type corrections from the lidar
+///
+/// Source: horus/pb/logs/logs.proto:1477:1
+class LidarCorrectionLoadingSuccess final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `LidarCorrectionLoadingSuccess`.
+  LidarCorrectionLoadingSuccess() noexcept = default;
+
+  /// Move constructor.
+  LidarCorrectionLoadingSuccess(LidarCorrectionLoadingSuccess&&) noexcept = default;
+  /// Move assignment operator.
+  LidarCorrectionLoadingSuccess& operator=(LidarCorrectionLoadingSuccess&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit LidarCorrectionLoadingSuccess(const LidarCorrectionLoadingSuccess& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  LidarCorrectionLoadingSuccess& operator=(const LidarCorrectionLoadingSuccess&) = delete;
+
+  /// Default destructor.
+  ~LidarCorrectionLoadingSuccess() noexcept final = default;
+
+  /// Creates a `LidarCorrectionLoadingSuccess` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit LidarCorrectionLoadingSuccess(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.LidarCorrectionLoadingSuccess`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.LidarCorrectionLoadingSuccess"; }
+
+  /// The full name of the message: `horus.pb.logs.LidarCorrectionLoadingSuccess`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `correction_type` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& correction_type() const& noexcept HORUS_LIFETIME_BOUND {
+    return correction_type_;
+  }
+
+  /// If `correction_type` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes correction_type() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(correction_type_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_correction_type() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return correction_type_;
+  }
+
+  /// Returns whether `correction_type` (no 1) is set.
+  constexpr bool has_correction_type() const noexcept { return set_fields_[0]; }
+
+  /// Clears `correction_type` (no 1).
+  void clear_correction_type() & noexcept {
+    set_fields_[0] = false;
+    correction_type_ = {};
+  }
+
+  /// Sets `correction_type` (no 1) and returns `*this`.
+  LidarCorrectionLoadingSuccess& set_correction_type(CowBytes&& correction_type) & noexcept {
+    set_fields_[0] = true;
+    correction_type_ = std::move(correction_type);
+    return *this;
+  }
+  /// Sets `correction_type` (no 1) and returns `*this`.
+  LidarCorrectionLoadingSuccess&& set_correction_type(CowBytes&& correction_type) && noexcept {
+    return std::move(set_correction_type(std::move(correction_type)));
+  }
+
+ private:
+  /// @see correction_type()
+  CowBytes correction_type_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
+};
+
+/// Log #202.
+/// 
+///  > Failed to load $correction_type corrections from the lidar ($details); using default correction values
+///
+/// Source: horus/pb/logs/logs.proto:1484:1
+class LidarCorrectionLoadingFailure final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `LidarCorrectionLoadingFailure`.
+  LidarCorrectionLoadingFailure() noexcept = default;
+
+  /// Move constructor.
+  LidarCorrectionLoadingFailure(LidarCorrectionLoadingFailure&&) noexcept = default;
+  /// Move assignment operator.
+  LidarCorrectionLoadingFailure& operator=(LidarCorrectionLoadingFailure&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit LidarCorrectionLoadingFailure(const LidarCorrectionLoadingFailure& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  LidarCorrectionLoadingFailure& operator=(const LidarCorrectionLoadingFailure&) = delete;
+
+  /// Default destructor.
+  ~LidarCorrectionLoadingFailure() noexcept final = default;
+
+  /// Creates a `LidarCorrectionLoadingFailure` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit LidarCorrectionLoadingFailure(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.LidarCorrectionLoadingFailure`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.LidarCorrectionLoadingFailure"; }
+
+  /// The full name of the message: `horus.pb.logs.LidarCorrectionLoadingFailure`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `correction_type` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& correction_type() const& noexcept HORUS_LIFETIME_BOUND {
+    return correction_type_;
+  }
+
+  /// If `correction_type` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes correction_type() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(correction_type_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_correction_type() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return correction_type_;
+  }
+
+  /// Returns whether `correction_type` (no 1) is set.
+  constexpr bool has_correction_type() const noexcept { return set_fields_[0]; }
+
+  /// Clears `correction_type` (no 1).
+  void clear_correction_type() & noexcept {
+    set_fields_[0] = false;
+    correction_type_ = {};
+  }
+
+  /// Sets `correction_type` (no 1) and returns `*this`.
+  LidarCorrectionLoadingFailure& set_correction_type(CowBytes&& correction_type) & noexcept {
+    set_fields_[0] = true;
+    correction_type_ = std::move(correction_type);
+    return *this;
+  }
+  /// Sets `correction_type` (no 1) and returns `*this`.
+  LidarCorrectionLoadingFailure&& set_correction_type(CowBytes&& correction_type) && noexcept {
+    return std::move(set_correction_type(std::move(correction_type)));
+  }
+
+  // Field `details` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& details() const& noexcept HORUS_LIFETIME_BOUND {
+    return details_;
+  }
+
+  /// If `details` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes details() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(details_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_details() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return details_;
+  }
+
+  /// Returns whether `details` (no 2) is set.
+  constexpr bool has_details() const noexcept { return set_fields_[1]; }
+
+  /// Clears `details` (no 2).
+  void clear_details() & noexcept {
+    set_fields_[1] = false;
+    details_ = {};
+  }
+
+  /// Sets `details` (no 2) and returns `*this`.
+  LidarCorrectionLoadingFailure& set_details(CowBytes&& details) & noexcept {
+    set_fields_[1] = true;
+    details_ = std::move(details);
+    return *this;
+  }
+  /// Sets `details` (no 2) and returns `*this`.
+  LidarCorrectionLoadingFailure&& set_details(CowBytes&& details) && noexcept {
+    return std::move(set_details(std::move(details)));
+  }
+
+ private:
+  /// @see correction_type()
+  CowBytes correction_type_{};
+  /// @see details()
+  CowBytes details_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
 };
 
 }  // namespace logs

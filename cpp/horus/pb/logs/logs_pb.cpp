@@ -5308,6 +5308,155 @@ void ResetBundledPacketDueToUnexpectedPacket::DeserializeFrom(PbReader& reader) 
   }
 }
 
+PacketBundlerDroppedPacketsWarning::PacketBundlerDroppedPacketsWarning(const PacketBundlerDroppedPacketsWarning& other) noexcept(false)
+    : lidar_id_{other.lidar_id_}
+    , num_dropped_{other.num_dropped_}
+    , duration_{other.duration_}
+    , set_fields_{other.set_fields_} {}
+
+void PacketBundlerDroppedPacketsWarning::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<std::uint64_t>(writer, /*tag=*/ 2, num_dropped_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<horus::pb::LogMetadata_Duration>(writer, /*tag=*/ 3, duration_);
+  }
+}
+
+void PacketBundlerDroppedPacketsWarning::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<std::uint64_t>(reader, num_dropped_);
+        set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<horus::pb::LogMetadata_Duration>(reader, duration_);
+        set_fields_[2] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+PacketBundlerFrameJumpWarning::PacketBundlerFrameJumpWarning(const PacketBundlerFrameJumpWarning& other) noexcept(false)
+    : lidar_id_{other.lidar_id_}
+    , frame_id_{other.frame_id_}
+    , next_frame_id_{other.next_frame_id_}
+    , set_fields_{other.set_fields_} {}
+
+void PacketBundlerFrameJumpWarning::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<std::uint64_t>(writer, /*tag=*/ 2, frame_id_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<std::uint64_t>(writer, /*tag=*/ 3, next_frame_id_);
+  }
+}
+
+void PacketBundlerFrameJumpWarning::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<std::uint64_t>(reader, frame_id_);
+        set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<std::uint64_t>(reader, next_frame_id_);
+        set_fields_[2] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+LidarCorrectionLoadingSuccess::LidarCorrectionLoadingSuccess(const LidarCorrectionLoadingSuccess& other) noexcept(false)
+    : correction_type_{other.correction_type_}
+    , set_fields_{other.set_fields_} {}
+
+void LidarCorrectionLoadingSuccess::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, correction_type_);
+  }
+}
+
+void LidarCorrectionLoadingSuccess::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, correction_type_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+LidarCorrectionLoadingFailure::LidarCorrectionLoadingFailure(const LidarCorrectionLoadingFailure& other) noexcept(false)
+    : correction_type_{other.correction_type_}
+    , details_{other.details_}
+    , set_fields_{other.set_fields_} {}
+
+void LidarCorrectionLoadingFailure::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, correction_type_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+}
+
+void LidarCorrectionLoadingFailure::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, correction_type_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, details_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
 }  // namespace logs
 }  // namespace pb
 }  // namespace sdk

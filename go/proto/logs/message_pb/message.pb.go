@@ -1932,6 +1932,42 @@ func (x *LogData) GetResetBundledPacketDueToUnexpectedPacket() *logs_pb.ResetBun
 	return nil
 }
 
+func (x *LogData) GetPacketBundlerDroppedPacketsWarning() *logs_pb.PacketBundlerDroppedPacketsWarning {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_PacketBundlerDroppedPacketsWarning); ok {
+			return x.PacketBundlerDroppedPacketsWarning
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetPacketBundlerFrameJumpWarning() *logs_pb.PacketBundlerFrameJumpWarning {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_PacketBundlerFrameJumpWarning); ok {
+			return x.PacketBundlerFrameJumpWarning
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetLidarCorrectionLoadingSuccess() *logs_pb.LidarCorrectionLoadingSuccess {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_LidarCorrectionLoadingSuccess); ok {
+			return x.LidarCorrectionLoadingSuccess
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetLidarCorrectionLoadingFailure() *logs_pb.LidarCorrectionLoadingFailure {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_LidarCorrectionLoadingFailure); ok {
+			return x.LidarCorrectionLoadingFailure
+		}
+	}
+	return nil
+}
+
 func (x *LogData) SetGeneric(v *logs_pb.Generic) {
 	if v == nil {
 		x.xxx_hidden_Data = nil
@@ -3514,6 +3550,38 @@ func (x *LogData) SetResetBundledPacketDueToUnexpectedPacket(v *logs_pb.ResetBun
 		return
 	}
 	x.xxx_hidden_Data = &logData_ResetBundledPacketDueToUnexpectedPacket{v}
+}
+
+func (x *LogData) SetPacketBundlerDroppedPacketsWarning(v *logs_pb.PacketBundlerDroppedPacketsWarning) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_PacketBundlerDroppedPacketsWarning{v}
+}
+
+func (x *LogData) SetPacketBundlerFrameJumpWarning(v *logs_pb.PacketBundlerFrameJumpWarning) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_PacketBundlerFrameJumpWarning{v}
+}
+
+func (x *LogData) SetLidarCorrectionLoadingSuccess(v *logs_pb.LidarCorrectionLoadingSuccess) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_LidarCorrectionLoadingSuccess{v}
+}
+
+func (x *LogData) SetLidarCorrectionLoadingFailure(v *logs_pb.LidarCorrectionLoadingFailure) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_LidarCorrectionLoadingFailure{v}
 }
 
 func (x *LogData) HasData() bool {
@@ -5107,6 +5175,38 @@ func (x *LogData) HasResetBundledPacketDueToUnexpectedPacket() bool {
 	return ok
 }
 
+func (x *LogData) HasPacketBundlerDroppedPacketsWarning() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_PacketBundlerDroppedPacketsWarning)
+	return ok
+}
+
+func (x *LogData) HasPacketBundlerFrameJumpWarning() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_PacketBundlerFrameJumpWarning)
+	return ok
+}
+
+func (x *LogData) HasLidarCorrectionLoadingSuccess() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_LidarCorrectionLoadingSuccess)
+	return ok
+}
+
+func (x *LogData) HasLidarCorrectionLoadingFailure() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_LidarCorrectionLoadingFailure)
+	return ok
+}
+
 func (x *LogData) ClearData() {
 	x.xxx_hidden_Data = nil
 }
@@ -6299,6 +6399,30 @@ func (x *LogData) ClearResetBundledPacketDueToUnexpectedPacket() {
 	}
 }
 
+func (x *LogData) ClearPacketBundlerDroppedPacketsWarning() {
+	if _, ok := x.xxx_hidden_Data.(*logData_PacketBundlerDroppedPacketsWarning); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearPacketBundlerFrameJumpWarning() {
+	if _, ok := x.xxx_hidden_Data.(*logData_PacketBundlerFrameJumpWarning); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearLidarCorrectionLoadingSuccess() {
+	if _, ok := x.xxx_hidden_Data.(*logData_LidarCorrectionLoadingSuccess); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearLidarCorrectionLoadingFailure() {
+	if _, ok := x.xxx_hidden_Data.(*logData_LidarCorrectionLoadingFailure); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
 const LogData_Data_not_set_case case_LogData_Data = 0
 const LogData_Generic_case case_LogData_Data = 1
 const LogData_Oom_case case_LogData_Data = 2
@@ -6498,6 +6622,10 @@ const LogData_LoadStaticEnvironmentSuccess_case case_LogData_Data = 195
 const LogData_LoadStaticEnvironmentFailed_case case_LogData_Data = 196
 const LogData_AttemptToInjectInvalidLidarIdWarning_case case_LogData_Data = 197
 const LogData_ResetBundledPacketDueToUnexpectedPacket_case case_LogData_Data = 198
+const LogData_PacketBundlerDroppedPacketsWarning_case case_LogData_Data = 199
+const LogData_PacketBundlerFrameJumpWarning_case case_LogData_Data = 200
+const LogData_LidarCorrectionLoadingSuccess_case case_LogData_Data = 201
+const LogData_LidarCorrectionLoadingFailure_case case_LogData_Data = 202
 
 func (x *LogData) WhichData() case_LogData_Data {
 	if x == nil {
@@ -6900,6 +7028,14 @@ func (x *LogData) WhichData() case_LogData_Data {
 		return LogData_AttemptToInjectInvalidLidarIdWarning_case
 	case *logData_ResetBundledPacketDueToUnexpectedPacket:
 		return LogData_ResetBundledPacketDueToUnexpectedPacket_case
+	case *logData_PacketBundlerDroppedPacketsWarning:
+		return LogData_PacketBundlerDroppedPacketsWarning_case
+	case *logData_PacketBundlerFrameJumpWarning:
+		return LogData_PacketBundlerFrameJumpWarning_case
+	case *logData_LidarCorrectionLoadingSuccess:
+		return LogData_LidarCorrectionLoadingSuccess_case
+	case *logData_LidarCorrectionLoadingFailure:
+		return LogData_LidarCorrectionLoadingFailure_case
 	default:
 		return LogData_Data_not_set_case
 	}
@@ -7107,6 +7243,10 @@ type LogData_builder struct {
 	LoadStaticEnvironmentFailed                 *logs_pb.LoadStaticEnvironmentFailed
 	AttemptToInjectInvalidLidarIdWarning        *logs_pb.AttemptToInjectInvalidLidarIdWarning
 	ResetBundledPacketDueToUnexpectedPacket     *logs_pb.ResetBundledPacketDueToUnexpectedPacket
+	PacketBundlerDroppedPacketsWarning          *logs_pb.PacketBundlerDroppedPacketsWarning
+	PacketBundlerFrameJumpWarning               *logs_pb.PacketBundlerFrameJumpWarning
+	LidarCorrectionLoadingSuccess               *logs_pb.LidarCorrectionLoadingSuccess
+	LidarCorrectionLoadingFailure               *logs_pb.LidarCorrectionLoadingFailure
 	// -- end of xxx_hidden_Data
 }
 
@@ -7707,6 +7847,18 @@ func (b0 LogData_builder) Build() *LogData {
 	}
 	if b.ResetBundledPacketDueToUnexpectedPacket != nil {
 		x.xxx_hidden_Data = &logData_ResetBundledPacketDueToUnexpectedPacket{b.ResetBundledPacketDueToUnexpectedPacket}
+	}
+	if b.PacketBundlerDroppedPacketsWarning != nil {
+		x.xxx_hidden_Data = &logData_PacketBundlerDroppedPacketsWarning{b.PacketBundlerDroppedPacketsWarning}
+	}
+	if b.PacketBundlerFrameJumpWarning != nil {
+		x.xxx_hidden_Data = &logData_PacketBundlerFrameJumpWarning{b.PacketBundlerFrameJumpWarning}
+	}
+	if b.LidarCorrectionLoadingSuccess != nil {
+		x.xxx_hidden_Data = &logData_LidarCorrectionLoadingSuccess{b.LidarCorrectionLoadingSuccess}
+	}
+	if b.LidarCorrectionLoadingFailure != nil {
+		x.xxx_hidden_Data = &logData_LidarCorrectionLoadingFailure{b.LidarCorrectionLoadingFailure}
 	}
 	return m0
 }
@@ -8517,6 +8669,22 @@ type logData_ResetBundledPacketDueToUnexpectedPacket struct {
 	ResetBundledPacketDueToUnexpectedPacket *logs_pb.ResetBundledPacketDueToUnexpectedPacket `protobuf:"bytes,198,opt,name=reset_bundled_packet_due_to_unexpected_packet,json=resetBundledPacketDueToUnexpectedPacket,proto3,oneof"`
 }
 
+type logData_PacketBundlerDroppedPacketsWarning struct {
+	PacketBundlerDroppedPacketsWarning *logs_pb.PacketBundlerDroppedPacketsWarning `protobuf:"bytes,199,opt,name=packet_bundler_dropped_packets_warning,json=packetBundlerDroppedPacketsWarning,proto3,oneof"`
+}
+
+type logData_PacketBundlerFrameJumpWarning struct {
+	PacketBundlerFrameJumpWarning *logs_pb.PacketBundlerFrameJumpWarning `protobuf:"bytes,200,opt,name=packet_bundler_frame_jump_warning,json=packetBundlerFrameJumpWarning,proto3,oneof"`
+}
+
+type logData_LidarCorrectionLoadingSuccess struct {
+	LidarCorrectionLoadingSuccess *logs_pb.LidarCorrectionLoadingSuccess `protobuf:"bytes,201,opt,name=lidar_correction_loading_success,json=lidarCorrectionLoadingSuccess,proto3,oneof"`
+}
+
+type logData_LidarCorrectionLoadingFailure struct {
+	LidarCorrectionLoadingFailure *logs_pb.LidarCorrectionLoadingFailure `protobuf:"bytes,202,opt,name=lidar_correction_loading_failure,json=lidarCorrectionLoadingFailure,proto3,oneof"`
+}
+
 func (*logData_Generic) isLogData_Data() {}
 
 func (*logData_Oom) isLogData_Data() {}
@@ -8913,6 +9081,14 @@ func (*logData_AttemptToInjectInvalidLidarIdWarning) isLogData_Data() {}
 
 func (*logData_ResetBundledPacketDueToUnexpectedPacket) isLogData_Data() {}
 
+func (*logData_PacketBundlerDroppedPacketsWarning) isLogData_Data() {}
+
+func (*logData_PacketBundlerFrameJumpWarning) isLogData_Data() {}
+
+func (*logData_LidarCorrectionLoadingSuccess) isLogData_Data() {}
+
+func (*logData_LidarCorrectionLoadingFailure) isLogData_Data() {}
+
 var File_horus_pb_logs_message_proto protoreflect.FileDescriptor
 
 var file_horus_pb_logs_message_proto_rawDesc = []byte{
@@ -8928,7 +9104,7 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
 	0x12, 0x25, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11,
 	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x6f, 0x67, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xbd, 0xa3, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
+	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xb7, 0xa7, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
 	0x44, 0x61, 0x74, 0x61, 0x12, 0x32, 0x0a, 0x07, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62,
 	0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x48, 0x00, 0x52,
@@ -10236,7 +10412,39 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x61, 0x63, 0x6b, 0x65, 0x74, 0x48, 0x00, 0x52, 0x27, 0x72, 0x65, 0x73, 0x65, 0x74, 0x42, 0x75,
 	0x6e, 0x64, 0x6c, 0x65, 0x64, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x44, 0x75, 0x65, 0x54, 0x6f,
 	0x55, 0x6e, 0x65, 0x78, 0x70, 0x65, 0x63, 0x74, 0x65, 0x64, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74,
-	0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x12, 0x88, 0x01, 0x0a, 0x26, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x5f, 0x62, 0x75, 0x6e, 0x64,
+	0x6c, 0x65, 0x72, 0x5f, 0x64, 0x72, 0x6f, 0x70, 0x70, 0x65, 0x64, 0x5f, 0x70, 0x61, 0x63, 0x6b,
+	0x65, 0x74, 0x73, 0x5f, 0x77, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x18, 0xc7, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x31, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f,
+	0x67, 0x73, 0x2e, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x42, 0x75, 0x6e, 0x64, 0x6c, 0x65, 0x72,
+	0x44, 0x72, 0x6f, 0x70, 0x70, 0x65, 0x64, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x57, 0x61,
+	0x72, 0x6e, 0x69, 0x6e, 0x67, 0x48, 0x00, 0x52, 0x22, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x42,
+	0x75, 0x6e, 0x64, 0x6c, 0x65, 0x72, 0x44, 0x72, 0x6f, 0x70, 0x70, 0x65, 0x64, 0x50, 0x61, 0x63,
+	0x6b, 0x65, 0x74, 0x73, 0x57, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x12, 0x79, 0x0a, 0x21, 0x70,
+	0x61, 0x63, 0x6b, 0x65, 0x74, 0x5f, 0x62, 0x75, 0x6e, 0x64, 0x6c, 0x65, 0x72, 0x5f, 0x66, 0x72,
+	0x61, 0x6d, 0x65, 0x5f, 0x6a, 0x75, 0x6d, 0x70, 0x5f, 0x77, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67,
+	0x18, 0xc8, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2c, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e,
+	0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x42, 0x75,
+	0x6e, 0x64, 0x6c, 0x65, 0x72, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x4a, 0x75, 0x6d, 0x70, 0x57, 0x61,
+	0x72, 0x6e, 0x69, 0x6e, 0x67, 0x48, 0x00, 0x52, 0x1d, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x42,
+	0x75, 0x6e, 0x64, 0x6c, 0x65, 0x72, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x4a, 0x75, 0x6d, 0x70, 0x57,
+	0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x12, 0x78, 0x0a, 0x20, 0x6c, 0x69, 0x64, 0x61, 0x72, 0x5f,
+	0x63, 0x6f, 0x72, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x6c, 0x6f, 0x61, 0x64, 0x69,
+	0x6e, 0x67, 0x5f, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0xc9, 0x01, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x2c, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67,
+	0x73, 0x2e, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x43, 0x6f, 0x72, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x4c, 0x6f, 0x61, 0x64, 0x69, 0x6e, 0x67, 0x53, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x48,
+	0x00, 0x52, 0x1d, 0x6c, 0x69, 0x64, 0x61, 0x72, 0x43, 0x6f, 0x72, 0x72, 0x65, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x4c, 0x6f, 0x61, 0x64, 0x69, 0x6e, 0x67, 0x53, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73,
+	0x12, 0x78, 0x0a, 0x20, 0x6c, 0x69, 0x64, 0x61, 0x72, 0x5f, 0x63, 0x6f, 0x72, 0x72, 0x65, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x6c, 0x6f, 0x61, 0x64, 0x69, 0x6e, 0x67, 0x5f, 0x66, 0x61, 0x69,
+	0x6c, 0x75, 0x72, 0x65, 0x18, 0xca, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2c, 0x2e, 0x68, 0x6f,
+	0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x4c, 0x69, 0x64, 0x61,
+	0x72, 0x43, 0x6f, 0x72, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4c, 0x6f, 0x61, 0x64, 0x69,
+	0x6e, 0x67, 0x46, 0x61, 0x69, 0x6c, 0x75, 0x72, 0x65, 0x48, 0x00, 0x52, 0x1d, 0x6c, 0x69, 0x64,
+	0x61, 0x72, 0x43, 0x6f, 0x72, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4c, 0x6f, 0x61, 0x64,
+	0x69, 0x6e, 0x67, 0x46, 0x61, 0x69, 0x6c, 0x75, 0x72, 0x65, 0x42, 0x06, 0x0a, 0x04, 0x64, 0x61,
+	0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_horus_pb_logs_message_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
@@ -10442,6 +10650,10 @@ var file_horus_pb_logs_message_proto_goTypes = []any{
 	(*logs_pb.LoadStaticEnvironmentFailed)(nil),                 // 198: horus.pb.logs.LoadStaticEnvironmentFailed
 	(*logs_pb.AttemptToInjectInvalidLidarIdWarning)(nil),        // 199: horus.pb.logs.AttemptToInjectInvalidLidarIdWarning
 	(*logs_pb.ResetBundledPacketDueToUnexpectedPacket)(nil),     // 200: horus.pb.logs.ResetBundledPacketDueToUnexpectedPacket
+	(*logs_pb.PacketBundlerDroppedPacketsWarning)(nil),          // 201: horus.pb.logs.PacketBundlerDroppedPacketsWarning
+	(*logs_pb.PacketBundlerFrameJumpWarning)(nil),               // 202: horus.pb.logs.PacketBundlerFrameJumpWarning
+	(*logs_pb.LidarCorrectionLoadingSuccess)(nil),               // 203: horus.pb.logs.LidarCorrectionLoadingSuccess
+	(*logs_pb.LidarCorrectionLoadingFailure)(nil),               // 204: horus.pb.logs.LidarCorrectionLoadingFailure
 }
 var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	2,   // 0: horus.pb.LogMessage.metadata:type_name -> horus.pb.LogMetadata
@@ -10644,11 +10856,15 @@ var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	198, // 197: horus.pb.LogData.load_static_environment_failed:type_name -> horus.pb.logs.LoadStaticEnvironmentFailed
 	199, // 198: horus.pb.LogData.attempt_to_inject_invalid_lidar_id_warning:type_name -> horus.pb.logs.AttemptToInjectInvalidLidarIdWarning
 	200, // 199: horus.pb.LogData.reset_bundled_packet_due_to_unexpected_packet:type_name -> horus.pb.logs.ResetBundledPacketDueToUnexpectedPacket
-	200, // [200:200] is the sub-list for method output_type
-	200, // [200:200] is the sub-list for method input_type
-	200, // [200:200] is the sub-list for extension type_name
-	200, // [200:200] is the sub-list for extension extendee
-	0,   // [0:200] is the sub-list for field type_name
+	201, // 200: horus.pb.LogData.packet_bundler_dropped_packets_warning:type_name -> horus.pb.logs.PacketBundlerDroppedPacketsWarning
+	202, // 201: horus.pb.LogData.packet_bundler_frame_jump_warning:type_name -> horus.pb.logs.PacketBundlerFrameJumpWarning
+	203, // 202: horus.pb.LogData.lidar_correction_loading_success:type_name -> horus.pb.logs.LidarCorrectionLoadingSuccess
+	204, // 203: horus.pb.LogData.lidar_correction_loading_failure:type_name -> horus.pb.logs.LidarCorrectionLoadingFailure
+	204, // [204:204] is the sub-list for method output_type
+	204, // [204:204] is the sub-list for method input_type
+	204, // [204:204] is the sub-list for extension type_name
+	204, // [204:204] is the sub-list for extension extendee
+	0,   // [0:204] is the sub-list for field type_name
 }
 
 func init() { file_horus_pb_logs_message_proto_init() }
@@ -10855,6 +11071,10 @@ func file_horus_pb_logs_message_proto_init() {
 		(*logData_LoadStaticEnvironmentFailed)(nil),
 		(*logData_AttemptToInjectInvalidLidarIdWarning)(nil),
 		(*logData_ResetBundledPacketDueToUnexpectedPacket)(nil),
+		(*logData_PacketBundlerDroppedPacketsWarning)(nil),
+		(*logData_PacketBundlerFrameJumpWarning)(nil),
+		(*logData_LidarCorrectionLoadingSuccess)(nil),
+		(*logData_LidarCorrectionLoadingFailure)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

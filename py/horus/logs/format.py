@@ -201,6 +201,10 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.LOAD_STATIC_ENVIRONMENT_FAILED_FIELD_NUMBER: lambda m: format_load_static_environment_failed(m.load_static_environment_failed),
     LogData.ATTEMPT_TO_INJECT_INVALID_LIDAR_ID_WARNING_FIELD_NUMBER: lambda m: format_attempt_to_inject_invalid_lidar_id_warning(m.attempt_to_inject_invalid_lidar_id_warning),
     LogData.RESET_BUNDLED_PACKET_DUE_TO_UNEXPECTED_PACKET_FIELD_NUMBER: lambda m: format_reset_bundled_packet_due_to_unexpected_packet(m.reset_bundled_packet_due_to_unexpected_packet),
+    LogData.PACKET_BUNDLER_DROPPED_PACKETS_WARNING_FIELD_NUMBER: lambda m: format_packet_bundler_dropped_packets_warning(m.packet_bundler_dropped_packets_warning),
+    LogData.PACKET_BUNDLER_FRAME_JUMP_WARNING_FIELD_NUMBER: lambda m: format_packet_bundler_frame_jump_warning(m.packet_bundler_frame_jump_warning),
+    LogData.LIDAR_CORRECTION_LOADING_SUCCESS_FIELD_NUMBER: lambda m: format_lidar_correction_loading_success(m.lidar_correction_loading_success),
+    LogData.LIDAR_CORRECTION_LOADING_FAILURE_FIELD_NUMBER: lambda m: format_lidar_correction_loading_failure(m.lidar_correction_loading_failure),
 }
 
 def _unknown_format(data: LogData) -> str:
@@ -1009,3 +1013,19 @@ def format_attempt_to_inject_invalid_lidar_id_warning(log: _logs_pb.AttemptToInj
 def format_reset_bundled_packet_due_to_unexpected_packet(log: _logs_pb.ResetBundledPacketDueToUnexpectedPacket) -> str:
     """Formats log `ResetBundledPacketDueToUnexpectedPacket` to a string."""
     return f"Resetting bundled packet due to unexpected packet from lidar {log.lidar_id}."
+
+def format_packet_bundler_dropped_packets_warning(log: _logs_pb.PacketBundlerDroppedPacketsWarning) -> str:
+    """Formats log `PacketBundlerDroppedPacketsWarning` to a string."""
+    return f"Lidar {log.lidar_id} dropped {log.num_dropped} packets over {log.duration}"
+
+def format_packet_bundler_frame_jump_warning(log: _logs_pb.PacketBundlerFrameJumpWarning) -> str:
+    """Formats log `PacketBundlerFrameJumpWarning` to a string."""
+    return f"Frame sequence jump detected on lidar {log.lidar_id}: from {log.frame_id} to {log.next_frame_id}"
+
+def format_lidar_correction_loading_success(log: _logs_pb.LidarCorrectionLoadingSuccess) -> str:
+    """Formats log `LidarCorrectionLoadingSuccess` to a string."""
+    return f"Successfully loaded {log.correction_type} corrections from the lidar"
+
+def format_lidar_correction_loading_failure(log: _logs_pb.LidarCorrectionLoadingFailure) -> str:
+    """Formats log `LidarCorrectionLoadingFailure` to a string."""
+    return f"Failed to load {log.correction_type} corrections from the lidar ({log.details}); using default correction values"

@@ -15,7 +15,7 @@ func main() {
 	ctx := context.Background()
 
 	// Only create connection to the detection service
-	onlyDetectionService := horus.Services{}.WithDetection(*horus.DefaultServices().Detection)
+	onlyDetectionService := horus.Services{}.WithDetectionMerger(*horus.DefaultServices().DetectionMerger)
 
 	// Create SDK.
 	sdk, err := horus.NewSdk(ctx, horus.SdkOptions{

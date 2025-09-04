@@ -406,6 +406,14 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return fmt.Sprintf("Attempt to inject invalid lidar ID %v into the system.", data.GetLidarId())
 	case *logs_pb.ResetBundledPacketDueToUnexpectedPacket:
 		return fmt.Sprintf("Resetting bundled packet due to unexpected packet from lidar %v.", data.GetLidarId())
+	case *logs_pb.PacketBundlerDroppedPacketsWarning:
+		return fmt.Sprintf("Lidar %v dropped %v packets over %v", data.GetLidarId(), data.GetNumDropped(), data.GetDuration())
+	case *logs_pb.PacketBundlerFrameJumpWarning:
+		return fmt.Sprintf("Frame sequence jump detected on lidar %v: from %v to %v", data.GetLidarId(), data.GetFrameId(), data.GetNextFrameId())
+	case *logs_pb.LidarCorrectionLoadingSuccess:
+		return fmt.Sprintf("Successfully loaded %v corrections from the lidar", data.GetCorrectionType())
+	case *logs_pb.LidarCorrectionLoadingFailure:
+		return fmt.Sprintf("Failed to load %v corrections from the lidar (%v); using default correction values", data.GetCorrectionType(), data.GetDetails())
 	default:
 		return "unknown log message"
 	}

@@ -1452,3 +1452,36 @@ message AttemptToInjectInvalidLidarIdWarning {
 message ResetBundledPacketDueToUnexpectedPacket {
   string lidar_id = 1;
 }
+
+// Log #199.
+//
+// > Lidar $lidar_id dropped $num_dropped packets over $duration
+message PacketBundlerDroppedPacketsWarning {
+  string lidar_id = 1;
+  uint64 num_dropped = 2;
+  LogMetadata.Duration duration = 3;
+}
+
+// Log #200.
+//
+// > Frame sequence jump detected on lidar $lidar_id: from $frame_id to $next_frame_id
+message PacketBundlerFrameJumpWarning {
+  string lidar_id = 1;
+  uint64 frame_id = 2;
+  uint64 next_frame_id = 3;
+}
+
+// Log #201.
+//
+// > Successfully loaded $correction_type corrections from the lidar
+message LidarCorrectionLoadingSuccess {
+  string correction_type = 1;
+}
+
+// Log #202.
+//
+// > Failed to load $correction_type corrections from the lidar ($details); using default correction values
+message LidarCorrectionLoadingFailure {
+  string correction_type = 1;
+  string details = 2;
+}
