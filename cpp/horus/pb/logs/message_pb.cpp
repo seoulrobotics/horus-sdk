@@ -205,6 +205,11 @@ LogData::LogData(const LogData& other) noexcept(false)
     , load_static_environment_failed_{other.load_static_environment_failed_}
     , attempt_to_inject_invalid_lidar_id_warning_{other.attempt_to_inject_invalid_lidar_id_warning_}
     , reset_bundled_packet_due_to_unexpected_packet_{other.reset_bundled_packet_due_to_unexpected_packet_}
+    , packet_bundler_dropped_packets_warning_{other.packet_bundler_dropped_packets_warning_}
+    , packet_bundler_frame_jump_warning_{other.packet_bundler_frame_jump_warning_}
+    , lidar_correction_loading_success_{other.lidar_correction_loading_success_}
+    , lidar_correction_loading_failure_{other.lidar_correction_loading_failure_}
+    , hesai_packet_statistics_lidar_{other.hesai_packet_statistics_lidar_}
     , data_{other.data_}
     , set_fields_{other.set_fields_} {}
 
@@ -802,6 +807,21 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[197]) {
     SerializeField<logs::ResetBundledPacketDueToUnexpectedPacket>(writer, /*tag=*/ 198, reset_bundled_packet_due_to_unexpected_packet_);
+  }
+  if (set_fields_[198]) {
+    SerializeField<logs::PacketBundlerDroppedPacketsWarning>(writer, /*tag=*/ 199, packet_bundler_dropped_packets_warning_);
+  }
+  if (set_fields_[199]) {
+    SerializeField<logs::PacketBundlerFrameJumpWarning>(writer, /*tag=*/ 200, packet_bundler_frame_jump_warning_);
+  }
+  if (set_fields_[200]) {
+    SerializeField<logs::LidarCorrectionLoadingSuccess>(writer, /*tag=*/ 201, lidar_correction_loading_success_);
+  }
+  if (set_fields_[201]) {
+    SerializeField<logs::LidarCorrectionLoadingFailure>(writer, /*tag=*/ 202, lidar_correction_loading_failure_);
+  }
+  if (set_fields_[202]) {
+    SerializeField<logs::HesaiPacketStatisticsLidar>(writer, /*tag=*/ 203, hesai_packet_statistics_lidar_);
   }
 }
 
@@ -2192,6 +2212,41 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
         data_ = DataOneof::kResetBundledPacketDueToUnexpectedPacket;
         DeserializeField<logs::ResetBundledPacketDueToUnexpectedPacket>(reader, reset_bundled_packet_due_to_unexpected_packet_);
         set_fields_[197] = true;
+        break;
+      }
+      case 199: {
+        clear_data();
+        data_ = DataOneof::kPacketBundlerDroppedPacketsWarning;
+        DeserializeField<logs::PacketBundlerDroppedPacketsWarning>(reader, packet_bundler_dropped_packets_warning_);
+        set_fields_[198] = true;
+        break;
+      }
+      case 200: {
+        clear_data();
+        data_ = DataOneof::kPacketBundlerFrameJumpWarning;
+        DeserializeField<logs::PacketBundlerFrameJumpWarning>(reader, packet_bundler_frame_jump_warning_);
+        set_fields_[199] = true;
+        break;
+      }
+      case 201: {
+        clear_data();
+        data_ = DataOneof::kLidarCorrectionLoadingSuccess;
+        DeserializeField<logs::LidarCorrectionLoadingSuccess>(reader, lidar_correction_loading_success_);
+        set_fields_[200] = true;
+        break;
+      }
+      case 202: {
+        clear_data();
+        data_ = DataOneof::kLidarCorrectionLoadingFailure;
+        DeserializeField<logs::LidarCorrectionLoadingFailure>(reader, lidar_correction_loading_failure_);
+        set_fields_[201] = true;
+        break;
+      }
+      case 203: {
+        clear_data();
+        data_ = DataOneof::kHesaiPacketStatisticsLidar;
+        DeserializeField<logs::HesaiPacketStatisticsLidar>(reader, hesai_packet_statistics_lidar_);
+        set_fields_[202] = true;
         break;
       }
       default: {
