@@ -4,9 +4,12 @@
 #include <gtest/gtest.h>
 
 #include <array>
+#include <cstddef>
 #include <cstdint>
 #include <limits>
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "horus/pb/buffer.h"
 #include "horus/pb/cow.h"
@@ -129,6 +132,52 @@ TEST(CowRepeated, BasicMessage) {
   EXPECT_EQ(msg.string().Str(), "foo");
   EXPECT_GT(msg.string().Str().data(), buffer_str.begin());
   EXPECT_LT(msg.string().Str().data(), buffer_str.end());
+}
+
+TEST(CowRepeated, MessageIterator) {
+  std::vector<std::uint8_t> buffer;
+  {
+    pb::TestMessage message;
+    message.set_i64(1);
+    for (std::int64_t i = 0; i < 80; ++i) {
+      message.mutable_rep_submessage().Add(
+          pb::TestMessage::SubMessage{}.set_string(CowBytes::OwnedCopy(std::to_string(i))));
+    }
+    message.mutable_rep_bool().Add(true);
+    message.SerializeToBuffer(buffer);
+  }
+
+  PbReader reader{PbBuffer::Borrowed({buffer.data(), buffer.size()})};
+  const pb::TestMessage root_message{reader};
+  const CowRepeated<pb::TestMessage::SubMessage>& rep{root_message.rep_submessage()};
+  EXPECT_EQ(rep.size(), 80);
+
+  size_t message_count = 0;
+
+  for (const Cow<pb::TestMessage::SubMessage>& message : rep) {
+    static_cast<void>(message);
+    ++message_count;
+  }
+
+  EXPECT_EQ(message_count, 80);
+}
+
+TEST(CowRepeated, EmptyMessageIterator) {
+  std::vector<std::uint8_t> buffer;
+  {
+    pb::TestMessage message;
+    message.set_i64(1);
+    message.SerializeToBuffer(buffer);
+  }
+
+  PbReader reader{PbBuffer::Borrowed({buffer.data(), buffer.size()})};
+  const pb::TestMessage root_message{reader};
+  const CowRepeated<pb::TestMessage::SubMessage>& rep{root_message.rep_submessage()};
+  EXPECT_EQ(rep.size(), 0);
+  for (const Cow<pb::TestMessage::SubMessage>& message : rep) {
+    static_cast<void>(message);
+    FAIL();
+  }
 }
 
 }  // namespace

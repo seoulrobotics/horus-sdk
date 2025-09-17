@@ -10980,6 +10980,281 @@ class LogData final : public PbMessage {
     return std::move(set_reset_bundled_packet_due_to_unexpected_packet(std::move(reset_bundled_packet_due_to_unexpected_packet)));
   }
 
+  // Field `packet_bundler_dropped_packets_warning` (no 199).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 199.
+  constexpr const logs::PacketBundlerDroppedPacketsWarning& packet_bundler_dropped_packets_warning() const& noexcept HORUS_LIFETIME_BOUND {
+    return packet_bundler_dropped_packets_warning_;
+  }
+
+  /// If `packet_bundler_dropped_packets_warning` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 199.
+  logs::PacketBundlerDroppedPacketsWarning packet_bundler_dropped_packets_warning() && noexcept {
+    if (!set_fields_[198]) {
+      return {};
+    }
+    return std::move(packet_bundler_dropped_packets_warning_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 199.
+  logs::PacketBundlerDroppedPacketsWarning& mutable_packet_bundler_dropped_packets_warning() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kPacketBundlerDroppedPacketsWarning;
+    set_fields_[198] = true;
+    return packet_bundler_dropped_packets_warning_;
+  }
+
+  /// Returns whether `packet_bundler_dropped_packets_warning` (no 199) is set.
+  constexpr bool has_packet_bundler_dropped_packets_warning() const noexcept { return set_fields_[198]; }
+
+  /// Clears `packet_bundler_dropped_packets_warning` (no 199).
+  void clear_packet_bundler_dropped_packets_warning() & noexcept {
+    data_ = {};
+    set_fields_[198] = false;
+    packet_bundler_dropped_packets_warning_ = {};
+  }
+
+  /// Sets `packet_bundler_dropped_packets_warning` (no 199) and returns `*this`.
+  LogData& set_packet_bundler_dropped_packets_warning(logs::PacketBundlerDroppedPacketsWarning&& packet_bundler_dropped_packets_warning) & noexcept {
+    clear_data();
+    data_ = DataOneof::kPacketBundlerDroppedPacketsWarning;
+    set_fields_[198] = true;
+    packet_bundler_dropped_packets_warning_ = std::move(packet_bundler_dropped_packets_warning);
+    return *this;
+  }
+  /// Sets `packet_bundler_dropped_packets_warning` (no 199) and returns `*this`.
+  LogData&& set_packet_bundler_dropped_packets_warning(logs::PacketBundlerDroppedPacketsWarning&& packet_bundler_dropped_packets_warning) && noexcept {
+    return std::move(set_packet_bundler_dropped_packets_warning(std::move(packet_bundler_dropped_packets_warning)));
+  }
+
+  // Field `packet_bundler_frame_jump_warning` (no 200).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 200.
+  constexpr const logs::PacketBundlerFrameJumpWarning& packet_bundler_frame_jump_warning() const& noexcept HORUS_LIFETIME_BOUND {
+    return packet_bundler_frame_jump_warning_;
+  }
+
+  /// If `packet_bundler_frame_jump_warning` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 200.
+  logs::PacketBundlerFrameJumpWarning packet_bundler_frame_jump_warning() && noexcept {
+    if (!set_fields_[199]) {
+      return {};
+    }
+    return std::move(packet_bundler_frame_jump_warning_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 200.
+  logs::PacketBundlerFrameJumpWarning& mutable_packet_bundler_frame_jump_warning() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kPacketBundlerFrameJumpWarning;
+    set_fields_[199] = true;
+    return packet_bundler_frame_jump_warning_;
+  }
+
+  /// Returns whether `packet_bundler_frame_jump_warning` (no 200) is set.
+  constexpr bool has_packet_bundler_frame_jump_warning() const noexcept { return set_fields_[199]; }
+
+  /// Clears `packet_bundler_frame_jump_warning` (no 200).
+  void clear_packet_bundler_frame_jump_warning() & noexcept {
+    data_ = {};
+    set_fields_[199] = false;
+    packet_bundler_frame_jump_warning_ = {};
+  }
+
+  /// Sets `packet_bundler_frame_jump_warning` (no 200) and returns `*this`.
+  LogData& set_packet_bundler_frame_jump_warning(logs::PacketBundlerFrameJumpWarning&& packet_bundler_frame_jump_warning) & noexcept {
+    clear_data();
+    data_ = DataOneof::kPacketBundlerFrameJumpWarning;
+    set_fields_[199] = true;
+    packet_bundler_frame_jump_warning_ = std::move(packet_bundler_frame_jump_warning);
+    return *this;
+  }
+  /// Sets `packet_bundler_frame_jump_warning` (no 200) and returns `*this`.
+  LogData&& set_packet_bundler_frame_jump_warning(logs::PacketBundlerFrameJumpWarning&& packet_bundler_frame_jump_warning) && noexcept {
+    return std::move(set_packet_bundler_frame_jump_warning(std::move(packet_bundler_frame_jump_warning)));
+  }
+
+  // Field `lidar_correction_loading_success` (no 201).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 201.
+  constexpr const logs::LidarCorrectionLoadingSuccess& lidar_correction_loading_success() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_correction_loading_success_;
+  }
+
+  /// If `lidar_correction_loading_success` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 201.
+  logs::LidarCorrectionLoadingSuccess lidar_correction_loading_success() && noexcept {
+    if (!set_fields_[200]) {
+      return {};
+    }
+    return std::move(lidar_correction_loading_success_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 201.
+  logs::LidarCorrectionLoadingSuccess& mutable_lidar_correction_loading_success() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kLidarCorrectionLoadingSuccess;
+    set_fields_[200] = true;
+    return lidar_correction_loading_success_;
+  }
+
+  /// Returns whether `lidar_correction_loading_success` (no 201) is set.
+  constexpr bool has_lidar_correction_loading_success() const noexcept { return set_fields_[200]; }
+
+  /// Clears `lidar_correction_loading_success` (no 201).
+  void clear_lidar_correction_loading_success() & noexcept {
+    data_ = {};
+    set_fields_[200] = false;
+    lidar_correction_loading_success_ = {};
+  }
+
+  /// Sets `lidar_correction_loading_success` (no 201) and returns `*this`.
+  LogData& set_lidar_correction_loading_success(logs::LidarCorrectionLoadingSuccess&& lidar_correction_loading_success) & noexcept {
+    clear_data();
+    data_ = DataOneof::kLidarCorrectionLoadingSuccess;
+    set_fields_[200] = true;
+    lidar_correction_loading_success_ = std::move(lidar_correction_loading_success);
+    return *this;
+  }
+  /// Sets `lidar_correction_loading_success` (no 201) and returns `*this`.
+  LogData&& set_lidar_correction_loading_success(logs::LidarCorrectionLoadingSuccess&& lidar_correction_loading_success) && noexcept {
+    return std::move(set_lidar_correction_loading_success(std::move(lidar_correction_loading_success)));
+  }
+
+  // Field `lidar_correction_loading_failure` (no 202).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 202.
+  constexpr const logs::LidarCorrectionLoadingFailure& lidar_correction_loading_failure() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_correction_loading_failure_;
+  }
+
+  /// If `lidar_correction_loading_failure` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 202.
+  logs::LidarCorrectionLoadingFailure lidar_correction_loading_failure() && noexcept {
+    if (!set_fields_[201]) {
+      return {};
+    }
+    return std::move(lidar_correction_loading_failure_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 202.
+  logs::LidarCorrectionLoadingFailure& mutable_lidar_correction_loading_failure() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kLidarCorrectionLoadingFailure;
+    set_fields_[201] = true;
+    return lidar_correction_loading_failure_;
+  }
+
+  /// Returns whether `lidar_correction_loading_failure` (no 202) is set.
+  constexpr bool has_lidar_correction_loading_failure() const noexcept { return set_fields_[201]; }
+
+  /// Clears `lidar_correction_loading_failure` (no 202).
+  void clear_lidar_correction_loading_failure() & noexcept {
+    data_ = {};
+    set_fields_[201] = false;
+    lidar_correction_loading_failure_ = {};
+  }
+
+  /// Sets `lidar_correction_loading_failure` (no 202) and returns `*this`.
+  LogData& set_lidar_correction_loading_failure(logs::LidarCorrectionLoadingFailure&& lidar_correction_loading_failure) & noexcept {
+    clear_data();
+    data_ = DataOneof::kLidarCorrectionLoadingFailure;
+    set_fields_[201] = true;
+    lidar_correction_loading_failure_ = std::move(lidar_correction_loading_failure);
+    return *this;
+  }
+  /// Sets `lidar_correction_loading_failure` (no 202) and returns `*this`.
+  LogData&& set_lidar_correction_loading_failure(logs::LidarCorrectionLoadingFailure&& lidar_correction_loading_failure) && noexcept {
+    return std::move(set_lidar_correction_loading_failure(std::move(lidar_correction_loading_failure)));
+  }
+
+  // Field `hesai_packet_statistics_lidar` (no 203).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 203.
+  constexpr const logs::HesaiPacketStatisticsLidar& hesai_packet_statistics_lidar() const& noexcept HORUS_LIFETIME_BOUND {
+    return hesai_packet_statistics_lidar_;
+  }
+
+  /// If `hesai_packet_statistics_lidar` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 203.
+  logs::HesaiPacketStatisticsLidar hesai_packet_statistics_lidar() && noexcept {
+    if (!set_fields_[202]) {
+      return {};
+    }
+    return std::move(hesai_packet_statistics_lidar_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 203.
+  logs::HesaiPacketStatisticsLidar& mutable_hesai_packet_statistics_lidar() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kHesaiPacketStatisticsLidar;
+    set_fields_[202] = true;
+    return hesai_packet_statistics_lidar_;
+  }
+
+  /// Returns whether `hesai_packet_statistics_lidar` (no 203) is set.
+  constexpr bool has_hesai_packet_statistics_lidar() const noexcept { return set_fields_[202]; }
+
+  /// Clears `hesai_packet_statistics_lidar` (no 203).
+  void clear_hesai_packet_statistics_lidar() & noexcept {
+    data_ = {};
+    set_fields_[202] = false;
+    hesai_packet_statistics_lidar_ = {};
+  }
+
+  /// Sets `hesai_packet_statistics_lidar` (no 203) and returns `*this`.
+  LogData& set_hesai_packet_statistics_lidar(logs::HesaiPacketStatisticsLidar&& hesai_packet_statistics_lidar) & noexcept {
+    clear_data();
+    data_ = DataOneof::kHesaiPacketStatisticsLidar;
+    set_fields_[202] = true;
+    hesai_packet_statistics_lidar_ = std::move(hesai_packet_statistics_lidar);
+    return *this;
+  }
+  /// Sets `hesai_packet_statistics_lidar` (no 203) and returns `*this`.
+  LogData&& set_hesai_packet_statistics_lidar(logs::HesaiPacketStatisticsLidar&& hesai_packet_statistics_lidar) && noexcept {
+    return std::move(set_hesai_packet_statistics_lidar(std::move(hesai_packet_statistics_lidar)));
+  }
+
   // Oneof `data`.
   // -----
 
@@ -11383,6 +11658,16 @@ class LogData final : public PbMessage {
     kAttemptToInjectInvalidLidarIdWarning = 197,
     /// @see reset_bundled_packet_due_to_unexpected_packet()
     kResetBundledPacketDueToUnexpectedPacket = 198,
+    /// @see packet_bundler_dropped_packets_warning()
+    kPacketBundlerDroppedPacketsWarning = 199,
+    /// @see packet_bundler_frame_jump_warning()
+    kPacketBundlerFrameJumpWarning = 200,
+    /// @see lidar_correction_loading_success()
+    kLidarCorrectionLoadingSuccess = 201,
+    /// @see lidar_correction_loading_failure()
+    kLidarCorrectionLoadingFailure = 202,
+    /// @see hesai_packet_statistics_lidar()
+    kHesaiPacketStatisticsLidar = 203,
   };
 
   /// Returns the current case set in `data`.
@@ -12185,6 +12470,26 @@ class LogData final : public PbMessage {
         clear_reset_bundled_packet_due_to_unexpected_packet();
         break;
       }
+      case DataOneof::kPacketBundlerDroppedPacketsWarning: {
+        clear_packet_bundler_dropped_packets_warning();
+        break;
+      }
+      case DataOneof::kPacketBundlerFrameJumpWarning: {
+        clear_packet_bundler_frame_jump_warning();
+        break;
+      }
+      case DataOneof::kLidarCorrectionLoadingSuccess: {
+        clear_lidar_correction_loading_success();
+        break;
+      }
+      case DataOneof::kLidarCorrectionLoadingFailure: {
+        clear_lidar_correction_loading_failure();
+        break;
+      }
+      case DataOneof::kHesaiPacketStatisticsLidar: {
+        clear_hesai_packet_statistics_lidar();
+        break;
+      }
       case DataOneof::kNotSet:
       default:
         break;
@@ -12588,12 +12893,22 @@ class LogData final : public PbMessage {
   logs::AttemptToInjectInvalidLidarIdWarning attempt_to_inject_invalid_lidar_id_warning_{};
   /// @see reset_bundled_packet_due_to_unexpected_packet()
   logs::ResetBundledPacketDueToUnexpectedPacket reset_bundled_packet_due_to_unexpected_packet_{};
+  /// @see packet_bundler_dropped_packets_warning()
+  logs::PacketBundlerDroppedPacketsWarning packet_bundler_dropped_packets_warning_{};
+  /// @see packet_bundler_frame_jump_warning()
+  logs::PacketBundlerFrameJumpWarning packet_bundler_frame_jump_warning_{};
+  /// @see lidar_correction_loading_success()
+  logs::LidarCorrectionLoadingSuccess lidar_correction_loading_success_{};
+  /// @see lidar_correction_loading_failure()
+  logs::LidarCorrectionLoadingFailure lidar_correction_loading_failure_{};
+  /// @see hesai_packet_statistics_lidar()
+  logs::HesaiPacketStatisticsLidar hesai_packet_statistics_lidar_{};
 
   /// @see data_case()
   DataOneof data_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<198> set_fields_;
+  std::bitset<203> set_fields_;
 };
 
 /// A log message notifying users about some status.

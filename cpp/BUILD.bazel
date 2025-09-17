@@ -1,47 +1,80 @@
-load("@rules_foreign_cc//foreign_cc:defs.bzl", "cmake")
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+load("@rules_cc//cc:cc_test.bzl", "cc_test")
 
-# As a shortcut, we use `cmake()` instead of defining a proper `cc_library()`
-# target. The problem here is that the `CMakeLists.txt` file does a few
-# things that wouldn't be trivial to port to Bazel (depend on non-Bazel
-# projects, use code generation, use `configure_file()`).
-
-cmake(
+cc_library(
     name = "cpp",
-    lib_source = ":srcs",
-    cache_entries = {
-        # @dep//:srcs evaluates to a set of files, but we only want one in order to get the source
-        # directory. `$(srcs=(...) && dirname "$srcs")` assigns all sources to a Bash list `srcs`
-        # then gets the directory name of the first element in that list.
-        "FETCHCONTENT_SOURCE_DIR_ixwebsocket": "$$(srcs=($(execpaths @ixwebsocket//:srcs)) && dirname \"$$srcs\")",
-        "FETCHCONTENT_SOURCE_DIR_libuv": "$$(srcs=($(execpaths @libuv//:srcs)) && dirname \"$$srcs\")",
-        "FETCHCONTENT_SOURCE_DIR_protozero": "$$(srcs=($(execpaths @protozero//:srcs)) && dirname \"$$srcs\")",
-
-        "HORUS_SDK_BUILD_EXAMPLES": "OFF",
-        "HORUS_SDK_BUILD_TESTING": "OFF",
-    },
-    build_data = [
-        "@ixwebsocket//:srcs",
-        "@libuv//:srcs",
-        "@protozero//:srcs",
+    srcs = glob(
+        ["horus/**/*.cpp", "horus/internal/*.h"],
+        exclude = [
+            "horus/**/*_test.cpp",
+            "horus/event_loop/uv_handles_generator.cpp",
+            "horus/testing/**",
+        ],
+    ) + [
+        # These headers are internal so we put them in `srcs`.
+        ":horus/internal/attributes.h",
+        ":horus/event_loop/uv_handles.h",
     ],
-    build_args = ["-j"],
-    targets = ["horus_sdk"],
-    includes = ["third_party"],
-    out_static_libs = [
-        "libhorus_sdk.a",
-        "libixwebsocket.a",
-        "libuv.a",
+    hdrs = glob(
+        ["horus/**/*.h"],
+        exclude = [
+            "horus/internal/**",
+            "horus/testing/**",
+        ],
+    ),
+    deps = [
+        "@ixwebsocket",
+        "@libuv",
+        "@protozero",
     ],
+    includes = ["."],
     visibility = ["//visibility:public"],
 )
 
-filegroup(
-    name = "srcs",
+# bazel test --cxxopt=-std=c++17 //cpp:cpp_test
+cc_test(
+    name = "cpp_test",
+    size = "small",
     srcs = glob([
-        "cmake/*",
-        "horus/**/*.cpp",
-        "horus/**/*.h",
-        "horus/**/*.in",
-        "CMakeLists.txt",
+        "horus/**/*_test.cpp",
+        "horus/testing/*.cpp",
+        "horus/testing/*.h",
     ]),
+    deps = [
+        ":cpp",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+    ],
+    defines = [
+        'HORUS_SDK_TESTING_MESSAGES_PROTO_PATH=\\"$(execpath //proto:horus/pb/testing/messages.proto)\\"',
+    ],
+    data = ["//proto:horus/pb/testing/messages.proto"],
+)
+
+# --------------------------------------------------------------------------------------------------
+# MARK: Code generation
+
+genrule(
+    name = "attributes",
+    outs = ["horus/internal/attributes.h"],
+    srcs = ["horus/internal/attributes.h.in"],
+    cmd = """
+        sed -E 's/\\$$\\{HORUS_SDK_(ATTRIBUTE_NO_UNIQUE_ADDRESS|ATTRIBUTE_TRIVIAL_ABI|SOURCE_DIR|THREAD_ANNOTATION_ATTRIBUTE)\\}//g
+                s/#cmakedefine01 HORUS_SDK_USE_PB_NAMESPACE_ALIAS/#define HORUS_SDK_USE_PB_NAMESPACE_ALIAS 1/g
+            ' $< > $@
+    """,
+)
+
+genrule(
+    name = "uv_handles",
+    outs = ["horus/event_loop/uv_handles.h"],
+    cmd = "$(execpath :uv_handles_generator) $@",
+    tools = [":uv_handles_generator"],
+)
+
+cc_binary(
+    name = "uv_handles_generator",
+    srcs = ["horus/event_loop/uv_handles_generator.cpp"],
+    deps = ["@libuv"],
 )

@@ -35,12 +35,10 @@ std::vector<std::uint8_t> ToBinpb(StringView textpb) {
   if (textpb.contains('\'')) {
     throw std::logic_error{"textpb cannot contain '"};
   }
-  std::string command{"cd '"};
-  command.append(HORUS_SDK_ROOT_DIR);
-  command.append("' && echo '");
+  std::string command{"echo '"};
   command.append(textpb);
-  command.append(
-      "' | protoc -I proto horus/pb/testing/messages.proto --encode=horus.pb.TestMessage");
+  command.append("' | protoc -I \"$(dirname \"" HORUS_SDK_TESTING_MESSAGES_PROTO_PATH
+                 "\")/../../..\" horus/pb/testing/messages.proto --encode=horus.pb.TestMessage");
   std::FILE* command_file{popen(command.c_str(), "r")};  // NOLINT(cert-env33-c, *-include-cleaner)
   std::vector<std::uint8_t> command_output;
   std::array<char, 256> buffer{};

@@ -625,6 +625,21 @@ void HorusStringify(const ErasedSink& sink, const AttemptToInjectInvalidLidarIdW
 /// Formats the log `logs::ResetBundledPacketDueToUnexpectedPacket` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const ResetBundledPacketDueToUnexpectedPacket& data);
 
+/// Formats the log `logs::PacketBundlerDroppedPacketsWarning` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const PacketBundlerDroppedPacketsWarning& data);
+
+/// Formats the log `logs::PacketBundlerFrameJumpWarning` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const PacketBundlerFrameJumpWarning& data);
+
+/// Formats the log `logs::LidarCorrectionLoadingSuccess` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const LidarCorrectionLoadingSuccess& data);
+
+/// Formats the log `logs::LidarCorrectionLoadingFailure` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const LidarCorrectionLoadingFailure& data);
+
+/// Formats the log `logs::HesaiPacketStatisticsLidar` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const HesaiPacketStatisticsLidar& data);
+
 }  // namespace logs
 
 }  // namespace pb

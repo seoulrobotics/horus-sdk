@@ -24,6 +24,13 @@ std::string MakeInvalidDataErrorString(StringView invalid_message_bytes) noexcep
   static constexpr StringView kPrefix{"invalid protobuf data: \""};
   static constexpr StringView kSuffix{"\""};
   static constexpr StringView kHexChars{"0123456789abcdef"};
+  static constexpr StringView kTruncatedSuffix{" (truncated)"};
+
+  constexpr std::size_t kMaxBytesToPrint{32};
+  const bool truncated = invalid_message_bytes.size() > kMaxBytesToPrint;
+  if (truncated) {
+    invalid_message_bytes = invalid_message_bytes.substr(0, kMaxBytesToPrint);
+  }
 
   // Compute size of string.
   std::size_t encoded_string_size{0};
@@ -47,6 +54,9 @@ std::string MakeInvalidDataErrorString(StringView invalid_message_bytes) noexcep
         break;
       }
     }
+  }
+  if (truncated) {
+    encoded_string_size += kTruncatedSuffix.size();
   }
 
   // Build and return string.
@@ -94,6 +104,9 @@ std::string MakeInvalidDataErrorString(StringView invalid_message_bytes) noexcep
     }
   }
   error_string.append(kSuffix);
+  if (truncated) {
+    error_string.append(kTruncatedSuffix);
+  }
   return error_string;
 }
 

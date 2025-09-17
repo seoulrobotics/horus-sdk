@@ -1452,3 +1452,48 @@ message AttemptToInjectInvalidLidarIdWarning {
 message ResetBundledPacketDueToUnexpectedPacket {
   string lidar_id = 1;
 }
+
+// Log #199.
+//
+// > Lidar $lidar_id dropped $num_dropped packets over $duration
+message PacketBundlerDroppedPacketsWarning {
+  string lidar_id = 1;
+  uint64 num_dropped = 2;
+  LogMetadata.Duration duration = 3;
+}
+
+// Log #200.
+//
+// > Frame sequence jump detected on lidar $lidar_id: from $frame_id to $next_frame_id
+message PacketBundlerFrameJumpWarning {
+  string lidar_id = 1;
+  uint64 frame_id = 2;
+  uint64 next_frame_id = 3;
+}
+
+// Log #201.
+//
+// > Successfully loaded $correction_type corrections from the lidar
+message LidarCorrectionLoadingSuccess {
+  string correction_type = 1;
+}
+
+// Log #202.
+//
+// > Failed to load $correction_type corrections from the lidar ($details); using default correction values
+message LidarCorrectionLoadingFailure {
+  string correction_type = 1;
+  string details = 2;
+}
+
+// Log #203.
+//
+// > [$lidar_id] Hesai Packet Statistics - Received: $packets_received, Published: $packets_published, Dropped: $packets_dropped, Decode Failed: $packets_decode_failed, Success Rate: $success_rate %
+message HesaiPacketStatisticsLidar {
+  uint64 packets_received = 1;
+  uint64 packets_published = 2;
+  uint64 packets_dropped = 3;
+  uint64 packets_decode_failed = 4;
+  double success_rate = 5;
+  string lidar_id = 6;
+}
