@@ -398,7 +398,7 @@ if(HORUS_SDK_BUILD_TESTING)
     horus/testing/ws_server.cpp
     horus/testing/ws_server.h
   )
-  target_compile_definitions(horus_sdk_test PRIVATE "HORUS_SDK_ROOT_DIR=\"${HORUS_SDK_ROOT_DIR}\"")
+  target_compile_definitions(horus_sdk_test PRIVATE "HORUS_SDK_TESTING_MESSAGES_PROTO_PATH=\"${HORUS_SDK_ROOT_DIR}/proto/horus/pb/testing/messages.proto\"")
   target_link_libraries(horus_sdk_test PRIVATE horus::sdk GTest::gmock_main ixwebsocket::ixwebsocket uv_a)
 
   list(APPEND horus_targets horus_sdk_test)

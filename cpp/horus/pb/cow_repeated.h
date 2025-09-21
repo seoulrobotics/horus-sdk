@@ -49,9 +49,6 @@ struct PbViewAndTag {
 /// A wrapper around a `std::vector<std::uint8_t>` which acts like a `std::vector<bool>` (with no
 /// bitset-like semantics).
 class VectorBool final {
-  static_assert(sizeof(bool) == sizeof(std::uint8_t), "");
-  static_assert(alignof(bool) == alignof(std::uint8_t), "");
-
  public:
   /// Constructs an empty vector.
   VectorBool() noexcept = default;
@@ -60,7 +57,7 @@ class VectorBool final {
   VectorBool(std::initializer_list<bool> values) noexcept(false) {
     inner_.reserve(values.size());
     for (const bool value : values) {
-      inner_.push_back(ToValue(value));
+      inner_.push_back(Bool{value});
     }
   }
 
@@ -68,7 +65,7 @@ class VectorBool final {
   VectorBool(const bool* begin, const bool* end) noexcept(false) {
     inner_.reserve(static_cast<std::size_t>(end - begin));
     while (begin != end) {
-      inner_.push_back(ToValue(*begin));
+      inner_.push_back(Bool{*begin});
       begin = PointerAdd(begin, 1);
     }
   }
@@ -80,14 +77,26 @@ class VectorBool final {
   /// Returns whether the vector is empty.
   bool empty() const noexcept { return inner_.empty(); }
 
+  /// Returns a reference to the last bool in the vector.
+  const bool& back() const& noexcept HORUS_LIFETIME_BOUND { return inner_.back().value; }
+  /// Returns a reference to the last bool in the vector.
+  bool& back() & noexcept HORUS_LIFETIME_BOUND { return inner_.back().value; }
+
+  /// Reserves space for `capacity` booleans.
+  void reserve(std::size_t capacity) noexcept(false) { inner_.reserve(capacity); }
+  /// Adds a boolean to the end of the vector.
+  void push_back(bool value) noexcept(false) { inner_.push_back(Bool{value}); }
+  /// Adds a boolean to the end of the vector.
+  void emplace_back(bool value) noexcept(false) { push_back(value); }
+
  private:
-  /// Converts bool -> std::uint8_t.
-  constexpr static std::uint8_t ToValue(bool value) noexcept { return value ? 1 : 0; }
-  /// Converts std::uint8_t -> bool.
-  constexpr static bool ToBool(std::uint8_t value) noexcept { return value != 0; }
+  /// A trivial wrapper around a `bool` used to obtain a non-specialized `std::vector<Bool>`.
+  struct Bool {
+    bool value{false};
+  };
 
   /// The inner vector.
-  std::vector<std::uint8_t> inner_;
+  std::vector<Bool> inner_;
 };
 
 }  // namespace horus_internal

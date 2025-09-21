@@ -1,0 +1,4 @@
+exports_files(
+    ["horus/pb/testing/messages.proto"],
+    visibility = ["//cpp:__pkg__"],
+)

@@ -1,10 +1,17 @@
-# Bazel support for the Horus SDK.
-#
-# This is experimental and is not intended for external use.
+"""
+Bazel support for the Horus SDK.
+
+This is experimental and is not intended for external use.
+"""
 
 module(name = "horus_sdk")
 
-bazel_dep(name = "rules_foreign_cc", version = "0.15.0")
+bazel_dep(name = "googletest", version = "1.17.0", dev_dependency = True)
+bazel_dep(name = "libuv", version = "1.48.0")
+bazel_dep(name = "rules_cc", version = "0.2.1")
+
+# --------------------------------------------------------------------------------------------------
+# MARK: HTTP dependencies
 
 http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
@@ -14,23 +21,19 @@ http_archive(
     strip_prefix = "IXWebSocket-11.4.6",
     integrity = "sha256-mfkojg90KtCLxg2Zq+72Fpo78Tf5we8cyl05/7vp1Es=",
     build_file_content = """
-filegroup(
-    name = "srcs",
-    srcs = glob(["**"]),
-    visibility = ["//visibility:public"],
-)
-""",
-)
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
 
-http_archive(
-    name = "libuv",
-    urls = ["https://github.com/libuv/libuv/archive/refs/tags/v1.51.0.zip"],
-    strip_prefix = "libuv-1.51.0",
-    integrity = "sha256-VOHhCMVLLR3K7g0WchOFQE/JXMKizS3rUeNSnCAtZFU=",
-    build_file_content = """
-filegroup(
-    name = "srcs",
-    srcs = glob(["**"]),
+cc_library(
+    name = "ixwebsocket",
+    srcs = glob(
+        ["ixwebsocket/*.cpp"],
+        exclude = ["ixwebsocket/*SSL.cpp", "ixwebsocket/*TLS.cpp"],
+    ),
+    hdrs = glob(
+        ["ixwebsocket/*.h"],
+        exclude = ["ixwebsocket/*SSL.h", "ixwebsocket/*TLS.h"],
+    ),
+    includes = ["."],
     visibility = ["//visibility:public"],
 )
 """,
@@ -43,12 +46,14 @@ http_archive(
     integrity = "sha256-LLLTy2r1DAk6RnUqpOKAvTRVP2M4Z/k4VpoZgg2DMrM=",
     patch_cmds = [
         "sed -i 's/^class basic_pbf_writer {$/class basic_pbf_writer { public:/g' include/protozero/basic_pbf_writer.hpp",
-        "rm CMakeLists.txt",
     ],
     build_file_content = """
-filegroup(
-    name = "srcs",
-    srcs = glob(["**"]),
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+cc_library(
+    name = "protozero",
+    hdrs = glob(["include/protozero/*.hpp"]),
+    includes = ["include"],
     visibility = ["//visibility:public"],
 )
 """,
