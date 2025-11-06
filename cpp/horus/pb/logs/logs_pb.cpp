@@ -1189,11 +1189,15 @@ void PointCloudParsingFailureWarning::DeserializeFrom(PbReader& reader) noexcept
 
 LidarIsDead::LidarIsDead(const LidarIsDead& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void LidarIsDead::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_name_);
   }
 }
 
@@ -1203,6 +1207,11 @@ void LidarIsDead::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 1: {
         DeserializeField<CowBytes>(reader, lidar_id_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
         break;
       }
       default: {
@@ -1215,11 +1224,15 @@ void LidarIsDead::DeserializeFrom(PbReader& reader) noexcept(false) {
 
 LidarIsNotDeadAnymore::LidarIsNotDeadAnymore(const LidarIsNotDeadAnymore& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void LidarIsNotDeadAnymore::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_name_);
   }
 }
 
@@ -1229,6 +1242,11 @@ void LidarIsNotDeadAnymore::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 1: {
         DeserializeField<CowBytes>(reader, lidar_id_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
         break;
       }
       default: {
@@ -1241,11 +1259,15 @@ void LidarIsNotDeadAnymore::DeserializeFrom(PbReader& reader) noexcept(false) {
 
 LidarIsObstructed::LidarIsObstructed(const LidarIsObstructed& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void LidarIsObstructed::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_name_);
   }
 }
 
@@ -1255,6 +1277,11 @@ void LidarIsObstructed::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 1: {
         DeserializeField<CowBytes>(reader, lidar_id_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
         break;
       }
       default: {
@@ -1267,11 +1294,15 @@ void LidarIsObstructed::DeserializeFrom(PbReader& reader) noexcept(false) {
 
 LidarIsNotObstructedAnymore::LidarIsNotObstructedAnymore(const LidarIsNotObstructedAnymore& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void LidarIsNotObstructedAnymore::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_name_);
   }
 }
 
@@ -1281,6 +1312,11 @@ void LidarIsNotObstructedAnymore::DeserializeFrom(PbReader& reader) noexcept(fal
       case 1: {
         DeserializeField<CowBytes>(reader, lidar_id_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
         break;
       }
       default: {
@@ -1293,11 +1329,15 @@ void LidarIsNotObstructedAnymore::DeserializeFrom(PbReader& reader) noexcept(fal
 
 LidarIsTilted::LidarIsTilted(const LidarIsTilted& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void LidarIsTilted::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_name_);
   }
 }
 
@@ -1307,6 +1347,11 @@ void LidarIsTilted::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 1: {
         DeserializeField<CowBytes>(reader, lidar_id_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
         break;
       }
       default: {
@@ -1319,11 +1364,15 @@ void LidarIsTilted::DeserializeFrom(PbReader& reader) noexcept(false) {
 
 LidarIsNotTiltedAnymore::LidarIsNotTiltedAnymore(const LidarIsNotTiltedAnymore& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void LidarIsNotTiltedAnymore::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_name_);
   }
 }
 
@@ -1333,6 +1382,11 @@ void LidarIsNotTiltedAnymore::DeserializeFrom(PbReader& reader) noexcept(false) 
       case 1: {
         DeserializeField<CowBytes>(reader, lidar_id_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
         break;
       }
       default: {
@@ -1345,11 +1399,23 @@ void LidarIsNotTiltedAnymore::DeserializeFrom(PbReader& reader) noexcept(false) 
 
 LidarHasBeenAutomaticallyRecalibrated::LidarHasBeenAutomaticallyRecalibrated(const LidarHasBeenAutomaticallyRecalibrated& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
+    , translation_{other.translation_}
+    , rotation_rpy_{other.rotation_rpy_}
     , set_fields_{other.set_fields_} {}
 
 void LidarHasBeenAutomaticallyRecalibrated::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_name_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, translation_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 4, rotation_rpy_);
   }
 }
 
@@ -1359,6 +1425,21 @@ void LidarHasBeenAutomaticallyRecalibrated::DeserializeFrom(PbReader& reader) no
       case 1: {
         DeserializeField<CowBytes>(reader, lidar_id_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<CowBytes>(reader, translation_);
+        set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        DeserializeField<CowBytes>(reader, rotation_rpy_);
+        set_fields_[3] = true;
         break;
       }
       default: {
@@ -1371,11 +1452,15 @@ void LidarHasBeenAutomaticallyRecalibrated::DeserializeFrom(PbReader& reader) no
 
 ReceivedFirstDataForLidar::ReceivedFirstDataForLidar(const ReceivedFirstDataForLidar& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void ReceivedFirstDataForLidar::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_name_);
   }
 }
 
@@ -1385,6 +1470,11 @@ void ReceivedFirstDataForLidar::DeserializeFrom(PbReader& reader) noexcept(false
       case 1: {
         DeserializeField<CowBytes>(reader, lidar_id_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
         break;
       }
       default: {
@@ -3136,11 +3226,15 @@ void CannotDetermineContainerIdError::DeserializeFrom(PbReader& reader) noexcept
 
 StartedLidarDriver::StartedLidarDriver(const StartedLidarDriver& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void StartedLidarDriver::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_name_);
   }
 }
 
@@ -3150,6 +3244,11 @@ void StartedLidarDriver::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 1: {
         DeserializeField<CowBytes>(reader, lidar_id_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
         break;
       }
       default: {
@@ -3163,6 +3262,7 @@ void StartedLidarDriver::DeserializeFrom(PbReader& reader) noexcept(false) {
 CannotStartLidarDriver::CannotStartLidarDriver(const CannotStartLidarDriver& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
     , details_{other.details_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void CannotStartLidarDriver::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -3171,6 +3271,9 @@ void CannotStartLidarDriver::SerializeTo(PbWriter& writer) const noexcept(false)
   }
   if (set_fields_[1]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, lidar_name_);
   }
 }
 
@@ -3187,6 +3290,11 @@ void CannotStartLidarDriver::DeserializeFrom(PbReader& reader) noexcept(false) {
         set_fields_[1] = true;
         break;
       }
+      case 3: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[2] = true;
+        break;
+      }
       default: {
         reader.Reader().skip();
         break;
@@ -3197,11 +3305,15 @@ void CannotStartLidarDriver::DeserializeFrom(PbReader& reader) noexcept(false) {
 
 StoppedLidarDriver::StoppedLidarDriver(const StoppedLidarDriver& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void StoppedLidarDriver::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_name_);
   }
 }
 
@@ -3211,6 +3323,11 @@ void StoppedLidarDriver::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 1: {
         DeserializeField<CowBytes>(reader, lidar_id_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
         break;
       }
       default: {
@@ -3224,6 +3341,7 @@ void StoppedLidarDriver::DeserializeFrom(PbReader& reader) noexcept(false) {
 CannotStopLidarDriver::CannotStopLidarDriver(const CannotStopLidarDriver& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
     , details_{other.details_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void CannotStopLidarDriver::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -3232,6 +3350,9 @@ void CannotStopLidarDriver::SerializeTo(PbWriter& writer) const noexcept(false) 
   }
   if (set_fields_[1]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, lidar_name_);
   }
 }
 
@@ -3248,6 +3369,11 @@ void CannotStopLidarDriver::DeserializeFrom(PbReader& reader) noexcept(false) {
         set_fields_[1] = true;
         break;
       }
+      case 3: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[2] = true;
+        break;
+      }
       default: {
         reader.Reader().skip();
         break;
@@ -3258,11 +3384,15 @@ void CannotStopLidarDriver::DeserializeFrom(PbReader& reader) noexcept(false) {
 
 RestartedLidarDriver::RestartedLidarDriver(const RestartedLidarDriver& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void RestartedLidarDriver::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_name_);
   }
 }
 
@@ -3272,6 +3402,11 @@ void RestartedLidarDriver::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 1: {
         DeserializeField<CowBytes>(reader, lidar_id_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
         break;
       }
       default: {
@@ -3285,6 +3420,7 @@ void RestartedLidarDriver::DeserializeFrom(PbReader& reader) noexcept(false) {
 CannotRestartLidarDriver::CannotRestartLidarDriver(const CannotRestartLidarDriver& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
     , details_{other.details_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void CannotRestartLidarDriver::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -3293,6 +3429,9 @@ void CannotRestartLidarDriver::SerializeTo(PbWriter& writer) const noexcept(fals
   }
   if (set_fields_[1]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, lidar_name_);
   }
 }
 
@@ -3309,6 +3448,11 @@ void CannotRestartLidarDriver::DeserializeFrom(PbReader& reader) noexcept(false)
         set_fields_[1] = true;
         break;
       }
+      case 3: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[2] = true;
+        break;
+      }
       default: {
         reader.Reader().skip();
         break;
@@ -3319,11 +3463,15 @@ void CannotRestartLidarDriver::DeserializeFrom(PbReader& reader) noexcept(false)
 
 RemovedUnusedLidarDriver::RemovedUnusedLidarDriver(const RemovedUnusedLidarDriver& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void RemovedUnusedLidarDriver::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_name_);
   }
 }
 
@@ -3333,6 +3481,11 @@ void RemovedUnusedLidarDriver::DeserializeFrom(PbReader& reader) noexcept(false)
       case 1: {
         DeserializeField<CowBytes>(reader, lidar_id_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
         break;
       }
       default: {
@@ -3346,6 +3499,7 @@ void RemovedUnusedLidarDriver::DeserializeFrom(PbReader& reader) noexcept(false)
 CannotRemoveUnusedLidarDriver::CannotRemoveUnusedLidarDriver(const CannotRemoveUnusedLidarDriver& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
     , details_{other.details_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void CannotRemoveUnusedLidarDriver::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -3354,6 +3508,9 @@ void CannotRemoveUnusedLidarDriver::SerializeTo(PbWriter& writer) const noexcept
   }
   if (set_fields_[1]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, lidar_name_);
   }
 }
 
@@ -3368,6 +3525,11 @@ void CannotRemoveUnusedLidarDriver::DeserializeFrom(PbReader& reader) noexcept(f
       case 2: {
         DeserializeField<CowBytes>(reader, details_);
         set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[2] = true;
         break;
       }
       default: {
@@ -3468,6 +3630,7 @@ void PreprocessingToPointAggregatorPointsSkipped::DeserializeFrom(PbReader& read
 MinMsgIntervalLessThanThreshold::MinMsgIntervalLessThanThreshold(const MinMsgIntervalLessThanThreshold& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
     , threshold_{other.threshold_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void MinMsgIntervalLessThanThreshold::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -3476,6 +3639,9 @@ void MinMsgIntervalLessThanThreshold::SerializeTo(PbWriter& writer) const noexce
   }
   if (set_fields_[1]) {
     SerializeField<horus::pb::LogMetadata_Duration>(writer, /*tag=*/ 2, threshold_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, lidar_name_);
   }
 }
 
@@ -3490,6 +3656,11 @@ void MinMsgIntervalLessThanThreshold::DeserializeFrom(PbReader& reader) noexcept
       case 2: {
         DeserializeField<horus::pb::LogMetadata_Duration>(reader, threshold_);
         set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[2] = true;
         break;
       }
       default: {
@@ -4267,6 +4438,7 @@ void CircularRecordingDisabledWarning::DeserializeFrom(PbReader& reader) noexcep
 InvalidLidarTimestamp::InvalidLidarTimestamp(const InvalidLidarTimestamp& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
     , timestamp_{other.timestamp_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void InvalidLidarTimestamp::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -4275,6 +4447,9 @@ void InvalidLidarTimestamp::SerializeTo(PbWriter& writer) const noexcept(false) 
   }
   if (set_fields_[1]) {
     SerializeField<horus::pb::LogMetadata_Timestamp>(writer, /*tag=*/ 2, timestamp_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, lidar_name_);
   }
 }
 
@@ -4289,6 +4464,11 @@ void InvalidLidarTimestamp::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 2: {
         DeserializeField<horus::pb::LogMetadata_Timestamp>(reader, timestamp_);
         set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[2] = true;
         break;
       }
       default: {
@@ -4620,11 +4800,15 @@ void BagUpgradeFailed::DeserializeFrom(PbReader& reader) noexcept(false) {
 
 UnknownLidarError::UnknownLidarError(const UnknownLidarError& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void UnknownLidarError::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_name_);
   }
 }
 
@@ -4634,6 +4818,11 @@ void UnknownLidarError::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 1: {
         DeserializeField<CowBytes>(reader, lidar_id_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
         break;
       }
       default: {
@@ -4647,6 +4836,7 @@ void UnknownLidarError::DeserializeFrom(PbReader& reader) noexcept(false) {
 InvalidPointCloudWarning::InvalidPointCloudWarning(const InvalidPointCloudWarning& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
     , reason_{other.reason_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void InvalidPointCloudWarning::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -4655,6 +4845,9 @@ void InvalidPointCloudWarning::SerializeTo(PbWriter& writer) const noexcept(fals
   }
   if (set_fields_[1]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 2, reason_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, lidar_name_);
   }
 }
 
@@ -4671,6 +4864,11 @@ void InvalidPointCloudWarning::DeserializeFrom(PbReader& reader) noexcept(false)
         set_fields_[1] = true;
         break;
       }
+      case 3: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[2] = true;
+        break;
+      }
       default: {
         reader.Reader().skip();
         break;
@@ -4683,6 +4881,7 @@ LidarIsDroppingPackets::LidarIsDroppingPackets(const LidarIsDroppingPackets& oth
     : lidar_id_{other.lidar_id_}
     , num_total_dropped_packets_{other.num_total_dropped_packets_}
     , num_total_expected_packets_{other.num_total_expected_packets_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void LidarIsDroppingPackets::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -4694,6 +4893,9 @@ void LidarIsDroppingPackets::SerializeTo(PbWriter& writer) const noexcept(false)
   }
   if (set_fields_[2]) {
     SerializeField<std::uint64_t>(writer, /*tag=*/ 3, num_total_expected_packets_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 4, lidar_name_);
   }
 }
 
@@ -4713,6 +4915,11 @@ void LidarIsDroppingPackets::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 3: {
         DeserializeField<std::uint64_t>(reader, num_total_expected_packets_);
         set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[3] = true;
         break;
       }
       default: {
@@ -4883,6 +5090,7 @@ void PlyFileLoadFailedError::DeserializeFrom(PbReader& reader) noexcept(false) {
 HesaiDriverLifecycle::HesaiDriverLifecycle(const HesaiDriverLifecycle& other) noexcept(false)
     : action_{other.action_}
     , lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void HesaiDriverLifecycle::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -4891,6 +5099,9 @@ void HesaiDriverLifecycle::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[1]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_id_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, lidar_name_);
   }
 }
 
@@ -4907,6 +5118,11 @@ void HesaiDriverLifecycle::DeserializeFrom(PbReader& reader) noexcept(false) {
         set_fields_[1] = true;
         break;
       }
+      case 3: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[2] = true;
+        break;
+      }
       default: {
         reader.Reader().skip();
         break;
@@ -4917,11 +5133,19 @@ void HesaiDriverLifecycle::DeserializeFrom(PbReader& reader) noexcept(false) {
 
 HesaiDriverError::HesaiDriverError(const HesaiDriverError& other) noexcept(false)
     : details_{other.details_}
+    , lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void HesaiDriverError::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, details_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_id_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, lidar_name_);
   }
 }
 
@@ -4931,6 +5155,16 @@ void HesaiDriverError::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 1: {
         DeserializeField<CowBytes>(reader, details_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[2] = true;
         break;
       }
       default: {
@@ -4944,6 +5178,7 @@ void HesaiDriverError::DeserializeFrom(PbReader& reader) noexcept(false) {
 HesaiPacketProcessingFailed::HesaiPacketProcessingFailed(const HesaiPacketProcessingFailed& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
     , details_{other.details_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void HesaiPacketProcessingFailed::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -4952,6 +5187,9 @@ void HesaiPacketProcessingFailed::SerializeTo(PbWriter& writer) const noexcept(f
   }
   if (set_fields_[1]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, lidar_name_);
   }
 }
 
@@ -4968,6 +5206,11 @@ void HesaiPacketProcessingFailed::DeserializeFrom(PbReader& reader) noexcept(fal
         set_fields_[1] = true;
         break;
       }
+      case 3: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[2] = true;
+        break;
+      }
       default: {
         reader.Reader().skip();
         break;
@@ -4979,6 +5222,8 @@ void HesaiPacketProcessingFailed::DeserializeFrom(PbReader& reader) noexcept(fal
 HesaiCorrectionFileError::HesaiCorrectionFileError(const HesaiCorrectionFileError& other) noexcept(false)
     : file_type_{other.file_type_}
     , details_{other.details_}
+    , lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void HesaiCorrectionFileError::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -4987,6 +5232,12 @@ void HesaiCorrectionFileError::SerializeTo(PbWriter& writer) const noexcept(fals
   }
   if (set_fields_[1]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, lidar_id_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 4, lidar_name_);
   }
 }
 
@@ -5003,6 +5254,16 @@ void HesaiCorrectionFileError::DeserializeFrom(PbReader& reader) noexcept(false)
         set_fields_[1] = true;
         break;
       }
+      case 3: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[3] = true;
+        break;
+      }
       default: {
         reader.Reader().skip();
         break;
@@ -5017,6 +5278,8 @@ HesaiPacketStatistics::HesaiPacketStatistics(const HesaiPacketStatistics& other)
     , packets_dropped_{other.packets_dropped_}
     , packets_decode_failed_{other.packets_decode_failed_}
     , success_rate_{other.success_rate_}
+    , lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void HesaiPacketStatistics::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -5034,6 +5297,12 @@ void HesaiPacketStatistics::SerializeTo(PbWriter& writer) const noexcept(false) 
   }
   if (set_fields_[4]) {
     SerializeField<double, PbDeserFlags::kFixed>(writer, /*tag=*/ 5, success_rate_);
+  }
+  if (set_fields_[5]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 6, lidar_id_);
+  }
+  if (set_fields_[6]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 7, lidar_name_);
   }
 }
 
@@ -5063,6 +5332,16 @@ void HesaiPacketStatistics::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 5: {
         DeserializeField<double, PbDeserFlags::kFixed>(reader, success_rate_);
         set_fields_[4] = true;
+        break;
+      }
+      case 6: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[5] = true;
+        break;
+      }
+      case 7: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[6] = true;
         break;
       }
       default: {
@@ -5284,11 +5563,15 @@ void AttemptToInjectInvalidLidarIdWarning::DeserializeFrom(PbReader& reader) noe
 
 ResetBundledPacketDueToUnexpectedPacket::ResetBundledPacketDueToUnexpectedPacket(const ResetBundledPacketDueToUnexpectedPacket& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void ResetBundledPacketDueToUnexpectedPacket::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_name_);
   }
 }
 
@@ -5298,6 +5581,11 @@ void ResetBundledPacketDueToUnexpectedPacket::DeserializeFrom(PbReader& reader) 
       case 1: {
         DeserializeField<CowBytes>(reader, lidar_id_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
         break;
       }
       default: {
@@ -5312,6 +5600,7 @@ PacketBundlerDroppedPacketsWarning::PacketBundlerDroppedPacketsWarning(const Pac
     : lidar_id_{other.lidar_id_}
     , num_dropped_{other.num_dropped_}
     , duration_{other.duration_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void PacketBundlerDroppedPacketsWarning::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -5323,6 +5612,9 @@ void PacketBundlerDroppedPacketsWarning::SerializeTo(PbWriter& writer) const noe
   }
   if (set_fields_[2]) {
     SerializeField<horus::pb::LogMetadata_Duration>(writer, /*tag=*/ 3, duration_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 4, lidar_name_);
   }
 }
 
@@ -5344,6 +5636,11 @@ void PacketBundlerDroppedPacketsWarning::DeserializeFrom(PbReader& reader) noexc
         set_fields_[2] = true;
         break;
       }
+      case 4: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[3] = true;
+        break;
+      }
       default: {
         reader.Reader().skip();
         break;
@@ -5356,6 +5653,7 @@ PacketBundlerFrameJumpWarning::PacketBundlerFrameJumpWarning(const PacketBundler
     : lidar_id_{other.lidar_id_}
     , frame_id_{other.frame_id_}
     , next_frame_id_{other.next_frame_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void PacketBundlerFrameJumpWarning::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -5367,6 +5665,9 @@ void PacketBundlerFrameJumpWarning::SerializeTo(PbWriter& writer) const noexcept
   }
   if (set_fields_[2]) {
     SerializeField<std::uint64_t>(writer, /*tag=*/ 3, next_frame_id_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 4, lidar_name_);
   }
 }
 
@@ -5388,6 +5689,11 @@ void PacketBundlerFrameJumpWarning::DeserializeFrom(PbReader& reader) noexcept(f
         set_fields_[2] = true;
         break;
       }
+      case 4: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[3] = true;
+        break;
+      }
       default: {
         reader.Reader().skip();
         break;
@@ -5398,11 +5704,19 @@ void PacketBundlerFrameJumpWarning::DeserializeFrom(PbReader& reader) noexcept(f
 
 LidarCorrectionLoadingSuccess::LidarCorrectionLoadingSuccess(const LidarCorrectionLoadingSuccess& other) noexcept(false)
     : correction_type_{other.correction_type_}
+    , lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void LidarCorrectionLoadingSuccess::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, correction_type_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_id_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, lidar_name_);
   }
 }
 
@@ -5412,6 +5726,16 @@ void LidarCorrectionLoadingSuccess::DeserializeFrom(PbReader& reader) noexcept(f
       case 1: {
         DeserializeField<CowBytes>(reader, correction_type_);
         set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[2] = true;
         break;
       }
       default: {
@@ -5425,6 +5749,8 @@ void LidarCorrectionLoadingSuccess::DeserializeFrom(PbReader& reader) noexcept(f
 LidarCorrectionLoadingFailure::LidarCorrectionLoadingFailure(const LidarCorrectionLoadingFailure& other) noexcept(false)
     : correction_type_{other.correction_type_}
     , details_{other.details_}
+    , lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , set_fields_{other.set_fields_} {}
 
 void LidarCorrectionLoadingFailure::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -5433,6 +5759,12 @@ void LidarCorrectionLoadingFailure::SerializeTo(PbWriter& writer) const noexcept
   }
   if (set_fields_[1]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, lidar_id_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 4, lidar_name_);
   }
 }
 
@@ -5447,6 +5779,16 @@ void LidarCorrectionLoadingFailure::DeserializeFrom(PbReader& reader) noexcept(f
       case 2: {
         DeserializeField<CowBytes>(reader, details_);
         set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[3] = true;
         break;
       }
       default: {
@@ -5518,6 +5860,94 @@ void HesaiPacketStatisticsLidar::DeserializeFrom(PbReader& reader) noexcept(fals
       case 6: {
         DeserializeField<CowBytes>(reader, lidar_id_);
         set_fields_[5] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+LidarTiltDetectionAlignedToCalibrationMapInfo::LidarTiltDetectionAlignedToCalibrationMapInfo(const LidarTiltDetectionAlignedToCalibrationMapInfo& other) noexcept(false)
+    : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
+    , set_fields_{other.set_fields_} {}
+
+void LidarTiltDetectionAlignedToCalibrationMapInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_name_);
+  }
+}
+
+void LidarTiltDetectionAlignedToCalibrationMapInfo::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+LidarTiltDetectionMisalignedToCalibrationMapWarning::LidarTiltDetectionMisalignedToCalibrationMapWarning(const LidarTiltDetectionMisalignedToCalibrationMapWarning& other) noexcept(false)
+    : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
+    , angle_{other.angle_}
+    , distance_{other.distance_}
+    , set_fields_{other.set_fields_} {}
+
+void LidarTiltDetectionMisalignedToCalibrationMapWarning::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_name_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<double, PbDeserFlags::kFixed>(writer, /*tag=*/ 3, angle_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<double, PbDeserFlags::kFixed>(writer, /*tag=*/ 4, distance_);
+  }
+}
+
+void LidarTiltDetectionMisalignedToCalibrationMapWarning::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<double, PbDeserFlags::kFixed>(reader, angle_);
+        set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        DeserializeField<double, PbDeserFlags::kFixed>(reader, distance_);
+        set_fields_[3] = true;
         break;
       }
       default: {

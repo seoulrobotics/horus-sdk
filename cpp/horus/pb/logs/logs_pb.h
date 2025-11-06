@@ -237,6 +237,8 @@ class PacketBundlerFrameJumpWarning;
 class LidarCorrectionLoadingSuccess;
 class LidarCorrectionLoadingFailure;
 class HesaiPacketStatisticsLidar;
+class LidarTiltDetectionAlignedToCalibrationMapInfo;
+class LidarTiltDetectionMisalignedToCalibrationMapWarning;
 
 // MARK: Message declarations
 
@@ -5862,7 +5864,7 @@ class PointCloudParsingFailureWarning final : public PbMessage {
 
 /// Log #39.
 /// 
-///  > The lidar $lidar_id is considered dead. No data has been received for a while.
+///  > The lidar $lidar_name [$lidar_id] is considered dead. No data has been received for a while.
 ///
 /// Source: horus/pb/logs/logs.proto:333:1
 class LidarIsDead final : public PbMessage {
@@ -5964,19 +5966,71 @@ class LidarIsDead final : public PbMessage {
     return std::move(set_lidar_id(std::move(lidar_id)));
   }
 
+  // Field `lidar_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 2) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 2).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarIsDead& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarIsDead&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// Log #40.
 /// 
-///  > The lidar $lidar_id is not considered dead anymore. A point cloud has been received again after some time.
+///  > The lidar $lidar_name [$lidar_id] is not considered dead anymore. A point cloud has been received again after some time.
 ///
-/// Source: horus/pb/logs/logs.proto:340:1
+/// Source: horus/pb/logs/logs.proto:341:1
 class LidarIsNotDeadAnymore final : public PbMessage {
  public:
 
@@ -6076,19 +6130,71 @@ class LidarIsNotDeadAnymore final : public PbMessage {
     return std::move(set_lidar_id(std::move(lidar_id)));
   }
 
+  // Field `lidar_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 2) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 2).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarIsNotDeadAnymore& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarIsNotDeadAnymore&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// Log #41.
 /// 
-///  > The lidar $lidar_id is obstructed.
+///  > The lidar $lidar_name [$lidar_id] is obstructed.
 ///
-/// Source: horus/pb/logs/logs.proto:347:1
+/// Source: horus/pb/logs/logs.proto:349:1
 class LidarIsObstructed final : public PbMessage {
  public:
 
@@ -6188,19 +6294,71 @@ class LidarIsObstructed final : public PbMessage {
     return std::move(set_lidar_id(std::move(lidar_id)));
   }
 
+  // Field `lidar_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 2) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 2).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarIsObstructed& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarIsObstructed&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// Log #42.
 /// 
-///  > The lidar $lidar_id is not obstructed anymore.
+///  > The lidar $lidar_name [$lidar_id] is not obstructed anymore.
 ///
-/// Source: horus/pb/logs/logs.proto:354:1
+/// Source: horus/pb/logs/logs.proto:357:1
 class LidarIsNotObstructedAnymore final : public PbMessage {
  public:
 
@@ -6300,19 +6458,71 @@ class LidarIsNotObstructedAnymore final : public PbMessage {
     return std::move(set_lidar_id(std::move(lidar_id)));
   }
 
+  // Field `lidar_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 2) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 2).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarIsNotObstructedAnymore& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarIsNotObstructedAnymore&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// Log #43.
 /// 
-///  > The lidar $lidar_id is tilted.
+///  > The lidar $lidar_name [$lidar_id] is tilted.
 ///
-/// Source: horus/pb/logs/logs.proto:361:1
+/// Source: horus/pb/logs/logs.proto:365:1
 class LidarIsTilted final : public PbMessage {
  public:
 
@@ -6412,19 +6622,71 @@ class LidarIsTilted final : public PbMessage {
     return std::move(set_lidar_id(std::move(lidar_id)));
   }
 
+  // Field `lidar_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 2) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 2).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarIsTilted& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarIsTilted&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// Log #44.
 /// 
-///  > The lidar $lidar_id is not tilted anymore.
+///  > The lidar $lidar_name [$lidar_id] is not tilted anymore.
 ///
-/// Source: horus/pb/logs/logs.proto:368:1
+/// Source: horus/pb/logs/logs.proto:373:1
 class LidarIsNotTiltedAnymore final : public PbMessage {
  public:
 
@@ -6524,19 +6786,71 @@ class LidarIsNotTiltedAnymore final : public PbMessage {
     return std::move(set_lidar_id(std::move(lidar_id)));
   }
 
+  // Field `lidar_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 2) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 2).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarIsNotTiltedAnymore& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarIsNotTiltedAnymore&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// Log #45.
 /// 
-///  > The lidar $lidar_id has been automatically re-calibrated.
+///  > LiDAR $lidar_name [$lidar_id] auto re-calibrated (Δ from original: t=$translation, r=$rotation_rpy)
 ///
-/// Source: horus/pb/logs/logs.proto:375:1
+/// Source: horus/pb/logs/logs.proto:381:1
 class LidarHasBeenAutomaticallyRecalibrated final : public PbMessage {
  public:
 
@@ -6636,19 +6950,175 @@ class LidarHasBeenAutomaticallyRecalibrated final : public PbMessage {
     return std::move(set_lidar_id(std::move(lidar_id)));
   }
 
+  // Field `lidar_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 2) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 2).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarHasBeenAutomaticallyRecalibrated& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarHasBeenAutomaticallyRecalibrated&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
+  // Field `translation` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& translation() const& noexcept HORUS_LIFETIME_BOUND {
+    return translation_;
+  }
+
+  /// If `translation` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes translation() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(translation_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_translation() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return translation_;
+  }
+
+  /// Returns whether `translation` (no 3) is set.
+  constexpr bool has_translation() const noexcept { return set_fields_[2]; }
+
+  /// Clears `translation` (no 3).
+  void clear_translation() & noexcept {
+    set_fields_[2] = false;
+    translation_ = {};
+  }
+
+  /// Sets `translation` (no 3) and returns `*this`.
+  LidarHasBeenAutomaticallyRecalibrated& set_translation(CowBytes&& translation) & noexcept {
+    set_fields_[2] = true;
+    translation_ = std::move(translation);
+    return *this;
+  }
+  /// Sets `translation` (no 3) and returns `*this`.
+  LidarHasBeenAutomaticallyRecalibrated&& set_translation(CowBytes&& translation) && noexcept {
+    return std::move(set_translation(std::move(translation)));
+  }
+
+  // Field `rotation_rpy` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr const CowBytes& rotation_rpy() const& noexcept HORUS_LIFETIME_BOUND {
+    return rotation_rpy_;
+  }
+
+  /// If `rotation_rpy` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  CowBytes rotation_rpy() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(rotation_rpy_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  CowBytes& mutable_rotation_rpy() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return rotation_rpy_;
+  }
+
+  /// Returns whether `rotation_rpy` (no 4) is set.
+  constexpr bool has_rotation_rpy() const noexcept { return set_fields_[3]; }
+
+  /// Clears `rotation_rpy` (no 4).
+  void clear_rotation_rpy() & noexcept {
+    set_fields_[3] = false;
+    rotation_rpy_ = {};
+  }
+
+  /// Sets `rotation_rpy` (no 4) and returns `*this`.
+  LidarHasBeenAutomaticallyRecalibrated& set_rotation_rpy(CowBytes&& rotation_rpy) & noexcept {
+    set_fields_[3] = true;
+    rotation_rpy_ = std::move(rotation_rpy);
+    return *this;
+  }
+  /// Sets `rotation_rpy` (no 4) and returns `*this`.
+  LidarHasBeenAutomaticallyRecalibrated&& set_rotation_rpy(CowBytes&& rotation_rpy) && noexcept {
+    return std::move(set_rotation_rpy(std::move(rotation_rpy)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
+  /// @see translation()
+  CowBytes translation_{};
+  /// @see rotation_rpy()
+  CowBytes rotation_rpy_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<4> set_fields_;
 };
 
 /// Log #46.
 /// 
-///  > Data has been received for the first time for the lidar $lidar_id.
+///  > Data has been received for the first time for the lidar $lidar_name [$lidar_id].
 ///
-/// Source: horus/pb/logs/logs.proto:382:1
+/// Source: horus/pb/logs/logs.proto:391:1
 class ReceivedFirstDataForLidar final : public PbMessage {
  public:
 
@@ -6748,19 +7218,71 @@ class ReceivedFirstDataForLidar final : public PbMessage {
     return std::move(set_lidar_id(std::move(lidar_id)));
   }
 
+  // Field `lidar_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 2) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 2).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  ReceivedFirstDataForLidar& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  ReceivedFirstDataForLidar&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// Log #47.
 /// 
 ///  > Failed to destruct $component: $details
 ///
-/// Source: horus/pb/logs/logs.proto:389:1
+/// Source: horus/pb/logs/logs.proto:399:1
 class TerminationFailureError final : public PbMessage {
  public:
 
@@ -6924,7 +7446,7 @@ class TerminationFailureError final : public PbMessage {
 /// 
 ///  > The Frame Task Scheduler failed to process frame task: $details
 ///
-/// Source: horus/pb/logs/logs.proto:397:1
+/// Source: horus/pb/logs/logs.proto:407:1
 class FrameProcessingError final : public PbMessage {
  public:
 
@@ -7036,7 +7558,7 @@ class FrameProcessingError final : public PbMessage {
 /// 
 ///  > Thread pool is not available: $consequence
 ///
-/// Source: horus/pb/logs/logs.proto:404:1
+/// Source: horus/pb/logs/logs.proto:414:1
 class ThreadPoolUnavailableError final : public PbMessage {
  public:
 
@@ -7148,7 +7670,7 @@ class ThreadPoolUnavailableError final : public PbMessage {
 /// 
 ///  > Invalid argument: $details
 ///
-/// Source: horus/pb/logs/logs.proto:411:1
+/// Source: horus/pb/logs/logs.proto:421:1
 class InvalidArgument final : public PbMessage {
  public:
 
@@ -7260,7 +7782,7 @@ class InvalidArgument final : public PbMessage {
 /// 
 ///  > Failed to initialize $component: $details
 ///
-/// Source: horus/pb/logs/logs.proto:418:1
+/// Source: horus/pb/logs/logs.proto:428:1
 class ComponentInitializationFailureFatal final : public PbMessage {
  public:
 
@@ -7424,7 +7946,7 @@ class ComponentInitializationFailureFatal final : public PbMessage {
 /// 
 ///  > Unhandled enum case $case_name at $location
 ///
-/// Source: horus/pb/logs/logs.proto:426:1
+/// Source: horus/pb/logs/logs.proto:436:1
 class UnhandledEnumCaseError final : public PbMessage {
  public:
 
@@ -7588,7 +8110,7 @@ class UnhandledEnumCaseError final : public PbMessage {
 /// 
 ///  > The replay bag file is empty.
 ///
-/// Source: horus/pb/logs/logs.proto:434:1
+/// Source: horus/pb/logs/logs.proto:444:1
 class BagEmptyError final : public PbMessage {
  public:
 
@@ -7652,7 +8174,7 @@ class BagEmptyError final : public PbMessage {
 /// 
 ///  > Discarding data in $component: $details
 ///
-/// Source: horus/pb/logs/logs.proto:440:1
+/// Source: horus/pb/logs/logs.proto:450:1
 class DiscardingDataError final : public PbMessage {
  public:
 
@@ -7816,7 +8338,7 @@ class DiscardingDataError final : public PbMessage {
 /// 
 ///  > Discarding data in $component: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:448:1
+/// Source: horus/pb/logs/logs.proto:458:1
 class DiscardingDataWarning final : public PbMessage {
  public:
 
@@ -7980,7 +8502,7 @@ class DiscardingDataWarning final : public PbMessage {
 /// 
 ///  > Nothing to process: $details
 ///
-/// Source: horus/pb/logs/logs.proto:456:1
+/// Source: horus/pb/logs/logs.proto:466:1
 class NothingToProcess final : public PbMessage {
  public:
 
@@ -8092,7 +8614,7 @@ class NothingToProcess final : public PbMessage {
 /// 
 ///  > Invalid configuration for $component: $details
 ///
-/// Source: horus/pb/logs/logs.proto:463:1
+/// Source: horus/pb/logs/logs.proto:473:1
 class InvalidComponentConfiguration final : public PbMessage {
  public:
 
@@ -8256,7 +8778,7 @@ class InvalidComponentConfiguration final : public PbMessage {
 /// 
 ///  > Channel receiver $key not found
 ///
-/// Source: horus/pb/logs/logs.proto:471:1
+/// Source: horus/pb/logs/logs.proto:481:1
 class ChannelReceiverNotFoundWarning final : public PbMessage {
  public:
 
@@ -8368,7 +8890,7 @@ class ChannelReceiverNotFoundWarning final : public PbMessage {
 /// 
 ///  > Model $model failed to load: $details
 ///
-/// Source: horus/pb/logs/logs.proto:478:1
+/// Source: horus/pb/logs/logs.proto:488:1
 class ModelLoadFailure final : public PbMessage {
  public:
 
@@ -8532,7 +9054,7 @@ class ModelLoadFailure final : public PbMessage {
 /// 
 ///  > Model $model failed to execute: $details
 ///
-/// Source: horus/pb/logs/logs.proto:486:1
+/// Source: horus/pb/logs/logs.proto:496:1
 class ModelExecutionFailureError final : public PbMessage {
  public:
 
@@ -8696,7 +9218,7 @@ class ModelExecutionFailureError final : public PbMessage {
 /// 
 ///  > $service service is ready
 ///
-/// Source: horus/pb/logs/logs.proto:494:1
+/// Source: horus/pb/logs/logs.proto:504:1
 class ServiceReadyInfo final : public PbMessage {
  public:
 
@@ -8808,7 +9330,7 @@ class ServiceReadyInfo final : public PbMessage {
 /// 
 ///  > Preparing model $model, it may take several seconds to stabilize.
 ///
-/// Source: horus/pb/logs/logs.proto:501:1
+/// Source: horus/pb/logs/logs.proto:511:1
 class ModelPreparingInfo final : public PbMessage {
  public:
 
@@ -8920,7 +9442,7 @@ class ModelPreparingInfo final : public PbMessage {
 /// 
 ///  > $name model has been initialized and is ready for use.
 ///
-/// Source: horus/pb/logs/logs.proto:508:1
+/// Source: horus/pb/logs/logs.proto:518:1
 class ModelInitializedInfo final : public PbMessage {
  public:
 
@@ -9032,7 +9554,7 @@ class ModelInitializedInfo final : public PbMessage {
 /// 
 ///  > Failed to initialize model $model: $details
 ///
-/// Source: horus/pb/logs/logs.proto:515:1
+/// Source: horus/pb/logs/logs.proto:525:1
 class ModelInitializationFailureWarning final : public PbMessage {
  public:
 
@@ -9196,7 +9718,7 @@ class ModelInitializationFailureWarning final : public PbMessage {
 /// 
 ///  > ROS spinner stopped: $details
 ///
-/// Source: horus/pb/logs/logs.proto:523:1
+/// Source: horus/pb/logs/logs.proto:533:1
 class RosSpinnerStoppedWarning final : public PbMessage {
  public:
 
@@ -9308,7 +9830,7 @@ class RosSpinnerStoppedWarning final : public PbMessage {
 /// 
 ///  > Actor system is not available. Please reinstantiate the pipeline.
 ///
-/// Source: horus/pb/logs/logs.proto:530:1
+/// Source: horus/pb/logs/logs.proto:540:1
 class ActorSystemUnavailableError final : public PbMessage {
  public:
 
@@ -9372,7 +9894,7 @@ class ActorSystemUnavailableError final : public PbMessage {
 /// 
 ///  > Configuration for node $node is unavailable
 ///
-/// Source: horus/pb/logs/logs.proto:536:1
+/// Source: horus/pb/logs/logs.proto:546:1
 class ConfigNodeNotFoundError final : public PbMessage {
  public:
 
@@ -9484,7 +10006,7 @@ class ConfigNodeNotFoundError final : public PbMessage {
 /// 
 ///  > Timestamps are out of order: $prior_timestamp > $current_timestamp
 ///
-/// Source: horus/pb/logs/logs.proto:543:1
+/// Source: horus/pb/logs/logs.proto:553:1
 class BagTimestampOutOfOrderError final : public PbMessage {
  public:
 
@@ -9648,7 +10170,7 @@ class BagTimestampOutOfOrderError final : public PbMessage {
 /// 
 ///  > Unexpected timestamp: expected $expected_timestamp but received $received_timestamp
 ///
-/// Source: horus/pb/logs/logs.proto:551:1
+/// Source: horus/pb/logs/logs.proto:561:1
 class BagReplayUnexpectedTimestampError final : public PbMessage {
  public:
 
@@ -9812,7 +10334,7 @@ class BagReplayUnexpectedTimestampError final : public PbMessage {
 /// 
 ///  > WebSocket RPC connection to $uri closed: $reason
 ///
-/// Source: horus/pb/logs/logs.proto:559:1
+/// Source: horus/pb/logs/logs.proto:569:1
 class WebsocketClosedInfo final : public PbMessage {
  public:
 
@@ -9976,7 +10498,7 @@ class WebsocketClosedInfo final : public PbMessage {
 /// 
 ///  > WebSocket RPC connection to $uri opened (as $endpoint_is_server_client)
 ///
-/// Source: horus/pb/logs/logs.proto:567:1
+/// Source: horus/pb/logs/logs.proto:577:1
 class WebsocketOpenedInfo final : public PbMessage {
  public:
 
@@ -10140,7 +10662,7 @@ class WebsocketOpenedInfo final : public PbMessage {
 /// 
 ///  > Subscriber $name disconnected ($uri)
 ///
-/// Source: horus/pb/logs/logs.proto:575:1
+/// Source: horus/pb/logs/logs.proto:585:1
 class SubscriberDisconnectedInfo final : public PbMessage {
  public:
 
@@ -10304,7 +10826,7 @@ class SubscriberDisconnectedInfo final : public PbMessage {
 /// 
 ///  > Thread pool is slowing down for $number times!
 ///
-/// Source: horus/pb/logs/logs.proto:583:1
+/// Source: horus/pb/logs/logs.proto:593:1
 class ThreadPoolSlowingDownWarning final : public PbMessage {
  public:
 
@@ -10404,7 +10926,7 @@ class ThreadPoolSlowingDownWarning final : public PbMessage {
 /// 
 ///  > Thread pool is not responding for $not_responding_for.
 ///
-/// Source: horus/pb/logs/logs.proto:590:1
+/// Source: horus/pb/logs/logs.proto:600:1
 class ThreadPoolNotRespondingWarning final : public PbMessage {
  public:
 
@@ -10516,7 +11038,7 @@ class ThreadPoolNotRespondingWarning final : public PbMessage {
 /// 
 ///  > Thread pool task future is no longer available. The thread pool might have been restarted during events such as input source change.
 ///
-/// Source: horus/pb/logs/logs.proto:597:1
+/// Source: horus/pb/logs/logs.proto:607:1
 class ThreadPoolBrokenPromiseWarning final : public PbMessage {
  public:
 
@@ -10580,7 +11102,7 @@ class ThreadPoolBrokenPromiseWarning final : public PbMessage {
 /// 
 ///  > Some points are below the base Z-coordinate when fitting the box. This might affect the detection results.
 ///
-/// Source: horus/pb/logs/logs.proto:603:1
+/// Source: horus/pb/logs/logs.proto:613:1
 class BoxFittingPointsBelowBaseWarning final : public PbMessage {
  public:
 
@@ -10644,7 +11166,7 @@ class BoxFittingPointsBelowBaseWarning final : public PbMessage {
 /// 
 ///  > Failed to remove stale points: $details
 ///
-/// Source: horus/pb/logs/logs.proto:609:1
+/// Source: horus/pb/logs/logs.proto:619:1
 class FailedToRemoveStalePointsWarning final : public PbMessage {
  public:
 
@@ -10756,7 +11278,7 @@ class FailedToRemoveStalePointsWarning final : public PbMessage {
 /// 
 ///  > $num_irregular irregular broadcast(s) detected in the last $duration (mean deviation: $mean_deviation).
 ///
-/// Source: horus/pb/logs/logs.proto:616:1
+/// Source: horus/pb/logs/logs.proto:626:1
 class IrregularBroadcastingPeriodWarning final : public PbMessage {
  public:
 
@@ -10960,7 +11482,7 @@ class IrregularBroadcastingPeriodWarning final : public PbMessage {
 /// 
 ///  > There are $num_points points out of range in the clusterer. Some points: $sample_points.
 ///
-/// Source: horus/pb/logs/logs.proto:625:1
+/// Source: horus/pb/logs/logs.proto:635:1
 class ClustererPointsOutOfRangeWarning final : public PbMessage {
  public:
 
@@ -11112,7 +11634,7 @@ class ClustererPointsOutOfRangeWarning final : public PbMessage {
 /// 
 ///  > An internal error occurred: $details
 ///
-/// Source: horus/pb/logs/logs.proto:633:1
+/// Source: horus/pb/logs/logs.proto:643:1
 class InternalError final : public PbMessage {
  public:
 
@@ -11224,7 +11746,7 @@ class InternalError final : public PbMessage {
 /// 
 ///  > An internal fatal error occurred: $details
 ///
-/// Source: horus/pb/logs/logs.proto:640:1
+/// Source: horus/pb/logs/logs.proto:650:1
 class InternalFatal final : public PbMessage {
  public:
 
@@ -11336,7 +11858,7 @@ class InternalFatal final : public PbMessage {
 /// 
 ///  > $service is starting
 ///
-/// Source: horus/pb/logs/logs.proto:647:1
+/// Source: horus/pb/logs/logs.proto:657:1
 class ServiceStartingInfo final : public PbMessage {
  public:
 
@@ -11448,7 +11970,7 @@ class ServiceStartingInfo final : public PbMessage {
 /// 
 ///  > Configuration for node $node is unavailable
 ///
-/// Source: horus/pb/logs/logs.proto:654:1
+/// Source: horus/pb/logs/logs.proto:664:1
 class ConfigNodeNotFoundFatal final : public PbMessage {
  public:
 
@@ -11560,7 +12082,7 @@ class ConfigNodeNotFoundFatal final : public PbMessage {
 /// 
 ///  > Failed to setup: $details
 ///
-/// Source: horus/pb/logs/logs.proto:661:1
+/// Source: horus/pb/logs/logs.proto:671:1
 class ServiceSetupError final : public PbMessage {
  public:
 
@@ -11672,7 +12194,7 @@ class ServiceSetupError final : public PbMessage {
 /// 
 ///  > Filesystem error: $details
 ///
-/// Source: horus/pb/logs/logs.proto:668:1
+/// Source: horus/pb/logs/logs.proto:678:1
 class FilesystemError final : public PbMessage {
  public:
 
@@ -11784,7 +12306,7 @@ class FilesystemError final : public PbMessage {
 /// 
 ///  > Tried to apply invalid preset $preset due to $reason, falling back to $fallback_name.
 ///
-/// Source: horus/pb/logs/logs.proto:675:1
+/// Source: horus/pb/logs/logs.proto:685:1
 class InvalidPresetWarning final : public PbMessage {
  public:
 
@@ -12000,7 +12522,7 @@ class InvalidPresetWarning final : public PbMessage {
 /// 
 ///  > WebSocket failed to clear pending queues: $exception
 ///
-/// Source: horus/pb/logs/logs.proto:684:1
+/// Source: horus/pb/logs/logs.proto:694:1
 class WebsocketFailedClearPendingError final : public PbMessage {
  public:
 
@@ -12112,7 +12634,7 @@ class WebsocketFailedClearPendingError final : public PbMessage {
 /// 
 ///  > WebSocket failed to stop: $exception
 ///
-/// Source: horus/pb/logs/logs.proto:691:1
+/// Source: horus/pb/logs/logs.proto:701:1
 class WebsocketFailedToStopError final : public PbMessage {
  public:
 
@@ -12224,7 +12746,7 @@ class WebsocketFailedToStopError final : public PbMessage {
 /// 
 ///  > Failed to create RPC server ws://$host:$port/: $exception
 ///
-/// Source: horus/pb/logs/logs.proto:698:1
+/// Source: horus/pb/logs/logs.proto:708:1
 class WebsocketFailedToCreateError final : public PbMessage {
  public:
 
@@ -12428,7 +12950,7 @@ class WebsocketFailedToCreateError final : public PbMessage {
 /// 
 ///  > Unexpected RPC error: $details
 ///
-/// Source: horus/pb/logs/logs.proto:707:1
+/// Source: horus/pb/logs/logs.proto:717:1
 class UnexpectedRpcError final : public PbMessage {
  public:
 
@@ -12540,7 +13062,7 @@ class UnexpectedRpcError final : public PbMessage {
 /// 
 ///  > Failed to poll license server: $details
 ///
-/// Source: horus/pb/logs/logs.proto:714:1
+/// Source: horus/pb/logs/logs.proto:724:1
 class LicensePollFailed final : public PbMessage {
  public:
 
@@ -12652,7 +13174,7 @@ class LicensePollFailed final : public PbMessage {
 /// 
 ///  > License expired on $expiration_time.
 ///
-/// Source: horus/pb/logs/logs.proto:721:1
+/// Source: horus/pb/logs/logs.proto:731:1
 class LicenseExpiredWarning final : public PbMessage {
  public:
 
@@ -12764,7 +13286,7 @@ class LicenseExpiredWarning final : public PbMessage {
 /// 
 ///  > License count of $lidar_count exceeds allowed usage of $max_lidar_count
 ///
-/// Source: horus/pb/logs/logs.proto:728:1
+/// Source: horus/pb/logs/logs.proto:738:1
 class LicenseUsageExceededWarning final : public PbMessage {
  public:
 
@@ -12904,7 +13426,7 @@ class LicenseUsageExceededWarning final : public PbMessage {
 /// 
 ///  > ThreadPool task took $time_elapsed to complete task enqueued in $enqueue_location
 ///
-/// Source: horus/pb/logs/logs.proto:736:1
+/// Source: horus/pb/logs/logs.proto:746:1
 class StaticThreadPoolSlowTaskWarning final : public PbMessage {
  public:
 
@@ -13068,7 +13590,7 @@ class StaticThreadPoolSlowTaskWarning final : public PbMessage {
 /// 
 ///  > Received request for unsupported service: $service_id
 ///
-/// Source: horus/pb/logs/logs.proto:744:1
+/// Source: horus/pb/logs/logs.proto:754:1
 class RpcUnsupportedServiceWarning final : public PbMessage {
  public:
 
@@ -13168,7 +13690,7 @@ class RpcUnsupportedServiceWarning final : public PbMessage {
 /// 
 ///  > WebSocket RPC handler encountered an error: $what
 ///
-/// Source: horus/pb/logs/logs.proto:751:1
+/// Source: horus/pb/logs/logs.proto:761:1
 class WebsocketHandlerProblem final : public PbMessage {
  public:
 
@@ -13280,7 +13802,7 @@ class WebsocketHandlerProblem final : public PbMessage {
 /// 
 ///  > WebSocket RPC received message cannot be deserialized: $what
 ///
-/// Source: horus/pb/logs/logs.proto:758:1
+/// Source: horus/pb/logs/logs.proto:768:1
 class WebsocketDeserializeError final : public PbMessage {
  public:
 
@@ -13392,7 +13914,7 @@ class WebsocketDeserializeError final : public PbMessage {
 /// 
 ///  > Attempting to access expired WebSocket RPC endpoint $uri
 ///
-/// Source: horus/pb/logs/logs.proto:765:1
+/// Source: horus/pb/logs/logs.proto:775:1
 class WebsocketExpiredRpcEndpointError final : public PbMessage {
  public:
 
@@ -13504,7 +14026,7 @@ class WebsocketExpiredRpcEndpointError final : public PbMessage {
 /// 
 ///  > Websocket message queue overloaded: $current / $max
 ///
-/// Source: horus/pb/logs/logs.proto:772:1
+/// Source: horus/pb/logs/logs.proto:782:1
 class WebsocketQueueOverloadedWarning final : public PbMessage {
  public:
 
@@ -13644,7 +14166,7 @@ class WebsocketQueueOverloadedWarning final : public PbMessage {
 /// 
 ///  > Could not notify $notification_name to $service $uri: $what
 ///
-/// Source: horus/pb/logs/logs.proto:780:1
+/// Source: horus/pb/logs/logs.proto:790:1
 class RpcFailedToNotifyWarning final : public PbMessage {
  public:
 
@@ -13912,7 +14434,7 @@ class RpcFailedToNotifyWarning final : public PbMessage {
 /// 
 ///  > Failed to subscribe to config: $details
 ///
-/// Source: horus/pb/logs/logs.proto:790:1
+/// Source: horus/pb/logs/logs.proto:800:1
 class ConfigSubscriptionFailedWarning final : public PbMessage {
  public:
 
@@ -14024,7 +14546,7 @@ class ConfigSubscriptionFailedWarning final : public PbMessage {
 /// 
 ///  > Clamped thread pool workers to $clamped instead of $requested
 ///
-/// Source: horus/pb/logs/logs.proto:797:1
+/// Source: horus/pb/logs/logs.proto:807:1
 class ThreadPoolClampedWorkersWarning final : public PbMessage {
  public:
 
@@ -14164,7 +14686,7 @@ class ThreadPoolClampedWorkersWarning final : public PbMessage {
 /// 
 ///  > Trying to stop the Horus bag recorder which is already stopped.
 ///
-/// Source: horus/pb/logs/logs.proto:805:1
+/// Source: horus/pb/logs/logs.proto:815:1
 class StoppingHorusBagRecorderAlreadyStopped final : public PbMessage {
  public:
 
@@ -14228,7 +14750,7 @@ class StoppingHorusBagRecorderAlreadyStopped final : public PbMessage {
 /// 
 ///  > An update for the Horus bag recorder has been received while it was running. This update will not be taken into account until the next recording.
 ///
-/// Source: horus/pb/logs/logs.proto:811:1
+/// Source: horus/pb/logs/logs.proto:821:1
 class RecorderConfigUpdateWhileRunning final : public PbMessage {
  public:
 
@@ -14292,7 +14814,7 @@ class RecorderConfigUpdateWhileRunning final : public PbMessage {
 /// 
 ///  > Clamping point cloud: $details
 ///
-/// Source: horus/pb/logs/logs.proto:817:1
+/// Source: horus/pb/logs/logs.proto:827:1
 class ClampingDataWarning final : public PbMessage {
  public:
 
@@ -14404,7 +14926,7 @@ class ClampingDataWarning final : public PbMessage {
 /// 
 ///  > Lidars $lidar_ip1 and $lidar_ip2 have incompatible $value_names: $value1 vs. $value2; $resolution.
 ///
-/// Source: horus/pb/logs/logs.proto:824:1
+/// Source: horus/pb/logs/logs.proto:834:1
 class LidarIncompatibleValues final : public PbMessage {
  public:
 
@@ -14776,7 +15298,7 @@ class LidarIncompatibleValues final : public PbMessage {
 /// 
 ///  > Cannot determine current Docker container ID; unknown $container_id_file_path format.
 ///
-/// Source: horus/pb/logs/logs.proto:836:1
+/// Source: horus/pb/logs/logs.proto:846:1
 class CannotDetermineContainerIdError final : public PbMessage {
  public:
 
@@ -14886,9 +15408,9 @@ class CannotDetermineContainerIdError final : public PbMessage {
 
 /// Log #108.
 /// 
-///  > Started lidar driver container $lidar_id.
+///  > Started lidar driver container $lidar_name [$lidar_id].
 ///
-/// Source: horus/pb/logs/logs.proto:843:1
+/// Source: horus/pb/logs/logs.proto:853:1
 class StartedLidarDriver final : public PbMessage {
  public:
 
@@ -14988,19 +15510,71 @@ class StartedLidarDriver final : public PbMessage {
     return std::move(set_lidar_id(std::move(lidar_id)));
   }
 
+  // Field `lidar_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 2) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 2).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  StartedLidarDriver& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  StartedLidarDriver&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// Log #109.
 /// 
-///  > Cannot start lidar driver container $lidar_id: $details.
+///  > Cannot start lidar driver container $lidar_name [$lidar_id]: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:850:1
+/// Source: horus/pb/logs/logs.proto:861:1
 class CannotStartLidarDriver final : public PbMessage {
  public:
 
@@ -15150,21 +15724,73 @@ class CannotStartLidarDriver final : public PbMessage {
     return std::move(set_details(std::move(details)));
   }
 
+  // Field `lidar_name` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 3) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[2]; }
+
+  /// Clears `lidar_name` (no 3).
+  void clear_lidar_name() & noexcept {
+    set_fields_[2] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  CannotStartLidarDriver& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[2] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  CannotStartLidarDriver&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
   /// @see details()
   CowBytes details_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 /// Log #110.
 /// 
-///  > Stopped lidar driver container $lidar_id.
+///  > Stopped lidar driver container $lidar_name [$lidar_id].
 ///
-/// Source: horus/pb/logs/logs.proto:858:1
+/// Source: horus/pb/logs/logs.proto:870:1
 class StoppedLidarDriver final : public PbMessage {
  public:
 
@@ -15264,19 +15890,71 @@ class StoppedLidarDriver final : public PbMessage {
     return std::move(set_lidar_id(std::move(lidar_id)));
   }
 
+  // Field `lidar_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 2) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 2).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  StoppedLidarDriver& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  StoppedLidarDriver&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// Log #111.
 /// 
-///  > Cannot stop lidar driver container $lidar_id: $details.
+///  > Cannot stop lidar driver container $lidar_name [$lidar_id]: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:865:1
+/// Source: horus/pb/logs/logs.proto:878:1
 class CannotStopLidarDriver final : public PbMessage {
  public:
 
@@ -15426,21 +16104,73 @@ class CannotStopLidarDriver final : public PbMessage {
     return std::move(set_details(std::move(details)));
   }
 
+  // Field `lidar_name` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 3) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[2]; }
+
+  /// Clears `lidar_name` (no 3).
+  void clear_lidar_name() & noexcept {
+    set_fields_[2] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  CannotStopLidarDriver& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[2] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  CannotStopLidarDriver&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
   /// @see details()
   CowBytes details_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 /// Log #112.
 /// 
-///  > Restarted lidar driver container $lidar_id.
+///  > Restarted lidar driver container $lidar_name [$lidar_id].
 ///
-/// Source: horus/pb/logs/logs.proto:873:1
+/// Source: horus/pb/logs/logs.proto:887:1
 class RestartedLidarDriver final : public PbMessage {
  public:
 
@@ -15540,19 +16270,71 @@ class RestartedLidarDriver final : public PbMessage {
     return std::move(set_lidar_id(std::move(lidar_id)));
   }
 
+  // Field `lidar_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 2) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 2).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  RestartedLidarDriver& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  RestartedLidarDriver&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// Log #113.
 /// 
-///  > Cannot restart lidar driver container $lidar_id: $details.
+///  > Cannot restart lidar driver container $lidar_name [$lidar_id]: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:880:1
+/// Source: horus/pb/logs/logs.proto:895:1
 class CannotRestartLidarDriver final : public PbMessage {
  public:
 
@@ -15702,21 +16484,73 @@ class CannotRestartLidarDriver final : public PbMessage {
     return std::move(set_details(std::move(details)));
   }
 
+  // Field `lidar_name` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 3) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[2]; }
+
+  /// Clears `lidar_name` (no 3).
+  void clear_lidar_name() & noexcept {
+    set_fields_[2] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  CannotRestartLidarDriver& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[2] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  CannotRestartLidarDriver&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
   /// @see details()
   CowBytes details_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 /// Log #114.
 /// 
-///  > Removed unused lidar driver container $lidar_id.
+///  > Removed unused lidar driver container $lidar_name [$lidar_id].
 ///
-/// Source: horus/pb/logs/logs.proto:888:1
+/// Source: horus/pb/logs/logs.proto:904:1
 class RemovedUnusedLidarDriver final : public PbMessage {
  public:
 
@@ -15816,19 +16650,71 @@ class RemovedUnusedLidarDriver final : public PbMessage {
     return std::move(set_lidar_id(std::move(lidar_id)));
   }
 
+  // Field `lidar_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 2) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 2).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  RemovedUnusedLidarDriver& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  RemovedUnusedLidarDriver&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// Log #115.
 /// 
-///  > Cannot remove unused lidar driver container $lidar_id: $details.
+///  > Cannot remove unused lidar driver container $lidar_name [$lidar_id]: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:895:1
+/// Source: horus/pb/logs/logs.proto:912:1
 class CannotRemoveUnusedLidarDriver final : public PbMessage {
  public:
 
@@ -15978,21 +16864,73 @@ class CannotRemoveUnusedLidarDriver final : public PbMessage {
     return std::move(set_details(std::move(details)));
   }
 
+  // Field `lidar_name` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 3) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[2]; }
+
+  /// Clears `lidar_name` (no 3).
+  void clear_lidar_name() & noexcept {
+    set_fields_[2] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  CannotRemoveUnusedLidarDriver& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[2] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  CannotRemoveUnusedLidarDriver&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
   /// @see details()
   CowBytes details_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 /// Log #116.
 /// 
 ///  > Error encountered while removing unused lidar driver containers: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:903:1
+/// Source: horus/pb/logs/logs.proto:921:1
 class LidarDriverGcFailure final : public PbMessage {
  public:
 
@@ -16104,7 +17042,7 @@ class LidarDriverGcFailure final : public PbMessage {
 /// 
 ///  > Cannot allocate new identifier with prefix "$prefix".
 ///
-/// Source: horus/pb/logs/logs.proto:910:1
+/// Source: horus/pb/logs/logs.proto:928:1
 class IdSpaceExhausted final : public PbMessage {
  public:
 
@@ -16216,7 +17154,7 @@ class IdSpaceExhausted final : public PbMessage {
 /// 
 ///  > The point cloud publishing to the point aggregator service has been skipped $num_skipped_points time(s) in the last $check_interval.
 ///
-/// Source: horus/pb/logs/logs.proto:917:1
+/// Source: horus/pb/logs/logs.proto:935:1
 class PreprocessingToPointAggregatorPointsSkipped final : public PbMessage {
  public:
 
@@ -16366,9 +17304,9 @@ class PreprocessingToPointAggregatorPointsSkipped final : public PbMessage {
 
 /// Log #119.
 /// 
-///  > Discarding lidar points from $lidar_id since the time interval between two point-cloud messages is too close (<$threshold). Adjust the Min-Message Interval parameter to change this behavior.
+///  > Discarding lidar points from $lidar_name [$lidar_id] since the time interval between two point-cloud messages is too close (<$threshold). Adjust the Min-Message Interval parameter to change this behavior.
 ///
-/// Source: horus/pb/logs/logs.proto:925:1
+/// Source: horus/pb/logs/logs.proto:943:1
 class MinMsgIntervalLessThanThreshold final : public PbMessage {
  public:
 
@@ -16518,21 +17456,73 @@ class MinMsgIntervalLessThanThreshold final : public PbMessage {
     return std::move(set_threshold(std::move(threshold)));
   }
 
+  // Field `lidar_name` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 3) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[2]; }
+
+  /// Clears `lidar_name` (no 3).
+  void clear_lidar_name() & noexcept {
+    set_fields_[2] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  MinMsgIntervalLessThanThreshold& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[2] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  MinMsgIntervalLessThanThreshold&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
   /// @see threshold()
   horus::pb::LogMetadata_Duration threshold_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 /// Log #120.
 /// 
 ///  > Failed to clean up ROS nodes and processes: $details
 ///
-/// Source: horus/pb/logs/logs.proto:933:1
+/// Source: horus/pb/logs/logs.proto:952:1
 class FailedToCleanupRosWarning final : public PbMessage {
  public:
 
@@ -16644,7 +17634,7 @@ class FailedToCleanupRosWarning final : public PbMessage {
 /// 
 ///  > RPC request $request_name to $endpoint failed since endpoint is disconnected.
 ///
-/// Source: horus/pb/logs/logs.proto:940:1
+/// Source: horus/pb/logs/logs.proto:959:1
 class RpcDisconnectedWarning final : public PbMessage {
  public:
 
@@ -16808,7 +17798,7 @@ class RpcDisconnectedWarning final : public PbMessage {
 /// 
 ///  > RPC request handler for $request_name failed due to an unhandled internal error: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:948:1
+/// Source: horus/pb/logs/logs.proto:967:1
 class RpcUnhandledError final : public PbMessage {
  public:
 
@@ -16972,7 +17962,7 @@ class RpcUnhandledError final : public PbMessage {
 /// 
 ///  > Time difference is out of range: $diff. Previous timestamp: $prev_time, Current timestamp: $curr_time.
 ///
-/// Source: horus/pb/logs/logs.proto:956:1
+/// Source: horus/pb/logs/logs.proto:975:1
 class TimeDiffOutOfRangeWarning final : public PbMessage {
  public:
 
@@ -17188,7 +18178,7 @@ class TimeDiffOutOfRangeWarning final : public PbMessage {
 /// 
 ///  > [TensorRT] $log
 ///
-/// Source: horus/pb/logs/logs.proto:965:1
+/// Source: horus/pb/logs/logs.proto:984:1
 class TensorrtLog final : public PbMessage {
  public:
 
@@ -17300,7 +18290,7 @@ class TensorrtLog final : public PbMessage {
 /// 
 ///  > Building TensorRT engine since the model has changed or the engine is not available. This may take a while.
 ///
-/// Source: horus/pb/logs/logs.proto:972:1
+/// Source: horus/pb/logs/logs.proto:991:1
 class BuildingTensorrtEngineInfo final : public PbMessage {
  public:
 
@@ -17364,7 +18354,7 @@ class BuildingTensorrtEngineInfo final : public PbMessage {
 /// 
 ///  > Loading TensorRT engine. This may take a while.
 ///
-/// Source: horus/pb/logs/logs.proto:978:1
+/// Source: horus/pb/logs/logs.proto:997:1
 class LoadingTensorrtEngineInfo final : public PbMessage {
  public:
 
@@ -17428,7 +18418,7 @@ class LoadingTensorrtEngineInfo final : public PbMessage {
 /// 
 ///  > The calibration map $path was not found.
 ///
-/// Source: horus/pb/logs/logs.proto:984:1
+/// Source: horus/pb/logs/logs.proto:1003:1
 class CalibrationMapNotFound final : public PbMessage {
  public:
 
@@ -17540,7 +18530,7 @@ class CalibrationMapNotFound final : public PbMessage {
 /// 
 ///  > The calibration map $path is not valid.
 ///
-/// Source: horus/pb/logs/logs.proto:991:1
+/// Source: horus/pb/logs/logs.proto:1010:1
 class CalibrationMapNotValid final : public PbMessage {
  public:
 
@@ -17652,7 +18642,7 @@ class CalibrationMapNotValid final : public PbMessage {
 /// 
 ///  > The calibration map path $path already exists.
 ///
-/// Source: horus/pb/logs/logs.proto:998:1
+/// Source: horus/pb/logs/logs.proto:1017:1
 class CalibrationMapPathAlreadyExists final : public PbMessage {
  public:
 
@@ -17764,7 +18754,7 @@ class CalibrationMapPathAlreadyExists final : public PbMessage {
 /// 
 ///  > Failed to save the calibration map to $path.
 ///
-/// Source: horus/pb/logs/logs.proto:1005:1
+/// Source: horus/pb/logs/logs.proto:1024:1
 class FailedToSaveCalibrationMap final : public PbMessage {
  public:
 
@@ -17876,7 +18866,7 @@ class FailedToSaveCalibrationMap final : public PbMessage {
 /// 
 ///  > Failed to remove the calibration map at $path.
 ///
-/// Source: horus/pb/logs/logs.proto:1012:1
+/// Source: horus/pb/logs/logs.proto:1031:1
 class FailedToRemoveCalibrationMap final : public PbMessage {
  public:
 
@@ -17988,7 +18978,7 @@ class FailedToRemoveCalibrationMap final : public PbMessage {
 /// 
 ///  > Failed to iterate in the $directory_name directory $directory_path: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:1019:1
+/// Source: horus/pb/logs/logs.proto:1038:1
 class FailedToIterateInDirectory final : public PbMessage {
  public:
 
@@ -18204,7 +19194,7 @@ class FailedToIterateInDirectory final : public PbMessage {
 /// 
 ///  > The calibration map must be running before triggering the map-based calibration.
 ///
-/// Source: horus/pb/logs/logs.proto:1028:1
+/// Source: horus/pb/logs/logs.proto:1047:1
 class MapBasedCalibrationWithoutMapLoading final : public PbMessage {
  public:
 
@@ -18268,7 +19258,7 @@ class MapBasedCalibrationWithoutMapLoading final : public PbMessage {
 /// 
 ///  > The map-based calibration is already running.
 ///
-/// Source: horus/pb/logs/logs.proto:1034:1
+/// Source: horus/pb/logs/logs.proto:1053:1
 class MapBasedCalibrationAlreadyRunning final : public PbMessage {
  public:
 
@@ -18332,7 +19322,7 @@ class MapBasedCalibrationAlreadyRunning final : public PbMessage {
 /// 
 ///  > A cancel map-based calibration request has been received while the calibration is not running.
 ///
-/// Source: horus/pb/logs/logs.proto:1040:1
+/// Source: horus/pb/logs/logs.proto:1059:1
 class CancelMapBasedCalibrationNotRunning final : public PbMessage {
  public:
 
@@ -18396,7 +19386,7 @@ class CancelMapBasedCalibrationNotRunning final : public PbMessage {
 /// 
 ///  > The stream $stream_id was not found from $bag_path.
 ///
-/// Source: horus/pb/logs/logs.proto:1046:1
+/// Source: horus/pb/logs/logs.proto:1065:1
 class BagStreamNotFound final : public PbMessage {
  public:
 
@@ -18560,7 +19550,7 @@ class BagStreamNotFound final : public PbMessage {
 /// 
 ///  > Evaluation bag started for $bag_path
 ///
-/// Source: horus/pb/logs/logs.proto:1054:1
+/// Source: horus/pb/logs/logs.proto:1073:1
 class EvaluationBagStartedInfo final : public PbMessage {
  public:
 
@@ -18672,7 +19662,7 @@ class EvaluationBagStartedInfo final : public PbMessage {
 /// 
 ///  > Evaluation bag finished for $bag_path
 ///
-/// Source: horus/pb/logs/logs.proto:1061:1
+/// Source: horus/pb/logs/logs.proto:1080:1
 class EvaluationBagFinishedInfo final : public PbMessage {
  public:
 
@@ -18784,7 +19774,7 @@ class EvaluationBagFinishedInfo final : public PbMessage {
 /// 
 ///  > The bag $bag_path was not found.
 ///
-/// Source: horus/pb/logs/logs.proto:1068:1
+/// Source: horus/pb/logs/logs.proto:1087:1
 class BagNotFound final : public PbMessage {
  public:
 
@@ -18896,7 +19886,7 @@ class BagNotFound final : public PbMessage {
 /// 
 ///  > Building the $pipeline_name pipeline.
 ///
-/// Source: horus/pb/logs/logs.proto:1075:1
+/// Source: horus/pb/logs/logs.proto:1094:1
 class BuildingPipelineInfo final : public PbMessage {
  public:
 
@@ -19008,7 +19998,7 @@ class BuildingPipelineInfo final : public PbMessage {
 /// 
 ///  > The bag $bag_path is not an evaluation bag.
 ///
-/// Source: horus/pb/logs/logs.proto:1082:1
+/// Source: horus/pb/logs/logs.proto:1101:1
 class BagIsNotEvaluation final : public PbMessage {
  public:
 
@@ -19120,7 +20110,7 @@ class BagIsNotEvaluation final : public PbMessage {
 /// 
 ///  > A Horus bag is currently running.
 ///
-/// Source: horus/pb/logs/logs.proto:1089:1
+/// Source: horus/pb/logs/logs.proto:1108:1
 class HorusBagRunning final : public PbMessage {
  public:
 
@@ -19184,7 +20174,7 @@ class HorusBagRunning final : public PbMessage {
 /// 
 ///  > Automatic ground calibration failed for the following lidars: $failed_lidar_ids.
 ///
-/// Source: horus/pb/logs/logs.proto:1095:1
+/// Source: horus/pb/logs/logs.proto:1114:1
 class AutoGroundCalibrationWarning final : public PbMessage {
  public:
 
@@ -19296,7 +20286,7 @@ class AutoGroundCalibrationWarning final : public PbMessage {
 /// 
 ///  > Automatic ground calibration failed for all lidars.
 ///
-/// Source: horus/pb/logs/logs.proto:1102:1
+/// Source: horus/pb/logs/logs.proto:1121:1
 class AutoGroundCalibrationError final : public PbMessage {
  public:
 
@@ -19360,7 +20350,7 @@ class AutoGroundCalibrationError final : public PbMessage {
 /// 
 ///  > The object detector is not loaded yet. Temporarily using rule based detection which may result in degraded detection results.
 ///
-/// Source: horus/pb/logs/logs.proto:1108:1
+/// Source: horus/pb/logs/logs.proto:1127:1
 class ObjectDetectorNotLoadedWarning final : public PbMessage {
  public:
 
@@ -19424,7 +20414,7 @@ class ObjectDetectorNotLoadedWarning final : public PbMessage {
 /// 
 ///  > A calibration process is already running.
 ///
-/// Source: horus/pb/logs/logs.proto:1114:1
+/// Source: horus/pb/logs/logs.proto:1133:1
 class CalibrationIsRunningError final : public PbMessage {
  public:
 
@@ -19488,7 +20478,7 @@ class CalibrationIsRunningError final : public PbMessage {
 /// 
 ///  > $component will start processing data once all models have finished initializing.
 ///
-/// Source: horus/pb/logs/logs.proto:1120:1
+/// Source: horus/pb/logs/logs.proto:1139:1
 class ModelInitInProgressInfo final : public PbMessage {
  public:
 
@@ -19600,7 +20590,7 @@ class ModelInitInProgressInfo final : public PbMessage {
 /// 
 ///  > RPC request "$request_name" to "$endpoint" timed out after $elapsed. Resolution: $resolution
 ///
-/// Source: horus/pb/logs/logs.proto:1127:1
+/// Source: horus/pb/logs/logs.proto:1146:1
 class RpcTimeoutWithResolutionWarning final : public PbMessage {
  public:
 
@@ -19868,7 +20858,7 @@ class RpcTimeoutWithResolutionWarning final : public PbMessage {
 /// 
 ///  > The $calibration_process_name process was cancelled.
 ///
-/// Source: horus/pb/logs/logs.proto:1137:1
+/// Source: horus/pb/logs/logs.proto:1156:1
 class CalibrationWasCancelledInfo final : public PbMessage {
  public:
 
@@ -19980,7 +20970,7 @@ class CalibrationWasCancelledInfo final : public PbMessage {
 /// 
 ///  > Failed to start recording the calibration map: $path
 ///
-/// Source: horus/pb/logs/logs.proto:1144:1
+/// Source: horus/pb/logs/logs.proto:1163:1
 class CalibrationMapRecordingFailedToStart final : public PbMessage {
  public:
 
@@ -20092,7 +21082,7 @@ class CalibrationMapRecordingFailedToStart final : public PbMessage {
 /// 
 ///  > The detection pipeline has been requested to be reset because $reason.
 ///
-/// Source: horus/pb/logs/logs.proto:1151:1
+/// Source: horus/pb/logs/logs.proto:1170:1
 class DetectionPipelineRequestedResetInfo final : public PbMessage {
  public:
 
@@ -20204,7 +21194,7 @@ class DetectionPipelineRequestedResetInfo final : public PbMessage {
 /// 
 ///  > Preprocessing service pipeline is not available yet due to $reason.
 ///
-/// Source: horus/pb/logs/logs.proto:1158:1
+/// Source: horus/pb/logs/logs.proto:1177:1
 class PreprocessingServicePipelineUnavailable final : public PbMessage {
  public:
 
@@ -20316,7 +21306,7 @@ class PreprocessingServicePipelineUnavailable final : public PbMessage {
 /// 
 ///  > The timeframe snapshot is disabled: $reason
 ///
-/// Source: horus/pb/logs/logs.proto:1165:1
+/// Source: horus/pb/logs/logs.proto:1184:1
 class CircularRecordingDisabledWarning final : public PbMessage {
  public:
 
@@ -20428,7 +21418,7 @@ class CircularRecordingDisabledWarning final : public PbMessage {
 /// 
 ///  > A snapshot is already running.
 ///
-/// Source: horus/pb/logs/logs.proto:1172:1
+/// Source: horus/pb/logs/logs.proto:1191:1
 class SnapshotAlreadyRunningWarning final : public PbMessage {
  public:
 
@@ -20492,7 +21482,7 @@ class SnapshotAlreadyRunningWarning final : public PbMessage {
 /// 
 ///  > The active project has been changed.
 ///
-/// Source: horus/pb/logs/logs.proto:1178:1
+/// Source: horus/pb/logs/logs.proto:1197:1
 class ActiveProjectChangedInfo final : public PbMessage {
  public:
 
@@ -20556,7 +21546,7 @@ class ActiveProjectChangedInfo final : public PbMessage {
 /// 
 ///  > The project configuration has been updated.
 ///
-/// Source: horus/pb/logs/logs.proto:1184:1
+/// Source: horus/pb/logs/logs.proto:1203:1
 class ProjectConfigUpdatedInfo final : public PbMessage {
  public:
 
@@ -20618,9 +21608,9 @@ class ProjectConfigUpdatedInfo final : public PbMessage {
 
 /// Log #163.
 /// 
-///  > Invalid timestamp $timestamp sent by lidar $lidar_id.
+///  > Invalid timestamp $timestamp sent by lidar $lidar_name [$lidar_id].
 ///
-/// Source: horus/pb/logs/logs.proto:1190:1
+/// Source: horus/pb/logs/logs.proto:1209:1
 class InvalidLidarTimestamp final : public PbMessage {
  public:
 
@@ -20770,21 +21760,73 @@ class InvalidLidarTimestamp final : public PbMessage {
     return std::move(set_timestamp(std::move(timestamp)));
   }
 
+  // Field `lidar_name` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 3) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[2]; }
+
+  /// Clears `lidar_name` (no 3).
+  void clear_lidar_name() & noexcept {
+    set_fields_[2] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  InvalidLidarTimestamp& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[2] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  InvalidLidarTimestamp&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
   /// @see timestamp()
   horus::pb::LogMetadata_Timestamp timestamp_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 /// Log #164.
 /// 
 ///  > Calibration is accumulating points for $time
 ///
-/// Source: horus/pb/logs/logs.proto:1198:1
+/// Source: horus/pb/logs/logs.proto:1218:1
 class CalibrationAccumulatingPointsInfo final : public PbMessage {
  public:
 
@@ -20896,7 +21938,7 @@ class CalibrationAccumulatingPointsInfo final : public PbMessage {
 /// 
 ///  > The sparse noise filter cannot be used with non-rotational lidars.
 ///
-/// Source: horus/pb/logs/logs.proto:1205:1
+/// Source: horus/pb/logs/logs.proto:1225:1
 class SparseNoiseFilterUsageNonRotationalLidars final : public PbMessage {
  public:
 
@@ -20960,7 +22002,7 @@ class SparseNoiseFilterUsageNonRotationalLidars final : public PbMessage {
 /// 
 ///  > Failed to write to file "$filename": "$details".
 ///
-/// Source: horus/pb/logs/logs.proto:1211:1
+/// Source: horus/pb/logs/logs.proto:1231:1
 class FileWriteWarning final : public PbMessage {
  public:
 
@@ -21124,7 +22166,7 @@ class FileWriteWarning final : public PbMessage {
 /// 
 ///  > $feature_name is not allowed by the current license.
 ///
-/// Source: horus/pb/logs/logs.proto:1219:1
+/// Source: horus/pb/logs/logs.proto:1239:1
 class LicenseForbiddenFeature final : public PbMessage {
  public:
 
@@ -21236,7 +22278,7 @@ class LicenseForbiddenFeature final : public PbMessage {
 /// 
 ///  > Failed to update the configuration: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:1226:1
+/// Source: horus/pb/logs/logs.proto:1246:1
 class FailedToUpdateConfiguration final : public PbMessage {
  public:
 
@@ -21348,7 +22390,7 @@ class FailedToUpdateConfiguration final : public PbMessage {
 /// 
 ///  > The obstruction detector reference is not valid since it contains zero points.
 ///
-/// Source: horus/pb/logs/logs.proto:1233:1
+/// Source: horus/pb/logs/logs.proto:1253:1
 class ObstructionDetectorBadReferenceWarning final : public PbMessage {
  public:
 
@@ -21412,7 +22454,7 @@ class ObstructionDetectorBadReferenceWarning final : public PbMessage {
 /// 
 ///  > Project file "$filename" has invalid permissions. Please restart Horus to fix the issue.
 ///
-/// Source: horus/pb/logs/logs.proto:1239:1
+/// Source: horus/pb/logs/logs.proto:1259:1
 class ProjectFileInvalidPermissionsError final : public PbMessage {
  public:
 
@@ -21524,7 +22566,7 @@ class ProjectFileInvalidPermissionsError final : public PbMessage {
 /// 
 ///  > Pipeline scheduler error: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:1246:1
+/// Source: horus/pb/logs/logs.proto:1266:1
 class PipelineSchedulerError final : public PbMessage {
  public:
 
@@ -21636,7 +22678,7 @@ class PipelineSchedulerError final : public PbMessage {
 /// 
 ///  > Multi lidar calibration failed for the following lidars: $failed_lidar_ids.
 ///
-/// Source: horus/pb/logs/logs.proto:1253:1
+/// Source: horus/pb/logs/logs.proto:1273:1
 class MultiLidarCalibrationWarning final : public PbMessage {
  public:
 
@@ -21748,7 +22790,7 @@ class MultiLidarCalibrationWarning final : public PbMessage {
 /// 
 ///  > Multi lidar calibration failed for all lidars.
 ///
-/// Source: horus/pb/logs/logs.proto:1260:1
+/// Source: horus/pb/logs/logs.proto:1280:1
 class MultiLidarCalibrationError final : public PbMessage {
  public:
 
@@ -21812,7 +22854,7 @@ class MultiLidarCalibrationError final : public PbMessage {
 /// 
 ///  > The bag file $bag_path with version $version is old. Please consider updating it with the API, refer to API documentation.
 ///
-/// Source: horus/pb/logs/logs.proto:1266:1
+/// Source: horus/pb/logs/logs.proto:1286:1
 class OldBagWarning final : public PbMessage {
  public:
 
@@ -21964,7 +23006,7 @@ class OldBagWarning final : public PbMessage {
 /// 
 ///  > Upgrading bag file $bag_path to latest version.
 ///
-/// Source: horus/pb/logs/logs.proto:1274:1
+/// Source: horus/pb/logs/logs.proto:1294:1
 class UpgradingBagInfo final : public PbMessage {
  public:
 
@@ -22076,7 +23118,7 @@ class UpgradingBagInfo final : public PbMessage {
 /// 
 ///  > Failed to save the bag calibration: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:1281:1
+/// Source: horus/pb/logs/logs.proto:1301:1
 class BagCalibrationSaveFailed final : public PbMessage {
  public:
 
@@ -22188,7 +23230,7 @@ class BagCalibrationSaveFailed final : public PbMessage {
 /// 
 ///  > Failed to upgrade the bag file $bag_path: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:1288:1
+/// Source: horus/pb/logs/logs.proto:1308:1
 class BagUpgradeFailed final : public PbMessage {
  public:
 
@@ -22350,9 +23392,9 @@ class BagUpgradeFailed final : public PbMessage {
 
 /// Log #178.
 /// 
-///  > Received points from unknown lidar $lidar_id.
+///  > Received points from unknown lidar $lidar_name [$lidar_id].
 ///
-/// Source: horus/pb/logs/logs.proto:1296:1
+/// Source: horus/pb/logs/logs.proto:1316:1
 class UnknownLidarError final : public PbMessage {
  public:
 
@@ -22452,19 +23494,71 @@ class UnknownLidarError final : public PbMessage {
     return std::move(set_lidar_id(std::move(lidar_id)));
   }
 
+  // Field `lidar_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 2) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 2).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  UnknownLidarError& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  UnknownLidarError&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// Log #179.
 /// 
-///  > Invalid point cloud received from lidar $lidar_id: $reason
+///  > Invalid point cloud received from lidar $lidar_name [$lidar_id]: $reason
 ///
-/// Source: horus/pb/logs/logs.proto:1303:1
+/// Source: horus/pb/logs/logs.proto:1324:1
 class InvalidPointCloudWarning final : public PbMessage {
  public:
 
@@ -22614,21 +23708,73 @@ class InvalidPointCloudWarning final : public PbMessage {
     return std::move(set_reason(std::move(reason)));
   }
 
+  // Field `lidar_name` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 3) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[2]; }
+
+  /// Clears `lidar_name` (no 3).
+  void clear_lidar_name() & noexcept {
+    set_fields_[2] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  InvalidPointCloudWarning& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[2] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  InvalidPointCloudWarning&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
   /// @see reason()
   CowBytes reason_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 /// Log #180.
 /// 
-///  > The lidar $lidar_id is dropping packets (dropped $num_total_dropped_packets packets out of $num_total_expected_packets).
+///  > The lidar $lidar_name [$lidar_id] is dropping packets (dropped $num_total_dropped_packets packets out of $num_total_expected_packets).
 ///
-/// Source: horus/pb/logs/logs.proto:1311:1
+/// Source: horus/pb/logs/logs.proto:1333:1
 class LidarIsDroppingPackets final : public PbMessage {
  public:
 
@@ -22804,6 +23950,56 @@ class LidarIsDroppingPackets final : public PbMessage {
     return std::move(set_num_total_expected_packets(num_total_expected_packets));
   }
 
+  // Field `lidar_name` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 4) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[3]; }
+
+  /// Clears `lidar_name` (no 4).
+  void clear_lidar_name() & noexcept {
+    set_fields_[3] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 4) and returns `*this`.
+  LidarIsDroppingPackets& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[3] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 4) and returns `*this`.
+  LidarIsDroppingPackets&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
@@ -22811,16 +24007,18 @@ class LidarIsDroppingPackets final : public PbMessage {
   std::uint64_t num_total_dropped_packets_{};
   /// @see num_total_expected_packets()
   std::uint64_t num_total_expected_packets_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<3> set_fields_;
+  std::bitset<4> set_fields_;
 };
 
 /// Log #181.
 /// 
 ///  > Some deprecated lidars have been found in the loaded project. These invalid lidars were removed from the active project but a backup config file has been saved in $backup_path.
 ///
-/// Source: horus/pb/logs/logs.proto:1320:1
+/// Source: horus/pb/logs/logs.proto:1343:1
 class RemovedInvalidLidarsFromConfigWarning final : public PbMessage {
  public:
 
@@ -22932,7 +24130,7 @@ class RemovedInvalidLidarsFromConfigWarning final : public PbMessage {
 /// 
 ///  > Failed recording the calibration map: $message
 ///
-/// Source: horus/pb/logs/logs.proto:1327:1
+/// Source: horus/pb/logs/logs.proto:1350:1
 class CalibrationMapRecordingFailed final : public PbMessage {
  public:
 
@@ -23044,7 +24242,7 @@ class CalibrationMapRecordingFailed final : public PbMessage {
 /// 
 ///  > Detection node $node_name not found.
 ///
-/// Source: horus/pb/logs/logs.proto:1334:1
+/// Source: horus/pb/logs/logs.proto:1357:1
 class DetectionNodeNotFoundError final : public PbMessage {
  public:
 
@@ -23156,7 +24354,7 @@ class DetectionNodeNotFoundError final : public PbMessage {
 /// 
 ///  > Horus upgraded from $old_horus_version to $new_horus_version. The project was backed up to $backup_path before being upgraded.
 ///
-/// Source: horus/pb/logs/logs.proto:1341:1
+/// Source: horus/pb/logs/logs.proto:1364:1
 class CreatedVersionBackupInfo final : public PbMessage {
  public:
 
@@ -23372,7 +24570,7 @@ class CreatedVersionBackupInfo final : public PbMessage {
 /// 
 ///  > Failed to load PLY file $file_path: $details
 ///
-/// Source: horus/pb/logs/logs.proto:1350:1
+/// Source: horus/pb/logs/logs.proto:1373:1
 class PlyFileLoadFailedError final : public PbMessage {
  public:
 
@@ -23534,9 +24732,9 @@ class PlyFileLoadFailedError final : public PbMessage {
 
 /// Log #186.
 /// 
-///  > Hesai XT32 driver $action for LiDAR $lidar_id.
+///  > [$lidar_name][$lidar_id] Hesai XT32 driver $action.
 ///
-/// Source: horus/pb/logs/logs.proto:1358:1
+/// Source: horus/pb/logs/logs.proto:1381:1
 class HesaiDriverLifecycle final : public PbMessage {
  public:
 
@@ -23686,21 +24884,73 @@ class HesaiDriverLifecycle final : public PbMessage {
     return std::move(set_lidar_id(std::move(lidar_id)));
   }
 
+  // Field `lidar_name` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 3) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[2]; }
+
+  /// Clears `lidar_name` (no 3).
+  void clear_lidar_name() & noexcept {
+    set_fields_[2] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  HesaiDriverLifecycle& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[2] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  HesaiDriverLifecycle&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see action()
   CowBytes action_{};
   /// @see lidar_id()
   CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 /// Log #187.
 /// 
-///  > Hesai XT32 driver error: $details
+///  > [$lidar_name][$lidar_id] Hesai XT32 driver error: $details
 ///
-/// Source: horus/pb/logs/logs.proto:1366:1
+/// Source: horus/pb/logs/logs.proto:1390:1
 class HesaiDriverError final : public PbMessage {
  public:
 
@@ -23800,19 +25050,123 @@ class HesaiDriverError final : public PbMessage {
     return std::move(set_details(std::move(details)));
   }
 
+  // Field `lidar_id` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 2) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_id` (no 2).
+  void clear_lidar_id() & noexcept {
+    set_fields_[1] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 2) and returns `*this`.
+  HesaiDriverError& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[1] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 2) and returns `*this`.
+  HesaiDriverError&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `lidar_name` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 3) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[2]; }
+
+  /// Clears `lidar_name` (no 3).
+  void clear_lidar_name() & noexcept {
+    set_fields_[2] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  HesaiDriverError& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[2] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  HesaiDriverError&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see details()
   CowBytes details_{};
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 /// Log #188.
 /// 
-///  > Failed to process packet for Hesai LiDAR $lidar_id: $details
+///  > [$lidar_name][$lidar_id] Failed to process packet: $details
 ///
-/// Source: horus/pb/logs/logs.proto:1373:1
+/// Source: horus/pb/logs/logs.proto:1399:1
 class HesaiPacketProcessingFailed final : public PbMessage {
  public:
 
@@ -23962,21 +25316,73 @@ class HesaiPacketProcessingFailed final : public PbMessage {
     return std::move(set_details(std::move(details)));
   }
 
+  // Field `lidar_name` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 3) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[2]; }
+
+  /// Clears `lidar_name` (no 3).
+  void clear_lidar_name() & noexcept {
+    set_fields_[2] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  HesaiPacketProcessingFailed& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[2] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  HesaiPacketProcessingFailed&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
   /// @see details()
   CowBytes details_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 /// Log #189.
 /// 
-///  > Failed to load Hesai XT32 correction file $file_type: $details
+///  > [$lidar_name][$lidar_id] Failed to load Hesai XT32 correction file $file_type: $details
 ///
-/// Source: horus/pb/logs/logs.proto:1381:1
+/// Source: horus/pb/logs/logs.proto:1408:1
 class HesaiCorrectionFileError final : public PbMessage {
  public:
 
@@ -24126,21 +25532,125 @@ class HesaiCorrectionFileError final : public PbMessage {
     return std::move(set_details(std::move(details)));
   }
 
+  // Field `lidar_id` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 3) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[2]; }
+
+  /// Clears `lidar_id` (no 3).
+  void clear_lidar_id() & noexcept {
+    set_fields_[2] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 3) and returns `*this`.
+  HesaiCorrectionFileError& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[2] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 3) and returns `*this`.
+  HesaiCorrectionFileError&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `lidar_name` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 4) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[3]; }
+
+  /// Clears `lidar_name` (no 4).
+  void clear_lidar_name() & noexcept {
+    set_fields_[3] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 4) and returns `*this`.
+  HesaiCorrectionFileError& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[3] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 4) and returns `*this`.
+  HesaiCorrectionFileError&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see file_type()
   CowBytes file_type_{};
   /// @see details()
   CowBytes details_{};
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<4> set_fields_;
 };
 
 /// Log #190.
 /// 
-///  > Hesai packet statistics - Received: $packets_received, Published: $packets_published, Dropped: $packets_dropped, Decode Failed: $packets_decode_failed, Success Rate: $success_rate %
+///  > [$lidar_name][$lidar_id] Hesai packet statistics - Received: $packets_received, Published: $packets_published, Dropped: $packets_dropped, Decode Failed: $packets_decode_failed, Success Rate: $success_rate %
 ///
-/// Source: horus/pb/logs/logs.proto:1389:1
+/// Source: horus/pb/logs/logs.proto:1418:1
 class HesaiPacketStatistics final : public PbMessage {
  public:
 
@@ -24380,6 +25890,106 @@ class HesaiPacketStatistics final : public PbMessage {
     return std::move(set_success_rate(success_rate));
   }
 
+  // Field `lidar_id` (no 6).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 6.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 6.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[5]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 6.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[5] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 6) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[5]; }
+
+  /// Clears `lidar_id` (no 6).
+  void clear_lidar_id() & noexcept {
+    set_fields_[5] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 6) and returns `*this`.
+  HesaiPacketStatistics& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[5] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 6) and returns `*this`.
+  HesaiPacketStatistics&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `lidar_name` (no 7).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 7.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 7.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[6]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 7.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[6] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 7) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[6]; }
+
+  /// Clears `lidar_name` (no 7).
+  void clear_lidar_name() & noexcept {
+    set_fields_[6] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 7) and returns `*this`.
+  HesaiPacketStatistics& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[6] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 7) and returns `*this`.
+  HesaiPacketStatistics&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see packets_received()
   std::uint64_t packets_received_{};
@@ -24391,16 +26001,20 @@ class HesaiPacketStatistics final : public PbMessage {
   std::uint64_t packets_decode_failed_{};
   /// @see success_rate()
   double success_rate_{};
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<5> set_fields_;
+  std::bitset<7> set_fields_;
 };
 
 /// Log #191.
 /// 
 ///  > Failed to write PLY file $file_path: $details
 ///
-/// Source: horus/pb/logs/logs.proto:1400:1
+/// Source: horus/pb/logs/logs.proto:1431:1
 class PlyFileWriteFailedError final : public PbMessage {
  public:
 
@@ -24564,7 +26178,7 @@ class PlyFileWriteFailedError final : public PbMessage {
 /// 
 ///  > Failed to save project: $error_message.
 ///
-/// Source: horus/pb/logs/logs.proto:1408:1
+/// Source: horus/pb/logs/logs.proto:1439:1
 class ProjectSaveError final : public PbMessage {
  public:
 
@@ -24676,7 +26290,7 @@ class ProjectSaveError final : public PbMessage {
 /// 
 ///  > Saved static environment to $path
 ///
-/// Source: horus/pb/logs/logs.proto:1415:1
+/// Source: horus/pb/logs/logs.proto:1446:1
 class SaveStaticEnvironmentSuccess final : public PbMessage {
  public:
 
@@ -24788,7 +26402,7 @@ class SaveStaticEnvironmentSuccess final : public PbMessage {
 /// 
 ///  > Failed to serialize static environment to $path: $details
 ///
-/// Source: horus/pb/logs/logs.proto:1422:1
+/// Source: horus/pb/logs/logs.proto:1453:1
 class SaveStaticEnvironmentFailed final : public PbMessage {
  public:
 
@@ -24952,7 +26566,7 @@ class SaveStaticEnvironmentFailed final : public PbMessage {
 /// 
 ///  > Static environment loaded from $path
 ///
-/// Source: horus/pb/logs/logs.proto:1430:1
+/// Source: horus/pb/logs/logs.proto:1461:1
 class LoadStaticEnvironmentSuccess final : public PbMessage {
  public:
 
@@ -25064,7 +26678,7 @@ class LoadStaticEnvironmentSuccess final : public PbMessage {
 /// 
 ///  > Failed to load static environment from $path: $details
 ///
-/// Source: horus/pb/logs/logs.proto:1437:1
+/// Source: horus/pb/logs/logs.proto:1468:1
 class LoadStaticEnvironmentFailed final : public PbMessage {
  public:
 
@@ -25228,7 +26842,7 @@ class LoadStaticEnvironmentFailed final : public PbMessage {
 /// 
 ///  > Attempt to inject invalid lidar ID $lidar_id into the system.
 ///
-/// Source: horus/pb/logs/logs.proto:1445:1
+/// Source: horus/pb/logs/logs.proto:1476:1
 class AttemptToInjectInvalidLidarIdWarning final : public PbMessage {
  public:
 
@@ -25338,9 +26952,9 @@ class AttemptToInjectInvalidLidarIdWarning final : public PbMessage {
 
 /// Log #198.
 /// 
-///  > Resetting bundled packet due to unexpected packet from lidar $lidar_id.
+///  > Resetting bundled packet due to unexpected packet from lidar $lidar_name [$lidar_id].
 ///
-/// Source: horus/pb/logs/logs.proto:1452:1
+/// Source: horus/pb/logs/logs.proto:1483:1
 class ResetBundledPacketDueToUnexpectedPacket final : public PbMessage {
  public:
 
@@ -25440,19 +27054,71 @@ class ResetBundledPacketDueToUnexpectedPacket final : public PbMessage {
     return std::move(set_lidar_id(std::move(lidar_id)));
   }
 
+  // Field `lidar_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 2) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 2).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  ResetBundledPacketDueToUnexpectedPacket& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  ResetBundledPacketDueToUnexpectedPacket&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// Log #199.
 /// 
-///  > Lidar $lidar_id dropped $num_dropped packets over $duration
+///  > Lidar $lidar_name [$lidar_id] dropped $num_dropped packets over $duration
 ///
-/// Source: horus/pb/logs/logs.proto:1459:1
+/// Source: horus/pb/logs/logs.proto:1491:1
 class PacketBundlerDroppedPacketsWarning final : public PbMessage {
  public:
 
@@ -25640,6 +27306,56 @@ class PacketBundlerDroppedPacketsWarning final : public PbMessage {
     return std::move(set_duration(std::move(duration)));
   }
 
+  // Field `lidar_name` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 4) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[3]; }
+
+  /// Clears `lidar_name` (no 4).
+  void clear_lidar_name() & noexcept {
+    set_fields_[3] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 4) and returns `*this`.
+  PacketBundlerDroppedPacketsWarning& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[3] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 4) and returns `*this`.
+  PacketBundlerDroppedPacketsWarning&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
@@ -25647,16 +27363,18 @@ class PacketBundlerDroppedPacketsWarning final : public PbMessage {
   std::uint64_t num_dropped_{};
   /// @see duration()
   horus::pb::LogMetadata_Duration duration_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<3> set_fields_;
+  std::bitset<4> set_fields_;
 };
 
 /// Log #200.
 /// 
-///  > Frame sequence jump detected on lidar $lidar_id: from $frame_id to $next_frame_id
+///  > Frame sequence jump detected on lidar $lidar_name [$lidar_id]: from $frame_id to $next_frame_id
 ///
-/// Source: horus/pb/logs/logs.proto:1468:1
+/// Source: horus/pb/logs/logs.proto:1501:1
 class PacketBundlerFrameJumpWarning final : public PbMessage {
  public:
 
@@ -25832,6 +27550,56 @@ class PacketBundlerFrameJumpWarning final : public PbMessage {
     return std::move(set_next_frame_id(next_frame_id));
   }
 
+  // Field `lidar_name` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 4) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[3]; }
+
+  /// Clears `lidar_name` (no 4).
+  void clear_lidar_name() & noexcept {
+    set_fields_[3] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 4) and returns `*this`.
+  PacketBundlerFrameJumpWarning& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[3] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 4) and returns `*this`.
+  PacketBundlerFrameJumpWarning&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
@@ -25839,16 +27607,18 @@ class PacketBundlerFrameJumpWarning final : public PbMessage {
   std::uint64_t frame_id_{};
   /// @see next_frame_id()
   std::uint64_t next_frame_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<3> set_fields_;
+  std::bitset<4> set_fields_;
 };
 
 /// Log #201.
 /// 
-///  > Successfully loaded $correction_type corrections from the lidar
+///  > [$lidar_name][$lidar_id] Successfully loaded $correction_type corrections from the lidar
 ///
-/// Source: horus/pb/logs/logs.proto:1477:1
+/// Source: horus/pb/logs/logs.proto:1511:1
 class LidarCorrectionLoadingSuccess final : public PbMessage {
  public:
 
@@ -25948,19 +27718,123 @@ class LidarCorrectionLoadingSuccess final : public PbMessage {
     return std::move(set_correction_type(std::move(correction_type)));
   }
 
+  // Field `lidar_id` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 2) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_id` (no 2).
+  void clear_lidar_id() & noexcept {
+    set_fields_[1] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 2) and returns `*this`.
+  LidarCorrectionLoadingSuccess& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[1] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 2) and returns `*this`.
+  LidarCorrectionLoadingSuccess&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `lidar_name` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 3) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[2]; }
+
+  /// Clears `lidar_name` (no 3).
+  void clear_lidar_name() & noexcept {
+    set_fields_[2] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  LidarCorrectionLoadingSuccess& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[2] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  LidarCorrectionLoadingSuccess&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see correction_type()
   CowBytes correction_type_{};
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 /// Log #202.
 /// 
-///  > Failed to load $correction_type corrections from the lidar ($details); using default correction values
+///  > [$lidar_name][$lidar_id] Failed to load $correction_type corrections from the lidar ($details); using default correction values
 ///
-/// Source: horus/pb/logs/logs.proto:1484:1
+/// Source: horus/pb/logs/logs.proto:1520:1
 class LidarCorrectionLoadingFailure final : public PbMessage {
  public:
 
@@ -26110,21 +27984,125 @@ class LidarCorrectionLoadingFailure final : public PbMessage {
     return std::move(set_details(std::move(details)));
   }
 
+  // Field `lidar_id` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 3) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[2]; }
+
+  /// Clears `lidar_id` (no 3).
+  void clear_lidar_id() & noexcept {
+    set_fields_[2] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 3) and returns `*this`.
+  LidarCorrectionLoadingFailure& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[2] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 3) and returns `*this`.
+  LidarCorrectionLoadingFailure&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `lidar_name` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 4) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[3]; }
+
+  /// Clears `lidar_name` (no 4).
+  void clear_lidar_name() & noexcept {
+    set_fields_[3] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 4) and returns `*this`.
+  LidarCorrectionLoadingFailure& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[3] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 4) and returns `*this`.
+  LidarCorrectionLoadingFailure&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
  private:
   /// @see correction_type()
   CowBytes correction_type_{};
   /// @see details()
   CowBytes details_{};
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<4> set_fields_;
 };
 
 /// Log #203.
 /// 
 ///  > [$lidar_id] Hesai Packet Statistics - Received: $packets_received, Published: $packets_published, Dropped: $packets_dropped, Decode Failed: $packets_decode_failed, Success Rate: $success_rate %
 ///
-/// Source: horus/pb/logs/logs.proto:1492:1
+/// Source: horus/pb/logs/logs.proto:1530:1
 class HesaiPacketStatisticsLidar final : public PbMessage {
  public:
 
@@ -26430,6 +28408,414 @@ class HesaiPacketStatisticsLidar final : public PbMessage {
 
   /// The set of fields that have been given an explicit value.
   std::bitset<6> set_fields_;
+};
+
+/// Log #204.
+/// 
+///  > Lidar $lidar_name [$lidar_id] is aligned to calibration map. Using the calibration map for tilt detection and auto-recalibration for this lidar.
+///
+/// Source: horus/pb/logs/logs.proto:1542:1
+class LidarTiltDetectionAlignedToCalibrationMapInfo final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `LidarTiltDetectionAlignedToCalibrationMapInfo`.
+  LidarTiltDetectionAlignedToCalibrationMapInfo() noexcept = default;
+
+  /// Move constructor.
+  LidarTiltDetectionAlignedToCalibrationMapInfo(LidarTiltDetectionAlignedToCalibrationMapInfo&&) noexcept = default;
+  /// Move assignment operator.
+  LidarTiltDetectionAlignedToCalibrationMapInfo& operator=(LidarTiltDetectionAlignedToCalibrationMapInfo&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit LidarTiltDetectionAlignedToCalibrationMapInfo(const LidarTiltDetectionAlignedToCalibrationMapInfo& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  LidarTiltDetectionAlignedToCalibrationMapInfo& operator=(const LidarTiltDetectionAlignedToCalibrationMapInfo&) = delete;
+
+  /// Default destructor.
+  ~LidarTiltDetectionAlignedToCalibrationMapInfo() noexcept final = default;
+
+  /// Creates a `LidarTiltDetectionAlignedToCalibrationMapInfo` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit LidarTiltDetectionAlignedToCalibrationMapInfo(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.LidarTiltDetectionAlignedToCalibrationMapInfo`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.LidarTiltDetectionAlignedToCalibrationMapInfo"; }
+
+  /// The full name of the message: `horus.pb.logs.LidarTiltDetectionAlignedToCalibrationMapInfo`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `lidar_id` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 1) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[0]; }
+
+  /// Clears `lidar_id` (no 1).
+  void clear_lidar_id() & noexcept {
+    set_fields_[0] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  LidarTiltDetectionAlignedToCalibrationMapInfo& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[0] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  LidarTiltDetectionAlignedToCalibrationMapInfo&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `lidar_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 2) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 2).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarTiltDetectionAlignedToCalibrationMapInfo& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarTiltDetectionAlignedToCalibrationMapInfo&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
+ private:
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// Log #205.
+/// 
+///  > Lidar $lidar_name [$lidar_id] deviates from calibration map by $angle degrees and $distance meters. Using accumulated points as reference to avoid overwriting manual calibration.
+///
+/// Source: horus/pb/logs/logs.proto:1550:1
+class LidarTiltDetectionMisalignedToCalibrationMapWarning final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `LidarTiltDetectionMisalignedToCalibrationMapWarning`.
+  LidarTiltDetectionMisalignedToCalibrationMapWarning() noexcept = default;
+
+  /// Move constructor.
+  LidarTiltDetectionMisalignedToCalibrationMapWarning(LidarTiltDetectionMisalignedToCalibrationMapWarning&&) noexcept = default;
+  /// Move assignment operator.
+  LidarTiltDetectionMisalignedToCalibrationMapWarning& operator=(LidarTiltDetectionMisalignedToCalibrationMapWarning&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit LidarTiltDetectionMisalignedToCalibrationMapWarning(const LidarTiltDetectionMisalignedToCalibrationMapWarning& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  LidarTiltDetectionMisalignedToCalibrationMapWarning& operator=(const LidarTiltDetectionMisalignedToCalibrationMapWarning&) = delete;
+
+  /// Default destructor.
+  ~LidarTiltDetectionMisalignedToCalibrationMapWarning() noexcept final = default;
+
+  /// Creates a `LidarTiltDetectionMisalignedToCalibrationMapWarning` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit LidarTiltDetectionMisalignedToCalibrationMapWarning(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.LidarTiltDetectionMisalignedToCalibrationMapWarning`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.LidarTiltDetectionMisalignedToCalibrationMapWarning"; }
+
+  /// The full name of the message: `horus.pb.logs.LidarTiltDetectionMisalignedToCalibrationMapWarning`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `lidar_id` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 1) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[0]; }
+
+  /// Clears `lidar_id` (no 1).
+  void clear_lidar_id() & noexcept {
+    set_fields_[0] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  LidarTiltDetectionMisalignedToCalibrationMapWarning& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[0] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 1) and returns `*this`.
+  LidarTiltDetectionMisalignedToCalibrationMapWarning&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `lidar_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 2) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 2).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarTiltDetectionMisalignedToCalibrationMapWarning& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 2) and returns `*this`.
+  LidarTiltDetectionMisalignedToCalibrationMapWarning&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
+  // Field `angle` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr double angle() const& noexcept HORUS_LIFETIME_BOUND {
+    return angle_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  double& mutable_angle() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return angle_;
+  }
+
+  /// Returns whether `angle` (no 3) is set.
+  constexpr bool has_angle() const noexcept { return set_fields_[2]; }
+
+  /// Clears `angle` (no 3).
+  void clear_angle() & noexcept {
+    set_fields_[2] = false;
+    angle_ = {};
+  }
+
+  /// Sets `angle` (no 3) and returns `*this`.
+  LidarTiltDetectionMisalignedToCalibrationMapWarning& set_angle(double angle) & noexcept {
+    set_fields_[2] = true;
+    angle_ = angle;
+    return *this;
+  }
+  /// Sets `angle` (no 3) and returns `*this`.
+  LidarTiltDetectionMisalignedToCalibrationMapWarning&& set_angle(double angle) && noexcept {
+    return std::move(set_angle(angle));
+  }
+
+  // Field `distance` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr double distance() const& noexcept HORUS_LIFETIME_BOUND {
+    return distance_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  double& mutable_distance() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return distance_;
+  }
+
+  /// Returns whether `distance` (no 4) is set.
+  constexpr bool has_distance() const noexcept { return set_fields_[3]; }
+
+  /// Clears `distance` (no 4).
+  void clear_distance() & noexcept {
+    set_fields_[3] = false;
+    distance_ = {};
+  }
+
+  /// Sets `distance` (no 4) and returns `*this`.
+  LidarTiltDetectionMisalignedToCalibrationMapWarning& set_distance(double distance) & noexcept {
+    set_fields_[3] = true;
+    distance_ = distance;
+    return *this;
+  }
+  /// Sets `distance` (no 4) and returns `*this`.
+  LidarTiltDetectionMisalignedToCalibrationMapWarning&& set_distance(double distance) && noexcept {
+    return std::move(set_distance(distance));
+  }
+
+ private:
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
+  /// @see angle()
+  double angle_{};
+  /// @see distance()
+  double distance_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<4> set_fields_;
 };
 
 }  // namespace logs

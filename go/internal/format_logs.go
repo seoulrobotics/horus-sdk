@@ -99,21 +99,21 @@ func FormatAnyLogMessage(message proto.Message) string {
 	case *logs_pb.PointCloudParsingFailureWarning:
 		return fmt.Sprintf("Point cloud parsing failed: %v", data.GetDetails())
 	case *logs_pb.LidarIsDead:
-		return fmt.Sprintf("The lidar %v is considered dead. No data has been received for a while.", data.GetLidarId())
+		return fmt.Sprintf("The lidar %v [%v] is considered dead. No data has been received for a while.", data.GetLidarName(), data.GetLidarId())
 	case *logs_pb.LidarIsNotDeadAnymore:
-		return fmt.Sprintf("The lidar %v is not considered dead anymore. A point cloud has been received again after some time.", data.GetLidarId())
+		return fmt.Sprintf("The lidar %v [%v] is not considered dead anymore. A point cloud has been received again after some time.", data.GetLidarName(), data.GetLidarId())
 	case *logs_pb.LidarIsObstructed:
-		return fmt.Sprintf("The lidar %v is obstructed.", data.GetLidarId())
+		return fmt.Sprintf("The lidar %v [%v] is obstructed.", data.GetLidarName(), data.GetLidarId())
 	case *logs_pb.LidarIsNotObstructedAnymore:
-		return fmt.Sprintf("The lidar %v is not obstructed anymore.", data.GetLidarId())
+		return fmt.Sprintf("The lidar %v [%v] is not obstructed anymore.", data.GetLidarName(), data.GetLidarId())
 	case *logs_pb.LidarIsTilted:
-		return fmt.Sprintf("The lidar %v is tilted.", data.GetLidarId())
+		return fmt.Sprintf("The lidar %v [%v] is tilted.", data.GetLidarName(), data.GetLidarId())
 	case *logs_pb.LidarIsNotTiltedAnymore:
-		return fmt.Sprintf("The lidar %v is not tilted anymore.", data.GetLidarId())
+		return fmt.Sprintf("The lidar %v [%v] is not tilted anymore.", data.GetLidarName(), data.GetLidarId())
 	case *logs_pb.LidarHasBeenAutomaticallyRecalibrated:
-		return fmt.Sprintf("The lidar %v has been automatically re-calibrated.", data.GetLidarId())
+		return fmt.Sprintf("LiDAR %v [%v] auto re-calibrated (Δ from original: t=%v, r=%v)", data.GetLidarName(), data.GetLidarId(), data.GetTranslation(), data.GetRotationRpy())
 	case *logs_pb.ReceivedFirstDataForLidar:
-		return fmt.Sprintf("Data has been received for the first time for the lidar %v.", data.GetLidarId())
+		return fmt.Sprintf("Data has been received for the first time for the lidar %v [%v].", data.GetLidarName(), data.GetLidarId())
 	case *logs_pb.TerminationFailureError:
 		return fmt.Sprintf("Failed to destruct %v: %v", data.GetComponent(), data.GetDetails())
 	case *logs_pb.FrameProcessingError:
@@ -237,21 +237,21 @@ func FormatAnyLogMessage(message proto.Message) string {
 	case *logs_pb.CannotDetermineContainerIdError:
 		return fmt.Sprintf("Cannot determine current Docker container ID; unknown %v format.", data.GetContainerIdFilePath())
 	case *logs_pb.StartedLidarDriver:
-		return fmt.Sprintf("Started lidar driver container %v.", data.GetLidarId())
+		return fmt.Sprintf("Started lidar driver container %v [%v].", data.GetLidarName(), data.GetLidarId())
 	case *logs_pb.CannotStartLidarDriver:
-		return fmt.Sprintf("Cannot start lidar driver container %v: %v.", data.GetLidarId(), data.GetDetails())
+		return fmt.Sprintf("Cannot start lidar driver container %v [%v]: %v.", data.GetLidarName(), data.GetLidarId(), data.GetDetails())
 	case *logs_pb.StoppedLidarDriver:
-		return fmt.Sprintf("Stopped lidar driver container %v.", data.GetLidarId())
+		return fmt.Sprintf("Stopped lidar driver container %v [%v].", data.GetLidarName(), data.GetLidarId())
 	case *logs_pb.CannotStopLidarDriver:
-		return fmt.Sprintf("Cannot stop lidar driver container %v: %v.", data.GetLidarId(), data.GetDetails())
+		return fmt.Sprintf("Cannot stop lidar driver container %v [%v]: %v.", data.GetLidarName(), data.GetLidarId(), data.GetDetails())
 	case *logs_pb.RestartedLidarDriver:
-		return fmt.Sprintf("Restarted lidar driver container %v.", data.GetLidarId())
+		return fmt.Sprintf("Restarted lidar driver container %v [%v].", data.GetLidarName(), data.GetLidarId())
 	case *logs_pb.CannotRestartLidarDriver:
-		return fmt.Sprintf("Cannot restart lidar driver container %v: %v.", data.GetLidarId(), data.GetDetails())
+		return fmt.Sprintf("Cannot restart lidar driver container %v [%v]: %v.", data.GetLidarName(), data.GetLidarId(), data.GetDetails())
 	case *logs_pb.RemovedUnusedLidarDriver:
-		return fmt.Sprintf("Removed unused lidar driver container %v.", data.GetLidarId())
+		return fmt.Sprintf("Removed unused lidar driver container %v [%v].", data.GetLidarName(), data.GetLidarId())
 	case *logs_pb.CannotRemoveUnusedLidarDriver:
-		return fmt.Sprintf("Cannot remove unused lidar driver container %v: %v.", data.GetLidarId(), data.GetDetails())
+		return fmt.Sprintf("Cannot remove unused lidar driver container %v [%v]: %v.", data.GetLidarName(), data.GetLidarId(), data.GetDetails())
 	case *logs_pb.LidarDriverGcFailure:
 		return fmt.Sprintf("Error encountered while removing unused lidar driver containers: %v.", data.GetDetails())
 	case *logs_pb.IdSpaceExhausted:
@@ -259,7 +259,7 @@ func FormatAnyLogMessage(message proto.Message) string {
 	case *logs_pb.PreprocessingToPointAggregatorPointsSkipped:
 		return fmt.Sprintf("The point cloud publishing to the point aggregator service has been skipped %v time(s) in the last %v.", data.GetNumSkippedPoints(), data.GetCheckInterval())
 	case *logs_pb.MinMsgIntervalLessThanThreshold:
-		return fmt.Sprintf("Discarding lidar points from %v since the time interval between two point-cloud messages is too close (<%v). Adjust the Min-Message Interval parameter to change this behavior.", data.GetLidarId(), data.GetThreshold())
+		return fmt.Sprintf("Discarding lidar points from %v [%v] since the time interval between two point-cloud messages is too close (<%v). Adjust the Min-Message Interval parameter to change this behavior.", data.GetLidarName(), data.GetLidarId(), data.GetThreshold())
 	case *logs_pb.FailedToCleanupRosWarning:
 		return fmt.Sprintf("Failed to clean up ROS nodes and processes: %v", data.GetDetails())
 	case *logs_pb.RpcDisconnectedWarning:
@@ -335,7 +335,7 @@ func FormatAnyLogMessage(message proto.Message) string {
 	case *logs_pb.ProjectConfigUpdatedInfo:
 		return "The project configuration has been updated."
 	case *logs_pb.InvalidLidarTimestamp:
-		return fmt.Sprintf("Invalid timestamp %v sent by lidar %v.", data.GetTimestamp(), data.GetLidarId())
+		return fmt.Sprintf("Invalid timestamp %v sent by lidar %v [%v].", data.GetTimestamp(), data.GetLidarName(), data.GetLidarId())
 	case *logs_pb.CalibrationAccumulatingPointsInfo:
 		return fmt.Sprintf("Calibration is accumulating points for %v", data.GetTime())
 	case *logs_pb.SparseNoiseFilterUsageNonRotationalLidars:
@@ -365,11 +365,11 @@ func FormatAnyLogMessage(message proto.Message) string {
 	case *logs_pb.BagUpgradeFailed:
 		return fmt.Sprintf("Failed to upgrade the bag file %v: %v.", data.GetBagPath(), data.GetDetails())
 	case *logs_pb.UnknownLidarError:
-		return fmt.Sprintf("Received points from unknown lidar %v.", data.GetLidarId())
+		return fmt.Sprintf("Received points from unknown lidar %v [%v].", data.GetLidarName(), data.GetLidarId())
 	case *logs_pb.InvalidPointCloudWarning:
-		return fmt.Sprintf("Invalid point cloud received from lidar %v: %v", data.GetLidarId(), data.GetReason())
+		return fmt.Sprintf("Invalid point cloud received from lidar %v [%v]: %v", data.GetLidarName(), data.GetLidarId(), data.GetReason())
 	case *logs_pb.LidarIsDroppingPackets:
-		return fmt.Sprintf("The lidar %v is dropping packets (dropped %v packets out of %v).", data.GetLidarId(), data.GetNumTotalDroppedPackets(), data.GetNumTotalExpectedPackets())
+		return fmt.Sprintf("The lidar %v [%v] is dropping packets (dropped %v packets out of %v).", data.GetLidarName(), data.GetLidarId(), data.GetNumTotalDroppedPackets(), data.GetNumTotalExpectedPackets())
 	case *logs_pb.RemovedInvalidLidarsFromConfigWarning:
 		return fmt.Sprintf("Some deprecated lidars have been found in the loaded project. These invalid lidars were removed from the active project but a backup config file has been saved in %v.", data.GetBackupPath())
 	case *logs_pb.CalibrationMapRecordingFailed:
@@ -381,15 +381,15 @@ func FormatAnyLogMessage(message proto.Message) string {
 	case *logs_pb.PlyFileLoadFailedError:
 		return fmt.Sprintf("Failed to load PLY file %v: %v", data.GetFilePath(), data.GetDetails())
 	case *logs_pb.HesaiDriverLifecycle:
-		return fmt.Sprintf("Hesai XT32 driver %v for LiDAR %v.", data.GetAction(), data.GetLidarId())
+		return fmt.Sprintf("[%v][%v] Hesai XT32 driver %v.", data.GetLidarName(), data.GetLidarId(), data.GetAction())
 	case *logs_pb.HesaiDriverError:
-		return fmt.Sprintf("Hesai XT32 driver error: %v", data.GetDetails())
+		return fmt.Sprintf("[%v][%v] Hesai XT32 driver error: %v", data.GetLidarName(), data.GetLidarId(), data.GetDetails())
 	case *logs_pb.HesaiPacketProcessingFailed:
-		return fmt.Sprintf("Failed to process packet for Hesai LiDAR %v: %v", data.GetLidarId(), data.GetDetails())
+		return fmt.Sprintf("[%v][%v] Failed to process packet: %v", data.GetLidarName(), data.GetLidarId(), data.GetDetails())
 	case *logs_pb.HesaiCorrectionFileError:
-		return fmt.Sprintf("Failed to load Hesai XT32 correction file %v: %v", data.GetFileType(), data.GetDetails())
+		return fmt.Sprintf("[%v][%v] Failed to load Hesai XT32 correction file %v: %v", data.GetLidarName(), data.GetLidarId(), data.GetFileType(), data.GetDetails())
 	case *logs_pb.HesaiPacketStatistics:
-		return fmt.Sprintf("Hesai packet statistics - Received: %v, Published: %v, Dropped: %v, Decode Failed: %v, Success Rate: %v %%", data.GetPacketsReceived(), data.GetPacketsPublished(), data.GetPacketsDropped(), data.GetPacketsDecodeFailed(), data.GetSuccessRate())
+		return fmt.Sprintf("[%v][%v] Hesai packet statistics - Received: %v, Published: %v, Dropped: %v, Decode Failed: %v, Success Rate: %v %%", data.GetLidarName(), data.GetLidarId(), data.GetPacketsReceived(), data.GetPacketsPublished(), data.GetPacketsDropped(), data.GetPacketsDecodeFailed(), data.GetSuccessRate())
 	case *logs_pb.PlyFileWriteFailedError:
 		return fmt.Sprintf("Failed to write PLY file %v: %v", data.GetFilePath(), data.GetDetails())
 	case *logs_pb.ProjectSaveError:
@@ -405,17 +405,21 @@ func FormatAnyLogMessage(message proto.Message) string {
 	case *logs_pb.AttemptToInjectInvalidLidarIdWarning:
 		return fmt.Sprintf("Attempt to inject invalid lidar ID %v into the system.", data.GetLidarId())
 	case *logs_pb.ResetBundledPacketDueToUnexpectedPacket:
-		return fmt.Sprintf("Resetting bundled packet due to unexpected packet from lidar %v.", data.GetLidarId())
+		return fmt.Sprintf("Resetting bundled packet due to unexpected packet from lidar %v [%v].", data.GetLidarName(), data.GetLidarId())
 	case *logs_pb.PacketBundlerDroppedPacketsWarning:
-		return fmt.Sprintf("Lidar %v dropped %v packets over %v", data.GetLidarId(), data.GetNumDropped(), data.GetDuration())
+		return fmt.Sprintf("Lidar %v [%v] dropped %v packets over %v", data.GetLidarName(), data.GetLidarId(), data.GetNumDropped(), data.GetDuration())
 	case *logs_pb.PacketBundlerFrameJumpWarning:
-		return fmt.Sprintf("Frame sequence jump detected on lidar %v: from %v to %v", data.GetLidarId(), data.GetFrameId(), data.GetNextFrameId())
+		return fmt.Sprintf("Frame sequence jump detected on lidar %v [%v]: from %v to %v", data.GetLidarName(), data.GetLidarId(), data.GetFrameId(), data.GetNextFrameId())
 	case *logs_pb.LidarCorrectionLoadingSuccess:
-		return fmt.Sprintf("Successfully loaded %v corrections from the lidar", data.GetCorrectionType())
+		return fmt.Sprintf("[%v][%v] Successfully loaded %v corrections from the lidar", data.GetLidarName(), data.GetLidarId(), data.GetCorrectionType())
 	case *logs_pb.LidarCorrectionLoadingFailure:
-		return fmt.Sprintf("Failed to load %v corrections from the lidar (%v); using default correction values", data.GetCorrectionType(), data.GetDetails())
+		return fmt.Sprintf("[%v][%v] Failed to load %v corrections from the lidar (%v); using default correction values", data.GetLidarName(), data.GetLidarId(), data.GetCorrectionType(), data.GetDetails())
 	case *logs_pb.HesaiPacketStatisticsLidar:
 		return fmt.Sprintf("[%v] Hesai Packet Statistics - Received: %v, Published: %v, Dropped: %v, Decode Failed: %v, Success Rate: %v %%", data.GetLidarId(), data.GetPacketsReceived(), data.GetPacketsPublished(), data.GetPacketsDropped(), data.GetPacketsDecodeFailed(), data.GetSuccessRate())
+	case *logs_pb.LidarTiltDetectionAlignedToCalibrationMapInfo:
+		return fmt.Sprintf("Lidar %v [%v] is aligned to calibration map. Using the calibration map for tilt detection and auto-recalibration for this lidar.", data.GetLidarName(), data.GetLidarId())
+	case *logs_pb.LidarTiltDetectionMisalignedToCalibrationMapWarning:
+		return fmt.Sprintf("Lidar %v [%v] deviates from calibration map by %v degrees and %v meters. Using accumulated points as reference to avoid overwriting manual calibration.", data.GetLidarName(), data.GetLidarId(), data.GetAngle(), data.GetDistance())
 	default:
 		return "unknown log message"
 	}

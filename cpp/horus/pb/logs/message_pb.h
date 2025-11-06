@@ -11255,6 +11255,116 @@ class LogData final : public PbMessage {
     return std::move(set_hesai_packet_statistics_lidar(std::move(hesai_packet_statistics_lidar)));
   }
 
+  // Field `lidar_tilt_detection_aligned_to_calibration_map_info` (no 204).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 204.
+  constexpr const logs::LidarTiltDetectionAlignedToCalibrationMapInfo& lidar_tilt_detection_aligned_to_calibration_map_info() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_tilt_detection_aligned_to_calibration_map_info_;
+  }
+
+  /// If `lidar_tilt_detection_aligned_to_calibration_map_info` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 204.
+  logs::LidarTiltDetectionAlignedToCalibrationMapInfo lidar_tilt_detection_aligned_to_calibration_map_info() && noexcept {
+    if (!set_fields_[203]) {
+      return {};
+    }
+    return std::move(lidar_tilt_detection_aligned_to_calibration_map_info_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 204.
+  logs::LidarTiltDetectionAlignedToCalibrationMapInfo& mutable_lidar_tilt_detection_aligned_to_calibration_map_info() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kLidarTiltDetectionAlignedToCalibrationMapInfo;
+    set_fields_[203] = true;
+    return lidar_tilt_detection_aligned_to_calibration_map_info_;
+  }
+
+  /// Returns whether `lidar_tilt_detection_aligned_to_calibration_map_info` (no 204) is set.
+  constexpr bool has_lidar_tilt_detection_aligned_to_calibration_map_info() const noexcept { return set_fields_[203]; }
+
+  /// Clears `lidar_tilt_detection_aligned_to_calibration_map_info` (no 204).
+  void clear_lidar_tilt_detection_aligned_to_calibration_map_info() & noexcept {
+    data_ = {};
+    set_fields_[203] = false;
+    lidar_tilt_detection_aligned_to_calibration_map_info_ = {};
+  }
+
+  /// Sets `lidar_tilt_detection_aligned_to_calibration_map_info` (no 204) and returns `*this`.
+  LogData& set_lidar_tilt_detection_aligned_to_calibration_map_info(logs::LidarTiltDetectionAlignedToCalibrationMapInfo&& lidar_tilt_detection_aligned_to_calibration_map_info) & noexcept {
+    clear_data();
+    data_ = DataOneof::kLidarTiltDetectionAlignedToCalibrationMapInfo;
+    set_fields_[203] = true;
+    lidar_tilt_detection_aligned_to_calibration_map_info_ = std::move(lidar_tilt_detection_aligned_to_calibration_map_info);
+    return *this;
+  }
+  /// Sets `lidar_tilt_detection_aligned_to_calibration_map_info` (no 204) and returns `*this`.
+  LogData&& set_lidar_tilt_detection_aligned_to_calibration_map_info(logs::LidarTiltDetectionAlignedToCalibrationMapInfo&& lidar_tilt_detection_aligned_to_calibration_map_info) && noexcept {
+    return std::move(set_lidar_tilt_detection_aligned_to_calibration_map_info(std::move(lidar_tilt_detection_aligned_to_calibration_map_info)));
+  }
+
+  // Field `lidar_tilt_detection_misaligned_to_calibration_map_warning` (no 205).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 205.
+  constexpr const logs::LidarTiltDetectionMisalignedToCalibrationMapWarning& lidar_tilt_detection_misaligned_to_calibration_map_warning() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_tilt_detection_misaligned_to_calibration_map_warning_;
+  }
+
+  /// If `lidar_tilt_detection_misaligned_to_calibration_map_warning` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 205.
+  logs::LidarTiltDetectionMisalignedToCalibrationMapWarning lidar_tilt_detection_misaligned_to_calibration_map_warning() && noexcept {
+    if (!set_fields_[204]) {
+      return {};
+    }
+    return std::move(lidar_tilt_detection_misaligned_to_calibration_map_warning_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 205.
+  logs::LidarTiltDetectionMisalignedToCalibrationMapWarning& mutable_lidar_tilt_detection_misaligned_to_calibration_map_warning() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kLidarTiltDetectionMisalignedToCalibrationMapWarning;
+    set_fields_[204] = true;
+    return lidar_tilt_detection_misaligned_to_calibration_map_warning_;
+  }
+
+  /// Returns whether `lidar_tilt_detection_misaligned_to_calibration_map_warning` (no 205) is set.
+  constexpr bool has_lidar_tilt_detection_misaligned_to_calibration_map_warning() const noexcept { return set_fields_[204]; }
+
+  /// Clears `lidar_tilt_detection_misaligned_to_calibration_map_warning` (no 205).
+  void clear_lidar_tilt_detection_misaligned_to_calibration_map_warning() & noexcept {
+    data_ = {};
+    set_fields_[204] = false;
+    lidar_tilt_detection_misaligned_to_calibration_map_warning_ = {};
+  }
+
+  /// Sets `lidar_tilt_detection_misaligned_to_calibration_map_warning` (no 205) and returns `*this`.
+  LogData& set_lidar_tilt_detection_misaligned_to_calibration_map_warning(logs::LidarTiltDetectionMisalignedToCalibrationMapWarning&& lidar_tilt_detection_misaligned_to_calibration_map_warning) & noexcept {
+    clear_data();
+    data_ = DataOneof::kLidarTiltDetectionMisalignedToCalibrationMapWarning;
+    set_fields_[204] = true;
+    lidar_tilt_detection_misaligned_to_calibration_map_warning_ = std::move(lidar_tilt_detection_misaligned_to_calibration_map_warning);
+    return *this;
+  }
+  /// Sets `lidar_tilt_detection_misaligned_to_calibration_map_warning` (no 205) and returns `*this`.
+  LogData&& set_lidar_tilt_detection_misaligned_to_calibration_map_warning(logs::LidarTiltDetectionMisalignedToCalibrationMapWarning&& lidar_tilt_detection_misaligned_to_calibration_map_warning) && noexcept {
+    return std::move(set_lidar_tilt_detection_misaligned_to_calibration_map_warning(std::move(lidar_tilt_detection_misaligned_to_calibration_map_warning)));
+  }
+
   // Oneof `data`.
   // -----
 
@@ -11668,6 +11778,10 @@ class LogData final : public PbMessage {
     kLidarCorrectionLoadingFailure = 202,
     /// @see hesai_packet_statistics_lidar()
     kHesaiPacketStatisticsLidar = 203,
+    /// @see lidar_tilt_detection_aligned_to_calibration_map_info()
+    kLidarTiltDetectionAlignedToCalibrationMapInfo = 204,
+    /// @see lidar_tilt_detection_misaligned_to_calibration_map_warning()
+    kLidarTiltDetectionMisalignedToCalibrationMapWarning = 205,
   };
 
   /// Returns the current case set in `data`.
@@ -12490,6 +12604,14 @@ class LogData final : public PbMessage {
         clear_hesai_packet_statistics_lidar();
         break;
       }
+      case DataOneof::kLidarTiltDetectionAlignedToCalibrationMapInfo: {
+        clear_lidar_tilt_detection_aligned_to_calibration_map_info();
+        break;
+      }
+      case DataOneof::kLidarTiltDetectionMisalignedToCalibrationMapWarning: {
+        clear_lidar_tilt_detection_misaligned_to_calibration_map_warning();
+        break;
+      }
       case DataOneof::kNotSet:
       default:
         break;
@@ -12903,12 +13025,16 @@ class LogData final : public PbMessage {
   logs::LidarCorrectionLoadingFailure lidar_correction_loading_failure_{};
   /// @see hesai_packet_statistics_lidar()
   logs::HesaiPacketStatisticsLidar hesai_packet_statistics_lidar_{};
+  /// @see lidar_tilt_detection_aligned_to_calibration_map_info()
+  logs::LidarTiltDetectionAlignedToCalibrationMapInfo lidar_tilt_detection_aligned_to_calibration_map_info_{};
+  /// @see lidar_tilt_detection_misaligned_to_calibration_map_warning()
+  logs::LidarTiltDetectionMisalignedToCalibrationMapWarning lidar_tilt_detection_misaligned_to_calibration_map_warning_{};
 
   /// @see data_case()
   DataOneof data_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<203> set_fields_;
+  std::bitset<205> set_fields_;
 };
 
 /// A log message notifying users about some status.

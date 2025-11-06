@@ -340,7 +340,7 @@ class PointFrame_Header final : public PbMessage {
 /// / @note The attributes are all or none. If the attributes are nonempty, the
 /// / number of attributes should be equal to the number of points.
 ///
-/// Source: horus/pb/point/point_message.proto:66:1
+/// Source: horus/pb/point/point_message.proto:69:1
 class AttributedPoints final : public PbMessage {
  public:
 
@@ -902,7 +902,7 @@ class PointFrame final : public PbMessage {
 
 /// Processed point cloud data from a single lidar.
 ///
-/// Source: horus/pb/point/point_message.proto:102:1
+/// Source: horus/pb/point/point_message.proto:105:1
 class ProcessedPointsEvent final : public PbMessage {
  public:
 
@@ -1012,7 +1012,7 @@ class ProcessedPointsEvent final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/point/point_message.proto:106:1
+/// Source: horus/pb/point/point_message.proto:109:1
 class AggregatedPointEvents final : public PbMessage {
  public:
 

@@ -210,6 +210,8 @@ LogData::LogData(const LogData& other) noexcept(false)
     , lidar_correction_loading_success_{other.lidar_correction_loading_success_}
     , lidar_correction_loading_failure_{other.lidar_correction_loading_failure_}
     , hesai_packet_statistics_lidar_{other.hesai_packet_statistics_lidar_}
+    , lidar_tilt_detection_aligned_to_calibration_map_info_{other.lidar_tilt_detection_aligned_to_calibration_map_info_}
+    , lidar_tilt_detection_misaligned_to_calibration_map_warning_{other.lidar_tilt_detection_misaligned_to_calibration_map_warning_}
     , data_{other.data_}
     , set_fields_{other.set_fields_} {}
 
@@ -822,6 +824,12 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[202]) {
     SerializeField<logs::HesaiPacketStatisticsLidar>(writer, /*tag=*/ 203, hesai_packet_statistics_lidar_);
+  }
+  if (set_fields_[203]) {
+    SerializeField<logs::LidarTiltDetectionAlignedToCalibrationMapInfo>(writer, /*tag=*/ 204, lidar_tilt_detection_aligned_to_calibration_map_info_);
+  }
+  if (set_fields_[204]) {
+    SerializeField<logs::LidarTiltDetectionMisalignedToCalibrationMapWarning>(writer, /*tag=*/ 205, lidar_tilt_detection_misaligned_to_calibration_map_warning_);
   }
 }
 
@@ -2247,6 +2255,20 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
         data_ = DataOneof::kHesaiPacketStatisticsLidar;
         DeserializeField<logs::HesaiPacketStatisticsLidar>(reader, hesai_packet_statistics_lidar_);
         set_fields_[202] = true;
+        break;
+      }
+      case 204: {
+        clear_data();
+        data_ = DataOneof::kLidarTiltDetectionAlignedToCalibrationMapInfo;
+        DeserializeField<logs::LidarTiltDetectionAlignedToCalibrationMapInfo>(reader, lidar_tilt_detection_aligned_to_calibration_map_info_);
+        set_fields_[203] = true;
+        break;
+      }
+      case 205: {
+        clear_data();
+        data_ = DataOneof::kLidarTiltDetectionMisalignedToCalibrationMapWarning;
+        DeserializeField<logs::LidarTiltDetectionMisalignedToCalibrationMapWarning>(reader, lidar_tilt_detection_misaligned_to_calibration_map_warning_);
+        set_fields_[204] = true;
         break;
       }
       default: {

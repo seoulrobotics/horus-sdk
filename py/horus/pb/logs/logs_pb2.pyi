@@ -300,52 +300,72 @@ class PointCloudParsingFailureWarning(_message.Message):
     def __init__(self, details: _Optional[str] = ...) -> None: ...
 
 class LidarIsDead(_message.Message):
-    __slots__ = ("lidar_id",)
+    __slots__ = ("lidar_id", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
-    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class LidarIsNotDeadAnymore(_message.Message):
-    __slots__ = ("lidar_id",)
+    __slots__ = ("lidar_id", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
-    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class LidarIsObstructed(_message.Message):
-    __slots__ = ("lidar_id",)
+    __slots__ = ("lidar_id", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
-    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class LidarIsNotObstructedAnymore(_message.Message):
-    __slots__ = ("lidar_id",)
+    __slots__ = ("lidar_id", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
-    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class LidarIsTilted(_message.Message):
-    __slots__ = ("lidar_id",)
+    __slots__ = ("lidar_id", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
-    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class LidarIsNotTiltedAnymore(_message.Message):
-    __slots__ = ("lidar_id",)
+    __slots__ = ("lidar_id", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
-    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class LidarHasBeenAutomaticallyRecalibrated(_message.Message):
-    __slots__ = ("lidar_id",)
+    __slots__ = ("lidar_id", "lidar_name", "translation", "rotation_rpy")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
+    TRANSLATION_FIELD_NUMBER: _ClassVar[int]
+    ROTATION_RPY_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
-    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    translation: str
+    rotation_rpy: str
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ..., translation: _Optional[str] = ..., rotation_rpy: _Optional[str] = ...) -> None: ...
 
 class ReceivedFirstDataForLidar(_message.Message):
-    __slots__ = ("lidar_id",)
+    __slots__ = ("lidar_id", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
-    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class TerminationFailureError(_message.Message):
     __slots__ = ("component", "details")
@@ -768,60 +788,76 @@ class CannotDetermineContainerIdError(_message.Message):
     def __init__(self, container_id_file_path: _Optional[str] = ...) -> None: ...
 
 class StartedLidarDriver(_message.Message):
-    __slots__ = ("lidar_id",)
+    __slots__ = ("lidar_id", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
-    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class CannotStartLidarDriver(_message.Message):
-    __slots__ = ("lidar_id", "details")
+    __slots__ = ("lidar_id", "details", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     DETAILS_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
     details: str
-    def __init__(self, lidar_id: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., details: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class StoppedLidarDriver(_message.Message):
-    __slots__ = ("lidar_id",)
+    __slots__ = ("lidar_id", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
-    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class CannotStopLidarDriver(_message.Message):
-    __slots__ = ("lidar_id", "details")
+    __slots__ = ("lidar_id", "details", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     DETAILS_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
     details: str
-    def __init__(self, lidar_id: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., details: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class RestartedLidarDriver(_message.Message):
-    __slots__ = ("lidar_id",)
+    __slots__ = ("lidar_id", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
-    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class CannotRestartLidarDriver(_message.Message):
-    __slots__ = ("lidar_id", "details")
+    __slots__ = ("lidar_id", "details", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     DETAILS_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
     details: str
-    def __init__(self, lidar_id: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., details: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class RemovedUnusedLidarDriver(_message.Message):
-    __slots__ = ("lidar_id",)
+    __slots__ = ("lidar_id", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
-    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class CannotRemoveUnusedLidarDriver(_message.Message):
-    __slots__ = ("lidar_id", "details")
+    __slots__ = ("lidar_id", "details", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     DETAILS_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
     details: str
-    def __init__(self, lidar_id: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., details: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class LidarDriverGcFailure(_message.Message):
     __slots__ = ("details",)
@@ -844,12 +880,14 @@ class PreprocessingToPointAggregatorPointsSkipped(_message.Message):
     def __init__(self, num_skipped_points: _Optional[int] = ..., check_interval: _Optional[_Union[_metadata_pb2.LogMetadata.Duration, _Mapping]] = ...) -> None: ...
 
 class MinMsgIntervalLessThanThreshold(_message.Message):
-    __slots__ = ("lidar_id", "threshold")
+    __slots__ = ("lidar_id", "threshold", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     THRESHOLD_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
     threshold: _metadata_pb2.LogMetadata.Duration
-    def __init__(self, lidar_id: _Optional[str] = ..., threshold: _Optional[_Union[_metadata_pb2.LogMetadata.Duration, _Mapping]] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., threshold: _Optional[_Union[_metadata_pb2.LogMetadata.Duration, _Mapping]] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class FailedToCleanupRosWarning(_message.Message):
     __slots__ = ("details",)
@@ -1070,12 +1108,14 @@ class ProjectConfigUpdatedInfo(_message.Message):
     def __init__(self) -> None: ...
 
 class InvalidLidarTimestamp(_message.Message):
-    __slots__ = ("lidar_id", "timestamp")
+    __slots__ = ("lidar_id", "timestamp", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
     timestamp: _metadata_pb2.LogMetadata.Timestamp
-    def __init__(self, lidar_id: _Optional[str] = ..., timestamp: _Optional[_Union[_metadata_pb2.LogMetadata.Timestamp, _Mapping]] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., timestamp: _Optional[_Union[_metadata_pb2.LogMetadata.Timestamp, _Mapping]] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class CalibrationAccumulatingPointsInfo(_message.Message):
     __slots__ = ("time",)
@@ -1162,28 +1202,34 @@ class BagUpgradeFailed(_message.Message):
     def __init__(self, bag_path: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
 
 class UnknownLidarError(_message.Message):
-    __slots__ = ("lidar_id",)
+    __slots__ = ("lidar_id", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
-    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class InvalidPointCloudWarning(_message.Message):
-    __slots__ = ("lidar_id", "reason")
+    __slots__ = ("lidar_id", "reason", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     REASON_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
     reason: str
-    def __init__(self, lidar_id: _Optional[str] = ..., reason: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., reason: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class LidarIsDroppingPackets(_message.Message):
-    __slots__ = ("lidar_id", "num_total_dropped_packets", "num_total_expected_packets")
+    __slots__ = ("lidar_id", "num_total_dropped_packets", "num_total_expected_packets", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     NUM_TOTAL_DROPPED_PACKETS_FIELD_NUMBER: _ClassVar[int]
     NUM_TOTAL_EXPECTED_PACKETS_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
     num_total_dropped_packets: int
     num_total_expected_packets: int
-    def __init__(self, lidar_id: _Optional[str] = ..., num_total_dropped_packets: _Optional[int] = ..., num_total_expected_packets: _Optional[int] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., num_total_dropped_packets: _Optional[int] = ..., num_total_expected_packets: _Optional[int] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class RemovedInvalidLidarsFromConfigWarning(_message.Message):
     __slots__ = ("backup_path",)
@@ -1222,48 +1268,64 @@ class PlyFileLoadFailedError(_message.Message):
     def __init__(self, file_path: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
 
 class HesaiDriverLifecycle(_message.Message):
-    __slots__ = ("action", "lidar_id")
+    __slots__ = ("action", "lidar_id", "lidar_name")
     ACTION_FIELD_NUMBER: _ClassVar[int]
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     action: str
     lidar_id: str
-    def __init__(self, action: _Optional[str] = ..., lidar_id: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, action: _Optional[str] = ..., lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class HesaiDriverError(_message.Message):
-    __slots__ = ("details",)
+    __slots__ = ("details", "lidar_id", "lidar_name")
     DETAILS_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     details: str
-    def __init__(self, details: _Optional[str] = ...) -> None: ...
+    lidar_id: str
+    lidar_name: str
+    def __init__(self, details: _Optional[str] = ..., lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class HesaiPacketProcessingFailed(_message.Message):
-    __slots__ = ("lidar_id", "details")
+    __slots__ = ("lidar_id", "details", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     DETAILS_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
     details: str
-    def __init__(self, lidar_id: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., details: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class HesaiCorrectionFileError(_message.Message):
-    __slots__ = ("file_type", "details")
+    __slots__ = ("file_type", "details", "lidar_id", "lidar_name")
     FILE_TYPE_FIELD_NUMBER: _ClassVar[int]
     DETAILS_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     file_type: str
     details: str
-    def __init__(self, file_type: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+    lidar_id: str
+    lidar_name: str
+    def __init__(self, file_type: _Optional[str] = ..., details: _Optional[str] = ..., lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class HesaiPacketStatistics(_message.Message):
-    __slots__ = ("packets_received", "packets_published", "packets_dropped", "packets_decode_failed", "success_rate")
+    __slots__ = ("packets_received", "packets_published", "packets_dropped", "packets_decode_failed", "success_rate", "lidar_id", "lidar_name")
     PACKETS_RECEIVED_FIELD_NUMBER: _ClassVar[int]
     PACKETS_PUBLISHED_FIELD_NUMBER: _ClassVar[int]
     PACKETS_DROPPED_FIELD_NUMBER: _ClassVar[int]
     PACKETS_DECODE_FAILED_FIELD_NUMBER: _ClassVar[int]
     SUCCESS_RATE_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     packets_received: int
     packets_published: int
     packets_dropped: int
     packets_decode_failed: int
     success_rate: float
-    def __init__(self, packets_received: _Optional[int] = ..., packets_published: _Optional[int] = ..., packets_dropped: _Optional[int] = ..., packets_decode_failed: _Optional[int] = ..., success_rate: _Optional[float] = ...) -> None: ...
+    lidar_id: str
+    lidar_name: str
+    def __init__(self, packets_received: _Optional[int] = ..., packets_published: _Optional[int] = ..., packets_dropped: _Optional[int] = ..., packets_decode_failed: _Optional[int] = ..., success_rate: _Optional[float] = ..., lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class PlyFileWriteFailedError(_message.Message):
     __slots__ = ("file_path", "details")
@@ -1314,44 +1376,58 @@ class AttemptToInjectInvalidLidarIdWarning(_message.Message):
     def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
 
 class ResetBundledPacketDueToUnexpectedPacket(_message.Message):
-    __slots__ = ("lidar_id",)
+    __slots__ = ("lidar_id", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
-    def __init__(self, lidar_id: _Optional[str] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class PacketBundlerDroppedPacketsWarning(_message.Message):
-    __slots__ = ("lidar_id", "num_dropped", "duration")
+    __slots__ = ("lidar_id", "num_dropped", "duration", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     NUM_DROPPED_FIELD_NUMBER: _ClassVar[int]
     DURATION_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
     num_dropped: int
     duration: _metadata_pb2.LogMetadata.Duration
-    def __init__(self, lidar_id: _Optional[str] = ..., num_dropped: _Optional[int] = ..., duration: _Optional[_Union[_metadata_pb2.LogMetadata.Duration, _Mapping]] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., num_dropped: _Optional[int] = ..., duration: _Optional[_Union[_metadata_pb2.LogMetadata.Duration, _Mapping]] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class PacketBundlerFrameJumpWarning(_message.Message):
-    __slots__ = ("lidar_id", "frame_id", "next_frame_id")
+    __slots__ = ("lidar_id", "frame_id", "next_frame_id", "lidar_name")
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     FRAME_ID_FIELD_NUMBER: _ClassVar[int]
     NEXT_FRAME_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
     frame_id: int
     next_frame_id: int
-    def __init__(self, lidar_id: _Optional[str] = ..., frame_id: _Optional[int] = ..., next_frame_id: _Optional[int] = ...) -> None: ...
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., frame_id: _Optional[int] = ..., next_frame_id: _Optional[int] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class LidarCorrectionLoadingSuccess(_message.Message):
-    __slots__ = ("correction_type",)
+    __slots__ = ("correction_type", "lidar_id", "lidar_name")
     CORRECTION_TYPE_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     correction_type: str
-    def __init__(self, correction_type: _Optional[str] = ...) -> None: ...
+    lidar_id: str
+    lidar_name: str
+    def __init__(self, correction_type: _Optional[str] = ..., lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class LidarCorrectionLoadingFailure(_message.Message):
-    __slots__ = ("correction_type", "details")
+    __slots__ = ("correction_type", "details", "lidar_id", "lidar_name")
     CORRECTION_TYPE_FIELD_NUMBER: _ClassVar[int]
     DETAILS_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     correction_type: str
     details: str
-    def __init__(self, correction_type: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+    lidar_id: str
+    lidar_name: str
+    def __init__(self, correction_type: _Optional[str] = ..., details: _Optional[str] = ..., lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class HesaiPacketStatisticsLidar(_message.Message):
     __slots__ = ("packets_received", "packets_published", "packets_dropped", "packets_decode_failed", "success_rate", "lidar_id")
@@ -1368,3 +1444,23 @@ class HesaiPacketStatisticsLidar(_message.Message):
     success_rate: float
     lidar_id: str
     def __init__(self, packets_received: _Optional[int] = ..., packets_published: _Optional[int] = ..., packets_dropped: _Optional[int] = ..., packets_decode_failed: _Optional[int] = ..., success_rate: _Optional[float] = ..., lidar_id: _Optional[str] = ...) -> None: ...
+
+class LidarTiltDetectionAlignedToCalibrationMapInfo(_message.Message):
+    __slots__ = ("lidar_id", "lidar_name")
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
+    lidar_id: str
+    lidar_name: str
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
+
+class LidarTiltDetectionMisalignedToCalibrationMapWarning(_message.Message):
+    __slots__ = ("lidar_id", "lidar_name", "angle", "distance")
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
+    ANGLE_FIELD_NUMBER: _ClassVar[int]
+    DISTANCE_FIELD_NUMBER: _ClassVar[int]
+    lidar_id: str
+    lidar_name: str
+    angle: float
+    distance: float
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ..., angle: _Optional[float] = ..., distance: _Optional[float] = ...) -> None: ...

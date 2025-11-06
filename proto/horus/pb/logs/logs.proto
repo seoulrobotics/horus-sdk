@@ -329,58 +329,68 @@ message PointCloudParsingFailureWarning {
 
 // Log #39.
 //
-// > The lidar $lidar_id is considered dead. No data has been received for a while.
+// > The lidar $lidar_name [$lidar_id] is considered dead. No data has been received for a while.
 message LidarIsDead {
   string lidar_id = 1;
+  string lidar_name = 2;
 }
 
 // Log #40.
 //
-// > The lidar $lidar_id is not considered dead anymore. A point cloud has been received again after some time.
+// > The lidar $lidar_name [$lidar_id] is not considered dead anymore. A point cloud has been received again after some time.
 message LidarIsNotDeadAnymore {
   string lidar_id = 1;
+  string lidar_name = 2;
 }
 
 // Log #41.
 //
-// > The lidar $lidar_id is obstructed.
+// > The lidar $lidar_name [$lidar_id] is obstructed.
 message LidarIsObstructed {
   string lidar_id = 1;
+  string lidar_name = 2;
 }
 
 // Log #42.
 //
-// > The lidar $lidar_id is not obstructed anymore.
+// > The lidar $lidar_name [$lidar_id] is not obstructed anymore.
 message LidarIsNotObstructedAnymore {
   string lidar_id = 1;
+  string lidar_name = 2;
 }
 
 // Log #43.
 //
-// > The lidar $lidar_id is tilted.
+// > The lidar $lidar_name [$lidar_id] is tilted.
 message LidarIsTilted {
   string lidar_id = 1;
+  string lidar_name = 2;
 }
 
 // Log #44.
 //
-// > The lidar $lidar_id is not tilted anymore.
+// > The lidar $lidar_name [$lidar_id] is not tilted anymore.
 message LidarIsNotTiltedAnymore {
   string lidar_id = 1;
+  string lidar_name = 2;
 }
 
 // Log #45.
 //
-// > The lidar $lidar_id has been automatically re-calibrated.
+// > LiDAR $lidar_name [$lidar_id] auto re-calibrated (Δ from original: t=$translation, r=$rotation_rpy)
 message LidarHasBeenAutomaticallyRecalibrated {
   string lidar_id = 1;
+  string lidar_name = 2;
+  string translation = 3;
+  string rotation_rpy = 4;
 }
 
 // Log #46.
 //
-// > Data has been received for the first time for the lidar $lidar_id.
+// > Data has been received for the first time for the lidar $lidar_name [$lidar_id].
 message ReceivedFirstDataForLidar {
   string lidar_id = 1;
+  string lidar_name = 2;
 }
 
 // Log #47.
@@ -839,62 +849,70 @@ message CannotDetermineContainerIdError {
 
 // Log #108.
 //
-// > Started lidar driver container $lidar_id.
+// > Started lidar driver container $lidar_name [$lidar_id].
 message StartedLidarDriver {
   string lidar_id = 1;
+  string lidar_name = 2;
 }
 
 // Log #109.
 //
-// > Cannot start lidar driver container $lidar_id: $details.
+// > Cannot start lidar driver container $lidar_name [$lidar_id]: $details.
 message CannotStartLidarDriver {
   string lidar_id = 1;
   string details = 2;
+  string lidar_name = 3;
 }
 
 // Log #110.
 //
-// > Stopped lidar driver container $lidar_id.
+// > Stopped lidar driver container $lidar_name [$lidar_id].
 message StoppedLidarDriver {
   string lidar_id = 1;
+  string lidar_name = 2;
 }
 
 // Log #111.
 //
-// > Cannot stop lidar driver container $lidar_id: $details.
+// > Cannot stop lidar driver container $lidar_name [$lidar_id]: $details.
 message CannotStopLidarDriver {
   string lidar_id = 1;
   string details = 2;
+  string lidar_name = 3;
 }
 
 // Log #112.
 //
-// > Restarted lidar driver container $lidar_id.
+// > Restarted lidar driver container $lidar_name [$lidar_id].
 message RestartedLidarDriver {
   string lidar_id = 1;
+  string lidar_name = 2;
 }
 
 // Log #113.
 //
-// > Cannot restart lidar driver container $lidar_id: $details.
+// > Cannot restart lidar driver container $lidar_name [$lidar_id]: $details.
 message CannotRestartLidarDriver {
   string lidar_id = 1;
   string details = 2;
+  string lidar_name = 3;
 }
 
 // Log #114.
 //
-// > Removed unused lidar driver container $lidar_id.
+// > Removed unused lidar driver container $lidar_name [$lidar_id].
 message RemovedUnusedLidarDriver {
   string lidar_id = 1;
+  string lidar_name = 2;
 }
 
 // Log #115.
 //
-// > Cannot remove unused lidar driver container $lidar_id: $details.
+// > Cannot remove unused lidar driver container $lidar_name [$lidar_id]: $details.
 message CannotRemoveUnusedLidarDriver {
   string lidar_id = 1;
   string details = 2;
+  string lidar_name = 3;
 }
 
 // Log #116.
@@ -921,10 +939,11 @@ message PreprocessingToPointAggregatorPointsSkipped {
 
 // Log #119.
 //
-// > Discarding lidar points from $lidar_id since the time interval between two point-cloud messages is too close (<$threshold). Adjust the Min-Message Interval parameter to change this behavior.
+// > Discarding lidar points from $lidar_name [$lidar_id] since the time interval between two point-cloud messages is too close (<$threshold). Adjust the Min-Message Interval parameter to change this behavior.
 message MinMsgIntervalLessThanThreshold {
   string lidar_id = 1;
   LogMetadata.Duration threshold = 2;
+  string lidar_name = 3;
 }
 
 // Log #120.
@@ -1186,10 +1205,11 @@ message ProjectConfigUpdatedInfo {
 
 // Log #163.
 //
-// > Invalid timestamp $timestamp sent by lidar $lidar_id.
+// > Invalid timestamp $timestamp sent by lidar $lidar_name [$lidar_id].
 message InvalidLidarTimestamp {
   string lidar_id = 1;
   LogMetadata.Timestamp timestamp = 2;
+  string lidar_name = 3;
 }
 
 // Log #164.
@@ -1292,26 +1312,29 @@ message BagUpgradeFailed {
 
 // Log #178.
 //
-// > Received points from unknown lidar $lidar_id.
+// > Received points from unknown lidar $lidar_name [$lidar_id].
 message UnknownLidarError {
   string lidar_id = 1;
+  string lidar_name = 2;
 }
 
 // Log #179.
 //
-// > Invalid point cloud received from lidar $lidar_id: $reason
+// > Invalid point cloud received from lidar $lidar_name [$lidar_id]: $reason
 message InvalidPointCloudWarning {
   string lidar_id = 1;
   string reason = 2;
+  string lidar_name = 3;
 }
 
 // Log #180.
 //
-// > The lidar $lidar_id is dropping packets (dropped $num_total_dropped_packets packets out of $num_total_expected_packets).
+// > The lidar $lidar_name [$lidar_id] is dropping packets (dropped $num_total_dropped_packets packets out of $num_total_expected_packets).
 message LidarIsDroppingPackets {
   string lidar_id = 1;
   uint64 num_total_dropped_packets = 2;
   uint64 num_total_expected_packets = 3;
+  string lidar_name = 4;
 }
 
 // Log #181.
@@ -1354,44 +1377,52 @@ message PlyFileLoadFailedError {
 
 // Log #186.
 //
-// > Hesai XT32 driver $action for LiDAR $lidar_id.
+// > [$lidar_name][$lidar_id] Hesai XT32 driver $action.
 message HesaiDriverLifecycle {
   string action = 1;
   string lidar_id = 2;
+  string lidar_name = 3;
 }
 
 // Log #187.
 //
-// > Hesai XT32 driver error: $details
+// > [$lidar_name][$lidar_id] Hesai XT32 driver error: $details
 message HesaiDriverError {
   string details = 1;
+  string lidar_id = 2;
+  string lidar_name = 3;
 }
 
 // Log #188.
 //
-// > Failed to process packet for Hesai LiDAR $lidar_id: $details
+// > [$lidar_name][$lidar_id] Failed to process packet: $details
 message HesaiPacketProcessingFailed {
   string lidar_id = 1;
   string details = 2;
+  string lidar_name = 3;
 }
 
 // Log #189.
 //
-// > Failed to load Hesai XT32 correction file $file_type: $details
+// > [$lidar_name][$lidar_id] Failed to load Hesai XT32 correction file $file_type: $details
 message HesaiCorrectionFileError {
   string file_type = 1;
   string details = 2;
+  string lidar_id = 3;
+  string lidar_name = 4;
 }
 
 // Log #190.
 //
-// > Hesai packet statistics - Received: $packets_received, Published: $packets_published, Dropped: $packets_dropped, Decode Failed: $packets_decode_failed, Success Rate: $success_rate %
+// > [$lidar_name][$lidar_id] Hesai packet statistics - Received: $packets_received, Published: $packets_published, Dropped: $packets_dropped, Decode Failed: $packets_decode_failed, Success Rate: $success_rate %
 message HesaiPacketStatistics {
   uint64 packets_received = 1;
   uint64 packets_published = 2;
   uint64 packets_dropped = 3;
   uint64 packets_decode_failed = 4;
   double success_rate = 5;
+  string lidar_id = 6;
+  string lidar_name = 7;
 }
 
 // Log #191.
@@ -1448,42 +1479,49 @@ message AttemptToInjectInvalidLidarIdWarning {
 
 // Log #198.
 //
-// > Resetting bundled packet due to unexpected packet from lidar $lidar_id.
+// > Resetting bundled packet due to unexpected packet from lidar $lidar_name [$lidar_id].
 message ResetBundledPacketDueToUnexpectedPacket {
   string lidar_id = 1;
+  string lidar_name = 2;
 }
 
 // Log #199.
 //
-// > Lidar $lidar_id dropped $num_dropped packets over $duration
+// > Lidar $lidar_name [$lidar_id] dropped $num_dropped packets over $duration
 message PacketBundlerDroppedPacketsWarning {
   string lidar_id = 1;
   uint64 num_dropped = 2;
   LogMetadata.Duration duration = 3;
+  string lidar_name = 4;
 }
 
 // Log #200.
 //
-// > Frame sequence jump detected on lidar $lidar_id: from $frame_id to $next_frame_id
+// > Frame sequence jump detected on lidar $lidar_name [$lidar_id]: from $frame_id to $next_frame_id
 message PacketBundlerFrameJumpWarning {
   string lidar_id = 1;
   uint64 frame_id = 2;
   uint64 next_frame_id = 3;
+  string lidar_name = 4;
 }
 
 // Log #201.
 //
-// > Successfully loaded $correction_type corrections from the lidar
+// > [$lidar_name][$lidar_id] Successfully loaded $correction_type corrections from the lidar
 message LidarCorrectionLoadingSuccess {
   string correction_type = 1;
+  string lidar_id = 2;
+  string lidar_name = 3;
 }
 
 // Log #202.
 //
-// > Failed to load $correction_type corrections from the lidar ($details); using default correction values
+// > [$lidar_name][$lidar_id] Failed to load $correction_type corrections from the lidar ($details); using default correction values
 message LidarCorrectionLoadingFailure {
   string correction_type = 1;
   string details = 2;
+  string lidar_id = 3;
+  string lidar_name = 4;
 }
 
 // Log #203.
@@ -1496,4 +1534,22 @@ message HesaiPacketStatisticsLidar {
   uint64 packets_decode_failed = 4;
   double success_rate = 5;
   string lidar_id = 6;
+}
+
+// Log #204.
+//
+// > Lidar $lidar_name [$lidar_id] is aligned to calibration map. Using the calibration map for tilt detection and auto-recalibration for this lidar.
+message LidarTiltDetectionAlignedToCalibrationMapInfo {
+  string lidar_id = 1;
+  string lidar_name = 2;
+}
+
+// Log #205.
+//
+// > Lidar $lidar_name [$lidar_id] deviates from calibration map by $angle degrees and $distance meters. Using accumulated points as reference to avoid overwriting manual calibration.
+message LidarTiltDetectionMisalignedToCalibrationMapWarning {
+  string lidar_id = 1;
+  string lidar_name = 2;
+  double angle = 3;
+  double distance = 4;
 }

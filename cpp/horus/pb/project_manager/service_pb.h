@@ -64,7 +64,7 @@ enum class LicensePrivilege : PbEnum {  // NOLINT(*-enum-size)
 
 /// Service represented by the node.
 ///
-/// Source: horus/pb/project_manager/service.proto:131:5
+/// Source: horus/pb/project_manager/service.proto:127:5
 enum class GetHealthStatusResponse_NodeHealth_Service : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -87,7 +87,7 @@ enum class GetHealthStatusResponse_NodeHealth_Service : PbEnum {  // NOLINT(*-en
 
 /// Connectivity status.
 ///
-/// Source: horus/pb/project_manager/service.proto:142:5
+/// Source: horus/pb/project_manager/service.proto:138:5
 enum class GetHealthStatusResponse_NodeHealth_Status : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -1316,7 +1316,7 @@ class LicenseStatus final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:120:1
+/// Source: horus/pb/project_manager/service.proto:116:1
 class GetHealthStatusRequest final : public PbMessage {
  public:
 
@@ -1378,7 +1378,7 @@ class GetHealthStatusRequest final : public PbMessage {
 
 /// Connectivity status of a single node.
 ///
-/// Source: horus/pb/project_manager/service.proto:129:3
+/// Source: horus/pb/project_manager/service.proto:125:3
 class GetHealthStatusResponse_NodeHealth final : public PbMessage {
  public:
   /// @see GetHealthStatusResponse_NodeHealth_Service
@@ -1572,7 +1572,7 @@ class GetHealthStatusResponse_NodeHealth final : public PbMessage {
 
 /// Wraps SensorInfo with node unreachable error
 ///
-/// Source: horus/pb/project_manager/service.proto:153:3
+/// Source: horus/pb/project_manager/service.proto:149:3
 class GetHealthStatusResponse_SensorHealth final : public PbMessage {
  public:
 
@@ -1827,7 +1827,7 @@ class GetHealthStatusResponse_SensorHealth final : public PbMessage {
 ///  - Lidar status
 ///  - Services connectivity
 ///
-/// Source: horus/pb/project_manager/service.proto:127:1
+/// Source: horus/pb/project_manager/service.proto:123:1
 class GetHealthStatusResponse final : public PbMessage {
  public:
   /// @see GetHealthStatusResponse_NodeHealth

@@ -113,10 +113,6 @@ message LicenseStatus {
 
 ;
 
-;
-
-;
-
 message GetHealthStatusRequest {}
 
 // Report of the health status of horus.

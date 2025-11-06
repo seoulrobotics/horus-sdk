@@ -219,5 +219,7 @@ message LogData {
     logs.LidarCorrectionLoadingSuccess lidar_correction_loading_success = 201;
     logs.LidarCorrectionLoadingFailure lidar_correction_loading_failure = 202;
     logs.HesaiPacketStatisticsLidar hesai_packet_statistics_lidar = 203;
+    logs.LidarTiltDetectionAlignedToCalibrationMapInfo lidar_tilt_detection_aligned_to_calibration_map_info = 204;
+    logs.LidarTiltDetectionMisalignedToCalibrationMapWarning lidar_tilt_detection_misaligned_to_calibration_map_warning = 205;
   }
 }

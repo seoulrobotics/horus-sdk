@@ -1977,6 +1977,24 @@ func (x *LogData) GetHesaiPacketStatisticsLidar() *logs_pb.HesaiPacketStatistics
 	return nil
 }
 
+func (x *LogData) GetLidarTiltDetectionAlignedToCalibrationMapInfo() *logs_pb.LidarTiltDetectionAlignedToCalibrationMapInfo {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_LidarTiltDetectionAlignedToCalibrationMapInfo); ok {
+			return x.LidarTiltDetectionAlignedToCalibrationMapInfo
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetLidarTiltDetectionMisalignedToCalibrationMapWarning() *logs_pb.LidarTiltDetectionMisalignedToCalibrationMapWarning {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_LidarTiltDetectionMisalignedToCalibrationMapWarning); ok {
+			return x.LidarTiltDetectionMisalignedToCalibrationMapWarning
+		}
+	}
+	return nil
+}
+
 func (x *LogData) SetGeneric(v *logs_pb.Generic) {
 	if v == nil {
 		x.xxx_hidden_Data = nil
@@ -3599,6 +3617,22 @@ func (x *LogData) SetHesaiPacketStatisticsLidar(v *logs_pb.HesaiPacketStatistics
 		return
 	}
 	x.xxx_hidden_Data = &logData_HesaiPacketStatisticsLidar{v}
+}
+
+func (x *LogData) SetLidarTiltDetectionAlignedToCalibrationMapInfo(v *logs_pb.LidarTiltDetectionAlignedToCalibrationMapInfo) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_LidarTiltDetectionAlignedToCalibrationMapInfo{v}
+}
+
+func (x *LogData) SetLidarTiltDetectionMisalignedToCalibrationMapWarning(v *logs_pb.LidarTiltDetectionMisalignedToCalibrationMapWarning) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_LidarTiltDetectionMisalignedToCalibrationMapWarning{v}
 }
 
 func (x *LogData) HasData() bool {
@@ -5232,6 +5266,22 @@ func (x *LogData) HasHesaiPacketStatisticsLidar() bool {
 	return ok
 }
 
+func (x *LogData) HasLidarTiltDetectionAlignedToCalibrationMapInfo() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_LidarTiltDetectionAlignedToCalibrationMapInfo)
+	return ok
+}
+
+func (x *LogData) HasLidarTiltDetectionMisalignedToCalibrationMapWarning() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_LidarTiltDetectionMisalignedToCalibrationMapWarning)
+	return ok
+}
+
 func (x *LogData) ClearData() {
 	x.xxx_hidden_Data = nil
 }
@@ -6454,6 +6504,18 @@ func (x *LogData) ClearHesaiPacketStatisticsLidar() {
 	}
 }
 
+func (x *LogData) ClearLidarTiltDetectionAlignedToCalibrationMapInfo() {
+	if _, ok := x.xxx_hidden_Data.(*logData_LidarTiltDetectionAlignedToCalibrationMapInfo); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearLidarTiltDetectionMisalignedToCalibrationMapWarning() {
+	if _, ok := x.xxx_hidden_Data.(*logData_LidarTiltDetectionMisalignedToCalibrationMapWarning); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
 const LogData_Data_not_set_case case_LogData_Data = 0
 const LogData_Generic_case case_LogData_Data = 1
 const LogData_Oom_case case_LogData_Data = 2
@@ -6658,6 +6720,8 @@ const LogData_PacketBundlerFrameJumpWarning_case case_LogData_Data = 200
 const LogData_LidarCorrectionLoadingSuccess_case case_LogData_Data = 201
 const LogData_LidarCorrectionLoadingFailure_case case_LogData_Data = 202
 const LogData_HesaiPacketStatisticsLidar_case case_LogData_Data = 203
+const LogData_LidarTiltDetectionAlignedToCalibrationMapInfo_case case_LogData_Data = 204
+const LogData_LidarTiltDetectionMisalignedToCalibrationMapWarning_case case_LogData_Data = 205
 
 func (x *LogData) WhichData() case_LogData_Data {
 	if x == nil {
@@ -7070,6 +7134,10 @@ func (x *LogData) WhichData() case_LogData_Data {
 		return LogData_LidarCorrectionLoadingFailure_case
 	case *logData_HesaiPacketStatisticsLidar:
 		return LogData_HesaiPacketStatisticsLidar_case
+	case *logData_LidarTiltDetectionAlignedToCalibrationMapInfo:
+		return LogData_LidarTiltDetectionAlignedToCalibrationMapInfo_case
+	case *logData_LidarTiltDetectionMisalignedToCalibrationMapWarning:
+		return LogData_LidarTiltDetectionMisalignedToCalibrationMapWarning_case
 	default:
 		return LogData_Data_not_set_case
 	}
@@ -7079,209 +7147,211 @@ type LogData_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
 	// Fields of oneof xxx_hidden_Data:
-	Generic                                     *logs_pb.Generic
-	Oom                                         *logs_pb.Oom
-	RpcConnectionError                          *logs_pb.RpcConnectionError
-	InvalidProjectName                          *logs_pb.InvalidProjectName
-	ProjectNotFound                             *logs_pb.ProjectNotFound
-	ProjectAlreadyExists                        *logs_pb.ProjectAlreadyExists
-	InvalidConfiguration                        *logs_pb.InvalidConfiguration
-	EntityNotFound                              *logs_pb.EntityNotFound
-	ActiveProjectCannotBeDeleted                *logs_pb.ActiveProjectCannotBeDeleted
-	RpcDisconnectionError                       *logs_pb.RpcDisconnectionError
-	DroppedLogs                                 *logs_pb.DroppedLogs
-	OpenedProject                               *logs_pb.OpenedProject
-	CreatedProject                              *logs_pb.CreatedProject
-	ConfigUnavailable                           *logs_pb.ConfigUnavailable
-	InvalidRequest                              *logs_pb.InvalidRequest
-	SanityCheckError                            *logs_pb.SanityCheckError
-	BagFailedToOpen                             *logs_pb.BagFailedToOpen
-	BagFailedToClose                            *logs_pb.BagFailedToClose
-	BagConversionFailed                         *logs_pb.BagConversionFailed
-	BagFailedToWrite                            *logs_pb.BagFailedToWrite
-	CalibrationError                            *logs_pb.CalibrationError
-	ProjectManagerFailedToStartRecording        *logs_pb.ProjectManagerFailedToStartRecording
-	ProjectManagerFailedToStopRecording         *logs_pb.ProjectManagerFailedToStopRecording
-	ServiceConnectionTimedOut                   *logs_pb.ServiceConnectionTimedOut
-	BagRecorderAlreadyRunning                   *logs_pb.BagRecorderAlreadyRunning
-	LicenseServerConnectionError                *logs_pb.LicenseServerConnectionError
-	LicenseError                                *logs_pb.LicenseError
-	LicenseNotFoundError                        *logs_pb.LicenseNotFoundError
-	LicenseExpiredError                         *logs_pb.LicenseExpiredError
-	LicenseExceededError                        *logs_pb.LicenseExceededError
-	LicenseHostMachineError                     *logs_pb.LicenseHostMachineError
-	LicensePrivilegeError                       *logs_pb.LicensePrivilegeError
-	LicenseActiveInfo                           *logs_pb.LicenseActiveInfo
-	MultipleLicensesWarning                     *logs_pb.MultipleLicensesWarning
-	LicenseCurrentLicenseStatusInfo             *logs_pb.LicenseCurrentLicenseStatusInfo
-	BagRecordingStoppedInfo                     *logs_pb.BagRecordingStoppedInfo
-	BagRecordingFailedToStart                   *logs_pb.BagRecordingFailedToStart
-	BagRecordingStartedInfo                     *logs_pb.BagRecordingStartedInfo
-	ReplayRestartedInfo                         *logs_pb.ReplayRestartedInfo
-	InputSourceChangeRequestedInfo              *logs_pb.InputSourceChangeRequestedInfo
-	InputSourceSwitchedInfo                     *logs_pb.InputSourceSwitchedInfo
-	RpcTimeoutWarning                           *logs_pb.RpcTimeoutWarning
-	CannotWriteLogFile                          *logs_pb.CannotWriteLogFile
-	PointCloudParsingFailureWarning             *logs_pb.PointCloudParsingFailureWarning
-	LidarIsDead                                 *logs_pb.LidarIsDead
-	LidarIsNotDeadAnymore                       *logs_pb.LidarIsNotDeadAnymore
-	LidarIsObstructed                           *logs_pb.LidarIsObstructed
-	LidarIsNotObstructedAnymore                 *logs_pb.LidarIsNotObstructedAnymore
-	LidarIsTilted                               *logs_pb.LidarIsTilted
-	LidarIsNotTiltedAnymore                     *logs_pb.LidarIsNotTiltedAnymore
-	LidarHasBeenAutomaticallyRecalibrated       *logs_pb.LidarHasBeenAutomaticallyRecalibrated
-	ReceivedFirstDataForLidar                   *logs_pb.ReceivedFirstDataForLidar
-	TerminationFailureError                     *logs_pb.TerminationFailureError
-	FrameProcessingError                        *logs_pb.FrameProcessingError
-	ThreadPoolUnavailableError                  *logs_pb.ThreadPoolUnavailableError
-	InvalidArgument                             *logs_pb.InvalidArgument
-	ComponentInitializationFailureFatal         *logs_pb.ComponentInitializationFailureFatal
-	UnhandledEnumCaseError                      *logs_pb.UnhandledEnumCaseError
-	BagEmptyError                               *logs_pb.BagEmptyError
-	DiscardingDataError                         *logs_pb.DiscardingDataError
-	DiscardingDataWarning                       *logs_pb.DiscardingDataWarning
-	NothingToProcess                            *logs_pb.NothingToProcess
-	InvalidComponentConfiguration               *logs_pb.InvalidComponentConfiguration
-	ChannelReceiverNotFoundWarning              *logs_pb.ChannelReceiverNotFoundWarning
-	ModelLoadFailure                            *logs_pb.ModelLoadFailure
-	ModelExecutionFailureError                  *logs_pb.ModelExecutionFailureError
-	ServiceReadyInfo                            *logs_pb.ServiceReadyInfo
-	ModelPreparingInfo                          *logs_pb.ModelPreparingInfo
-	ModelInitializedInfo                        *logs_pb.ModelInitializedInfo
-	ModelInitializationFailureWarning           *logs_pb.ModelInitializationFailureWarning
-	RosSpinnerStoppedWarning                    *logs_pb.RosSpinnerStoppedWarning
-	ActorSystemUnavailableError                 *logs_pb.ActorSystemUnavailableError
-	ConfigNodeNotFoundError                     *logs_pb.ConfigNodeNotFoundError
-	BagTimestampOutOfOrderError                 *logs_pb.BagTimestampOutOfOrderError
-	BagReplayUnexpectedTimestampError           *logs_pb.BagReplayUnexpectedTimestampError
-	WebsocketClosedInfo                         *logs_pb.WebsocketClosedInfo
-	WebsocketOpenedInfo                         *logs_pb.WebsocketOpenedInfo
-	SubscriberDisconnectedInfo                  *logs_pb.SubscriberDisconnectedInfo
-	ThreadPoolSlowingDownWarning                *logs_pb.ThreadPoolSlowingDownWarning
-	ThreadPoolNotRespondingWarning              *logs_pb.ThreadPoolNotRespondingWarning
-	ThreadPoolBrokenPromiseWarning              *logs_pb.ThreadPoolBrokenPromiseWarning
-	BoxFittingPointsBelowBaseWarning            *logs_pb.BoxFittingPointsBelowBaseWarning
-	FailedToRemoveStalePointsWarning            *logs_pb.FailedToRemoveStalePointsWarning
-	IrregularBroadcastingPeriodWarning          *logs_pb.IrregularBroadcastingPeriodWarning
-	ClustererPointsOutOfRangeWarning            *logs_pb.ClustererPointsOutOfRangeWarning
-	InternalError                               *logs_pb.InternalError
-	InternalFatal                               *logs_pb.InternalFatal
-	ServiceStartingInfo                         *logs_pb.ServiceStartingInfo
-	ConfigNodeNotFoundFatal                     *logs_pb.ConfigNodeNotFoundFatal
-	ServiceSetupError                           *logs_pb.ServiceSetupError
-	FilesystemError                             *logs_pb.FilesystemError
-	InvalidPresetWarning                        *logs_pb.InvalidPresetWarning
-	WebsocketFailedClearPendingError            *logs_pb.WebsocketFailedClearPendingError
-	WebsocketFailedToStopError                  *logs_pb.WebsocketFailedToStopError
-	WebsocketFailedToCreateError                *logs_pb.WebsocketFailedToCreateError
-	UnexpectedRpcError                          *logs_pb.UnexpectedRpcError
-	LicensePollFailed                           *logs_pb.LicensePollFailed
-	LicenseExpiredWarning                       *logs_pb.LicenseExpiredWarning
-	LicenseUsageExceededWarning                 *logs_pb.LicenseUsageExceededWarning
-	StaticThreadPoolSlowTaskWarning             *logs_pb.StaticThreadPoolSlowTaskWarning
-	RpcUnsupportedServiceWarning                *logs_pb.RpcUnsupportedServiceWarning
-	WebsocketHandlerProblem                     *logs_pb.WebsocketHandlerProblem
-	WebsocketDeserializeError                   *logs_pb.WebsocketDeserializeError
-	WebsocketExpiredRpcEndpointError            *logs_pb.WebsocketExpiredRpcEndpointError
-	WebsocketQueueOverloadedWarning             *logs_pb.WebsocketQueueOverloadedWarning
-	RpcFailedToNotifyWarning                    *logs_pb.RpcFailedToNotifyWarning
-	ConfigSubscriptionFailedWarning             *logs_pb.ConfigSubscriptionFailedWarning
-	ThreadPoolClampedWorkersWarning             *logs_pb.ThreadPoolClampedWorkersWarning
-	StoppingHorusBagRecorderAlreadyStopped      *logs_pb.StoppingHorusBagRecorderAlreadyStopped
-	RecorderConfigUpdateWhileRunning            *logs_pb.RecorderConfigUpdateWhileRunning
-	ClampingDataWarning                         *logs_pb.ClampingDataWarning
-	LidarIncompatibleValues                     *logs_pb.LidarIncompatibleValues
-	CannotDetermineContainerIdError             *logs_pb.CannotDetermineContainerIdError
-	StartedLidarDriver                          *logs_pb.StartedLidarDriver
-	CannotStartLidarDriver                      *logs_pb.CannotStartLidarDriver
-	StoppedLidarDriver                          *logs_pb.StoppedLidarDriver
-	CannotStopLidarDriver                       *logs_pb.CannotStopLidarDriver
-	RestartedLidarDriver                        *logs_pb.RestartedLidarDriver
-	CannotRestartLidarDriver                    *logs_pb.CannotRestartLidarDriver
-	RemovedUnusedLidarDriver                    *logs_pb.RemovedUnusedLidarDriver
-	CannotRemoveUnusedLidarDriver               *logs_pb.CannotRemoveUnusedLidarDriver
-	LidarDriverGcFailure                        *logs_pb.LidarDriverGcFailure
-	IdSpaceExhausted                            *logs_pb.IdSpaceExhausted
-	PreprocessingToPointAggregatorPointsSkipped *logs_pb.PreprocessingToPointAggregatorPointsSkipped
-	MinMsgIntervalLessThanThreshold             *logs_pb.MinMsgIntervalLessThanThreshold
-	FailedToCleanupRosWarning                   *logs_pb.FailedToCleanupRosWarning
-	RpcDisconnectedWarning                      *logs_pb.RpcDisconnectedWarning
-	RpcUnhandledError                           *logs_pb.RpcUnhandledError
-	TimeDiffOutOfRangeWarning                   *logs_pb.TimeDiffOutOfRangeWarning
-	TensorrtLog                                 *logs_pb.TensorrtLog
-	BuildingTensorrtEngineInfo                  *logs_pb.BuildingTensorrtEngineInfo
-	LoadingTensorrtEngineInfo                   *logs_pb.LoadingTensorrtEngineInfo
-	CalibrationMapNotFound                      *logs_pb.CalibrationMapNotFound
-	CalibrationMapNotValid                      *logs_pb.CalibrationMapNotValid
-	CalibrationMapPathAlreadyExists             *logs_pb.CalibrationMapPathAlreadyExists
-	FailedToSaveCalibrationMap                  *logs_pb.FailedToSaveCalibrationMap
-	FailedToRemoveCalibrationMap                *logs_pb.FailedToRemoveCalibrationMap
-	FailedToIterateInDirectory                  *logs_pb.FailedToIterateInDirectory
-	MapBasedCalibrationWithoutMapLoading        *logs_pb.MapBasedCalibrationWithoutMapLoading
-	MapBasedCalibrationAlreadyRunning           *logs_pb.MapBasedCalibrationAlreadyRunning
-	CancelMapBasedCalibrationNotRunning         *logs_pb.CancelMapBasedCalibrationNotRunning
-	BagStreamNotFound                           *logs_pb.BagStreamNotFound
-	EvaluationBagStartedInfo                    *logs_pb.EvaluationBagStartedInfo
-	EvaluationBagFinishedInfo                   *logs_pb.EvaluationBagFinishedInfo
-	BagNotFound                                 *logs_pb.BagNotFound
-	BuildingPipelineInfo                        *logs_pb.BuildingPipelineInfo
-	BagIsNotEvaluation                          *logs_pb.BagIsNotEvaluation
-	HorusBagRunning                             *logs_pb.HorusBagRunning
-	AutoGroundCalibrationWarning                *logs_pb.AutoGroundCalibrationWarning
-	AutoGroundCalibrationError                  *logs_pb.AutoGroundCalibrationError
-	ObjectDetectorNotLoadedWarning              *logs_pb.ObjectDetectorNotLoadedWarning
-	CalibrationIsRunningError                   *logs_pb.CalibrationIsRunningError
-	ModelInitInProgressInfo                     *logs_pb.ModelInitInProgressInfo
-	RpcTimeoutWithResolutionWarning             *logs_pb.RpcTimeoutWithResolutionWarning
-	CalibrationWasCancelledInfo                 *logs_pb.CalibrationWasCancelledInfo
-	CalibrationMapRecordingFailedToStart        *logs_pb.CalibrationMapRecordingFailedToStart
-	DetectionPipelineRequestedResetInfo         *logs_pb.DetectionPipelineRequestedResetInfo
-	PreprocessingServicePipelineUnavailable     *logs_pb.PreprocessingServicePipelineUnavailable
-	CircularRecordingDisabledWarning            *logs_pb.CircularRecordingDisabledWarning
-	SnapshotAlreadyRunningWarning               *logs_pb.SnapshotAlreadyRunningWarning
-	ActiveProjectChangedInfo                    *logs_pb.ActiveProjectChangedInfo
-	ProjectConfigUpdatedInfo                    *logs_pb.ProjectConfigUpdatedInfo
-	InvalidLidarTimestamp                       *logs_pb.InvalidLidarTimestamp
-	CalibrationAccumulatingPointsInfo           *logs_pb.CalibrationAccumulatingPointsInfo
-	SparseNoiseFilterUsageNonRotationalLidars   *logs_pb.SparseNoiseFilterUsageNonRotationalLidars
-	FileWriteWarning                            *logs_pb.FileWriteWarning
-	LicenseForbiddenFeature                     *logs_pb.LicenseForbiddenFeature
-	FailedToUpdateConfiguration                 *logs_pb.FailedToUpdateConfiguration
-	ObstructionDetectorBadReferenceWarning      *logs_pb.ObstructionDetectorBadReferenceWarning
-	ProjectFileInvalidPermissionsError          *logs_pb.ProjectFileInvalidPermissionsError
-	PipelineSchedulerError                      *logs_pb.PipelineSchedulerError
-	MultiLidarCalibrationWarning                *logs_pb.MultiLidarCalibrationWarning
-	MultiLidarCalibrationError                  *logs_pb.MultiLidarCalibrationError
-	OldBagWarning                               *logs_pb.OldBagWarning
-	UpgradingBagInfo                            *logs_pb.UpgradingBagInfo
-	BagCalibrationSaveFailed                    *logs_pb.BagCalibrationSaveFailed
-	BagUpgradeFailed                            *logs_pb.BagUpgradeFailed
-	UnknownLidarError                           *logs_pb.UnknownLidarError
-	InvalidPointCloudWarning                    *logs_pb.InvalidPointCloudWarning
-	LidarIsDroppingPackets                      *logs_pb.LidarIsDroppingPackets
-	RemovedInvalidLidarsFromConfigWarning       *logs_pb.RemovedInvalidLidarsFromConfigWarning
-	CalibrationMapRecordingFailed               *logs_pb.CalibrationMapRecordingFailed
-	DetectionNodeNotFoundError                  *logs_pb.DetectionNodeNotFoundError
-	CreatedVersionBackupInfo                    *logs_pb.CreatedVersionBackupInfo
-	PlyFileLoadFailedError                      *logs_pb.PlyFileLoadFailedError
-	HesaiDriverLifecycle                        *logs_pb.HesaiDriverLifecycle
-	HesaiDriverError                            *logs_pb.HesaiDriverError
-	HesaiPacketProcessingFailed                 *logs_pb.HesaiPacketProcessingFailed
-	HesaiCorrectionFileError                    *logs_pb.HesaiCorrectionFileError
-	HesaiPacketStatistics                       *logs_pb.HesaiPacketStatistics
-	PlyFileWriteFailedError                     *logs_pb.PlyFileWriteFailedError
-	ProjectSaveError                            *logs_pb.ProjectSaveError
-	SaveStaticEnvironmentSuccess                *logs_pb.SaveStaticEnvironmentSuccess
-	SaveStaticEnvironmentFailed                 *logs_pb.SaveStaticEnvironmentFailed
-	LoadStaticEnvironmentSuccess                *logs_pb.LoadStaticEnvironmentSuccess
-	LoadStaticEnvironmentFailed                 *logs_pb.LoadStaticEnvironmentFailed
-	AttemptToInjectInvalidLidarIdWarning        *logs_pb.AttemptToInjectInvalidLidarIdWarning
-	ResetBundledPacketDueToUnexpectedPacket     *logs_pb.ResetBundledPacketDueToUnexpectedPacket
-	PacketBundlerDroppedPacketsWarning          *logs_pb.PacketBundlerDroppedPacketsWarning
-	PacketBundlerFrameJumpWarning               *logs_pb.PacketBundlerFrameJumpWarning
-	LidarCorrectionLoadingSuccess               *logs_pb.LidarCorrectionLoadingSuccess
-	LidarCorrectionLoadingFailure               *logs_pb.LidarCorrectionLoadingFailure
-	HesaiPacketStatisticsLidar                  *logs_pb.HesaiPacketStatisticsLidar
+	Generic                                             *logs_pb.Generic
+	Oom                                                 *logs_pb.Oom
+	RpcConnectionError                                  *logs_pb.RpcConnectionError
+	InvalidProjectName                                  *logs_pb.InvalidProjectName
+	ProjectNotFound                                     *logs_pb.ProjectNotFound
+	ProjectAlreadyExists                                *logs_pb.ProjectAlreadyExists
+	InvalidConfiguration                                *logs_pb.InvalidConfiguration
+	EntityNotFound                                      *logs_pb.EntityNotFound
+	ActiveProjectCannotBeDeleted                        *logs_pb.ActiveProjectCannotBeDeleted
+	RpcDisconnectionError                               *logs_pb.RpcDisconnectionError
+	DroppedLogs                                         *logs_pb.DroppedLogs
+	OpenedProject                                       *logs_pb.OpenedProject
+	CreatedProject                                      *logs_pb.CreatedProject
+	ConfigUnavailable                                   *logs_pb.ConfigUnavailable
+	InvalidRequest                                      *logs_pb.InvalidRequest
+	SanityCheckError                                    *logs_pb.SanityCheckError
+	BagFailedToOpen                                     *logs_pb.BagFailedToOpen
+	BagFailedToClose                                    *logs_pb.BagFailedToClose
+	BagConversionFailed                                 *logs_pb.BagConversionFailed
+	BagFailedToWrite                                    *logs_pb.BagFailedToWrite
+	CalibrationError                                    *logs_pb.CalibrationError
+	ProjectManagerFailedToStartRecording                *logs_pb.ProjectManagerFailedToStartRecording
+	ProjectManagerFailedToStopRecording                 *logs_pb.ProjectManagerFailedToStopRecording
+	ServiceConnectionTimedOut                           *logs_pb.ServiceConnectionTimedOut
+	BagRecorderAlreadyRunning                           *logs_pb.BagRecorderAlreadyRunning
+	LicenseServerConnectionError                        *logs_pb.LicenseServerConnectionError
+	LicenseError                                        *logs_pb.LicenseError
+	LicenseNotFoundError                                *logs_pb.LicenseNotFoundError
+	LicenseExpiredError                                 *logs_pb.LicenseExpiredError
+	LicenseExceededError                                *logs_pb.LicenseExceededError
+	LicenseHostMachineError                             *logs_pb.LicenseHostMachineError
+	LicensePrivilegeError                               *logs_pb.LicensePrivilegeError
+	LicenseActiveInfo                                   *logs_pb.LicenseActiveInfo
+	MultipleLicensesWarning                             *logs_pb.MultipleLicensesWarning
+	LicenseCurrentLicenseStatusInfo                     *logs_pb.LicenseCurrentLicenseStatusInfo
+	BagRecordingStoppedInfo                             *logs_pb.BagRecordingStoppedInfo
+	BagRecordingFailedToStart                           *logs_pb.BagRecordingFailedToStart
+	BagRecordingStartedInfo                             *logs_pb.BagRecordingStartedInfo
+	ReplayRestartedInfo                                 *logs_pb.ReplayRestartedInfo
+	InputSourceChangeRequestedInfo                      *logs_pb.InputSourceChangeRequestedInfo
+	InputSourceSwitchedInfo                             *logs_pb.InputSourceSwitchedInfo
+	RpcTimeoutWarning                                   *logs_pb.RpcTimeoutWarning
+	CannotWriteLogFile                                  *logs_pb.CannotWriteLogFile
+	PointCloudParsingFailureWarning                     *logs_pb.PointCloudParsingFailureWarning
+	LidarIsDead                                         *logs_pb.LidarIsDead
+	LidarIsNotDeadAnymore                               *logs_pb.LidarIsNotDeadAnymore
+	LidarIsObstructed                                   *logs_pb.LidarIsObstructed
+	LidarIsNotObstructedAnymore                         *logs_pb.LidarIsNotObstructedAnymore
+	LidarIsTilted                                       *logs_pb.LidarIsTilted
+	LidarIsNotTiltedAnymore                             *logs_pb.LidarIsNotTiltedAnymore
+	LidarHasBeenAutomaticallyRecalibrated               *logs_pb.LidarHasBeenAutomaticallyRecalibrated
+	ReceivedFirstDataForLidar                           *logs_pb.ReceivedFirstDataForLidar
+	TerminationFailureError                             *logs_pb.TerminationFailureError
+	FrameProcessingError                                *logs_pb.FrameProcessingError
+	ThreadPoolUnavailableError                          *logs_pb.ThreadPoolUnavailableError
+	InvalidArgument                                     *logs_pb.InvalidArgument
+	ComponentInitializationFailureFatal                 *logs_pb.ComponentInitializationFailureFatal
+	UnhandledEnumCaseError                              *logs_pb.UnhandledEnumCaseError
+	BagEmptyError                                       *logs_pb.BagEmptyError
+	DiscardingDataError                                 *logs_pb.DiscardingDataError
+	DiscardingDataWarning                               *logs_pb.DiscardingDataWarning
+	NothingToProcess                                    *logs_pb.NothingToProcess
+	InvalidComponentConfiguration                       *logs_pb.InvalidComponentConfiguration
+	ChannelReceiverNotFoundWarning                      *logs_pb.ChannelReceiverNotFoundWarning
+	ModelLoadFailure                                    *logs_pb.ModelLoadFailure
+	ModelExecutionFailureError                          *logs_pb.ModelExecutionFailureError
+	ServiceReadyInfo                                    *logs_pb.ServiceReadyInfo
+	ModelPreparingInfo                                  *logs_pb.ModelPreparingInfo
+	ModelInitializedInfo                                *logs_pb.ModelInitializedInfo
+	ModelInitializationFailureWarning                   *logs_pb.ModelInitializationFailureWarning
+	RosSpinnerStoppedWarning                            *logs_pb.RosSpinnerStoppedWarning
+	ActorSystemUnavailableError                         *logs_pb.ActorSystemUnavailableError
+	ConfigNodeNotFoundError                             *logs_pb.ConfigNodeNotFoundError
+	BagTimestampOutOfOrderError                         *logs_pb.BagTimestampOutOfOrderError
+	BagReplayUnexpectedTimestampError                   *logs_pb.BagReplayUnexpectedTimestampError
+	WebsocketClosedInfo                                 *logs_pb.WebsocketClosedInfo
+	WebsocketOpenedInfo                                 *logs_pb.WebsocketOpenedInfo
+	SubscriberDisconnectedInfo                          *logs_pb.SubscriberDisconnectedInfo
+	ThreadPoolSlowingDownWarning                        *logs_pb.ThreadPoolSlowingDownWarning
+	ThreadPoolNotRespondingWarning                      *logs_pb.ThreadPoolNotRespondingWarning
+	ThreadPoolBrokenPromiseWarning                      *logs_pb.ThreadPoolBrokenPromiseWarning
+	BoxFittingPointsBelowBaseWarning                    *logs_pb.BoxFittingPointsBelowBaseWarning
+	FailedToRemoveStalePointsWarning                    *logs_pb.FailedToRemoveStalePointsWarning
+	IrregularBroadcastingPeriodWarning                  *logs_pb.IrregularBroadcastingPeriodWarning
+	ClustererPointsOutOfRangeWarning                    *logs_pb.ClustererPointsOutOfRangeWarning
+	InternalError                                       *logs_pb.InternalError
+	InternalFatal                                       *logs_pb.InternalFatal
+	ServiceStartingInfo                                 *logs_pb.ServiceStartingInfo
+	ConfigNodeNotFoundFatal                             *logs_pb.ConfigNodeNotFoundFatal
+	ServiceSetupError                                   *logs_pb.ServiceSetupError
+	FilesystemError                                     *logs_pb.FilesystemError
+	InvalidPresetWarning                                *logs_pb.InvalidPresetWarning
+	WebsocketFailedClearPendingError                    *logs_pb.WebsocketFailedClearPendingError
+	WebsocketFailedToStopError                          *logs_pb.WebsocketFailedToStopError
+	WebsocketFailedToCreateError                        *logs_pb.WebsocketFailedToCreateError
+	UnexpectedRpcError                                  *logs_pb.UnexpectedRpcError
+	LicensePollFailed                                   *logs_pb.LicensePollFailed
+	LicenseExpiredWarning                               *logs_pb.LicenseExpiredWarning
+	LicenseUsageExceededWarning                         *logs_pb.LicenseUsageExceededWarning
+	StaticThreadPoolSlowTaskWarning                     *logs_pb.StaticThreadPoolSlowTaskWarning
+	RpcUnsupportedServiceWarning                        *logs_pb.RpcUnsupportedServiceWarning
+	WebsocketHandlerProblem                             *logs_pb.WebsocketHandlerProblem
+	WebsocketDeserializeError                           *logs_pb.WebsocketDeserializeError
+	WebsocketExpiredRpcEndpointError                    *logs_pb.WebsocketExpiredRpcEndpointError
+	WebsocketQueueOverloadedWarning                     *logs_pb.WebsocketQueueOverloadedWarning
+	RpcFailedToNotifyWarning                            *logs_pb.RpcFailedToNotifyWarning
+	ConfigSubscriptionFailedWarning                     *logs_pb.ConfigSubscriptionFailedWarning
+	ThreadPoolClampedWorkersWarning                     *logs_pb.ThreadPoolClampedWorkersWarning
+	StoppingHorusBagRecorderAlreadyStopped              *logs_pb.StoppingHorusBagRecorderAlreadyStopped
+	RecorderConfigUpdateWhileRunning                    *logs_pb.RecorderConfigUpdateWhileRunning
+	ClampingDataWarning                                 *logs_pb.ClampingDataWarning
+	LidarIncompatibleValues                             *logs_pb.LidarIncompatibleValues
+	CannotDetermineContainerIdError                     *logs_pb.CannotDetermineContainerIdError
+	StartedLidarDriver                                  *logs_pb.StartedLidarDriver
+	CannotStartLidarDriver                              *logs_pb.CannotStartLidarDriver
+	StoppedLidarDriver                                  *logs_pb.StoppedLidarDriver
+	CannotStopLidarDriver                               *logs_pb.CannotStopLidarDriver
+	RestartedLidarDriver                                *logs_pb.RestartedLidarDriver
+	CannotRestartLidarDriver                            *logs_pb.CannotRestartLidarDriver
+	RemovedUnusedLidarDriver                            *logs_pb.RemovedUnusedLidarDriver
+	CannotRemoveUnusedLidarDriver                       *logs_pb.CannotRemoveUnusedLidarDriver
+	LidarDriverGcFailure                                *logs_pb.LidarDriverGcFailure
+	IdSpaceExhausted                                    *logs_pb.IdSpaceExhausted
+	PreprocessingToPointAggregatorPointsSkipped         *logs_pb.PreprocessingToPointAggregatorPointsSkipped
+	MinMsgIntervalLessThanThreshold                     *logs_pb.MinMsgIntervalLessThanThreshold
+	FailedToCleanupRosWarning                           *logs_pb.FailedToCleanupRosWarning
+	RpcDisconnectedWarning                              *logs_pb.RpcDisconnectedWarning
+	RpcUnhandledError                                   *logs_pb.RpcUnhandledError
+	TimeDiffOutOfRangeWarning                           *logs_pb.TimeDiffOutOfRangeWarning
+	TensorrtLog                                         *logs_pb.TensorrtLog
+	BuildingTensorrtEngineInfo                          *logs_pb.BuildingTensorrtEngineInfo
+	LoadingTensorrtEngineInfo                           *logs_pb.LoadingTensorrtEngineInfo
+	CalibrationMapNotFound                              *logs_pb.CalibrationMapNotFound
+	CalibrationMapNotValid                              *logs_pb.CalibrationMapNotValid
+	CalibrationMapPathAlreadyExists                     *logs_pb.CalibrationMapPathAlreadyExists
+	FailedToSaveCalibrationMap                          *logs_pb.FailedToSaveCalibrationMap
+	FailedToRemoveCalibrationMap                        *logs_pb.FailedToRemoveCalibrationMap
+	FailedToIterateInDirectory                          *logs_pb.FailedToIterateInDirectory
+	MapBasedCalibrationWithoutMapLoading                *logs_pb.MapBasedCalibrationWithoutMapLoading
+	MapBasedCalibrationAlreadyRunning                   *logs_pb.MapBasedCalibrationAlreadyRunning
+	CancelMapBasedCalibrationNotRunning                 *logs_pb.CancelMapBasedCalibrationNotRunning
+	BagStreamNotFound                                   *logs_pb.BagStreamNotFound
+	EvaluationBagStartedInfo                            *logs_pb.EvaluationBagStartedInfo
+	EvaluationBagFinishedInfo                           *logs_pb.EvaluationBagFinishedInfo
+	BagNotFound                                         *logs_pb.BagNotFound
+	BuildingPipelineInfo                                *logs_pb.BuildingPipelineInfo
+	BagIsNotEvaluation                                  *logs_pb.BagIsNotEvaluation
+	HorusBagRunning                                     *logs_pb.HorusBagRunning
+	AutoGroundCalibrationWarning                        *logs_pb.AutoGroundCalibrationWarning
+	AutoGroundCalibrationError                          *logs_pb.AutoGroundCalibrationError
+	ObjectDetectorNotLoadedWarning                      *logs_pb.ObjectDetectorNotLoadedWarning
+	CalibrationIsRunningError                           *logs_pb.CalibrationIsRunningError
+	ModelInitInProgressInfo                             *logs_pb.ModelInitInProgressInfo
+	RpcTimeoutWithResolutionWarning                     *logs_pb.RpcTimeoutWithResolutionWarning
+	CalibrationWasCancelledInfo                         *logs_pb.CalibrationWasCancelledInfo
+	CalibrationMapRecordingFailedToStart                *logs_pb.CalibrationMapRecordingFailedToStart
+	DetectionPipelineRequestedResetInfo                 *logs_pb.DetectionPipelineRequestedResetInfo
+	PreprocessingServicePipelineUnavailable             *logs_pb.PreprocessingServicePipelineUnavailable
+	CircularRecordingDisabledWarning                    *logs_pb.CircularRecordingDisabledWarning
+	SnapshotAlreadyRunningWarning                       *logs_pb.SnapshotAlreadyRunningWarning
+	ActiveProjectChangedInfo                            *logs_pb.ActiveProjectChangedInfo
+	ProjectConfigUpdatedInfo                            *logs_pb.ProjectConfigUpdatedInfo
+	InvalidLidarTimestamp                               *logs_pb.InvalidLidarTimestamp
+	CalibrationAccumulatingPointsInfo                   *logs_pb.CalibrationAccumulatingPointsInfo
+	SparseNoiseFilterUsageNonRotationalLidars           *logs_pb.SparseNoiseFilterUsageNonRotationalLidars
+	FileWriteWarning                                    *logs_pb.FileWriteWarning
+	LicenseForbiddenFeature                             *logs_pb.LicenseForbiddenFeature
+	FailedToUpdateConfiguration                         *logs_pb.FailedToUpdateConfiguration
+	ObstructionDetectorBadReferenceWarning              *logs_pb.ObstructionDetectorBadReferenceWarning
+	ProjectFileInvalidPermissionsError                  *logs_pb.ProjectFileInvalidPermissionsError
+	PipelineSchedulerError                              *logs_pb.PipelineSchedulerError
+	MultiLidarCalibrationWarning                        *logs_pb.MultiLidarCalibrationWarning
+	MultiLidarCalibrationError                          *logs_pb.MultiLidarCalibrationError
+	OldBagWarning                                       *logs_pb.OldBagWarning
+	UpgradingBagInfo                                    *logs_pb.UpgradingBagInfo
+	BagCalibrationSaveFailed                            *logs_pb.BagCalibrationSaveFailed
+	BagUpgradeFailed                                    *logs_pb.BagUpgradeFailed
+	UnknownLidarError                                   *logs_pb.UnknownLidarError
+	InvalidPointCloudWarning                            *logs_pb.InvalidPointCloudWarning
+	LidarIsDroppingPackets                              *logs_pb.LidarIsDroppingPackets
+	RemovedInvalidLidarsFromConfigWarning               *logs_pb.RemovedInvalidLidarsFromConfigWarning
+	CalibrationMapRecordingFailed                       *logs_pb.CalibrationMapRecordingFailed
+	DetectionNodeNotFoundError                          *logs_pb.DetectionNodeNotFoundError
+	CreatedVersionBackupInfo                            *logs_pb.CreatedVersionBackupInfo
+	PlyFileLoadFailedError                              *logs_pb.PlyFileLoadFailedError
+	HesaiDriverLifecycle                                *logs_pb.HesaiDriverLifecycle
+	HesaiDriverError                                    *logs_pb.HesaiDriverError
+	HesaiPacketProcessingFailed                         *logs_pb.HesaiPacketProcessingFailed
+	HesaiCorrectionFileError                            *logs_pb.HesaiCorrectionFileError
+	HesaiPacketStatistics                               *logs_pb.HesaiPacketStatistics
+	PlyFileWriteFailedError                             *logs_pb.PlyFileWriteFailedError
+	ProjectSaveError                                    *logs_pb.ProjectSaveError
+	SaveStaticEnvironmentSuccess                        *logs_pb.SaveStaticEnvironmentSuccess
+	SaveStaticEnvironmentFailed                         *logs_pb.SaveStaticEnvironmentFailed
+	LoadStaticEnvironmentSuccess                        *logs_pb.LoadStaticEnvironmentSuccess
+	LoadStaticEnvironmentFailed                         *logs_pb.LoadStaticEnvironmentFailed
+	AttemptToInjectInvalidLidarIdWarning                *logs_pb.AttemptToInjectInvalidLidarIdWarning
+	ResetBundledPacketDueToUnexpectedPacket             *logs_pb.ResetBundledPacketDueToUnexpectedPacket
+	PacketBundlerDroppedPacketsWarning                  *logs_pb.PacketBundlerDroppedPacketsWarning
+	PacketBundlerFrameJumpWarning                       *logs_pb.PacketBundlerFrameJumpWarning
+	LidarCorrectionLoadingSuccess                       *logs_pb.LidarCorrectionLoadingSuccess
+	LidarCorrectionLoadingFailure                       *logs_pb.LidarCorrectionLoadingFailure
+	HesaiPacketStatisticsLidar                          *logs_pb.HesaiPacketStatisticsLidar
+	LidarTiltDetectionAlignedToCalibrationMapInfo       *logs_pb.LidarTiltDetectionAlignedToCalibrationMapInfo
+	LidarTiltDetectionMisalignedToCalibrationMapWarning *logs_pb.LidarTiltDetectionMisalignedToCalibrationMapWarning
 	// -- end of xxx_hidden_Data
 }
 
@@ -7897,6 +7967,12 @@ func (b0 LogData_builder) Build() *LogData {
 	}
 	if b.HesaiPacketStatisticsLidar != nil {
 		x.xxx_hidden_Data = &logData_HesaiPacketStatisticsLidar{b.HesaiPacketStatisticsLidar}
+	}
+	if b.LidarTiltDetectionAlignedToCalibrationMapInfo != nil {
+		x.xxx_hidden_Data = &logData_LidarTiltDetectionAlignedToCalibrationMapInfo{b.LidarTiltDetectionAlignedToCalibrationMapInfo}
+	}
+	if b.LidarTiltDetectionMisalignedToCalibrationMapWarning != nil {
+		x.xxx_hidden_Data = &logData_LidarTiltDetectionMisalignedToCalibrationMapWarning{b.LidarTiltDetectionMisalignedToCalibrationMapWarning}
 	}
 	return m0
 }
@@ -8727,6 +8803,14 @@ type logData_HesaiPacketStatisticsLidar struct {
 	HesaiPacketStatisticsLidar *logs_pb.HesaiPacketStatisticsLidar `protobuf:"bytes,203,opt,name=hesai_packet_statistics_lidar,json=hesaiPacketStatisticsLidar,proto3,oneof"`
 }
 
+type logData_LidarTiltDetectionAlignedToCalibrationMapInfo struct {
+	LidarTiltDetectionAlignedToCalibrationMapInfo *logs_pb.LidarTiltDetectionAlignedToCalibrationMapInfo `protobuf:"bytes,204,opt,name=lidar_tilt_detection_aligned_to_calibration_map_info,json=lidarTiltDetectionAlignedToCalibrationMapInfo,proto3,oneof"`
+}
+
+type logData_LidarTiltDetectionMisalignedToCalibrationMapWarning struct {
+	LidarTiltDetectionMisalignedToCalibrationMapWarning *logs_pb.LidarTiltDetectionMisalignedToCalibrationMapWarning `protobuf:"bytes,205,opt,name=lidar_tilt_detection_misaligned_to_calibration_map_warning,json=lidarTiltDetectionMisalignedToCalibrationMapWarning,proto3,oneof"`
+}
+
 func (*logData_Generic) isLogData_Data() {}
 
 func (*logData_Oom) isLogData_Data() {}
@@ -9133,6 +9217,10 @@ func (*logData_LidarCorrectionLoadingFailure) isLogData_Data() {}
 
 func (*logData_HesaiPacketStatisticsLidar) isLogData_Data() {}
 
+func (*logData_LidarTiltDetectionAlignedToCalibrationMapInfo) isLogData_Data() {}
+
+func (*logData_LidarTiltDetectionMisalignedToCalibrationMapWarning) isLogData_Data() {}
+
 var File_horus_pb_logs_message_proto protoreflect.FileDescriptor
 
 var file_horus_pb_logs_message_proto_rawDesc = []byte{
@@ -9148,7 +9236,7 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
 	0x12, 0x25, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11,
 	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x6f, 0x67, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xa8, 0xa8, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
+	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x98, 0xab, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
 	0x44, 0x61, 0x74, 0x61, 0x12, 0x32, 0x0a, 0x07, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62,
 	0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x48, 0x00, 0x52,
@@ -10494,218 +10582,243 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x67, 0x73, 0x2e, 0x48, 0x65, 0x73, 0x61, 0x69, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x53, 0x74,
 	0x61, 0x74, 0x69, 0x73, 0x74, 0x69, 0x63, 0x73, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x48, 0x00, 0x52,
 	0x1a, 0x68, 0x65, 0x73, 0x61, 0x69, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x53, 0x74, 0x61, 0x74,
-	0x69, 0x73, 0x74, 0x69, 0x63, 0x73, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x42, 0x06, 0x0a, 0x04, 0x64,
+	0x69, 0x73, 0x74, 0x69, 0x63, 0x73, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x12, 0xac, 0x01, 0x0a, 0x34,
+	0x6c, 0x69, 0x64, 0x61, 0x72, 0x5f, 0x74, 0x69, 0x6c, 0x74, 0x5f, 0x64, 0x65, 0x74, 0x65, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x61, 0x6c, 0x69, 0x67, 0x6e, 0x65, 0x64, 0x5f, 0x74, 0x6f, 0x5f,
+	0x63, 0x61, 0x6c, 0x69, 0x62, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x6d, 0x61, 0x70, 0x5f,
+	0x69, 0x6e, 0x66, 0x6f, 0x18, 0xcc, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3c, 0x2e, 0x68, 0x6f,
+	0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x4c, 0x69, 0x64, 0x61,
+	0x72, 0x54, 0x69, 0x6c, 0x74, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x41, 0x6c,
+	0x69, 0x67, 0x6e, 0x65, 0x64, 0x54, 0x6f, 0x43, 0x61, 0x6c, 0x69, 0x62, 0x72, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x4d, 0x61, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x00, 0x52, 0x2d, 0x6c, 0x69, 0x64,
+	0x61, 0x72, 0x54, 0x69, 0x6c, 0x74, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x41,
+	0x6c, 0x69, 0x67, 0x6e, 0x65, 0x64, 0x54, 0x6f, 0x43, 0x61, 0x6c, 0x69, 0x62, 0x72, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x4d, 0x61, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0xbe, 0x01, 0x0a, 0x3a, 0x6c,
+	0x69, 0x64, 0x61, 0x72, 0x5f, 0x74, 0x69, 0x6c, 0x74, 0x5f, 0x64, 0x65, 0x74, 0x65, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x5f, 0x6d, 0x69, 0x73, 0x61, 0x6c, 0x69, 0x67, 0x6e, 0x65, 0x64, 0x5f, 0x74,
+	0x6f, 0x5f, 0x63, 0x61, 0x6c, 0x69, 0x62, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x6d, 0x61,
+	0x70, 0x5f, 0x77, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x18, 0xcd, 0x01, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x42, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73,
+	0x2e, 0x4c, 0x69, 0x64, 0x61, 0x72, 0x54, 0x69, 0x6c, 0x74, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x4d, 0x69, 0x73, 0x61, 0x6c, 0x69, 0x67, 0x6e, 0x65, 0x64, 0x54, 0x6f, 0x43,
+	0x61, 0x6c, 0x69, 0x62, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4d, 0x61, 0x70, 0x57, 0x61, 0x72,
+	0x6e, 0x69, 0x6e, 0x67, 0x48, 0x00, 0x52, 0x33, 0x6c, 0x69, 0x64, 0x61, 0x72, 0x54, 0x69, 0x6c,
+	0x74, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4d, 0x69, 0x73, 0x61, 0x6c, 0x69,
+	0x67, 0x6e, 0x65, 0x64, 0x54, 0x6f, 0x43, 0x61, 0x6c, 0x69, 0x62, 0x72, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x4d, 0x61, 0x70, 0x57, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x42, 0x06, 0x0a, 0x04, 0x64,
 	0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_horus_pb_logs_message_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_horus_pb_logs_message_proto_goTypes = []any{
-	(*LogMessage)(nil),                                          // 0: horus.pb.LogMessage
-	(*LogData)(nil),                                             // 1: horus.pb.LogData
-	(*metadata_pb.LogMetadata)(nil),                             // 2: horus.pb.LogMetadata
-	(*logs_pb.Generic)(nil),                                     // 3: horus.pb.logs.Generic
-	(*logs_pb.Oom)(nil),                                         // 4: horus.pb.logs.Oom
-	(*logs_pb.RpcConnectionError)(nil),                          // 5: horus.pb.logs.RpcConnectionError
-	(*logs_pb.InvalidProjectName)(nil),                          // 6: horus.pb.logs.InvalidProjectName
-	(*logs_pb.ProjectNotFound)(nil),                             // 7: horus.pb.logs.ProjectNotFound
-	(*logs_pb.ProjectAlreadyExists)(nil),                        // 8: horus.pb.logs.ProjectAlreadyExists
-	(*logs_pb.InvalidConfiguration)(nil),                        // 9: horus.pb.logs.InvalidConfiguration
-	(*logs_pb.EntityNotFound)(nil),                              // 10: horus.pb.logs.EntityNotFound
-	(*logs_pb.ActiveProjectCannotBeDeleted)(nil),                // 11: horus.pb.logs.ActiveProjectCannotBeDeleted
-	(*logs_pb.RpcDisconnectionError)(nil),                       // 12: horus.pb.logs.RpcDisconnectionError
-	(*logs_pb.DroppedLogs)(nil),                                 // 13: horus.pb.logs.DroppedLogs
-	(*logs_pb.OpenedProject)(nil),                               // 14: horus.pb.logs.OpenedProject
-	(*logs_pb.CreatedProject)(nil),                              // 15: horus.pb.logs.CreatedProject
-	(*logs_pb.ConfigUnavailable)(nil),                           // 16: horus.pb.logs.ConfigUnavailable
-	(*logs_pb.InvalidRequest)(nil),                              // 17: horus.pb.logs.InvalidRequest
-	(*logs_pb.SanityCheckError)(nil),                            // 18: horus.pb.logs.SanityCheckError
-	(*logs_pb.BagFailedToOpen)(nil),                             // 19: horus.pb.logs.BagFailedToOpen
-	(*logs_pb.BagFailedToClose)(nil),                            // 20: horus.pb.logs.BagFailedToClose
-	(*logs_pb.BagConversionFailed)(nil),                         // 21: horus.pb.logs.BagConversionFailed
-	(*logs_pb.BagFailedToWrite)(nil),                            // 22: horus.pb.logs.BagFailedToWrite
-	(*logs_pb.CalibrationError)(nil),                            // 23: horus.pb.logs.CalibrationError
-	(*logs_pb.ProjectManagerFailedToStartRecording)(nil),        // 24: horus.pb.logs.ProjectManagerFailedToStartRecording
-	(*logs_pb.ProjectManagerFailedToStopRecording)(nil),         // 25: horus.pb.logs.ProjectManagerFailedToStopRecording
-	(*logs_pb.ServiceConnectionTimedOut)(nil),                   // 26: horus.pb.logs.ServiceConnectionTimedOut
-	(*logs_pb.BagRecorderAlreadyRunning)(nil),                   // 27: horus.pb.logs.BagRecorderAlreadyRunning
-	(*logs_pb.LicenseServerConnectionError)(nil),                // 28: horus.pb.logs.LicenseServerConnectionError
-	(*logs_pb.LicenseError)(nil),                                // 29: horus.pb.logs.LicenseError
-	(*logs_pb.LicenseNotFoundError)(nil),                        // 30: horus.pb.logs.LicenseNotFoundError
-	(*logs_pb.LicenseExpiredError)(nil),                         // 31: horus.pb.logs.LicenseExpiredError
-	(*logs_pb.LicenseExceededError)(nil),                        // 32: horus.pb.logs.LicenseExceededError
-	(*logs_pb.LicenseHostMachineError)(nil),                     // 33: horus.pb.logs.LicenseHostMachineError
-	(*logs_pb.LicensePrivilegeError)(nil),                       // 34: horus.pb.logs.LicensePrivilegeError
-	(*logs_pb.LicenseActiveInfo)(nil),                           // 35: horus.pb.logs.LicenseActiveInfo
-	(*logs_pb.MultipleLicensesWarning)(nil),                     // 36: horus.pb.logs.MultipleLicensesWarning
-	(*logs_pb.LicenseCurrentLicenseStatusInfo)(nil),             // 37: horus.pb.logs.LicenseCurrentLicenseStatusInfo
-	(*logs_pb.BagRecordingStoppedInfo)(nil),                     // 38: horus.pb.logs.BagRecordingStoppedInfo
-	(*logs_pb.BagRecordingFailedToStart)(nil),                   // 39: horus.pb.logs.BagRecordingFailedToStart
-	(*logs_pb.BagRecordingStartedInfo)(nil),                     // 40: horus.pb.logs.BagRecordingStartedInfo
-	(*logs_pb.ReplayRestartedInfo)(nil),                         // 41: horus.pb.logs.ReplayRestartedInfo
-	(*logs_pb.InputSourceChangeRequestedInfo)(nil),              // 42: horus.pb.logs.InputSourceChangeRequestedInfo
-	(*logs_pb.InputSourceSwitchedInfo)(nil),                     // 43: horus.pb.logs.InputSourceSwitchedInfo
-	(*logs_pb.RpcTimeoutWarning)(nil),                           // 44: horus.pb.logs.RpcTimeoutWarning
-	(*logs_pb.CannotWriteLogFile)(nil),                          // 45: horus.pb.logs.CannotWriteLogFile
-	(*logs_pb.PointCloudParsingFailureWarning)(nil),             // 46: horus.pb.logs.PointCloudParsingFailureWarning
-	(*logs_pb.LidarIsDead)(nil),                                 // 47: horus.pb.logs.LidarIsDead
-	(*logs_pb.LidarIsNotDeadAnymore)(nil),                       // 48: horus.pb.logs.LidarIsNotDeadAnymore
-	(*logs_pb.LidarIsObstructed)(nil),                           // 49: horus.pb.logs.LidarIsObstructed
-	(*logs_pb.LidarIsNotObstructedAnymore)(nil),                 // 50: horus.pb.logs.LidarIsNotObstructedAnymore
-	(*logs_pb.LidarIsTilted)(nil),                               // 51: horus.pb.logs.LidarIsTilted
-	(*logs_pb.LidarIsNotTiltedAnymore)(nil),                     // 52: horus.pb.logs.LidarIsNotTiltedAnymore
-	(*logs_pb.LidarHasBeenAutomaticallyRecalibrated)(nil),       // 53: horus.pb.logs.LidarHasBeenAutomaticallyRecalibrated
-	(*logs_pb.ReceivedFirstDataForLidar)(nil),                   // 54: horus.pb.logs.ReceivedFirstDataForLidar
-	(*logs_pb.TerminationFailureError)(nil),                     // 55: horus.pb.logs.TerminationFailureError
-	(*logs_pb.FrameProcessingError)(nil),                        // 56: horus.pb.logs.FrameProcessingError
-	(*logs_pb.ThreadPoolUnavailableError)(nil),                  // 57: horus.pb.logs.ThreadPoolUnavailableError
-	(*logs_pb.InvalidArgument)(nil),                             // 58: horus.pb.logs.InvalidArgument
-	(*logs_pb.ComponentInitializationFailureFatal)(nil),         // 59: horus.pb.logs.ComponentInitializationFailureFatal
-	(*logs_pb.UnhandledEnumCaseError)(nil),                      // 60: horus.pb.logs.UnhandledEnumCaseError
-	(*logs_pb.BagEmptyError)(nil),                               // 61: horus.pb.logs.BagEmptyError
-	(*logs_pb.DiscardingDataError)(nil),                         // 62: horus.pb.logs.DiscardingDataError
-	(*logs_pb.DiscardingDataWarning)(nil),                       // 63: horus.pb.logs.DiscardingDataWarning
-	(*logs_pb.NothingToProcess)(nil),                            // 64: horus.pb.logs.NothingToProcess
-	(*logs_pb.InvalidComponentConfiguration)(nil),               // 65: horus.pb.logs.InvalidComponentConfiguration
-	(*logs_pb.ChannelReceiverNotFoundWarning)(nil),              // 66: horus.pb.logs.ChannelReceiverNotFoundWarning
-	(*logs_pb.ModelLoadFailure)(nil),                            // 67: horus.pb.logs.ModelLoadFailure
-	(*logs_pb.ModelExecutionFailureError)(nil),                  // 68: horus.pb.logs.ModelExecutionFailureError
-	(*logs_pb.ServiceReadyInfo)(nil),                            // 69: horus.pb.logs.ServiceReadyInfo
-	(*logs_pb.ModelPreparingInfo)(nil),                          // 70: horus.pb.logs.ModelPreparingInfo
-	(*logs_pb.ModelInitializedInfo)(nil),                        // 71: horus.pb.logs.ModelInitializedInfo
-	(*logs_pb.ModelInitializationFailureWarning)(nil),           // 72: horus.pb.logs.ModelInitializationFailureWarning
-	(*logs_pb.RosSpinnerStoppedWarning)(nil),                    // 73: horus.pb.logs.RosSpinnerStoppedWarning
-	(*logs_pb.ActorSystemUnavailableError)(nil),                 // 74: horus.pb.logs.ActorSystemUnavailableError
-	(*logs_pb.ConfigNodeNotFoundError)(nil),                     // 75: horus.pb.logs.ConfigNodeNotFoundError
-	(*logs_pb.BagTimestampOutOfOrderError)(nil),                 // 76: horus.pb.logs.BagTimestampOutOfOrderError
-	(*logs_pb.BagReplayUnexpectedTimestampError)(nil),           // 77: horus.pb.logs.BagReplayUnexpectedTimestampError
-	(*logs_pb.WebsocketClosedInfo)(nil),                         // 78: horus.pb.logs.WebsocketClosedInfo
-	(*logs_pb.WebsocketOpenedInfo)(nil),                         // 79: horus.pb.logs.WebsocketOpenedInfo
-	(*logs_pb.SubscriberDisconnectedInfo)(nil),                  // 80: horus.pb.logs.SubscriberDisconnectedInfo
-	(*logs_pb.ThreadPoolSlowingDownWarning)(nil),                // 81: horus.pb.logs.ThreadPoolSlowingDownWarning
-	(*logs_pb.ThreadPoolNotRespondingWarning)(nil),              // 82: horus.pb.logs.ThreadPoolNotRespondingWarning
-	(*logs_pb.ThreadPoolBrokenPromiseWarning)(nil),              // 83: horus.pb.logs.ThreadPoolBrokenPromiseWarning
-	(*logs_pb.BoxFittingPointsBelowBaseWarning)(nil),            // 84: horus.pb.logs.BoxFittingPointsBelowBaseWarning
-	(*logs_pb.FailedToRemoveStalePointsWarning)(nil),            // 85: horus.pb.logs.FailedToRemoveStalePointsWarning
-	(*logs_pb.IrregularBroadcastingPeriodWarning)(nil),          // 86: horus.pb.logs.IrregularBroadcastingPeriodWarning
-	(*logs_pb.ClustererPointsOutOfRangeWarning)(nil),            // 87: horus.pb.logs.ClustererPointsOutOfRangeWarning
-	(*logs_pb.InternalError)(nil),                               // 88: horus.pb.logs.InternalError
-	(*logs_pb.InternalFatal)(nil),                               // 89: horus.pb.logs.InternalFatal
-	(*logs_pb.ServiceStartingInfo)(nil),                         // 90: horus.pb.logs.ServiceStartingInfo
-	(*logs_pb.ConfigNodeNotFoundFatal)(nil),                     // 91: horus.pb.logs.ConfigNodeNotFoundFatal
-	(*logs_pb.ServiceSetupError)(nil),                           // 92: horus.pb.logs.ServiceSetupError
-	(*logs_pb.FilesystemError)(nil),                             // 93: horus.pb.logs.FilesystemError
-	(*logs_pb.InvalidPresetWarning)(nil),                        // 94: horus.pb.logs.InvalidPresetWarning
-	(*logs_pb.WebsocketFailedClearPendingError)(nil),            // 95: horus.pb.logs.WebsocketFailedClearPendingError
-	(*logs_pb.WebsocketFailedToStopError)(nil),                  // 96: horus.pb.logs.WebsocketFailedToStopError
-	(*logs_pb.WebsocketFailedToCreateError)(nil),                // 97: horus.pb.logs.WebsocketFailedToCreateError
-	(*logs_pb.UnexpectedRpcError)(nil),                          // 98: horus.pb.logs.UnexpectedRpcError
-	(*logs_pb.LicensePollFailed)(nil),                           // 99: horus.pb.logs.LicensePollFailed
-	(*logs_pb.LicenseExpiredWarning)(nil),                       // 100: horus.pb.logs.LicenseExpiredWarning
-	(*logs_pb.LicenseUsageExceededWarning)(nil),                 // 101: horus.pb.logs.LicenseUsageExceededWarning
-	(*logs_pb.StaticThreadPoolSlowTaskWarning)(nil),             // 102: horus.pb.logs.StaticThreadPoolSlowTaskWarning
-	(*logs_pb.RpcUnsupportedServiceWarning)(nil),                // 103: horus.pb.logs.RpcUnsupportedServiceWarning
-	(*logs_pb.WebsocketHandlerProblem)(nil),                     // 104: horus.pb.logs.WebsocketHandlerProblem
-	(*logs_pb.WebsocketDeserializeError)(nil),                   // 105: horus.pb.logs.WebsocketDeserializeError
-	(*logs_pb.WebsocketExpiredRpcEndpointError)(nil),            // 106: horus.pb.logs.WebsocketExpiredRpcEndpointError
-	(*logs_pb.WebsocketQueueOverloadedWarning)(nil),             // 107: horus.pb.logs.WebsocketQueueOverloadedWarning
-	(*logs_pb.RpcFailedToNotifyWarning)(nil),                    // 108: horus.pb.logs.RpcFailedToNotifyWarning
-	(*logs_pb.ConfigSubscriptionFailedWarning)(nil),             // 109: horus.pb.logs.ConfigSubscriptionFailedWarning
-	(*logs_pb.ThreadPoolClampedWorkersWarning)(nil),             // 110: horus.pb.logs.ThreadPoolClampedWorkersWarning
-	(*logs_pb.StoppingHorusBagRecorderAlreadyStopped)(nil),      // 111: horus.pb.logs.StoppingHorusBagRecorderAlreadyStopped
-	(*logs_pb.RecorderConfigUpdateWhileRunning)(nil),            // 112: horus.pb.logs.RecorderConfigUpdateWhileRunning
-	(*logs_pb.ClampingDataWarning)(nil),                         // 113: horus.pb.logs.ClampingDataWarning
-	(*logs_pb.LidarIncompatibleValues)(nil),                     // 114: horus.pb.logs.LidarIncompatibleValues
-	(*logs_pb.CannotDetermineContainerIdError)(nil),             // 115: horus.pb.logs.CannotDetermineContainerIdError
-	(*logs_pb.StartedLidarDriver)(nil),                          // 116: horus.pb.logs.StartedLidarDriver
-	(*logs_pb.CannotStartLidarDriver)(nil),                      // 117: horus.pb.logs.CannotStartLidarDriver
-	(*logs_pb.StoppedLidarDriver)(nil),                          // 118: horus.pb.logs.StoppedLidarDriver
-	(*logs_pb.CannotStopLidarDriver)(nil),                       // 119: horus.pb.logs.CannotStopLidarDriver
-	(*logs_pb.RestartedLidarDriver)(nil),                        // 120: horus.pb.logs.RestartedLidarDriver
-	(*logs_pb.CannotRestartLidarDriver)(nil),                    // 121: horus.pb.logs.CannotRestartLidarDriver
-	(*logs_pb.RemovedUnusedLidarDriver)(nil),                    // 122: horus.pb.logs.RemovedUnusedLidarDriver
-	(*logs_pb.CannotRemoveUnusedLidarDriver)(nil),               // 123: horus.pb.logs.CannotRemoveUnusedLidarDriver
-	(*logs_pb.LidarDriverGcFailure)(nil),                        // 124: horus.pb.logs.LidarDriverGcFailure
-	(*logs_pb.IdSpaceExhausted)(nil),                            // 125: horus.pb.logs.IdSpaceExhausted
-	(*logs_pb.PreprocessingToPointAggregatorPointsSkipped)(nil), // 126: horus.pb.logs.PreprocessingToPointAggregatorPointsSkipped
-	(*logs_pb.MinMsgIntervalLessThanThreshold)(nil),             // 127: horus.pb.logs.MinMsgIntervalLessThanThreshold
-	(*logs_pb.FailedToCleanupRosWarning)(nil),                   // 128: horus.pb.logs.FailedToCleanupRosWarning
-	(*logs_pb.RpcDisconnectedWarning)(nil),                      // 129: horus.pb.logs.RpcDisconnectedWarning
-	(*logs_pb.RpcUnhandledError)(nil),                           // 130: horus.pb.logs.RpcUnhandledError
-	(*logs_pb.TimeDiffOutOfRangeWarning)(nil),                   // 131: horus.pb.logs.TimeDiffOutOfRangeWarning
-	(*logs_pb.TensorrtLog)(nil),                                 // 132: horus.pb.logs.TensorrtLog
-	(*logs_pb.BuildingTensorrtEngineInfo)(nil),                  // 133: horus.pb.logs.BuildingTensorrtEngineInfo
-	(*logs_pb.LoadingTensorrtEngineInfo)(nil),                   // 134: horus.pb.logs.LoadingTensorrtEngineInfo
-	(*logs_pb.CalibrationMapNotFound)(nil),                      // 135: horus.pb.logs.CalibrationMapNotFound
-	(*logs_pb.CalibrationMapNotValid)(nil),                      // 136: horus.pb.logs.CalibrationMapNotValid
-	(*logs_pb.CalibrationMapPathAlreadyExists)(nil),             // 137: horus.pb.logs.CalibrationMapPathAlreadyExists
-	(*logs_pb.FailedToSaveCalibrationMap)(nil),                  // 138: horus.pb.logs.FailedToSaveCalibrationMap
-	(*logs_pb.FailedToRemoveCalibrationMap)(nil),                // 139: horus.pb.logs.FailedToRemoveCalibrationMap
-	(*logs_pb.FailedToIterateInDirectory)(nil),                  // 140: horus.pb.logs.FailedToIterateInDirectory
-	(*logs_pb.MapBasedCalibrationWithoutMapLoading)(nil),        // 141: horus.pb.logs.MapBasedCalibrationWithoutMapLoading
-	(*logs_pb.MapBasedCalibrationAlreadyRunning)(nil),           // 142: horus.pb.logs.MapBasedCalibrationAlreadyRunning
-	(*logs_pb.CancelMapBasedCalibrationNotRunning)(nil),         // 143: horus.pb.logs.CancelMapBasedCalibrationNotRunning
-	(*logs_pb.BagStreamNotFound)(nil),                           // 144: horus.pb.logs.BagStreamNotFound
-	(*logs_pb.EvaluationBagStartedInfo)(nil),                    // 145: horus.pb.logs.EvaluationBagStartedInfo
-	(*logs_pb.EvaluationBagFinishedInfo)(nil),                   // 146: horus.pb.logs.EvaluationBagFinishedInfo
-	(*logs_pb.BagNotFound)(nil),                                 // 147: horus.pb.logs.BagNotFound
-	(*logs_pb.BuildingPipelineInfo)(nil),                        // 148: horus.pb.logs.BuildingPipelineInfo
-	(*logs_pb.BagIsNotEvaluation)(nil),                          // 149: horus.pb.logs.BagIsNotEvaluation
-	(*logs_pb.HorusBagRunning)(nil),                             // 150: horus.pb.logs.HorusBagRunning
-	(*logs_pb.AutoGroundCalibrationWarning)(nil),                // 151: horus.pb.logs.AutoGroundCalibrationWarning
-	(*logs_pb.AutoGroundCalibrationError)(nil),                  // 152: horus.pb.logs.AutoGroundCalibrationError
-	(*logs_pb.ObjectDetectorNotLoadedWarning)(nil),              // 153: horus.pb.logs.ObjectDetectorNotLoadedWarning
-	(*logs_pb.CalibrationIsRunningError)(nil),                   // 154: horus.pb.logs.CalibrationIsRunningError
-	(*logs_pb.ModelInitInProgressInfo)(nil),                     // 155: horus.pb.logs.ModelInitInProgressInfo
-	(*logs_pb.RpcTimeoutWithResolutionWarning)(nil),             // 156: horus.pb.logs.RpcTimeoutWithResolutionWarning
-	(*logs_pb.CalibrationWasCancelledInfo)(nil),                 // 157: horus.pb.logs.CalibrationWasCancelledInfo
-	(*logs_pb.CalibrationMapRecordingFailedToStart)(nil),        // 158: horus.pb.logs.CalibrationMapRecordingFailedToStart
-	(*logs_pb.DetectionPipelineRequestedResetInfo)(nil),         // 159: horus.pb.logs.DetectionPipelineRequestedResetInfo
-	(*logs_pb.PreprocessingServicePipelineUnavailable)(nil),     // 160: horus.pb.logs.PreprocessingServicePipelineUnavailable
-	(*logs_pb.CircularRecordingDisabledWarning)(nil),            // 161: horus.pb.logs.CircularRecordingDisabledWarning
-	(*logs_pb.SnapshotAlreadyRunningWarning)(nil),               // 162: horus.pb.logs.SnapshotAlreadyRunningWarning
-	(*logs_pb.ActiveProjectChangedInfo)(nil),                    // 163: horus.pb.logs.ActiveProjectChangedInfo
-	(*logs_pb.ProjectConfigUpdatedInfo)(nil),                    // 164: horus.pb.logs.ProjectConfigUpdatedInfo
-	(*logs_pb.InvalidLidarTimestamp)(nil),                       // 165: horus.pb.logs.InvalidLidarTimestamp
-	(*logs_pb.CalibrationAccumulatingPointsInfo)(nil),           // 166: horus.pb.logs.CalibrationAccumulatingPointsInfo
-	(*logs_pb.SparseNoiseFilterUsageNonRotationalLidars)(nil),   // 167: horus.pb.logs.SparseNoiseFilterUsageNonRotationalLidars
-	(*logs_pb.FileWriteWarning)(nil),                            // 168: horus.pb.logs.FileWriteWarning
-	(*logs_pb.LicenseForbiddenFeature)(nil),                     // 169: horus.pb.logs.LicenseForbiddenFeature
-	(*logs_pb.FailedToUpdateConfiguration)(nil),                 // 170: horus.pb.logs.FailedToUpdateConfiguration
-	(*logs_pb.ObstructionDetectorBadReferenceWarning)(nil),      // 171: horus.pb.logs.ObstructionDetectorBadReferenceWarning
-	(*logs_pb.ProjectFileInvalidPermissionsError)(nil),          // 172: horus.pb.logs.ProjectFileInvalidPermissionsError
-	(*logs_pb.PipelineSchedulerError)(nil),                      // 173: horus.pb.logs.PipelineSchedulerError
-	(*logs_pb.MultiLidarCalibrationWarning)(nil),                // 174: horus.pb.logs.MultiLidarCalibrationWarning
-	(*logs_pb.MultiLidarCalibrationError)(nil),                  // 175: horus.pb.logs.MultiLidarCalibrationError
-	(*logs_pb.OldBagWarning)(nil),                               // 176: horus.pb.logs.OldBagWarning
-	(*logs_pb.UpgradingBagInfo)(nil),                            // 177: horus.pb.logs.UpgradingBagInfo
-	(*logs_pb.BagCalibrationSaveFailed)(nil),                    // 178: horus.pb.logs.BagCalibrationSaveFailed
-	(*logs_pb.BagUpgradeFailed)(nil),                            // 179: horus.pb.logs.BagUpgradeFailed
-	(*logs_pb.UnknownLidarError)(nil),                           // 180: horus.pb.logs.UnknownLidarError
-	(*logs_pb.InvalidPointCloudWarning)(nil),                    // 181: horus.pb.logs.InvalidPointCloudWarning
-	(*logs_pb.LidarIsDroppingPackets)(nil),                      // 182: horus.pb.logs.LidarIsDroppingPackets
-	(*logs_pb.RemovedInvalidLidarsFromConfigWarning)(nil),       // 183: horus.pb.logs.RemovedInvalidLidarsFromConfigWarning
-	(*logs_pb.CalibrationMapRecordingFailed)(nil),               // 184: horus.pb.logs.CalibrationMapRecordingFailed
-	(*logs_pb.DetectionNodeNotFoundError)(nil),                  // 185: horus.pb.logs.DetectionNodeNotFoundError
-	(*logs_pb.CreatedVersionBackupInfo)(nil),                    // 186: horus.pb.logs.CreatedVersionBackupInfo
-	(*logs_pb.PlyFileLoadFailedError)(nil),                      // 187: horus.pb.logs.PlyFileLoadFailedError
-	(*logs_pb.HesaiDriverLifecycle)(nil),                        // 188: horus.pb.logs.HesaiDriverLifecycle
-	(*logs_pb.HesaiDriverError)(nil),                            // 189: horus.pb.logs.HesaiDriverError
-	(*logs_pb.HesaiPacketProcessingFailed)(nil),                 // 190: horus.pb.logs.HesaiPacketProcessingFailed
-	(*logs_pb.HesaiCorrectionFileError)(nil),                    // 191: horus.pb.logs.HesaiCorrectionFileError
-	(*logs_pb.HesaiPacketStatistics)(nil),                       // 192: horus.pb.logs.HesaiPacketStatistics
-	(*logs_pb.PlyFileWriteFailedError)(nil),                     // 193: horus.pb.logs.PlyFileWriteFailedError
-	(*logs_pb.ProjectSaveError)(nil),                            // 194: horus.pb.logs.ProjectSaveError
-	(*logs_pb.SaveStaticEnvironmentSuccess)(nil),                // 195: horus.pb.logs.SaveStaticEnvironmentSuccess
-	(*logs_pb.SaveStaticEnvironmentFailed)(nil),                 // 196: horus.pb.logs.SaveStaticEnvironmentFailed
-	(*logs_pb.LoadStaticEnvironmentSuccess)(nil),                // 197: horus.pb.logs.LoadStaticEnvironmentSuccess
-	(*logs_pb.LoadStaticEnvironmentFailed)(nil),                 // 198: horus.pb.logs.LoadStaticEnvironmentFailed
-	(*logs_pb.AttemptToInjectInvalidLidarIdWarning)(nil),        // 199: horus.pb.logs.AttemptToInjectInvalidLidarIdWarning
-	(*logs_pb.ResetBundledPacketDueToUnexpectedPacket)(nil),     // 200: horus.pb.logs.ResetBundledPacketDueToUnexpectedPacket
-	(*logs_pb.PacketBundlerDroppedPacketsWarning)(nil),          // 201: horus.pb.logs.PacketBundlerDroppedPacketsWarning
-	(*logs_pb.PacketBundlerFrameJumpWarning)(nil),               // 202: horus.pb.logs.PacketBundlerFrameJumpWarning
-	(*logs_pb.LidarCorrectionLoadingSuccess)(nil),               // 203: horus.pb.logs.LidarCorrectionLoadingSuccess
-	(*logs_pb.LidarCorrectionLoadingFailure)(nil),               // 204: horus.pb.logs.LidarCorrectionLoadingFailure
-	(*logs_pb.HesaiPacketStatisticsLidar)(nil),                  // 205: horus.pb.logs.HesaiPacketStatisticsLidar
+	(*LogMessage)(nil),                                                  // 0: horus.pb.LogMessage
+	(*LogData)(nil),                                                     // 1: horus.pb.LogData
+	(*metadata_pb.LogMetadata)(nil),                                     // 2: horus.pb.LogMetadata
+	(*logs_pb.Generic)(nil),                                             // 3: horus.pb.logs.Generic
+	(*logs_pb.Oom)(nil),                                                 // 4: horus.pb.logs.Oom
+	(*logs_pb.RpcConnectionError)(nil),                                  // 5: horus.pb.logs.RpcConnectionError
+	(*logs_pb.InvalidProjectName)(nil),                                  // 6: horus.pb.logs.InvalidProjectName
+	(*logs_pb.ProjectNotFound)(nil),                                     // 7: horus.pb.logs.ProjectNotFound
+	(*logs_pb.ProjectAlreadyExists)(nil),                                // 8: horus.pb.logs.ProjectAlreadyExists
+	(*logs_pb.InvalidConfiguration)(nil),                                // 9: horus.pb.logs.InvalidConfiguration
+	(*logs_pb.EntityNotFound)(nil),                                      // 10: horus.pb.logs.EntityNotFound
+	(*logs_pb.ActiveProjectCannotBeDeleted)(nil),                        // 11: horus.pb.logs.ActiveProjectCannotBeDeleted
+	(*logs_pb.RpcDisconnectionError)(nil),                               // 12: horus.pb.logs.RpcDisconnectionError
+	(*logs_pb.DroppedLogs)(nil),                                         // 13: horus.pb.logs.DroppedLogs
+	(*logs_pb.OpenedProject)(nil),                                       // 14: horus.pb.logs.OpenedProject
+	(*logs_pb.CreatedProject)(nil),                                      // 15: horus.pb.logs.CreatedProject
+	(*logs_pb.ConfigUnavailable)(nil),                                   // 16: horus.pb.logs.ConfigUnavailable
+	(*logs_pb.InvalidRequest)(nil),                                      // 17: horus.pb.logs.InvalidRequest
+	(*logs_pb.SanityCheckError)(nil),                                    // 18: horus.pb.logs.SanityCheckError
+	(*logs_pb.BagFailedToOpen)(nil),                                     // 19: horus.pb.logs.BagFailedToOpen
+	(*logs_pb.BagFailedToClose)(nil),                                    // 20: horus.pb.logs.BagFailedToClose
+	(*logs_pb.BagConversionFailed)(nil),                                 // 21: horus.pb.logs.BagConversionFailed
+	(*logs_pb.BagFailedToWrite)(nil),                                    // 22: horus.pb.logs.BagFailedToWrite
+	(*logs_pb.CalibrationError)(nil),                                    // 23: horus.pb.logs.CalibrationError
+	(*logs_pb.ProjectManagerFailedToStartRecording)(nil),                // 24: horus.pb.logs.ProjectManagerFailedToStartRecording
+	(*logs_pb.ProjectManagerFailedToStopRecording)(nil),                 // 25: horus.pb.logs.ProjectManagerFailedToStopRecording
+	(*logs_pb.ServiceConnectionTimedOut)(nil),                           // 26: horus.pb.logs.ServiceConnectionTimedOut
+	(*logs_pb.BagRecorderAlreadyRunning)(nil),                           // 27: horus.pb.logs.BagRecorderAlreadyRunning
+	(*logs_pb.LicenseServerConnectionError)(nil),                        // 28: horus.pb.logs.LicenseServerConnectionError
+	(*logs_pb.LicenseError)(nil),                                        // 29: horus.pb.logs.LicenseError
+	(*logs_pb.LicenseNotFoundError)(nil),                                // 30: horus.pb.logs.LicenseNotFoundError
+	(*logs_pb.LicenseExpiredError)(nil),                                 // 31: horus.pb.logs.LicenseExpiredError
+	(*logs_pb.LicenseExceededError)(nil),                                // 32: horus.pb.logs.LicenseExceededError
+	(*logs_pb.LicenseHostMachineError)(nil),                             // 33: horus.pb.logs.LicenseHostMachineError
+	(*logs_pb.LicensePrivilegeError)(nil),                               // 34: horus.pb.logs.LicensePrivilegeError
+	(*logs_pb.LicenseActiveInfo)(nil),                                   // 35: horus.pb.logs.LicenseActiveInfo
+	(*logs_pb.MultipleLicensesWarning)(nil),                             // 36: horus.pb.logs.MultipleLicensesWarning
+	(*logs_pb.LicenseCurrentLicenseStatusInfo)(nil),                     // 37: horus.pb.logs.LicenseCurrentLicenseStatusInfo
+	(*logs_pb.BagRecordingStoppedInfo)(nil),                             // 38: horus.pb.logs.BagRecordingStoppedInfo
+	(*logs_pb.BagRecordingFailedToStart)(nil),                           // 39: horus.pb.logs.BagRecordingFailedToStart
+	(*logs_pb.BagRecordingStartedInfo)(nil),                             // 40: horus.pb.logs.BagRecordingStartedInfo
+	(*logs_pb.ReplayRestartedInfo)(nil),                                 // 41: horus.pb.logs.ReplayRestartedInfo
+	(*logs_pb.InputSourceChangeRequestedInfo)(nil),                      // 42: horus.pb.logs.InputSourceChangeRequestedInfo
+	(*logs_pb.InputSourceSwitchedInfo)(nil),                             // 43: horus.pb.logs.InputSourceSwitchedInfo
+	(*logs_pb.RpcTimeoutWarning)(nil),                                   // 44: horus.pb.logs.RpcTimeoutWarning
+	(*logs_pb.CannotWriteLogFile)(nil),                                  // 45: horus.pb.logs.CannotWriteLogFile
+	(*logs_pb.PointCloudParsingFailureWarning)(nil),                     // 46: horus.pb.logs.PointCloudParsingFailureWarning
+	(*logs_pb.LidarIsDead)(nil),                                         // 47: horus.pb.logs.LidarIsDead
+	(*logs_pb.LidarIsNotDeadAnymore)(nil),                               // 48: horus.pb.logs.LidarIsNotDeadAnymore
+	(*logs_pb.LidarIsObstructed)(nil),                                   // 49: horus.pb.logs.LidarIsObstructed
+	(*logs_pb.LidarIsNotObstructedAnymore)(nil),                         // 50: horus.pb.logs.LidarIsNotObstructedAnymore
+	(*logs_pb.LidarIsTilted)(nil),                                       // 51: horus.pb.logs.LidarIsTilted
+	(*logs_pb.LidarIsNotTiltedAnymore)(nil),                             // 52: horus.pb.logs.LidarIsNotTiltedAnymore
+	(*logs_pb.LidarHasBeenAutomaticallyRecalibrated)(nil),               // 53: horus.pb.logs.LidarHasBeenAutomaticallyRecalibrated
+	(*logs_pb.ReceivedFirstDataForLidar)(nil),                           // 54: horus.pb.logs.ReceivedFirstDataForLidar
+	(*logs_pb.TerminationFailureError)(nil),                             // 55: horus.pb.logs.TerminationFailureError
+	(*logs_pb.FrameProcessingError)(nil),                                // 56: horus.pb.logs.FrameProcessingError
+	(*logs_pb.ThreadPoolUnavailableError)(nil),                          // 57: horus.pb.logs.ThreadPoolUnavailableError
+	(*logs_pb.InvalidArgument)(nil),                                     // 58: horus.pb.logs.InvalidArgument
+	(*logs_pb.ComponentInitializationFailureFatal)(nil),                 // 59: horus.pb.logs.ComponentInitializationFailureFatal
+	(*logs_pb.UnhandledEnumCaseError)(nil),                              // 60: horus.pb.logs.UnhandledEnumCaseError
+	(*logs_pb.BagEmptyError)(nil),                                       // 61: horus.pb.logs.BagEmptyError
+	(*logs_pb.DiscardingDataError)(nil),                                 // 62: horus.pb.logs.DiscardingDataError
+	(*logs_pb.DiscardingDataWarning)(nil),                               // 63: horus.pb.logs.DiscardingDataWarning
+	(*logs_pb.NothingToProcess)(nil),                                    // 64: horus.pb.logs.NothingToProcess
+	(*logs_pb.InvalidComponentConfiguration)(nil),                       // 65: horus.pb.logs.InvalidComponentConfiguration
+	(*logs_pb.ChannelReceiverNotFoundWarning)(nil),                      // 66: horus.pb.logs.ChannelReceiverNotFoundWarning
+	(*logs_pb.ModelLoadFailure)(nil),                                    // 67: horus.pb.logs.ModelLoadFailure
+	(*logs_pb.ModelExecutionFailureError)(nil),                          // 68: horus.pb.logs.ModelExecutionFailureError
+	(*logs_pb.ServiceReadyInfo)(nil),                                    // 69: horus.pb.logs.ServiceReadyInfo
+	(*logs_pb.ModelPreparingInfo)(nil),                                  // 70: horus.pb.logs.ModelPreparingInfo
+	(*logs_pb.ModelInitializedInfo)(nil),                                // 71: horus.pb.logs.ModelInitializedInfo
+	(*logs_pb.ModelInitializationFailureWarning)(nil),                   // 72: horus.pb.logs.ModelInitializationFailureWarning
+	(*logs_pb.RosSpinnerStoppedWarning)(nil),                            // 73: horus.pb.logs.RosSpinnerStoppedWarning
+	(*logs_pb.ActorSystemUnavailableError)(nil),                         // 74: horus.pb.logs.ActorSystemUnavailableError
+	(*logs_pb.ConfigNodeNotFoundError)(nil),                             // 75: horus.pb.logs.ConfigNodeNotFoundError
+	(*logs_pb.BagTimestampOutOfOrderError)(nil),                         // 76: horus.pb.logs.BagTimestampOutOfOrderError
+	(*logs_pb.BagReplayUnexpectedTimestampError)(nil),                   // 77: horus.pb.logs.BagReplayUnexpectedTimestampError
+	(*logs_pb.WebsocketClosedInfo)(nil),                                 // 78: horus.pb.logs.WebsocketClosedInfo
+	(*logs_pb.WebsocketOpenedInfo)(nil),                                 // 79: horus.pb.logs.WebsocketOpenedInfo
+	(*logs_pb.SubscriberDisconnectedInfo)(nil),                          // 80: horus.pb.logs.SubscriberDisconnectedInfo
+	(*logs_pb.ThreadPoolSlowingDownWarning)(nil),                        // 81: horus.pb.logs.ThreadPoolSlowingDownWarning
+	(*logs_pb.ThreadPoolNotRespondingWarning)(nil),                      // 82: horus.pb.logs.ThreadPoolNotRespondingWarning
+	(*logs_pb.ThreadPoolBrokenPromiseWarning)(nil),                      // 83: horus.pb.logs.ThreadPoolBrokenPromiseWarning
+	(*logs_pb.BoxFittingPointsBelowBaseWarning)(nil),                    // 84: horus.pb.logs.BoxFittingPointsBelowBaseWarning
+	(*logs_pb.FailedToRemoveStalePointsWarning)(nil),                    // 85: horus.pb.logs.FailedToRemoveStalePointsWarning
+	(*logs_pb.IrregularBroadcastingPeriodWarning)(nil),                  // 86: horus.pb.logs.IrregularBroadcastingPeriodWarning
+	(*logs_pb.ClustererPointsOutOfRangeWarning)(nil),                    // 87: horus.pb.logs.ClustererPointsOutOfRangeWarning
+	(*logs_pb.InternalError)(nil),                                       // 88: horus.pb.logs.InternalError
+	(*logs_pb.InternalFatal)(nil),                                       // 89: horus.pb.logs.InternalFatal
+	(*logs_pb.ServiceStartingInfo)(nil),                                 // 90: horus.pb.logs.ServiceStartingInfo
+	(*logs_pb.ConfigNodeNotFoundFatal)(nil),                             // 91: horus.pb.logs.ConfigNodeNotFoundFatal
+	(*logs_pb.ServiceSetupError)(nil),                                   // 92: horus.pb.logs.ServiceSetupError
+	(*logs_pb.FilesystemError)(nil),                                     // 93: horus.pb.logs.FilesystemError
+	(*logs_pb.InvalidPresetWarning)(nil),                                // 94: horus.pb.logs.InvalidPresetWarning
+	(*logs_pb.WebsocketFailedClearPendingError)(nil),                    // 95: horus.pb.logs.WebsocketFailedClearPendingError
+	(*logs_pb.WebsocketFailedToStopError)(nil),                          // 96: horus.pb.logs.WebsocketFailedToStopError
+	(*logs_pb.WebsocketFailedToCreateError)(nil),                        // 97: horus.pb.logs.WebsocketFailedToCreateError
+	(*logs_pb.UnexpectedRpcError)(nil),                                  // 98: horus.pb.logs.UnexpectedRpcError
+	(*logs_pb.LicensePollFailed)(nil),                                   // 99: horus.pb.logs.LicensePollFailed
+	(*logs_pb.LicenseExpiredWarning)(nil),                               // 100: horus.pb.logs.LicenseExpiredWarning
+	(*logs_pb.LicenseUsageExceededWarning)(nil),                         // 101: horus.pb.logs.LicenseUsageExceededWarning
+	(*logs_pb.StaticThreadPoolSlowTaskWarning)(nil),                     // 102: horus.pb.logs.StaticThreadPoolSlowTaskWarning
+	(*logs_pb.RpcUnsupportedServiceWarning)(nil),                        // 103: horus.pb.logs.RpcUnsupportedServiceWarning
+	(*logs_pb.WebsocketHandlerProblem)(nil),                             // 104: horus.pb.logs.WebsocketHandlerProblem
+	(*logs_pb.WebsocketDeserializeError)(nil),                           // 105: horus.pb.logs.WebsocketDeserializeError
+	(*logs_pb.WebsocketExpiredRpcEndpointError)(nil),                    // 106: horus.pb.logs.WebsocketExpiredRpcEndpointError
+	(*logs_pb.WebsocketQueueOverloadedWarning)(nil),                     // 107: horus.pb.logs.WebsocketQueueOverloadedWarning
+	(*logs_pb.RpcFailedToNotifyWarning)(nil),                            // 108: horus.pb.logs.RpcFailedToNotifyWarning
+	(*logs_pb.ConfigSubscriptionFailedWarning)(nil),                     // 109: horus.pb.logs.ConfigSubscriptionFailedWarning
+	(*logs_pb.ThreadPoolClampedWorkersWarning)(nil),                     // 110: horus.pb.logs.ThreadPoolClampedWorkersWarning
+	(*logs_pb.StoppingHorusBagRecorderAlreadyStopped)(nil),              // 111: horus.pb.logs.StoppingHorusBagRecorderAlreadyStopped
+	(*logs_pb.RecorderConfigUpdateWhileRunning)(nil),                    // 112: horus.pb.logs.RecorderConfigUpdateWhileRunning
+	(*logs_pb.ClampingDataWarning)(nil),                                 // 113: horus.pb.logs.ClampingDataWarning
+	(*logs_pb.LidarIncompatibleValues)(nil),                             // 114: horus.pb.logs.LidarIncompatibleValues
+	(*logs_pb.CannotDetermineContainerIdError)(nil),                     // 115: horus.pb.logs.CannotDetermineContainerIdError
+	(*logs_pb.StartedLidarDriver)(nil),                                  // 116: horus.pb.logs.StartedLidarDriver
+	(*logs_pb.CannotStartLidarDriver)(nil),                              // 117: horus.pb.logs.CannotStartLidarDriver
+	(*logs_pb.StoppedLidarDriver)(nil),                                  // 118: horus.pb.logs.StoppedLidarDriver
+	(*logs_pb.CannotStopLidarDriver)(nil),                               // 119: horus.pb.logs.CannotStopLidarDriver
+	(*logs_pb.RestartedLidarDriver)(nil),                                // 120: horus.pb.logs.RestartedLidarDriver
+	(*logs_pb.CannotRestartLidarDriver)(nil),                            // 121: horus.pb.logs.CannotRestartLidarDriver
+	(*logs_pb.RemovedUnusedLidarDriver)(nil),                            // 122: horus.pb.logs.RemovedUnusedLidarDriver
+	(*logs_pb.CannotRemoveUnusedLidarDriver)(nil),                       // 123: horus.pb.logs.CannotRemoveUnusedLidarDriver
+	(*logs_pb.LidarDriverGcFailure)(nil),                                // 124: horus.pb.logs.LidarDriverGcFailure
+	(*logs_pb.IdSpaceExhausted)(nil),                                    // 125: horus.pb.logs.IdSpaceExhausted
+	(*logs_pb.PreprocessingToPointAggregatorPointsSkipped)(nil),         // 126: horus.pb.logs.PreprocessingToPointAggregatorPointsSkipped
+	(*logs_pb.MinMsgIntervalLessThanThreshold)(nil),                     // 127: horus.pb.logs.MinMsgIntervalLessThanThreshold
+	(*logs_pb.FailedToCleanupRosWarning)(nil),                           // 128: horus.pb.logs.FailedToCleanupRosWarning
+	(*logs_pb.RpcDisconnectedWarning)(nil),                              // 129: horus.pb.logs.RpcDisconnectedWarning
+	(*logs_pb.RpcUnhandledError)(nil),                                   // 130: horus.pb.logs.RpcUnhandledError
+	(*logs_pb.TimeDiffOutOfRangeWarning)(nil),                           // 131: horus.pb.logs.TimeDiffOutOfRangeWarning
+	(*logs_pb.TensorrtLog)(nil),                                         // 132: horus.pb.logs.TensorrtLog
+	(*logs_pb.BuildingTensorrtEngineInfo)(nil),                          // 133: horus.pb.logs.BuildingTensorrtEngineInfo
+	(*logs_pb.LoadingTensorrtEngineInfo)(nil),                           // 134: horus.pb.logs.LoadingTensorrtEngineInfo
+	(*logs_pb.CalibrationMapNotFound)(nil),                              // 135: horus.pb.logs.CalibrationMapNotFound
+	(*logs_pb.CalibrationMapNotValid)(nil),                              // 136: horus.pb.logs.CalibrationMapNotValid
+	(*logs_pb.CalibrationMapPathAlreadyExists)(nil),                     // 137: horus.pb.logs.CalibrationMapPathAlreadyExists
+	(*logs_pb.FailedToSaveCalibrationMap)(nil),                          // 138: horus.pb.logs.FailedToSaveCalibrationMap
+	(*logs_pb.FailedToRemoveCalibrationMap)(nil),                        // 139: horus.pb.logs.FailedToRemoveCalibrationMap
+	(*logs_pb.FailedToIterateInDirectory)(nil),                          // 140: horus.pb.logs.FailedToIterateInDirectory
+	(*logs_pb.MapBasedCalibrationWithoutMapLoading)(nil),                // 141: horus.pb.logs.MapBasedCalibrationWithoutMapLoading
+	(*logs_pb.MapBasedCalibrationAlreadyRunning)(nil),                   // 142: horus.pb.logs.MapBasedCalibrationAlreadyRunning
+	(*logs_pb.CancelMapBasedCalibrationNotRunning)(nil),                 // 143: horus.pb.logs.CancelMapBasedCalibrationNotRunning
+	(*logs_pb.BagStreamNotFound)(nil),                                   // 144: horus.pb.logs.BagStreamNotFound
+	(*logs_pb.EvaluationBagStartedInfo)(nil),                            // 145: horus.pb.logs.EvaluationBagStartedInfo
+	(*logs_pb.EvaluationBagFinishedInfo)(nil),                           // 146: horus.pb.logs.EvaluationBagFinishedInfo
+	(*logs_pb.BagNotFound)(nil),                                         // 147: horus.pb.logs.BagNotFound
+	(*logs_pb.BuildingPipelineInfo)(nil),                                // 148: horus.pb.logs.BuildingPipelineInfo
+	(*logs_pb.BagIsNotEvaluation)(nil),                                  // 149: horus.pb.logs.BagIsNotEvaluation
+	(*logs_pb.HorusBagRunning)(nil),                                     // 150: horus.pb.logs.HorusBagRunning
+	(*logs_pb.AutoGroundCalibrationWarning)(nil),                        // 151: horus.pb.logs.AutoGroundCalibrationWarning
+	(*logs_pb.AutoGroundCalibrationError)(nil),                          // 152: horus.pb.logs.AutoGroundCalibrationError
+	(*logs_pb.ObjectDetectorNotLoadedWarning)(nil),                      // 153: horus.pb.logs.ObjectDetectorNotLoadedWarning
+	(*logs_pb.CalibrationIsRunningError)(nil),                           // 154: horus.pb.logs.CalibrationIsRunningError
+	(*logs_pb.ModelInitInProgressInfo)(nil),                             // 155: horus.pb.logs.ModelInitInProgressInfo
+	(*logs_pb.RpcTimeoutWithResolutionWarning)(nil),                     // 156: horus.pb.logs.RpcTimeoutWithResolutionWarning
+	(*logs_pb.CalibrationWasCancelledInfo)(nil),                         // 157: horus.pb.logs.CalibrationWasCancelledInfo
+	(*logs_pb.CalibrationMapRecordingFailedToStart)(nil),                // 158: horus.pb.logs.CalibrationMapRecordingFailedToStart
+	(*logs_pb.DetectionPipelineRequestedResetInfo)(nil),                 // 159: horus.pb.logs.DetectionPipelineRequestedResetInfo
+	(*logs_pb.PreprocessingServicePipelineUnavailable)(nil),             // 160: horus.pb.logs.PreprocessingServicePipelineUnavailable
+	(*logs_pb.CircularRecordingDisabledWarning)(nil),                    // 161: horus.pb.logs.CircularRecordingDisabledWarning
+	(*logs_pb.SnapshotAlreadyRunningWarning)(nil),                       // 162: horus.pb.logs.SnapshotAlreadyRunningWarning
+	(*logs_pb.ActiveProjectChangedInfo)(nil),                            // 163: horus.pb.logs.ActiveProjectChangedInfo
+	(*logs_pb.ProjectConfigUpdatedInfo)(nil),                            // 164: horus.pb.logs.ProjectConfigUpdatedInfo
+	(*logs_pb.InvalidLidarTimestamp)(nil),                               // 165: horus.pb.logs.InvalidLidarTimestamp
+	(*logs_pb.CalibrationAccumulatingPointsInfo)(nil),                   // 166: horus.pb.logs.CalibrationAccumulatingPointsInfo
+	(*logs_pb.SparseNoiseFilterUsageNonRotationalLidars)(nil),           // 167: horus.pb.logs.SparseNoiseFilterUsageNonRotationalLidars
+	(*logs_pb.FileWriteWarning)(nil),                                    // 168: horus.pb.logs.FileWriteWarning
+	(*logs_pb.LicenseForbiddenFeature)(nil),                             // 169: horus.pb.logs.LicenseForbiddenFeature
+	(*logs_pb.FailedToUpdateConfiguration)(nil),                         // 170: horus.pb.logs.FailedToUpdateConfiguration
+	(*logs_pb.ObstructionDetectorBadReferenceWarning)(nil),              // 171: horus.pb.logs.ObstructionDetectorBadReferenceWarning
+	(*logs_pb.ProjectFileInvalidPermissionsError)(nil),                  // 172: horus.pb.logs.ProjectFileInvalidPermissionsError
+	(*logs_pb.PipelineSchedulerError)(nil),                              // 173: horus.pb.logs.PipelineSchedulerError
+	(*logs_pb.MultiLidarCalibrationWarning)(nil),                        // 174: horus.pb.logs.MultiLidarCalibrationWarning
+	(*logs_pb.MultiLidarCalibrationError)(nil),                          // 175: horus.pb.logs.MultiLidarCalibrationError
+	(*logs_pb.OldBagWarning)(nil),                                       // 176: horus.pb.logs.OldBagWarning
+	(*logs_pb.UpgradingBagInfo)(nil),                                    // 177: horus.pb.logs.UpgradingBagInfo
+	(*logs_pb.BagCalibrationSaveFailed)(nil),                            // 178: horus.pb.logs.BagCalibrationSaveFailed
+	(*logs_pb.BagUpgradeFailed)(nil),                                    // 179: horus.pb.logs.BagUpgradeFailed
+	(*logs_pb.UnknownLidarError)(nil),                                   // 180: horus.pb.logs.UnknownLidarError
+	(*logs_pb.InvalidPointCloudWarning)(nil),                            // 181: horus.pb.logs.InvalidPointCloudWarning
+	(*logs_pb.LidarIsDroppingPackets)(nil),                              // 182: horus.pb.logs.LidarIsDroppingPackets
+	(*logs_pb.RemovedInvalidLidarsFromConfigWarning)(nil),               // 183: horus.pb.logs.RemovedInvalidLidarsFromConfigWarning
+	(*logs_pb.CalibrationMapRecordingFailed)(nil),                       // 184: horus.pb.logs.CalibrationMapRecordingFailed
+	(*logs_pb.DetectionNodeNotFoundError)(nil),                          // 185: horus.pb.logs.DetectionNodeNotFoundError
+	(*logs_pb.CreatedVersionBackupInfo)(nil),                            // 186: horus.pb.logs.CreatedVersionBackupInfo
+	(*logs_pb.PlyFileLoadFailedError)(nil),                              // 187: horus.pb.logs.PlyFileLoadFailedError
+	(*logs_pb.HesaiDriverLifecycle)(nil),                                // 188: horus.pb.logs.HesaiDriverLifecycle
+	(*logs_pb.HesaiDriverError)(nil),                                    // 189: horus.pb.logs.HesaiDriverError
+	(*logs_pb.HesaiPacketProcessingFailed)(nil),                         // 190: horus.pb.logs.HesaiPacketProcessingFailed
+	(*logs_pb.HesaiCorrectionFileError)(nil),                            // 191: horus.pb.logs.HesaiCorrectionFileError
+	(*logs_pb.HesaiPacketStatistics)(nil),                               // 192: horus.pb.logs.HesaiPacketStatistics
+	(*logs_pb.PlyFileWriteFailedError)(nil),                             // 193: horus.pb.logs.PlyFileWriteFailedError
+	(*logs_pb.ProjectSaveError)(nil),                                    // 194: horus.pb.logs.ProjectSaveError
+	(*logs_pb.SaveStaticEnvironmentSuccess)(nil),                        // 195: horus.pb.logs.SaveStaticEnvironmentSuccess
+	(*logs_pb.SaveStaticEnvironmentFailed)(nil),                         // 196: horus.pb.logs.SaveStaticEnvironmentFailed
+	(*logs_pb.LoadStaticEnvironmentSuccess)(nil),                        // 197: horus.pb.logs.LoadStaticEnvironmentSuccess
+	(*logs_pb.LoadStaticEnvironmentFailed)(nil),                         // 198: horus.pb.logs.LoadStaticEnvironmentFailed
+	(*logs_pb.AttemptToInjectInvalidLidarIdWarning)(nil),                // 199: horus.pb.logs.AttemptToInjectInvalidLidarIdWarning
+	(*logs_pb.ResetBundledPacketDueToUnexpectedPacket)(nil),             // 200: horus.pb.logs.ResetBundledPacketDueToUnexpectedPacket
+	(*logs_pb.PacketBundlerDroppedPacketsWarning)(nil),                  // 201: horus.pb.logs.PacketBundlerDroppedPacketsWarning
+	(*logs_pb.PacketBundlerFrameJumpWarning)(nil),                       // 202: horus.pb.logs.PacketBundlerFrameJumpWarning
+	(*logs_pb.LidarCorrectionLoadingSuccess)(nil),                       // 203: horus.pb.logs.LidarCorrectionLoadingSuccess
+	(*logs_pb.LidarCorrectionLoadingFailure)(nil),                       // 204: horus.pb.logs.LidarCorrectionLoadingFailure
+	(*logs_pb.HesaiPacketStatisticsLidar)(nil),                          // 205: horus.pb.logs.HesaiPacketStatisticsLidar
+	(*logs_pb.LidarTiltDetectionAlignedToCalibrationMapInfo)(nil),       // 206: horus.pb.logs.LidarTiltDetectionAlignedToCalibrationMapInfo
+	(*logs_pb.LidarTiltDetectionMisalignedToCalibrationMapWarning)(nil), // 207: horus.pb.logs.LidarTiltDetectionMisalignedToCalibrationMapWarning
 }
 var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	2,   // 0: horus.pb.LogMessage.metadata:type_name -> horus.pb.LogMetadata
@@ -10913,11 +11026,13 @@ var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	203, // 202: horus.pb.LogData.lidar_correction_loading_success:type_name -> horus.pb.logs.LidarCorrectionLoadingSuccess
 	204, // 203: horus.pb.LogData.lidar_correction_loading_failure:type_name -> horus.pb.logs.LidarCorrectionLoadingFailure
 	205, // 204: horus.pb.LogData.hesai_packet_statistics_lidar:type_name -> horus.pb.logs.HesaiPacketStatisticsLidar
-	205, // [205:205] is the sub-list for method output_type
-	205, // [205:205] is the sub-list for method input_type
-	205, // [205:205] is the sub-list for extension type_name
-	205, // [205:205] is the sub-list for extension extendee
-	0,   // [0:205] is the sub-list for field type_name
+	206, // 205: horus.pb.LogData.lidar_tilt_detection_aligned_to_calibration_map_info:type_name -> horus.pb.logs.LidarTiltDetectionAlignedToCalibrationMapInfo
+	207, // 206: horus.pb.LogData.lidar_tilt_detection_misaligned_to_calibration_map_warning:type_name -> horus.pb.logs.LidarTiltDetectionMisalignedToCalibrationMapWarning
+	207, // [207:207] is the sub-list for method output_type
+	207, // [207:207] is the sub-list for method input_type
+	207, // [207:207] is the sub-list for extension type_name
+	207, // [207:207] is the sub-list for extension extendee
+	0,   // [0:207] is the sub-list for field type_name
 }
 
 func init() { file_horus_pb_logs_message_proto_init() }
@@ -11129,6 +11244,8 @@ func file_horus_pb_logs_message_proto_init() {
 		(*logData_LidarCorrectionLoadingSuccess)(nil),
 		(*logData_LidarCorrectionLoadingFailure)(nil),
 		(*logData_HesaiPacketStatisticsLidar)(nil),
+		(*logData_LidarTiltDetectionAlignedToCalibrationMapInfo)(nil),
+		(*logData_LidarTiltDetectionMisalignedToCalibrationMapWarning)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

@@ -640,6 +640,12 @@ void HorusStringify(const ErasedSink& sink, const LidarCorrectionLoadingFailure&
 /// Formats the log `logs::HesaiPacketStatisticsLidar` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const HesaiPacketStatisticsLidar& data);
 
+/// Formats the log `logs::LidarTiltDetectionAlignedToCalibrationMapInfo` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const LidarTiltDetectionAlignedToCalibrationMapInfo& data);
+
+/// Formats the log `logs::LidarTiltDetectionMisalignedToCalibrationMapWarning` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const LidarTiltDetectionMisalignedToCalibrationMapWarning& data);
+
 }  // namespace logs
 
 }  // namespace pb
