@@ -135,6 +135,15 @@ void PrintSensorHealth(const horus::sdk::SensorHealth& sensor_health_status) {
   if (sensor_info.HasStatus(horus::sdk::SensorInfo::SensorStatus::kObstructed)) {
     horus::StringifyTo(horus::StdoutSink(), "  - Obstructed\n");
   }
+  if (sensor_info.HasStatus(horus::sdk::SensorInfo::SensorStatus::kPacketDrop)) {
+    horus::StringifyTo(horus::StdoutSink(), "  - Packet drop\n");
+  }
+  if (sensor_info.HasStatus(horus::sdk::SensorInfo::SensorStatus::kAutoCorrectionModerate)) {
+    horus::StringifyTo(horus::StdoutSink(), "  - Moderate auto-correction detected\n");
+  }
+  if (sensor_info.HasStatus(horus::sdk::SensorInfo::SensorStatus::kAutoCorrectionSevere)) {
+    horus::StringifyTo(horus::StdoutSink(), "  - Severe auto-correction detected\n");
+  }
 }
 
 void PrintServiceStatuses(horus::Span<const horus::sdk::NodeHealth> service_health_statuses) {

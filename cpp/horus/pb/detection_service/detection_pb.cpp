@@ -388,6 +388,7 @@ DetectionEvent::DetectionEvent(const DetectionEvent& other) noexcept(false)
     , labeled_point_clouds_{other.labeled_point_clouds_}
     , frame_info_{other.frame_info_}
     , raw_deep_learning_objects_{other.raw_deep_learning_objects_}
+    , unrecovered_object_ids_{other.unrecovered_object_ids_}
     , set_fields_{other.set_fields_} {}
 
 void DetectionEvent::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -402,6 +403,9 @@ void DetectionEvent::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[3]) {
     SerializeField<CowRepeated<DeepLearningObject>>(writer, /*tag=*/ 4, raw_deep_learning_objects_);
+  }
+  if (set_fields_[4]) {
+    SerializeField<CowRepeated<std::uint32_t>>(writer, /*tag=*/ 5, unrecovered_object_ids_);
   }
 }
 
@@ -426,6 +430,11 @@ void DetectionEvent::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 4: {
         DeserializeField<CowRepeated<DeepLearningObject>>(reader, raw_deep_learning_objects_);
         set_fields_[3] = true;
+        break;
+      }
+      case 5: {
+        DeserializeField<CowRepeated<std::uint32_t>>(reader, unrecovered_object_ids_);
+        set_fields_[4] = true;
         break;
       }
       default: {

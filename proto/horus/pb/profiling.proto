@@ -92,6 +92,9 @@ message FrameProfiling {
   /// It has to be substracted to the overall frame latency to get the total
   /// overhead of our pipeline for the frame.
   Duration frame_bundling_latency = 2;
+
+  /// The removed earliest_packet_to_detection_latency field.
+  reserved 3;
 }
 
 /// A bundled profiling set bundling bundled frame profiling set of the

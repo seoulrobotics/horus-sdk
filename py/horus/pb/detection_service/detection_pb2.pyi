@@ -110,7 +110,7 @@ class DeepLearningObject(_message.Message):
     def __init__(self, classification: _Optional[_Union[DeepLearningObject.Classification, _Mapping]] = ..., bounding_box: _Optional[_Union[BoundingBox, _Mapping]] = ...) -> None: ...
 
 class DetectionEvent(_message.Message):
-    __slots__ = ("objects", "labeled_point_clouds", "frame_info", "raw_deep_learning_objects")
+    __slots__ = ("objects", "labeled_point_clouds", "frame_info", "raw_deep_learning_objects", "unrecovered_object_ids")
     class FrameInfo(_message.Message):
         __slots__ = ("frame_timestamp",)
         FRAME_TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
@@ -120,8 +120,10 @@ class DetectionEvent(_message.Message):
     LABELED_POINT_CLOUDS_FIELD_NUMBER: _ClassVar[int]
     FRAME_INFO_FIELD_NUMBER: _ClassVar[int]
     RAW_DEEP_LEARNING_OBJECTS_FIELD_NUMBER: _ClassVar[int]
+    UNRECOVERED_OBJECT_IDS_FIELD_NUMBER: _ClassVar[int]
     objects: _containers.RepeatedCompositeFieldContainer[DetectedObject]
     labeled_point_clouds: _containers.RepeatedCompositeFieldContainer[LabeledPointCloud]
     frame_info: DetectionEvent.FrameInfo
     raw_deep_learning_objects: _containers.RepeatedCompositeFieldContainer[DeepLearningObject]
-    def __init__(self, objects: _Optional[_Iterable[_Union[DetectedObject, _Mapping]]] = ..., labeled_point_clouds: _Optional[_Iterable[_Union[LabeledPointCloud, _Mapping]]] = ..., frame_info: _Optional[_Union[DetectionEvent.FrameInfo, _Mapping]] = ..., raw_deep_learning_objects: _Optional[_Iterable[_Union[DeepLearningObject, _Mapping]]] = ...) -> None: ...
+    unrecovered_object_ids: _containers.RepeatedScalarFieldContainer[int]
+    def __init__(self, objects: _Optional[_Iterable[_Union[DetectedObject, _Mapping]]] = ..., labeled_point_clouds: _Optional[_Iterable[_Union[LabeledPointCloud, _Mapping]]] = ..., frame_info: _Optional[_Union[DetectionEvent.FrameInfo, _Mapping]] = ..., raw_deep_learning_objects: _Optional[_Iterable[_Union[DeepLearningObject, _Mapping]]] = ..., unrecovered_object_ids: _Optional[_Iterable[int]] = ...) -> None: ...

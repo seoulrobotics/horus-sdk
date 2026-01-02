@@ -74,7 +74,7 @@ class GetHealthStatusRequest(_message.Message):
     def __init__(self) -> None: ...
 
 class GetHealthStatusResponse(_message.Message):
-    __slots__ = ("license_status", "sensor_statuses", "service_statuses")
+    __slots__ = ("license_status", "sensor_statuses", "service_statuses", "node_resources")
     class NodeHealth(_message.Message):
         __slots__ = ("service", "node_id", "node_status")
         class Service(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
@@ -117,10 +117,15 @@ class GetHealthStatusResponse(_message.Message):
         info: _messages_pb2.SensorInfo
         timeout: _logs_pb2.ServiceConnectionTimedOut
         def __init__(self, preprocessing_node_id: _Optional[str] = ..., info: _Optional[_Union[_messages_pb2.SensorInfo, _Mapping]] = ..., timeout: _Optional[_Union[_logs_pb2.ServiceConnectionTimedOut, _Mapping]] = ...) -> None: ...
+    class NodeResources(_message.Message):
+        __slots__ = ()
+        def __init__(self) -> None: ...
     LICENSE_STATUS_FIELD_NUMBER: _ClassVar[int]
     SENSOR_STATUSES_FIELD_NUMBER: _ClassVar[int]
     SERVICE_STATUSES_FIELD_NUMBER: _ClassVar[int]
+    NODE_RESOURCES_FIELD_NUMBER: _ClassVar[int]
     license_status: LicenseStatus
     sensor_statuses: _containers.RepeatedCompositeFieldContainer[GetHealthStatusResponse.SensorHealth]
     service_statuses: _containers.RepeatedCompositeFieldContainer[GetHealthStatusResponse.NodeHealth]
-    def __init__(self, license_status: _Optional[_Union[LicenseStatus, _Mapping]] = ..., sensor_statuses: _Optional[_Iterable[_Union[GetHealthStatusResponse.SensorHealth, _Mapping]]] = ..., service_statuses: _Optional[_Iterable[_Union[GetHealthStatusResponse.NodeHealth, _Mapping]]] = ...) -> None: ...
+    node_resources: _containers.RepeatedCompositeFieldContainer[GetHealthStatusResponse.NodeResources]
+    def __init__(self, license_status: _Optional[_Union[LicenseStatus, _Mapping]] = ..., sensor_statuses: _Optional[_Iterable[_Union[GetHealthStatusResponse.SensorHealth, _Mapping]]] = ..., service_statuses: _Optional[_Iterable[_Union[GetHealthStatusResponse.NodeHealth, _Mapping]]] = ..., node_resources: _Optional[_Iterable[_Union[GetHealthStatusResponse.NodeResources, _Mapping]]] = ...) -> None: ...

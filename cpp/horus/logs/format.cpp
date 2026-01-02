@@ -235,6 +235,14 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     logs::HorusStringify(sink, log_data.lidar_has_been_automatically_recalibrated());
     break;
   }
+  case LogData::DataOneof::kLidarAutoCorrectionFailed: {
+    logs::HorusStringify(sink, log_data.lidar_auto_correction_failed());
+    break;
+  }
+  case LogData::DataOneof::kLidarIcpFailed: {
+    logs::HorusStringify(sink, log_data.lidar_icp_failed());
+    break;
+  }
   case LogData::DataOneof::kReceivedFirstDataForLidar: {
     logs::HorusStringify(sink, log_data.received_first_data_for_lidar());
     break;
@@ -843,6 +851,58 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     logs::HorusStringify(sink, log_data.hesai_packet_statistics_lidar());
     break;
   }
+  case LogData::DataOneof::kLidarTiltDetectionAlignedToCalibrationMapInfo: {
+    logs::HorusStringify(sink, log_data.lidar_tilt_detection_aligned_to_calibration_map_info());
+    break;
+  }
+  case LogData::DataOneof::kLidarTiltDetectionMisalignedToCalibrationMapWarning: {
+    logs::HorusStringify(sink, log_data.lidar_tilt_detection_misaligned_to_calibration_map_warning());
+    break;
+  }
+  case LogData::DataOneof::kLidarOriginalPoseDiffersForAutoCorrectionError: {
+    logs::HorusStringify(sink, log_data.lidar_original_pose_differs_for_auto_correction_error());
+    break;
+  }
+  case LogData::DataOneof::kRecoveredCarIdsInfo: {
+    logs::HorusStringify(sink, log_data.recovered_car_ids_info());
+    break;
+  }
+  case LogData::DataOneof::kFailedToRecoverCarIds: {
+    logs::HorusStringify(sink, log_data.failed_to_recover_car_ids());
+    break;
+  }
+  case LogData::DataOneof::kFailedToEmplaceRecoveredCarId: {
+    logs::HorusStringify(sink, log_data.failed_to_emplace_recovered_car_id());
+    break;
+  }
+  case LogData::DataOneof::kPersistentStorageError: {
+    logs::HorusStringify(sink, log_data.persistent_storage_error());
+    break;
+  }
+  case LogData::DataOneof::kTrackCapacityExceededWarning: {
+    logs::HorusStringify(sink, log_data.track_capacity_exceeded_warning());
+    break;
+  }
+  case LogData::DataOneof::kTrackerStatePathUnavailableWarning: {
+    logs::HorusStringify(sink, log_data.tracker_state_path_unavailable_warning());
+    break;
+  }
+  case LogData::DataOneof::kTrackerIdRecoveryFailedError: {
+    logs::HorusStringify(sink, log_data.tracker_id_recovery_failed_error());
+    break;
+  }
+  case LogData::DataOneof::kTrackerIdFastForwardFailedError: {
+    logs::HorusStringify(sink, log_data.tracker_id_fast_forward_failed_error());
+    break;
+  }
+  case LogData::DataOneof::kCircularRecordingSnapshotCreated: {
+    logs::HorusStringify(sink, log_data.circular_recording_snapshot_created());
+    break;
+  }
+  case LogData::DataOneof::kCircularRecordingFileOperationError: {
+    logs::HorusStringify(sink, log_data.circular_recording_file_operation_error());
+    break;
+  }
   case LogData::DataOneof::kNotSet:
   default: {
     sink.Append("Unknown log message");
@@ -1030,35 +1090,43 @@ void HorusStringify(const ErasedSink& sink, const PointCloudParsingFailureWarnin
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarIsDead& data) {
-  StringifyTo(sink, "The lidar ", data.lidar_id(), " is considered dead. No data has been received for a while.");
+  StringifyTo(sink, "The lidar ", data.lidar_name(), " [", data.lidar_id(), "] is considered dead. No data has been received for a while.");
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarIsNotDeadAnymore& data) {
-  StringifyTo(sink, "The lidar ", data.lidar_id(), " is not considered dead anymore. A point cloud has been received again after some time.");
+  StringifyTo(sink, "The lidar ", data.lidar_name(), " [", data.lidar_id(), "] is not considered dead anymore. A point cloud has been received again after some time.");
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarIsObstructed& data) {
-  StringifyTo(sink, "The lidar ", data.lidar_id(), " is obstructed.");
+  StringifyTo(sink, "The lidar ", data.lidar_name(), " [", data.lidar_id(), "] is obstructed.");
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarIsNotObstructedAnymore& data) {
-  StringifyTo(sink, "The lidar ", data.lidar_id(), " is not obstructed anymore.");
+  StringifyTo(sink, "The lidar ", data.lidar_name(), " [", data.lidar_id(), "] is not obstructed anymore.");
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarIsTilted& data) {
-  StringifyTo(sink, "The lidar ", data.lidar_id(), " is tilted.");
+  StringifyTo(sink, "The lidar ", data.lidar_name(), " [", data.lidar_id(), "] is tilted.");
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarIsNotTiltedAnymore& data) {
-  StringifyTo(sink, "The lidar ", data.lidar_id(), " is not tilted anymore.");
+  StringifyTo(sink, "The lidar ", data.lidar_name(), " [", data.lidar_id(), "] is not tilted anymore.");
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarHasBeenAutomaticallyRecalibrated& data) {
-  StringifyTo(sink, "The lidar ", data.lidar_id(), " has been automatically re-calibrated.");
+  StringifyTo(sink, "LiDAR ", data.lidar_name(), " [", data.lidar_id(), "] auto re-calibrated (Δ from original: t=", data.translation(), ", r=", data.rotation_rpy(), ")");
+}
+
+void HorusStringify(const ErasedSink& sink, const LidarAutoCorrectionFailed& data) {
+  StringifyTo(sink, "LiDAR ", data.lidar_name(), " [", data.lidar_id(), "] auto-correction failed ", data.failure_count(), " times in the last second (ICP unreliable for calibration)");
+}
+
+void HorusStringify(const ErasedSink& sink, const LidarIcpFailed& data) {
+  StringifyTo(sink, "LiDAR ", data.lidar_name(), " [", data.lidar_id(), "] ICP failed ", data.failure_count(), " times in the last second (convergence error)");
 }
 
 void HorusStringify(const ErasedSink& sink, const ReceivedFirstDataForLidar& data) {
-  StringifyTo(sink, "Data has been received for the first time for the lidar ", data.lidar_id(), ".");
+  StringifyTo(sink, "Data has been received for the first time for the lidar ", data.lidar_name(), " [", data.lidar_id(), "].");
 }
 
 void HorusStringify(const ErasedSink& sink, const TerminationFailureError& data) {
@@ -1306,35 +1374,35 @@ void HorusStringify(const ErasedSink& sink, const CannotDetermineContainerIdErro
 }
 
 void HorusStringify(const ErasedSink& sink, const StartedLidarDriver& data) {
-  StringifyTo(sink, "Started lidar driver container ", data.lidar_id(), ".");
+  StringifyTo(sink, "Started lidar driver container ", data.lidar_name(), " [", data.lidar_id(), "].");
 }
 
 void HorusStringify(const ErasedSink& sink, const CannotStartLidarDriver& data) {
-  StringifyTo(sink, "Cannot start lidar driver container ", data.lidar_id(), ": ", data.details(), ".");
+  StringifyTo(sink, "Cannot start lidar driver container ", data.lidar_name(), " [", data.lidar_id(), "]: ", data.details(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const StoppedLidarDriver& data) {
-  StringifyTo(sink, "Stopped lidar driver container ", data.lidar_id(), ".");
+  StringifyTo(sink, "Stopped lidar driver container ", data.lidar_name(), " [", data.lidar_id(), "].");
 }
 
 void HorusStringify(const ErasedSink& sink, const CannotStopLidarDriver& data) {
-  StringifyTo(sink, "Cannot stop lidar driver container ", data.lidar_id(), ": ", data.details(), ".");
+  StringifyTo(sink, "Cannot stop lidar driver container ", data.lidar_name(), " [", data.lidar_id(), "]: ", data.details(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const RestartedLidarDriver& data) {
-  StringifyTo(sink, "Restarted lidar driver container ", data.lidar_id(), ".");
+  StringifyTo(sink, "Restarted lidar driver container ", data.lidar_name(), " [", data.lidar_id(), "].");
 }
 
 void HorusStringify(const ErasedSink& sink, const CannotRestartLidarDriver& data) {
-  StringifyTo(sink, "Cannot restart lidar driver container ", data.lidar_id(), ": ", data.details(), ".");
+  StringifyTo(sink, "Cannot restart lidar driver container ", data.lidar_name(), " [", data.lidar_id(), "]: ", data.details(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const RemovedUnusedLidarDriver& data) {
-  StringifyTo(sink, "Removed unused lidar driver container ", data.lidar_id(), ".");
+  StringifyTo(sink, "Removed unused lidar driver container ", data.lidar_name(), " [", data.lidar_id(), "].");
 }
 
 void HorusStringify(const ErasedSink& sink, const CannotRemoveUnusedLidarDriver& data) {
-  StringifyTo(sink, "Cannot remove unused lidar driver container ", data.lidar_id(), ": ", data.details(), ".");
+  StringifyTo(sink, "Cannot remove unused lidar driver container ", data.lidar_name(), " [", data.lidar_id(), "]: ", data.details(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarDriverGcFailure& data) {
@@ -1350,7 +1418,7 @@ void HorusStringify(const ErasedSink& sink, const PreprocessingToPointAggregator
 }
 
 void HorusStringify(const ErasedSink& sink, const MinMsgIntervalLessThanThreshold& data) {
-  StringifyTo(sink, "Discarding lidar points from ", data.lidar_id(), " since the time interval between two point-cloud messages is too close (<", data.threshold(), "). Adjust the Min-Message Interval parameter to change this behavior.");
+  StringifyTo(sink, "Discarding lidar points from ", data.lidar_name(), " [", data.lidar_id(), "] since the time interval between two point-cloud messages is too close (<", data.threshold(), "). Adjust the Min-Message Interval parameter to change this behavior.");
 }
 
 void HorusStringify(const ErasedSink& sink, const FailedToCleanupRosWarning& data) {
@@ -1502,7 +1570,7 @@ void HorusStringify(const ErasedSink& sink, const ProjectConfigUpdatedInfo& /*da
 }
 
 void HorusStringify(const ErasedSink& sink, const InvalidLidarTimestamp& data) {
-  StringifyTo(sink, "Invalid timestamp ", data.timestamp(), " sent by lidar ", data.lidar_id(), ".");
+  StringifyTo(sink, "Invalid timestamp ", data.timestamp(), " sent by lidar ", data.lidar_name(), " [", data.lidar_id(), "].");
 }
 
 void HorusStringify(const ErasedSink& sink, const CalibrationAccumulatingPointsInfo& data) {
@@ -1530,7 +1598,7 @@ void HorusStringify(const ErasedSink& sink, const ObstructionDetectorBadReferenc
 }
 
 void HorusStringify(const ErasedSink& sink, const ProjectFileInvalidPermissionsError& data) {
-  StringifyTo(sink, "Project file \"", data.filename(), "\" has invalid permissions. Please restart Horus to fix the issue.");
+  StringifyTo(sink, "Project file \"", data.filename(), "\" has invalid permissions. Please fix your file permissions manually.");
 }
 
 void HorusStringify(const ErasedSink& sink, const PipelineSchedulerError& data) {
@@ -1562,15 +1630,15 @@ void HorusStringify(const ErasedSink& sink, const BagUpgradeFailed& data) {
 }
 
 void HorusStringify(const ErasedSink& sink, const UnknownLidarError& data) {
-  StringifyTo(sink, "Received points from unknown lidar ", data.lidar_id(), ".");
+  StringifyTo(sink, "Received points from unknown lidar ", data.lidar_name(), " [", data.lidar_id(), "].");
 }
 
 void HorusStringify(const ErasedSink& sink, const InvalidPointCloudWarning& data) {
-  StringifyTo(sink, "Invalid point cloud received from lidar ", data.lidar_id(), ": ", data.reason());
+  StringifyTo(sink, "Invalid point cloud received from lidar ", data.lidar_name(), " [", data.lidar_id(), "]: ", data.reason());
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarIsDroppingPackets& data) {
-  StringifyTo(sink, "The lidar ", data.lidar_id(), " is dropping packets (dropped ", data.num_total_dropped_packets(), " packets out of ", data.num_total_expected_packets(), ").");
+  StringifyTo(sink, "The lidar ", data.lidar_name(), " [", data.lidar_id(), "] is dropping packets (dropped ", data.num_total_dropped_packets(), " packets out of ", data.num_total_expected_packets(), ").");
 }
 
 void HorusStringify(const ErasedSink& sink, const RemovedInvalidLidarsFromConfigWarning& data) {
@@ -1594,23 +1662,23 @@ void HorusStringify(const ErasedSink& sink, const PlyFileLoadFailedError& data) 
 }
 
 void HorusStringify(const ErasedSink& sink, const HesaiDriverLifecycle& data) {
-  StringifyTo(sink, "Hesai XT32 driver ", data.action(), " for LiDAR ", data.lidar_id(), ".");
+  StringifyTo(sink, "[", data.lidar_name(), "][", data.lidar_id(), "] Hesai XT32 driver ", data.action(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const HesaiDriverError& data) {
-  StringifyTo(sink, "Hesai XT32 driver error: ", data.details());
+  StringifyTo(sink, "[", data.lidar_name(), "][", data.lidar_id(), "] Hesai XT32 driver error: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const HesaiPacketProcessingFailed& data) {
-  StringifyTo(sink, "Failed to process packet for Hesai LiDAR ", data.lidar_id(), ": ", data.details());
+  StringifyTo(sink, "[", data.lidar_name(), "][", data.lidar_id(), "] Failed to process packet: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const HesaiCorrectionFileError& data) {
-  StringifyTo(sink, "Failed to load Hesai XT32 correction file ", data.file_type(), ": ", data.details());
+  StringifyTo(sink, "[", data.lidar_name(), "][", data.lidar_id(), "] Failed to load Hesai XT32 correction file ", data.file_type(), ": ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const HesaiPacketStatistics& data) {
-  StringifyTo(sink, "Hesai packet statistics - Received: ", data.packets_received(), ", Published: ", data.packets_published(), ", Dropped: ", data.packets_dropped(), ", Decode Failed: ", data.packets_decode_failed(), ", Success Rate: ", data.success_rate(), " %");
+  StringifyTo(sink, "[", data.lidar_name(), "][", data.lidar_id(), "] Hesai packet statistics - Received: ", data.packets_received(), ", Published: ", data.packets_published(), ", Dropped: ", data.packets_dropped(), ", Decode Failed: ", data.packets_decode_failed(), ", Success Rate: ", data.success_rate(), " %");
 }
 
 void HorusStringify(const ErasedSink& sink, const PlyFileWriteFailedError& data) {
@@ -1642,27 +1710,79 @@ void HorusStringify(const ErasedSink& sink, const AttemptToInjectInvalidLidarIdW
 }
 
 void HorusStringify(const ErasedSink& sink, const ResetBundledPacketDueToUnexpectedPacket& data) {
-  StringifyTo(sink, "Resetting bundled packet due to unexpected packet from lidar ", data.lidar_id(), ".");
+  StringifyTo(sink, "Resetting bundled packet due to unexpected packet from lidar ", data.lidar_name(), " [", data.lidar_id(), "].");
 }
 
 void HorusStringify(const ErasedSink& sink, const PacketBundlerDroppedPacketsWarning& data) {
-  StringifyTo(sink, "Lidar ", data.lidar_id(), " dropped ", data.num_dropped(), " packets over ", data.duration());
+  StringifyTo(sink, "Lidar ", data.lidar_name(), " [", data.lidar_id(), "] dropped ", data.num_dropped(), " packets over ", data.duration());
 }
 
 void HorusStringify(const ErasedSink& sink, const PacketBundlerFrameJumpWarning& data) {
-  StringifyTo(sink, "Frame sequence jump detected on lidar ", data.lidar_id(), ": from ", data.frame_id(), " to ", data.next_frame_id());
+  StringifyTo(sink, "Frame sequence jump detected on lidar ", data.lidar_name(), " [", data.lidar_id(), "]: from ", data.frame_id(), " to ", data.next_frame_id());
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarCorrectionLoadingSuccess& data) {
-  StringifyTo(sink, "Successfully loaded ", data.correction_type(), " corrections from the lidar");
+  StringifyTo(sink, "[", data.lidar_name(), "][", data.lidar_id(), "] Successfully loaded ", data.correction_type(), " corrections from the lidar");
 }
 
 void HorusStringify(const ErasedSink& sink, const LidarCorrectionLoadingFailure& data) {
-  StringifyTo(sink, "Failed to load ", data.correction_type(), " corrections from the lidar (", data.details(), "); using default correction values");
+  StringifyTo(sink, "[", data.lidar_name(), "][", data.lidar_id(), "] Failed to load ", data.correction_type(), " corrections from the lidar (", data.details(), "); using default correction values");
 }
 
 void HorusStringify(const ErasedSink& sink, const HesaiPacketStatisticsLidar& data) {
   StringifyTo(sink, "[", data.lidar_id(), "] Hesai Packet Statistics - Received: ", data.packets_received(), ", Published: ", data.packets_published(), ", Dropped: ", data.packets_dropped(), ", Decode Failed: ", data.packets_decode_failed(), ", Success Rate: ", data.success_rate(), " %");
+}
+
+void HorusStringify(const ErasedSink& sink, const LidarTiltDetectionAlignedToCalibrationMapInfo& data) {
+  StringifyTo(sink, "Lidar ", data.lidar_name(), " [", data.lidar_id(), "] is aligned to calibration map. Using the calibration map for tilt detection and auto-recalibration for this lidar.");
+}
+
+void HorusStringify(const ErasedSink& sink, const LidarTiltDetectionMisalignedToCalibrationMapWarning& data) {
+  StringifyTo(sink, "Lidar ", data.lidar_name(), " [", data.lidar_id(), "] deviates from calibration map by ", data.angle(), " degrees and ", data.distance(), " meters. Using accumulated points as reference to avoid overwriting manual calibration.");
+}
+
+void HorusStringify(const ErasedSink& sink, const LidarOriginalPoseDiffersForAutoCorrectionError& /*data*/) {
+  StringifyTo(sink, "The requested auto-correction cannot be applied because the original pose differs from the current configuration.");
+}
+
+void HorusStringify(const ErasedSink& sink, const RecoveredCarIdsInfo& data) {
+  StringifyTo(sink, "Successfully recovered car IDs: ", data.details(), ".");
+}
+
+void HorusStringify(const ErasedSink& sink, const FailedToRecoverCarIds& data) {
+  StringifyTo(sink, "Failed to recover object IDs: ", data.details(), ".");
+}
+
+void HorusStringify(const ErasedSink& sink, const FailedToEmplaceRecoveredCarId& data) {
+  StringifyTo(sink, "Failed to emplace recovered object ID ", data.object_id(), " for car. Using a newly generated ID instead.");
+}
+
+void HorusStringify(const ErasedSink& sink, const PersistentStorageError& data) {
+  StringifyTo(sink, "Persistent storage operation failed: ", data.operation(), " on ", data.filepath());
+}
+
+void HorusStringify(const ErasedSink& sink, const TrackCapacityExceededWarning& data) {
+  StringifyTo(sink, "Track storage capacity exceeded: attempted to store ", data.attempted_count(), " tracks, limit is ", data.max_tracks());
+}
+
+void HorusStringify(const ErasedSink& sink, const TrackerStatePathUnavailableWarning& data) {
+  StringifyTo(sink, "Tracker state file path unavailable for project: ", data.project_name());
+}
+
+void HorusStringify(const ErasedSink& sink, const TrackerIdRecoveryFailedError& data) {
+  StringifyTo(sink, "Failed to recover tracker ID ", data.id(), ": ", data.error_message());
+}
+
+void HorusStringify(const ErasedSink& sink, const TrackerIdFastForwardFailedError& data) {
+  StringifyTo(sink, "Failed to fast-forward ID generator to ", data.target_id(), ": ", data.error_message());
+}
+
+void HorusStringify(const ErasedSink& sink, const CircularRecordingSnapshotCreated& data) {
+  StringifyTo(sink, "Circular recording snapshot created with ", data.message_count(), " messages covering ", data.actual_duration_seconds(), " seconds of data");
+}
+
+void HorusStringify(const ErasedSink& sink, const CircularRecordingFileOperationError& data) {
+  StringifyTo(sink, "Circular recording file operation failed: ", data.operation(), " on ", data.file_path(), " - ", data.details());
 }
 
 }  // namespace logs

@@ -184,6 +184,12 @@ void HorusStringify(const ErasedSink& sink, const LidarIsNotTiltedAnymore& data)
 /// Formats the log `logs::LidarHasBeenAutomaticallyRecalibrated` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const LidarHasBeenAutomaticallyRecalibrated& data);
 
+/// Formats the log `logs::LidarAutoCorrectionFailed` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const LidarAutoCorrectionFailed& data);
+
+/// Formats the log `logs::LidarIcpFailed` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const LidarIcpFailed& data);
+
 /// Formats the log `logs::ReceivedFirstDataForLidar` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const ReceivedFirstDataForLidar& data);
 
@@ -639,6 +645,45 @@ void HorusStringify(const ErasedSink& sink, const LidarCorrectionLoadingFailure&
 
 /// Formats the log `logs::HesaiPacketStatisticsLidar` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const HesaiPacketStatisticsLidar& data);
+
+/// Formats the log `logs::LidarTiltDetectionAlignedToCalibrationMapInfo` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const LidarTiltDetectionAlignedToCalibrationMapInfo& data);
+
+/// Formats the log `logs::LidarTiltDetectionMisalignedToCalibrationMapWarning` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const LidarTiltDetectionMisalignedToCalibrationMapWarning& data);
+
+/// Formats the log `logs::LidarOriginalPoseDiffersForAutoCorrectionError` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const LidarOriginalPoseDiffersForAutoCorrectionError& /*data*/);
+
+/// Formats the log `logs::RecoveredCarIdsInfo` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const RecoveredCarIdsInfo& data);
+
+/// Formats the log `logs::FailedToRecoverCarIds` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const FailedToRecoverCarIds& data);
+
+/// Formats the log `logs::FailedToEmplaceRecoveredCarId` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const FailedToEmplaceRecoveredCarId& data);
+
+/// Formats the log `logs::PersistentStorageError` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const PersistentStorageError& data);
+
+/// Formats the log `logs::TrackCapacityExceededWarning` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const TrackCapacityExceededWarning& data);
+
+/// Formats the log `logs::TrackerStatePathUnavailableWarning` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const TrackerStatePathUnavailableWarning& data);
+
+/// Formats the log `logs::TrackerIdRecoveryFailedError` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const TrackerIdRecoveryFailedError& data);
+
+/// Formats the log `logs::TrackerIdFastForwardFailedError` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const TrackerIdFastForwardFailedError& data);
+
+/// Formats the log `logs::CircularRecordingSnapshotCreated` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const CircularRecordingSnapshotCreated& data);
+
+/// Formats the log `logs::CircularRecordingFileOperationError` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const CircularRecordingFileOperationError& data);
 
 }  // namespace logs
 

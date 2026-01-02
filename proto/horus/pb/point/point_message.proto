@@ -43,6 +43,9 @@ message PointFrame {
     Timestamp point_cloud_creation_timestamp = 4;
     /// Static environment learning progress.
     optional uint32 static_env_learning_progress = 5;
+
+    /// The removed frame_rate_hz field.
+    reserved 9;
   }
 
   // This is incremented for each point frame.

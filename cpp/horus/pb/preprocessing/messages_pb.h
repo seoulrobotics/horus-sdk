@@ -76,9 +76,13 @@ enum class SensorStatus : PbEnum {  // NOLINT(*-enum-size)
   kObstructed = 32,
   /// No documentation.
   kPacketDrop = 64,
+  /// No documentation.
+  kAutoCorrectionModerate = 128,
+  /// No documentation.
+  kAutoCorrectionSevere = 256,
 
   /// Unknown value read from the wire.
-  kUnknownWireValue = 65,
+  kUnknownWireValue = 257,
 };
 
 // MARK: Message forward declarations
@@ -669,7 +673,7 @@ class OccupancyGridEvent final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:84:3
+/// Source: horus/pb/preprocessing/messages.proto:86:3
 class SensorInfo_PoseCorrection final : public PbMessage {
  public:
 
@@ -831,7 +835,7 @@ class SensorInfo_PoseCorrection final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:73:1
+/// Source: horus/pb/preprocessing/messages.proto:75:1
 class SensorInfo final : public PbMessage {
  public:
   /// @see SensorInfo_PoseCorrection
@@ -1284,6 +1288,12 @@ class PbEnumTraits<horus::sdk::pb::SensorStatus> final {
       case horus::sdk::pb::SensorStatus::kPacketDrop: {
         return "PACKET_DROP";
       }
+      case horus::sdk::pb::SensorStatus::kAutoCorrectionModerate: {
+        return "AUTO_CORRECTION_MODERATE";
+      }
+      case horus::sdk::pb::SensorStatus::kAutoCorrectionSevere: {
+        return "AUTO_CORRECTION_SEVERE";
+      }
       case horus::sdk::pb::SensorStatus::kUnknownWireValue:
       default: {
         return "";
@@ -1318,6 +1328,12 @@ class PbEnumTraits<horus::sdk::pb::SensorStatus> final {
       case 64: {
         return horus::sdk::pb::SensorStatus::kPacketDrop;
       }
+      case 128: {
+        return horus::sdk::pb::SensorStatus::kAutoCorrectionModerate;
+      }
+      case 256: {
+        return horus::sdk::pb::SensorStatus::kAutoCorrectionSevere;
+      }
       default: {
         return default_value;
       }
@@ -1349,6 +1365,12 @@ class PbEnumTraits<horus::sdk::pb::SensorStatus> final {
     }
     if (name == "PACKET_DROP") {
       return horus::sdk::pb::SensorStatus::kPacketDrop;
+    }
+    if (name == "AUTO_CORRECTION_MODERATE") {
+      return horus::sdk::pb::SensorStatus::kAutoCorrectionModerate;
+    }
+    if (name == "AUTO_CORRECTION_SEVERE") {
+      return horus::sdk::pb::SensorStatus::kAutoCorrectionSevere;
     }
     return default_value;
   }

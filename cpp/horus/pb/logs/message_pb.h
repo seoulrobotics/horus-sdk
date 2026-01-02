@@ -2895,6 +2895,116 @@ class LogData final : public PbMessage {
     return std::move(set_lidar_has_been_automatically_recalibrated(std::move(lidar_has_been_automatically_recalibrated)));
   }
 
+  // Field `lidar_auto_correction_failed` (no 207).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 207.
+  constexpr const logs::LidarAutoCorrectionFailed& lidar_auto_correction_failed() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_auto_correction_failed_;
+  }
+
+  /// If `lidar_auto_correction_failed` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 207.
+  logs::LidarAutoCorrectionFailed lidar_auto_correction_failed() && noexcept {
+    if (!set_fields_[51]) {
+      return {};
+    }
+    return std::move(lidar_auto_correction_failed_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 207.
+  logs::LidarAutoCorrectionFailed& mutable_lidar_auto_correction_failed() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kLidarAutoCorrectionFailed;
+    set_fields_[51] = true;
+    return lidar_auto_correction_failed_;
+  }
+
+  /// Returns whether `lidar_auto_correction_failed` (no 207) is set.
+  constexpr bool has_lidar_auto_correction_failed() const noexcept { return set_fields_[51]; }
+
+  /// Clears `lidar_auto_correction_failed` (no 207).
+  void clear_lidar_auto_correction_failed() & noexcept {
+    data_ = {};
+    set_fields_[51] = false;
+    lidar_auto_correction_failed_ = {};
+  }
+
+  /// Sets `lidar_auto_correction_failed` (no 207) and returns `*this`.
+  LogData& set_lidar_auto_correction_failed(logs::LidarAutoCorrectionFailed&& lidar_auto_correction_failed) & noexcept {
+    clear_data();
+    data_ = DataOneof::kLidarAutoCorrectionFailed;
+    set_fields_[51] = true;
+    lidar_auto_correction_failed_ = std::move(lidar_auto_correction_failed);
+    return *this;
+  }
+  /// Sets `lidar_auto_correction_failed` (no 207) and returns `*this`.
+  LogData&& set_lidar_auto_correction_failed(logs::LidarAutoCorrectionFailed&& lidar_auto_correction_failed) && noexcept {
+    return std::move(set_lidar_auto_correction_failed(std::move(lidar_auto_correction_failed)));
+  }
+
+  // Field `lidar_icp_failed` (no 208).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 208.
+  constexpr const logs::LidarIcpFailed& lidar_icp_failed() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_icp_failed_;
+  }
+
+  /// If `lidar_icp_failed` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 208.
+  logs::LidarIcpFailed lidar_icp_failed() && noexcept {
+    if (!set_fields_[52]) {
+      return {};
+    }
+    return std::move(lidar_icp_failed_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 208.
+  logs::LidarIcpFailed& mutable_lidar_icp_failed() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kLidarIcpFailed;
+    set_fields_[52] = true;
+    return lidar_icp_failed_;
+  }
+
+  /// Returns whether `lidar_icp_failed` (no 208) is set.
+  constexpr bool has_lidar_icp_failed() const noexcept { return set_fields_[52]; }
+
+  /// Clears `lidar_icp_failed` (no 208).
+  void clear_lidar_icp_failed() & noexcept {
+    data_ = {};
+    set_fields_[52] = false;
+    lidar_icp_failed_ = {};
+  }
+
+  /// Sets `lidar_icp_failed` (no 208) and returns `*this`.
+  LogData& set_lidar_icp_failed(logs::LidarIcpFailed&& lidar_icp_failed) & noexcept {
+    clear_data();
+    data_ = DataOneof::kLidarIcpFailed;
+    set_fields_[52] = true;
+    lidar_icp_failed_ = std::move(lidar_icp_failed);
+    return *this;
+  }
+  /// Sets `lidar_icp_failed` (no 208) and returns `*this`.
+  LogData&& set_lidar_icp_failed(logs::LidarIcpFailed&& lidar_icp_failed) && noexcept {
+    return std::move(set_lidar_icp_failed(std::move(lidar_icp_failed)));
+  }
+
   // Field `received_first_data_for_lidar` (no 46).
   // -----
 
@@ -2911,7 +3021,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 46.
   logs::ReceivedFirstDataForLidar received_first_data_for_lidar() && noexcept {
-    if (!set_fields_[51]) {
+    if (!set_fields_[53]) {
       return {};
     }
     return std::move(received_first_data_for_lidar_);
@@ -2923,17 +3033,17 @@ class LogData final : public PbMessage {
   logs::ReceivedFirstDataForLidar& mutable_received_first_data_for_lidar() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kReceivedFirstDataForLidar;
-    set_fields_[51] = true;
+    set_fields_[53] = true;
     return received_first_data_for_lidar_;
   }
 
   /// Returns whether `received_first_data_for_lidar` (no 46) is set.
-  constexpr bool has_received_first_data_for_lidar() const noexcept { return set_fields_[51]; }
+  constexpr bool has_received_first_data_for_lidar() const noexcept { return set_fields_[53]; }
 
   /// Clears `received_first_data_for_lidar` (no 46).
   void clear_received_first_data_for_lidar() & noexcept {
     data_ = {};
-    set_fields_[51] = false;
+    set_fields_[53] = false;
     received_first_data_for_lidar_ = {};
   }
 
@@ -2941,7 +3051,7 @@ class LogData final : public PbMessage {
   LogData& set_received_first_data_for_lidar(logs::ReceivedFirstDataForLidar&& received_first_data_for_lidar) & noexcept {
     clear_data();
     data_ = DataOneof::kReceivedFirstDataForLidar;
-    set_fields_[51] = true;
+    set_fields_[53] = true;
     received_first_data_for_lidar_ = std::move(received_first_data_for_lidar);
     return *this;
   }
@@ -2966,7 +3076,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 47.
   logs::TerminationFailureError termination_failure_error() && noexcept {
-    if (!set_fields_[52]) {
+    if (!set_fields_[54]) {
       return {};
     }
     return std::move(termination_failure_error_);
@@ -2978,17 +3088,17 @@ class LogData final : public PbMessage {
   logs::TerminationFailureError& mutable_termination_failure_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kTerminationFailureError;
-    set_fields_[52] = true;
+    set_fields_[54] = true;
     return termination_failure_error_;
   }
 
   /// Returns whether `termination_failure_error` (no 47) is set.
-  constexpr bool has_termination_failure_error() const noexcept { return set_fields_[52]; }
+  constexpr bool has_termination_failure_error() const noexcept { return set_fields_[54]; }
 
   /// Clears `termination_failure_error` (no 47).
   void clear_termination_failure_error() & noexcept {
     data_ = {};
-    set_fields_[52] = false;
+    set_fields_[54] = false;
     termination_failure_error_ = {};
   }
 
@@ -2996,7 +3106,7 @@ class LogData final : public PbMessage {
   LogData& set_termination_failure_error(logs::TerminationFailureError&& termination_failure_error) & noexcept {
     clear_data();
     data_ = DataOneof::kTerminationFailureError;
-    set_fields_[52] = true;
+    set_fields_[54] = true;
     termination_failure_error_ = std::move(termination_failure_error);
     return *this;
   }
@@ -3021,7 +3131,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 48.
   logs::FrameProcessingError frame_processing_error() && noexcept {
-    if (!set_fields_[53]) {
+    if (!set_fields_[55]) {
       return {};
     }
     return std::move(frame_processing_error_);
@@ -3033,17 +3143,17 @@ class LogData final : public PbMessage {
   logs::FrameProcessingError& mutable_frame_processing_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFrameProcessingError;
-    set_fields_[53] = true;
+    set_fields_[55] = true;
     return frame_processing_error_;
   }
 
   /// Returns whether `frame_processing_error` (no 48) is set.
-  constexpr bool has_frame_processing_error() const noexcept { return set_fields_[53]; }
+  constexpr bool has_frame_processing_error() const noexcept { return set_fields_[55]; }
 
   /// Clears `frame_processing_error` (no 48).
   void clear_frame_processing_error() & noexcept {
     data_ = {};
-    set_fields_[53] = false;
+    set_fields_[55] = false;
     frame_processing_error_ = {};
   }
 
@@ -3051,7 +3161,7 @@ class LogData final : public PbMessage {
   LogData& set_frame_processing_error(logs::FrameProcessingError&& frame_processing_error) & noexcept {
     clear_data();
     data_ = DataOneof::kFrameProcessingError;
-    set_fields_[53] = true;
+    set_fields_[55] = true;
     frame_processing_error_ = std::move(frame_processing_error);
     return *this;
   }
@@ -3076,7 +3186,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 49.
   logs::ThreadPoolUnavailableError thread_pool_unavailable_error() && noexcept {
-    if (!set_fields_[54]) {
+    if (!set_fields_[56]) {
       return {};
     }
     return std::move(thread_pool_unavailable_error_);
@@ -3088,17 +3198,17 @@ class LogData final : public PbMessage {
   logs::ThreadPoolUnavailableError& mutable_thread_pool_unavailable_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kThreadPoolUnavailableError;
-    set_fields_[54] = true;
+    set_fields_[56] = true;
     return thread_pool_unavailable_error_;
   }
 
   /// Returns whether `thread_pool_unavailable_error` (no 49) is set.
-  constexpr bool has_thread_pool_unavailable_error() const noexcept { return set_fields_[54]; }
+  constexpr bool has_thread_pool_unavailable_error() const noexcept { return set_fields_[56]; }
 
   /// Clears `thread_pool_unavailable_error` (no 49).
   void clear_thread_pool_unavailable_error() & noexcept {
     data_ = {};
-    set_fields_[54] = false;
+    set_fields_[56] = false;
     thread_pool_unavailable_error_ = {};
   }
 
@@ -3106,7 +3216,7 @@ class LogData final : public PbMessage {
   LogData& set_thread_pool_unavailable_error(logs::ThreadPoolUnavailableError&& thread_pool_unavailable_error) & noexcept {
     clear_data();
     data_ = DataOneof::kThreadPoolUnavailableError;
-    set_fields_[54] = true;
+    set_fields_[56] = true;
     thread_pool_unavailable_error_ = std::move(thread_pool_unavailable_error);
     return *this;
   }
@@ -3131,7 +3241,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 50.
   logs::InvalidArgument invalid_argument() && noexcept {
-    if (!set_fields_[55]) {
+    if (!set_fields_[57]) {
       return {};
     }
     return std::move(invalid_argument_);
@@ -3143,17 +3253,17 @@ class LogData final : public PbMessage {
   logs::InvalidArgument& mutable_invalid_argument() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInvalidArgument;
-    set_fields_[55] = true;
+    set_fields_[57] = true;
     return invalid_argument_;
   }
 
   /// Returns whether `invalid_argument` (no 50) is set.
-  constexpr bool has_invalid_argument() const noexcept { return set_fields_[55]; }
+  constexpr bool has_invalid_argument() const noexcept { return set_fields_[57]; }
 
   /// Clears `invalid_argument` (no 50).
   void clear_invalid_argument() & noexcept {
     data_ = {};
-    set_fields_[55] = false;
+    set_fields_[57] = false;
     invalid_argument_ = {};
   }
 
@@ -3161,7 +3271,7 @@ class LogData final : public PbMessage {
   LogData& set_invalid_argument(logs::InvalidArgument&& invalid_argument) & noexcept {
     clear_data();
     data_ = DataOneof::kInvalidArgument;
-    set_fields_[55] = true;
+    set_fields_[57] = true;
     invalid_argument_ = std::move(invalid_argument);
     return *this;
   }
@@ -3186,7 +3296,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 51.
   logs::ComponentInitializationFailureFatal component_initialization_failure_fatal() && noexcept {
-    if (!set_fields_[56]) {
+    if (!set_fields_[58]) {
       return {};
     }
     return std::move(component_initialization_failure_fatal_);
@@ -3198,17 +3308,17 @@ class LogData final : public PbMessage {
   logs::ComponentInitializationFailureFatal& mutable_component_initialization_failure_fatal() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kComponentInitializationFailureFatal;
-    set_fields_[56] = true;
+    set_fields_[58] = true;
     return component_initialization_failure_fatal_;
   }
 
   /// Returns whether `component_initialization_failure_fatal` (no 51) is set.
-  constexpr bool has_component_initialization_failure_fatal() const noexcept { return set_fields_[56]; }
+  constexpr bool has_component_initialization_failure_fatal() const noexcept { return set_fields_[58]; }
 
   /// Clears `component_initialization_failure_fatal` (no 51).
   void clear_component_initialization_failure_fatal() & noexcept {
     data_ = {};
-    set_fields_[56] = false;
+    set_fields_[58] = false;
     component_initialization_failure_fatal_ = {};
   }
 
@@ -3216,7 +3326,7 @@ class LogData final : public PbMessage {
   LogData& set_component_initialization_failure_fatal(logs::ComponentInitializationFailureFatal&& component_initialization_failure_fatal) & noexcept {
     clear_data();
     data_ = DataOneof::kComponentInitializationFailureFatal;
-    set_fields_[56] = true;
+    set_fields_[58] = true;
     component_initialization_failure_fatal_ = std::move(component_initialization_failure_fatal);
     return *this;
   }
@@ -3241,7 +3351,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 52.
   logs::UnhandledEnumCaseError unhandled_enum_case_error() && noexcept {
-    if (!set_fields_[57]) {
+    if (!set_fields_[59]) {
       return {};
     }
     return std::move(unhandled_enum_case_error_);
@@ -3253,17 +3363,17 @@ class LogData final : public PbMessage {
   logs::UnhandledEnumCaseError& mutable_unhandled_enum_case_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kUnhandledEnumCaseError;
-    set_fields_[57] = true;
+    set_fields_[59] = true;
     return unhandled_enum_case_error_;
   }
 
   /// Returns whether `unhandled_enum_case_error` (no 52) is set.
-  constexpr bool has_unhandled_enum_case_error() const noexcept { return set_fields_[57]; }
+  constexpr bool has_unhandled_enum_case_error() const noexcept { return set_fields_[59]; }
 
   /// Clears `unhandled_enum_case_error` (no 52).
   void clear_unhandled_enum_case_error() & noexcept {
     data_ = {};
-    set_fields_[57] = false;
+    set_fields_[59] = false;
     unhandled_enum_case_error_ = {};
   }
 
@@ -3271,7 +3381,7 @@ class LogData final : public PbMessage {
   LogData& set_unhandled_enum_case_error(logs::UnhandledEnumCaseError&& unhandled_enum_case_error) & noexcept {
     clear_data();
     data_ = DataOneof::kUnhandledEnumCaseError;
-    set_fields_[57] = true;
+    set_fields_[59] = true;
     unhandled_enum_case_error_ = std::move(unhandled_enum_case_error);
     return *this;
   }
@@ -3296,7 +3406,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 53.
   logs::BagEmptyError bag_empty_error() && noexcept {
-    if (!set_fields_[58]) {
+    if (!set_fields_[60]) {
       return {};
     }
     return std::move(bag_empty_error_);
@@ -3308,17 +3418,17 @@ class LogData final : public PbMessage {
   logs::BagEmptyError& mutable_bag_empty_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagEmptyError;
-    set_fields_[58] = true;
+    set_fields_[60] = true;
     return bag_empty_error_;
   }
 
   /// Returns whether `bag_empty_error` (no 53) is set.
-  constexpr bool has_bag_empty_error() const noexcept { return set_fields_[58]; }
+  constexpr bool has_bag_empty_error() const noexcept { return set_fields_[60]; }
 
   /// Clears `bag_empty_error` (no 53).
   void clear_bag_empty_error() & noexcept {
     data_ = {};
-    set_fields_[58] = false;
+    set_fields_[60] = false;
     bag_empty_error_ = {};
   }
 
@@ -3326,7 +3436,7 @@ class LogData final : public PbMessage {
   LogData& set_bag_empty_error(logs::BagEmptyError&& bag_empty_error) & noexcept {
     clear_data();
     data_ = DataOneof::kBagEmptyError;
-    set_fields_[58] = true;
+    set_fields_[60] = true;
     bag_empty_error_ = std::move(bag_empty_error);
     return *this;
   }
@@ -3351,7 +3461,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 54.
   logs::DiscardingDataError discarding_data_error() && noexcept {
-    if (!set_fields_[59]) {
+    if (!set_fields_[61]) {
       return {};
     }
     return std::move(discarding_data_error_);
@@ -3363,17 +3473,17 @@ class LogData final : public PbMessage {
   logs::DiscardingDataError& mutable_discarding_data_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kDiscardingDataError;
-    set_fields_[59] = true;
+    set_fields_[61] = true;
     return discarding_data_error_;
   }
 
   /// Returns whether `discarding_data_error` (no 54) is set.
-  constexpr bool has_discarding_data_error() const noexcept { return set_fields_[59]; }
+  constexpr bool has_discarding_data_error() const noexcept { return set_fields_[61]; }
 
   /// Clears `discarding_data_error` (no 54).
   void clear_discarding_data_error() & noexcept {
     data_ = {};
-    set_fields_[59] = false;
+    set_fields_[61] = false;
     discarding_data_error_ = {};
   }
 
@@ -3381,7 +3491,7 @@ class LogData final : public PbMessage {
   LogData& set_discarding_data_error(logs::DiscardingDataError&& discarding_data_error) & noexcept {
     clear_data();
     data_ = DataOneof::kDiscardingDataError;
-    set_fields_[59] = true;
+    set_fields_[61] = true;
     discarding_data_error_ = std::move(discarding_data_error);
     return *this;
   }
@@ -3406,7 +3516,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 55.
   logs::DiscardingDataWarning discarding_data_warning() && noexcept {
-    if (!set_fields_[60]) {
+    if (!set_fields_[62]) {
       return {};
     }
     return std::move(discarding_data_warning_);
@@ -3418,17 +3528,17 @@ class LogData final : public PbMessage {
   logs::DiscardingDataWarning& mutable_discarding_data_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kDiscardingDataWarning;
-    set_fields_[60] = true;
+    set_fields_[62] = true;
     return discarding_data_warning_;
   }
 
   /// Returns whether `discarding_data_warning` (no 55) is set.
-  constexpr bool has_discarding_data_warning() const noexcept { return set_fields_[60]; }
+  constexpr bool has_discarding_data_warning() const noexcept { return set_fields_[62]; }
 
   /// Clears `discarding_data_warning` (no 55).
   void clear_discarding_data_warning() & noexcept {
     data_ = {};
-    set_fields_[60] = false;
+    set_fields_[62] = false;
     discarding_data_warning_ = {};
   }
 
@@ -3436,7 +3546,7 @@ class LogData final : public PbMessage {
   LogData& set_discarding_data_warning(logs::DiscardingDataWarning&& discarding_data_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kDiscardingDataWarning;
-    set_fields_[60] = true;
+    set_fields_[62] = true;
     discarding_data_warning_ = std::move(discarding_data_warning);
     return *this;
   }
@@ -3461,7 +3571,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 56.
   logs::NothingToProcess nothing_to_process() && noexcept {
-    if (!set_fields_[61]) {
+    if (!set_fields_[63]) {
       return {};
     }
     return std::move(nothing_to_process_);
@@ -3473,17 +3583,17 @@ class LogData final : public PbMessage {
   logs::NothingToProcess& mutable_nothing_to_process() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kNothingToProcess;
-    set_fields_[61] = true;
+    set_fields_[63] = true;
     return nothing_to_process_;
   }
 
   /// Returns whether `nothing_to_process` (no 56) is set.
-  constexpr bool has_nothing_to_process() const noexcept { return set_fields_[61]; }
+  constexpr bool has_nothing_to_process() const noexcept { return set_fields_[63]; }
 
   /// Clears `nothing_to_process` (no 56).
   void clear_nothing_to_process() & noexcept {
     data_ = {};
-    set_fields_[61] = false;
+    set_fields_[63] = false;
     nothing_to_process_ = {};
   }
 
@@ -3491,7 +3601,7 @@ class LogData final : public PbMessage {
   LogData& set_nothing_to_process(logs::NothingToProcess&& nothing_to_process) & noexcept {
     clear_data();
     data_ = DataOneof::kNothingToProcess;
-    set_fields_[61] = true;
+    set_fields_[63] = true;
     nothing_to_process_ = std::move(nothing_to_process);
     return *this;
   }
@@ -3516,7 +3626,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 57.
   logs::InvalidComponentConfiguration invalid_component_configuration() && noexcept {
-    if (!set_fields_[62]) {
+    if (!set_fields_[64]) {
       return {};
     }
     return std::move(invalid_component_configuration_);
@@ -3528,17 +3638,17 @@ class LogData final : public PbMessage {
   logs::InvalidComponentConfiguration& mutable_invalid_component_configuration() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInvalidComponentConfiguration;
-    set_fields_[62] = true;
+    set_fields_[64] = true;
     return invalid_component_configuration_;
   }
 
   /// Returns whether `invalid_component_configuration` (no 57) is set.
-  constexpr bool has_invalid_component_configuration() const noexcept { return set_fields_[62]; }
+  constexpr bool has_invalid_component_configuration() const noexcept { return set_fields_[64]; }
 
   /// Clears `invalid_component_configuration` (no 57).
   void clear_invalid_component_configuration() & noexcept {
     data_ = {};
-    set_fields_[62] = false;
+    set_fields_[64] = false;
     invalid_component_configuration_ = {};
   }
 
@@ -3546,7 +3656,7 @@ class LogData final : public PbMessage {
   LogData& set_invalid_component_configuration(logs::InvalidComponentConfiguration&& invalid_component_configuration) & noexcept {
     clear_data();
     data_ = DataOneof::kInvalidComponentConfiguration;
-    set_fields_[62] = true;
+    set_fields_[64] = true;
     invalid_component_configuration_ = std::move(invalid_component_configuration);
     return *this;
   }
@@ -3571,7 +3681,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 58.
   logs::ChannelReceiverNotFoundWarning channel_receiver_not_found_warning() && noexcept {
-    if (!set_fields_[63]) {
+    if (!set_fields_[65]) {
       return {};
     }
     return std::move(channel_receiver_not_found_warning_);
@@ -3583,17 +3693,17 @@ class LogData final : public PbMessage {
   logs::ChannelReceiverNotFoundWarning& mutable_channel_receiver_not_found_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kChannelReceiverNotFoundWarning;
-    set_fields_[63] = true;
+    set_fields_[65] = true;
     return channel_receiver_not_found_warning_;
   }
 
   /// Returns whether `channel_receiver_not_found_warning` (no 58) is set.
-  constexpr bool has_channel_receiver_not_found_warning() const noexcept { return set_fields_[63]; }
+  constexpr bool has_channel_receiver_not_found_warning() const noexcept { return set_fields_[65]; }
 
   /// Clears `channel_receiver_not_found_warning` (no 58).
   void clear_channel_receiver_not_found_warning() & noexcept {
     data_ = {};
-    set_fields_[63] = false;
+    set_fields_[65] = false;
     channel_receiver_not_found_warning_ = {};
   }
 
@@ -3601,7 +3711,7 @@ class LogData final : public PbMessage {
   LogData& set_channel_receiver_not_found_warning(logs::ChannelReceiverNotFoundWarning&& channel_receiver_not_found_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kChannelReceiverNotFoundWarning;
-    set_fields_[63] = true;
+    set_fields_[65] = true;
     channel_receiver_not_found_warning_ = std::move(channel_receiver_not_found_warning);
     return *this;
   }
@@ -3626,7 +3736,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 59.
   logs::ModelLoadFailure model_load_failure() && noexcept {
-    if (!set_fields_[64]) {
+    if (!set_fields_[66]) {
       return {};
     }
     return std::move(model_load_failure_);
@@ -3638,17 +3748,17 @@ class LogData final : public PbMessage {
   logs::ModelLoadFailure& mutable_model_load_failure() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kModelLoadFailure;
-    set_fields_[64] = true;
+    set_fields_[66] = true;
     return model_load_failure_;
   }
 
   /// Returns whether `model_load_failure` (no 59) is set.
-  constexpr bool has_model_load_failure() const noexcept { return set_fields_[64]; }
+  constexpr bool has_model_load_failure() const noexcept { return set_fields_[66]; }
 
   /// Clears `model_load_failure` (no 59).
   void clear_model_load_failure() & noexcept {
     data_ = {};
-    set_fields_[64] = false;
+    set_fields_[66] = false;
     model_load_failure_ = {};
   }
 
@@ -3656,7 +3766,7 @@ class LogData final : public PbMessage {
   LogData& set_model_load_failure(logs::ModelLoadFailure&& model_load_failure) & noexcept {
     clear_data();
     data_ = DataOneof::kModelLoadFailure;
-    set_fields_[64] = true;
+    set_fields_[66] = true;
     model_load_failure_ = std::move(model_load_failure);
     return *this;
   }
@@ -3681,7 +3791,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 60.
   logs::ModelExecutionFailureError model_execution_failure_error() && noexcept {
-    if (!set_fields_[65]) {
+    if (!set_fields_[67]) {
       return {};
     }
     return std::move(model_execution_failure_error_);
@@ -3693,17 +3803,17 @@ class LogData final : public PbMessage {
   logs::ModelExecutionFailureError& mutable_model_execution_failure_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kModelExecutionFailureError;
-    set_fields_[65] = true;
+    set_fields_[67] = true;
     return model_execution_failure_error_;
   }
 
   /// Returns whether `model_execution_failure_error` (no 60) is set.
-  constexpr bool has_model_execution_failure_error() const noexcept { return set_fields_[65]; }
+  constexpr bool has_model_execution_failure_error() const noexcept { return set_fields_[67]; }
 
   /// Clears `model_execution_failure_error` (no 60).
   void clear_model_execution_failure_error() & noexcept {
     data_ = {};
-    set_fields_[65] = false;
+    set_fields_[67] = false;
     model_execution_failure_error_ = {};
   }
 
@@ -3711,7 +3821,7 @@ class LogData final : public PbMessage {
   LogData& set_model_execution_failure_error(logs::ModelExecutionFailureError&& model_execution_failure_error) & noexcept {
     clear_data();
     data_ = DataOneof::kModelExecutionFailureError;
-    set_fields_[65] = true;
+    set_fields_[67] = true;
     model_execution_failure_error_ = std::move(model_execution_failure_error);
     return *this;
   }
@@ -3736,7 +3846,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 61.
   logs::ServiceReadyInfo service_ready_info() && noexcept {
-    if (!set_fields_[66]) {
+    if (!set_fields_[68]) {
       return {};
     }
     return std::move(service_ready_info_);
@@ -3748,17 +3858,17 @@ class LogData final : public PbMessage {
   logs::ServiceReadyInfo& mutable_service_ready_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kServiceReadyInfo;
-    set_fields_[66] = true;
+    set_fields_[68] = true;
     return service_ready_info_;
   }
 
   /// Returns whether `service_ready_info` (no 61) is set.
-  constexpr bool has_service_ready_info() const noexcept { return set_fields_[66]; }
+  constexpr bool has_service_ready_info() const noexcept { return set_fields_[68]; }
 
   /// Clears `service_ready_info` (no 61).
   void clear_service_ready_info() & noexcept {
     data_ = {};
-    set_fields_[66] = false;
+    set_fields_[68] = false;
     service_ready_info_ = {};
   }
 
@@ -3766,7 +3876,7 @@ class LogData final : public PbMessage {
   LogData& set_service_ready_info(logs::ServiceReadyInfo&& service_ready_info) & noexcept {
     clear_data();
     data_ = DataOneof::kServiceReadyInfo;
-    set_fields_[66] = true;
+    set_fields_[68] = true;
     service_ready_info_ = std::move(service_ready_info);
     return *this;
   }
@@ -3791,7 +3901,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 62.
   logs::ModelPreparingInfo model_preparing_info() && noexcept {
-    if (!set_fields_[67]) {
+    if (!set_fields_[69]) {
       return {};
     }
     return std::move(model_preparing_info_);
@@ -3803,17 +3913,17 @@ class LogData final : public PbMessage {
   logs::ModelPreparingInfo& mutable_model_preparing_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kModelPreparingInfo;
-    set_fields_[67] = true;
+    set_fields_[69] = true;
     return model_preparing_info_;
   }
 
   /// Returns whether `model_preparing_info` (no 62) is set.
-  constexpr bool has_model_preparing_info() const noexcept { return set_fields_[67]; }
+  constexpr bool has_model_preparing_info() const noexcept { return set_fields_[69]; }
 
   /// Clears `model_preparing_info` (no 62).
   void clear_model_preparing_info() & noexcept {
     data_ = {};
-    set_fields_[67] = false;
+    set_fields_[69] = false;
     model_preparing_info_ = {};
   }
 
@@ -3821,7 +3931,7 @@ class LogData final : public PbMessage {
   LogData& set_model_preparing_info(logs::ModelPreparingInfo&& model_preparing_info) & noexcept {
     clear_data();
     data_ = DataOneof::kModelPreparingInfo;
-    set_fields_[67] = true;
+    set_fields_[69] = true;
     model_preparing_info_ = std::move(model_preparing_info);
     return *this;
   }
@@ -3846,7 +3956,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 63.
   logs::ModelInitializedInfo model_initialized_info() && noexcept {
-    if (!set_fields_[68]) {
+    if (!set_fields_[70]) {
       return {};
     }
     return std::move(model_initialized_info_);
@@ -3858,17 +3968,17 @@ class LogData final : public PbMessage {
   logs::ModelInitializedInfo& mutable_model_initialized_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kModelInitializedInfo;
-    set_fields_[68] = true;
+    set_fields_[70] = true;
     return model_initialized_info_;
   }
 
   /// Returns whether `model_initialized_info` (no 63) is set.
-  constexpr bool has_model_initialized_info() const noexcept { return set_fields_[68]; }
+  constexpr bool has_model_initialized_info() const noexcept { return set_fields_[70]; }
 
   /// Clears `model_initialized_info` (no 63).
   void clear_model_initialized_info() & noexcept {
     data_ = {};
-    set_fields_[68] = false;
+    set_fields_[70] = false;
     model_initialized_info_ = {};
   }
 
@@ -3876,7 +3986,7 @@ class LogData final : public PbMessage {
   LogData& set_model_initialized_info(logs::ModelInitializedInfo&& model_initialized_info) & noexcept {
     clear_data();
     data_ = DataOneof::kModelInitializedInfo;
-    set_fields_[68] = true;
+    set_fields_[70] = true;
     model_initialized_info_ = std::move(model_initialized_info);
     return *this;
   }
@@ -3901,7 +4011,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 64.
   logs::ModelInitializationFailureWarning model_initialization_failure_warning() && noexcept {
-    if (!set_fields_[69]) {
+    if (!set_fields_[71]) {
       return {};
     }
     return std::move(model_initialization_failure_warning_);
@@ -3913,17 +4023,17 @@ class LogData final : public PbMessage {
   logs::ModelInitializationFailureWarning& mutable_model_initialization_failure_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kModelInitializationFailureWarning;
-    set_fields_[69] = true;
+    set_fields_[71] = true;
     return model_initialization_failure_warning_;
   }
 
   /// Returns whether `model_initialization_failure_warning` (no 64) is set.
-  constexpr bool has_model_initialization_failure_warning() const noexcept { return set_fields_[69]; }
+  constexpr bool has_model_initialization_failure_warning() const noexcept { return set_fields_[71]; }
 
   /// Clears `model_initialization_failure_warning` (no 64).
   void clear_model_initialization_failure_warning() & noexcept {
     data_ = {};
-    set_fields_[69] = false;
+    set_fields_[71] = false;
     model_initialization_failure_warning_ = {};
   }
 
@@ -3931,7 +4041,7 @@ class LogData final : public PbMessage {
   LogData& set_model_initialization_failure_warning(logs::ModelInitializationFailureWarning&& model_initialization_failure_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kModelInitializationFailureWarning;
-    set_fields_[69] = true;
+    set_fields_[71] = true;
     model_initialization_failure_warning_ = std::move(model_initialization_failure_warning);
     return *this;
   }
@@ -3956,7 +4066,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 65.
   logs::RosSpinnerStoppedWarning ros_spinner_stopped_warning() && noexcept {
-    if (!set_fields_[70]) {
+    if (!set_fields_[72]) {
       return {};
     }
     return std::move(ros_spinner_stopped_warning_);
@@ -3968,17 +4078,17 @@ class LogData final : public PbMessage {
   logs::RosSpinnerStoppedWarning& mutable_ros_spinner_stopped_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRosSpinnerStoppedWarning;
-    set_fields_[70] = true;
+    set_fields_[72] = true;
     return ros_spinner_stopped_warning_;
   }
 
   /// Returns whether `ros_spinner_stopped_warning` (no 65) is set.
-  constexpr bool has_ros_spinner_stopped_warning() const noexcept { return set_fields_[70]; }
+  constexpr bool has_ros_spinner_stopped_warning() const noexcept { return set_fields_[72]; }
 
   /// Clears `ros_spinner_stopped_warning` (no 65).
   void clear_ros_spinner_stopped_warning() & noexcept {
     data_ = {};
-    set_fields_[70] = false;
+    set_fields_[72] = false;
     ros_spinner_stopped_warning_ = {};
   }
 
@@ -3986,7 +4096,7 @@ class LogData final : public PbMessage {
   LogData& set_ros_spinner_stopped_warning(logs::RosSpinnerStoppedWarning&& ros_spinner_stopped_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kRosSpinnerStoppedWarning;
-    set_fields_[70] = true;
+    set_fields_[72] = true;
     ros_spinner_stopped_warning_ = std::move(ros_spinner_stopped_warning);
     return *this;
   }
@@ -4011,7 +4121,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 66.
   logs::ActorSystemUnavailableError actor_system_unavailable_error() && noexcept {
-    if (!set_fields_[71]) {
+    if (!set_fields_[73]) {
       return {};
     }
     return std::move(actor_system_unavailable_error_);
@@ -4023,17 +4133,17 @@ class LogData final : public PbMessage {
   logs::ActorSystemUnavailableError& mutable_actor_system_unavailable_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kActorSystemUnavailableError;
-    set_fields_[71] = true;
+    set_fields_[73] = true;
     return actor_system_unavailable_error_;
   }
 
   /// Returns whether `actor_system_unavailable_error` (no 66) is set.
-  constexpr bool has_actor_system_unavailable_error() const noexcept { return set_fields_[71]; }
+  constexpr bool has_actor_system_unavailable_error() const noexcept { return set_fields_[73]; }
 
   /// Clears `actor_system_unavailable_error` (no 66).
   void clear_actor_system_unavailable_error() & noexcept {
     data_ = {};
-    set_fields_[71] = false;
+    set_fields_[73] = false;
     actor_system_unavailable_error_ = {};
   }
 
@@ -4041,7 +4151,7 @@ class LogData final : public PbMessage {
   LogData& set_actor_system_unavailable_error(logs::ActorSystemUnavailableError&& actor_system_unavailable_error) & noexcept {
     clear_data();
     data_ = DataOneof::kActorSystemUnavailableError;
-    set_fields_[71] = true;
+    set_fields_[73] = true;
     actor_system_unavailable_error_ = std::move(actor_system_unavailable_error);
     return *this;
   }
@@ -4066,7 +4176,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 67.
   logs::ConfigNodeNotFoundError config_node_not_found_error() && noexcept {
-    if (!set_fields_[72]) {
+    if (!set_fields_[74]) {
       return {};
     }
     return std::move(config_node_not_found_error_);
@@ -4078,17 +4188,17 @@ class LogData final : public PbMessage {
   logs::ConfigNodeNotFoundError& mutable_config_node_not_found_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kConfigNodeNotFoundError;
-    set_fields_[72] = true;
+    set_fields_[74] = true;
     return config_node_not_found_error_;
   }
 
   /// Returns whether `config_node_not_found_error` (no 67) is set.
-  constexpr bool has_config_node_not_found_error() const noexcept { return set_fields_[72]; }
+  constexpr bool has_config_node_not_found_error() const noexcept { return set_fields_[74]; }
 
   /// Clears `config_node_not_found_error` (no 67).
   void clear_config_node_not_found_error() & noexcept {
     data_ = {};
-    set_fields_[72] = false;
+    set_fields_[74] = false;
     config_node_not_found_error_ = {};
   }
 
@@ -4096,7 +4206,7 @@ class LogData final : public PbMessage {
   LogData& set_config_node_not_found_error(logs::ConfigNodeNotFoundError&& config_node_not_found_error) & noexcept {
     clear_data();
     data_ = DataOneof::kConfigNodeNotFoundError;
-    set_fields_[72] = true;
+    set_fields_[74] = true;
     config_node_not_found_error_ = std::move(config_node_not_found_error);
     return *this;
   }
@@ -4121,7 +4231,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 68.
   logs::BagTimestampOutOfOrderError bag_timestamp_out_of_order_error() && noexcept {
-    if (!set_fields_[73]) {
+    if (!set_fields_[75]) {
       return {};
     }
     return std::move(bag_timestamp_out_of_order_error_);
@@ -4133,17 +4243,17 @@ class LogData final : public PbMessage {
   logs::BagTimestampOutOfOrderError& mutable_bag_timestamp_out_of_order_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagTimestampOutOfOrderError;
-    set_fields_[73] = true;
+    set_fields_[75] = true;
     return bag_timestamp_out_of_order_error_;
   }
 
   /// Returns whether `bag_timestamp_out_of_order_error` (no 68) is set.
-  constexpr bool has_bag_timestamp_out_of_order_error() const noexcept { return set_fields_[73]; }
+  constexpr bool has_bag_timestamp_out_of_order_error() const noexcept { return set_fields_[75]; }
 
   /// Clears `bag_timestamp_out_of_order_error` (no 68).
   void clear_bag_timestamp_out_of_order_error() & noexcept {
     data_ = {};
-    set_fields_[73] = false;
+    set_fields_[75] = false;
     bag_timestamp_out_of_order_error_ = {};
   }
 
@@ -4151,7 +4261,7 @@ class LogData final : public PbMessage {
   LogData& set_bag_timestamp_out_of_order_error(logs::BagTimestampOutOfOrderError&& bag_timestamp_out_of_order_error) & noexcept {
     clear_data();
     data_ = DataOneof::kBagTimestampOutOfOrderError;
-    set_fields_[73] = true;
+    set_fields_[75] = true;
     bag_timestamp_out_of_order_error_ = std::move(bag_timestamp_out_of_order_error);
     return *this;
   }
@@ -4176,7 +4286,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 69.
   logs::BagReplayUnexpectedTimestampError bag_replay_unexpected_timestamp_error() && noexcept {
-    if (!set_fields_[74]) {
+    if (!set_fields_[76]) {
       return {};
     }
     return std::move(bag_replay_unexpected_timestamp_error_);
@@ -4188,17 +4298,17 @@ class LogData final : public PbMessage {
   logs::BagReplayUnexpectedTimestampError& mutable_bag_replay_unexpected_timestamp_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagReplayUnexpectedTimestampError;
-    set_fields_[74] = true;
+    set_fields_[76] = true;
     return bag_replay_unexpected_timestamp_error_;
   }
 
   /// Returns whether `bag_replay_unexpected_timestamp_error` (no 69) is set.
-  constexpr bool has_bag_replay_unexpected_timestamp_error() const noexcept { return set_fields_[74]; }
+  constexpr bool has_bag_replay_unexpected_timestamp_error() const noexcept { return set_fields_[76]; }
 
   /// Clears `bag_replay_unexpected_timestamp_error` (no 69).
   void clear_bag_replay_unexpected_timestamp_error() & noexcept {
     data_ = {};
-    set_fields_[74] = false;
+    set_fields_[76] = false;
     bag_replay_unexpected_timestamp_error_ = {};
   }
 
@@ -4206,7 +4316,7 @@ class LogData final : public PbMessage {
   LogData& set_bag_replay_unexpected_timestamp_error(logs::BagReplayUnexpectedTimestampError&& bag_replay_unexpected_timestamp_error) & noexcept {
     clear_data();
     data_ = DataOneof::kBagReplayUnexpectedTimestampError;
-    set_fields_[74] = true;
+    set_fields_[76] = true;
     bag_replay_unexpected_timestamp_error_ = std::move(bag_replay_unexpected_timestamp_error);
     return *this;
   }
@@ -4231,7 +4341,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 70.
   logs::WebsocketClosedInfo websocket_closed_info() && noexcept {
-    if (!set_fields_[75]) {
+    if (!set_fields_[77]) {
       return {};
     }
     return std::move(websocket_closed_info_);
@@ -4243,17 +4353,17 @@ class LogData final : public PbMessage {
   logs::WebsocketClosedInfo& mutable_websocket_closed_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketClosedInfo;
-    set_fields_[75] = true;
+    set_fields_[77] = true;
     return websocket_closed_info_;
   }
 
   /// Returns whether `websocket_closed_info` (no 70) is set.
-  constexpr bool has_websocket_closed_info() const noexcept { return set_fields_[75]; }
+  constexpr bool has_websocket_closed_info() const noexcept { return set_fields_[77]; }
 
   /// Clears `websocket_closed_info` (no 70).
   void clear_websocket_closed_info() & noexcept {
     data_ = {};
-    set_fields_[75] = false;
+    set_fields_[77] = false;
     websocket_closed_info_ = {};
   }
 
@@ -4261,7 +4371,7 @@ class LogData final : public PbMessage {
   LogData& set_websocket_closed_info(logs::WebsocketClosedInfo&& websocket_closed_info) & noexcept {
     clear_data();
     data_ = DataOneof::kWebsocketClosedInfo;
-    set_fields_[75] = true;
+    set_fields_[77] = true;
     websocket_closed_info_ = std::move(websocket_closed_info);
     return *this;
   }
@@ -4286,7 +4396,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 71.
   logs::WebsocketOpenedInfo websocket_opened_info() && noexcept {
-    if (!set_fields_[76]) {
+    if (!set_fields_[78]) {
       return {};
     }
     return std::move(websocket_opened_info_);
@@ -4298,17 +4408,17 @@ class LogData final : public PbMessage {
   logs::WebsocketOpenedInfo& mutable_websocket_opened_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketOpenedInfo;
-    set_fields_[76] = true;
+    set_fields_[78] = true;
     return websocket_opened_info_;
   }
 
   /// Returns whether `websocket_opened_info` (no 71) is set.
-  constexpr bool has_websocket_opened_info() const noexcept { return set_fields_[76]; }
+  constexpr bool has_websocket_opened_info() const noexcept { return set_fields_[78]; }
 
   /// Clears `websocket_opened_info` (no 71).
   void clear_websocket_opened_info() & noexcept {
     data_ = {};
-    set_fields_[76] = false;
+    set_fields_[78] = false;
     websocket_opened_info_ = {};
   }
 
@@ -4316,7 +4426,7 @@ class LogData final : public PbMessage {
   LogData& set_websocket_opened_info(logs::WebsocketOpenedInfo&& websocket_opened_info) & noexcept {
     clear_data();
     data_ = DataOneof::kWebsocketOpenedInfo;
-    set_fields_[76] = true;
+    set_fields_[78] = true;
     websocket_opened_info_ = std::move(websocket_opened_info);
     return *this;
   }
@@ -4341,7 +4451,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 72.
   logs::SubscriberDisconnectedInfo subscriber_disconnected_info() && noexcept {
-    if (!set_fields_[77]) {
+    if (!set_fields_[79]) {
       return {};
     }
     return std::move(subscriber_disconnected_info_);
@@ -4353,17 +4463,17 @@ class LogData final : public PbMessage {
   logs::SubscriberDisconnectedInfo& mutable_subscriber_disconnected_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kSubscriberDisconnectedInfo;
-    set_fields_[77] = true;
+    set_fields_[79] = true;
     return subscriber_disconnected_info_;
   }
 
   /// Returns whether `subscriber_disconnected_info` (no 72) is set.
-  constexpr bool has_subscriber_disconnected_info() const noexcept { return set_fields_[77]; }
+  constexpr bool has_subscriber_disconnected_info() const noexcept { return set_fields_[79]; }
 
   /// Clears `subscriber_disconnected_info` (no 72).
   void clear_subscriber_disconnected_info() & noexcept {
     data_ = {};
-    set_fields_[77] = false;
+    set_fields_[79] = false;
     subscriber_disconnected_info_ = {};
   }
 
@@ -4371,7 +4481,7 @@ class LogData final : public PbMessage {
   LogData& set_subscriber_disconnected_info(logs::SubscriberDisconnectedInfo&& subscriber_disconnected_info) & noexcept {
     clear_data();
     data_ = DataOneof::kSubscriberDisconnectedInfo;
-    set_fields_[77] = true;
+    set_fields_[79] = true;
     subscriber_disconnected_info_ = std::move(subscriber_disconnected_info);
     return *this;
   }
@@ -4396,7 +4506,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 73.
   logs::ThreadPoolSlowingDownWarning thread_pool_slowing_down_warning() && noexcept {
-    if (!set_fields_[78]) {
+    if (!set_fields_[80]) {
       return {};
     }
     return std::move(thread_pool_slowing_down_warning_);
@@ -4408,17 +4518,17 @@ class LogData final : public PbMessage {
   logs::ThreadPoolSlowingDownWarning& mutable_thread_pool_slowing_down_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kThreadPoolSlowingDownWarning;
-    set_fields_[78] = true;
+    set_fields_[80] = true;
     return thread_pool_slowing_down_warning_;
   }
 
   /// Returns whether `thread_pool_slowing_down_warning` (no 73) is set.
-  constexpr bool has_thread_pool_slowing_down_warning() const noexcept { return set_fields_[78]; }
+  constexpr bool has_thread_pool_slowing_down_warning() const noexcept { return set_fields_[80]; }
 
   /// Clears `thread_pool_slowing_down_warning` (no 73).
   void clear_thread_pool_slowing_down_warning() & noexcept {
     data_ = {};
-    set_fields_[78] = false;
+    set_fields_[80] = false;
     thread_pool_slowing_down_warning_ = {};
   }
 
@@ -4426,7 +4536,7 @@ class LogData final : public PbMessage {
   LogData& set_thread_pool_slowing_down_warning(logs::ThreadPoolSlowingDownWarning&& thread_pool_slowing_down_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kThreadPoolSlowingDownWarning;
-    set_fields_[78] = true;
+    set_fields_[80] = true;
     thread_pool_slowing_down_warning_ = std::move(thread_pool_slowing_down_warning);
     return *this;
   }
@@ -4451,7 +4561,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 74.
   logs::ThreadPoolNotRespondingWarning thread_pool_not_responding_warning() && noexcept {
-    if (!set_fields_[79]) {
+    if (!set_fields_[81]) {
       return {};
     }
     return std::move(thread_pool_not_responding_warning_);
@@ -4463,17 +4573,17 @@ class LogData final : public PbMessage {
   logs::ThreadPoolNotRespondingWarning& mutable_thread_pool_not_responding_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kThreadPoolNotRespondingWarning;
-    set_fields_[79] = true;
+    set_fields_[81] = true;
     return thread_pool_not_responding_warning_;
   }
 
   /// Returns whether `thread_pool_not_responding_warning` (no 74) is set.
-  constexpr bool has_thread_pool_not_responding_warning() const noexcept { return set_fields_[79]; }
+  constexpr bool has_thread_pool_not_responding_warning() const noexcept { return set_fields_[81]; }
 
   /// Clears `thread_pool_not_responding_warning` (no 74).
   void clear_thread_pool_not_responding_warning() & noexcept {
     data_ = {};
-    set_fields_[79] = false;
+    set_fields_[81] = false;
     thread_pool_not_responding_warning_ = {};
   }
 
@@ -4481,7 +4591,7 @@ class LogData final : public PbMessage {
   LogData& set_thread_pool_not_responding_warning(logs::ThreadPoolNotRespondingWarning&& thread_pool_not_responding_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kThreadPoolNotRespondingWarning;
-    set_fields_[79] = true;
+    set_fields_[81] = true;
     thread_pool_not_responding_warning_ = std::move(thread_pool_not_responding_warning);
     return *this;
   }
@@ -4506,7 +4616,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 75.
   logs::ThreadPoolBrokenPromiseWarning thread_pool_broken_promise_warning() && noexcept {
-    if (!set_fields_[80]) {
+    if (!set_fields_[82]) {
       return {};
     }
     return std::move(thread_pool_broken_promise_warning_);
@@ -4518,17 +4628,17 @@ class LogData final : public PbMessage {
   logs::ThreadPoolBrokenPromiseWarning& mutable_thread_pool_broken_promise_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kThreadPoolBrokenPromiseWarning;
-    set_fields_[80] = true;
+    set_fields_[82] = true;
     return thread_pool_broken_promise_warning_;
   }
 
   /// Returns whether `thread_pool_broken_promise_warning` (no 75) is set.
-  constexpr bool has_thread_pool_broken_promise_warning() const noexcept { return set_fields_[80]; }
+  constexpr bool has_thread_pool_broken_promise_warning() const noexcept { return set_fields_[82]; }
 
   /// Clears `thread_pool_broken_promise_warning` (no 75).
   void clear_thread_pool_broken_promise_warning() & noexcept {
     data_ = {};
-    set_fields_[80] = false;
+    set_fields_[82] = false;
     thread_pool_broken_promise_warning_ = {};
   }
 
@@ -4536,7 +4646,7 @@ class LogData final : public PbMessage {
   LogData& set_thread_pool_broken_promise_warning(logs::ThreadPoolBrokenPromiseWarning&& thread_pool_broken_promise_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kThreadPoolBrokenPromiseWarning;
-    set_fields_[80] = true;
+    set_fields_[82] = true;
     thread_pool_broken_promise_warning_ = std::move(thread_pool_broken_promise_warning);
     return *this;
   }
@@ -4561,7 +4671,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 76.
   logs::BoxFittingPointsBelowBaseWarning box_fitting_points_below_base_warning() && noexcept {
-    if (!set_fields_[81]) {
+    if (!set_fields_[83]) {
       return {};
     }
     return std::move(box_fitting_points_below_base_warning_);
@@ -4573,17 +4683,17 @@ class LogData final : public PbMessage {
   logs::BoxFittingPointsBelowBaseWarning& mutable_box_fitting_points_below_base_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBoxFittingPointsBelowBaseWarning;
-    set_fields_[81] = true;
+    set_fields_[83] = true;
     return box_fitting_points_below_base_warning_;
   }
 
   /// Returns whether `box_fitting_points_below_base_warning` (no 76) is set.
-  constexpr bool has_box_fitting_points_below_base_warning() const noexcept { return set_fields_[81]; }
+  constexpr bool has_box_fitting_points_below_base_warning() const noexcept { return set_fields_[83]; }
 
   /// Clears `box_fitting_points_below_base_warning` (no 76).
   void clear_box_fitting_points_below_base_warning() & noexcept {
     data_ = {};
-    set_fields_[81] = false;
+    set_fields_[83] = false;
     box_fitting_points_below_base_warning_ = {};
   }
 
@@ -4591,7 +4701,7 @@ class LogData final : public PbMessage {
   LogData& set_box_fitting_points_below_base_warning(logs::BoxFittingPointsBelowBaseWarning&& box_fitting_points_below_base_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kBoxFittingPointsBelowBaseWarning;
-    set_fields_[81] = true;
+    set_fields_[83] = true;
     box_fitting_points_below_base_warning_ = std::move(box_fitting_points_below_base_warning);
     return *this;
   }
@@ -4616,7 +4726,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 77.
   logs::FailedToRemoveStalePointsWarning failed_to_remove_stale_points_warning() && noexcept {
-    if (!set_fields_[82]) {
+    if (!set_fields_[84]) {
       return {};
     }
     return std::move(failed_to_remove_stale_points_warning_);
@@ -4628,17 +4738,17 @@ class LogData final : public PbMessage {
   logs::FailedToRemoveStalePointsWarning& mutable_failed_to_remove_stale_points_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFailedToRemoveStalePointsWarning;
-    set_fields_[82] = true;
+    set_fields_[84] = true;
     return failed_to_remove_stale_points_warning_;
   }
 
   /// Returns whether `failed_to_remove_stale_points_warning` (no 77) is set.
-  constexpr bool has_failed_to_remove_stale_points_warning() const noexcept { return set_fields_[82]; }
+  constexpr bool has_failed_to_remove_stale_points_warning() const noexcept { return set_fields_[84]; }
 
   /// Clears `failed_to_remove_stale_points_warning` (no 77).
   void clear_failed_to_remove_stale_points_warning() & noexcept {
     data_ = {};
-    set_fields_[82] = false;
+    set_fields_[84] = false;
     failed_to_remove_stale_points_warning_ = {};
   }
 
@@ -4646,7 +4756,7 @@ class LogData final : public PbMessage {
   LogData& set_failed_to_remove_stale_points_warning(logs::FailedToRemoveStalePointsWarning&& failed_to_remove_stale_points_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kFailedToRemoveStalePointsWarning;
-    set_fields_[82] = true;
+    set_fields_[84] = true;
     failed_to_remove_stale_points_warning_ = std::move(failed_to_remove_stale_points_warning);
     return *this;
   }
@@ -4671,7 +4781,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 78.
   logs::IrregularBroadcastingPeriodWarning irregular_broadcasting_period_warning() && noexcept {
-    if (!set_fields_[83]) {
+    if (!set_fields_[85]) {
       return {};
     }
     return std::move(irregular_broadcasting_period_warning_);
@@ -4683,17 +4793,17 @@ class LogData final : public PbMessage {
   logs::IrregularBroadcastingPeriodWarning& mutable_irregular_broadcasting_period_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kIrregularBroadcastingPeriodWarning;
-    set_fields_[83] = true;
+    set_fields_[85] = true;
     return irregular_broadcasting_period_warning_;
   }
 
   /// Returns whether `irregular_broadcasting_period_warning` (no 78) is set.
-  constexpr bool has_irregular_broadcasting_period_warning() const noexcept { return set_fields_[83]; }
+  constexpr bool has_irregular_broadcasting_period_warning() const noexcept { return set_fields_[85]; }
 
   /// Clears `irregular_broadcasting_period_warning` (no 78).
   void clear_irregular_broadcasting_period_warning() & noexcept {
     data_ = {};
-    set_fields_[83] = false;
+    set_fields_[85] = false;
     irregular_broadcasting_period_warning_ = {};
   }
 
@@ -4701,7 +4811,7 @@ class LogData final : public PbMessage {
   LogData& set_irregular_broadcasting_period_warning(logs::IrregularBroadcastingPeriodWarning&& irregular_broadcasting_period_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kIrregularBroadcastingPeriodWarning;
-    set_fields_[83] = true;
+    set_fields_[85] = true;
     irregular_broadcasting_period_warning_ = std::move(irregular_broadcasting_period_warning);
     return *this;
   }
@@ -4726,7 +4836,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 79.
   logs::ClustererPointsOutOfRangeWarning clusterer_points_out_of_range_warning() && noexcept {
-    if (!set_fields_[84]) {
+    if (!set_fields_[86]) {
       return {};
     }
     return std::move(clusterer_points_out_of_range_warning_);
@@ -4738,17 +4848,17 @@ class LogData final : public PbMessage {
   logs::ClustererPointsOutOfRangeWarning& mutable_clusterer_points_out_of_range_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kClustererPointsOutOfRangeWarning;
-    set_fields_[84] = true;
+    set_fields_[86] = true;
     return clusterer_points_out_of_range_warning_;
   }
 
   /// Returns whether `clusterer_points_out_of_range_warning` (no 79) is set.
-  constexpr bool has_clusterer_points_out_of_range_warning() const noexcept { return set_fields_[84]; }
+  constexpr bool has_clusterer_points_out_of_range_warning() const noexcept { return set_fields_[86]; }
 
   /// Clears `clusterer_points_out_of_range_warning` (no 79).
   void clear_clusterer_points_out_of_range_warning() & noexcept {
     data_ = {};
-    set_fields_[84] = false;
+    set_fields_[86] = false;
     clusterer_points_out_of_range_warning_ = {};
   }
 
@@ -4756,7 +4866,7 @@ class LogData final : public PbMessage {
   LogData& set_clusterer_points_out_of_range_warning(logs::ClustererPointsOutOfRangeWarning&& clusterer_points_out_of_range_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kClustererPointsOutOfRangeWarning;
-    set_fields_[84] = true;
+    set_fields_[86] = true;
     clusterer_points_out_of_range_warning_ = std::move(clusterer_points_out_of_range_warning);
     return *this;
   }
@@ -4781,7 +4891,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 80.
   logs::InternalError internal_error() && noexcept {
-    if (!set_fields_[85]) {
+    if (!set_fields_[87]) {
       return {};
     }
     return std::move(internal_error_);
@@ -4793,17 +4903,17 @@ class LogData final : public PbMessage {
   logs::InternalError& mutable_internal_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInternalError;
-    set_fields_[85] = true;
+    set_fields_[87] = true;
     return internal_error_;
   }
 
   /// Returns whether `internal_error` (no 80) is set.
-  constexpr bool has_internal_error() const noexcept { return set_fields_[85]; }
+  constexpr bool has_internal_error() const noexcept { return set_fields_[87]; }
 
   /// Clears `internal_error` (no 80).
   void clear_internal_error() & noexcept {
     data_ = {};
-    set_fields_[85] = false;
+    set_fields_[87] = false;
     internal_error_ = {};
   }
 
@@ -4811,7 +4921,7 @@ class LogData final : public PbMessage {
   LogData& set_internal_error(logs::InternalError&& internal_error) & noexcept {
     clear_data();
     data_ = DataOneof::kInternalError;
-    set_fields_[85] = true;
+    set_fields_[87] = true;
     internal_error_ = std::move(internal_error);
     return *this;
   }
@@ -4836,7 +4946,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 81.
   logs::InternalFatal internal_fatal() && noexcept {
-    if (!set_fields_[86]) {
+    if (!set_fields_[88]) {
       return {};
     }
     return std::move(internal_fatal_);
@@ -4848,17 +4958,17 @@ class LogData final : public PbMessage {
   logs::InternalFatal& mutable_internal_fatal() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInternalFatal;
-    set_fields_[86] = true;
+    set_fields_[88] = true;
     return internal_fatal_;
   }
 
   /// Returns whether `internal_fatal` (no 81) is set.
-  constexpr bool has_internal_fatal() const noexcept { return set_fields_[86]; }
+  constexpr bool has_internal_fatal() const noexcept { return set_fields_[88]; }
 
   /// Clears `internal_fatal` (no 81).
   void clear_internal_fatal() & noexcept {
     data_ = {};
-    set_fields_[86] = false;
+    set_fields_[88] = false;
     internal_fatal_ = {};
   }
 
@@ -4866,7 +4976,7 @@ class LogData final : public PbMessage {
   LogData& set_internal_fatal(logs::InternalFatal&& internal_fatal) & noexcept {
     clear_data();
     data_ = DataOneof::kInternalFatal;
-    set_fields_[86] = true;
+    set_fields_[88] = true;
     internal_fatal_ = std::move(internal_fatal);
     return *this;
   }
@@ -4891,7 +5001,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 82.
   logs::ServiceStartingInfo service_starting_info() && noexcept {
-    if (!set_fields_[87]) {
+    if (!set_fields_[89]) {
       return {};
     }
     return std::move(service_starting_info_);
@@ -4903,17 +5013,17 @@ class LogData final : public PbMessage {
   logs::ServiceStartingInfo& mutable_service_starting_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kServiceStartingInfo;
-    set_fields_[87] = true;
+    set_fields_[89] = true;
     return service_starting_info_;
   }
 
   /// Returns whether `service_starting_info` (no 82) is set.
-  constexpr bool has_service_starting_info() const noexcept { return set_fields_[87]; }
+  constexpr bool has_service_starting_info() const noexcept { return set_fields_[89]; }
 
   /// Clears `service_starting_info` (no 82).
   void clear_service_starting_info() & noexcept {
     data_ = {};
-    set_fields_[87] = false;
+    set_fields_[89] = false;
     service_starting_info_ = {};
   }
 
@@ -4921,7 +5031,7 @@ class LogData final : public PbMessage {
   LogData& set_service_starting_info(logs::ServiceStartingInfo&& service_starting_info) & noexcept {
     clear_data();
     data_ = DataOneof::kServiceStartingInfo;
-    set_fields_[87] = true;
+    set_fields_[89] = true;
     service_starting_info_ = std::move(service_starting_info);
     return *this;
   }
@@ -4946,7 +5056,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 83.
   logs::ConfigNodeNotFoundFatal config_node_not_found_fatal() && noexcept {
-    if (!set_fields_[88]) {
+    if (!set_fields_[90]) {
       return {};
     }
     return std::move(config_node_not_found_fatal_);
@@ -4958,17 +5068,17 @@ class LogData final : public PbMessage {
   logs::ConfigNodeNotFoundFatal& mutable_config_node_not_found_fatal() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kConfigNodeNotFoundFatal;
-    set_fields_[88] = true;
+    set_fields_[90] = true;
     return config_node_not_found_fatal_;
   }
 
   /// Returns whether `config_node_not_found_fatal` (no 83) is set.
-  constexpr bool has_config_node_not_found_fatal() const noexcept { return set_fields_[88]; }
+  constexpr bool has_config_node_not_found_fatal() const noexcept { return set_fields_[90]; }
 
   /// Clears `config_node_not_found_fatal` (no 83).
   void clear_config_node_not_found_fatal() & noexcept {
     data_ = {};
-    set_fields_[88] = false;
+    set_fields_[90] = false;
     config_node_not_found_fatal_ = {};
   }
 
@@ -4976,7 +5086,7 @@ class LogData final : public PbMessage {
   LogData& set_config_node_not_found_fatal(logs::ConfigNodeNotFoundFatal&& config_node_not_found_fatal) & noexcept {
     clear_data();
     data_ = DataOneof::kConfigNodeNotFoundFatal;
-    set_fields_[88] = true;
+    set_fields_[90] = true;
     config_node_not_found_fatal_ = std::move(config_node_not_found_fatal);
     return *this;
   }
@@ -5001,7 +5111,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 84.
   logs::ServiceSetupError service_setup_error() && noexcept {
-    if (!set_fields_[89]) {
+    if (!set_fields_[91]) {
       return {};
     }
     return std::move(service_setup_error_);
@@ -5013,17 +5123,17 @@ class LogData final : public PbMessage {
   logs::ServiceSetupError& mutable_service_setup_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kServiceSetupError;
-    set_fields_[89] = true;
+    set_fields_[91] = true;
     return service_setup_error_;
   }
 
   /// Returns whether `service_setup_error` (no 84) is set.
-  constexpr bool has_service_setup_error() const noexcept { return set_fields_[89]; }
+  constexpr bool has_service_setup_error() const noexcept { return set_fields_[91]; }
 
   /// Clears `service_setup_error` (no 84).
   void clear_service_setup_error() & noexcept {
     data_ = {};
-    set_fields_[89] = false;
+    set_fields_[91] = false;
     service_setup_error_ = {};
   }
 
@@ -5031,7 +5141,7 @@ class LogData final : public PbMessage {
   LogData& set_service_setup_error(logs::ServiceSetupError&& service_setup_error) & noexcept {
     clear_data();
     data_ = DataOneof::kServiceSetupError;
-    set_fields_[89] = true;
+    set_fields_[91] = true;
     service_setup_error_ = std::move(service_setup_error);
     return *this;
   }
@@ -5056,7 +5166,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 85.
   logs::FilesystemError filesystem_error() && noexcept {
-    if (!set_fields_[90]) {
+    if (!set_fields_[92]) {
       return {};
     }
     return std::move(filesystem_error_);
@@ -5068,17 +5178,17 @@ class LogData final : public PbMessage {
   logs::FilesystemError& mutable_filesystem_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFilesystemError;
-    set_fields_[90] = true;
+    set_fields_[92] = true;
     return filesystem_error_;
   }
 
   /// Returns whether `filesystem_error` (no 85) is set.
-  constexpr bool has_filesystem_error() const noexcept { return set_fields_[90]; }
+  constexpr bool has_filesystem_error() const noexcept { return set_fields_[92]; }
 
   /// Clears `filesystem_error` (no 85).
   void clear_filesystem_error() & noexcept {
     data_ = {};
-    set_fields_[90] = false;
+    set_fields_[92] = false;
     filesystem_error_ = {};
   }
 
@@ -5086,7 +5196,7 @@ class LogData final : public PbMessage {
   LogData& set_filesystem_error(logs::FilesystemError&& filesystem_error) & noexcept {
     clear_data();
     data_ = DataOneof::kFilesystemError;
-    set_fields_[90] = true;
+    set_fields_[92] = true;
     filesystem_error_ = std::move(filesystem_error);
     return *this;
   }
@@ -5111,7 +5221,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 86.
   logs::InvalidPresetWarning invalid_preset_warning() && noexcept {
-    if (!set_fields_[91]) {
+    if (!set_fields_[93]) {
       return {};
     }
     return std::move(invalid_preset_warning_);
@@ -5123,17 +5233,17 @@ class LogData final : public PbMessage {
   logs::InvalidPresetWarning& mutable_invalid_preset_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInvalidPresetWarning;
-    set_fields_[91] = true;
+    set_fields_[93] = true;
     return invalid_preset_warning_;
   }
 
   /// Returns whether `invalid_preset_warning` (no 86) is set.
-  constexpr bool has_invalid_preset_warning() const noexcept { return set_fields_[91]; }
+  constexpr bool has_invalid_preset_warning() const noexcept { return set_fields_[93]; }
 
   /// Clears `invalid_preset_warning` (no 86).
   void clear_invalid_preset_warning() & noexcept {
     data_ = {};
-    set_fields_[91] = false;
+    set_fields_[93] = false;
     invalid_preset_warning_ = {};
   }
 
@@ -5141,7 +5251,7 @@ class LogData final : public PbMessage {
   LogData& set_invalid_preset_warning(logs::InvalidPresetWarning&& invalid_preset_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kInvalidPresetWarning;
-    set_fields_[91] = true;
+    set_fields_[93] = true;
     invalid_preset_warning_ = std::move(invalid_preset_warning);
     return *this;
   }
@@ -5166,7 +5276,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 87.
   logs::WebsocketFailedClearPendingError websocket_failed_clear_pending_error() && noexcept {
-    if (!set_fields_[92]) {
+    if (!set_fields_[94]) {
       return {};
     }
     return std::move(websocket_failed_clear_pending_error_);
@@ -5178,17 +5288,17 @@ class LogData final : public PbMessage {
   logs::WebsocketFailedClearPendingError& mutable_websocket_failed_clear_pending_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketFailedClearPendingError;
-    set_fields_[92] = true;
+    set_fields_[94] = true;
     return websocket_failed_clear_pending_error_;
   }
 
   /// Returns whether `websocket_failed_clear_pending_error` (no 87) is set.
-  constexpr bool has_websocket_failed_clear_pending_error() const noexcept { return set_fields_[92]; }
+  constexpr bool has_websocket_failed_clear_pending_error() const noexcept { return set_fields_[94]; }
 
   /// Clears `websocket_failed_clear_pending_error` (no 87).
   void clear_websocket_failed_clear_pending_error() & noexcept {
     data_ = {};
-    set_fields_[92] = false;
+    set_fields_[94] = false;
     websocket_failed_clear_pending_error_ = {};
   }
 
@@ -5196,7 +5306,7 @@ class LogData final : public PbMessage {
   LogData& set_websocket_failed_clear_pending_error(logs::WebsocketFailedClearPendingError&& websocket_failed_clear_pending_error) & noexcept {
     clear_data();
     data_ = DataOneof::kWebsocketFailedClearPendingError;
-    set_fields_[92] = true;
+    set_fields_[94] = true;
     websocket_failed_clear_pending_error_ = std::move(websocket_failed_clear_pending_error);
     return *this;
   }
@@ -5221,7 +5331,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 88.
   logs::WebsocketFailedToStopError websocket_failed_to_stop_error() && noexcept {
-    if (!set_fields_[93]) {
+    if (!set_fields_[95]) {
       return {};
     }
     return std::move(websocket_failed_to_stop_error_);
@@ -5233,17 +5343,17 @@ class LogData final : public PbMessage {
   logs::WebsocketFailedToStopError& mutable_websocket_failed_to_stop_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketFailedToStopError;
-    set_fields_[93] = true;
+    set_fields_[95] = true;
     return websocket_failed_to_stop_error_;
   }
 
   /// Returns whether `websocket_failed_to_stop_error` (no 88) is set.
-  constexpr bool has_websocket_failed_to_stop_error() const noexcept { return set_fields_[93]; }
+  constexpr bool has_websocket_failed_to_stop_error() const noexcept { return set_fields_[95]; }
 
   /// Clears `websocket_failed_to_stop_error` (no 88).
   void clear_websocket_failed_to_stop_error() & noexcept {
     data_ = {};
-    set_fields_[93] = false;
+    set_fields_[95] = false;
     websocket_failed_to_stop_error_ = {};
   }
 
@@ -5251,7 +5361,7 @@ class LogData final : public PbMessage {
   LogData& set_websocket_failed_to_stop_error(logs::WebsocketFailedToStopError&& websocket_failed_to_stop_error) & noexcept {
     clear_data();
     data_ = DataOneof::kWebsocketFailedToStopError;
-    set_fields_[93] = true;
+    set_fields_[95] = true;
     websocket_failed_to_stop_error_ = std::move(websocket_failed_to_stop_error);
     return *this;
   }
@@ -5276,7 +5386,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 89.
   logs::WebsocketFailedToCreateError websocket_failed_to_create_error() && noexcept {
-    if (!set_fields_[94]) {
+    if (!set_fields_[96]) {
       return {};
     }
     return std::move(websocket_failed_to_create_error_);
@@ -5288,17 +5398,17 @@ class LogData final : public PbMessage {
   logs::WebsocketFailedToCreateError& mutable_websocket_failed_to_create_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketFailedToCreateError;
-    set_fields_[94] = true;
+    set_fields_[96] = true;
     return websocket_failed_to_create_error_;
   }
 
   /// Returns whether `websocket_failed_to_create_error` (no 89) is set.
-  constexpr bool has_websocket_failed_to_create_error() const noexcept { return set_fields_[94]; }
+  constexpr bool has_websocket_failed_to_create_error() const noexcept { return set_fields_[96]; }
 
   /// Clears `websocket_failed_to_create_error` (no 89).
   void clear_websocket_failed_to_create_error() & noexcept {
     data_ = {};
-    set_fields_[94] = false;
+    set_fields_[96] = false;
     websocket_failed_to_create_error_ = {};
   }
 
@@ -5306,7 +5416,7 @@ class LogData final : public PbMessage {
   LogData& set_websocket_failed_to_create_error(logs::WebsocketFailedToCreateError&& websocket_failed_to_create_error) & noexcept {
     clear_data();
     data_ = DataOneof::kWebsocketFailedToCreateError;
-    set_fields_[94] = true;
+    set_fields_[96] = true;
     websocket_failed_to_create_error_ = std::move(websocket_failed_to_create_error);
     return *this;
   }
@@ -5331,7 +5441,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 90.
   logs::UnexpectedRpcError unexpected_rpc_error() && noexcept {
-    if (!set_fields_[95]) {
+    if (!set_fields_[97]) {
       return {};
     }
     return std::move(unexpected_rpc_error_);
@@ -5343,17 +5453,17 @@ class LogData final : public PbMessage {
   logs::UnexpectedRpcError& mutable_unexpected_rpc_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kUnexpectedRpcError;
-    set_fields_[95] = true;
+    set_fields_[97] = true;
     return unexpected_rpc_error_;
   }
 
   /// Returns whether `unexpected_rpc_error` (no 90) is set.
-  constexpr bool has_unexpected_rpc_error() const noexcept { return set_fields_[95]; }
+  constexpr bool has_unexpected_rpc_error() const noexcept { return set_fields_[97]; }
 
   /// Clears `unexpected_rpc_error` (no 90).
   void clear_unexpected_rpc_error() & noexcept {
     data_ = {};
-    set_fields_[95] = false;
+    set_fields_[97] = false;
     unexpected_rpc_error_ = {};
   }
 
@@ -5361,7 +5471,7 @@ class LogData final : public PbMessage {
   LogData& set_unexpected_rpc_error(logs::UnexpectedRpcError&& unexpected_rpc_error) & noexcept {
     clear_data();
     data_ = DataOneof::kUnexpectedRpcError;
-    set_fields_[95] = true;
+    set_fields_[97] = true;
     unexpected_rpc_error_ = std::move(unexpected_rpc_error);
     return *this;
   }
@@ -5386,7 +5496,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 91.
   logs::LicensePollFailed license_poll_failed() && noexcept {
-    if (!set_fields_[96]) {
+    if (!set_fields_[98]) {
       return {};
     }
     return std::move(license_poll_failed_);
@@ -5398,17 +5508,17 @@ class LogData final : public PbMessage {
   logs::LicensePollFailed& mutable_license_poll_failed() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicensePollFailed;
-    set_fields_[96] = true;
+    set_fields_[98] = true;
     return license_poll_failed_;
   }
 
   /// Returns whether `license_poll_failed` (no 91) is set.
-  constexpr bool has_license_poll_failed() const noexcept { return set_fields_[96]; }
+  constexpr bool has_license_poll_failed() const noexcept { return set_fields_[98]; }
 
   /// Clears `license_poll_failed` (no 91).
   void clear_license_poll_failed() & noexcept {
     data_ = {};
-    set_fields_[96] = false;
+    set_fields_[98] = false;
     license_poll_failed_ = {};
   }
 
@@ -5416,7 +5526,7 @@ class LogData final : public PbMessage {
   LogData& set_license_poll_failed(logs::LicensePollFailed&& license_poll_failed) & noexcept {
     clear_data();
     data_ = DataOneof::kLicensePollFailed;
-    set_fields_[96] = true;
+    set_fields_[98] = true;
     license_poll_failed_ = std::move(license_poll_failed);
     return *this;
   }
@@ -5441,7 +5551,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 92.
   logs::LicenseExpiredWarning license_expired_warning() && noexcept {
-    if (!set_fields_[97]) {
+    if (!set_fields_[99]) {
       return {};
     }
     return std::move(license_expired_warning_);
@@ -5453,17 +5563,17 @@ class LogData final : public PbMessage {
   logs::LicenseExpiredWarning& mutable_license_expired_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicenseExpiredWarning;
-    set_fields_[97] = true;
+    set_fields_[99] = true;
     return license_expired_warning_;
   }
 
   /// Returns whether `license_expired_warning` (no 92) is set.
-  constexpr bool has_license_expired_warning() const noexcept { return set_fields_[97]; }
+  constexpr bool has_license_expired_warning() const noexcept { return set_fields_[99]; }
 
   /// Clears `license_expired_warning` (no 92).
   void clear_license_expired_warning() & noexcept {
     data_ = {};
-    set_fields_[97] = false;
+    set_fields_[99] = false;
     license_expired_warning_ = {};
   }
 
@@ -5471,7 +5581,7 @@ class LogData final : public PbMessage {
   LogData& set_license_expired_warning(logs::LicenseExpiredWarning&& license_expired_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kLicenseExpiredWarning;
-    set_fields_[97] = true;
+    set_fields_[99] = true;
     license_expired_warning_ = std::move(license_expired_warning);
     return *this;
   }
@@ -5496,7 +5606,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 93.
   logs::LicenseUsageExceededWarning license_usage_exceeded_warning() && noexcept {
-    if (!set_fields_[98]) {
+    if (!set_fields_[100]) {
       return {};
     }
     return std::move(license_usage_exceeded_warning_);
@@ -5508,17 +5618,17 @@ class LogData final : public PbMessage {
   logs::LicenseUsageExceededWarning& mutable_license_usage_exceeded_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicenseUsageExceededWarning;
-    set_fields_[98] = true;
+    set_fields_[100] = true;
     return license_usage_exceeded_warning_;
   }
 
   /// Returns whether `license_usage_exceeded_warning` (no 93) is set.
-  constexpr bool has_license_usage_exceeded_warning() const noexcept { return set_fields_[98]; }
+  constexpr bool has_license_usage_exceeded_warning() const noexcept { return set_fields_[100]; }
 
   /// Clears `license_usage_exceeded_warning` (no 93).
   void clear_license_usage_exceeded_warning() & noexcept {
     data_ = {};
-    set_fields_[98] = false;
+    set_fields_[100] = false;
     license_usage_exceeded_warning_ = {};
   }
 
@@ -5526,7 +5636,7 @@ class LogData final : public PbMessage {
   LogData& set_license_usage_exceeded_warning(logs::LicenseUsageExceededWarning&& license_usage_exceeded_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kLicenseUsageExceededWarning;
-    set_fields_[98] = true;
+    set_fields_[100] = true;
     license_usage_exceeded_warning_ = std::move(license_usage_exceeded_warning);
     return *this;
   }
@@ -5551,7 +5661,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 94.
   logs::StaticThreadPoolSlowTaskWarning static_thread_pool_slow_task_warning() && noexcept {
-    if (!set_fields_[99]) {
+    if (!set_fields_[101]) {
       return {};
     }
     return std::move(static_thread_pool_slow_task_warning_);
@@ -5563,17 +5673,17 @@ class LogData final : public PbMessage {
   logs::StaticThreadPoolSlowTaskWarning& mutable_static_thread_pool_slow_task_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kStaticThreadPoolSlowTaskWarning;
-    set_fields_[99] = true;
+    set_fields_[101] = true;
     return static_thread_pool_slow_task_warning_;
   }
 
   /// Returns whether `static_thread_pool_slow_task_warning` (no 94) is set.
-  constexpr bool has_static_thread_pool_slow_task_warning() const noexcept { return set_fields_[99]; }
+  constexpr bool has_static_thread_pool_slow_task_warning() const noexcept { return set_fields_[101]; }
 
   /// Clears `static_thread_pool_slow_task_warning` (no 94).
   void clear_static_thread_pool_slow_task_warning() & noexcept {
     data_ = {};
-    set_fields_[99] = false;
+    set_fields_[101] = false;
     static_thread_pool_slow_task_warning_ = {};
   }
 
@@ -5581,7 +5691,7 @@ class LogData final : public PbMessage {
   LogData& set_static_thread_pool_slow_task_warning(logs::StaticThreadPoolSlowTaskWarning&& static_thread_pool_slow_task_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kStaticThreadPoolSlowTaskWarning;
-    set_fields_[99] = true;
+    set_fields_[101] = true;
     static_thread_pool_slow_task_warning_ = std::move(static_thread_pool_slow_task_warning);
     return *this;
   }
@@ -5606,7 +5716,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 95.
   logs::RpcUnsupportedServiceWarning rpc_unsupported_service_warning() && noexcept {
-    if (!set_fields_[100]) {
+    if (!set_fields_[102]) {
       return {};
     }
     return std::move(rpc_unsupported_service_warning_);
@@ -5618,17 +5728,17 @@ class LogData final : public PbMessage {
   logs::RpcUnsupportedServiceWarning& mutable_rpc_unsupported_service_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRpcUnsupportedServiceWarning;
-    set_fields_[100] = true;
+    set_fields_[102] = true;
     return rpc_unsupported_service_warning_;
   }
 
   /// Returns whether `rpc_unsupported_service_warning` (no 95) is set.
-  constexpr bool has_rpc_unsupported_service_warning() const noexcept { return set_fields_[100]; }
+  constexpr bool has_rpc_unsupported_service_warning() const noexcept { return set_fields_[102]; }
 
   /// Clears `rpc_unsupported_service_warning` (no 95).
   void clear_rpc_unsupported_service_warning() & noexcept {
     data_ = {};
-    set_fields_[100] = false;
+    set_fields_[102] = false;
     rpc_unsupported_service_warning_ = {};
   }
 
@@ -5636,7 +5746,7 @@ class LogData final : public PbMessage {
   LogData& set_rpc_unsupported_service_warning(logs::RpcUnsupportedServiceWarning&& rpc_unsupported_service_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kRpcUnsupportedServiceWarning;
-    set_fields_[100] = true;
+    set_fields_[102] = true;
     rpc_unsupported_service_warning_ = std::move(rpc_unsupported_service_warning);
     return *this;
   }
@@ -5661,7 +5771,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 96.
   logs::WebsocketHandlerProblem websocket_handler_problem() && noexcept {
-    if (!set_fields_[101]) {
+    if (!set_fields_[103]) {
       return {};
     }
     return std::move(websocket_handler_problem_);
@@ -5673,17 +5783,17 @@ class LogData final : public PbMessage {
   logs::WebsocketHandlerProblem& mutable_websocket_handler_problem() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketHandlerProblem;
-    set_fields_[101] = true;
+    set_fields_[103] = true;
     return websocket_handler_problem_;
   }
 
   /// Returns whether `websocket_handler_problem` (no 96) is set.
-  constexpr bool has_websocket_handler_problem() const noexcept { return set_fields_[101]; }
+  constexpr bool has_websocket_handler_problem() const noexcept { return set_fields_[103]; }
 
   /// Clears `websocket_handler_problem` (no 96).
   void clear_websocket_handler_problem() & noexcept {
     data_ = {};
-    set_fields_[101] = false;
+    set_fields_[103] = false;
     websocket_handler_problem_ = {};
   }
 
@@ -5691,7 +5801,7 @@ class LogData final : public PbMessage {
   LogData& set_websocket_handler_problem(logs::WebsocketHandlerProblem&& websocket_handler_problem) & noexcept {
     clear_data();
     data_ = DataOneof::kWebsocketHandlerProblem;
-    set_fields_[101] = true;
+    set_fields_[103] = true;
     websocket_handler_problem_ = std::move(websocket_handler_problem);
     return *this;
   }
@@ -5716,7 +5826,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 97.
   logs::WebsocketDeserializeError websocket_deserialize_error() && noexcept {
-    if (!set_fields_[102]) {
+    if (!set_fields_[104]) {
       return {};
     }
     return std::move(websocket_deserialize_error_);
@@ -5728,17 +5838,17 @@ class LogData final : public PbMessage {
   logs::WebsocketDeserializeError& mutable_websocket_deserialize_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketDeserializeError;
-    set_fields_[102] = true;
+    set_fields_[104] = true;
     return websocket_deserialize_error_;
   }
 
   /// Returns whether `websocket_deserialize_error` (no 97) is set.
-  constexpr bool has_websocket_deserialize_error() const noexcept { return set_fields_[102]; }
+  constexpr bool has_websocket_deserialize_error() const noexcept { return set_fields_[104]; }
 
   /// Clears `websocket_deserialize_error` (no 97).
   void clear_websocket_deserialize_error() & noexcept {
     data_ = {};
-    set_fields_[102] = false;
+    set_fields_[104] = false;
     websocket_deserialize_error_ = {};
   }
 
@@ -5746,7 +5856,7 @@ class LogData final : public PbMessage {
   LogData& set_websocket_deserialize_error(logs::WebsocketDeserializeError&& websocket_deserialize_error) & noexcept {
     clear_data();
     data_ = DataOneof::kWebsocketDeserializeError;
-    set_fields_[102] = true;
+    set_fields_[104] = true;
     websocket_deserialize_error_ = std::move(websocket_deserialize_error);
     return *this;
   }
@@ -5771,7 +5881,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 98.
   logs::WebsocketExpiredRpcEndpointError websocket_expired_rpc_endpoint_error() && noexcept {
-    if (!set_fields_[103]) {
+    if (!set_fields_[105]) {
       return {};
     }
     return std::move(websocket_expired_rpc_endpoint_error_);
@@ -5783,17 +5893,17 @@ class LogData final : public PbMessage {
   logs::WebsocketExpiredRpcEndpointError& mutable_websocket_expired_rpc_endpoint_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketExpiredRpcEndpointError;
-    set_fields_[103] = true;
+    set_fields_[105] = true;
     return websocket_expired_rpc_endpoint_error_;
   }
 
   /// Returns whether `websocket_expired_rpc_endpoint_error` (no 98) is set.
-  constexpr bool has_websocket_expired_rpc_endpoint_error() const noexcept { return set_fields_[103]; }
+  constexpr bool has_websocket_expired_rpc_endpoint_error() const noexcept { return set_fields_[105]; }
 
   /// Clears `websocket_expired_rpc_endpoint_error` (no 98).
   void clear_websocket_expired_rpc_endpoint_error() & noexcept {
     data_ = {};
-    set_fields_[103] = false;
+    set_fields_[105] = false;
     websocket_expired_rpc_endpoint_error_ = {};
   }
 
@@ -5801,7 +5911,7 @@ class LogData final : public PbMessage {
   LogData& set_websocket_expired_rpc_endpoint_error(logs::WebsocketExpiredRpcEndpointError&& websocket_expired_rpc_endpoint_error) & noexcept {
     clear_data();
     data_ = DataOneof::kWebsocketExpiredRpcEndpointError;
-    set_fields_[103] = true;
+    set_fields_[105] = true;
     websocket_expired_rpc_endpoint_error_ = std::move(websocket_expired_rpc_endpoint_error);
     return *this;
   }
@@ -5826,7 +5936,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 99.
   logs::WebsocketQueueOverloadedWarning websocket_queue_overloaded_warning() && noexcept {
-    if (!set_fields_[104]) {
+    if (!set_fields_[106]) {
       return {};
     }
     return std::move(websocket_queue_overloaded_warning_);
@@ -5838,17 +5948,17 @@ class LogData final : public PbMessage {
   logs::WebsocketQueueOverloadedWarning& mutable_websocket_queue_overloaded_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kWebsocketQueueOverloadedWarning;
-    set_fields_[104] = true;
+    set_fields_[106] = true;
     return websocket_queue_overloaded_warning_;
   }
 
   /// Returns whether `websocket_queue_overloaded_warning` (no 99) is set.
-  constexpr bool has_websocket_queue_overloaded_warning() const noexcept { return set_fields_[104]; }
+  constexpr bool has_websocket_queue_overloaded_warning() const noexcept { return set_fields_[106]; }
 
   /// Clears `websocket_queue_overloaded_warning` (no 99).
   void clear_websocket_queue_overloaded_warning() & noexcept {
     data_ = {};
-    set_fields_[104] = false;
+    set_fields_[106] = false;
     websocket_queue_overloaded_warning_ = {};
   }
 
@@ -5856,7 +5966,7 @@ class LogData final : public PbMessage {
   LogData& set_websocket_queue_overloaded_warning(logs::WebsocketQueueOverloadedWarning&& websocket_queue_overloaded_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kWebsocketQueueOverloadedWarning;
-    set_fields_[104] = true;
+    set_fields_[106] = true;
     websocket_queue_overloaded_warning_ = std::move(websocket_queue_overloaded_warning);
     return *this;
   }
@@ -5881,7 +5991,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 100.
   logs::RpcFailedToNotifyWarning rpc_failed_to_notify_warning() && noexcept {
-    if (!set_fields_[105]) {
+    if (!set_fields_[107]) {
       return {};
     }
     return std::move(rpc_failed_to_notify_warning_);
@@ -5893,17 +6003,17 @@ class LogData final : public PbMessage {
   logs::RpcFailedToNotifyWarning& mutable_rpc_failed_to_notify_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRpcFailedToNotifyWarning;
-    set_fields_[105] = true;
+    set_fields_[107] = true;
     return rpc_failed_to_notify_warning_;
   }
 
   /// Returns whether `rpc_failed_to_notify_warning` (no 100) is set.
-  constexpr bool has_rpc_failed_to_notify_warning() const noexcept { return set_fields_[105]; }
+  constexpr bool has_rpc_failed_to_notify_warning() const noexcept { return set_fields_[107]; }
 
   /// Clears `rpc_failed_to_notify_warning` (no 100).
   void clear_rpc_failed_to_notify_warning() & noexcept {
     data_ = {};
-    set_fields_[105] = false;
+    set_fields_[107] = false;
     rpc_failed_to_notify_warning_ = {};
   }
 
@@ -5911,7 +6021,7 @@ class LogData final : public PbMessage {
   LogData& set_rpc_failed_to_notify_warning(logs::RpcFailedToNotifyWarning&& rpc_failed_to_notify_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kRpcFailedToNotifyWarning;
-    set_fields_[105] = true;
+    set_fields_[107] = true;
     rpc_failed_to_notify_warning_ = std::move(rpc_failed_to_notify_warning);
     return *this;
   }
@@ -5936,7 +6046,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 101.
   logs::ConfigSubscriptionFailedWarning config_subscription_failed_warning() && noexcept {
-    if (!set_fields_[106]) {
+    if (!set_fields_[108]) {
       return {};
     }
     return std::move(config_subscription_failed_warning_);
@@ -5948,17 +6058,17 @@ class LogData final : public PbMessage {
   logs::ConfigSubscriptionFailedWarning& mutable_config_subscription_failed_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kConfigSubscriptionFailedWarning;
-    set_fields_[106] = true;
+    set_fields_[108] = true;
     return config_subscription_failed_warning_;
   }
 
   /// Returns whether `config_subscription_failed_warning` (no 101) is set.
-  constexpr bool has_config_subscription_failed_warning() const noexcept { return set_fields_[106]; }
+  constexpr bool has_config_subscription_failed_warning() const noexcept { return set_fields_[108]; }
 
   /// Clears `config_subscription_failed_warning` (no 101).
   void clear_config_subscription_failed_warning() & noexcept {
     data_ = {};
-    set_fields_[106] = false;
+    set_fields_[108] = false;
     config_subscription_failed_warning_ = {};
   }
 
@@ -5966,7 +6076,7 @@ class LogData final : public PbMessage {
   LogData& set_config_subscription_failed_warning(logs::ConfigSubscriptionFailedWarning&& config_subscription_failed_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kConfigSubscriptionFailedWarning;
-    set_fields_[106] = true;
+    set_fields_[108] = true;
     config_subscription_failed_warning_ = std::move(config_subscription_failed_warning);
     return *this;
   }
@@ -5991,7 +6101,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 102.
   logs::ThreadPoolClampedWorkersWarning thread_pool_clamped_workers_warning() && noexcept {
-    if (!set_fields_[107]) {
+    if (!set_fields_[109]) {
       return {};
     }
     return std::move(thread_pool_clamped_workers_warning_);
@@ -6003,17 +6113,17 @@ class LogData final : public PbMessage {
   logs::ThreadPoolClampedWorkersWarning& mutable_thread_pool_clamped_workers_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kThreadPoolClampedWorkersWarning;
-    set_fields_[107] = true;
+    set_fields_[109] = true;
     return thread_pool_clamped_workers_warning_;
   }
 
   /// Returns whether `thread_pool_clamped_workers_warning` (no 102) is set.
-  constexpr bool has_thread_pool_clamped_workers_warning() const noexcept { return set_fields_[107]; }
+  constexpr bool has_thread_pool_clamped_workers_warning() const noexcept { return set_fields_[109]; }
 
   /// Clears `thread_pool_clamped_workers_warning` (no 102).
   void clear_thread_pool_clamped_workers_warning() & noexcept {
     data_ = {};
-    set_fields_[107] = false;
+    set_fields_[109] = false;
     thread_pool_clamped_workers_warning_ = {};
   }
 
@@ -6021,7 +6131,7 @@ class LogData final : public PbMessage {
   LogData& set_thread_pool_clamped_workers_warning(logs::ThreadPoolClampedWorkersWarning&& thread_pool_clamped_workers_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kThreadPoolClampedWorkersWarning;
-    set_fields_[107] = true;
+    set_fields_[109] = true;
     thread_pool_clamped_workers_warning_ = std::move(thread_pool_clamped_workers_warning);
     return *this;
   }
@@ -6046,7 +6156,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 103.
   logs::StoppingHorusBagRecorderAlreadyStopped stopping_horus_bag_recorder_already_stopped() && noexcept {
-    if (!set_fields_[108]) {
+    if (!set_fields_[110]) {
       return {};
     }
     return std::move(stopping_horus_bag_recorder_already_stopped_);
@@ -6058,17 +6168,17 @@ class LogData final : public PbMessage {
   logs::StoppingHorusBagRecorderAlreadyStopped& mutable_stopping_horus_bag_recorder_already_stopped() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kStoppingHorusBagRecorderAlreadyStopped;
-    set_fields_[108] = true;
+    set_fields_[110] = true;
     return stopping_horus_bag_recorder_already_stopped_;
   }
 
   /// Returns whether `stopping_horus_bag_recorder_already_stopped` (no 103) is set.
-  constexpr bool has_stopping_horus_bag_recorder_already_stopped() const noexcept { return set_fields_[108]; }
+  constexpr bool has_stopping_horus_bag_recorder_already_stopped() const noexcept { return set_fields_[110]; }
 
   /// Clears `stopping_horus_bag_recorder_already_stopped` (no 103).
   void clear_stopping_horus_bag_recorder_already_stopped() & noexcept {
     data_ = {};
-    set_fields_[108] = false;
+    set_fields_[110] = false;
     stopping_horus_bag_recorder_already_stopped_ = {};
   }
 
@@ -6076,7 +6186,7 @@ class LogData final : public PbMessage {
   LogData& set_stopping_horus_bag_recorder_already_stopped(logs::StoppingHorusBagRecorderAlreadyStopped&& stopping_horus_bag_recorder_already_stopped) & noexcept {
     clear_data();
     data_ = DataOneof::kStoppingHorusBagRecorderAlreadyStopped;
-    set_fields_[108] = true;
+    set_fields_[110] = true;
     stopping_horus_bag_recorder_already_stopped_ = std::move(stopping_horus_bag_recorder_already_stopped);
     return *this;
   }
@@ -6101,7 +6211,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 104.
   logs::RecorderConfigUpdateWhileRunning recorder_config_update_while_running() && noexcept {
-    if (!set_fields_[109]) {
+    if (!set_fields_[111]) {
       return {};
     }
     return std::move(recorder_config_update_while_running_);
@@ -6113,17 +6223,17 @@ class LogData final : public PbMessage {
   logs::RecorderConfigUpdateWhileRunning& mutable_recorder_config_update_while_running() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRecorderConfigUpdateWhileRunning;
-    set_fields_[109] = true;
+    set_fields_[111] = true;
     return recorder_config_update_while_running_;
   }
 
   /// Returns whether `recorder_config_update_while_running` (no 104) is set.
-  constexpr bool has_recorder_config_update_while_running() const noexcept { return set_fields_[109]; }
+  constexpr bool has_recorder_config_update_while_running() const noexcept { return set_fields_[111]; }
 
   /// Clears `recorder_config_update_while_running` (no 104).
   void clear_recorder_config_update_while_running() & noexcept {
     data_ = {};
-    set_fields_[109] = false;
+    set_fields_[111] = false;
     recorder_config_update_while_running_ = {};
   }
 
@@ -6131,7 +6241,7 @@ class LogData final : public PbMessage {
   LogData& set_recorder_config_update_while_running(logs::RecorderConfigUpdateWhileRunning&& recorder_config_update_while_running) & noexcept {
     clear_data();
     data_ = DataOneof::kRecorderConfigUpdateWhileRunning;
-    set_fields_[109] = true;
+    set_fields_[111] = true;
     recorder_config_update_while_running_ = std::move(recorder_config_update_while_running);
     return *this;
   }
@@ -6156,7 +6266,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 105.
   logs::ClampingDataWarning clamping_data_warning() && noexcept {
-    if (!set_fields_[110]) {
+    if (!set_fields_[112]) {
       return {};
     }
     return std::move(clamping_data_warning_);
@@ -6168,17 +6278,17 @@ class LogData final : public PbMessage {
   logs::ClampingDataWarning& mutable_clamping_data_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kClampingDataWarning;
-    set_fields_[110] = true;
+    set_fields_[112] = true;
     return clamping_data_warning_;
   }
 
   /// Returns whether `clamping_data_warning` (no 105) is set.
-  constexpr bool has_clamping_data_warning() const noexcept { return set_fields_[110]; }
+  constexpr bool has_clamping_data_warning() const noexcept { return set_fields_[112]; }
 
   /// Clears `clamping_data_warning` (no 105).
   void clear_clamping_data_warning() & noexcept {
     data_ = {};
-    set_fields_[110] = false;
+    set_fields_[112] = false;
     clamping_data_warning_ = {};
   }
 
@@ -6186,7 +6296,7 @@ class LogData final : public PbMessage {
   LogData& set_clamping_data_warning(logs::ClampingDataWarning&& clamping_data_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kClampingDataWarning;
-    set_fields_[110] = true;
+    set_fields_[112] = true;
     clamping_data_warning_ = std::move(clamping_data_warning);
     return *this;
   }
@@ -6211,7 +6321,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 106.
   logs::LidarIncompatibleValues lidar_incompatible_values() && noexcept {
-    if (!set_fields_[111]) {
+    if (!set_fields_[113]) {
       return {};
     }
     return std::move(lidar_incompatible_values_);
@@ -6223,17 +6333,17 @@ class LogData final : public PbMessage {
   logs::LidarIncompatibleValues& mutable_lidar_incompatible_values() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLidarIncompatibleValues;
-    set_fields_[111] = true;
+    set_fields_[113] = true;
     return lidar_incompatible_values_;
   }
 
   /// Returns whether `lidar_incompatible_values` (no 106) is set.
-  constexpr bool has_lidar_incompatible_values() const noexcept { return set_fields_[111]; }
+  constexpr bool has_lidar_incompatible_values() const noexcept { return set_fields_[113]; }
 
   /// Clears `lidar_incompatible_values` (no 106).
   void clear_lidar_incompatible_values() & noexcept {
     data_ = {};
-    set_fields_[111] = false;
+    set_fields_[113] = false;
     lidar_incompatible_values_ = {};
   }
 
@@ -6241,7 +6351,7 @@ class LogData final : public PbMessage {
   LogData& set_lidar_incompatible_values(logs::LidarIncompatibleValues&& lidar_incompatible_values) & noexcept {
     clear_data();
     data_ = DataOneof::kLidarIncompatibleValues;
-    set_fields_[111] = true;
+    set_fields_[113] = true;
     lidar_incompatible_values_ = std::move(lidar_incompatible_values);
     return *this;
   }
@@ -6266,7 +6376,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 107.
   logs::CannotDetermineContainerIdError cannot_determine_container_id_error() && noexcept {
-    if (!set_fields_[112]) {
+    if (!set_fields_[114]) {
       return {};
     }
     return std::move(cannot_determine_container_id_error_);
@@ -6278,17 +6388,17 @@ class LogData final : public PbMessage {
   logs::CannotDetermineContainerIdError& mutable_cannot_determine_container_id_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCannotDetermineContainerIdError;
-    set_fields_[112] = true;
+    set_fields_[114] = true;
     return cannot_determine_container_id_error_;
   }
 
   /// Returns whether `cannot_determine_container_id_error` (no 107) is set.
-  constexpr bool has_cannot_determine_container_id_error() const noexcept { return set_fields_[112]; }
+  constexpr bool has_cannot_determine_container_id_error() const noexcept { return set_fields_[114]; }
 
   /// Clears `cannot_determine_container_id_error` (no 107).
   void clear_cannot_determine_container_id_error() & noexcept {
     data_ = {};
-    set_fields_[112] = false;
+    set_fields_[114] = false;
     cannot_determine_container_id_error_ = {};
   }
 
@@ -6296,7 +6406,7 @@ class LogData final : public PbMessage {
   LogData& set_cannot_determine_container_id_error(logs::CannotDetermineContainerIdError&& cannot_determine_container_id_error) & noexcept {
     clear_data();
     data_ = DataOneof::kCannotDetermineContainerIdError;
-    set_fields_[112] = true;
+    set_fields_[114] = true;
     cannot_determine_container_id_error_ = std::move(cannot_determine_container_id_error);
     return *this;
   }
@@ -6321,7 +6431,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 108.
   logs::StartedLidarDriver started_lidar_driver() && noexcept {
-    if (!set_fields_[113]) {
+    if (!set_fields_[115]) {
       return {};
     }
     return std::move(started_lidar_driver_);
@@ -6333,17 +6443,17 @@ class LogData final : public PbMessage {
   logs::StartedLidarDriver& mutable_started_lidar_driver() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kStartedLidarDriver;
-    set_fields_[113] = true;
+    set_fields_[115] = true;
     return started_lidar_driver_;
   }
 
   /// Returns whether `started_lidar_driver` (no 108) is set.
-  constexpr bool has_started_lidar_driver() const noexcept { return set_fields_[113]; }
+  constexpr bool has_started_lidar_driver() const noexcept { return set_fields_[115]; }
 
   /// Clears `started_lidar_driver` (no 108).
   void clear_started_lidar_driver() & noexcept {
     data_ = {};
-    set_fields_[113] = false;
+    set_fields_[115] = false;
     started_lidar_driver_ = {};
   }
 
@@ -6351,7 +6461,7 @@ class LogData final : public PbMessage {
   LogData& set_started_lidar_driver(logs::StartedLidarDriver&& started_lidar_driver) & noexcept {
     clear_data();
     data_ = DataOneof::kStartedLidarDriver;
-    set_fields_[113] = true;
+    set_fields_[115] = true;
     started_lidar_driver_ = std::move(started_lidar_driver);
     return *this;
   }
@@ -6376,7 +6486,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 109.
   logs::CannotStartLidarDriver cannot_start_lidar_driver() && noexcept {
-    if (!set_fields_[114]) {
+    if (!set_fields_[116]) {
       return {};
     }
     return std::move(cannot_start_lidar_driver_);
@@ -6388,17 +6498,17 @@ class LogData final : public PbMessage {
   logs::CannotStartLidarDriver& mutable_cannot_start_lidar_driver() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCannotStartLidarDriver;
-    set_fields_[114] = true;
+    set_fields_[116] = true;
     return cannot_start_lidar_driver_;
   }
 
   /// Returns whether `cannot_start_lidar_driver` (no 109) is set.
-  constexpr bool has_cannot_start_lidar_driver() const noexcept { return set_fields_[114]; }
+  constexpr bool has_cannot_start_lidar_driver() const noexcept { return set_fields_[116]; }
 
   /// Clears `cannot_start_lidar_driver` (no 109).
   void clear_cannot_start_lidar_driver() & noexcept {
     data_ = {};
-    set_fields_[114] = false;
+    set_fields_[116] = false;
     cannot_start_lidar_driver_ = {};
   }
 
@@ -6406,7 +6516,7 @@ class LogData final : public PbMessage {
   LogData& set_cannot_start_lidar_driver(logs::CannotStartLidarDriver&& cannot_start_lidar_driver) & noexcept {
     clear_data();
     data_ = DataOneof::kCannotStartLidarDriver;
-    set_fields_[114] = true;
+    set_fields_[116] = true;
     cannot_start_lidar_driver_ = std::move(cannot_start_lidar_driver);
     return *this;
   }
@@ -6431,7 +6541,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 110.
   logs::StoppedLidarDriver stopped_lidar_driver() && noexcept {
-    if (!set_fields_[115]) {
+    if (!set_fields_[117]) {
       return {};
     }
     return std::move(stopped_lidar_driver_);
@@ -6443,17 +6553,17 @@ class LogData final : public PbMessage {
   logs::StoppedLidarDriver& mutable_stopped_lidar_driver() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kStoppedLidarDriver;
-    set_fields_[115] = true;
+    set_fields_[117] = true;
     return stopped_lidar_driver_;
   }
 
   /// Returns whether `stopped_lidar_driver` (no 110) is set.
-  constexpr bool has_stopped_lidar_driver() const noexcept { return set_fields_[115]; }
+  constexpr bool has_stopped_lidar_driver() const noexcept { return set_fields_[117]; }
 
   /// Clears `stopped_lidar_driver` (no 110).
   void clear_stopped_lidar_driver() & noexcept {
     data_ = {};
-    set_fields_[115] = false;
+    set_fields_[117] = false;
     stopped_lidar_driver_ = {};
   }
 
@@ -6461,7 +6571,7 @@ class LogData final : public PbMessage {
   LogData& set_stopped_lidar_driver(logs::StoppedLidarDriver&& stopped_lidar_driver) & noexcept {
     clear_data();
     data_ = DataOneof::kStoppedLidarDriver;
-    set_fields_[115] = true;
+    set_fields_[117] = true;
     stopped_lidar_driver_ = std::move(stopped_lidar_driver);
     return *this;
   }
@@ -6486,7 +6596,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 111.
   logs::CannotStopLidarDriver cannot_stop_lidar_driver() && noexcept {
-    if (!set_fields_[116]) {
+    if (!set_fields_[118]) {
       return {};
     }
     return std::move(cannot_stop_lidar_driver_);
@@ -6498,17 +6608,17 @@ class LogData final : public PbMessage {
   logs::CannotStopLidarDriver& mutable_cannot_stop_lidar_driver() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCannotStopLidarDriver;
-    set_fields_[116] = true;
+    set_fields_[118] = true;
     return cannot_stop_lidar_driver_;
   }
 
   /// Returns whether `cannot_stop_lidar_driver` (no 111) is set.
-  constexpr bool has_cannot_stop_lidar_driver() const noexcept { return set_fields_[116]; }
+  constexpr bool has_cannot_stop_lidar_driver() const noexcept { return set_fields_[118]; }
 
   /// Clears `cannot_stop_lidar_driver` (no 111).
   void clear_cannot_stop_lidar_driver() & noexcept {
     data_ = {};
-    set_fields_[116] = false;
+    set_fields_[118] = false;
     cannot_stop_lidar_driver_ = {};
   }
 
@@ -6516,7 +6626,7 @@ class LogData final : public PbMessage {
   LogData& set_cannot_stop_lidar_driver(logs::CannotStopLidarDriver&& cannot_stop_lidar_driver) & noexcept {
     clear_data();
     data_ = DataOneof::kCannotStopLidarDriver;
-    set_fields_[116] = true;
+    set_fields_[118] = true;
     cannot_stop_lidar_driver_ = std::move(cannot_stop_lidar_driver);
     return *this;
   }
@@ -6541,7 +6651,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 112.
   logs::RestartedLidarDriver restarted_lidar_driver() && noexcept {
-    if (!set_fields_[117]) {
+    if (!set_fields_[119]) {
       return {};
     }
     return std::move(restarted_lidar_driver_);
@@ -6553,17 +6663,17 @@ class LogData final : public PbMessage {
   logs::RestartedLidarDriver& mutable_restarted_lidar_driver() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRestartedLidarDriver;
-    set_fields_[117] = true;
+    set_fields_[119] = true;
     return restarted_lidar_driver_;
   }
 
   /// Returns whether `restarted_lidar_driver` (no 112) is set.
-  constexpr bool has_restarted_lidar_driver() const noexcept { return set_fields_[117]; }
+  constexpr bool has_restarted_lidar_driver() const noexcept { return set_fields_[119]; }
 
   /// Clears `restarted_lidar_driver` (no 112).
   void clear_restarted_lidar_driver() & noexcept {
     data_ = {};
-    set_fields_[117] = false;
+    set_fields_[119] = false;
     restarted_lidar_driver_ = {};
   }
 
@@ -6571,7 +6681,7 @@ class LogData final : public PbMessage {
   LogData& set_restarted_lidar_driver(logs::RestartedLidarDriver&& restarted_lidar_driver) & noexcept {
     clear_data();
     data_ = DataOneof::kRestartedLidarDriver;
-    set_fields_[117] = true;
+    set_fields_[119] = true;
     restarted_lidar_driver_ = std::move(restarted_lidar_driver);
     return *this;
   }
@@ -6596,7 +6706,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 113.
   logs::CannotRestartLidarDriver cannot_restart_lidar_driver() && noexcept {
-    if (!set_fields_[118]) {
+    if (!set_fields_[120]) {
       return {};
     }
     return std::move(cannot_restart_lidar_driver_);
@@ -6608,17 +6718,17 @@ class LogData final : public PbMessage {
   logs::CannotRestartLidarDriver& mutable_cannot_restart_lidar_driver() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCannotRestartLidarDriver;
-    set_fields_[118] = true;
+    set_fields_[120] = true;
     return cannot_restart_lidar_driver_;
   }
 
   /// Returns whether `cannot_restart_lidar_driver` (no 113) is set.
-  constexpr bool has_cannot_restart_lidar_driver() const noexcept { return set_fields_[118]; }
+  constexpr bool has_cannot_restart_lidar_driver() const noexcept { return set_fields_[120]; }
 
   /// Clears `cannot_restart_lidar_driver` (no 113).
   void clear_cannot_restart_lidar_driver() & noexcept {
     data_ = {};
-    set_fields_[118] = false;
+    set_fields_[120] = false;
     cannot_restart_lidar_driver_ = {};
   }
 
@@ -6626,7 +6736,7 @@ class LogData final : public PbMessage {
   LogData& set_cannot_restart_lidar_driver(logs::CannotRestartLidarDriver&& cannot_restart_lidar_driver) & noexcept {
     clear_data();
     data_ = DataOneof::kCannotRestartLidarDriver;
-    set_fields_[118] = true;
+    set_fields_[120] = true;
     cannot_restart_lidar_driver_ = std::move(cannot_restart_lidar_driver);
     return *this;
   }
@@ -6651,7 +6761,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 114.
   logs::RemovedUnusedLidarDriver removed_unused_lidar_driver() && noexcept {
-    if (!set_fields_[119]) {
+    if (!set_fields_[121]) {
       return {};
     }
     return std::move(removed_unused_lidar_driver_);
@@ -6663,17 +6773,17 @@ class LogData final : public PbMessage {
   logs::RemovedUnusedLidarDriver& mutable_removed_unused_lidar_driver() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRemovedUnusedLidarDriver;
-    set_fields_[119] = true;
+    set_fields_[121] = true;
     return removed_unused_lidar_driver_;
   }
 
   /// Returns whether `removed_unused_lidar_driver` (no 114) is set.
-  constexpr bool has_removed_unused_lidar_driver() const noexcept { return set_fields_[119]; }
+  constexpr bool has_removed_unused_lidar_driver() const noexcept { return set_fields_[121]; }
 
   /// Clears `removed_unused_lidar_driver` (no 114).
   void clear_removed_unused_lidar_driver() & noexcept {
     data_ = {};
-    set_fields_[119] = false;
+    set_fields_[121] = false;
     removed_unused_lidar_driver_ = {};
   }
 
@@ -6681,7 +6791,7 @@ class LogData final : public PbMessage {
   LogData& set_removed_unused_lidar_driver(logs::RemovedUnusedLidarDriver&& removed_unused_lidar_driver) & noexcept {
     clear_data();
     data_ = DataOneof::kRemovedUnusedLidarDriver;
-    set_fields_[119] = true;
+    set_fields_[121] = true;
     removed_unused_lidar_driver_ = std::move(removed_unused_lidar_driver);
     return *this;
   }
@@ -6706,7 +6816,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 115.
   logs::CannotRemoveUnusedLidarDriver cannot_remove_unused_lidar_driver() && noexcept {
-    if (!set_fields_[120]) {
+    if (!set_fields_[122]) {
       return {};
     }
     return std::move(cannot_remove_unused_lidar_driver_);
@@ -6718,17 +6828,17 @@ class LogData final : public PbMessage {
   logs::CannotRemoveUnusedLidarDriver& mutable_cannot_remove_unused_lidar_driver() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCannotRemoveUnusedLidarDriver;
-    set_fields_[120] = true;
+    set_fields_[122] = true;
     return cannot_remove_unused_lidar_driver_;
   }
 
   /// Returns whether `cannot_remove_unused_lidar_driver` (no 115) is set.
-  constexpr bool has_cannot_remove_unused_lidar_driver() const noexcept { return set_fields_[120]; }
+  constexpr bool has_cannot_remove_unused_lidar_driver() const noexcept { return set_fields_[122]; }
 
   /// Clears `cannot_remove_unused_lidar_driver` (no 115).
   void clear_cannot_remove_unused_lidar_driver() & noexcept {
     data_ = {};
-    set_fields_[120] = false;
+    set_fields_[122] = false;
     cannot_remove_unused_lidar_driver_ = {};
   }
 
@@ -6736,7 +6846,7 @@ class LogData final : public PbMessage {
   LogData& set_cannot_remove_unused_lidar_driver(logs::CannotRemoveUnusedLidarDriver&& cannot_remove_unused_lidar_driver) & noexcept {
     clear_data();
     data_ = DataOneof::kCannotRemoveUnusedLidarDriver;
-    set_fields_[120] = true;
+    set_fields_[122] = true;
     cannot_remove_unused_lidar_driver_ = std::move(cannot_remove_unused_lidar_driver);
     return *this;
   }
@@ -6761,7 +6871,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 116.
   logs::LidarDriverGcFailure lidar_driver_gc_failure() && noexcept {
-    if (!set_fields_[121]) {
+    if (!set_fields_[123]) {
       return {};
     }
     return std::move(lidar_driver_gc_failure_);
@@ -6773,17 +6883,17 @@ class LogData final : public PbMessage {
   logs::LidarDriverGcFailure& mutable_lidar_driver_gc_failure() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLidarDriverGcFailure;
-    set_fields_[121] = true;
+    set_fields_[123] = true;
     return lidar_driver_gc_failure_;
   }
 
   /// Returns whether `lidar_driver_gc_failure` (no 116) is set.
-  constexpr bool has_lidar_driver_gc_failure() const noexcept { return set_fields_[121]; }
+  constexpr bool has_lidar_driver_gc_failure() const noexcept { return set_fields_[123]; }
 
   /// Clears `lidar_driver_gc_failure` (no 116).
   void clear_lidar_driver_gc_failure() & noexcept {
     data_ = {};
-    set_fields_[121] = false;
+    set_fields_[123] = false;
     lidar_driver_gc_failure_ = {};
   }
 
@@ -6791,7 +6901,7 @@ class LogData final : public PbMessage {
   LogData& set_lidar_driver_gc_failure(logs::LidarDriverGcFailure&& lidar_driver_gc_failure) & noexcept {
     clear_data();
     data_ = DataOneof::kLidarDriverGcFailure;
-    set_fields_[121] = true;
+    set_fields_[123] = true;
     lidar_driver_gc_failure_ = std::move(lidar_driver_gc_failure);
     return *this;
   }
@@ -6816,7 +6926,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 117.
   logs::IdSpaceExhausted id_space_exhausted() && noexcept {
-    if (!set_fields_[122]) {
+    if (!set_fields_[124]) {
       return {};
     }
     return std::move(id_space_exhausted_);
@@ -6828,17 +6938,17 @@ class LogData final : public PbMessage {
   logs::IdSpaceExhausted& mutable_id_space_exhausted() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kIdSpaceExhausted;
-    set_fields_[122] = true;
+    set_fields_[124] = true;
     return id_space_exhausted_;
   }
 
   /// Returns whether `id_space_exhausted` (no 117) is set.
-  constexpr bool has_id_space_exhausted() const noexcept { return set_fields_[122]; }
+  constexpr bool has_id_space_exhausted() const noexcept { return set_fields_[124]; }
 
   /// Clears `id_space_exhausted` (no 117).
   void clear_id_space_exhausted() & noexcept {
     data_ = {};
-    set_fields_[122] = false;
+    set_fields_[124] = false;
     id_space_exhausted_ = {};
   }
 
@@ -6846,7 +6956,7 @@ class LogData final : public PbMessage {
   LogData& set_id_space_exhausted(logs::IdSpaceExhausted&& id_space_exhausted) & noexcept {
     clear_data();
     data_ = DataOneof::kIdSpaceExhausted;
-    set_fields_[122] = true;
+    set_fields_[124] = true;
     id_space_exhausted_ = std::move(id_space_exhausted);
     return *this;
   }
@@ -6871,7 +6981,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 118.
   logs::PreprocessingToPointAggregatorPointsSkipped preprocessing_to_point_aggregator_points_skipped() && noexcept {
-    if (!set_fields_[123]) {
+    if (!set_fields_[125]) {
       return {};
     }
     return std::move(preprocessing_to_point_aggregator_points_skipped_);
@@ -6883,17 +6993,17 @@ class LogData final : public PbMessage {
   logs::PreprocessingToPointAggregatorPointsSkipped& mutable_preprocessing_to_point_aggregator_points_skipped() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kPreprocessingToPointAggregatorPointsSkipped;
-    set_fields_[123] = true;
+    set_fields_[125] = true;
     return preprocessing_to_point_aggregator_points_skipped_;
   }
 
   /// Returns whether `preprocessing_to_point_aggregator_points_skipped` (no 118) is set.
-  constexpr bool has_preprocessing_to_point_aggregator_points_skipped() const noexcept { return set_fields_[123]; }
+  constexpr bool has_preprocessing_to_point_aggregator_points_skipped() const noexcept { return set_fields_[125]; }
 
   /// Clears `preprocessing_to_point_aggregator_points_skipped` (no 118).
   void clear_preprocessing_to_point_aggregator_points_skipped() & noexcept {
     data_ = {};
-    set_fields_[123] = false;
+    set_fields_[125] = false;
     preprocessing_to_point_aggregator_points_skipped_ = {};
   }
 
@@ -6901,7 +7011,7 @@ class LogData final : public PbMessage {
   LogData& set_preprocessing_to_point_aggregator_points_skipped(logs::PreprocessingToPointAggregatorPointsSkipped&& preprocessing_to_point_aggregator_points_skipped) & noexcept {
     clear_data();
     data_ = DataOneof::kPreprocessingToPointAggregatorPointsSkipped;
-    set_fields_[123] = true;
+    set_fields_[125] = true;
     preprocessing_to_point_aggregator_points_skipped_ = std::move(preprocessing_to_point_aggregator_points_skipped);
     return *this;
   }
@@ -6926,7 +7036,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 119.
   logs::MinMsgIntervalLessThanThreshold min_msg_interval_less_than_threshold() && noexcept {
-    if (!set_fields_[124]) {
+    if (!set_fields_[126]) {
       return {};
     }
     return std::move(min_msg_interval_less_than_threshold_);
@@ -6938,17 +7048,17 @@ class LogData final : public PbMessage {
   logs::MinMsgIntervalLessThanThreshold& mutable_min_msg_interval_less_than_threshold() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kMinMsgIntervalLessThanThreshold;
-    set_fields_[124] = true;
+    set_fields_[126] = true;
     return min_msg_interval_less_than_threshold_;
   }
 
   /// Returns whether `min_msg_interval_less_than_threshold` (no 119) is set.
-  constexpr bool has_min_msg_interval_less_than_threshold() const noexcept { return set_fields_[124]; }
+  constexpr bool has_min_msg_interval_less_than_threshold() const noexcept { return set_fields_[126]; }
 
   /// Clears `min_msg_interval_less_than_threshold` (no 119).
   void clear_min_msg_interval_less_than_threshold() & noexcept {
     data_ = {};
-    set_fields_[124] = false;
+    set_fields_[126] = false;
     min_msg_interval_less_than_threshold_ = {};
   }
 
@@ -6956,7 +7066,7 @@ class LogData final : public PbMessage {
   LogData& set_min_msg_interval_less_than_threshold(logs::MinMsgIntervalLessThanThreshold&& min_msg_interval_less_than_threshold) & noexcept {
     clear_data();
     data_ = DataOneof::kMinMsgIntervalLessThanThreshold;
-    set_fields_[124] = true;
+    set_fields_[126] = true;
     min_msg_interval_less_than_threshold_ = std::move(min_msg_interval_less_than_threshold);
     return *this;
   }
@@ -6981,7 +7091,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 120.
   logs::FailedToCleanupRosWarning failed_to_cleanup_ros_warning() && noexcept {
-    if (!set_fields_[125]) {
+    if (!set_fields_[127]) {
       return {};
     }
     return std::move(failed_to_cleanup_ros_warning_);
@@ -6993,17 +7103,17 @@ class LogData final : public PbMessage {
   logs::FailedToCleanupRosWarning& mutable_failed_to_cleanup_ros_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFailedToCleanupRosWarning;
-    set_fields_[125] = true;
+    set_fields_[127] = true;
     return failed_to_cleanup_ros_warning_;
   }
 
   /// Returns whether `failed_to_cleanup_ros_warning` (no 120) is set.
-  constexpr bool has_failed_to_cleanup_ros_warning() const noexcept { return set_fields_[125]; }
+  constexpr bool has_failed_to_cleanup_ros_warning() const noexcept { return set_fields_[127]; }
 
   /// Clears `failed_to_cleanup_ros_warning` (no 120).
   void clear_failed_to_cleanup_ros_warning() & noexcept {
     data_ = {};
-    set_fields_[125] = false;
+    set_fields_[127] = false;
     failed_to_cleanup_ros_warning_ = {};
   }
 
@@ -7011,7 +7121,7 @@ class LogData final : public PbMessage {
   LogData& set_failed_to_cleanup_ros_warning(logs::FailedToCleanupRosWarning&& failed_to_cleanup_ros_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kFailedToCleanupRosWarning;
-    set_fields_[125] = true;
+    set_fields_[127] = true;
     failed_to_cleanup_ros_warning_ = std::move(failed_to_cleanup_ros_warning);
     return *this;
   }
@@ -7036,7 +7146,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 121.
   logs::RpcDisconnectedWarning rpc_disconnected_warning() && noexcept {
-    if (!set_fields_[126]) {
+    if (!set_fields_[128]) {
       return {};
     }
     return std::move(rpc_disconnected_warning_);
@@ -7048,17 +7158,17 @@ class LogData final : public PbMessage {
   logs::RpcDisconnectedWarning& mutable_rpc_disconnected_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRpcDisconnectedWarning;
-    set_fields_[126] = true;
+    set_fields_[128] = true;
     return rpc_disconnected_warning_;
   }
 
   /// Returns whether `rpc_disconnected_warning` (no 121) is set.
-  constexpr bool has_rpc_disconnected_warning() const noexcept { return set_fields_[126]; }
+  constexpr bool has_rpc_disconnected_warning() const noexcept { return set_fields_[128]; }
 
   /// Clears `rpc_disconnected_warning` (no 121).
   void clear_rpc_disconnected_warning() & noexcept {
     data_ = {};
-    set_fields_[126] = false;
+    set_fields_[128] = false;
     rpc_disconnected_warning_ = {};
   }
 
@@ -7066,7 +7176,7 @@ class LogData final : public PbMessage {
   LogData& set_rpc_disconnected_warning(logs::RpcDisconnectedWarning&& rpc_disconnected_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kRpcDisconnectedWarning;
-    set_fields_[126] = true;
+    set_fields_[128] = true;
     rpc_disconnected_warning_ = std::move(rpc_disconnected_warning);
     return *this;
   }
@@ -7091,7 +7201,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 122.
   logs::RpcUnhandledError rpc_unhandled_error() && noexcept {
-    if (!set_fields_[127]) {
+    if (!set_fields_[129]) {
       return {};
     }
     return std::move(rpc_unhandled_error_);
@@ -7103,17 +7213,17 @@ class LogData final : public PbMessage {
   logs::RpcUnhandledError& mutable_rpc_unhandled_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRpcUnhandledError;
-    set_fields_[127] = true;
+    set_fields_[129] = true;
     return rpc_unhandled_error_;
   }
 
   /// Returns whether `rpc_unhandled_error` (no 122) is set.
-  constexpr bool has_rpc_unhandled_error() const noexcept { return set_fields_[127]; }
+  constexpr bool has_rpc_unhandled_error() const noexcept { return set_fields_[129]; }
 
   /// Clears `rpc_unhandled_error` (no 122).
   void clear_rpc_unhandled_error() & noexcept {
     data_ = {};
-    set_fields_[127] = false;
+    set_fields_[129] = false;
     rpc_unhandled_error_ = {};
   }
 
@@ -7121,7 +7231,7 @@ class LogData final : public PbMessage {
   LogData& set_rpc_unhandled_error(logs::RpcUnhandledError&& rpc_unhandled_error) & noexcept {
     clear_data();
     data_ = DataOneof::kRpcUnhandledError;
-    set_fields_[127] = true;
+    set_fields_[129] = true;
     rpc_unhandled_error_ = std::move(rpc_unhandled_error);
     return *this;
   }
@@ -7146,7 +7256,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 123.
   logs::TimeDiffOutOfRangeWarning time_diff_out_of_range_warning() && noexcept {
-    if (!set_fields_[128]) {
+    if (!set_fields_[130]) {
       return {};
     }
     return std::move(time_diff_out_of_range_warning_);
@@ -7158,17 +7268,17 @@ class LogData final : public PbMessage {
   logs::TimeDiffOutOfRangeWarning& mutable_time_diff_out_of_range_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kTimeDiffOutOfRangeWarning;
-    set_fields_[128] = true;
+    set_fields_[130] = true;
     return time_diff_out_of_range_warning_;
   }
 
   /// Returns whether `time_diff_out_of_range_warning` (no 123) is set.
-  constexpr bool has_time_diff_out_of_range_warning() const noexcept { return set_fields_[128]; }
+  constexpr bool has_time_diff_out_of_range_warning() const noexcept { return set_fields_[130]; }
 
   /// Clears `time_diff_out_of_range_warning` (no 123).
   void clear_time_diff_out_of_range_warning() & noexcept {
     data_ = {};
-    set_fields_[128] = false;
+    set_fields_[130] = false;
     time_diff_out_of_range_warning_ = {};
   }
 
@@ -7176,7 +7286,7 @@ class LogData final : public PbMessage {
   LogData& set_time_diff_out_of_range_warning(logs::TimeDiffOutOfRangeWarning&& time_diff_out_of_range_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kTimeDiffOutOfRangeWarning;
-    set_fields_[128] = true;
+    set_fields_[130] = true;
     time_diff_out_of_range_warning_ = std::move(time_diff_out_of_range_warning);
     return *this;
   }
@@ -7201,7 +7311,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 124.
   logs::TensorrtLog tensorrt_log() && noexcept {
-    if (!set_fields_[129]) {
+    if (!set_fields_[131]) {
       return {};
     }
     return std::move(tensorrt_log_);
@@ -7213,17 +7323,17 @@ class LogData final : public PbMessage {
   logs::TensorrtLog& mutable_tensorrt_log() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kTensorrtLog;
-    set_fields_[129] = true;
+    set_fields_[131] = true;
     return tensorrt_log_;
   }
 
   /// Returns whether `tensorrt_log` (no 124) is set.
-  constexpr bool has_tensorrt_log() const noexcept { return set_fields_[129]; }
+  constexpr bool has_tensorrt_log() const noexcept { return set_fields_[131]; }
 
   /// Clears `tensorrt_log` (no 124).
   void clear_tensorrt_log() & noexcept {
     data_ = {};
-    set_fields_[129] = false;
+    set_fields_[131] = false;
     tensorrt_log_ = {};
   }
 
@@ -7231,7 +7341,7 @@ class LogData final : public PbMessage {
   LogData& set_tensorrt_log(logs::TensorrtLog&& tensorrt_log) & noexcept {
     clear_data();
     data_ = DataOneof::kTensorrtLog;
-    set_fields_[129] = true;
+    set_fields_[131] = true;
     tensorrt_log_ = std::move(tensorrt_log);
     return *this;
   }
@@ -7256,7 +7366,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 125.
   logs::BuildingTensorrtEngineInfo building_tensorrt_engine_info() && noexcept {
-    if (!set_fields_[130]) {
+    if (!set_fields_[132]) {
       return {};
     }
     return std::move(building_tensorrt_engine_info_);
@@ -7268,17 +7378,17 @@ class LogData final : public PbMessage {
   logs::BuildingTensorrtEngineInfo& mutable_building_tensorrt_engine_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBuildingTensorrtEngineInfo;
-    set_fields_[130] = true;
+    set_fields_[132] = true;
     return building_tensorrt_engine_info_;
   }
 
   /// Returns whether `building_tensorrt_engine_info` (no 125) is set.
-  constexpr bool has_building_tensorrt_engine_info() const noexcept { return set_fields_[130]; }
+  constexpr bool has_building_tensorrt_engine_info() const noexcept { return set_fields_[132]; }
 
   /// Clears `building_tensorrt_engine_info` (no 125).
   void clear_building_tensorrt_engine_info() & noexcept {
     data_ = {};
-    set_fields_[130] = false;
+    set_fields_[132] = false;
     building_tensorrt_engine_info_ = {};
   }
 
@@ -7286,7 +7396,7 @@ class LogData final : public PbMessage {
   LogData& set_building_tensorrt_engine_info(logs::BuildingTensorrtEngineInfo&& building_tensorrt_engine_info) & noexcept {
     clear_data();
     data_ = DataOneof::kBuildingTensorrtEngineInfo;
-    set_fields_[130] = true;
+    set_fields_[132] = true;
     building_tensorrt_engine_info_ = std::move(building_tensorrt_engine_info);
     return *this;
   }
@@ -7311,7 +7421,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 126.
   logs::LoadingTensorrtEngineInfo loading_tensorrt_engine_info() && noexcept {
-    if (!set_fields_[131]) {
+    if (!set_fields_[133]) {
       return {};
     }
     return std::move(loading_tensorrt_engine_info_);
@@ -7323,17 +7433,17 @@ class LogData final : public PbMessage {
   logs::LoadingTensorrtEngineInfo& mutable_loading_tensorrt_engine_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLoadingTensorrtEngineInfo;
-    set_fields_[131] = true;
+    set_fields_[133] = true;
     return loading_tensorrt_engine_info_;
   }
 
   /// Returns whether `loading_tensorrt_engine_info` (no 126) is set.
-  constexpr bool has_loading_tensorrt_engine_info() const noexcept { return set_fields_[131]; }
+  constexpr bool has_loading_tensorrt_engine_info() const noexcept { return set_fields_[133]; }
 
   /// Clears `loading_tensorrt_engine_info` (no 126).
   void clear_loading_tensorrt_engine_info() & noexcept {
     data_ = {};
-    set_fields_[131] = false;
+    set_fields_[133] = false;
     loading_tensorrt_engine_info_ = {};
   }
 
@@ -7341,7 +7451,7 @@ class LogData final : public PbMessage {
   LogData& set_loading_tensorrt_engine_info(logs::LoadingTensorrtEngineInfo&& loading_tensorrt_engine_info) & noexcept {
     clear_data();
     data_ = DataOneof::kLoadingTensorrtEngineInfo;
-    set_fields_[131] = true;
+    set_fields_[133] = true;
     loading_tensorrt_engine_info_ = std::move(loading_tensorrt_engine_info);
     return *this;
   }
@@ -7366,7 +7476,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 127.
   logs::CalibrationMapNotFound calibration_map_not_found() && noexcept {
-    if (!set_fields_[132]) {
+    if (!set_fields_[134]) {
       return {};
     }
     return std::move(calibration_map_not_found_);
@@ -7378,17 +7488,17 @@ class LogData final : public PbMessage {
   logs::CalibrationMapNotFound& mutable_calibration_map_not_found() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCalibrationMapNotFound;
-    set_fields_[132] = true;
+    set_fields_[134] = true;
     return calibration_map_not_found_;
   }
 
   /// Returns whether `calibration_map_not_found` (no 127) is set.
-  constexpr bool has_calibration_map_not_found() const noexcept { return set_fields_[132]; }
+  constexpr bool has_calibration_map_not_found() const noexcept { return set_fields_[134]; }
 
   /// Clears `calibration_map_not_found` (no 127).
   void clear_calibration_map_not_found() & noexcept {
     data_ = {};
-    set_fields_[132] = false;
+    set_fields_[134] = false;
     calibration_map_not_found_ = {};
   }
 
@@ -7396,7 +7506,7 @@ class LogData final : public PbMessage {
   LogData& set_calibration_map_not_found(logs::CalibrationMapNotFound&& calibration_map_not_found) & noexcept {
     clear_data();
     data_ = DataOneof::kCalibrationMapNotFound;
-    set_fields_[132] = true;
+    set_fields_[134] = true;
     calibration_map_not_found_ = std::move(calibration_map_not_found);
     return *this;
   }
@@ -7421,7 +7531,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 128.
   logs::CalibrationMapNotValid calibration_map_not_valid() && noexcept {
-    if (!set_fields_[133]) {
+    if (!set_fields_[135]) {
       return {};
     }
     return std::move(calibration_map_not_valid_);
@@ -7433,17 +7543,17 @@ class LogData final : public PbMessage {
   logs::CalibrationMapNotValid& mutable_calibration_map_not_valid() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCalibrationMapNotValid;
-    set_fields_[133] = true;
+    set_fields_[135] = true;
     return calibration_map_not_valid_;
   }
 
   /// Returns whether `calibration_map_not_valid` (no 128) is set.
-  constexpr bool has_calibration_map_not_valid() const noexcept { return set_fields_[133]; }
+  constexpr bool has_calibration_map_not_valid() const noexcept { return set_fields_[135]; }
 
   /// Clears `calibration_map_not_valid` (no 128).
   void clear_calibration_map_not_valid() & noexcept {
     data_ = {};
-    set_fields_[133] = false;
+    set_fields_[135] = false;
     calibration_map_not_valid_ = {};
   }
 
@@ -7451,7 +7561,7 @@ class LogData final : public PbMessage {
   LogData& set_calibration_map_not_valid(logs::CalibrationMapNotValid&& calibration_map_not_valid) & noexcept {
     clear_data();
     data_ = DataOneof::kCalibrationMapNotValid;
-    set_fields_[133] = true;
+    set_fields_[135] = true;
     calibration_map_not_valid_ = std::move(calibration_map_not_valid);
     return *this;
   }
@@ -7476,7 +7586,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 129.
   logs::CalibrationMapPathAlreadyExists calibration_map_path_already_exists() && noexcept {
-    if (!set_fields_[134]) {
+    if (!set_fields_[136]) {
       return {};
     }
     return std::move(calibration_map_path_already_exists_);
@@ -7488,17 +7598,17 @@ class LogData final : public PbMessage {
   logs::CalibrationMapPathAlreadyExists& mutable_calibration_map_path_already_exists() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCalibrationMapPathAlreadyExists;
-    set_fields_[134] = true;
+    set_fields_[136] = true;
     return calibration_map_path_already_exists_;
   }
 
   /// Returns whether `calibration_map_path_already_exists` (no 129) is set.
-  constexpr bool has_calibration_map_path_already_exists() const noexcept { return set_fields_[134]; }
+  constexpr bool has_calibration_map_path_already_exists() const noexcept { return set_fields_[136]; }
 
   /// Clears `calibration_map_path_already_exists` (no 129).
   void clear_calibration_map_path_already_exists() & noexcept {
     data_ = {};
-    set_fields_[134] = false;
+    set_fields_[136] = false;
     calibration_map_path_already_exists_ = {};
   }
 
@@ -7506,7 +7616,7 @@ class LogData final : public PbMessage {
   LogData& set_calibration_map_path_already_exists(logs::CalibrationMapPathAlreadyExists&& calibration_map_path_already_exists) & noexcept {
     clear_data();
     data_ = DataOneof::kCalibrationMapPathAlreadyExists;
-    set_fields_[134] = true;
+    set_fields_[136] = true;
     calibration_map_path_already_exists_ = std::move(calibration_map_path_already_exists);
     return *this;
   }
@@ -7531,7 +7641,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 130.
   logs::FailedToSaveCalibrationMap failed_to_save_calibration_map() && noexcept {
-    if (!set_fields_[135]) {
+    if (!set_fields_[137]) {
       return {};
     }
     return std::move(failed_to_save_calibration_map_);
@@ -7543,17 +7653,17 @@ class LogData final : public PbMessage {
   logs::FailedToSaveCalibrationMap& mutable_failed_to_save_calibration_map() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFailedToSaveCalibrationMap;
-    set_fields_[135] = true;
+    set_fields_[137] = true;
     return failed_to_save_calibration_map_;
   }
 
   /// Returns whether `failed_to_save_calibration_map` (no 130) is set.
-  constexpr bool has_failed_to_save_calibration_map() const noexcept { return set_fields_[135]; }
+  constexpr bool has_failed_to_save_calibration_map() const noexcept { return set_fields_[137]; }
 
   /// Clears `failed_to_save_calibration_map` (no 130).
   void clear_failed_to_save_calibration_map() & noexcept {
     data_ = {};
-    set_fields_[135] = false;
+    set_fields_[137] = false;
     failed_to_save_calibration_map_ = {};
   }
 
@@ -7561,7 +7671,7 @@ class LogData final : public PbMessage {
   LogData& set_failed_to_save_calibration_map(logs::FailedToSaveCalibrationMap&& failed_to_save_calibration_map) & noexcept {
     clear_data();
     data_ = DataOneof::kFailedToSaveCalibrationMap;
-    set_fields_[135] = true;
+    set_fields_[137] = true;
     failed_to_save_calibration_map_ = std::move(failed_to_save_calibration_map);
     return *this;
   }
@@ -7586,7 +7696,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 131.
   logs::FailedToRemoveCalibrationMap failed_to_remove_calibration_map() && noexcept {
-    if (!set_fields_[136]) {
+    if (!set_fields_[138]) {
       return {};
     }
     return std::move(failed_to_remove_calibration_map_);
@@ -7598,17 +7708,17 @@ class LogData final : public PbMessage {
   logs::FailedToRemoveCalibrationMap& mutable_failed_to_remove_calibration_map() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFailedToRemoveCalibrationMap;
-    set_fields_[136] = true;
+    set_fields_[138] = true;
     return failed_to_remove_calibration_map_;
   }
 
   /// Returns whether `failed_to_remove_calibration_map` (no 131) is set.
-  constexpr bool has_failed_to_remove_calibration_map() const noexcept { return set_fields_[136]; }
+  constexpr bool has_failed_to_remove_calibration_map() const noexcept { return set_fields_[138]; }
 
   /// Clears `failed_to_remove_calibration_map` (no 131).
   void clear_failed_to_remove_calibration_map() & noexcept {
     data_ = {};
-    set_fields_[136] = false;
+    set_fields_[138] = false;
     failed_to_remove_calibration_map_ = {};
   }
 
@@ -7616,7 +7726,7 @@ class LogData final : public PbMessage {
   LogData& set_failed_to_remove_calibration_map(logs::FailedToRemoveCalibrationMap&& failed_to_remove_calibration_map) & noexcept {
     clear_data();
     data_ = DataOneof::kFailedToRemoveCalibrationMap;
-    set_fields_[136] = true;
+    set_fields_[138] = true;
     failed_to_remove_calibration_map_ = std::move(failed_to_remove_calibration_map);
     return *this;
   }
@@ -7641,7 +7751,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 132.
   logs::FailedToIterateInDirectory failed_to_iterate_in_directory() && noexcept {
-    if (!set_fields_[137]) {
+    if (!set_fields_[139]) {
       return {};
     }
     return std::move(failed_to_iterate_in_directory_);
@@ -7653,17 +7763,17 @@ class LogData final : public PbMessage {
   logs::FailedToIterateInDirectory& mutable_failed_to_iterate_in_directory() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFailedToIterateInDirectory;
-    set_fields_[137] = true;
+    set_fields_[139] = true;
     return failed_to_iterate_in_directory_;
   }
 
   /// Returns whether `failed_to_iterate_in_directory` (no 132) is set.
-  constexpr bool has_failed_to_iterate_in_directory() const noexcept { return set_fields_[137]; }
+  constexpr bool has_failed_to_iterate_in_directory() const noexcept { return set_fields_[139]; }
 
   /// Clears `failed_to_iterate_in_directory` (no 132).
   void clear_failed_to_iterate_in_directory() & noexcept {
     data_ = {};
-    set_fields_[137] = false;
+    set_fields_[139] = false;
     failed_to_iterate_in_directory_ = {};
   }
 
@@ -7671,7 +7781,7 @@ class LogData final : public PbMessage {
   LogData& set_failed_to_iterate_in_directory(logs::FailedToIterateInDirectory&& failed_to_iterate_in_directory) & noexcept {
     clear_data();
     data_ = DataOneof::kFailedToIterateInDirectory;
-    set_fields_[137] = true;
+    set_fields_[139] = true;
     failed_to_iterate_in_directory_ = std::move(failed_to_iterate_in_directory);
     return *this;
   }
@@ -7696,7 +7806,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 133.
   logs::MapBasedCalibrationWithoutMapLoading map_based_calibration_without_map_loading() && noexcept {
-    if (!set_fields_[138]) {
+    if (!set_fields_[140]) {
       return {};
     }
     return std::move(map_based_calibration_without_map_loading_);
@@ -7708,17 +7818,17 @@ class LogData final : public PbMessage {
   logs::MapBasedCalibrationWithoutMapLoading& mutable_map_based_calibration_without_map_loading() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kMapBasedCalibrationWithoutMapLoading;
-    set_fields_[138] = true;
+    set_fields_[140] = true;
     return map_based_calibration_without_map_loading_;
   }
 
   /// Returns whether `map_based_calibration_without_map_loading` (no 133) is set.
-  constexpr bool has_map_based_calibration_without_map_loading() const noexcept { return set_fields_[138]; }
+  constexpr bool has_map_based_calibration_without_map_loading() const noexcept { return set_fields_[140]; }
 
   /// Clears `map_based_calibration_without_map_loading` (no 133).
   void clear_map_based_calibration_without_map_loading() & noexcept {
     data_ = {};
-    set_fields_[138] = false;
+    set_fields_[140] = false;
     map_based_calibration_without_map_loading_ = {};
   }
 
@@ -7726,7 +7836,7 @@ class LogData final : public PbMessage {
   LogData& set_map_based_calibration_without_map_loading(logs::MapBasedCalibrationWithoutMapLoading&& map_based_calibration_without_map_loading) & noexcept {
     clear_data();
     data_ = DataOneof::kMapBasedCalibrationWithoutMapLoading;
-    set_fields_[138] = true;
+    set_fields_[140] = true;
     map_based_calibration_without_map_loading_ = std::move(map_based_calibration_without_map_loading);
     return *this;
   }
@@ -7751,7 +7861,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 134.
   logs::MapBasedCalibrationAlreadyRunning map_based_calibration_already_running() && noexcept {
-    if (!set_fields_[139]) {
+    if (!set_fields_[141]) {
       return {};
     }
     return std::move(map_based_calibration_already_running_);
@@ -7763,17 +7873,17 @@ class LogData final : public PbMessage {
   logs::MapBasedCalibrationAlreadyRunning& mutable_map_based_calibration_already_running() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kMapBasedCalibrationAlreadyRunning;
-    set_fields_[139] = true;
+    set_fields_[141] = true;
     return map_based_calibration_already_running_;
   }
 
   /// Returns whether `map_based_calibration_already_running` (no 134) is set.
-  constexpr bool has_map_based_calibration_already_running() const noexcept { return set_fields_[139]; }
+  constexpr bool has_map_based_calibration_already_running() const noexcept { return set_fields_[141]; }
 
   /// Clears `map_based_calibration_already_running` (no 134).
   void clear_map_based_calibration_already_running() & noexcept {
     data_ = {};
-    set_fields_[139] = false;
+    set_fields_[141] = false;
     map_based_calibration_already_running_ = {};
   }
 
@@ -7781,7 +7891,7 @@ class LogData final : public PbMessage {
   LogData& set_map_based_calibration_already_running(logs::MapBasedCalibrationAlreadyRunning&& map_based_calibration_already_running) & noexcept {
     clear_data();
     data_ = DataOneof::kMapBasedCalibrationAlreadyRunning;
-    set_fields_[139] = true;
+    set_fields_[141] = true;
     map_based_calibration_already_running_ = std::move(map_based_calibration_already_running);
     return *this;
   }
@@ -7806,7 +7916,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 135.
   logs::CancelMapBasedCalibrationNotRunning cancel_map_based_calibration_not_running() && noexcept {
-    if (!set_fields_[140]) {
+    if (!set_fields_[142]) {
       return {};
     }
     return std::move(cancel_map_based_calibration_not_running_);
@@ -7818,17 +7928,17 @@ class LogData final : public PbMessage {
   logs::CancelMapBasedCalibrationNotRunning& mutable_cancel_map_based_calibration_not_running() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCancelMapBasedCalibrationNotRunning;
-    set_fields_[140] = true;
+    set_fields_[142] = true;
     return cancel_map_based_calibration_not_running_;
   }
 
   /// Returns whether `cancel_map_based_calibration_not_running` (no 135) is set.
-  constexpr bool has_cancel_map_based_calibration_not_running() const noexcept { return set_fields_[140]; }
+  constexpr bool has_cancel_map_based_calibration_not_running() const noexcept { return set_fields_[142]; }
 
   /// Clears `cancel_map_based_calibration_not_running` (no 135).
   void clear_cancel_map_based_calibration_not_running() & noexcept {
     data_ = {};
-    set_fields_[140] = false;
+    set_fields_[142] = false;
     cancel_map_based_calibration_not_running_ = {};
   }
 
@@ -7836,7 +7946,7 @@ class LogData final : public PbMessage {
   LogData& set_cancel_map_based_calibration_not_running(logs::CancelMapBasedCalibrationNotRunning&& cancel_map_based_calibration_not_running) & noexcept {
     clear_data();
     data_ = DataOneof::kCancelMapBasedCalibrationNotRunning;
-    set_fields_[140] = true;
+    set_fields_[142] = true;
     cancel_map_based_calibration_not_running_ = std::move(cancel_map_based_calibration_not_running);
     return *this;
   }
@@ -7861,7 +7971,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 136.
   logs::BagStreamNotFound bag_stream_not_found() && noexcept {
-    if (!set_fields_[141]) {
+    if (!set_fields_[143]) {
       return {};
     }
     return std::move(bag_stream_not_found_);
@@ -7873,17 +7983,17 @@ class LogData final : public PbMessage {
   logs::BagStreamNotFound& mutable_bag_stream_not_found() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagStreamNotFound;
-    set_fields_[141] = true;
+    set_fields_[143] = true;
     return bag_stream_not_found_;
   }
 
   /// Returns whether `bag_stream_not_found` (no 136) is set.
-  constexpr bool has_bag_stream_not_found() const noexcept { return set_fields_[141]; }
+  constexpr bool has_bag_stream_not_found() const noexcept { return set_fields_[143]; }
 
   /// Clears `bag_stream_not_found` (no 136).
   void clear_bag_stream_not_found() & noexcept {
     data_ = {};
-    set_fields_[141] = false;
+    set_fields_[143] = false;
     bag_stream_not_found_ = {};
   }
 
@@ -7891,7 +8001,7 @@ class LogData final : public PbMessage {
   LogData& set_bag_stream_not_found(logs::BagStreamNotFound&& bag_stream_not_found) & noexcept {
     clear_data();
     data_ = DataOneof::kBagStreamNotFound;
-    set_fields_[141] = true;
+    set_fields_[143] = true;
     bag_stream_not_found_ = std::move(bag_stream_not_found);
     return *this;
   }
@@ -7916,7 +8026,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 137.
   logs::EvaluationBagStartedInfo evaluation_bag_started_info() && noexcept {
-    if (!set_fields_[142]) {
+    if (!set_fields_[144]) {
       return {};
     }
     return std::move(evaluation_bag_started_info_);
@@ -7928,17 +8038,17 @@ class LogData final : public PbMessage {
   logs::EvaluationBagStartedInfo& mutable_evaluation_bag_started_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kEvaluationBagStartedInfo;
-    set_fields_[142] = true;
+    set_fields_[144] = true;
     return evaluation_bag_started_info_;
   }
 
   /// Returns whether `evaluation_bag_started_info` (no 137) is set.
-  constexpr bool has_evaluation_bag_started_info() const noexcept { return set_fields_[142]; }
+  constexpr bool has_evaluation_bag_started_info() const noexcept { return set_fields_[144]; }
 
   /// Clears `evaluation_bag_started_info` (no 137).
   void clear_evaluation_bag_started_info() & noexcept {
     data_ = {};
-    set_fields_[142] = false;
+    set_fields_[144] = false;
     evaluation_bag_started_info_ = {};
   }
 
@@ -7946,7 +8056,7 @@ class LogData final : public PbMessage {
   LogData& set_evaluation_bag_started_info(logs::EvaluationBagStartedInfo&& evaluation_bag_started_info) & noexcept {
     clear_data();
     data_ = DataOneof::kEvaluationBagStartedInfo;
-    set_fields_[142] = true;
+    set_fields_[144] = true;
     evaluation_bag_started_info_ = std::move(evaluation_bag_started_info);
     return *this;
   }
@@ -7971,7 +8081,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 138.
   logs::EvaluationBagFinishedInfo evaluation_bag_finished_info() && noexcept {
-    if (!set_fields_[143]) {
+    if (!set_fields_[145]) {
       return {};
     }
     return std::move(evaluation_bag_finished_info_);
@@ -7983,17 +8093,17 @@ class LogData final : public PbMessage {
   logs::EvaluationBagFinishedInfo& mutable_evaluation_bag_finished_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kEvaluationBagFinishedInfo;
-    set_fields_[143] = true;
+    set_fields_[145] = true;
     return evaluation_bag_finished_info_;
   }
 
   /// Returns whether `evaluation_bag_finished_info` (no 138) is set.
-  constexpr bool has_evaluation_bag_finished_info() const noexcept { return set_fields_[143]; }
+  constexpr bool has_evaluation_bag_finished_info() const noexcept { return set_fields_[145]; }
 
   /// Clears `evaluation_bag_finished_info` (no 138).
   void clear_evaluation_bag_finished_info() & noexcept {
     data_ = {};
-    set_fields_[143] = false;
+    set_fields_[145] = false;
     evaluation_bag_finished_info_ = {};
   }
 
@@ -8001,7 +8111,7 @@ class LogData final : public PbMessage {
   LogData& set_evaluation_bag_finished_info(logs::EvaluationBagFinishedInfo&& evaluation_bag_finished_info) & noexcept {
     clear_data();
     data_ = DataOneof::kEvaluationBagFinishedInfo;
-    set_fields_[143] = true;
+    set_fields_[145] = true;
     evaluation_bag_finished_info_ = std::move(evaluation_bag_finished_info);
     return *this;
   }
@@ -8026,7 +8136,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 139.
   logs::BagNotFound bag_not_found() && noexcept {
-    if (!set_fields_[144]) {
+    if (!set_fields_[146]) {
       return {};
     }
     return std::move(bag_not_found_);
@@ -8038,17 +8148,17 @@ class LogData final : public PbMessage {
   logs::BagNotFound& mutable_bag_not_found() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagNotFound;
-    set_fields_[144] = true;
+    set_fields_[146] = true;
     return bag_not_found_;
   }
 
   /// Returns whether `bag_not_found` (no 139) is set.
-  constexpr bool has_bag_not_found() const noexcept { return set_fields_[144]; }
+  constexpr bool has_bag_not_found() const noexcept { return set_fields_[146]; }
 
   /// Clears `bag_not_found` (no 139).
   void clear_bag_not_found() & noexcept {
     data_ = {};
-    set_fields_[144] = false;
+    set_fields_[146] = false;
     bag_not_found_ = {};
   }
 
@@ -8056,7 +8166,7 @@ class LogData final : public PbMessage {
   LogData& set_bag_not_found(logs::BagNotFound&& bag_not_found) & noexcept {
     clear_data();
     data_ = DataOneof::kBagNotFound;
-    set_fields_[144] = true;
+    set_fields_[146] = true;
     bag_not_found_ = std::move(bag_not_found);
     return *this;
   }
@@ -8081,7 +8191,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 140.
   logs::BuildingPipelineInfo building_pipeline_info() && noexcept {
-    if (!set_fields_[145]) {
+    if (!set_fields_[147]) {
       return {};
     }
     return std::move(building_pipeline_info_);
@@ -8093,17 +8203,17 @@ class LogData final : public PbMessage {
   logs::BuildingPipelineInfo& mutable_building_pipeline_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBuildingPipelineInfo;
-    set_fields_[145] = true;
+    set_fields_[147] = true;
     return building_pipeline_info_;
   }
 
   /// Returns whether `building_pipeline_info` (no 140) is set.
-  constexpr bool has_building_pipeline_info() const noexcept { return set_fields_[145]; }
+  constexpr bool has_building_pipeline_info() const noexcept { return set_fields_[147]; }
 
   /// Clears `building_pipeline_info` (no 140).
   void clear_building_pipeline_info() & noexcept {
     data_ = {};
-    set_fields_[145] = false;
+    set_fields_[147] = false;
     building_pipeline_info_ = {};
   }
 
@@ -8111,7 +8221,7 @@ class LogData final : public PbMessage {
   LogData& set_building_pipeline_info(logs::BuildingPipelineInfo&& building_pipeline_info) & noexcept {
     clear_data();
     data_ = DataOneof::kBuildingPipelineInfo;
-    set_fields_[145] = true;
+    set_fields_[147] = true;
     building_pipeline_info_ = std::move(building_pipeline_info);
     return *this;
   }
@@ -8136,7 +8246,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 141.
   logs::BagIsNotEvaluation bag_is_not_evaluation() && noexcept {
-    if (!set_fields_[146]) {
+    if (!set_fields_[148]) {
       return {};
     }
     return std::move(bag_is_not_evaluation_);
@@ -8148,17 +8258,17 @@ class LogData final : public PbMessage {
   logs::BagIsNotEvaluation& mutable_bag_is_not_evaluation() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagIsNotEvaluation;
-    set_fields_[146] = true;
+    set_fields_[148] = true;
     return bag_is_not_evaluation_;
   }
 
   /// Returns whether `bag_is_not_evaluation` (no 141) is set.
-  constexpr bool has_bag_is_not_evaluation() const noexcept { return set_fields_[146]; }
+  constexpr bool has_bag_is_not_evaluation() const noexcept { return set_fields_[148]; }
 
   /// Clears `bag_is_not_evaluation` (no 141).
   void clear_bag_is_not_evaluation() & noexcept {
     data_ = {};
-    set_fields_[146] = false;
+    set_fields_[148] = false;
     bag_is_not_evaluation_ = {};
   }
 
@@ -8166,7 +8276,7 @@ class LogData final : public PbMessage {
   LogData& set_bag_is_not_evaluation(logs::BagIsNotEvaluation&& bag_is_not_evaluation) & noexcept {
     clear_data();
     data_ = DataOneof::kBagIsNotEvaluation;
-    set_fields_[146] = true;
+    set_fields_[148] = true;
     bag_is_not_evaluation_ = std::move(bag_is_not_evaluation);
     return *this;
   }
@@ -8191,7 +8301,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 142.
   logs::HorusBagRunning horus_bag_running() && noexcept {
-    if (!set_fields_[147]) {
+    if (!set_fields_[149]) {
       return {};
     }
     return std::move(horus_bag_running_);
@@ -8203,17 +8313,17 @@ class LogData final : public PbMessage {
   logs::HorusBagRunning& mutable_horus_bag_running() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kHorusBagRunning;
-    set_fields_[147] = true;
+    set_fields_[149] = true;
     return horus_bag_running_;
   }
 
   /// Returns whether `horus_bag_running` (no 142) is set.
-  constexpr bool has_horus_bag_running() const noexcept { return set_fields_[147]; }
+  constexpr bool has_horus_bag_running() const noexcept { return set_fields_[149]; }
 
   /// Clears `horus_bag_running` (no 142).
   void clear_horus_bag_running() & noexcept {
     data_ = {};
-    set_fields_[147] = false;
+    set_fields_[149] = false;
     horus_bag_running_ = {};
   }
 
@@ -8221,7 +8331,7 @@ class LogData final : public PbMessage {
   LogData& set_horus_bag_running(logs::HorusBagRunning&& horus_bag_running) & noexcept {
     clear_data();
     data_ = DataOneof::kHorusBagRunning;
-    set_fields_[147] = true;
+    set_fields_[149] = true;
     horus_bag_running_ = std::move(horus_bag_running);
     return *this;
   }
@@ -8246,7 +8356,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 143.
   logs::AutoGroundCalibrationWarning auto_ground_calibration_warning() && noexcept {
-    if (!set_fields_[148]) {
+    if (!set_fields_[150]) {
       return {};
     }
     return std::move(auto_ground_calibration_warning_);
@@ -8258,17 +8368,17 @@ class LogData final : public PbMessage {
   logs::AutoGroundCalibrationWarning& mutable_auto_ground_calibration_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kAutoGroundCalibrationWarning;
-    set_fields_[148] = true;
+    set_fields_[150] = true;
     return auto_ground_calibration_warning_;
   }
 
   /// Returns whether `auto_ground_calibration_warning` (no 143) is set.
-  constexpr bool has_auto_ground_calibration_warning() const noexcept { return set_fields_[148]; }
+  constexpr bool has_auto_ground_calibration_warning() const noexcept { return set_fields_[150]; }
 
   /// Clears `auto_ground_calibration_warning` (no 143).
   void clear_auto_ground_calibration_warning() & noexcept {
     data_ = {};
-    set_fields_[148] = false;
+    set_fields_[150] = false;
     auto_ground_calibration_warning_ = {};
   }
 
@@ -8276,7 +8386,7 @@ class LogData final : public PbMessage {
   LogData& set_auto_ground_calibration_warning(logs::AutoGroundCalibrationWarning&& auto_ground_calibration_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kAutoGroundCalibrationWarning;
-    set_fields_[148] = true;
+    set_fields_[150] = true;
     auto_ground_calibration_warning_ = std::move(auto_ground_calibration_warning);
     return *this;
   }
@@ -8301,7 +8411,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 144.
   logs::AutoGroundCalibrationError auto_ground_calibration_error() && noexcept {
-    if (!set_fields_[149]) {
+    if (!set_fields_[151]) {
       return {};
     }
     return std::move(auto_ground_calibration_error_);
@@ -8313,17 +8423,17 @@ class LogData final : public PbMessage {
   logs::AutoGroundCalibrationError& mutable_auto_ground_calibration_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kAutoGroundCalibrationError;
-    set_fields_[149] = true;
+    set_fields_[151] = true;
     return auto_ground_calibration_error_;
   }
 
   /// Returns whether `auto_ground_calibration_error` (no 144) is set.
-  constexpr bool has_auto_ground_calibration_error() const noexcept { return set_fields_[149]; }
+  constexpr bool has_auto_ground_calibration_error() const noexcept { return set_fields_[151]; }
 
   /// Clears `auto_ground_calibration_error` (no 144).
   void clear_auto_ground_calibration_error() & noexcept {
     data_ = {};
-    set_fields_[149] = false;
+    set_fields_[151] = false;
     auto_ground_calibration_error_ = {};
   }
 
@@ -8331,7 +8441,7 @@ class LogData final : public PbMessage {
   LogData& set_auto_ground_calibration_error(logs::AutoGroundCalibrationError&& auto_ground_calibration_error) & noexcept {
     clear_data();
     data_ = DataOneof::kAutoGroundCalibrationError;
-    set_fields_[149] = true;
+    set_fields_[151] = true;
     auto_ground_calibration_error_ = std::move(auto_ground_calibration_error);
     return *this;
   }
@@ -8356,7 +8466,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 151.
   logs::ObjectDetectorNotLoadedWarning object_detector_not_loaded_warning() && noexcept {
-    if (!set_fields_[150]) {
+    if (!set_fields_[152]) {
       return {};
     }
     return std::move(object_detector_not_loaded_warning_);
@@ -8368,17 +8478,17 @@ class LogData final : public PbMessage {
   logs::ObjectDetectorNotLoadedWarning& mutable_object_detector_not_loaded_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kObjectDetectorNotLoadedWarning;
-    set_fields_[150] = true;
+    set_fields_[152] = true;
     return object_detector_not_loaded_warning_;
   }
 
   /// Returns whether `object_detector_not_loaded_warning` (no 151) is set.
-  constexpr bool has_object_detector_not_loaded_warning() const noexcept { return set_fields_[150]; }
+  constexpr bool has_object_detector_not_loaded_warning() const noexcept { return set_fields_[152]; }
 
   /// Clears `object_detector_not_loaded_warning` (no 151).
   void clear_object_detector_not_loaded_warning() & noexcept {
     data_ = {};
-    set_fields_[150] = false;
+    set_fields_[152] = false;
     object_detector_not_loaded_warning_ = {};
   }
 
@@ -8386,7 +8496,7 @@ class LogData final : public PbMessage {
   LogData& set_object_detector_not_loaded_warning(logs::ObjectDetectorNotLoadedWarning&& object_detector_not_loaded_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kObjectDetectorNotLoadedWarning;
-    set_fields_[150] = true;
+    set_fields_[152] = true;
     object_detector_not_loaded_warning_ = std::move(object_detector_not_loaded_warning);
     return *this;
   }
@@ -8411,7 +8521,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 152.
   logs::CalibrationIsRunningError calibration_is_running_error() && noexcept {
-    if (!set_fields_[151]) {
+    if (!set_fields_[153]) {
       return {};
     }
     return std::move(calibration_is_running_error_);
@@ -8423,17 +8533,17 @@ class LogData final : public PbMessage {
   logs::CalibrationIsRunningError& mutable_calibration_is_running_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCalibrationIsRunningError;
-    set_fields_[151] = true;
+    set_fields_[153] = true;
     return calibration_is_running_error_;
   }
 
   /// Returns whether `calibration_is_running_error` (no 152) is set.
-  constexpr bool has_calibration_is_running_error() const noexcept { return set_fields_[151]; }
+  constexpr bool has_calibration_is_running_error() const noexcept { return set_fields_[153]; }
 
   /// Clears `calibration_is_running_error` (no 152).
   void clear_calibration_is_running_error() & noexcept {
     data_ = {};
-    set_fields_[151] = false;
+    set_fields_[153] = false;
     calibration_is_running_error_ = {};
   }
 
@@ -8441,7 +8551,7 @@ class LogData final : public PbMessage {
   LogData& set_calibration_is_running_error(logs::CalibrationIsRunningError&& calibration_is_running_error) & noexcept {
     clear_data();
     data_ = DataOneof::kCalibrationIsRunningError;
-    set_fields_[151] = true;
+    set_fields_[153] = true;
     calibration_is_running_error_ = std::move(calibration_is_running_error);
     return *this;
   }
@@ -8466,7 +8576,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 153.
   logs::ModelInitInProgressInfo model_init_in_progress_info() && noexcept {
-    if (!set_fields_[152]) {
+    if (!set_fields_[154]) {
       return {};
     }
     return std::move(model_init_in_progress_info_);
@@ -8478,17 +8588,17 @@ class LogData final : public PbMessage {
   logs::ModelInitInProgressInfo& mutable_model_init_in_progress_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kModelInitInProgressInfo;
-    set_fields_[152] = true;
+    set_fields_[154] = true;
     return model_init_in_progress_info_;
   }
 
   /// Returns whether `model_init_in_progress_info` (no 153) is set.
-  constexpr bool has_model_init_in_progress_info() const noexcept { return set_fields_[152]; }
+  constexpr bool has_model_init_in_progress_info() const noexcept { return set_fields_[154]; }
 
   /// Clears `model_init_in_progress_info` (no 153).
   void clear_model_init_in_progress_info() & noexcept {
     data_ = {};
-    set_fields_[152] = false;
+    set_fields_[154] = false;
     model_init_in_progress_info_ = {};
   }
 
@@ -8496,7 +8606,7 @@ class LogData final : public PbMessage {
   LogData& set_model_init_in_progress_info(logs::ModelInitInProgressInfo&& model_init_in_progress_info) & noexcept {
     clear_data();
     data_ = DataOneof::kModelInitInProgressInfo;
-    set_fields_[152] = true;
+    set_fields_[154] = true;
     model_init_in_progress_info_ = std::move(model_init_in_progress_info);
     return *this;
   }
@@ -8521,7 +8631,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 154.
   logs::RpcTimeoutWithResolutionWarning rpc_timeout_with_resolution_warning() && noexcept {
-    if (!set_fields_[153]) {
+    if (!set_fields_[155]) {
       return {};
     }
     return std::move(rpc_timeout_with_resolution_warning_);
@@ -8533,17 +8643,17 @@ class LogData final : public PbMessage {
   logs::RpcTimeoutWithResolutionWarning& mutable_rpc_timeout_with_resolution_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRpcTimeoutWithResolutionWarning;
-    set_fields_[153] = true;
+    set_fields_[155] = true;
     return rpc_timeout_with_resolution_warning_;
   }
 
   /// Returns whether `rpc_timeout_with_resolution_warning` (no 154) is set.
-  constexpr bool has_rpc_timeout_with_resolution_warning() const noexcept { return set_fields_[153]; }
+  constexpr bool has_rpc_timeout_with_resolution_warning() const noexcept { return set_fields_[155]; }
 
   /// Clears `rpc_timeout_with_resolution_warning` (no 154).
   void clear_rpc_timeout_with_resolution_warning() & noexcept {
     data_ = {};
-    set_fields_[153] = false;
+    set_fields_[155] = false;
     rpc_timeout_with_resolution_warning_ = {};
   }
 
@@ -8551,7 +8661,7 @@ class LogData final : public PbMessage {
   LogData& set_rpc_timeout_with_resolution_warning(logs::RpcTimeoutWithResolutionWarning&& rpc_timeout_with_resolution_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kRpcTimeoutWithResolutionWarning;
-    set_fields_[153] = true;
+    set_fields_[155] = true;
     rpc_timeout_with_resolution_warning_ = std::move(rpc_timeout_with_resolution_warning);
     return *this;
   }
@@ -8576,7 +8686,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 155.
   logs::CalibrationWasCancelledInfo calibration_was_cancelled_info() && noexcept {
-    if (!set_fields_[154]) {
+    if (!set_fields_[156]) {
       return {};
     }
     return std::move(calibration_was_cancelled_info_);
@@ -8588,17 +8698,17 @@ class LogData final : public PbMessage {
   logs::CalibrationWasCancelledInfo& mutable_calibration_was_cancelled_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCalibrationWasCancelledInfo;
-    set_fields_[154] = true;
+    set_fields_[156] = true;
     return calibration_was_cancelled_info_;
   }
 
   /// Returns whether `calibration_was_cancelled_info` (no 155) is set.
-  constexpr bool has_calibration_was_cancelled_info() const noexcept { return set_fields_[154]; }
+  constexpr bool has_calibration_was_cancelled_info() const noexcept { return set_fields_[156]; }
 
   /// Clears `calibration_was_cancelled_info` (no 155).
   void clear_calibration_was_cancelled_info() & noexcept {
     data_ = {};
-    set_fields_[154] = false;
+    set_fields_[156] = false;
     calibration_was_cancelled_info_ = {};
   }
 
@@ -8606,7 +8716,7 @@ class LogData final : public PbMessage {
   LogData& set_calibration_was_cancelled_info(logs::CalibrationWasCancelledInfo&& calibration_was_cancelled_info) & noexcept {
     clear_data();
     data_ = DataOneof::kCalibrationWasCancelledInfo;
-    set_fields_[154] = true;
+    set_fields_[156] = true;
     calibration_was_cancelled_info_ = std::move(calibration_was_cancelled_info);
     return *this;
   }
@@ -8631,7 +8741,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 156.
   logs::CalibrationMapRecordingFailedToStart calibration_map_recording_failed_to_start() && noexcept {
-    if (!set_fields_[155]) {
+    if (!set_fields_[157]) {
       return {};
     }
     return std::move(calibration_map_recording_failed_to_start_);
@@ -8643,17 +8753,17 @@ class LogData final : public PbMessage {
   logs::CalibrationMapRecordingFailedToStart& mutable_calibration_map_recording_failed_to_start() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCalibrationMapRecordingFailedToStart;
-    set_fields_[155] = true;
+    set_fields_[157] = true;
     return calibration_map_recording_failed_to_start_;
   }
 
   /// Returns whether `calibration_map_recording_failed_to_start` (no 156) is set.
-  constexpr bool has_calibration_map_recording_failed_to_start() const noexcept { return set_fields_[155]; }
+  constexpr bool has_calibration_map_recording_failed_to_start() const noexcept { return set_fields_[157]; }
 
   /// Clears `calibration_map_recording_failed_to_start` (no 156).
   void clear_calibration_map_recording_failed_to_start() & noexcept {
     data_ = {};
-    set_fields_[155] = false;
+    set_fields_[157] = false;
     calibration_map_recording_failed_to_start_ = {};
   }
 
@@ -8661,7 +8771,7 @@ class LogData final : public PbMessage {
   LogData& set_calibration_map_recording_failed_to_start(logs::CalibrationMapRecordingFailedToStart&& calibration_map_recording_failed_to_start) & noexcept {
     clear_data();
     data_ = DataOneof::kCalibrationMapRecordingFailedToStart;
-    set_fields_[155] = true;
+    set_fields_[157] = true;
     calibration_map_recording_failed_to_start_ = std::move(calibration_map_recording_failed_to_start);
     return *this;
   }
@@ -8686,7 +8796,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 157.
   logs::DetectionPipelineRequestedResetInfo detection_pipeline_requested_reset_info() && noexcept {
-    if (!set_fields_[156]) {
+    if (!set_fields_[158]) {
       return {};
     }
     return std::move(detection_pipeline_requested_reset_info_);
@@ -8698,17 +8808,17 @@ class LogData final : public PbMessage {
   logs::DetectionPipelineRequestedResetInfo& mutable_detection_pipeline_requested_reset_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kDetectionPipelineRequestedResetInfo;
-    set_fields_[156] = true;
+    set_fields_[158] = true;
     return detection_pipeline_requested_reset_info_;
   }
 
   /// Returns whether `detection_pipeline_requested_reset_info` (no 157) is set.
-  constexpr bool has_detection_pipeline_requested_reset_info() const noexcept { return set_fields_[156]; }
+  constexpr bool has_detection_pipeline_requested_reset_info() const noexcept { return set_fields_[158]; }
 
   /// Clears `detection_pipeline_requested_reset_info` (no 157).
   void clear_detection_pipeline_requested_reset_info() & noexcept {
     data_ = {};
-    set_fields_[156] = false;
+    set_fields_[158] = false;
     detection_pipeline_requested_reset_info_ = {};
   }
 
@@ -8716,7 +8826,7 @@ class LogData final : public PbMessage {
   LogData& set_detection_pipeline_requested_reset_info(logs::DetectionPipelineRequestedResetInfo&& detection_pipeline_requested_reset_info) & noexcept {
     clear_data();
     data_ = DataOneof::kDetectionPipelineRequestedResetInfo;
-    set_fields_[156] = true;
+    set_fields_[158] = true;
     detection_pipeline_requested_reset_info_ = std::move(detection_pipeline_requested_reset_info);
     return *this;
   }
@@ -8741,7 +8851,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 158.
   logs::PreprocessingServicePipelineUnavailable preprocessing_service_pipeline_unavailable() && noexcept {
-    if (!set_fields_[157]) {
+    if (!set_fields_[159]) {
       return {};
     }
     return std::move(preprocessing_service_pipeline_unavailable_);
@@ -8753,17 +8863,17 @@ class LogData final : public PbMessage {
   logs::PreprocessingServicePipelineUnavailable& mutable_preprocessing_service_pipeline_unavailable() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kPreprocessingServicePipelineUnavailable;
-    set_fields_[157] = true;
+    set_fields_[159] = true;
     return preprocessing_service_pipeline_unavailable_;
   }
 
   /// Returns whether `preprocessing_service_pipeline_unavailable` (no 158) is set.
-  constexpr bool has_preprocessing_service_pipeline_unavailable() const noexcept { return set_fields_[157]; }
+  constexpr bool has_preprocessing_service_pipeline_unavailable() const noexcept { return set_fields_[159]; }
 
   /// Clears `preprocessing_service_pipeline_unavailable` (no 158).
   void clear_preprocessing_service_pipeline_unavailable() & noexcept {
     data_ = {};
-    set_fields_[157] = false;
+    set_fields_[159] = false;
     preprocessing_service_pipeline_unavailable_ = {};
   }
 
@@ -8771,7 +8881,7 @@ class LogData final : public PbMessage {
   LogData& set_preprocessing_service_pipeline_unavailable(logs::PreprocessingServicePipelineUnavailable&& preprocessing_service_pipeline_unavailable) & noexcept {
     clear_data();
     data_ = DataOneof::kPreprocessingServicePipelineUnavailable;
-    set_fields_[157] = true;
+    set_fields_[159] = true;
     preprocessing_service_pipeline_unavailable_ = std::move(preprocessing_service_pipeline_unavailable);
     return *this;
   }
@@ -8796,7 +8906,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 159.
   logs::CircularRecordingDisabledWarning circular_recording_disabled_warning() && noexcept {
-    if (!set_fields_[158]) {
+    if (!set_fields_[160]) {
       return {};
     }
     return std::move(circular_recording_disabled_warning_);
@@ -8808,17 +8918,17 @@ class LogData final : public PbMessage {
   logs::CircularRecordingDisabledWarning& mutable_circular_recording_disabled_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCircularRecordingDisabledWarning;
-    set_fields_[158] = true;
+    set_fields_[160] = true;
     return circular_recording_disabled_warning_;
   }
 
   /// Returns whether `circular_recording_disabled_warning` (no 159) is set.
-  constexpr bool has_circular_recording_disabled_warning() const noexcept { return set_fields_[158]; }
+  constexpr bool has_circular_recording_disabled_warning() const noexcept { return set_fields_[160]; }
 
   /// Clears `circular_recording_disabled_warning` (no 159).
   void clear_circular_recording_disabled_warning() & noexcept {
     data_ = {};
-    set_fields_[158] = false;
+    set_fields_[160] = false;
     circular_recording_disabled_warning_ = {};
   }
 
@@ -8826,7 +8936,7 @@ class LogData final : public PbMessage {
   LogData& set_circular_recording_disabled_warning(logs::CircularRecordingDisabledWarning&& circular_recording_disabled_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kCircularRecordingDisabledWarning;
-    set_fields_[158] = true;
+    set_fields_[160] = true;
     circular_recording_disabled_warning_ = std::move(circular_recording_disabled_warning);
     return *this;
   }
@@ -8851,7 +8961,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 160.
   logs::SnapshotAlreadyRunningWarning snapshot_already_running_warning() && noexcept {
-    if (!set_fields_[159]) {
+    if (!set_fields_[161]) {
       return {};
     }
     return std::move(snapshot_already_running_warning_);
@@ -8863,17 +8973,17 @@ class LogData final : public PbMessage {
   logs::SnapshotAlreadyRunningWarning& mutable_snapshot_already_running_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kSnapshotAlreadyRunningWarning;
-    set_fields_[159] = true;
+    set_fields_[161] = true;
     return snapshot_already_running_warning_;
   }
 
   /// Returns whether `snapshot_already_running_warning` (no 160) is set.
-  constexpr bool has_snapshot_already_running_warning() const noexcept { return set_fields_[159]; }
+  constexpr bool has_snapshot_already_running_warning() const noexcept { return set_fields_[161]; }
 
   /// Clears `snapshot_already_running_warning` (no 160).
   void clear_snapshot_already_running_warning() & noexcept {
     data_ = {};
-    set_fields_[159] = false;
+    set_fields_[161] = false;
     snapshot_already_running_warning_ = {};
   }
 
@@ -8881,7 +8991,7 @@ class LogData final : public PbMessage {
   LogData& set_snapshot_already_running_warning(logs::SnapshotAlreadyRunningWarning&& snapshot_already_running_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kSnapshotAlreadyRunningWarning;
-    set_fields_[159] = true;
+    set_fields_[161] = true;
     snapshot_already_running_warning_ = std::move(snapshot_already_running_warning);
     return *this;
   }
@@ -8906,7 +9016,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 161.
   logs::ActiveProjectChangedInfo active_project_changed_info() && noexcept {
-    if (!set_fields_[160]) {
+    if (!set_fields_[162]) {
       return {};
     }
     return std::move(active_project_changed_info_);
@@ -8918,17 +9028,17 @@ class LogData final : public PbMessage {
   logs::ActiveProjectChangedInfo& mutable_active_project_changed_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kActiveProjectChangedInfo;
-    set_fields_[160] = true;
+    set_fields_[162] = true;
     return active_project_changed_info_;
   }
 
   /// Returns whether `active_project_changed_info` (no 161) is set.
-  constexpr bool has_active_project_changed_info() const noexcept { return set_fields_[160]; }
+  constexpr bool has_active_project_changed_info() const noexcept { return set_fields_[162]; }
 
   /// Clears `active_project_changed_info` (no 161).
   void clear_active_project_changed_info() & noexcept {
     data_ = {};
-    set_fields_[160] = false;
+    set_fields_[162] = false;
     active_project_changed_info_ = {};
   }
 
@@ -8936,7 +9046,7 @@ class LogData final : public PbMessage {
   LogData& set_active_project_changed_info(logs::ActiveProjectChangedInfo&& active_project_changed_info) & noexcept {
     clear_data();
     data_ = DataOneof::kActiveProjectChangedInfo;
-    set_fields_[160] = true;
+    set_fields_[162] = true;
     active_project_changed_info_ = std::move(active_project_changed_info);
     return *this;
   }
@@ -8961,7 +9071,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 162.
   logs::ProjectConfigUpdatedInfo project_config_updated_info() && noexcept {
-    if (!set_fields_[161]) {
+    if (!set_fields_[163]) {
       return {};
     }
     return std::move(project_config_updated_info_);
@@ -8973,17 +9083,17 @@ class LogData final : public PbMessage {
   logs::ProjectConfigUpdatedInfo& mutable_project_config_updated_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kProjectConfigUpdatedInfo;
-    set_fields_[161] = true;
+    set_fields_[163] = true;
     return project_config_updated_info_;
   }
 
   /// Returns whether `project_config_updated_info` (no 162) is set.
-  constexpr bool has_project_config_updated_info() const noexcept { return set_fields_[161]; }
+  constexpr bool has_project_config_updated_info() const noexcept { return set_fields_[163]; }
 
   /// Clears `project_config_updated_info` (no 162).
   void clear_project_config_updated_info() & noexcept {
     data_ = {};
-    set_fields_[161] = false;
+    set_fields_[163] = false;
     project_config_updated_info_ = {};
   }
 
@@ -8991,7 +9101,7 @@ class LogData final : public PbMessage {
   LogData& set_project_config_updated_info(logs::ProjectConfigUpdatedInfo&& project_config_updated_info) & noexcept {
     clear_data();
     data_ = DataOneof::kProjectConfigUpdatedInfo;
-    set_fields_[161] = true;
+    set_fields_[163] = true;
     project_config_updated_info_ = std::move(project_config_updated_info);
     return *this;
   }
@@ -9016,7 +9126,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 163.
   logs::InvalidLidarTimestamp invalid_lidar_timestamp() && noexcept {
-    if (!set_fields_[162]) {
+    if (!set_fields_[164]) {
       return {};
     }
     return std::move(invalid_lidar_timestamp_);
@@ -9028,17 +9138,17 @@ class LogData final : public PbMessage {
   logs::InvalidLidarTimestamp& mutable_invalid_lidar_timestamp() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInvalidLidarTimestamp;
-    set_fields_[162] = true;
+    set_fields_[164] = true;
     return invalid_lidar_timestamp_;
   }
 
   /// Returns whether `invalid_lidar_timestamp` (no 163) is set.
-  constexpr bool has_invalid_lidar_timestamp() const noexcept { return set_fields_[162]; }
+  constexpr bool has_invalid_lidar_timestamp() const noexcept { return set_fields_[164]; }
 
   /// Clears `invalid_lidar_timestamp` (no 163).
   void clear_invalid_lidar_timestamp() & noexcept {
     data_ = {};
-    set_fields_[162] = false;
+    set_fields_[164] = false;
     invalid_lidar_timestamp_ = {};
   }
 
@@ -9046,7 +9156,7 @@ class LogData final : public PbMessage {
   LogData& set_invalid_lidar_timestamp(logs::InvalidLidarTimestamp&& invalid_lidar_timestamp) & noexcept {
     clear_data();
     data_ = DataOneof::kInvalidLidarTimestamp;
-    set_fields_[162] = true;
+    set_fields_[164] = true;
     invalid_lidar_timestamp_ = std::move(invalid_lidar_timestamp);
     return *this;
   }
@@ -9071,7 +9181,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 164.
   logs::CalibrationAccumulatingPointsInfo calibration_accumulating_points_info() && noexcept {
-    if (!set_fields_[163]) {
+    if (!set_fields_[165]) {
       return {};
     }
     return std::move(calibration_accumulating_points_info_);
@@ -9083,17 +9193,17 @@ class LogData final : public PbMessage {
   logs::CalibrationAccumulatingPointsInfo& mutable_calibration_accumulating_points_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCalibrationAccumulatingPointsInfo;
-    set_fields_[163] = true;
+    set_fields_[165] = true;
     return calibration_accumulating_points_info_;
   }
 
   /// Returns whether `calibration_accumulating_points_info` (no 164) is set.
-  constexpr bool has_calibration_accumulating_points_info() const noexcept { return set_fields_[163]; }
+  constexpr bool has_calibration_accumulating_points_info() const noexcept { return set_fields_[165]; }
 
   /// Clears `calibration_accumulating_points_info` (no 164).
   void clear_calibration_accumulating_points_info() & noexcept {
     data_ = {};
-    set_fields_[163] = false;
+    set_fields_[165] = false;
     calibration_accumulating_points_info_ = {};
   }
 
@@ -9101,7 +9211,7 @@ class LogData final : public PbMessage {
   LogData& set_calibration_accumulating_points_info(logs::CalibrationAccumulatingPointsInfo&& calibration_accumulating_points_info) & noexcept {
     clear_data();
     data_ = DataOneof::kCalibrationAccumulatingPointsInfo;
-    set_fields_[163] = true;
+    set_fields_[165] = true;
     calibration_accumulating_points_info_ = std::move(calibration_accumulating_points_info);
     return *this;
   }
@@ -9126,7 +9236,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 165.
   logs::SparseNoiseFilterUsageNonRotationalLidars sparse_noise_filter_usage_non_rotational_lidars() && noexcept {
-    if (!set_fields_[164]) {
+    if (!set_fields_[166]) {
       return {};
     }
     return std::move(sparse_noise_filter_usage_non_rotational_lidars_);
@@ -9138,17 +9248,17 @@ class LogData final : public PbMessage {
   logs::SparseNoiseFilterUsageNonRotationalLidars& mutable_sparse_noise_filter_usage_non_rotational_lidars() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kSparseNoiseFilterUsageNonRotationalLidars;
-    set_fields_[164] = true;
+    set_fields_[166] = true;
     return sparse_noise_filter_usage_non_rotational_lidars_;
   }
 
   /// Returns whether `sparse_noise_filter_usage_non_rotational_lidars` (no 165) is set.
-  constexpr bool has_sparse_noise_filter_usage_non_rotational_lidars() const noexcept { return set_fields_[164]; }
+  constexpr bool has_sparse_noise_filter_usage_non_rotational_lidars() const noexcept { return set_fields_[166]; }
 
   /// Clears `sparse_noise_filter_usage_non_rotational_lidars` (no 165).
   void clear_sparse_noise_filter_usage_non_rotational_lidars() & noexcept {
     data_ = {};
-    set_fields_[164] = false;
+    set_fields_[166] = false;
     sparse_noise_filter_usage_non_rotational_lidars_ = {};
   }
 
@@ -9156,7 +9266,7 @@ class LogData final : public PbMessage {
   LogData& set_sparse_noise_filter_usage_non_rotational_lidars(logs::SparseNoiseFilterUsageNonRotationalLidars&& sparse_noise_filter_usage_non_rotational_lidars) & noexcept {
     clear_data();
     data_ = DataOneof::kSparseNoiseFilterUsageNonRotationalLidars;
-    set_fields_[164] = true;
+    set_fields_[166] = true;
     sparse_noise_filter_usage_non_rotational_lidars_ = std::move(sparse_noise_filter_usage_non_rotational_lidars);
     return *this;
   }
@@ -9181,7 +9291,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 166.
   logs::FileWriteWarning file_write_warning() && noexcept {
-    if (!set_fields_[165]) {
+    if (!set_fields_[167]) {
       return {};
     }
     return std::move(file_write_warning_);
@@ -9193,17 +9303,17 @@ class LogData final : public PbMessage {
   logs::FileWriteWarning& mutable_file_write_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFileWriteWarning;
-    set_fields_[165] = true;
+    set_fields_[167] = true;
     return file_write_warning_;
   }
 
   /// Returns whether `file_write_warning` (no 166) is set.
-  constexpr bool has_file_write_warning() const noexcept { return set_fields_[165]; }
+  constexpr bool has_file_write_warning() const noexcept { return set_fields_[167]; }
 
   /// Clears `file_write_warning` (no 166).
   void clear_file_write_warning() & noexcept {
     data_ = {};
-    set_fields_[165] = false;
+    set_fields_[167] = false;
     file_write_warning_ = {};
   }
 
@@ -9211,7 +9321,7 @@ class LogData final : public PbMessage {
   LogData& set_file_write_warning(logs::FileWriteWarning&& file_write_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kFileWriteWarning;
-    set_fields_[165] = true;
+    set_fields_[167] = true;
     file_write_warning_ = std::move(file_write_warning);
     return *this;
   }
@@ -9236,7 +9346,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 167.
   logs::LicenseForbiddenFeature license_forbidden_feature() && noexcept {
-    if (!set_fields_[166]) {
+    if (!set_fields_[168]) {
       return {};
     }
     return std::move(license_forbidden_feature_);
@@ -9248,17 +9358,17 @@ class LogData final : public PbMessage {
   logs::LicenseForbiddenFeature& mutable_license_forbidden_feature() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLicenseForbiddenFeature;
-    set_fields_[166] = true;
+    set_fields_[168] = true;
     return license_forbidden_feature_;
   }
 
   /// Returns whether `license_forbidden_feature` (no 167) is set.
-  constexpr bool has_license_forbidden_feature() const noexcept { return set_fields_[166]; }
+  constexpr bool has_license_forbidden_feature() const noexcept { return set_fields_[168]; }
 
   /// Clears `license_forbidden_feature` (no 167).
   void clear_license_forbidden_feature() & noexcept {
     data_ = {};
-    set_fields_[166] = false;
+    set_fields_[168] = false;
     license_forbidden_feature_ = {};
   }
 
@@ -9266,7 +9376,7 @@ class LogData final : public PbMessage {
   LogData& set_license_forbidden_feature(logs::LicenseForbiddenFeature&& license_forbidden_feature) & noexcept {
     clear_data();
     data_ = DataOneof::kLicenseForbiddenFeature;
-    set_fields_[166] = true;
+    set_fields_[168] = true;
     license_forbidden_feature_ = std::move(license_forbidden_feature);
     return *this;
   }
@@ -9291,7 +9401,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 168.
   logs::FailedToUpdateConfiguration failed_to_update_configuration() && noexcept {
-    if (!set_fields_[167]) {
+    if (!set_fields_[169]) {
       return {};
     }
     return std::move(failed_to_update_configuration_);
@@ -9303,17 +9413,17 @@ class LogData final : public PbMessage {
   logs::FailedToUpdateConfiguration& mutable_failed_to_update_configuration() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kFailedToUpdateConfiguration;
-    set_fields_[167] = true;
+    set_fields_[169] = true;
     return failed_to_update_configuration_;
   }
 
   /// Returns whether `failed_to_update_configuration` (no 168) is set.
-  constexpr bool has_failed_to_update_configuration() const noexcept { return set_fields_[167]; }
+  constexpr bool has_failed_to_update_configuration() const noexcept { return set_fields_[169]; }
 
   /// Clears `failed_to_update_configuration` (no 168).
   void clear_failed_to_update_configuration() & noexcept {
     data_ = {};
-    set_fields_[167] = false;
+    set_fields_[169] = false;
     failed_to_update_configuration_ = {};
   }
 
@@ -9321,7 +9431,7 @@ class LogData final : public PbMessage {
   LogData& set_failed_to_update_configuration(logs::FailedToUpdateConfiguration&& failed_to_update_configuration) & noexcept {
     clear_data();
     data_ = DataOneof::kFailedToUpdateConfiguration;
-    set_fields_[167] = true;
+    set_fields_[169] = true;
     failed_to_update_configuration_ = std::move(failed_to_update_configuration);
     return *this;
   }
@@ -9346,7 +9456,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 169.
   logs::ObstructionDetectorBadReferenceWarning obstruction_detector_bad_reference_warning() && noexcept {
-    if (!set_fields_[168]) {
+    if (!set_fields_[170]) {
       return {};
     }
     return std::move(obstruction_detector_bad_reference_warning_);
@@ -9358,17 +9468,17 @@ class LogData final : public PbMessage {
   logs::ObstructionDetectorBadReferenceWarning& mutable_obstruction_detector_bad_reference_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kObstructionDetectorBadReferenceWarning;
-    set_fields_[168] = true;
+    set_fields_[170] = true;
     return obstruction_detector_bad_reference_warning_;
   }
 
   /// Returns whether `obstruction_detector_bad_reference_warning` (no 169) is set.
-  constexpr bool has_obstruction_detector_bad_reference_warning() const noexcept { return set_fields_[168]; }
+  constexpr bool has_obstruction_detector_bad_reference_warning() const noexcept { return set_fields_[170]; }
 
   /// Clears `obstruction_detector_bad_reference_warning` (no 169).
   void clear_obstruction_detector_bad_reference_warning() & noexcept {
     data_ = {};
-    set_fields_[168] = false;
+    set_fields_[170] = false;
     obstruction_detector_bad_reference_warning_ = {};
   }
 
@@ -9376,7 +9486,7 @@ class LogData final : public PbMessage {
   LogData& set_obstruction_detector_bad_reference_warning(logs::ObstructionDetectorBadReferenceWarning&& obstruction_detector_bad_reference_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kObstructionDetectorBadReferenceWarning;
-    set_fields_[168] = true;
+    set_fields_[170] = true;
     obstruction_detector_bad_reference_warning_ = std::move(obstruction_detector_bad_reference_warning);
     return *this;
   }
@@ -9401,7 +9511,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 170.
   logs::ProjectFileInvalidPermissionsError project_file_invalid_permissions_error() && noexcept {
-    if (!set_fields_[169]) {
+    if (!set_fields_[171]) {
       return {};
     }
     return std::move(project_file_invalid_permissions_error_);
@@ -9413,17 +9523,17 @@ class LogData final : public PbMessage {
   logs::ProjectFileInvalidPermissionsError& mutable_project_file_invalid_permissions_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kProjectFileInvalidPermissionsError;
-    set_fields_[169] = true;
+    set_fields_[171] = true;
     return project_file_invalid_permissions_error_;
   }
 
   /// Returns whether `project_file_invalid_permissions_error` (no 170) is set.
-  constexpr bool has_project_file_invalid_permissions_error() const noexcept { return set_fields_[169]; }
+  constexpr bool has_project_file_invalid_permissions_error() const noexcept { return set_fields_[171]; }
 
   /// Clears `project_file_invalid_permissions_error` (no 170).
   void clear_project_file_invalid_permissions_error() & noexcept {
     data_ = {};
-    set_fields_[169] = false;
+    set_fields_[171] = false;
     project_file_invalid_permissions_error_ = {};
   }
 
@@ -9431,7 +9541,7 @@ class LogData final : public PbMessage {
   LogData& set_project_file_invalid_permissions_error(logs::ProjectFileInvalidPermissionsError&& project_file_invalid_permissions_error) & noexcept {
     clear_data();
     data_ = DataOneof::kProjectFileInvalidPermissionsError;
-    set_fields_[169] = true;
+    set_fields_[171] = true;
     project_file_invalid_permissions_error_ = std::move(project_file_invalid_permissions_error);
     return *this;
   }
@@ -9456,7 +9566,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 171.
   logs::PipelineSchedulerError pipeline_scheduler_error() && noexcept {
-    if (!set_fields_[170]) {
+    if (!set_fields_[172]) {
       return {};
     }
     return std::move(pipeline_scheduler_error_);
@@ -9468,17 +9578,17 @@ class LogData final : public PbMessage {
   logs::PipelineSchedulerError& mutable_pipeline_scheduler_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kPipelineSchedulerError;
-    set_fields_[170] = true;
+    set_fields_[172] = true;
     return pipeline_scheduler_error_;
   }
 
   /// Returns whether `pipeline_scheduler_error` (no 171) is set.
-  constexpr bool has_pipeline_scheduler_error() const noexcept { return set_fields_[170]; }
+  constexpr bool has_pipeline_scheduler_error() const noexcept { return set_fields_[172]; }
 
   /// Clears `pipeline_scheduler_error` (no 171).
   void clear_pipeline_scheduler_error() & noexcept {
     data_ = {};
-    set_fields_[170] = false;
+    set_fields_[172] = false;
     pipeline_scheduler_error_ = {};
   }
 
@@ -9486,7 +9596,7 @@ class LogData final : public PbMessage {
   LogData& set_pipeline_scheduler_error(logs::PipelineSchedulerError&& pipeline_scheduler_error) & noexcept {
     clear_data();
     data_ = DataOneof::kPipelineSchedulerError;
-    set_fields_[170] = true;
+    set_fields_[172] = true;
     pipeline_scheduler_error_ = std::move(pipeline_scheduler_error);
     return *this;
   }
@@ -9511,7 +9621,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 172.
   logs::MultiLidarCalibrationWarning multi_lidar_calibration_warning() && noexcept {
-    if (!set_fields_[171]) {
+    if (!set_fields_[173]) {
       return {};
     }
     return std::move(multi_lidar_calibration_warning_);
@@ -9523,17 +9633,17 @@ class LogData final : public PbMessage {
   logs::MultiLidarCalibrationWarning& mutable_multi_lidar_calibration_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kMultiLidarCalibrationWarning;
-    set_fields_[171] = true;
+    set_fields_[173] = true;
     return multi_lidar_calibration_warning_;
   }
 
   /// Returns whether `multi_lidar_calibration_warning` (no 172) is set.
-  constexpr bool has_multi_lidar_calibration_warning() const noexcept { return set_fields_[171]; }
+  constexpr bool has_multi_lidar_calibration_warning() const noexcept { return set_fields_[173]; }
 
   /// Clears `multi_lidar_calibration_warning` (no 172).
   void clear_multi_lidar_calibration_warning() & noexcept {
     data_ = {};
-    set_fields_[171] = false;
+    set_fields_[173] = false;
     multi_lidar_calibration_warning_ = {};
   }
 
@@ -9541,7 +9651,7 @@ class LogData final : public PbMessage {
   LogData& set_multi_lidar_calibration_warning(logs::MultiLidarCalibrationWarning&& multi_lidar_calibration_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kMultiLidarCalibrationWarning;
-    set_fields_[171] = true;
+    set_fields_[173] = true;
     multi_lidar_calibration_warning_ = std::move(multi_lidar_calibration_warning);
     return *this;
   }
@@ -9566,7 +9676,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 173.
   logs::MultiLidarCalibrationError multi_lidar_calibration_error() && noexcept {
-    if (!set_fields_[172]) {
+    if (!set_fields_[174]) {
       return {};
     }
     return std::move(multi_lidar_calibration_error_);
@@ -9578,17 +9688,17 @@ class LogData final : public PbMessage {
   logs::MultiLidarCalibrationError& mutable_multi_lidar_calibration_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kMultiLidarCalibrationError;
-    set_fields_[172] = true;
+    set_fields_[174] = true;
     return multi_lidar_calibration_error_;
   }
 
   /// Returns whether `multi_lidar_calibration_error` (no 173) is set.
-  constexpr bool has_multi_lidar_calibration_error() const noexcept { return set_fields_[172]; }
+  constexpr bool has_multi_lidar_calibration_error() const noexcept { return set_fields_[174]; }
 
   /// Clears `multi_lidar_calibration_error` (no 173).
   void clear_multi_lidar_calibration_error() & noexcept {
     data_ = {};
-    set_fields_[172] = false;
+    set_fields_[174] = false;
     multi_lidar_calibration_error_ = {};
   }
 
@@ -9596,7 +9706,7 @@ class LogData final : public PbMessage {
   LogData& set_multi_lidar_calibration_error(logs::MultiLidarCalibrationError&& multi_lidar_calibration_error) & noexcept {
     clear_data();
     data_ = DataOneof::kMultiLidarCalibrationError;
-    set_fields_[172] = true;
+    set_fields_[174] = true;
     multi_lidar_calibration_error_ = std::move(multi_lidar_calibration_error);
     return *this;
   }
@@ -9621,7 +9731,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 174.
   logs::OldBagWarning old_bag_warning() && noexcept {
-    if (!set_fields_[173]) {
+    if (!set_fields_[175]) {
       return {};
     }
     return std::move(old_bag_warning_);
@@ -9633,17 +9743,17 @@ class LogData final : public PbMessage {
   logs::OldBagWarning& mutable_old_bag_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kOldBagWarning;
-    set_fields_[173] = true;
+    set_fields_[175] = true;
     return old_bag_warning_;
   }
 
   /// Returns whether `old_bag_warning` (no 174) is set.
-  constexpr bool has_old_bag_warning() const noexcept { return set_fields_[173]; }
+  constexpr bool has_old_bag_warning() const noexcept { return set_fields_[175]; }
 
   /// Clears `old_bag_warning` (no 174).
   void clear_old_bag_warning() & noexcept {
     data_ = {};
-    set_fields_[173] = false;
+    set_fields_[175] = false;
     old_bag_warning_ = {};
   }
 
@@ -9651,7 +9761,7 @@ class LogData final : public PbMessage {
   LogData& set_old_bag_warning(logs::OldBagWarning&& old_bag_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kOldBagWarning;
-    set_fields_[173] = true;
+    set_fields_[175] = true;
     old_bag_warning_ = std::move(old_bag_warning);
     return *this;
   }
@@ -9676,7 +9786,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 175.
   logs::UpgradingBagInfo upgrading_bag_info() && noexcept {
-    if (!set_fields_[174]) {
+    if (!set_fields_[176]) {
       return {};
     }
     return std::move(upgrading_bag_info_);
@@ -9688,17 +9798,17 @@ class LogData final : public PbMessage {
   logs::UpgradingBagInfo& mutable_upgrading_bag_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kUpgradingBagInfo;
-    set_fields_[174] = true;
+    set_fields_[176] = true;
     return upgrading_bag_info_;
   }
 
   /// Returns whether `upgrading_bag_info` (no 175) is set.
-  constexpr bool has_upgrading_bag_info() const noexcept { return set_fields_[174]; }
+  constexpr bool has_upgrading_bag_info() const noexcept { return set_fields_[176]; }
 
   /// Clears `upgrading_bag_info` (no 175).
   void clear_upgrading_bag_info() & noexcept {
     data_ = {};
-    set_fields_[174] = false;
+    set_fields_[176] = false;
     upgrading_bag_info_ = {};
   }
 
@@ -9706,7 +9816,7 @@ class LogData final : public PbMessage {
   LogData& set_upgrading_bag_info(logs::UpgradingBagInfo&& upgrading_bag_info) & noexcept {
     clear_data();
     data_ = DataOneof::kUpgradingBagInfo;
-    set_fields_[174] = true;
+    set_fields_[176] = true;
     upgrading_bag_info_ = std::move(upgrading_bag_info);
     return *this;
   }
@@ -9731,7 +9841,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 176.
   logs::BagCalibrationSaveFailed bag_calibration_save_failed() && noexcept {
-    if (!set_fields_[175]) {
+    if (!set_fields_[177]) {
       return {};
     }
     return std::move(bag_calibration_save_failed_);
@@ -9743,17 +9853,17 @@ class LogData final : public PbMessage {
   logs::BagCalibrationSaveFailed& mutable_bag_calibration_save_failed() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagCalibrationSaveFailed;
-    set_fields_[175] = true;
+    set_fields_[177] = true;
     return bag_calibration_save_failed_;
   }
 
   /// Returns whether `bag_calibration_save_failed` (no 176) is set.
-  constexpr bool has_bag_calibration_save_failed() const noexcept { return set_fields_[175]; }
+  constexpr bool has_bag_calibration_save_failed() const noexcept { return set_fields_[177]; }
 
   /// Clears `bag_calibration_save_failed` (no 176).
   void clear_bag_calibration_save_failed() & noexcept {
     data_ = {};
-    set_fields_[175] = false;
+    set_fields_[177] = false;
     bag_calibration_save_failed_ = {};
   }
 
@@ -9761,7 +9871,7 @@ class LogData final : public PbMessage {
   LogData& set_bag_calibration_save_failed(logs::BagCalibrationSaveFailed&& bag_calibration_save_failed) & noexcept {
     clear_data();
     data_ = DataOneof::kBagCalibrationSaveFailed;
-    set_fields_[175] = true;
+    set_fields_[177] = true;
     bag_calibration_save_failed_ = std::move(bag_calibration_save_failed);
     return *this;
   }
@@ -9786,7 +9896,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 177.
   logs::BagUpgradeFailed bag_upgrade_failed() && noexcept {
-    if (!set_fields_[176]) {
+    if (!set_fields_[178]) {
       return {};
     }
     return std::move(bag_upgrade_failed_);
@@ -9798,17 +9908,17 @@ class LogData final : public PbMessage {
   logs::BagUpgradeFailed& mutable_bag_upgrade_failed() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kBagUpgradeFailed;
-    set_fields_[176] = true;
+    set_fields_[178] = true;
     return bag_upgrade_failed_;
   }
 
   /// Returns whether `bag_upgrade_failed` (no 177) is set.
-  constexpr bool has_bag_upgrade_failed() const noexcept { return set_fields_[176]; }
+  constexpr bool has_bag_upgrade_failed() const noexcept { return set_fields_[178]; }
 
   /// Clears `bag_upgrade_failed` (no 177).
   void clear_bag_upgrade_failed() & noexcept {
     data_ = {};
-    set_fields_[176] = false;
+    set_fields_[178] = false;
     bag_upgrade_failed_ = {};
   }
 
@@ -9816,7 +9926,7 @@ class LogData final : public PbMessage {
   LogData& set_bag_upgrade_failed(logs::BagUpgradeFailed&& bag_upgrade_failed) & noexcept {
     clear_data();
     data_ = DataOneof::kBagUpgradeFailed;
-    set_fields_[176] = true;
+    set_fields_[178] = true;
     bag_upgrade_failed_ = std::move(bag_upgrade_failed);
     return *this;
   }
@@ -9841,7 +9951,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 178.
   logs::UnknownLidarError unknown_lidar_error() && noexcept {
-    if (!set_fields_[177]) {
+    if (!set_fields_[179]) {
       return {};
     }
     return std::move(unknown_lidar_error_);
@@ -9853,17 +9963,17 @@ class LogData final : public PbMessage {
   logs::UnknownLidarError& mutable_unknown_lidar_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kUnknownLidarError;
-    set_fields_[177] = true;
+    set_fields_[179] = true;
     return unknown_lidar_error_;
   }
 
   /// Returns whether `unknown_lidar_error` (no 178) is set.
-  constexpr bool has_unknown_lidar_error() const noexcept { return set_fields_[177]; }
+  constexpr bool has_unknown_lidar_error() const noexcept { return set_fields_[179]; }
 
   /// Clears `unknown_lidar_error` (no 178).
   void clear_unknown_lidar_error() & noexcept {
     data_ = {};
-    set_fields_[177] = false;
+    set_fields_[179] = false;
     unknown_lidar_error_ = {};
   }
 
@@ -9871,7 +9981,7 @@ class LogData final : public PbMessage {
   LogData& set_unknown_lidar_error(logs::UnknownLidarError&& unknown_lidar_error) & noexcept {
     clear_data();
     data_ = DataOneof::kUnknownLidarError;
-    set_fields_[177] = true;
+    set_fields_[179] = true;
     unknown_lidar_error_ = std::move(unknown_lidar_error);
     return *this;
   }
@@ -9896,7 +10006,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 179.
   logs::InvalidPointCloudWarning invalid_point_cloud_warning() && noexcept {
-    if (!set_fields_[178]) {
+    if (!set_fields_[180]) {
       return {};
     }
     return std::move(invalid_point_cloud_warning_);
@@ -9908,17 +10018,17 @@ class LogData final : public PbMessage {
   logs::InvalidPointCloudWarning& mutable_invalid_point_cloud_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kInvalidPointCloudWarning;
-    set_fields_[178] = true;
+    set_fields_[180] = true;
     return invalid_point_cloud_warning_;
   }
 
   /// Returns whether `invalid_point_cloud_warning` (no 179) is set.
-  constexpr bool has_invalid_point_cloud_warning() const noexcept { return set_fields_[178]; }
+  constexpr bool has_invalid_point_cloud_warning() const noexcept { return set_fields_[180]; }
 
   /// Clears `invalid_point_cloud_warning` (no 179).
   void clear_invalid_point_cloud_warning() & noexcept {
     data_ = {};
-    set_fields_[178] = false;
+    set_fields_[180] = false;
     invalid_point_cloud_warning_ = {};
   }
 
@@ -9926,7 +10036,7 @@ class LogData final : public PbMessage {
   LogData& set_invalid_point_cloud_warning(logs::InvalidPointCloudWarning&& invalid_point_cloud_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kInvalidPointCloudWarning;
-    set_fields_[178] = true;
+    set_fields_[180] = true;
     invalid_point_cloud_warning_ = std::move(invalid_point_cloud_warning);
     return *this;
   }
@@ -9951,7 +10061,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 180.
   logs::LidarIsDroppingPackets lidar_is_dropping_packets() && noexcept {
-    if (!set_fields_[179]) {
+    if (!set_fields_[181]) {
       return {};
     }
     return std::move(lidar_is_dropping_packets_);
@@ -9963,17 +10073,17 @@ class LogData final : public PbMessage {
   logs::LidarIsDroppingPackets& mutable_lidar_is_dropping_packets() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLidarIsDroppingPackets;
-    set_fields_[179] = true;
+    set_fields_[181] = true;
     return lidar_is_dropping_packets_;
   }
 
   /// Returns whether `lidar_is_dropping_packets` (no 180) is set.
-  constexpr bool has_lidar_is_dropping_packets() const noexcept { return set_fields_[179]; }
+  constexpr bool has_lidar_is_dropping_packets() const noexcept { return set_fields_[181]; }
 
   /// Clears `lidar_is_dropping_packets` (no 180).
   void clear_lidar_is_dropping_packets() & noexcept {
     data_ = {};
-    set_fields_[179] = false;
+    set_fields_[181] = false;
     lidar_is_dropping_packets_ = {};
   }
 
@@ -9981,7 +10091,7 @@ class LogData final : public PbMessage {
   LogData& set_lidar_is_dropping_packets(logs::LidarIsDroppingPackets&& lidar_is_dropping_packets) & noexcept {
     clear_data();
     data_ = DataOneof::kLidarIsDroppingPackets;
-    set_fields_[179] = true;
+    set_fields_[181] = true;
     lidar_is_dropping_packets_ = std::move(lidar_is_dropping_packets);
     return *this;
   }
@@ -10006,7 +10116,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 181.
   logs::RemovedInvalidLidarsFromConfigWarning removed_invalid_lidars_from_config_warning() && noexcept {
-    if (!set_fields_[180]) {
+    if (!set_fields_[182]) {
       return {};
     }
     return std::move(removed_invalid_lidars_from_config_warning_);
@@ -10018,17 +10128,17 @@ class LogData final : public PbMessage {
   logs::RemovedInvalidLidarsFromConfigWarning& mutable_removed_invalid_lidars_from_config_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kRemovedInvalidLidarsFromConfigWarning;
-    set_fields_[180] = true;
+    set_fields_[182] = true;
     return removed_invalid_lidars_from_config_warning_;
   }
 
   /// Returns whether `removed_invalid_lidars_from_config_warning` (no 181) is set.
-  constexpr bool has_removed_invalid_lidars_from_config_warning() const noexcept { return set_fields_[180]; }
+  constexpr bool has_removed_invalid_lidars_from_config_warning() const noexcept { return set_fields_[182]; }
 
   /// Clears `removed_invalid_lidars_from_config_warning` (no 181).
   void clear_removed_invalid_lidars_from_config_warning() & noexcept {
     data_ = {};
-    set_fields_[180] = false;
+    set_fields_[182] = false;
     removed_invalid_lidars_from_config_warning_ = {};
   }
 
@@ -10036,7 +10146,7 @@ class LogData final : public PbMessage {
   LogData& set_removed_invalid_lidars_from_config_warning(logs::RemovedInvalidLidarsFromConfigWarning&& removed_invalid_lidars_from_config_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kRemovedInvalidLidarsFromConfigWarning;
-    set_fields_[180] = true;
+    set_fields_[182] = true;
     removed_invalid_lidars_from_config_warning_ = std::move(removed_invalid_lidars_from_config_warning);
     return *this;
   }
@@ -10061,7 +10171,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 182.
   logs::CalibrationMapRecordingFailed calibration_map_recording_failed() && noexcept {
-    if (!set_fields_[181]) {
+    if (!set_fields_[183]) {
       return {};
     }
     return std::move(calibration_map_recording_failed_);
@@ -10073,17 +10183,17 @@ class LogData final : public PbMessage {
   logs::CalibrationMapRecordingFailed& mutable_calibration_map_recording_failed() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCalibrationMapRecordingFailed;
-    set_fields_[181] = true;
+    set_fields_[183] = true;
     return calibration_map_recording_failed_;
   }
 
   /// Returns whether `calibration_map_recording_failed` (no 182) is set.
-  constexpr bool has_calibration_map_recording_failed() const noexcept { return set_fields_[181]; }
+  constexpr bool has_calibration_map_recording_failed() const noexcept { return set_fields_[183]; }
 
   /// Clears `calibration_map_recording_failed` (no 182).
   void clear_calibration_map_recording_failed() & noexcept {
     data_ = {};
-    set_fields_[181] = false;
+    set_fields_[183] = false;
     calibration_map_recording_failed_ = {};
   }
 
@@ -10091,7 +10201,7 @@ class LogData final : public PbMessage {
   LogData& set_calibration_map_recording_failed(logs::CalibrationMapRecordingFailed&& calibration_map_recording_failed) & noexcept {
     clear_data();
     data_ = DataOneof::kCalibrationMapRecordingFailed;
-    set_fields_[181] = true;
+    set_fields_[183] = true;
     calibration_map_recording_failed_ = std::move(calibration_map_recording_failed);
     return *this;
   }
@@ -10116,7 +10226,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 183.
   logs::DetectionNodeNotFoundError detection_node_not_found_error() && noexcept {
-    if (!set_fields_[182]) {
+    if (!set_fields_[184]) {
       return {};
     }
     return std::move(detection_node_not_found_error_);
@@ -10128,17 +10238,17 @@ class LogData final : public PbMessage {
   logs::DetectionNodeNotFoundError& mutable_detection_node_not_found_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kDetectionNodeNotFoundError;
-    set_fields_[182] = true;
+    set_fields_[184] = true;
     return detection_node_not_found_error_;
   }
 
   /// Returns whether `detection_node_not_found_error` (no 183) is set.
-  constexpr bool has_detection_node_not_found_error() const noexcept { return set_fields_[182]; }
+  constexpr bool has_detection_node_not_found_error() const noexcept { return set_fields_[184]; }
 
   /// Clears `detection_node_not_found_error` (no 183).
   void clear_detection_node_not_found_error() & noexcept {
     data_ = {};
-    set_fields_[182] = false;
+    set_fields_[184] = false;
     detection_node_not_found_error_ = {};
   }
 
@@ -10146,7 +10256,7 @@ class LogData final : public PbMessage {
   LogData& set_detection_node_not_found_error(logs::DetectionNodeNotFoundError&& detection_node_not_found_error) & noexcept {
     clear_data();
     data_ = DataOneof::kDetectionNodeNotFoundError;
-    set_fields_[182] = true;
+    set_fields_[184] = true;
     detection_node_not_found_error_ = std::move(detection_node_not_found_error);
     return *this;
   }
@@ -10171,7 +10281,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 184.
   logs::CreatedVersionBackupInfo created_version_backup_info() && noexcept {
-    if (!set_fields_[183]) {
+    if (!set_fields_[185]) {
       return {};
     }
     return std::move(created_version_backup_info_);
@@ -10183,17 +10293,17 @@ class LogData final : public PbMessage {
   logs::CreatedVersionBackupInfo& mutable_created_version_backup_info() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCreatedVersionBackupInfo;
-    set_fields_[183] = true;
+    set_fields_[185] = true;
     return created_version_backup_info_;
   }
 
   /// Returns whether `created_version_backup_info` (no 184) is set.
-  constexpr bool has_created_version_backup_info() const noexcept { return set_fields_[183]; }
+  constexpr bool has_created_version_backup_info() const noexcept { return set_fields_[185]; }
 
   /// Clears `created_version_backup_info` (no 184).
   void clear_created_version_backup_info() & noexcept {
     data_ = {};
-    set_fields_[183] = false;
+    set_fields_[185] = false;
     created_version_backup_info_ = {};
   }
 
@@ -10201,7 +10311,7 @@ class LogData final : public PbMessage {
   LogData& set_created_version_backup_info(logs::CreatedVersionBackupInfo&& created_version_backup_info) & noexcept {
     clear_data();
     data_ = DataOneof::kCreatedVersionBackupInfo;
-    set_fields_[183] = true;
+    set_fields_[185] = true;
     created_version_backup_info_ = std::move(created_version_backup_info);
     return *this;
   }
@@ -10226,7 +10336,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 185.
   logs::PlyFileLoadFailedError ply_file_load_failed_error() && noexcept {
-    if (!set_fields_[184]) {
+    if (!set_fields_[186]) {
       return {};
     }
     return std::move(ply_file_load_failed_error_);
@@ -10238,17 +10348,17 @@ class LogData final : public PbMessage {
   logs::PlyFileLoadFailedError& mutable_ply_file_load_failed_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kPlyFileLoadFailedError;
-    set_fields_[184] = true;
+    set_fields_[186] = true;
     return ply_file_load_failed_error_;
   }
 
   /// Returns whether `ply_file_load_failed_error` (no 185) is set.
-  constexpr bool has_ply_file_load_failed_error() const noexcept { return set_fields_[184]; }
+  constexpr bool has_ply_file_load_failed_error() const noexcept { return set_fields_[186]; }
 
   /// Clears `ply_file_load_failed_error` (no 185).
   void clear_ply_file_load_failed_error() & noexcept {
     data_ = {};
-    set_fields_[184] = false;
+    set_fields_[186] = false;
     ply_file_load_failed_error_ = {};
   }
 
@@ -10256,7 +10366,7 @@ class LogData final : public PbMessage {
   LogData& set_ply_file_load_failed_error(logs::PlyFileLoadFailedError&& ply_file_load_failed_error) & noexcept {
     clear_data();
     data_ = DataOneof::kPlyFileLoadFailedError;
-    set_fields_[184] = true;
+    set_fields_[186] = true;
     ply_file_load_failed_error_ = std::move(ply_file_load_failed_error);
     return *this;
   }
@@ -10281,7 +10391,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 186.
   logs::HesaiDriverLifecycle hesai_driver_lifecycle() && noexcept {
-    if (!set_fields_[185]) {
+    if (!set_fields_[187]) {
       return {};
     }
     return std::move(hesai_driver_lifecycle_);
@@ -10293,17 +10403,17 @@ class LogData final : public PbMessage {
   logs::HesaiDriverLifecycle& mutable_hesai_driver_lifecycle() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kHesaiDriverLifecycle;
-    set_fields_[185] = true;
+    set_fields_[187] = true;
     return hesai_driver_lifecycle_;
   }
 
   /// Returns whether `hesai_driver_lifecycle` (no 186) is set.
-  constexpr bool has_hesai_driver_lifecycle() const noexcept { return set_fields_[185]; }
+  constexpr bool has_hesai_driver_lifecycle() const noexcept { return set_fields_[187]; }
 
   /// Clears `hesai_driver_lifecycle` (no 186).
   void clear_hesai_driver_lifecycle() & noexcept {
     data_ = {};
-    set_fields_[185] = false;
+    set_fields_[187] = false;
     hesai_driver_lifecycle_ = {};
   }
 
@@ -10311,7 +10421,7 @@ class LogData final : public PbMessage {
   LogData& set_hesai_driver_lifecycle(logs::HesaiDriverLifecycle&& hesai_driver_lifecycle) & noexcept {
     clear_data();
     data_ = DataOneof::kHesaiDriverLifecycle;
-    set_fields_[185] = true;
+    set_fields_[187] = true;
     hesai_driver_lifecycle_ = std::move(hesai_driver_lifecycle);
     return *this;
   }
@@ -10336,7 +10446,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 187.
   logs::HesaiDriverError hesai_driver_error() && noexcept {
-    if (!set_fields_[186]) {
+    if (!set_fields_[188]) {
       return {};
     }
     return std::move(hesai_driver_error_);
@@ -10348,17 +10458,17 @@ class LogData final : public PbMessage {
   logs::HesaiDriverError& mutable_hesai_driver_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kHesaiDriverError;
-    set_fields_[186] = true;
+    set_fields_[188] = true;
     return hesai_driver_error_;
   }
 
   /// Returns whether `hesai_driver_error` (no 187) is set.
-  constexpr bool has_hesai_driver_error() const noexcept { return set_fields_[186]; }
+  constexpr bool has_hesai_driver_error() const noexcept { return set_fields_[188]; }
 
   /// Clears `hesai_driver_error` (no 187).
   void clear_hesai_driver_error() & noexcept {
     data_ = {};
-    set_fields_[186] = false;
+    set_fields_[188] = false;
     hesai_driver_error_ = {};
   }
 
@@ -10366,7 +10476,7 @@ class LogData final : public PbMessage {
   LogData& set_hesai_driver_error(logs::HesaiDriverError&& hesai_driver_error) & noexcept {
     clear_data();
     data_ = DataOneof::kHesaiDriverError;
-    set_fields_[186] = true;
+    set_fields_[188] = true;
     hesai_driver_error_ = std::move(hesai_driver_error);
     return *this;
   }
@@ -10391,7 +10501,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 188.
   logs::HesaiPacketProcessingFailed hesai_packet_processing_failed() && noexcept {
-    if (!set_fields_[187]) {
+    if (!set_fields_[189]) {
       return {};
     }
     return std::move(hesai_packet_processing_failed_);
@@ -10403,17 +10513,17 @@ class LogData final : public PbMessage {
   logs::HesaiPacketProcessingFailed& mutable_hesai_packet_processing_failed() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kHesaiPacketProcessingFailed;
-    set_fields_[187] = true;
+    set_fields_[189] = true;
     return hesai_packet_processing_failed_;
   }
 
   /// Returns whether `hesai_packet_processing_failed` (no 188) is set.
-  constexpr bool has_hesai_packet_processing_failed() const noexcept { return set_fields_[187]; }
+  constexpr bool has_hesai_packet_processing_failed() const noexcept { return set_fields_[189]; }
 
   /// Clears `hesai_packet_processing_failed` (no 188).
   void clear_hesai_packet_processing_failed() & noexcept {
     data_ = {};
-    set_fields_[187] = false;
+    set_fields_[189] = false;
     hesai_packet_processing_failed_ = {};
   }
 
@@ -10421,7 +10531,7 @@ class LogData final : public PbMessage {
   LogData& set_hesai_packet_processing_failed(logs::HesaiPacketProcessingFailed&& hesai_packet_processing_failed) & noexcept {
     clear_data();
     data_ = DataOneof::kHesaiPacketProcessingFailed;
-    set_fields_[187] = true;
+    set_fields_[189] = true;
     hesai_packet_processing_failed_ = std::move(hesai_packet_processing_failed);
     return *this;
   }
@@ -10446,7 +10556,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 189.
   logs::HesaiCorrectionFileError hesai_correction_file_error() && noexcept {
-    if (!set_fields_[188]) {
+    if (!set_fields_[190]) {
       return {};
     }
     return std::move(hesai_correction_file_error_);
@@ -10458,17 +10568,17 @@ class LogData final : public PbMessage {
   logs::HesaiCorrectionFileError& mutable_hesai_correction_file_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kHesaiCorrectionFileError;
-    set_fields_[188] = true;
+    set_fields_[190] = true;
     return hesai_correction_file_error_;
   }
 
   /// Returns whether `hesai_correction_file_error` (no 189) is set.
-  constexpr bool has_hesai_correction_file_error() const noexcept { return set_fields_[188]; }
+  constexpr bool has_hesai_correction_file_error() const noexcept { return set_fields_[190]; }
 
   /// Clears `hesai_correction_file_error` (no 189).
   void clear_hesai_correction_file_error() & noexcept {
     data_ = {};
-    set_fields_[188] = false;
+    set_fields_[190] = false;
     hesai_correction_file_error_ = {};
   }
 
@@ -10476,7 +10586,7 @@ class LogData final : public PbMessage {
   LogData& set_hesai_correction_file_error(logs::HesaiCorrectionFileError&& hesai_correction_file_error) & noexcept {
     clear_data();
     data_ = DataOneof::kHesaiCorrectionFileError;
-    set_fields_[188] = true;
+    set_fields_[190] = true;
     hesai_correction_file_error_ = std::move(hesai_correction_file_error);
     return *this;
   }
@@ -10501,7 +10611,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 190.
   logs::HesaiPacketStatistics hesai_packet_statistics() && noexcept {
-    if (!set_fields_[189]) {
+    if (!set_fields_[191]) {
       return {};
     }
     return std::move(hesai_packet_statistics_);
@@ -10513,17 +10623,17 @@ class LogData final : public PbMessage {
   logs::HesaiPacketStatistics& mutable_hesai_packet_statistics() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kHesaiPacketStatistics;
-    set_fields_[189] = true;
+    set_fields_[191] = true;
     return hesai_packet_statistics_;
   }
 
   /// Returns whether `hesai_packet_statistics` (no 190) is set.
-  constexpr bool has_hesai_packet_statistics() const noexcept { return set_fields_[189]; }
+  constexpr bool has_hesai_packet_statistics() const noexcept { return set_fields_[191]; }
 
   /// Clears `hesai_packet_statistics` (no 190).
   void clear_hesai_packet_statistics() & noexcept {
     data_ = {};
-    set_fields_[189] = false;
+    set_fields_[191] = false;
     hesai_packet_statistics_ = {};
   }
 
@@ -10531,7 +10641,7 @@ class LogData final : public PbMessage {
   LogData& set_hesai_packet_statistics(logs::HesaiPacketStatistics&& hesai_packet_statistics) & noexcept {
     clear_data();
     data_ = DataOneof::kHesaiPacketStatistics;
-    set_fields_[189] = true;
+    set_fields_[191] = true;
     hesai_packet_statistics_ = std::move(hesai_packet_statistics);
     return *this;
   }
@@ -10556,7 +10666,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 191.
   logs::PlyFileWriteFailedError ply_file_write_failed_error() && noexcept {
-    if (!set_fields_[190]) {
+    if (!set_fields_[192]) {
       return {};
     }
     return std::move(ply_file_write_failed_error_);
@@ -10568,17 +10678,17 @@ class LogData final : public PbMessage {
   logs::PlyFileWriteFailedError& mutable_ply_file_write_failed_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kPlyFileWriteFailedError;
-    set_fields_[190] = true;
+    set_fields_[192] = true;
     return ply_file_write_failed_error_;
   }
 
   /// Returns whether `ply_file_write_failed_error` (no 191) is set.
-  constexpr bool has_ply_file_write_failed_error() const noexcept { return set_fields_[190]; }
+  constexpr bool has_ply_file_write_failed_error() const noexcept { return set_fields_[192]; }
 
   /// Clears `ply_file_write_failed_error` (no 191).
   void clear_ply_file_write_failed_error() & noexcept {
     data_ = {};
-    set_fields_[190] = false;
+    set_fields_[192] = false;
     ply_file_write_failed_error_ = {};
   }
 
@@ -10586,7 +10696,7 @@ class LogData final : public PbMessage {
   LogData& set_ply_file_write_failed_error(logs::PlyFileWriteFailedError&& ply_file_write_failed_error) & noexcept {
     clear_data();
     data_ = DataOneof::kPlyFileWriteFailedError;
-    set_fields_[190] = true;
+    set_fields_[192] = true;
     ply_file_write_failed_error_ = std::move(ply_file_write_failed_error);
     return *this;
   }
@@ -10611,7 +10721,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 192.
   logs::ProjectSaveError project_save_error() && noexcept {
-    if (!set_fields_[191]) {
+    if (!set_fields_[193]) {
       return {};
     }
     return std::move(project_save_error_);
@@ -10623,17 +10733,17 @@ class LogData final : public PbMessage {
   logs::ProjectSaveError& mutable_project_save_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kProjectSaveError;
-    set_fields_[191] = true;
+    set_fields_[193] = true;
     return project_save_error_;
   }
 
   /// Returns whether `project_save_error` (no 192) is set.
-  constexpr bool has_project_save_error() const noexcept { return set_fields_[191]; }
+  constexpr bool has_project_save_error() const noexcept { return set_fields_[193]; }
 
   /// Clears `project_save_error` (no 192).
   void clear_project_save_error() & noexcept {
     data_ = {};
-    set_fields_[191] = false;
+    set_fields_[193] = false;
     project_save_error_ = {};
   }
 
@@ -10641,7 +10751,7 @@ class LogData final : public PbMessage {
   LogData& set_project_save_error(logs::ProjectSaveError&& project_save_error) & noexcept {
     clear_data();
     data_ = DataOneof::kProjectSaveError;
-    set_fields_[191] = true;
+    set_fields_[193] = true;
     project_save_error_ = std::move(project_save_error);
     return *this;
   }
@@ -10666,7 +10776,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 193.
   logs::SaveStaticEnvironmentSuccess save_static_environment_success() && noexcept {
-    if (!set_fields_[192]) {
+    if (!set_fields_[194]) {
       return {};
     }
     return std::move(save_static_environment_success_);
@@ -10678,17 +10788,17 @@ class LogData final : public PbMessage {
   logs::SaveStaticEnvironmentSuccess& mutable_save_static_environment_success() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kSaveStaticEnvironmentSuccess;
-    set_fields_[192] = true;
+    set_fields_[194] = true;
     return save_static_environment_success_;
   }
 
   /// Returns whether `save_static_environment_success` (no 193) is set.
-  constexpr bool has_save_static_environment_success() const noexcept { return set_fields_[192]; }
+  constexpr bool has_save_static_environment_success() const noexcept { return set_fields_[194]; }
 
   /// Clears `save_static_environment_success` (no 193).
   void clear_save_static_environment_success() & noexcept {
     data_ = {};
-    set_fields_[192] = false;
+    set_fields_[194] = false;
     save_static_environment_success_ = {};
   }
 
@@ -10696,7 +10806,7 @@ class LogData final : public PbMessage {
   LogData& set_save_static_environment_success(logs::SaveStaticEnvironmentSuccess&& save_static_environment_success) & noexcept {
     clear_data();
     data_ = DataOneof::kSaveStaticEnvironmentSuccess;
-    set_fields_[192] = true;
+    set_fields_[194] = true;
     save_static_environment_success_ = std::move(save_static_environment_success);
     return *this;
   }
@@ -10721,7 +10831,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 194.
   logs::SaveStaticEnvironmentFailed save_static_environment_failed() && noexcept {
-    if (!set_fields_[193]) {
+    if (!set_fields_[195]) {
       return {};
     }
     return std::move(save_static_environment_failed_);
@@ -10733,17 +10843,17 @@ class LogData final : public PbMessage {
   logs::SaveStaticEnvironmentFailed& mutable_save_static_environment_failed() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kSaveStaticEnvironmentFailed;
-    set_fields_[193] = true;
+    set_fields_[195] = true;
     return save_static_environment_failed_;
   }
 
   /// Returns whether `save_static_environment_failed` (no 194) is set.
-  constexpr bool has_save_static_environment_failed() const noexcept { return set_fields_[193]; }
+  constexpr bool has_save_static_environment_failed() const noexcept { return set_fields_[195]; }
 
   /// Clears `save_static_environment_failed` (no 194).
   void clear_save_static_environment_failed() & noexcept {
     data_ = {};
-    set_fields_[193] = false;
+    set_fields_[195] = false;
     save_static_environment_failed_ = {};
   }
 
@@ -10751,7 +10861,7 @@ class LogData final : public PbMessage {
   LogData& set_save_static_environment_failed(logs::SaveStaticEnvironmentFailed&& save_static_environment_failed) & noexcept {
     clear_data();
     data_ = DataOneof::kSaveStaticEnvironmentFailed;
-    set_fields_[193] = true;
+    set_fields_[195] = true;
     save_static_environment_failed_ = std::move(save_static_environment_failed);
     return *this;
   }
@@ -10776,7 +10886,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 195.
   logs::LoadStaticEnvironmentSuccess load_static_environment_success() && noexcept {
-    if (!set_fields_[194]) {
+    if (!set_fields_[196]) {
       return {};
     }
     return std::move(load_static_environment_success_);
@@ -10788,17 +10898,17 @@ class LogData final : public PbMessage {
   logs::LoadStaticEnvironmentSuccess& mutable_load_static_environment_success() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLoadStaticEnvironmentSuccess;
-    set_fields_[194] = true;
+    set_fields_[196] = true;
     return load_static_environment_success_;
   }
 
   /// Returns whether `load_static_environment_success` (no 195) is set.
-  constexpr bool has_load_static_environment_success() const noexcept { return set_fields_[194]; }
+  constexpr bool has_load_static_environment_success() const noexcept { return set_fields_[196]; }
 
   /// Clears `load_static_environment_success` (no 195).
   void clear_load_static_environment_success() & noexcept {
     data_ = {};
-    set_fields_[194] = false;
+    set_fields_[196] = false;
     load_static_environment_success_ = {};
   }
 
@@ -10806,7 +10916,7 @@ class LogData final : public PbMessage {
   LogData& set_load_static_environment_success(logs::LoadStaticEnvironmentSuccess&& load_static_environment_success) & noexcept {
     clear_data();
     data_ = DataOneof::kLoadStaticEnvironmentSuccess;
-    set_fields_[194] = true;
+    set_fields_[196] = true;
     load_static_environment_success_ = std::move(load_static_environment_success);
     return *this;
   }
@@ -10831,7 +10941,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 196.
   logs::LoadStaticEnvironmentFailed load_static_environment_failed() && noexcept {
-    if (!set_fields_[195]) {
+    if (!set_fields_[197]) {
       return {};
     }
     return std::move(load_static_environment_failed_);
@@ -10843,17 +10953,17 @@ class LogData final : public PbMessage {
   logs::LoadStaticEnvironmentFailed& mutable_load_static_environment_failed() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLoadStaticEnvironmentFailed;
-    set_fields_[195] = true;
+    set_fields_[197] = true;
     return load_static_environment_failed_;
   }
 
   /// Returns whether `load_static_environment_failed` (no 196) is set.
-  constexpr bool has_load_static_environment_failed() const noexcept { return set_fields_[195]; }
+  constexpr bool has_load_static_environment_failed() const noexcept { return set_fields_[197]; }
 
   /// Clears `load_static_environment_failed` (no 196).
   void clear_load_static_environment_failed() & noexcept {
     data_ = {};
-    set_fields_[195] = false;
+    set_fields_[197] = false;
     load_static_environment_failed_ = {};
   }
 
@@ -10861,7 +10971,7 @@ class LogData final : public PbMessage {
   LogData& set_load_static_environment_failed(logs::LoadStaticEnvironmentFailed&& load_static_environment_failed) & noexcept {
     clear_data();
     data_ = DataOneof::kLoadStaticEnvironmentFailed;
-    set_fields_[195] = true;
+    set_fields_[197] = true;
     load_static_environment_failed_ = std::move(load_static_environment_failed);
     return *this;
   }
@@ -10886,7 +10996,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 197.
   logs::AttemptToInjectInvalidLidarIdWarning attempt_to_inject_invalid_lidar_id_warning() && noexcept {
-    if (!set_fields_[196]) {
+    if (!set_fields_[198]) {
       return {};
     }
     return std::move(attempt_to_inject_invalid_lidar_id_warning_);
@@ -10898,17 +11008,17 @@ class LogData final : public PbMessage {
   logs::AttemptToInjectInvalidLidarIdWarning& mutable_attempt_to_inject_invalid_lidar_id_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kAttemptToInjectInvalidLidarIdWarning;
-    set_fields_[196] = true;
+    set_fields_[198] = true;
     return attempt_to_inject_invalid_lidar_id_warning_;
   }
 
   /// Returns whether `attempt_to_inject_invalid_lidar_id_warning` (no 197) is set.
-  constexpr bool has_attempt_to_inject_invalid_lidar_id_warning() const noexcept { return set_fields_[196]; }
+  constexpr bool has_attempt_to_inject_invalid_lidar_id_warning() const noexcept { return set_fields_[198]; }
 
   /// Clears `attempt_to_inject_invalid_lidar_id_warning` (no 197).
   void clear_attempt_to_inject_invalid_lidar_id_warning() & noexcept {
     data_ = {};
-    set_fields_[196] = false;
+    set_fields_[198] = false;
     attempt_to_inject_invalid_lidar_id_warning_ = {};
   }
 
@@ -10916,7 +11026,7 @@ class LogData final : public PbMessage {
   LogData& set_attempt_to_inject_invalid_lidar_id_warning(logs::AttemptToInjectInvalidLidarIdWarning&& attempt_to_inject_invalid_lidar_id_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kAttemptToInjectInvalidLidarIdWarning;
-    set_fields_[196] = true;
+    set_fields_[198] = true;
     attempt_to_inject_invalid_lidar_id_warning_ = std::move(attempt_to_inject_invalid_lidar_id_warning);
     return *this;
   }
@@ -10941,7 +11051,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 198.
   logs::ResetBundledPacketDueToUnexpectedPacket reset_bundled_packet_due_to_unexpected_packet() && noexcept {
-    if (!set_fields_[197]) {
+    if (!set_fields_[199]) {
       return {};
     }
     return std::move(reset_bundled_packet_due_to_unexpected_packet_);
@@ -10953,17 +11063,17 @@ class LogData final : public PbMessage {
   logs::ResetBundledPacketDueToUnexpectedPacket& mutable_reset_bundled_packet_due_to_unexpected_packet() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kResetBundledPacketDueToUnexpectedPacket;
-    set_fields_[197] = true;
+    set_fields_[199] = true;
     return reset_bundled_packet_due_to_unexpected_packet_;
   }
 
   /// Returns whether `reset_bundled_packet_due_to_unexpected_packet` (no 198) is set.
-  constexpr bool has_reset_bundled_packet_due_to_unexpected_packet() const noexcept { return set_fields_[197]; }
+  constexpr bool has_reset_bundled_packet_due_to_unexpected_packet() const noexcept { return set_fields_[199]; }
 
   /// Clears `reset_bundled_packet_due_to_unexpected_packet` (no 198).
   void clear_reset_bundled_packet_due_to_unexpected_packet() & noexcept {
     data_ = {};
-    set_fields_[197] = false;
+    set_fields_[199] = false;
     reset_bundled_packet_due_to_unexpected_packet_ = {};
   }
 
@@ -10971,7 +11081,7 @@ class LogData final : public PbMessage {
   LogData& set_reset_bundled_packet_due_to_unexpected_packet(logs::ResetBundledPacketDueToUnexpectedPacket&& reset_bundled_packet_due_to_unexpected_packet) & noexcept {
     clear_data();
     data_ = DataOneof::kResetBundledPacketDueToUnexpectedPacket;
-    set_fields_[197] = true;
+    set_fields_[199] = true;
     reset_bundled_packet_due_to_unexpected_packet_ = std::move(reset_bundled_packet_due_to_unexpected_packet);
     return *this;
   }
@@ -10996,7 +11106,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 199.
   logs::PacketBundlerDroppedPacketsWarning packet_bundler_dropped_packets_warning() && noexcept {
-    if (!set_fields_[198]) {
+    if (!set_fields_[200]) {
       return {};
     }
     return std::move(packet_bundler_dropped_packets_warning_);
@@ -11008,17 +11118,17 @@ class LogData final : public PbMessage {
   logs::PacketBundlerDroppedPacketsWarning& mutable_packet_bundler_dropped_packets_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kPacketBundlerDroppedPacketsWarning;
-    set_fields_[198] = true;
+    set_fields_[200] = true;
     return packet_bundler_dropped_packets_warning_;
   }
 
   /// Returns whether `packet_bundler_dropped_packets_warning` (no 199) is set.
-  constexpr bool has_packet_bundler_dropped_packets_warning() const noexcept { return set_fields_[198]; }
+  constexpr bool has_packet_bundler_dropped_packets_warning() const noexcept { return set_fields_[200]; }
 
   /// Clears `packet_bundler_dropped_packets_warning` (no 199).
   void clear_packet_bundler_dropped_packets_warning() & noexcept {
     data_ = {};
-    set_fields_[198] = false;
+    set_fields_[200] = false;
     packet_bundler_dropped_packets_warning_ = {};
   }
 
@@ -11026,7 +11136,7 @@ class LogData final : public PbMessage {
   LogData& set_packet_bundler_dropped_packets_warning(logs::PacketBundlerDroppedPacketsWarning&& packet_bundler_dropped_packets_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kPacketBundlerDroppedPacketsWarning;
-    set_fields_[198] = true;
+    set_fields_[200] = true;
     packet_bundler_dropped_packets_warning_ = std::move(packet_bundler_dropped_packets_warning);
     return *this;
   }
@@ -11051,7 +11161,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 200.
   logs::PacketBundlerFrameJumpWarning packet_bundler_frame_jump_warning() && noexcept {
-    if (!set_fields_[199]) {
+    if (!set_fields_[201]) {
       return {};
     }
     return std::move(packet_bundler_frame_jump_warning_);
@@ -11063,17 +11173,17 @@ class LogData final : public PbMessage {
   logs::PacketBundlerFrameJumpWarning& mutable_packet_bundler_frame_jump_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kPacketBundlerFrameJumpWarning;
-    set_fields_[199] = true;
+    set_fields_[201] = true;
     return packet_bundler_frame_jump_warning_;
   }
 
   /// Returns whether `packet_bundler_frame_jump_warning` (no 200) is set.
-  constexpr bool has_packet_bundler_frame_jump_warning() const noexcept { return set_fields_[199]; }
+  constexpr bool has_packet_bundler_frame_jump_warning() const noexcept { return set_fields_[201]; }
 
   /// Clears `packet_bundler_frame_jump_warning` (no 200).
   void clear_packet_bundler_frame_jump_warning() & noexcept {
     data_ = {};
-    set_fields_[199] = false;
+    set_fields_[201] = false;
     packet_bundler_frame_jump_warning_ = {};
   }
 
@@ -11081,7 +11191,7 @@ class LogData final : public PbMessage {
   LogData& set_packet_bundler_frame_jump_warning(logs::PacketBundlerFrameJumpWarning&& packet_bundler_frame_jump_warning) & noexcept {
     clear_data();
     data_ = DataOneof::kPacketBundlerFrameJumpWarning;
-    set_fields_[199] = true;
+    set_fields_[201] = true;
     packet_bundler_frame_jump_warning_ = std::move(packet_bundler_frame_jump_warning);
     return *this;
   }
@@ -11106,7 +11216,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 201.
   logs::LidarCorrectionLoadingSuccess lidar_correction_loading_success() && noexcept {
-    if (!set_fields_[200]) {
+    if (!set_fields_[202]) {
       return {};
     }
     return std::move(lidar_correction_loading_success_);
@@ -11118,17 +11228,17 @@ class LogData final : public PbMessage {
   logs::LidarCorrectionLoadingSuccess& mutable_lidar_correction_loading_success() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLidarCorrectionLoadingSuccess;
-    set_fields_[200] = true;
+    set_fields_[202] = true;
     return lidar_correction_loading_success_;
   }
 
   /// Returns whether `lidar_correction_loading_success` (no 201) is set.
-  constexpr bool has_lidar_correction_loading_success() const noexcept { return set_fields_[200]; }
+  constexpr bool has_lidar_correction_loading_success() const noexcept { return set_fields_[202]; }
 
   /// Clears `lidar_correction_loading_success` (no 201).
   void clear_lidar_correction_loading_success() & noexcept {
     data_ = {};
-    set_fields_[200] = false;
+    set_fields_[202] = false;
     lidar_correction_loading_success_ = {};
   }
 
@@ -11136,7 +11246,7 @@ class LogData final : public PbMessage {
   LogData& set_lidar_correction_loading_success(logs::LidarCorrectionLoadingSuccess&& lidar_correction_loading_success) & noexcept {
     clear_data();
     data_ = DataOneof::kLidarCorrectionLoadingSuccess;
-    set_fields_[200] = true;
+    set_fields_[202] = true;
     lidar_correction_loading_success_ = std::move(lidar_correction_loading_success);
     return *this;
   }
@@ -11161,7 +11271,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 202.
   logs::LidarCorrectionLoadingFailure lidar_correction_loading_failure() && noexcept {
-    if (!set_fields_[201]) {
+    if (!set_fields_[203]) {
       return {};
     }
     return std::move(lidar_correction_loading_failure_);
@@ -11173,17 +11283,17 @@ class LogData final : public PbMessage {
   logs::LidarCorrectionLoadingFailure& mutable_lidar_correction_loading_failure() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kLidarCorrectionLoadingFailure;
-    set_fields_[201] = true;
+    set_fields_[203] = true;
     return lidar_correction_loading_failure_;
   }
 
   /// Returns whether `lidar_correction_loading_failure` (no 202) is set.
-  constexpr bool has_lidar_correction_loading_failure() const noexcept { return set_fields_[201]; }
+  constexpr bool has_lidar_correction_loading_failure() const noexcept { return set_fields_[203]; }
 
   /// Clears `lidar_correction_loading_failure` (no 202).
   void clear_lidar_correction_loading_failure() & noexcept {
     data_ = {};
-    set_fields_[201] = false;
+    set_fields_[203] = false;
     lidar_correction_loading_failure_ = {};
   }
 
@@ -11191,7 +11301,7 @@ class LogData final : public PbMessage {
   LogData& set_lidar_correction_loading_failure(logs::LidarCorrectionLoadingFailure&& lidar_correction_loading_failure) & noexcept {
     clear_data();
     data_ = DataOneof::kLidarCorrectionLoadingFailure;
-    set_fields_[201] = true;
+    set_fields_[203] = true;
     lidar_correction_loading_failure_ = std::move(lidar_correction_loading_failure);
     return *this;
   }
@@ -11216,7 +11326,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 203.
   logs::HesaiPacketStatisticsLidar hesai_packet_statistics_lidar() && noexcept {
-    if (!set_fields_[202]) {
+    if (!set_fields_[204]) {
       return {};
     }
     return std::move(hesai_packet_statistics_lidar_);
@@ -11228,17 +11338,17 @@ class LogData final : public PbMessage {
   logs::HesaiPacketStatisticsLidar& mutable_hesai_packet_statistics_lidar() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kHesaiPacketStatisticsLidar;
-    set_fields_[202] = true;
+    set_fields_[204] = true;
     return hesai_packet_statistics_lidar_;
   }
 
   /// Returns whether `hesai_packet_statistics_lidar` (no 203) is set.
-  constexpr bool has_hesai_packet_statistics_lidar() const noexcept { return set_fields_[202]; }
+  constexpr bool has_hesai_packet_statistics_lidar() const noexcept { return set_fields_[204]; }
 
   /// Clears `hesai_packet_statistics_lidar` (no 203).
   void clear_hesai_packet_statistics_lidar() & noexcept {
     data_ = {};
-    set_fields_[202] = false;
+    set_fields_[204] = false;
     hesai_packet_statistics_lidar_ = {};
   }
 
@@ -11246,13 +11356,728 @@ class LogData final : public PbMessage {
   LogData& set_hesai_packet_statistics_lidar(logs::HesaiPacketStatisticsLidar&& hesai_packet_statistics_lidar) & noexcept {
     clear_data();
     data_ = DataOneof::kHesaiPacketStatisticsLidar;
-    set_fields_[202] = true;
+    set_fields_[204] = true;
     hesai_packet_statistics_lidar_ = std::move(hesai_packet_statistics_lidar);
     return *this;
   }
   /// Sets `hesai_packet_statistics_lidar` (no 203) and returns `*this`.
   LogData&& set_hesai_packet_statistics_lidar(logs::HesaiPacketStatisticsLidar&& hesai_packet_statistics_lidar) && noexcept {
     return std::move(set_hesai_packet_statistics_lidar(std::move(hesai_packet_statistics_lidar)));
+  }
+
+  // Field `lidar_tilt_detection_aligned_to_calibration_map_info` (no 204).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 204.
+  constexpr const logs::LidarTiltDetectionAlignedToCalibrationMapInfo& lidar_tilt_detection_aligned_to_calibration_map_info() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_tilt_detection_aligned_to_calibration_map_info_;
+  }
+
+  /// If `lidar_tilt_detection_aligned_to_calibration_map_info` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 204.
+  logs::LidarTiltDetectionAlignedToCalibrationMapInfo lidar_tilt_detection_aligned_to_calibration_map_info() && noexcept {
+    if (!set_fields_[205]) {
+      return {};
+    }
+    return std::move(lidar_tilt_detection_aligned_to_calibration_map_info_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 204.
+  logs::LidarTiltDetectionAlignedToCalibrationMapInfo& mutable_lidar_tilt_detection_aligned_to_calibration_map_info() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kLidarTiltDetectionAlignedToCalibrationMapInfo;
+    set_fields_[205] = true;
+    return lidar_tilt_detection_aligned_to_calibration_map_info_;
+  }
+
+  /// Returns whether `lidar_tilt_detection_aligned_to_calibration_map_info` (no 204) is set.
+  constexpr bool has_lidar_tilt_detection_aligned_to_calibration_map_info() const noexcept { return set_fields_[205]; }
+
+  /// Clears `lidar_tilt_detection_aligned_to_calibration_map_info` (no 204).
+  void clear_lidar_tilt_detection_aligned_to_calibration_map_info() & noexcept {
+    data_ = {};
+    set_fields_[205] = false;
+    lidar_tilt_detection_aligned_to_calibration_map_info_ = {};
+  }
+
+  /// Sets `lidar_tilt_detection_aligned_to_calibration_map_info` (no 204) and returns `*this`.
+  LogData& set_lidar_tilt_detection_aligned_to_calibration_map_info(logs::LidarTiltDetectionAlignedToCalibrationMapInfo&& lidar_tilt_detection_aligned_to_calibration_map_info) & noexcept {
+    clear_data();
+    data_ = DataOneof::kLidarTiltDetectionAlignedToCalibrationMapInfo;
+    set_fields_[205] = true;
+    lidar_tilt_detection_aligned_to_calibration_map_info_ = std::move(lidar_tilt_detection_aligned_to_calibration_map_info);
+    return *this;
+  }
+  /// Sets `lidar_tilt_detection_aligned_to_calibration_map_info` (no 204) and returns `*this`.
+  LogData&& set_lidar_tilt_detection_aligned_to_calibration_map_info(logs::LidarTiltDetectionAlignedToCalibrationMapInfo&& lidar_tilt_detection_aligned_to_calibration_map_info) && noexcept {
+    return std::move(set_lidar_tilt_detection_aligned_to_calibration_map_info(std::move(lidar_tilt_detection_aligned_to_calibration_map_info)));
+  }
+
+  // Field `lidar_tilt_detection_misaligned_to_calibration_map_warning` (no 205).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 205.
+  constexpr const logs::LidarTiltDetectionMisalignedToCalibrationMapWarning& lidar_tilt_detection_misaligned_to_calibration_map_warning() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_tilt_detection_misaligned_to_calibration_map_warning_;
+  }
+
+  /// If `lidar_tilt_detection_misaligned_to_calibration_map_warning` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 205.
+  logs::LidarTiltDetectionMisalignedToCalibrationMapWarning lidar_tilt_detection_misaligned_to_calibration_map_warning() && noexcept {
+    if (!set_fields_[206]) {
+      return {};
+    }
+    return std::move(lidar_tilt_detection_misaligned_to_calibration_map_warning_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 205.
+  logs::LidarTiltDetectionMisalignedToCalibrationMapWarning& mutable_lidar_tilt_detection_misaligned_to_calibration_map_warning() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kLidarTiltDetectionMisalignedToCalibrationMapWarning;
+    set_fields_[206] = true;
+    return lidar_tilt_detection_misaligned_to_calibration_map_warning_;
+  }
+
+  /// Returns whether `lidar_tilt_detection_misaligned_to_calibration_map_warning` (no 205) is set.
+  constexpr bool has_lidar_tilt_detection_misaligned_to_calibration_map_warning() const noexcept { return set_fields_[206]; }
+
+  /// Clears `lidar_tilt_detection_misaligned_to_calibration_map_warning` (no 205).
+  void clear_lidar_tilt_detection_misaligned_to_calibration_map_warning() & noexcept {
+    data_ = {};
+    set_fields_[206] = false;
+    lidar_tilt_detection_misaligned_to_calibration_map_warning_ = {};
+  }
+
+  /// Sets `lidar_tilt_detection_misaligned_to_calibration_map_warning` (no 205) and returns `*this`.
+  LogData& set_lidar_tilt_detection_misaligned_to_calibration_map_warning(logs::LidarTiltDetectionMisalignedToCalibrationMapWarning&& lidar_tilt_detection_misaligned_to_calibration_map_warning) & noexcept {
+    clear_data();
+    data_ = DataOneof::kLidarTiltDetectionMisalignedToCalibrationMapWarning;
+    set_fields_[206] = true;
+    lidar_tilt_detection_misaligned_to_calibration_map_warning_ = std::move(lidar_tilt_detection_misaligned_to_calibration_map_warning);
+    return *this;
+  }
+  /// Sets `lidar_tilt_detection_misaligned_to_calibration_map_warning` (no 205) and returns `*this`.
+  LogData&& set_lidar_tilt_detection_misaligned_to_calibration_map_warning(logs::LidarTiltDetectionMisalignedToCalibrationMapWarning&& lidar_tilt_detection_misaligned_to_calibration_map_warning) && noexcept {
+    return std::move(set_lidar_tilt_detection_misaligned_to_calibration_map_warning(std::move(lidar_tilt_detection_misaligned_to_calibration_map_warning)));
+  }
+
+  // Field `lidar_original_pose_differs_for_auto_correction_error` (no 209).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 209.
+  constexpr const logs::LidarOriginalPoseDiffersForAutoCorrectionError& lidar_original_pose_differs_for_auto_correction_error() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_original_pose_differs_for_auto_correction_error_;
+  }
+
+  /// If `lidar_original_pose_differs_for_auto_correction_error` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 209.
+  logs::LidarOriginalPoseDiffersForAutoCorrectionError lidar_original_pose_differs_for_auto_correction_error() && noexcept {
+    if (!set_fields_[207]) {
+      return {};
+    }
+    return std::move(lidar_original_pose_differs_for_auto_correction_error_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 209.
+  logs::LidarOriginalPoseDiffersForAutoCorrectionError& mutable_lidar_original_pose_differs_for_auto_correction_error() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kLidarOriginalPoseDiffersForAutoCorrectionError;
+    set_fields_[207] = true;
+    return lidar_original_pose_differs_for_auto_correction_error_;
+  }
+
+  /// Returns whether `lidar_original_pose_differs_for_auto_correction_error` (no 209) is set.
+  constexpr bool has_lidar_original_pose_differs_for_auto_correction_error() const noexcept { return set_fields_[207]; }
+
+  /// Clears `lidar_original_pose_differs_for_auto_correction_error` (no 209).
+  void clear_lidar_original_pose_differs_for_auto_correction_error() & noexcept {
+    data_ = {};
+    set_fields_[207] = false;
+    lidar_original_pose_differs_for_auto_correction_error_ = {};
+  }
+
+  /// Sets `lidar_original_pose_differs_for_auto_correction_error` (no 209) and returns `*this`.
+  LogData& set_lidar_original_pose_differs_for_auto_correction_error(logs::LidarOriginalPoseDiffersForAutoCorrectionError&& lidar_original_pose_differs_for_auto_correction_error) & noexcept {
+    clear_data();
+    data_ = DataOneof::kLidarOriginalPoseDiffersForAutoCorrectionError;
+    set_fields_[207] = true;
+    lidar_original_pose_differs_for_auto_correction_error_ = std::move(lidar_original_pose_differs_for_auto_correction_error);
+    return *this;
+  }
+  /// Sets `lidar_original_pose_differs_for_auto_correction_error` (no 209) and returns `*this`.
+  LogData&& set_lidar_original_pose_differs_for_auto_correction_error(logs::LidarOriginalPoseDiffersForAutoCorrectionError&& lidar_original_pose_differs_for_auto_correction_error) && noexcept {
+    return std::move(set_lidar_original_pose_differs_for_auto_correction_error(std::move(lidar_original_pose_differs_for_auto_correction_error)));
+  }
+
+  // Field `recovered_car_ids_info` (no 210).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 210.
+  constexpr const logs::RecoveredCarIdsInfo& recovered_car_ids_info() const& noexcept HORUS_LIFETIME_BOUND {
+    return recovered_car_ids_info_;
+  }
+
+  /// If `recovered_car_ids_info` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 210.
+  logs::RecoveredCarIdsInfo recovered_car_ids_info() && noexcept {
+    if (!set_fields_[208]) {
+      return {};
+    }
+    return std::move(recovered_car_ids_info_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 210.
+  logs::RecoveredCarIdsInfo& mutable_recovered_car_ids_info() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kRecoveredCarIdsInfo;
+    set_fields_[208] = true;
+    return recovered_car_ids_info_;
+  }
+
+  /// Returns whether `recovered_car_ids_info` (no 210) is set.
+  constexpr bool has_recovered_car_ids_info() const noexcept { return set_fields_[208]; }
+
+  /// Clears `recovered_car_ids_info` (no 210).
+  void clear_recovered_car_ids_info() & noexcept {
+    data_ = {};
+    set_fields_[208] = false;
+    recovered_car_ids_info_ = {};
+  }
+
+  /// Sets `recovered_car_ids_info` (no 210) and returns `*this`.
+  LogData& set_recovered_car_ids_info(logs::RecoveredCarIdsInfo&& recovered_car_ids_info) & noexcept {
+    clear_data();
+    data_ = DataOneof::kRecoveredCarIdsInfo;
+    set_fields_[208] = true;
+    recovered_car_ids_info_ = std::move(recovered_car_ids_info);
+    return *this;
+  }
+  /// Sets `recovered_car_ids_info` (no 210) and returns `*this`.
+  LogData&& set_recovered_car_ids_info(logs::RecoveredCarIdsInfo&& recovered_car_ids_info) && noexcept {
+    return std::move(set_recovered_car_ids_info(std::move(recovered_car_ids_info)));
+  }
+
+  // Field `failed_to_recover_car_ids` (no 211).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 211.
+  constexpr const logs::FailedToRecoverCarIds& failed_to_recover_car_ids() const& noexcept HORUS_LIFETIME_BOUND {
+    return failed_to_recover_car_ids_;
+  }
+
+  /// If `failed_to_recover_car_ids` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 211.
+  logs::FailedToRecoverCarIds failed_to_recover_car_ids() && noexcept {
+    if (!set_fields_[209]) {
+      return {};
+    }
+    return std::move(failed_to_recover_car_ids_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 211.
+  logs::FailedToRecoverCarIds& mutable_failed_to_recover_car_ids() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kFailedToRecoverCarIds;
+    set_fields_[209] = true;
+    return failed_to_recover_car_ids_;
+  }
+
+  /// Returns whether `failed_to_recover_car_ids` (no 211) is set.
+  constexpr bool has_failed_to_recover_car_ids() const noexcept { return set_fields_[209]; }
+
+  /// Clears `failed_to_recover_car_ids` (no 211).
+  void clear_failed_to_recover_car_ids() & noexcept {
+    data_ = {};
+    set_fields_[209] = false;
+    failed_to_recover_car_ids_ = {};
+  }
+
+  /// Sets `failed_to_recover_car_ids` (no 211) and returns `*this`.
+  LogData& set_failed_to_recover_car_ids(logs::FailedToRecoverCarIds&& failed_to_recover_car_ids) & noexcept {
+    clear_data();
+    data_ = DataOneof::kFailedToRecoverCarIds;
+    set_fields_[209] = true;
+    failed_to_recover_car_ids_ = std::move(failed_to_recover_car_ids);
+    return *this;
+  }
+  /// Sets `failed_to_recover_car_ids` (no 211) and returns `*this`.
+  LogData&& set_failed_to_recover_car_ids(logs::FailedToRecoverCarIds&& failed_to_recover_car_ids) && noexcept {
+    return std::move(set_failed_to_recover_car_ids(std::move(failed_to_recover_car_ids)));
+  }
+
+  // Field `failed_to_emplace_recovered_car_id` (no 212).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 212.
+  constexpr const logs::FailedToEmplaceRecoveredCarId& failed_to_emplace_recovered_car_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return failed_to_emplace_recovered_car_id_;
+  }
+
+  /// If `failed_to_emplace_recovered_car_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 212.
+  logs::FailedToEmplaceRecoveredCarId failed_to_emplace_recovered_car_id() && noexcept {
+    if (!set_fields_[210]) {
+      return {};
+    }
+    return std::move(failed_to_emplace_recovered_car_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 212.
+  logs::FailedToEmplaceRecoveredCarId& mutable_failed_to_emplace_recovered_car_id() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kFailedToEmplaceRecoveredCarId;
+    set_fields_[210] = true;
+    return failed_to_emplace_recovered_car_id_;
+  }
+
+  /// Returns whether `failed_to_emplace_recovered_car_id` (no 212) is set.
+  constexpr bool has_failed_to_emplace_recovered_car_id() const noexcept { return set_fields_[210]; }
+
+  /// Clears `failed_to_emplace_recovered_car_id` (no 212).
+  void clear_failed_to_emplace_recovered_car_id() & noexcept {
+    data_ = {};
+    set_fields_[210] = false;
+    failed_to_emplace_recovered_car_id_ = {};
+  }
+
+  /// Sets `failed_to_emplace_recovered_car_id` (no 212) and returns `*this`.
+  LogData& set_failed_to_emplace_recovered_car_id(logs::FailedToEmplaceRecoveredCarId&& failed_to_emplace_recovered_car_id) & noexcept {
+    clear_data();
+    data_ = DataOneof::kFailedToEmplaceRecoveredCarId;
+    set_fields_[210] = true;
+    failed_to_emplace_recovered_car_id_ = std::move(failed_to_emplace_recovered_car_id);
+    return *this;
+  }
+  /// Sets `failed_to_emplace_recovered_car_id` (no 212) and returns `*this`.
+  LogData&& set_failed_to_emplace_recovered_car_id(logs::FailedToEmplaceRecoveredCarId&& failed_to_emplace_recovered_car_id) && noexcept {
+    return std::move(set_failed_to_emplace_recovered_car_id(std::move(failed_to_emplace_recovered_car_id)));
+  }
+
+  // Field `persistent_storage_error` (no 213).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 213.
+  constexpr const logs::PersistentStorageError& persistent_storage_error() const& noexcept HORUS_LIFETIME_BOUND {
+    return persistent_storage_error_;
+  }
+
+  /// If `persistent_storage_error` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 213.
+  logs::PersistentStorageError persistent_storage_error() && noexcept {
+    if (!set_fields_[211]) {
+      return {};
+    }
+    return std::move(persistent_storage_error_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 213.
+  logs::PersistentStorageError& mutable_persistent_storage_error() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kPersistentStorageError;
+    set_fields_[211] = true;
+    return persistent_storage_error_;
+  }
+
+  /// Returns whether `persistent_storage_error` (no 213) is set.
+  constexpr bool has_persistent_storage_error() const noexcept { return set_fields_[211]; }
+
+  /// Clears `persistent_storage_error` (no 213).
+  void clear_persistent_storage_error() & noexcept {
+    data_ = {};
+    set_fields_[211] = false;
+    persistent_storage_error_ = {};
+  }
+
+  /// Sets `persistent_storage_error` (no 213) and returns `*this`.
+  LogData& set_persistent_storage_error(logs::PersistentStorageError&& persistent_storage_error) & noexcept {
+    clear_data();
+    data_ = DataOneof::kPersistentStorageError;
+    set_fields_[211] = true;
+    persistent_storage_error_ = std::move(persistent_storage_error);
+    return *this;
+  }
+  /// Sets `persistent_storage_error` (no 213) and returns `*this`.
+  LogData&& set_persistent_storage_error(logs::PersistentStorageError&& persistent_storage_error) && noexcept {
+    return std::move(set_persistent_storage_error(std::move(persistent_storage_error)));
+  }
+
+  // Field `track_capacity_exceeded_warning` (no 214).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 214.
+  constexpr const logs::TrackCapacityExceededWarning& track_capacity_exceeded_warning() const& noexcept HORUS_LIFETIME_BOUND {
+    return track_capacity_exceeded_warning_;
+  }
+
+  /// If `track_capacity_exceeded_warning` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 214.
+  logs::TrackCapacityExceededWarning track_capacity_exceeded_warning() && noexcept {
+    if (!set_fields_[212]) {
+      return {};
+    }
+    return std::move(track_capacity_exceeded_warning_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 214.
+  logs::TrackCapacityExceededWarning& mutable_track_capacity_exceeded_warning() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kTrackCapacityExceededWarning;
+    set_fields_[212] = true;
+    return track_capacity_exceeded_warning_;
+  }
+
+  /// Returns whether `track_capacity_exceeded_warning` (no 214) is set.
+  constexpr bool has_track_capacity_exceeded_warning() const noexcept { return set_fields_[212]; }
+
+  /// Clears `track_capacity_exceeded_warning` (no 214).
+  void clear_track_capacity_exceeded_warning() & noexcept {
+    data_ = {};
+    set_fields_[212] = false;
+    track_capacity_exceeded_warning_ = {};
+  }
+
+  /// Sets `track_capacity_exceeded_warning` (no 214) and returns `*this`.
+  LogData& set_track_capacity_exceeded_warning(logs::TrackCapacityExceededWarning&& track_capacity_exceeded_warning) & noexcept {
+    clear_data();
+    data_ = DataOneof::kTrackCapacityExceededWarning;
+    set_fields_[212] = true;
+    track_capacity_exceeded_warning_ = std::move(track_capacity_exceeded_warning);
+    return *this;
+  }
+  /// Sets `track_capacity_exceeded_warning` (no 214) and returns `*this`.
+  LogData&& set_track_capacity_exceeded_warning(logs::TrackCapacityExceededWarning&& track_capacity_exceeded_warning) && noexcept {
+    return std::move(set_track_capacity_exceeded_warning(std::move(track_capacity_exceeded_warning)));
+  }
+
+  // Field `tracker_state_path_unavailable_warning` (no 215).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 215.
+  constexpr const logs::TrackerStatePathUnavailableWarning& tracker_state_path_unavailable_warning() const& noexcept HORUS_LIFETIME_BOUND {
+    return tracker_state_path_unavailable_warning_;
+  }
+
+  /// If `tracker_state_path_unavailable_warning` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 215.
+  logs::TrackerStatePathUnavailableWarning tracker_state_path_unavailable_warning() && noexcept {
+    if (!set_fields_[213]) {
+      return {};
+    }
+    return std::move(tracker_state_path_unavailable_warning_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 215.
+  logs::TrackerStatePathUnavailableWarning& mutable_tracker_state_path_unavailable_warning() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kTrackerStatePathUnavailableWarning;
+    set_fields_[213] = true;
+    return tracker_state_path_unavailable_warning_;
+  }
+
+  /// Returns whether `tracker_state_path_unavailable_warning` (no 215) is set.
+  constexpr bool has_tracker_state_path_unavailable_warning() const noexcept { return set_fields_[213]; }
+
+  /// Clears `tracker_state_path_unavailable_warning` (no 215).
+  void clear_tracker_state_path_unavailable_warning() & noexcept {
+    data_ = {};
+    set_fields_[213] = false;
+    tracker_state_path_unavailable_warning_ = {};
+  }
+
+  /// Sets `tracker_state_path_unavailable_warning` (no 215) and returns `*this`.
+  LogData& set_tracker_state_path_unavailable_warning(logs::TrackerStatePathUnavailableWarning&& tracker_state_path_unavailable_warning) & noexcept {
+    clear_data();
+    data_ = DataOneof::kTrackerStatePathUnavailableWarning;
+    set_fields_[213] = true;
+    tracker_state_path_unavailable_warning_ = std::move(tracker_state_path_unavailable_warning);
+    return *this;
+  }
+  /// Sets `tracker_state_path_unavailable_warning` (no 215) and returns `*this`.
+  LogData&& set_tracker_state_path_unavailable_warning(logs::TrackerStatePathUnavailableWarning&& tracker_state_path_unavailable_warning) && noexcept {
+    return std::move(set_tracker_state_path_unavailable_warning(std::move(tracker_state_path_unavailable_warning)));
+  }
+
+  // Field `tracker_id_recovery_failed_error` (no 216).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 216.
+  constexpr const logs::TrackerIdRecoveryFailedError& tracker_id_recovery_failed_error() const& noexcept HORUS_LIFETIME_BOUND {
+    return tracker_id_recovery_failed_error_;
+  }
+
+  /// If `tracker_id_recovery_failed_error` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 216.
+  logs::TrackerIdRecoveryFailedError tracker_id_recovery_failed_error() && noexcept {
+    if (!set_fields_[214]) {
+      return {};
+    }
+    return std::move(tracker_id_recovery_failed_error_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 216.
+  logs::TrackerIdRecoveryFailedError& mutable_tracker_id_recovery_failed_error() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kTrackerIdRecoveryFailedError;
+    set_fields_[214] = true;
+    return tracker_id_recovery_failed_error_;
+  }
+
+  /// Returns whether `tracker_id_recovery_failed_error` (no 216) is set.
+  constexpr bool has_tracker_id_recovery_failed_error() const noexcept { return set_fields_[214]; }
+
+  /// Clears `tracker_id_recovery_failed_error` (no 216).
+  void clear_tracker_id_recovery_failed_error() & noexcept {
+    data_ = {};
+    set_fields_[214] = false;
+    tracker_id_recovery_failed_error_ = {};
+  }
+
+  /// Sets `tracker_id_recovery_failed_error` (no 216) and returns `*this`.
+  LogData& set_tracker_id_recovery_failed_error(logs::TrackerIdRecoveryFailedError&& tracker_id_recovery_failed_error) & noexcept {
+    clear_data();
+    data_ = DataOneof::kTrackerIdRecoveryFailedError;
+    set_fields_[214] = true;
+    tracker_id_recovery_failed_error_ = std::move(tracker_id_recovery_failed_error);
+    return *this;
+  }
+  /// Sets `tracker_id_recovery_failed_error` (no 216) and returns `*this`.
+  LogData&& set_tracker_id_recovery_failed_error(logs::TrackerIdRecoveryFailedError&& tracker_id_recovery_failed_error) && noexcept {
+    return std::move(set_tracker_id_recovery_failed_error(std::move(tracker_id_recovery_failed_error)));
+  }
+
+  // Field `tracker_id_fast_forward_failed_error` (no 217).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 217.
+  constexpr const logs::TrackerIdFastForwardFailedError& tracker_id_fast_forward_failed_error() const& noexcept HORUS_LIFETIME_BOUND {
+    return tracker_id_fast_forward_failed_error_;
+  }
+
+  /// If `tracker_id_fast_forward_failed_error` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 217.
+  logs::TrackerIdFastForwardFailedError tracker_id_fast_forward_failed_error() && noexcept {
+    if (!set_fields_[215]) {
+      return {};
+    }
+    return std::move(tracker_id_fast_forward_failed_error_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 217.
+  logs::TrackerIdFastForwardFailedError& mutable_tracker_id_fast_forward_failed_error() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kTrackerIdFastForwardFailedError;
+    set_fields_[215] = true;
+    return tracker_id_fast_forward_failed_error_;
+  }
+
+  /// Returns whether `tracker_id_fast_forward_failed_error` (no 217) is set.
+  constexpr bool has_tracker_id_fast_forward_failed_error() const noexcept { return set_fields_[215]; }
+
+  /// Clears `tracker_id_fast_forward_failed_error` (no 217).
+  void clear_tracker_id_fast_forward_failed_error() & noexcept {
+    data_ = {};
+    set_fields_[215] = false;
+    tracker_id_fast_forward_failed_error_ = {};
+  }
+
+  /// Sets `tracker_id_fast_forward_failed_error` (no 217) and returns `*this`.
+  LogData& set_tracker_id_fast_forward_failed_error(logs::TrackerIdFastForwardFailedError&& tracker_id_fast_forward_failed_error) & noexcept {
+    clear_data();
+    data_ = DataOneof::kTrackerIdFastForwardFailedError;
+    set_fields_[215] = true;
+    tracker_id_fast_forward_failed_error_ = std::move(tracker_id_fast_forward_failed_error);
+    return *this;
+  }
+  /// Sets `tracker_id_fast_forward_failed_error` (no 217) and returns `*this`.
+  LogData&& set_tracker_id_fast_forward_failed_error(logs::TrackerIdFastForwardFailedError&& tracker_id_fast_forward_failed_error) && noexcept {
+    return std::move(set_tracker_id_fast_forward_failed_error(std::move(tracker_id_fast_forward_failed_error)));
+  }
+
+  // Field `circular_recording_snapshot_created` (no 218).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 218.
+  constexpr const logs::CircularRecordingSnapshotCreated& circular_recording_snapshot_created() const& noexcept HORUS_LIFETIME_BOUND {
+    return circular_recording_snapshot_created_;
+  }
+
+  /// If `circular_recording_snapshot_created` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 218.
+  logs::CircularRecordingSnapshotCreated circular_recording_snapshot_created() && noexcept {
+    if (!set_fields_[216]) {
+      return {};
+    }
+    return std::move(circular_recording_snapshot_created_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 218.
+  logs::CircularRecordingSnapshotCreated& mutable_circular_recording_snapshot_created() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kCircularRecordingSnapshotCreated;
+    set_fields_[216] = true;
+    return circular_recording_snapshot_created_;
+  }
+
+  /// Returns whether `circular_recording_snapshot_created` (no 218) is set.
+  constexpr bool has_circular_recording_snapshot_created() const noexcept { return set_fields_[216]; }
+
+  /// Clears `circular_recording_snapshot_created` (no 218).
+  void clear_circular_recording_snapshot_created() & noexcept {
+    data_ = {};
+    set_fields_[216] = false;
+    circular_recording_snapshot_created_ = {};
+  }
+
+  /// Sets `circular_recording_snapshot_created` (no 218) and returns `*this`.
+  LogData& set_circular_recording_snapshot_created(logs::CircularRecordingSnapshotCreated&& circular_recording_snapshot_created) & noexcept {
+    clear_data();
+    data_ = DataOneof::kCircularRecordingSnapshotCreated;
+    set_fields_[216] = true;
+    circular_recording_snapshot_created_ = std::move(circular_recording_snapshot_created);
+    return *this;
+  }
+  /// Sets `circular_recording_snapshot_created` (no 218) and returns `*this`.
+  LogData&& set_circular_recording_snapshot_created(logs::CircularRecordingSnapshotCreated&& circular_recording_snapshot_created) && noexcept {
+    return std::move(set_circular_recording_snapshot_created(std::move(circular_recording_snapshot_created)));
+  }
+
+  // Field `circular_recording_file_operation_error` (no 219).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 219.
+  constexpr const logs::CircularRecordingFileOperationError& circular_recording_file_operation_error() const& noexcept HORUS_LIFETIME_BOUND {
+    return circular_recording_file_operation_error_;
+  }
+
+  /// If `circular_recording_file_operation_error` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 219.
+  logs::CircularRecordingFileOperationError circular_recording_file_operation_error() && noexcept {
+    if (!set_fields_[217]) {
+      return {};
+    }
+    return std::move(circular_recording_file_operation_error_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 219.
+  logs::CircularRecordingFileOperationError& mutable_circular_recording_file_operation_error() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kCircularRecordingFileOperationError;
+    set_fields_[217] = true;
+    return circular_recording_file_operation_error_;
+  }
+
+  /// Returns whether `circular_recording_file_operation_error` (no 219) is set.
+  constexpr bool has_circular_recording_file_operation_error() const noexcept { return set_fields_[217]; }
+
+  /// Clears `circular_recording_file_operation_error` (no 219).
+  void clear_circular_recording_file_operation_error() & noexcept {
+    data_ = {};
+    set_fields_[217] = false;
+    circular_recording_file_operation_error_ = {};
+  }
+
+  /// Sets `circular_recording_file_operation_error` (no 219) and returns `*this`.
+  LogData& set_circular_recording_file_operation_error(logs::CircularRecordingFileOperationError&& circular_recording_file_operation_error) & noexcept {
+    clear_data();
+    data_ = DataOneof::kCircularRecordingFileOperationError;
+    set_fields_[217] = true;
+    circular_recording_file_operation_error_ = std::move(circular_recording_file_operation_error);
+    return *this;
+  }
+  /// Sets `circular_recording_file_operation_error` (no 219) and returns `*this`.
+  LogData&& set_circular_recording_file_operation_error(logs::CircularRecordingFileOperationError&& circular_recording_file_operation_error) && noexcept {
+    return std::move(set_circular_recording_file_operation_error(std::move(circular_recording_file_operation_error)));
   }
 
   // Oneof `data`.
@@ -11364,6 +12189,10 @@ class LogData final : public PbMessage {
     kLidarIsNotTiltedAnymore = 44,
     /// @see lidar_has_been_automatically_recalibrated()
     kLidarHasBeenAutomaticallyRecalibrated = 45,
+    /// @see lidar_auto_correction_failed()
+    kLidarAutoCorrectionFailed = 207,
+    /// @see lidar_icp_failed()
+    kLidarIcpFailed = 208,
     /// @see received_first_data_for_lidar()
     kReceivedFirstDataForLidar = 46,
     /// @see termination_failure_error()
@@ -11668,6 +12497,32 @@ class LogData final : public PbMessage {
     kLidarCorrectionLoadingFailure = 202,
     /// @see hesai_packet_statistics_lidar()
     kHesaiPacketStatisticsLidar = 203,
+    /// @see lidar_tilt_detection_aligned_to_calibration_map_info()
+    kLidarTiltDetectionAlignedToCalibrationMapInfo = 204,
+    /// @see lidar_tilt_detection_misaligned_to_calibration_map_warning()
+    kLidarTiltDetectionMisalignedToCalibrationMapWarning = 205,
+    /// @see lidar_original_pose_differs_for_auto_correction_error()
+    kLidarOriginalPoseDiffersForAutoCorrectionError = 209,
+    /// @see recovered_car_ids_info()
+    kRecoveredCarIdsInfo = 210,
+    /// @see failed_to_recover_car_ids()
+    kFailedToRecoverCarIds = 211,
+    /// @see failed_to_emplace_recovered_car_id()
+    kFailedToEmplaceRecoveredCarId = 212,
+    /// @see persistent_storage_error()
+    kPersistentStorageError = 213,
+    /// @see track_capacity_exceeded_warning()
+    kTrackCapacityExceededWarning = 214,
+    /// @see tracker_state_path_unavailable_warning()
+    kTrackerStatePathUnavailableWarning = 215,
+    /// @see tracker_id_recovery_failed_error()
+    kTrackerIdRecoveryFailedError = 216,
+    /// @see tracker_id_fast_forward_failed_error()
+    kTrackerIdFastForwardFailedError = 217,
+    /// @see circular_recording_snapshot_created()
+    kCircularRecordingSnapshotCreated = 218,
+    /// @see circular_recording_file_operation_error()
+    kCircularRecordingFileOperationError = 219,
   };
 
   /// Returns the current case set in `data`.
@@ -11880,6 +12735,14 @@ class LogData final : public PbMessage {
       }
       case DataOneof::kLidarHasBeenAutomaticallyRecalibrated: {
         clear_lidar_has_been_automatically_recalibrated();
+        break;
+      }
+      case DataOneof::kLidarAutoCorrectionFailed: {
+        clear_lidar_auto_correction_failed();
+        break;
+      }
+      case DataOneof::kLidarIcpFailed: {
+        clear_lidar_icp_failed();
         break;
       }
       case DataOneof::kReceivedFirstDataForLidar: {
@@ -12490,6 +13353,58 @@ class LogData final : public PbMessage {
         clear_hesai_packet_statistics_lidar();
         break;
       }
+      case DataOneof::kLidarTiltDetectionAlignedToCalibrationMapInfo: {
+        clear_lidar_tilt_detection_aligned_to_calibration_map_info();
+        break;
+      }
+      case DataOneof::kLidarTiltDetectionMisalignedToCalibrationMapWarning: {
+        clear_lidar_tilt_detection_misaligned_to_calibration_map_warning();
+        break;
+      }
+      case DataOneof::kLidarOriginalPoseDiffersForAutoCorrectionError: {
+        clear_lidar_original_pose_differs_for_auto_correction_error();
+        break;
+      }
+      case DataOneof::kRecoveredCarIdsInfo: {
+        clear_recovered_car_ids_info();
+        break;
+      }
+      case DataOneof::kFailedToRecoverCarIds: {
+        clear_failed_to_recover_car_ids();
+        break;
+      }
+      case DataOneof::kFailedToEmplaceRecoveredCarId: {
+        clear_failed_to_emplace_recovered_car_id();
+        break;
+      }
+      case DataOneof::kPersistentStorageError: {
+        clear_persistent_storage_error();
+        break;
+      }
+      case DataOneof::kTrackCapacityExceededWarning: {
+        clear_track_capacity_exceeded_warning();
+        break;
+      }
+      case DataOneof::kTrackerStatePathUnavailableWarning: {
+        clear_tracker_state_path_unavailable_warning();
+        break;
+      }
+      case DataOneof::kTrackerIdRecoveryFailedError: {
+        clear_tracker_id_recovery_failed_error();
+        break;
+      }
+      case DataOneof::kTrackerIdFastForwardFailedError: {
+        clear_tracker_id_fast_forward_failed_error();
+        break;
+      }
+      case DataOneof::kCircularRecordingSnapshotCreated: {
+        clear_circular_recording_snapshot_created();
+        break;
+      }
+      case DataOneof::kCircularRecordingFileOperationError: {
+        clear_circular_recording_file_operation_error();
+        break;
+      }
       case DataOneof::kNotSet:
       default:
         break;
@@ -12599,6 +13514,10 @@ class LogData final : public PbMessage {
   logs::LidarIsNotTiltedAnymore lidar_is_not_tilted_anymore_{};
   /// @see lidar_has_been_automatically_recalibrated()
   logs::LidarHasBeenAutomaticallyRecalibrated lidar_has_been_automatically_recalibrated_{};
+  /// @see lidar_auto_correction_failed()
+  logs::LidarAutoCorrectionFailed lidar_auto_correction_failed_{};
+  /// @see lidar_icp_failed()
+  logs::LidarIcpFailed lidar_icp_failed_{};
   /// @see received_first_data_for_lidar()
   logs::ReceivedFirstDataForLidar received_first_data_for_lidar_{};
   /// @see termination_failure_error()
@@ -12903,12 +13822,38 @@ class LogData final : public PbMessage {
   logs::LidarCorrectionLoadingFailure lidar_correction_loading_failure_{};
   /// @see hesai_packet_statistics_lidar()
   logs::HesaiPacketStatisticsLidar hesai_packet_statistics_lidar_{};
+  /// @see lidar_tilt_detection_aligned_to_calibration_map_info()
+  logs::LidarTiltDetectionAlignedToCalibrationMapInfo lidar_tilt_detection_aligned_to_calibration_map_info_{};
+  /// @see lidar_tilt_detection_misaligned_to_calibration_map_warning()
+  logs::LidarTiltDetectionMisalignedToCalibrationMapWarning lidar_tilt_detection_misaligned_to_calibration_map_warning_{};
+  /// @see lidar_original_pose_differs_for_auto_correction_error()
+  logs::LidarOriginalPoseDiffersForAutoCorrectionError lidar_original_pose_differs_for_auto_correction_error_{};
+  /// @see recovered_car_ids_info()
+  logs::RecoveredCarIdsInfo recovered_car_ids_info_{};
+  /// @see failed_to_recover_car_ids()
+  logs::FailedToRecoverCarIds failed_to_recover_car_ids_{};
+  /// @see failed_to_emplace_recovered_car_id()
+  logs::FailedToEmplaceRecoveredCarId failed_to_emplace_recovered_car_id_{};
+  /// @see persistent_storage_error()
+  logs::PersistentStorageError persistent_storage_error_{};
+  /// @see track_capacity_exceeded_warning()
+  logs::TrackCapacityExceededWarning track_capacity_exceeded_warning_{};
+  /// @see tracker_state_path_unavailable_warning()
+  logs::TrackerStatePathUnavailableWarning tracker_state_path_unavailable_warning_{};
+  /// @see tracker_id_recovery_failed_error()
+  logs::TrackerIdRecoveryFailedError tracker_id_recovery_failed_error_{};
+  /// @see tracker_id_fast_forward_failed_error()
+  logs::TrackerIdFastForwardFailedError tracker_id_fast_forward_failed_error_{};
+  /// @see circular_recording_snapshot_created()
+  logs::CircularRecordingSnapshotCreated circular_recording_snapshot_created_{};
+  /// @see circular_recording_file_operation_error()
+  logs::CircularRecordingFileOperationError circular_recording_file_operation_error_{};
 
   /// @see data_case()
   DataOneof data_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<203> set_fields_;
+  std::bitset<218> set_fields_;
 };
 
 /// A log message notifying users about some status.

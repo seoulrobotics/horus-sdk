@@ -67,6 +67,8 @@ message LogData {
     logs.LidarIsTilted lidar_is_tilted = 43;
     logs.LidarIsNotTiltedAnymore lidar_is_not_tilted_anymore = 44;
     logs.LidarHasBeenAutomaticallyRecalibrated lidar_has_been_automatically_recalibrated = 45;
+    logs.LidarAutoCorrectionFailed lidar_auto_correction_failed = 207;
+    logs.LidarIcpFailed lidar_icp_failed = 208;
     logs.ReceivedFirstDataForLidar received_first_data_for_lidar = 46;
     logs.TerminationFailureError termination_failure_error = 47;
     logs.FrameProcessingError frame_processing_error = 48;
@@ -219,5 +221,18 @@ message LogData {
     logs.LidarCorrectionLoadingSuccess lidar_correction_loading_success = 201;
     logs.LidarCorrectionLoadingFailure lidar_correction_loading_failure = 202;
     logs.HesaiPacketStatisticsLidar hesai_packet_statistics_lidar = 203;
+    logs.LidarTiltDetectionAlignedToCalibrationMapInfo lidar_tilt_detection_aligned_to_calibration_map_info = 204;
+    logs.LidarTiltDetectionMisalignedToCalibrationMapWarning lidar_tilt_detection_misaligned_to_calibration_map_warning = 205;
+    logs.LidarOriginalPoseDiffersForAutoCorrectionError lidar_original_pose_differs_for_auto_correction_error = 209;
+    logs.RecoveredCarIdsInfo recovered_car_ids_info = 210;
+    logs.FailedToRecoverCarIds failed_to_recover_car_ids = 211;
+    logs.FailedToEmplaceRecoveredCarId failed_to_emplace_recovered_car_id = 212;
+    logs.PersistentStorageError persistent_storage_error = 213;
+    logs.TrackCapacityExceededWarning track_capacity_exceeded_warning = 214;
+    logs.TrackerStatePathUnavailableWarning tracker_state_path_unavailable_warning = 215;
+    logs.TrackerIdRecoveryFailedError tracker_id_recovery_failed_error = 216;
+    logs.TrackerIdFastForwardFailedError tracker_id_fast_forward_failed_error = 217;
+    logs.CircularRecordingSnapshotCreated circular_recording_snapshot_created = 218;
+    logs.CircularRecordingFileOperationError circular_recording_file_operation_error = 219;
   }
 }

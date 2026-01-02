@@ -125,6 +125,9 @@ SensorInfo::SensorInfo(const pb::SensorInfo& pb_sensor_info, bool is_unreachable
   if_has_status_flag_then_add_to_set(SensorStatus::kHighFrequency);
   if_has_status_flag_then_add_to_set(SensorStatus::kTilted);
   if_has_status_flag_then_add_to_set(SensorStatus::kObstructed);
+  if_has_status_flag_then_add_to_set(SensorStatus::kPacketDrop);
+  if_has_status_flag_then_add_to_set(SensorStatus::kAutoCorrectionModerate);
+  if_has_status_flag_then_add_to_set(SensorStatus::kAutoCorrectionSevere);
   status_ = std::move(statuses);
 
   measured_frequency_ = pb_sensor_info.measured_frequency();
