@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1ehorus/pb/calibration_map.proto\x12\x08horus.pb\"*\n\x0e\x43\x61librationMap\x12\x12\n\nmap_points\x18\x02 \x03(\x02J\x04\x08\x01\x10\x02\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1ehorus/pb/calibration_map.proto\x12\x08horus.pb\"?\n\x0e\x43\x61librationMap\x12\x12\n\nmap_points\x18\x02 \x03(\x02\x12\x13\n\x0bintensities\x18\x03 \x03(\x02J\x04\x08\x01\x10\x02\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,5 +32,5 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'horus.pb.calibration_map_pb
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_CALIBRATIONMAP']._serialized_start=44
-  _globals['_CALIBRATIONMAP']._serialized_end=86
+  _globals['_CALIBRATIONMAP']._serialized_end=107
 # @@protoc_insertion_point(module_scope)

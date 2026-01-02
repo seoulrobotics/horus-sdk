@@ -54,6 +54,8 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.LIDAR_IS_TILTED_FIELD_NUMBER: lambda m: format_lidar_is_tilted(m.lidar_is_tilted),
     LogData.LIDAR_IS_NOT_TILTED_ANYMORE_FIELD_NUMBER: lambda m: format_lidar_is_not_tilted_anymore(m.lidar_is_not_tilted_anymore),
     LogData.LIDAR_HAS_BEEN_AUTOMATICALLY_RECALIBRATED_FIELD_NUMBER: lambda m: format_lidar_has_been_automatically_recalibrated(m.lidar_has_been_automatically_recalibrated),
+    LogData.LIDAR_AUTO_CORRECTION_FAILED_FIELD_NUMBER: lambda m: format_lidar_auto_correction_failed(m.lidar_auto_correction_failed),
+    LogData.LIDAR_ICP_FAILED_FIELD_NUMBER: lambda m: format_lidar_icp_failed(m.lidar_icp_failed),
     LogData.RECEIVED_FIRST_DATA_FOR_LIDAR_FIELD_NUMBER: lambda m: format_received_first_data_for_lidar(m.received_first_data_for_lidar),
     LogData.TERMINATION_FAILURE_ERROR_FIELD_NUMBER: lambda m: format_termination_failure_error(m.termination_failure_error),
     LogData.FRAME_PROCESSING_ERROR_FIELD_NUMBER: lambda m: format_frame_processing_error(m.frame_processing_error),
@@ -206,6 +208,19 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.LIDAR_CORRECTION_LOADING_SUCCESS_FIELD_NUMBER: lambda m: format_lidar_correction_loading_success(m.lidar_correction_loading_success),
     LogData.LIDAR_CORRECTION_LOADING_FAILURE_FIELD_NUMBER: lambda m: format_lidar_correction_loading_failure(m.lidar_correction_loading_failure),
     LogData.HESAI_PACKET_STATISTICS_LIDAR_FIELD_NUMBER: lambda m: format_hesai_packet_statistics_lidar(m.hesai_packet_statistics_lidar),
+    LogData.LIDAR_TILT_DETECTION_ALIGNED_TO_CALIBRATION_MAP_INFO_FIELD_NUMBER: lambda m: format_lidar_tilt_detection_aligned_to_calibration_map_info(m.lidar_tilt_detection_aligned_to_calibration_map_info),
+    LogData.LIDAR_TILT_DETECTION_MISALIGNED_TO_CALIBRATION_MAP_WARNING_FIELD_NUMBER: lambda m: format_lidar_tilt_detection_misaligned_to_calibration_map_warning(m.lidar_tilt_detection_misaligned_to_calibration_map_warning),
+    LogData.LIDAR_ORIGINAL_POSE_DIFFERS_FOR_AUTO_CORRECTION_ERROR_FIELD_NUMBER: lambda m: format_lidar_original_pose_differs_for_auto_correction_error(m.lidar_original_pose_differs_for_auto_correction_error),
+    LogData.RECOVERED_CAR_IDS_INFO_FIELD_NUMBER: lambda m: format_recovered_car_ids_info(m.recovered_car_ids_info),
+    LogData.FAILED_TO_RECOVER_CAR_IDS_FIELD_NUMBER: lambda m: format_failed_to_recover_car_ids(m.failed_to_recover_car_ids),
+    LogData.FAILED_TO_EMPLACE_RECOVERED_CAR_ID_FIELD_NUMBER: lambda m: format_failed_to_emplace_recovered_car_id(m.failed_to_emplace_recovered_car_id),
+    LogData.PERSISTENT_STORAGE_ERROR_FIELD_NUMBER: lambda m: format_persistent_storage_error(m.persistent_storage_error),
+    LogData.TRACK_CAPACITY_EXCEEDED_WARNING_FIELD_NUMBER: lambda m: format_track_capacity_exceeded_warning(m.track_capacity_exceeded_warning),
+    LogData.TRACKER_STATE_PATH_UNAVAILABLE_WARNING_FIELD_NUMBER: lambda m: format_tracker_state_path_unavailable_warning(m.tracker_state_path_unavailable_warning),
+    LogData.TRACKER_ID_RECOVERY_FAILED_ERROR_FIELD_NUMBER: lambda m: format_tracker_id_recovery_failed_error(m.tracker_id_recovery_failed_error),
+    LogData.TRACKER_ID_FAST_FORWARD_FAILED_ERROR_FIELD_NUMBER: lambda m: format_tracker_id_fast_forward_failed_error(m.tracker_id_fast_forward_failed_error),
+    LogData.CIRCULAR_RECORDING_SNAPSHOT_CREATED_FIELD_NUMBER: lambda m: format_circular_recording_snapshot_created(m.circular_recording_snapshot_created),
+    LogData.CIRCULAR_RECORDING_FILE_OPERATION_ERROR_FIELD_NUMBER: lambda m: format_circular_recording_file_operation_error(m.circular_recording_file_operation_error),
 }
 
 def _unknown_format(data: LogData) -> str:
@@ -401,35 +416,43 @@ def format_point_cloud_parsing_failure_warning(log: _logs_pb.PointCloudParsingFa
 
 def format_lidar_is_dead(log: _logs_pb.LidarIsDead) -> str:
     """Formats log `LidarIsDead` to a string."""
-    return f"The lidar {log.lidar_id} is considered dead. No data has been received for a while."
+    return f"The lidar {log.lidar_name} [{log.lidar_id}] is considered dead. No data has been received for a while."
 
 def format_lidar_is_not_dead_anymore(log: _logs_pb.LidarIsNotDeadAnymore) -> str:
     """Formats log `LidarIsNotDeadAnymore` to a string."""
-    return f"The lidar {log.lidar_id} is not considered dead anymore. A point cloud has been received again after some time."
+    return f"The lidar {log.lidar_name} [{log.lidar_id}] is not considered dead anymore. A point cloud has been received again after some time."
 
 def format_lidar_is_obstructed(log: _logs_pb.LidarIsObstructed) -> str:
     """Formats log `LidarIsObstructed` to a string."""
-    return f"The lidar {log.lidar_id} is obstructed."
+    return f"The lidar {log.lidar_name} [{log.lidar_id}] is obstructed."
 
 def format_lidar_is_not_obstructed_anymore(log: _logs_pb.LidarIsNotObstructedAnymore) -> str:
     """Formats log `LidarIsNotObstructedAnymore` to a string."""
-    return f"The lidar {log.lidar_id} is not obstructed anymore."
+    return f"The lidar {log.lidar_name} [{log.lidar_id}] is not obstructed anymore."
 
 def format_lidar_is_tilted(log: _logs_pb.LidarIsTilted) -> str:
     """Formats log `LidarIsTilted` to a string."""
-    return f"The lidar {log.lidar_id} is tilted."
+    return f"The lidar {log.lidar_name} [{log.lidar_id}] is tilted."
 
 def format_lidar_is_not_tilted_anymore(log: _logs_pb.LidarIsNotTiltedAnymore) -> str:
     """Formats log `LidarIsNotTiltedAnymore` to a string."""
-    return f"The lidar {log.lidar_id} is not tilted anymore."
+    return f"The lidar {log.lidar_name} [{log.lidar_id}] is not tilted anymore."
 
 def format_lidar_has_been_automatically_recalibrated(log: _logs_pb.LidarHasBeenAutomaticallyRecalibrated) -> str:
     """Formats log `LidarHasBeenAutomaticallyRecalibrated` to a string."""
-    return f"The lidar {log.lidar_id} has been automatically re-calibrated."
+    return f"LiDAR {log.lidar_name} [{log.lidar_id}] auto re-calibrated (Δ from original: t={log.translation}, r={log.rotation_rpy})"
+
+def format_lidar_auto_correction_failed(log: _logs_pb.LidarAutoCorrectionFailed) -> str:
+    """Formats log `LidarAutoCorrectionFailed` to a string."""
+    return f"LiDAR {log.lidar_name} [{log.lidar_id}] auto-correction failed {log.failure_count} times in the last second (ICP unreliable for calibration)"
+
+def format_lidar_icp_failed(log: _logs_pb.LidarIcpFailed) -> str:
+    """Formats log `LidarIcpFailed` to a string."""
+    return f"LiDAR {log.lidar_name} [{log.lidar_id}] ICP failed {log.failure_count} times in the last second (convergence error)"
 
 def format_received_first_data_for_lidar(log: _logs_pb.ReceivedFirstDataForLidar) -> str:
     """Formats log `ReceivedFirstDataForLidar` to a string."""
-    return f"Data has been received for the first time for the lidar {log.lidar_id}."
+    return f"Data has been received for the first time for the lidar {log.lidar_name} [{log.lidar_id}]."
 
 def format_termination_failure_error(log: _logs_pb.TerminationFailureError) -> str:
     """Formats log `TerminationFailureError` to a string."""
@@ -677,35 +700,35 @@ def format_cannot_determine_container_id_error(log: _logs_pb.CannotDetermineCont
 
 def format_started_lidar_driver(log: _logs_pb.StartedLidarDriver) -> str:
     """Formats log `StartedLidarDriver` to a string."""
-    return f"Started lidar driver container {log.lidar_id}."
+    return f"Started lidar driver container {log.lidar_name} [{log.lidar_id}]."
 
 def format_cannot_start_lidar_driver(log: _logs_pb.CannotStartLidarDriver) -> str:
     """Formats log `CannotStartLidarDriver` to a string."""
-    return f"Cannot start lidar driver container {log.lidar_id}: {log.details}."
+    return f"Cannot start lidar driver container {log.lidar_name} [{log.lidar_id}]: {log.details}."
 
 def format_stopped_lidar_driver(log: _logs_pb.StoppedLidarDriver) -> str:
     """Formats log `StoppedLidarDriver` to a string."""
-    return f"Stopped lidar driver container {log.lidar_id}."
+    return f"Stopped lidar driver container {log.lidar_name} [{log.lidar_id}]."
 
 def format_cannot_stop_lidar_driver(log: _logs_pb.CannotStopLidarDriver) -> str:
     """Formats log `CannotStopLidarDriver` to a string."""
-    return f"Cannot stop lidar driver container {log.lidar_id}: {log.details}."
+    return f"Cannot stop lidar driver container {log.lidar_name} [{log.lidar_id}]: {log.details}."
 
 def format_restarted_lidar_driver(log: _logs_pb.RestartedLidarDriver) -> str:
     """Formats log `RestartedLidarDriver` to a string."""
-    return f"Restarted lidar driver container {log.lidar_id}."
+    return f"Restarted lidar driver container {log.lidar_name} [{log.lidar_id}]."
 
 def format_cannot_restart_lidar_driver(log: _logs_pb.CannotRestartLidarDriver) -> str:
     """Formats log `CannotRestartLidarDriver` to a string."""
-    return f"Cannot restart lidar driver container {log.lidar_id}: {log.details}."
+    return f"Cannot restart lidar driver container {log.lidar_name} [{log.lidar_id}]: {log.details}."
 
 def format_removed_unused_lidar_driver(log: _logs_pb.RemovedUnusedLidarDriver) -> str:
     """Formats log `RemovedUnusedLidarDriver` to a string."""
-    return f"Removed unused lidar driver container {log.lidar_id}."
+    return f"Removed unused lidar driver container {log.lidar_name} [{log.lidar_id}]."
 
 def format_cannot_remove_unused_lidar_driver(log: _logs_pb.CannotRemoveUnusedLidarDriver) -> str:
     """Formats log `CannotRemoveUnusedLidarDriver` to a string."""
-    return f"Cannot remove unused lidar driver container {log.lidar_id}: {log.details}."
+    return f"Cannot remove unused lidar driver container {log.lidar_name} [{log.lidar_id}]: {log.details}."
 
 def format_lidar_driver_gc_failure(log: _logs_pb.LidarDriverGcFailure) -> str:
     """Formats log `LidarDriverGcFailure` to a string."""
@@ -721,7 +744,7 @@ def format_preprocessing_to_point_aggregator_points_skipped(log: _logs_pb.Prepro
 
 def format_min_msg_interval_less_than_threshold(log: _logs_pb.MinMsgIntervalLessThanThreshold) -> str:
     """Formats log `MinMsgIntervalLessThanThreshold` to a string."""
-    return f"Discarding lidar points from {log.lidar_id} since the time interval between two point-cloud messages is too close (<{log.threshold}). Adjust the Min-Message Interval parameter to change this behavior."
+    return f"Discarding lidar points from {log.lidar_name} [{log.lidar_id}] since the time interval between two point-cloud messages is too close (<{log.threshold}). Adjust the Min-Message Interval parameter to change this behavior."
 
 def format_failed_to_cleanup_ros_warning(log: _logs_pb.FailedToCleanupRosWarning) -> str:
     """Formats log `FailedToCleanupRosWarning` to a string."""
@@ -873,7 +896,7 @@ def format_project_config_updated_info(log: _logs_pb.ProjectConfigUpdatedInfo) -
 
 def format_invalid_lidar_timestamp(log: _logs_pb.InvalidLidarTimestamp) -> str:
     """Formats log `InvalidLidarTimestamp` to a string."""
-    return f"Invalid timestamp {log.timestamp} sent by lidar {log.lidar_id}."
+    return f"Invalid timestamp {log.timestamp} sent by lidar {log.lidar_name} [{log.lidar_id}]."
 
 def format_calibration_accumulating_points_info(log: _logs_pb.CalibrationAccumulatingPointsInfo) -> str:
     """Formats log `CalibrationAccumulatingPointsInfo` to a string."""
@@ -901,7 +924,7 @@ def format_obstruction_detector_bad_reference_warning(log: _logs_pb.ObstructionD
 
 def format_project_file_invalid_permissions_error(log: _logs_pb.ProjectFileInvalidPermissionsError) -> str:
     """Formats log `ProjectFileInvalidPermissionsError` to a string."""
-    return f"Project file \"{log.filename}\" has invalid permissions. Please restart Horus to fix the issue."
+    return f"Project file \"{log.filename}\" has invalid permissions. Please fix your file permissions manually."
 
 def format_pipeline_scheduler_error(log: _logs_pb.PipelineSchedulerError) -> str:
     """Formats log `PipelineSchedulerError` to a string."""
@@ -933,15 +956,15 @@ def format_bag_upgrade_failed(log: _logs_pb.BagUpgradeFailed) -> str:
 
 def format_unknown_lidar_error(log: _logs_pb.UnknownLidarError) -> str:
     """Formats log `UnknownLidarError` to a string."""
-    return f"Received points from unknown lidar {log.lidar_id}."
+    return f"Received points from unknown lidar {log.lidar_name} [{log.lidar_id}]."
 
 def format_invalid_point_cloud_warning(log: _logs_pb.InvalidPointCloudWarning) -> str:
     """Formats log `InvalidPointCloudWarning` to a string."""
-    return f"Invalid point cloud received from lidar {log.lidar_id}: {log.reason}"
+    return f"Invalid point cloud received from lidar {log.lidar_name} [{log.lidar_id}]: {log.reason}"
 
 def format_lidar_is_dropping_packets(log: _logs_pb.LidarIsDroppingPackets) -> str:
     """Formats log `LidarIsDroppingPackets` to a string."""
-    return f"The lidar {log.lidar_id} is dropping packets (dropped {log.num_total_dropped_packets} packets out of {log.num_total_expected_packets})."
+    return f"The lidar {log.lidar_name} [{log.lidar_id}] is dropping packets (dropped {log.num_total_dropped_packets} packets out of {log.num_total_expected_packets})."
 
 def format_removed_invalid_lidars_from_config_warning(log: _logs_pb.RemovedInvalidLidarsFromConfigWarning) -> str:
     """Formats log `RemovedInvalidLidarsFromConfigWarning` to a string."""
@@ -965,23 +988,23 @@ def format_ply_file_load_failed_error(log: _logs_pb.PlyFileLoadFailedError) -> s
 
 def format_hesai_driver_lifecycle(log: _logs_pb.HesaiDriverLifecycle) -> str:
     """Formats log `HesaiDriverLifecycle` to a string."""
-    return f"Hesai XT32 driver {log.action} for LiDAR {log.lidar_id}."
+    return f"[{log.lidar_name}][{log.lidar_id}] Hesai XT32 driver {log.action}."
 
 def format_hesai_driver_error(log: _logs_pb.HesaiDriverError) -> str:
     """Formats log `HesaiDriverError` to a string."""
-    return f"Hesai XT32 driver error: {log.details}"
+    return f"[{log.lidar_name}][{log.lidar_id}] Hesai XT32 driver error: {log.details}"
 
 def format_hesai_packet_processing_failed(log: _logs_pb.HesaiPacketProcessingFailed) -> str:
     """Formats log `HesaiPacketProcessingFailed` to a string."""
-    return f"Failed to process packet for Hesai LiDAR {log.lidar_id}: {log.details}"
+    return f"[{log.lidar_name}][{log.lidar_id}] Failed to process packet: {log.details}"
 
 def format_hesai_correction_file_error(log: _logs_pb.HesaiCorrectionFileError) -> str:
     """Formats log `HesaiCorrectionFileError` to a string."""
-    return f"Failed to load Hesai XT32 correction file {log.file_type}: {log.details}"
+    return f"[{log.lidar_name}][{log.lidar_id}] Failed to load Hesai XT32 correction file {log.file_type}: {log.details}"
 
 def format_hesai_packet_statistics(log: _logs_pb.HesaiPacketStatistics) -> str:
     """Formats log `HesaiPacketStatistics` to a string."""
-    return f"Hesai packet statistics - Received: {log.packets_received}, Published: {log.packets_published}, Dropped: {log.packets_dropped}, Decode Failed: {log.packets_decode_failed}, Success Rate: {log.success_rate} %"
+    return f"[{log.lidar_name}][{log.lidar_id}] Hesai packet statistics - Received: {log.packets_received}, Published: {log.packets_published}, Dropped: {log.packets_dropped}, Decode Failed: {log.packets_decode_failed}, Success Rate: {log.success_rate} %"
 
 def format_ply_file_write_failed_error(log: _logs_pb.PlyFileWriteFailedError) -> str:
     """Formats log `PlyFileWriteFailedError` to a string."""
@@ -1013,24 +1036,76 @@ def format_attempt_to_inject_invalid_lidar_id_warning(log: _logs_pb.AttemptToInj
 
 def format_reset_bundled_packet_due_to_unexpected_packet(log: _logs_pb.ResetBundledPacketDueToUnexpectedPacket) -> str:
     """Formats log `ResetBundledPacketDueToUnexpectedPacket` to a string."""
-    return f"Resetting bundled packet due to unexpected packet from lidar {log.lidar_id}."
+    return f"Resetting bundled packet due to unexpected packet from lidar {log.lidar_name} [{log.lidar_id}]."
 
 def format_packet_bundler_dropped_packets_warning(log: _logs_pb.PacketBundlerDroppedPacketsWarning) -> str:
     """Formats log `PacketBundlerDroppedPacketsWarning` to a string."""
-    return f"Lidar {log.lidar_id} dropped {log.num_dropped} packets over {log.duration}"
+    return f"Lidar {log.lidar_name} [{log.lidar_id}] dropped {log.num_dropped} packets over {log.duration}"
 
 def format_packet_bundler_frame_jump_warning(log: _logs_pb.PacketBundlerFrameJumpWarning) -> str:
     """Formats log `PacketBundlerFrameJumpWarning` to a string."""
-    return f"Frame sequence jump detected on lidar {log.lidar_id}: from {log.frame_id} to {log.next_frame_id}"
+    return f"Frame sequence jump detected on lidar {log.lidar_name} [{log.lidar_id}]: from {log.frame_id} to {log.next_frame_id}"
 
 def format_lidar_correction_loading_success(log: _logs_pb.LidarCorrectionLoadingSuccess) -> str:
     """Formats log `LidarCorrectionLoadingSuccess` to a string."""
-    return f"Successfully loaded {log.correction_type} corrections from the lidar"
+    return f"[{log.lidar_name}][{log.lidar_id}] Successfully loaded {log.correction_type} corrections from the lidar"
 
 def format_lidar_correction_loading_failure(log: _logs_pb.LidarCorrectionLoadingFailure) -> str:
     """Formats log `LidarCorrectionLoadingFailure` to a string."""
-    return f"Failed to load {log.correction_type} corrections from the lidar ({log.details}); using default correction values"
+    return f"[{log.lidar_name}][{log.lidar_id}] Failed to load {log.correction_type} corrections from the lidar ({log.details}); using default correction values"
 
 def format_hesai_packet_statistics_lidar(log: _logs_pb.HesaiPacketStatisticsLidar) -> str:
     """Formats log `HesaiPacketStatisticsLidar` to a string."""
     return f"[{log.lidar_id}] Hesai Packet Statistics - Received: {log.packets_received}, Published: {log.packets_published}, Dropped: {log.packets_dropped}, Decode Failed: {log.packets_decode_failed}, Success Rate: {log.success_rate} %"
+
+def format_lidar_tilt_detection_aligned_to_calibration_map_info(log: _logs_pb.LidarTiltDetectionAlignedToCalibrationMapInfo) -> str:
+    """Formats log `LidarTiltDetectionAlignedToCalibrationMapInfo` to a string."""
+    return f"Lidar {log.lidar_name} [{log.lidar_id}] is aligned to calibration map. Using the calibration map for tilt detection and auto-recalibration for this lidar."
+
+def format_lidar_tilt_detection_misaligned_to_calibration_map_warning(log: _logs_pb.LidarTiltDetectionMisalignedToCalibrationMapWarning) -> str:
+    """Formats log `LidarTiltDetectionMisalignedToCalibrationMapWarning` to a string."""
+    return f"Lidar {log.lidar_name} [{log.lidar_id}] deviates from calibration map by {log.angle} degrees and {log.distance} meters. Using accumulated points as reference to avoid overwriting manual calibration."
+
+def format_lidar_original_pose_differs_for_auto_correction_error(log: _logs_pb.LidarOriginalPoseDiffersForAutoCorrectionError) -> str:
+    """Formats log `LidarOriginalPoseDiffersForAutoCorrectionError` to a string."""
+    return f"The requested auto-correction cannot be applied because the original pose differs from the current configuration."
+
+def format_recovered_car_ids_info(log: _logs_pb.RecoveredCarIdsInfo) -> str:
+    """Formats log `RecoveredCarIdsInfo` to a string."""
+    return f"Successfully recovered car IDs: {log.details}."
+
+def format_failed_to_recover_car_ids(log: _logs_pb.FailedToRecoverCarIds) -> str:
+    """Formats log `FailedToRecoverCarIds` to a string."""
+    return f"Failed to recover object IDs: {log.details}."
+
+def format_failed_to_emplace_recovered_car_id(log: _logs_pb.FailedToEmplaceRecoveredCarId) -> str:
+    """Formats log `FailedToEmplaceRecoveredCarId` to a string."""
+    return f"Failed to emplace recovered object ID {log.object_id} for car. Using a newly generated ID instead."
+
+def format_persistent_storage_error(log: _logs_pb.PersistentStorageError) -> str:
+    """Formats log `PersistentStorageError` to a string."""
+    return f"Persistent storage operation failed: {log.operation} on {log.filepath}"
+
+def format_track_capacity_exceeded_warning(log: _logs_pb.TrackCapacityExceededWarning) -> str:
+    """Formats log `TrackCapacityExceededWarning` to a string."""
+    return f"Track storage capacity exceeded: attempted to store {log.attempted_count} tracks, limit is {log.max_tracks}"
+
+def format_tracker_state_path_unavailable_warning(log: _logs_pb.TrackerStatePathUnavailableWarning) -> str:
+    """Formats log `TrackerStatePathUnavailableWarning` to a string."""
+    return f"Tracker state file path unavailable for project: {log.project_name}"
+
+def format_tracker_id_recovery_failed_error(log: _logs_pb.TrackerIdRecoveryFailedError) -> str:
+    """Formats log `TrackerIdRecoveryFailedError` to a string."""
+    return f"Failed to recover tracker ID {log.id}: {log.error_message}"
+
+def format_tracker_id_fast_forward_failed_error(log: _logs_pb.TrackerIdFastForwardFailedError) -> str:
+    """Formats log `TrackerIdFastForwardFailedError` to a string."""
+    return f"Failed to fast-forward ID generator to {log.target_id}: {log.error_message}"
+
+def format_circular_recording_snapshot_created(log: _logs_pb.CircularRecordingSnapshotCreated) -> str:
+    """Formats log `CircularRecordingSnapshotCreated` to a string."""
+    return f"Circular recording snapshot created with {log.message_count} messages covering {log.actual_duration_seconds} seconds of data"
+
+def format_circular_recording_file_operation_error(log: _logs_pb.CircularRecordingFileOperationError) -> str:
+    """Formats log `CircularRecordingFileOperationError` to a string."""
+    return f"Circular recording file operation failed: {log.operation} on {log.file_path} - {log.details}"

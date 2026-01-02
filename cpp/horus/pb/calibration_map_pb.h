@@ -136,12 +136,64 @@ class CalibrationMap final : public PbMessage {
     return std::move(set_map_points(std::move(map_points)));
   }
 
+  // Field `intensities` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowSpan<float>& intensities() const& noexcept HORUS_LIFETIME_BOUND {
+    return intensities_;
+  }
+
+  /// If `intensities` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowSpan<float> intensities() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(intensities_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowSpan<float>& mutable_intensities() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return intensities_;
+  }
+
+  /// Returns whether `intensities` (no 3) is set.
+  constexpr bool has_intensities() const noexcept { return set_fields_[1]; }
+
+  /// Clears `intensities` (no 3).
+  void clear_intensities() & noexcept {
+    set_fields_[1] = false;
+    intensities_ = {};
+  }
+
+  /// Sets `intensities` (no 3) and returns `*this`.
+  CalibrationMap& set_intensities(CowSpan<float>&& intensities) & noexcept {
+    set_fields_[1] = true;
+    intensities_ = std::move(intensities);
+    return *this;
+  }
+  /// Sets `intensities` (no 3) and returns `*this`.
+  CalibrationMap&& set_intensities(CowSpan<float>&& intensities) && noexcept {
+    return std::move(set_intensities(std::move(intensities)));
+  }
+
  private:
   /// @see map_points()
   CowSpan<float> map_points_{};
+  /// @see intensities()
+  CowSpan<float> intensities_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 }  // namespace pb

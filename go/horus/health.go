@@ -187,6 +187,9 @@ const (
 	SensorStatusHighFrequency SensorStatus = SensorStatus(pp_pb.SensorStatus_HIGH_FREQUENCY)
 	SensorStatusTilted        SensorStatus = SensorStatus(pp_pb.SensorStatus_TILTED)
 	SensorStatusObstructed    SensorStatus = SensorStatus(pp_pb.SensorStatus_OBSTRUCTED)
+	SensorStatusPacketDrop    SensorStatus = SensorStatus(pp_pb.SensorStatus_PACKET_DROP)
+	SensorStatusAutoCorrectionModerate SensorStatus = SensorStatus(pp_pb.SensorStatus_AUTO_CORRECTION_MODERATE)
+	SensorStatusAutoCorrectionSevere SensorStatus = SensorStatus(pp_pb.SensorStatus_AUTO_CORRECTION_SEVERE)
 )
 
 // Converts SensorHealth flag enum to string.
@@ -204,6 +207,10 @@ func (status SensorStatus) String() string {
 		return "Tilted"
 	case SensorStatusObstructed:
 		return "Obstructed"
+	case SensorStatusPacketDrop:
+		return "Packet drop"
+	case SensorStatusAutoCorrectionSevere:
+		return "Severe auto-correction detected"
 	default:
 		return "Unknown"
 	}
@@ -220,7 +227,7 @@ func newSensorHealthFromPb(pb *pm_pb.GetHealthStatusResponse_SensorHealth) *Sens
 		unreachableReason = internal.FormatAnyLogMessage(pb.GetTimeout())
 	} else {
 		statuses = make(map[SensorStatus]bool)
-		statusesToTest := []SensorStatus{SensorStatusNoData, SensorStatusReceivingData, SensorStatusLowFrequency, SensorStatusHighFrequency, SensorStatusTilted, SensorStatusObstructed}
+		statusesToTest := []SensorStatus{SensorStatusNoData, SensorStatusReceivingData, SensorStatusLowFrequency, SensorStatusHighFrequency, SensorStatusTilted, SensorStatusObstructed, SensorStatusPacketDrop, SensorStatusAutoCorrectionSevere}
 		for _, status := range statusesToTest {
 			statuses[status] = (pb.GetInfo().GetStatus() & uint32(status)) == uint32(status)
 		}

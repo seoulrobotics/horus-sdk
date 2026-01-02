@@ -64,7 +64,7 @@ enum class LicensePrivilege : PbEnum {  // NOLINT(*-enum-size)
 
 /// Service represented by the node.
 ///
-/// Source: horus/pb/project_manager/service.proto:131:5
+/// Source: horus/pb/project_manager/service.proto:127:5
 enum class GetHealthStatusResponse_NodeHealth_Service : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -87,7 +87,7 @@ enum class GetHealthStatusResponse_NodeHealth_Service : PbEnum {  // NOLINT(*-en
 
 /// Connectivity status.
 ///
-/// Source: horus/pb/project_manager/service.proto:142:5
+/// Source: horus/pb/project_manager/service.proto:138:5
 enum class GetHealthStatusResponse_NodeHealth_Status : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -111,6 +111,7 @@ class LicenseStatus;
 class GetHealthStatusRequest;
 class GetHealthStatusResponse_NodeHealth;
 class GetHealthStatusResponse_SensorHealth;
+class GetHealthStatusResponse_NodeResources;
 class GetHealthStatusResponse;
 
 // MARK: Message declarations
@@ -1316,7 +1317,7 @@ class LicenseStatus final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:120:1
+/// Source: horus/pb/project_manager/service.proto:116:1
 class GetHealthStatusRequest final : public PbMessage {
  public:
 
@@ -1378,7 +1379,7 @@ class GetHealthStatusRequest final : public PbMessage {
 
 /// Connectivity status of a single node.
 ///
-/// Source: horus/pb/project_manager/service.proto:129:3
+/// Source: horus/pb/project_manager/service.proto:125:3
 class GetHealthStatusResponse_NodeHealth final : public PbMessage {
  public:
   /// @see GetHealthStatusResponse_NodeHealth_Service
@@ -1572,7 +1573,7 @@ class GetHealthStatusResponse_NodeHealth final : public PbMessage {
 
 /// Wraps SensorInfo with node unreachable error
 ///
-/// Source: horus/pb/project_manager/service.proto:153:3
+/// Source: horus/pb/project_manager/service.proto:149:3
 class GetHealthStatusResponse_SensorHealth final : public PbMessage {
  public:
 
@@ -1821,17 +1822,82 @@ class GetHealthStatusResponse_SensorHealth final : public PbMessage {
   std::bitset<3> set_fields_;
 };
 
+/// Resource usage of each relevant node (preprocessing service & detection
+///  service).
+///
+/// Source: horus/pb/project_manager/service.proto:173:3
+class GetHealthStatusResponse_NodeResources final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `GetHealthStatusResponse_NodeResources`.
+  GetHealthStatusResponse_NodeResources() noexcept = default;
+
+  /// Move constructor.
+  GetHealthStatusResponse_NodeResources(GetHealthStatusResponse_NodeResources&&) noexcept = default;
+  /// Move assignment operator.
+  GetHealthStatusResponse_NodeResources& operator=(GetHealthStatusResponse_NodeResources&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit GetHealthStatusResponse_NodeResources(const GetHealthStatusResponse_NodeResources&) noexcept = default;  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  GetHealthStatusResponse_NodeResources& operator=(const GetHealthStatusResponse_NodeResources&) = delete;
+
+  /// Default destructor.
+  ~GetHealthStatusResponse_NodeResources() noexcept final = default;
+
+  /// Creates a `GetHealthStatusResponse_NodeResources` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit GetHealthStatusResponse_NodeResources(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final {
+    static_cast<void>(writer);
+  }
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final {
+    reader.SkipMessage();
+  }
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.GetHealthStatusResponse.NodeResources`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.GetHealthStatusResponse.NodeResources"; }
+
+  /// The full name of the message: `horus.pb.GetHealthStatusResponse.NodeResources`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+ private:
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<0> set_fields_;
+};
+
 /// Report of the health status of horus.
 ///  It gathers information about:
 ///  - License
 ///  - Lidar status
 ///  - Services connectivity
 ///
-/// Source: horus/pb/project_manager/service.proto:127:1
+/// Source: horus/pb/project_manager/service.proto:123:1
 class GetHealthStatusResponse final : public PbMessage {
  public:
   /// @see GetHealthStatusResponse_NodeHealth
   using NodeHealth = GetHealthStatusResponse_NodeHealth;
+  /// @see GetHealthStatusResponse_NodeResources
+  using NodeResources = GetHealthStatusResponse_NodeResources;
   /// @see GetHealthStatusResponse_SensorHealth
   using SensorHealth = GetHealthStatusResponse_SensorHealth;
 
@@ -2039,6 +2105,56 @@ class GetHealthStatusResponse final : public PbMessage {
     return std::move(set_service_statuses(std::move(service_statuses)));
   }
 
+  // Field `node_resources` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr const CowRepeated<GetHealthStatusResponse_NodeResources>& node_resources() const& noexcept HORUS_LIFETIME_BOUND {
+    return node_resources_;
+  }
+
+  /// If `node_resources` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  CowRepeated<GetHealthStatusResponse_NodeResources> node_resources() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(node_resources_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  CowRepeated<GetHealthStatusResponse_NodeResources>& mutable_node_resources() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return node_resources_;
+  }
+
+  /// Returns whether `node_resources` (no 4) is set.
+  constexpr bool has_node_resources() const noexcept { return set_fields_[3]; }
+
+  /// Clears `node_resources` (no 4).
+  void clear_node_resources() & noexcept {
+    set_fields_[3] = false;
+    node_resources_ = {};
+  }
+
+  /// Sets `node_resources` (no 4) and returns `*this`.
+  GetHealthStatusResponse& set_node_resources(CowRepeated<GetHealthStatusResponse_NodeResources>&& node_resources) & noexcept {
+    set_fields_[3] = true;
+    node_resources_ = std::move(node_resources);
+    return *this;
+  }
+  /// Sets `node_resources` (no 4) and returns `*this`.
+  GetHealthStatusResponse&& set_node_resources(CowRepeated<GetHealthStatusResponse_NodeResources>&& node_resources) && noexcept {
+    return std::move(set_node_resources(std::move(node_resources)));
+  }
+
  private:
   /// @see license_status()
   LicenseStatus license_status_{};
@@ -2046,9 +2162,11 @@ class GetHealthStatusResponse final : public PbMessage {
   CowRepeated<GetHealthStatusResponse_SensorHealth> sensor_statuses_{};
   /// @see service_statuses()
   CowRepeated<GetHealthStatusResponse_NodeHealth> service_statuses_{};
+  /// @see node_resources()
+  CowRepeated<GetHealthStatusResponse_NodeResources> node_resources_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<3> set_fields_;
+  std::bitset<4> set_fields_;
 };
 
 }  // namespace pb

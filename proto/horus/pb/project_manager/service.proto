@@ -113,10 +113,6 @@ message LicenseStatus {
 
 ;
 
-;
-
-;
-
 message GetHealthStatusRequest {}
 
 // Report of the health status of horus.
@@ -171,4 +167,11 @@ message GetHealthStatusResponse {
 
   // Connectivity status of each node.
   repeated NodeHealth service_statuses = 3;
+
+  // Resource usage of each relevant node (preprocessing service & detection
+  // service).
+  message NodeResources {
+
+  }
+  repeated NodeResources node_resources = 4;
 }

@@ -2041,6 +2041,60 @@ class DetectionEvent final : public PbMessage {
     return std::move(set_raw_deep_learning_objects(std::move(raw_deep_learning_objects)));
   }
 
+  // Field `unrecovered_object_ids` (no 5).
+  // -----
+
+  /// IDs of objects that were persisted but could not be matched
+  ///  to a new detection within the recovery window.
+  ///  Subscribers should remove these IDs from their cache.
+  ///
+  /// Field no: 5.
+  constexpr const CowRepeated<std::uint32_t>& unrecovered_object_ids() const& noexcept HORUS_LIFETIME_BOUND {
+    return unrecovered_object_ids_;
+  }
+
+  /// If `unrecovered_object_ids` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 5.
+  CowRepeated<std::uint32_t> unrecovered_object_ids() && noexcept {
+    if (!set_fields_[4]) {
+      return {};
+    }
+    return std::move(unrecovered_object_ids_);
+  }
+
+  /// IDs of objects that were persisted but could not be matched
+  ///  to a new detection within the recovery window.
+  ///  Subscribers should remove these IDs from their cache.
+  ///
+  /// Field no: 5.
+  CowRepeated<std::uint32_t>& mutable_unrecovered_object_ids() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[4] = true;
+    return unrecovered_object_ids_;
+  }
+
+  /// Returns whether `unrecovered_object_ids` (no 5) is set.
+  constexpr bool has_unrecovered_object_ids() const noexcept { return set_fields_[4]; }
+
+  /// Clears `unrecovered_object_ids` (no 5).
+  void clear_unrecovered_object_ids() & noexcept {
+    set_fields_[4] = false;
+    unrecovered_object_ids_ = {};
+  }
+
+  /// Sets `unrecovered_object_ids` (no 5) and returns `*this`.
+  DetectionEvent& set_unrecovered_object_ids(CowRepeated<std::uint32_t>&& unrecovered_object_ids) & noexcept {
+    set_fields_[4] = true;
+    unrecovered_object_ids_ = std::move(unrecovered_object_ids);
+    return *this;
+  }
+  /// Sets `unrecovered_object_ids` (no 5) and returns `*this`.
+  DetectionEvent&& set_unrecovered_object_ids(CowRepeated<std::uint32_t>&& unrecovered_object_ids) && noexcept {
+    return std::move(set_unrecovered_object_ids(std::move(unrecovered_object_ids)));
+  }
+
  private:
   /// @see objects()
   CowRepeated<DetectedObject> objects_{};
@@ -2050,9 +2104,11 @@ class DetectionEvent final : public PbMessage {
   DetectionEvent_FrameInfo frame_info_{};
   /// @see raw_deep_learning_objects()
   CowRepeated<DeepLearningObject> raw_deep_learning_objects_{};
+  /// @see unrecovered_object_ids()
+  CowRepeated<std::uint32_t> unrecovered_object_ids_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<4> set_fields_;
+  std::bitset<5> set_fields_;
 };
 
 }  // namespace pb

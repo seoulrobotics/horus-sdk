@@ -68,6 +68,8 @@ enum SensorStatus {
   TILTED = 16;
   OBSTRUCTED = 32;
   PACKET_DROP = 64;
+  AUTO_CORRECTION_MODERATE = 128;
+  AUTO_CORRECTION_SEVERE = 256;
 }
 
 message SensorInfo {

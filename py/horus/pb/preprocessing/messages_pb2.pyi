@@ -25,6 +25,8 @@ class SensorStatus(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     TILTED: _ClassVar[SensorStatus]
     OBSTRUCTED: _ClassVar[SensorStatus]
     PACKET_DROP: _ClassVar[SensorStatus]
+    AUTO_CORRECTION_MODERATE: _ClassVar[SensorStatus]
+    AUTO_CORRECTION_SEVERE: _ClassVar[SensorStatus]
 OCCUPANCYCLASSIFICATION_UNSPECIFIED: OccupancyClassification
 FREE: OccupancyClassification
 OCCLUDED: OccupancyClassification
@@ -38,6 +40,8 @@ HIGH_FREQUENCY: SensorStatus
 TILTED: SensorStatus
 OBSTRUCTED: SensorStatus
 PACKET_DROP: SensorStatus
+AUTO_CORRECTION_MODERATE: SensorStatus
+AUTO_CORRECTION_SEVERE: SensorStatus
 
 class OccupancyGrid(_message.Message):
     __slots__ = ("rows", "cols", "cells")

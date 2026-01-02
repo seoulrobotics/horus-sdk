@@ -118,4 +118,8 @@ message DetectionEvent {
   FrameInfo frame_info = 3;
   // The raw deep learning bounding boxes.
   repeated DeepLearningObject raw_deep_learning_objects = 4;
+  // IDs of objects that were persisted but could not be matched
+  // to a new detection within the recovery window.
+  // Subscribers should remove these IDs from their cache.
+  repeated uint32 unrecovered_object_ids = 5;
 }

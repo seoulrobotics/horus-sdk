@@ -19,6 +19,9 @@ class SensorStatus(enum.Flag):
     HIGH_FREQUENCY = 8
     TILTED = 16
     OBSTRUCTED = 32
+    PACKET_DROP = 64
+    AUTO_CORRECTION_MODERATE = 128
+    AUTO_CORRECTION_SEVERE = 256
 
 
 @dataclasses.dataclass(frozen=True)

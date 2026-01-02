@@ -332,10 +332,13 @@ void GetHealthStatusResponse_SensorHealth::DeserializeFrom(PbReader& reader) noe
   }
 }
 
+
+
 GetHealthStatusResponse::GetHealthStatusResponse(const GetHealthStatusResponse& other) noexcept(false)
     : license_status_{other.license_status_}
     , sensor_statuses_{other.sensor_statuses_}
     , service_statuses_{other.service_statuses_}
+    , node_resources_{other.node_resources_}
     , set_fields_{other.set_fields_} {}
 
 void GetHealthStatusResponse::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -347,6 +350,9 @@ void GetHealthStatusResponse::SerializeTo(PbWriter& writer) const noexcept(false
   }
   if (set_fields_[2]) {
     SerializeField<CowRepeated<GetHealthStatusResponse_NodeHealth>>(writer, /*tag=*/ 3, service_statuses_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<CowRepeated<GetHealthStatusResponse_NodeResources>>(writer, /*tag=*/ 4, node_resources_);
   }
 }
 
@@ -366,6 +372,11 @@ void GetHealthStatusResponse::DeserializeFrom(PbReader& reader) noexcept(false) 
       case 3: {
         DeserializeField<CowRepeated<GetHealthStatusResponse_NodeHealth>>(reader, service_statuses_);
         set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        DeserializeField<CowRepeated<GetHealthStatusResponse_NodeResources>>(reader, node_resources_);
+        set_fields_[3] = true;
         break;
       }
       default: {

@@ -7,4 +7,5 @@ message CalibrationMap {
 
   // Packed 3D points (x, y, z)
   repeated float map_points = 2;
+  repeated float intensities = 3;
 }
