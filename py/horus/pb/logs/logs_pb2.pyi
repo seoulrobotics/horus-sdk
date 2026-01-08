@@ -1564,3 +1564,17 @@ class CircularRecordingFileOperationError(_message.Message):
     file_path: str
     details: str
     def __init__(self, operation: _Optional[str] = ..., file_path: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+
+class ObjectIdRecoveryRejectedInfo(_message.Message):
+    __slots__ = ("id", "reason")
+    ID_FIELD_NUMBER: _ClassVar[int]
+    REASON_FIELD_NUMBER: _ClassVar[int]
+    id: int
+    reason: str
+    def __init__(self, id: _Optional[int] = ..., reason: _Optional[str] = ...) -> None: ...
+
+class ExpiredRecoveryIdsInfo(_message.Message):
+    __slots__ = ("expired_ids",)
+    EXPIRED_IDS_FIELD_NUMBER: _ClassVar[int]
+    expired_ids: str
+    def __init__(self, expired_ids: _Optional[str] = ...) -> None: ...

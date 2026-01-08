@@ -446,6 +446,10 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return fmt.Sprintf("Circular recording snapshot created with %v messages covering %v seconds of data", data.GetMessageCount(), data.GetActualDurationSeconds())
 	case *logs_pb.CircularRecordingFileOperationError:
 		return fmt.Sprintf("Circular recording file operation failed: %v on %v - %v", data.GetOperation(), data.GetFilePath(), data.GetDetails())
+	case *logs_pb.ObjectIdRecoveryRejectedInfo:
+		return fmt.Sprintf("Recovery candidate with ID %v was rejected this frame because %v. Will attempt again next frame.", data.GetId(), data.GetReason())
+	case *logs_pb.ExpiredRecoveryIdsInfo:
+		return fmt.Sprintf("The following recovery candidate IDs have expired and will not be used for recovery: %v.", data.GetExpiredIds())
 	default:
 		return "unknown log message"
 	}

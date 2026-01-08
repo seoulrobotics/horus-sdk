@@ -252,6 +252,8 @@ class TrackerIdRecoveryFailedError;
 class TrackerIdFastForwardFailedError;
 class CircularRecordingSnapshotCreated;
 class CircularRecordingFileOperationError;
+class ObjectIdRecoveryRejectedInfo;
+class ExpiredRecoveryIdsInfo;
 
 // MARK: Message declarations
 
@@ -30741,6 +30743,270 @@ class CircularRecordingFileOperationError final : public PbMessage {
 
   /// The set of fields that have been given an explicit value.
   std::bitset<3> set_fields_;
+};
+
+/// Log #220.
+/// 
+///  > Recovery candidate with ID $id was rejected this frame because $reason. Will attempt again next frame.
+///
+/// Source: horus/pb/logs/logs.proto:1662:1
+class ObjectIdRecoveryRejectedInfo final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `ObjectIdRecoveryRejectedInfo`.
+  ObjectIdRecoveryRejectedInfo() noexcept = default;
+
+  /// Move constructor.
+  ObjectIdRecoveryRejectedInfo(ObjectIdRecoveryRejectedInfo&&) noexcept = default;
+  /// Move assignment operator.
+  ObjectIdRecoveryRejectedInfo& operator=(ObjectIdRecoveryRejectedInfo&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit ObjectIdRecoveryRejectedInfo(const ObjectIdRecoveryRejectedInfo& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  ObjectIdRecoveryRejectedInfo& operator=(const ObjectIdRecoveryRejectedInfo&) = delete;
+
+  /// Default destructor.
+  ~ObjectIdRecoveryRejectedInfo() noexcept final = default;
+
+  /// Creates a `ObjectIdRecoveryRejectedInfo` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit ObjectIdRecoveryRejectedInfo(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.ObjectIdRecoveryRejectedInfo`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.ObjectIdRecoveryRejectedInfo"; }
+
+  /// The full name of the message: `horus.pb.logs.ObjectIdRecoveryRejectedInfo`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `id` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr std::uint64_t id() const& noexcept HORUS_LIFETIME_BOUND {
+    return id_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  std::uint64_t& mutable_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return id_;
+  }
+
+  /// Returns whether `id` (no 1) is set.
+  constexpr bool has_id() const noexcept { return set_fields_[0]; }
+
+  /// Clears `id` (no 1).
+  void clear_id() & noexcept {
+    set_fields_[0] = false;
+    id_ = {};
+  }
+
+  /// Sets `id` (no 1) and returns `*this`.
+  ObjectIdRecoveryRejectedInfo& set_id(std::uint64_t id) & noexcept {
+    set_fields_[0] = true;
+    id_ = id;
+    return *this;
+  }
+  /// Sets `id` (no 1) and returns `*this`.
+  ObjectIdRecoveryRejectedInfo&& set_id(std::uint64_t id) && noexcept {
+    return std::move(set_id(id));
+  }
+
+  // Field `reason` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& reason() const& noexcept HORUS_LIFETIME_BOUND {
+    return reason_;
+  }
+
+  /// If `reason` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes reason() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(reason_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_reason() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return reason_;
+  }
+
+  /// Returns whether `reason` (no 2) is set.
+  constexpr bool has_reason() const noexcept { return set_fields_[1]; }
+
+  /// Clears `reason` (no 2).
+  void clear_reason() & noexcept {
+    set_fields_[1] = false;
+    reason_ = {};
+  }
+
+  /// Sets `reason` (no 2) and returns `*this`.
+  ObjectIdRecoveryRejectedInfo& set_reason(CowBytes&& reason) & noexcept {
+    set_fields_[1] = true;
+    reason_ = std::move(reason);
+    return *this;
+  }
+  /// Sets `reason` (no 2) and returns `*this`.
+  ObjectIdRecoveryRejectedInfo&& set_reason(CowBytes&& reason) && noexcept {
+    return std::move(set_reason(std::move(reason)));
+  }
+
+ private:
+  /// @see id()
+  std::uint64_t id_{};
+  /// @see reason()
+  CowBytes reason_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// Log #221.
+/// 
+///  > The following recovery candidate IDs have expired and will not be used for recovery: $expired_ids.
+///
+/// Source: horus/pb/logs/logs.proto:1670:1
+class ExpiredRecoveryIdsInfo final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `ExpiredRecoveryIdsInfo`.
+  ExpiredRecoveryIdsInfo() noexcept = default;
+
+  /// Move constructor.
+  ExpiredRecoveryIdsInfo(ExpiredRecoveryIdsInfo&&) noexcept = default;
+  /// Move assignment operator.
+  ExpiredRecoveryIdsInfo& operator=(ExpiredRecoveryIdsInfo&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit ExpiredRecoveryIdsInfo(const ExpiredRecoveryIdsInfo& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  ExpiredRecoveryIdsInfo& operator=(const ExpiredRecoveryIdsInfo&) = delete;
+
+  /// Default destructor.
+  ~ExpiredRecoveryIdsInfo() noexcept final = default;
+
+  /// Creates a `ExpiredRecoveryIdsInfo` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit ExpiredRecoveryIdsInfo(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.ExpiredRecoveryIdsInfo`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.ExpiredRecoveryIdsInfo"; }
+
+  /// The full name of the message: `horus.pb.logs.ExpiredRecoveryIdsInfo`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `expired_ids` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& expired_ids() const& noexcept HORUS_LIFETIME_BOUND {
+    return expired_ids_;
+  }
+
+  /// If `expired_ids` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes expired_ids() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(expired_ids_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_expired_ids() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return expired_ids_;
+  }
+
+  /// Returns whether `expired_ids` (no 1) is set.
+  constexpr bool has_expired_ids() const noexcept { return set_fields_[0]; }
+
+  /// Clears `expired_ids` (no 1).
+  void clear_expired_ids() & noexcept {
+    set_fields_[0] = false;
+    expired_ids_ = {};
+  }
+
+  /// Sets `expired_ids` (no 1) and returns `*this`.
+  ExpiredRecoveryIdsInfo& set_expired_ids(CowBytes&& expired_ids) & noexcept {
+    set_fields_[0] = true;
+    expired_ids_ = std::move(expired_ids);
+    return *this;
+  }
+  /// Sets `expired_ids` (no 1) and returns `*this`.
+  ExpiredRecoveryIdsInfo&& set_expired_ids(CowBytes&& expired_ids) && noexcept {
+    return std::move(set_expired_ids(std::move(expired_ids)));
+  }
+
+ private:
+  /// @see expired_ids()
+  CowBytes expired_ids_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
 };
 
 }  // namespace logs

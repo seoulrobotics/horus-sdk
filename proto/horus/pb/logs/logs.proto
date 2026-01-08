@@ -1655,3 +1655,18 @@ message CircularRecordingFileOperationError {
   string file_path = 2;
   string details = 3;
 }
+
+// Log #220.
+//
+// > Recovery candidate with ID $id was rejected this frame because $reason. Will attempt again next frame.
+message ObjectIdRecoveryRejectedInfo {
+  uint64 id = 1;
+  string reason = 2;
+}
+
+// Log #221.
+//
+// > The following recovery candidate IDs have expired and will not be used for recovery: $expired_ids.
+message ExpiredRecoveryIdsInfo {
+  string expired_ids = 1;
+}

@@ -234,5 +234,7 @@ message LogData {
     logs.TrackerIdFastForwardFailedError tracker_id_fast_forward_failed_error = 217;
     logs.CircularRecordingSnapshotCreated circular_recording_snapshot_created = 218;
     logs.CircularRecordingFileOperationError circular_recording_file_operation_error = 219;
+    logs.ObjectIdRecoveryRejectedInfo object_id_recovery_rejected_info = 220;
+    logs.ExpiredRecoveryIdsInfo expired_recovery_ids_info = 221;
   }
 }

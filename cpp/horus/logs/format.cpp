@@ -903,6 +903,14 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     logs::HorusStringify(sink, log_data.circular_recording_file_operation_error());
     break;
   }
+  case LogData::DataOneof::kObjectIdRecoveryRejectedInfo: {
+    logs::HorusStringify(sink, log_data.object_id_recovery_rejected_info());
+    break;
+  }
+  case LogData::DataOneof::kExpiredRecoveryIdsInfo: {
+    logs::HorusStringify(sink, log_data.expired_recovery_ids_info());
+    break;
+  }
   case LogData::DataOneof::kNotSet:
   default: {
     sink.Append("Unknown log message");
@@ -1783,6 +1791,14 @@ void HorusStringify(const ErasedSink& sink, const CircularRecordingSnapshotCreat
 
 void HorusStringify(const ErasedSink& sink, const CircularRecordingFileOperationError& data) {
   StringifyTo(sink, "Circular recording file operation failed: ", data.operation(), " on ", data.file_path(), " - ", data.details());
+}
+
+void HorusStringify(const ErasedSink& sink, const ObjectIdRecoveryRejectedInfo& data) {
+  StringifyTo(sink, "Recovery candidate with ID ", data.id(), " was rejected this frame because ", data.reason(), ". Will attempt again next frame.");
+}
+
+void HorusStringify(const ErasedSink& sink, const ExpiredRecoveryIdsInfo& data) {
+  StringifyTo(sink, "The following recovery candidate IDs have expired and will not be used for recovery: ", data.expired_ids(), ".");
 }
 
 }  // namespace logs
