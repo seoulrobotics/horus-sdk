@@ -685,6 +685,12 @@ void HorusStringify(const ErasedSink& sink, const CircularRecordingSnapshotCreat
 /// Formats the log `logs::CircularRecordingFileOperationError` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const CircularRecordingFileOperationError& data);
 
+/// Formats the log `logs::ObjectIdRecoveryRejectedInfo` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const ObjectIdRecoveryRejectedInfo& data);
+
+/// Formats the log `logs::ExpiredRecoveryIdsInfo` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const ExpiredRecoveryIdsInfo& data);
+
 }  // namespace logs
 
 }  // namespace pb

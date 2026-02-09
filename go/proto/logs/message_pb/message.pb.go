@@ -2112,6 +2112,24 @@ func (x *LogData) GetCircularRecordingFileOperationError() *logs_pb.CircularReco
 	return nil
 }
 
+func (x *LogData) GetObjectIdRecoveryRejectedInfo() *logs_pb.ObjectIdRecoveryRejectedInfo {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_ObjectIdRecoveryRejectedInfo); ok {
+			return x.ObjectIdRecoveryRejectedInfo
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetExpiredRecoveryIdsInfo() *logs_pb.ExpiredRecoveryIdsInfo {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_ExpiredRecoveryIdsInfo); ok {
+			return x.ExpiredRecoveryIdsInfo
+		}
+	}
+	return nil
+}
+
 func (x *LogData) SetGeneric(v *logs_pb.Generic) {
 	if v == nil {
 		x.xxx_hidden_Data = nil
@@ -3854,6 +3872,22 @@ func (x *LogData) SetCircularRecordingFileOperationError(v *logs_pb.CircularReco
 		return
 	}
 	x.xxx_hidden_Data = &logData_CircularRecordingFileOperationError{v}
+}
+
+func (x *LogData) SetObjectIdRecoveryRejectedInfo(v *logs_pb.ObjectIdRecoveryRejectedInfo) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_ObjectIdRecoveryRejectedInfo{v}
+}
+
+func (x *LogData) SetExpiredRecoveryIdsInfo(v *logs_pb.ExpiredRecoveryIdsInfo) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_ExpiredRecoveryIdsInfo{v}
 }
 
 func (x *LogData) HasData() bool {
@@ -5607,6 +5641,22 @@ func (x *LogData) HasCircularRecordingFileOperationError() bool {
 	return ok
 }
 
+func (x *LogData) HasObjectIdRecoveryRejectedInfo() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_ObjectIdRecoveryRejectedInfo)
+	return ok
+}
+
+func (x *LogData) HasExpiredRecoveryIdsInfo() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_ExpiredRecoveryIdsInfo)
+	return ok
+}
+
 func (x *LogData) ClearData() {
 	x.xxx_hidden_Data = nil
 }
@@ -6919,6 +6969,18 @@ func (x *LogData) ClearCircularRecordingFileOperationError() {
 	}
 }
 
+func (x *LogData) ClearObjectIdRecoveryRejectedInfo() {
+	if _, ok := x.xxx_hidden_Data.(*logData_ObjectIdRecoveryRejectedInfo); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearExpiredRecoveryIdsInfo() {
+	if _, ok := x.xxx_hidden_Data.(*logData_ExpiredRecoveryIdsInfo); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
 const LogData_Data_not_set_case case_LogData_Data = 0
 const LogData_Generic_case case_LogData_Data = 1
 const LogData_Oom_case case_LogData_Data = 2
@@ -7138,6 +7200,8 @@ const LogData_TrackerIdRecoveryFailedError_case case_LogData_Data = 216
 const LogData_TrackerIdFastForwardFailedError_case case_LogData_Data = 217
 const LogData_CircularRecordingSnapshotCreated_case case_LogData_Data = 218
 const LogData_CircularRecordingFileOperationError_case case_LogData_Data = 219
+const LogData_ObjectIdRecoveryRejectedInfo_case case_LogData_Data = 220
+const LogData_ExpiredRecoveryIdsInfo_case case_LogData_Data = 221
 
 func (x *LogData) WhichData() case_LogData_Data {
 	if x == nil {
@@ -7580,6 +7644,10 @@ func (x *LogData) WhichData() case_LogData_Data {
 		return LogData_CircularRecordingSnapshotCreated_case
 	case *logData_CircularRecordingFileOperationError:
 		return LogData_CircularRecordingFileOperationError_case
+	case *logData_ObjectIdRecoveryRejectedInfo:
+		return LogData_ObjectIdRecoveryRejectedInfo_case
+	case *logData_ExpiredRecoveryIdsInfo:
+		return LogData_ExpiredRecoveryIdsInfo_case
 	default:
 		return LogData_Data_not_set_case
 	}
@@ -7807,6 +7875,8 @@ type LogData_builder struct {
 	TrackerIdFastForwardFailedError                     *logs_pb.TrackerIdFastForwardFailedError
 	CircularRecordingSnapshotCreated                    *logs_pb.CircularRecordingSnapshotCreated
 	CircularRecordingFileOperationError                 *logs_pb.CircularRecordingFileOperationError
+	ObjectIdRecoveryRejectedInfo                        *logs_pb.ObjectIdRecoveryRejectedInfo
+	ExpiredRecoveryIdsInfo                              *logs_pb.ExpiredRecoveryIdsInfo
 	// -- end of xxx_hidden_Data
 }
 
@@ -8467,6 +8537,12 @@ func (b0 LogData_builder) Build() *LogData {
 	}
 	if b.CircularRecordingFileOperationError != nil {
 		x.xxx_hidden_Data = &logData_CircularRecordingFileOperationError{b.CircularRecordingFileOperationError}
+	}
+	if b.ObjectIdRecoveryRejectedInfo != nil {
+		x.xxx_hidden_Data = &logData_ObjectIdRecoveryRejectedInfo{b.ObjectIdRecoveryRejectedInfo}
+	}
+	if b.ExpiredRecoveryIdsInfo != nil {
+		x.xxx_hidden_Data = &logData_ExpiredRecoveryIdsInfo{b.ExpiredRecoveryIdsInfo}
 	}
 	return m0
 }
@@ -9357,6 +9433,14 @@ type logData_CircularRecordingFileOperationError struct {
 	CircularRecordingFileOperationError *logs_pb.CircularRecordingFileOperationError `protobuf:"bytes,219,opt,name=circular_recording_file_operation_error,json=circularRecordingFileOperationError,proto3,oneof"`
 }
 
+type logData_ObjectIdRecoveryRejectedInfo struct {
+	ObjectIdRecoveryRejectedInfo *logs_pb.ObjectIdRecoveryRejectedInfo `protobuf:"bytes,220,opt,name=object_id_recovery_rejected_info,json=objectIdRecoveryRejectedInfo,proto3,oneof"`
+}
+
+type logData_ExpiredRecoveryIdsInfo struct {
+	ExpiredRecoveryIdsInfo *logs_pb.ExpiredRecoveryIdsInfo `protobuf:"bytes,221,opt,name=expired_recovery_ids_info,json=expiredRecoveryIdsInfo,proto3,oneof"`
+}
+
 func (*logData_Generic) isLogData_Data() {}
 
 func (*logData_Oom) isLogData_Data() {}
@@ -9793,6 +9877,10 @@ func (*logData_CircularRecordingSnapshotCreated) isLogData_Data() {}
 
 func (*logData_CircularRecordingFileOperationError) isLogData_Data() {}
 
+func (*logData_ObjectIdRecoveryRejectedInfo) isLogData_Data() {}
+
+func (*logData_ExpiredRecoveryIdsInfo) isLogData_Data() {}
+
 var File_horus_pb_logs_message_proto protoreflect.FileDescriptor
 
 var file_horus_pb_logs_message_proto_rawDesc = []byte{
@@ -9808,7 +9896,7 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
 	0x12, 0x25, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11,
 	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x6f, 0x67, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xb2, 0xb7, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
+	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x8f, 0xb9, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
 	0x44, 0x61, 0x74, 0x61, 0x12, 0x32, 0x0a, 0x07, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62,
 	0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x48, 0x00, 0x52,
@@ -11275,8 +11363,22 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x48, 0x00,
 	0x52, 0x23, 0x63, 0x69, 0x72, 0x63, 0x75, 0x6c, 0x61, 0x72, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64,
 	0x69, 0x6e, 0x67, 0x46, 0x69, 0x6c, 0x65, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
-	0x45, 0x72, 0x72, 0x6f, 0x72, 0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x45, 0x72, 0x72, 0x6f, 0x72, 0x12, 0x76, 0x0a, 0x20, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x5f,
+	0x69, 0x64, 0x5f, 0x72, 0x65, 0x63, 0x6f, 0x76, 0x65, 0x72, 0x79, 0x5f, 0x72, 0x65, 0x6a, 0x65,
+	0x63, 0x74, 0x65, 0x64, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0xdc, 0x01, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x2b, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73,
+	0x2e, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x52, 0x65, 0x63, 0x6f, 0x76, 0x65, 0x72,
+	0x79, 0x52, 0x65, 0x6a, 0x65, 0x63, 0x74, 0x65, 0x64, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x00, 0x52,
+	0x1c, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x52, 0x65, 0x63, 0x6f, 0x76, 0x65, 0x72,
+	0x79, 0x52, 0x65, 0x6a, 0x65, 0x63, 0x74, 0x65, 0x64, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x63, 0x0a,
+	0x19, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x64, 0x5f, 0x72, 0x65, 0x63, 0x6f, 0x76, 0x65, 0x72,
+	0x79, 0x5f, 0x69, 0x64, 0x73, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0xdd, 0x01, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x25, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67,
+	0x73, 0x2e, 0x45, 0x78, 0x70, 0x69, 0x72, 0x65, 0x64, 0x52, 0x65, 0x63, 0x6f, 0x76, 0x65, 0x72,
+	0x79, 0x49, 0x64, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x00, 0x52, 0x16, 0x65, 0x78, 0x70, 0x69,
+	0x72, 0x65, 0x64, 0x52, 0x65, 0x63, 0x6f, 0x76, 0x65, 0x72, 0x79, 0x49, 0x64, 0x73, 0x49, 0x6e,
+	0x66, 0x6f, 0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var file_horus_pb_logs_message_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
@@ -11502,6 +11604,8 @@ var file_horus_pb_logs_message_proto_goTypes = []any{
 	(*logs_pb.TrackerIdFastForwardFailedError)(nil),                     // 218: horus.pb.logs.TrackerIdFastForwardFailedError
 	(*logs_pb.CircularRecordingSnapshotCreated)(nil),                    // 219: horus.pb.logs.CircularRecordingSnapshotCreated
 	(*logs_pb.CircularRecordingFileOperationError)(nil),                 // 220: horus.pb.logs.CircularRecordingFileOperationError
+	(*logs_pb.ObjectIdRecoveryRejectedInfo)(nil),                        // 221: horus.pb.logs.ObjectIdRecoveryRejectedInfo
+	(*logs_pb.ExpiredRecoveryIdsInfo)(nil),                              // 222: horus.pb.logs.ExpiredRecoveryIdsInfo
 }
 var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	2,   // 0: horus.pb.LogMessage.metadata:type_name -> horus.pb.LogMetadata
@@ -11724,11 +11828,13 @@ var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	218, // 217: horus.pb.LogData.tracker_id_fast_forward_failed_error:type_name -> horus.pb.logs.TrackerIdFastForwardFailedError
 	219, // 218: horus.pb.LogData.circular_recording_snapshot_created:type_name -> horus.pb.logs.CircularRecordingSnapshotCreated
 	220, // 219: horus.pb.LogData.circular_recording_file_operation_error:type_name -> horus.pb.logs.CircularRecordingFileOperationError
-	220, // [220:220] is the sub-list for method output_type
-	220, // [220:220] is the sub-list for method input_type
-	220, // [220:220] is the sub-list for extension type_name
-	220, // [220:220] is the sub-list for extension extendee
-	0,   // [0:220] is the sub-list for field type_name
+	221, // 220: horus.pb.LogData.object_id_recovery_rejected_info:type_name -> horus.pb.logs.ObjectIdRecoveryRejectedInfo
+	222, // 221: horus.pb.LogData.expired_recovery_ids_info:type_name -> horus.pb.logs.ExpiredRecoveryIdsInfo
+	222, // [222:222] is the sub-list for method output_type
+	222, // [222:222] is the sub-list for method input_type
+	222, // [222:222] is the sub-list for extension type_name
+	222, // [222:222] is the sub-list for extension extendee
+	0,   // [0:222] is the sub-list for field type_name
 }
 
 func init() { file_horus_pb_logs_message_proto_init() }
@@ -11955,6 +12061,8 @@ func file_horus_pb_logs_message_proto_init() {
 		(*logData_TrackerIdFastForwardFailedError)(nil),
 		(*logData_CircularRecordingSnapshotCreated)(nil),
 		(*logData_CircularRecordingFileOperationError)(nil),
+		(*logData_ObjectIdRecoveryRejectedInfo)(nil),
+		(*logData_ExpiredRecoveryIdsInfo)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

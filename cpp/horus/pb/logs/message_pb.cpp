@@ -225,6 +225,8 @@ LogData::LogData(const LogData& other) noexcept(false)
     , tracker_id_fast_forward_failed_error_{other.tracker_id_fast_forward_failed_error_}
     , circular_recording_snapshot_created_{other.circular_recording_snapshot_created_}
     , circular_recording_file_operation_error_{other.circular_recording_file_operation_error_}
+    , object_id_recovery_rejected_info_{other.object_id_recovery_rejected_info_}
+    , expired_recovery_ids_info_{other.expired_recovery_ids_info_}
     , data_{other.data_}
     , set_fields_{other.set_fields_} {}
 
@@ -882,6 +884,12 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[217]) {
     SerializeField<logs::CircularRecordingFileOperationError>(writer, /*tag=*/ 219, circular_recording_file_operation_error_);
+  }
+  if (set_fields_[218]) {
+    SerializeField<logs::ObjectIdRecoveryRejectedInfo>(writer, /*tag=*/ 220, object_id_recovery_rejected_info_);
+  }
+  if (set_fields_[219]) {
+    SerializeField<logs::ExpiredRecoveryIdsInfo>(writer, /*tag=*/ 221, expired_recovery_ids_info_);
   }
 }
 
@@ -2412,6 +2420,20 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
         data_ = DataOneof::kCircularRecordingFileOperationError;
         DeserializeField<logs::CircularRecordingFileOperationError>(reader, circular_recording_file_operation_error_);
         set_fields_[217] = true;
+        break;
+      }
+      case 220: {
+        clear_data();
+        data_ = DataOneof::kObjectIdRecoveryRejectedInfo;
+        DeserializeField<logs::ObjectIdRecoveryRejectedInfo>(reader, object_id_recovery_rejected_info_);
+        set_fields_[218] = true;
+        break;
+      }
+      case 221: {
+        clear_data();
+        data_ = DataOneof::kExpiredRecoveryIdsInfo;
+        DeserializeField<logs::ExpiredRecoveryIdsInfo>(reader, expired_recovery_ids_info_);
+        set_fields_[219] = true;
         break;
       }
       default: {

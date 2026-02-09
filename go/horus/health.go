@@ -209,6 +209,8 @@ func (status SensorStatus) String() string {
 		return "Obstructed"
 	case SensorStatusPacketDrop:
 		return "Packet drop"
+	case SensorStatusAutoCorrectionModerate:
+		return "Moderate auto-correction detected"
 	case SensorStatusAutoCorrectionSevere:
 		return "Severe auto-correction detected"
 	default:

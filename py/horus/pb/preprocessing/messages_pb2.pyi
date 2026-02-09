@@ -27,6 +27,10 @@ class SensorStatus(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     PACKET_DROP: _ClassVar[SensorStatus]
     AUTO_CORRECTION_MODERATE: _ClassVar[SensorStatus]
     AUTO_CORRECTION_SEVERE: _ClassVar[SensorStatus]
+
+class ReferenceAlignmentType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    REFERENCE_ALIGNMENT_TYPE_UNSPECIFIED: _ClassVar[ReferenceAlignmentType]
 OCCUPANCYCLASSIFICATION_UNSPECIFIED: OccupancyClassification
 FREE: OccupancyClassification
 OCCLUDED: OccupancyClassification
@@ -42,6 +46,7 @@ OBSTRUCTED: SensorStatus
 PACKET_DROP: SensorStatus
 AUTO_CORRECTION_MODERATE: SensorStatus
 AUTO_CORRECTION_SEVERE: SensorStatus
+REFERENCE_ALIGNMENT_TYPE_UNSPECIFIED: ReferenceAlignmentType
 
 class OccupancyGrid(_message.Message):
     __slots__ = ("rows", "cols", "cells")
@@ -72,7 +77,7 @@ class OccupancyGridEvent(_message.Message):
     def __init__(self, grid: _Optional[_Union[OccupancyGrid, _Mapping]] = ..., x_min: _Optional[float] = ..., x_max: _Optional[float] = ..., y_min: _Optional[float] = ..., y_max: _Optional[float] = ..., resolution: _Optional[float] = ..., timestamp: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class SensorInfo(_message.Message):
-    __slots__ = ("lidar_id", "status", "measured_frequency", "pose_correction", "num_total_dropped_packets", "num_total_expected_packets")
+    __slots__ = ("lidar_id", "lidar_name", "status", "measured_frequency", "pose_correction", "num_total_dropped_packets", "num_total_expected_packets", "reference_alignment")
     class PoseCorrection(_message.Message):
         __slots__ = ("translation", "rotation")
         TRANSLATION_FIELD_NUMBER: _ClassVar[int]
@@ -81,15 +86,19 @@ class SensorInfo(_message.Message):
         rotation: _metadata_pb2.Quaterniond
         def __init__(self, translation: _Optional[_Union[_metadata_pb2.Vector3f, _Mapping]] = ..., rotation: _Optional[_Union[_metadata_pb2.Quaterniond, _Mapping]] = ...) -> None: ...
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
     MEASURED_FREQUENCY_FIELD_NUMBER: _ClassVar[int]
     POSE_CORRECTION_FIELD_NUMBER: _ClassVar[int]
     NUM_TOTAL_DROPPED_PACKETS_FIELD_NUMBER: _ClassVar[int]
     NUM_TOTAL_EXPECTED_PACKETS_FIELD_NUMBER: _ClassVar[int]
+    REFERENCE_ALIGNMENT_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
+    lidar_name: str
     status: int
     measured_frequency: float
     pose_correction: SensorInfo.PoseCorrection
     num_total_dropped_packets: int
     num_total_expected_packets: int
-    def __init__(self, lidar_id: _Optional[str] = ..., status: _Optional[int] = ..., measured_frequency: _Optional[float] = ..., pose_correction: _Optional[_Union[SensorInfo.PoseCorrection, _Mapping]] = ..., num_total_dropped_packets: _Optional[int] = ..., num_total_expected_packets: _Optional[int] = ...) -> None: ...
+    reference_alignment: ReferenceAlignmentType
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ..., status: _Optional[int] = ..., measured_frequency: _Optional[float] = ..., pose_correction: _Optional[_Union[SensorInfo.PoseCorrection, _Mapping]] = ..., num_total_dropped_packets: _Optional[int] = ..., num_total_expected_packets: _Optional[int] = ..., reference_alignment: _Optional[_Union[ReferenceAlignmentType, str]] = ...) -> None: ...

@@ -6380,6 +6380,67 @@ void CircularRecordingFileOperationError::DeserializeFrom(PbReader& reader) noex
   }
 }
 
+ObjectIdRecoveryRejectedInfo::ObjectIdRecoveryRejectedInfo(const ObjectIdRecoveryRejectedInfo& other) noexcept(false)
+    : id_{other.id_}
+    , reason_{other.reason_}
+    , set_fields_{other.set_fields_} {}
+
+void ObjectIdRecoveryRejectedInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<std::uint64_t>(writer, /*tag=*/ 1, id_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, reason_);
+  }
+}
+
+void ObjectIdRecoveryRejectedInfo::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<std::uint64_t>(reader, id_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, reason_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+ExpiredRecoveryIdsInfo::ExpiredRecoveryIdsInfo(const ExpiredRecoveryIdsInfo& other) noexcept(false)
+    : expired_ids_{other.expired_ids_}
+    , set_fields_{other.set_fields_} {}
+
+void ExpiredRecoveryIdsInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, expired_ids_);
+  }
+}
+
+void ExpiredRecoveryIdsInfo::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, expired_ids_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
 }  // namespace logs
 }  // namespace pb
 }  // namespace sdk

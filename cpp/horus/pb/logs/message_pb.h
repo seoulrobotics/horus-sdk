@@ -12080,6 +12080,116 @@ class LogData final : public PbMessage {
     return std::move(set_circular_recording_file_operation_error(std::move(circular_recording_file_operation_error)));
   }
 
+  // Field `object_id_recovery_rejected_info` (no 220).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 220.
+  constexpr const logs::ObjectIdRecoveryRejectedInfo& object_id_recovery_rejected_info() const& noexcept HORUS_LIFETIME_BOUND {
+    return object_id_recovery_rejected_info_;
+  }
+
+  /// If `object_id_recovery_rejected_info` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 220.
+  logs::ObjectIdRecoveryRejectedInfo object_id_recovery_rejected_info() && noexcept {
+    if (!set_fields_[218]) {
+      return {};
+    }
+    return std::move(object_id_recovery_rejected_info_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 220.
+  logs::ObjectIdRecoveryRejectedInfo& mutable_object_id_recovery_rejected_info() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kObjectIdRecoveryRejectedInfo;
+    set_fields_[218] = true;
+    return object_id_recovery_rejected_info_;
+  }
+
+  /// Returns whether `object_id_recovery_rejected_info` (no 220) is set.
+  constexpr bool has_object_id_recovery_rejected_info() const noexcept { return set_fields_[218]; }
+
+  /// Clears `object_id_recovery_rejected_info` (no 220).
+  void clear_object_id_recovery_rejected_info() & noexcept {
+    data_ = {};
+    set_fields_[218] = false;
+    object_id_recovery_rejected_info_ = {};
+  }
+
+  /// Sets `object_id_recovery_rejected_info` (no 220) and returns `*this`.
+  LogData& set_object_id_recovery_rejected_info(logs::ObjectIdRecoveryRejectedInfo&& object_id_recovery_rejected_info) & noexcept {
+    clear_data();
+    data_ = DataOneof::kObjectIdRecoveryRejectedInfo;
+    set_fields_[218] = true;
+    object_id_recovery_rejected_info_ = std::move(object_id_recovery_rejected_info);
+    return *this;
+  }
+  /// Sets `object_id_recovery_rejected_info` (no 220) and returns `*this`.
+  LogData&& set_object_id_recovery_rejected_info(logs::ObjectIdRecoveryRejectedInfo&& object_id_recovery_rejected_info) && noexcept {
+    return std::move(set_object_id_recovery_rejected_info(std::move(object_id_recovery_rejected_info)));
+  }
+
+  // Field `expired_recovery_ids_info` (no 221).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 221.
+  constexpr const logs::ExpiredRecoveryIdsInfo& expired_recovery_ids_info() const& noexcept HORUS_LIFETIME_BOUND {
+    return expired_recovery_ids_info_;
+  }
+
+  /// If `expired_recovery_ids_info` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 221.
+  logs::ExpiredRecoveryIdsInfo expired_recovery_ids_info() && noexcept {
+    if (!set_fields_[219]) {
+      return {};
+    }
+    return std::move(expired_recovery_ids_info_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 221.
+  logs::ExpiredRecoveryIdsInfo& mutable_expired_recovery_ids_info() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kExpiredRecoveryIdsInfo;
+    set_fields_[219] = true;
+    return expired_recovery_ids_info_;
+  }
+
+  /// Returns whether `expired_recovery_ids_info` (no 221) is set.
+  constexpr bool has_expired_recovery_ids_info() const noexcept { return set_fields_[219]; }
+
+  /// Clears `expired_recovery_ids_info` (no 221).
+  void clear_expired_recovery_ids_info() & noexcept {
+    data_ = {};
+    set_fields_[219] = false;
+    expired_recovery_ids_info_ = {};
+  }
+
+  /// Sets `expired_recovery_ids_info` (no 221) and returns `*this`.
+  LogData& set_expired_recovery_ids_info(logs::ExpiredRecoveryIdsInfo&& expired_recovery_ids_info) & noexcept {
+    clear_data();
+    data_ = DataOneof::kExpiredRecoveryIdsInfo;
+    set_fields_[219] = true;
+    expired_recovery_ids_info_ = std::move(expired_recovery_ids_info);
+    return *this;
+  }
+  /// Sets `expired_recovery_ids_info` (no 221) and returns `*this`.
+  LogData&& set_expired_recovery_ids_info(logs::ExpiredRecoveryIdsInfo&& expired_recovery_ids_info) && noexcept {
+    return std::move(set_expired_recovery_ids_info(std::move(expired_recovery_ids_info)));
+  }
+
   // Oneof `data`.
   // -----
 
@@ -12523,6 +12633,10 @@ class LogData final : public PbMessage {
     kCircularRecordingSnapshotCreated = 218,
     /// @see circular_recording_file_operation_error()
     kCircularRecordingFileOperationError = 219,
+    /// @see object_id_recovery_rejected_info()
+    kObjectIdRecoveryRejectedInfo = 220,
+    /// @see expired_recovery_ids_info()
+    kExpiredRecoveryIdsInfo = 221,
   };
 
   /// Returns the current case set in `data`.
@@ -13405,6 +13519,14 @@ class LogData final : public PbMessage {
         clear_circular_recording_file_operation_error();
         break;
       }
+      case DataOneof::kObjectIdRecoveryRejectedInfo: {
+        clear_object_id_recovery_rejected_info();
+        break;
+      }
+      case DataOneof::kExpiredRecoveryIdsInfo: {
+        clear_expired_recovery_ids_info();
+        break;
+      }
       case DataOneof::kNotSet:
       default:
         break;
@@ -13848,12 +13970,16 @@ class LogData final : public PbMessage {
   logs::CircularRecordingSnapshotCreated circular_recording_snapshot_created_{};
   /// @see circular_recording_file_operation_error()
   logs::CircularRecordingFileOperationError circular_recording_file_operation_error_{};
+  /// @see object_id_recovery_rejected_info()
+  logs::ObjectIdRecoveryRejectedInfo object_id_recovery_rejected_info_{};
+  /// @see expired_recovery_ids_info()
+  logs::ExpiredRecoveryIdsInfo expired_recovery_ids_info_{};
 
   /// @see data_case()
   DataOneof data_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<218> set_fields_;
+  std::bitset<220> set_fields_;
 };
 
 /// A log message notifying users about some status.

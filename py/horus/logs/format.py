@@ -221,6 +221,8 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.TRACKER_ID_FAST_FORWARD_FAILED_ERROR_FIELD_NUMBER: lambda m: format_tracker_id_fast_forward_failed_error(m.tracker_id_fast_forward_failed_error),
     LogData.CIRCULAR_RECORDING_SNAPSHOT_CREATED_FIELD_NUMBER: lambda m: format_circular_recording_snapshot_created(m.circular_recording_snapshot_created),
     LogData.CIRCULAR_RECORDING_FILE_OPERATION_ERROR_FIELD_NUMBER: lambda m: format_circular_recording_file_operation_error(m.circular_recording_file_operation_error),
+    LogData.OBJECT_ID_RECOVERY_REJECTED_INFO_FIELD_NUMBER: lambda m: format_object_id_recovery_rejected_info(m.object_id_recovery_rejected_info),
+    LogData.EXPIRED_RECOVERY_IDS_INFO_FIELD_NUMBER: lambda m: format_expired_recovery_ids_info(m.expired_recovery_ids_info),
 }
 
 def _unknown_format(data: LogData) -> str:
@@ -1109,3 +1111,11 @@ def format_circular_recording_snapshot_created(log: _logs_pb.CircularRecordingSn
 def format_circular_recording_file_operation_error(log: _logs_pb.CircularRecordingFileOperationError) -> str:
     """Formats log `CircularRecordingFileOperationError` to a string."""
     return f"Circular recording file operation failed: {log.operation} on {log.file_path} - {log.details}"
+
+def format_object_id_recovery_rejected_info(log: _logs_pb.ObjectIdRecoveryRejectedInfo) -> str:
+    """Formats log `ObjectIdRecoveryRejectedInfo` to a string."""
+    return f"Recovery candidate with ID {log.id} was rejected this frame because {log.reason}. Will attempt again next frame."
+
+def format_expired_recovery_ids_info(log: _logs_pb.ExpiredRecoveryIdsInfo) -> str:
+    """Formats log `ExpiredRecoveryIdsInfo` to a string."""
+    return f"The following recovery candidate IDs have expired and will not be used for recovery: {log.expired_ids}."

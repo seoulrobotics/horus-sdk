@@ -6,9 +6,9 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Optional as _Op
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class CalibrationMap(_message.Message):
-    __slots__ = ("map_points", "intensities")
+    __slots__ = ("map_points", "intensities_bytes")
     MAP_POINTS_FIELD_NUMBER: _ClassVar[int]
-    INTENSITIES_FIELD_NUMBER: _ClassVar[int]
+    INTENSITIES_BYTES_FIELD_NUMBER: _ClassVar[int]
     map_points: _containers.RepeatedScalarFieldContainer[float]
-    intensities: _containers.RepeatedScalarFieldContainer[float]
-    def __init__(self, map_points: _Optional[_Iterable[float]] = ..., intensities: _Optional[_Iterable[float]] = ...) -> None: ...
+    intensities_bytes: bytes
+    def __init__(self, map_points: _Optional[_Iterable[float]] = ..., intensities_bytes: _Optional[bytes] = ...) -> None: ...

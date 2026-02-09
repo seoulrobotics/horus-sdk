@@ -72,8 +72,15 @@ enum SensorStatus {
   AUTO_CORRECTION_SEVERE = 256;
 }
 
+// Reference alignment type for tilt detector.
+// Indicates which reference is being used by the tilt detector.
+enum ReferenceAlignmentType {
+  REFERENCE_ALIGNMENT_TYPE_UNSPECIFIED = 0;
+}
+
 message SensorInfo {
   string lidar_id = 1;
+  string lidar_name = 8;
   // Status as uint32, each status is combined using bitwise OR.
   uint32 status = 2;
   double measured_frequency = 3;
@@ -82,6 +89,9 @@ message SensorInfo {
 
   optional uint64 num_total_dropped_packets = 5;
   optional uint64 num_total_expected_packets = 6;
+
+  // Reference alignment type when tilt detector is enabled.
+  ReferenceAlignmentType reference_alignment = 7;
 
   message PoseCorrection {
     Vector3f translation = 1;
