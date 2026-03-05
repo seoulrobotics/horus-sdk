@@ -1362,32 +1362,24 @@ class ProjectSaveError(_message.Message):
     def __init__(self, error_message: _Optional[str] = ...) -> None: ...
 
 class SaveStaticEnvironmentSuccess(_message.Message):
-    __slots__ = ("path",)
-    PATH_FIELD_NUMBER: _ClassVar[int]
-    path: str
-    def __init__(self, path: _Optional[str] = ...) -> None: ...
+    __slots__ = ()
+    def __init__(self) -> None: ...
 
 class SaveStaticEnvironmentFailed(_message.Message):
-    __slots__ = ("path", "details")
-    PATH_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ("details",)
     DETAILS_FIELD_NUMBER: _ClassVar[int]
-    path: str
     details: str
-    def __init__(self, path: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+    def __init__(self, details: _Optional[str] = ...) -> None: ...
 
 class LoadStaticEnvironmentSuccess(_message.Message):
-    __slots__ = ("path",)
-    PATH_FIELD_NUMBER: _ClassVar[int]
-    path: str
-    def __init__(self, path: _Optional[str] = ...) -> None: ...
+    __slots__ = ()
+    def __init__(self) -> None: ...
 
 class LoadStaticEnvironmentFailed(_message.Message):
-    __slots__ = ("path", "details")
-    PATH_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ("details",)
     DETAILS_FIELD_NUMBER: _ClassVar[int]
-    path: str
     details: str
-    def __init__(self, path: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+    def __init__(self, details: _Optional[str] = ...) -> None: ...
 
 class AttemptToInjectInvalidLidarIdWarning(_message.Message):
     __slots__ = ("lidar_id",)
@@ -1529,6 +1521,18 @@ class TrackerStatePathUnavailableWarning(_message.Message):
     project_name: str
     def __init__(self, project_name: _Optional[str] = ...) -> None: ...
 
+class TrackerStateRecoveryError(_message.Message):
+    __slots__ = ("error_message",)
+    ERROR_MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    error_message: str
+    def __init__(self, error_message: _Optional[str] = ...) -> None: ...
+
+class TrackerStateSaveError(_message.Message):
+    __slots__ = ("error_message",)
+    ERROR_MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    error_message: str
+    def __init__(self, error_message: _Optional[str] = ...) -> None: ...
+
 class TrackerIdRecoveryFailedError(_message.Message):
     __slots__ = ("id", "error_message")
     ID_FIELD_NUMBER: _ClassVar[int]
@@ -1564,3 +1568,35 @@ class CircularRecordingFileOperationError(_message.Message):
     file_path: str
     details: str
     def __init__(self, operation: _Optional[str] = ..., file_path: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+
+class ObjectIdRecoveryRejectedInfo(_message.Message):
+    __slots__ = ("id", "reason")
+    ID_FIELD_NUMBER: _ClassVar[int]
+    REASON_FIELD_NUMBER: _ClassVar[int]
+    id: int
+    reason: str
+    def __init__(self, id: _Optional[int] = ..., reason: _Optional[str] = ...) -> None: ...
+
+class ExpiredRecoveryIdsInfo(_message.Message):
+    __slots__ = ("expired_ids",)
+    EXPIRED_IDS_FIELD_NUMBER: _ClassVar[int]
+    expired_ids: str
+    def __init__(self, expired_ids: _Optional[str] = ...) -> None: ...
+
+class HesaiUdpReceiverInfo(_message.Message):
+    __slots__ = ("action", "lidar_id", "lidar_name")
+    ACTION_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
+    action: str
+    lidar_id: str
+    lidar_name: str
+    def __init__(self, action: _Optional[str] = ..., lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
+
+class DbCommitFailed(_message.Message):
+    __slots__ = ("action", "error")
+    ACTION_FIELD_NUMBER: _ClassVar[int]
+    ERROR_FIELD_NUMBER: _ClassVar[int]
+    action: str
+    error: str
+    def __init__(self, action: _Optional[str] = ..., error: _Optional[str] = ...) -> None: ...

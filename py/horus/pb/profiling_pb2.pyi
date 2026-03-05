@@ -1,4 +1,5 @@
 from horus.pb.config import metadata_pb2 as _metadata_pb2
+from horus.pb import resources_pb2 as _resources_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
@@ -46,20 +47,13 @@ class ProfilingSet(_message.Message):
         key: str
         value: ProfilingSet.ProfiledDuration
         def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[ProfilingSet.ProfiledDuration, _Mapping]] = ...) -> None: ...
-    class ResourceUsage(_message.Message):
-        __slots__ = ("cpu_usage_percentage", "memory_usage")
-        CPU_USAGE_PERCENTAGE_FIELD_NUMBER: _ClassVar[int]
-        MEMORY_USAGE_FIELD_NUMBER: _ClassVar[int]
-        cpu_usage_percentage: int
-        memory_usage: int
-        def __init__(self, cpu_usage_percentage: _Optional[int] = ..., memory_usage: _Optional[int] = ...) -> None: ...
     PROFILED_SERVICE_FIELD_NUMBER: _ClassVar[int]
     PROCESSING_TIMES_FIELD_NUMBER: _ClassVar[int]
     RESOURCE_USAGE_FIELD_NUMBER: _ClassVar[int]
     profiled_service: ProfilingSet.ProfiledService
     processing_times: _containers.RepeatedCompositeFieldContainer[ProfilingSet.ProfiledDurationMapEntry]
-    resource_usage: ProfilingSet.ResourceUsage
-    def __init__(self, profiled_service: _Optional[_Union[ProfilingSet.ProfiledService, str]] = ..., processing_times: _Optional[_Iterable[_Union[ProfilingSet.ProfiledDurationMapEntry, _Mapping]]] = ..., resource_usage: _Optional[_Union[ProfilingSet.ResourceUsage, _Mapping]] = ...) -> None: ...
+    resource_usage: _resources_pb2.ResourceUsage
+    def __init__(self, profiled_service: _Optional[_Union[ProfilingSet.ProfiledService, str]] = ..., processing_times: _Optional[_Iterable[_Union[ProfilingSet.ProfiledDurationMapEntry, _Mapping]]] = ..., resource_usage: _Optional[_Union[_resources_pb2.ResourceUsage, _Mapping]] = ...) -> None: ...
 
 class ServiceProfiling(_message.Message):
     __slots__ = ("details_profiling_set", "total_service_latency", "idle_time_before_processing", "intra_component_idle_time")

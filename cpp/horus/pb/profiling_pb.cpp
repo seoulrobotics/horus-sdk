@@ -111,41 +111,6 @@ void ProfilingSet_ProfiledDurationMapEntry::DeserializeFrom(PbReader& reader) no
   }
 }
 
-ProfilingSet_ResourceUsage::ProfilingSet_ResourceUsage(const ProfilingSet_ResourceUsage& other) noexcept(false)
-    : cpu_usage_percentage_{other.cpu_usage_percentage_}
-    , memory_usage_{other.memory_usage_}
-    , set_fields_{other.set_fields_} {}
-
-void ProfilingSet_ResourceUsage::SerializeTo(PbWriter& writer) const noexcept(false) {
-  if (set_fields_[0]) {
-    SerializeField<std::uint32_t>(writer, /*tag=*/ 1, cpu_usage_percentage_);
-  }
-  if (set_fields_[1]) {
-    SerializeField<std::uint64_t>(writer, /*tag=*/ 2, memory_usage_);
-  }
-}
-
-void ProfilingSet_ResourceUsage::DeserializeFrom(PbReader& reader) noexcept(false) {
-  while (reader.Reader().next()) {
-    switch (reader.Reader().tag()) {
-      case 1: {
-        DeserializeField<std::uint32_t>(reader, cpu_usage_percentage_);
-        set_fields_[0] = true;
-        break;
-      }
-      case 2: {
-        DeserializeField<std::uint64_t>(reader, memory_usage_);
-        set_fields_[1] = true;
-        break;
-      }
-      default: {
-        reader.Reader().skip();
-        break;
-      }
-    }
-  }
-}
-
 ProfilingSet::ProfilingSet(const ProfilingSet& other) noexcept(false)
     : profiled_service_{other.profiled_service_}
     , processing_times_{other.processing_times_}
@@ -160,7 +125,7 @@ void ProfilingSet::SerializeTo(PbWriter& writer) const noexcept(false) {
     SerializeField<CowRepeated<ProfilingSet_ProfiledDurationMapEntry>>(writer, /*tag=*/ 2, processing_times_);
   }
   if (set_fields_[2]) {
-    SerializeField<ProfilingSet_ResourceUsage>(writer, /*tag=*/ 3, resource_usage_);
+    SerializeField<ResourceUsage>(writer, /*tag=*/ 4, resource_usage_);
   }
 }
 
@@ -177,8 +142,8 @@ void ProfilingSet::DeserializeFrom(PbReader& reader) noexcept(false) {
         set_fields_[1] = true;
         break;
       }
-      case 3: {
-        DeserializeField<ProfilingSet_ResourceUsage>(reader, resource_usage_);
+      case 4: {
+        DeserializeField<ResourceUsage>(reader, resource_usage_);
         set_fields_[2] = true;
         break;
       }

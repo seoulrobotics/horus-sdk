@@ -221,10 +221,16 @@ LogData::LogData(const LogData& other) noexcept(false)
     , persistent_storage_error_{other.persistent_storage_error_}
     , track_capacity_exceeded_warning_{other.track_capacity_exceeded_warning_}
     , tracker_state_path_unavailable_warning_{other.tracker_state_path_unavailable_warning_}
+    , tracker_state_recovery_error_{other.tracker_state_recovery_error_}
+    , tracker_state_save_error_{other.tracker_state_save_error_}
     , tracker_id_recovery_failed_error_{other.tracker_id_recovery_failed_error_}
     , tracker_id_fast_forward_failed_error_{other.tracker_id_fast_forward_failed_error_}
     , circular_recording_snapshot_created_{other.circular_recording_snapshot_created_}
     , circular_recording_file_operation_error_{other.circular_recording_file_operation_error_}
+    , object_id_recovery_rejected_info_{other.object_id_recovery_rejected_info_}
+    , expired_recovery_ids_info_{other.expired_recovery_ids_info_}
+    , hesai_udp_receiver_info_{other.hesai_udp_receiver_info_}
+    , db_commit_failed_{other.db_commit_failed_}
     , data_{other.data_}
     , set_fields_{other.set_fields_} {}
 
@@ -872,16 +878,34 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
     SerializeField<logs::TrackerStatePathUnavailableWarning>(writer, /*tag=*/ 215, tracker_state_path_unavailable_warning_);
   }
   if (set_fields_[214]) {
-    SerializeField<logs::TrackerIdRecoveryFailedError>(writer, /*tag=*/ 216, tracker_id_recovery_failed_error_);
+    SerializeField<logs::TrackerStateRecoveryError>(writer, /*tag=*/ 224, tracker_state_recovery_error_);
   }
   if (set_fields_[215]) {
-    SerializeField<logs::TrackerIdFastForwardFailedError>(writer, /*tag=*/ 217, tracker_id_fast_forward_failed_error_);
+    SerializeField<logs::TrackerStateSaveError>(writer, /*tag=*/ 225, tracker_state_save_error_);
   }
   if (set_fields_[216]) {
-    SerializeField<logs::CircularRecordingSnapshotCreated>(writer, /*tag=*/ 218, circular_recording_snapshot_created_);
+    SerializeField<logs::TrackerIdRecoveryFailedError>(writer, /*tag=*/ 216, tracker_id_recovery_failed_error_);
   }
   if (set_fields_[217]) {
+    SerializeField<logs::TrackerIdFastForwardFailedError>(writer, /*tag=*/ 217, tracker_id_fast_forward_failed_error_);
+  }
+  if (set_fields_[218]) {
+    SerializeField<logs::CircularRecordingSnapshotCreated>(writer, /*tag=*/ 218, circular_recording_snapshot_created_);
+  }
+  if (set_fields_[219]) {
     SerializeField<logs::CircularRecordingFileOperationError>(writer, /*tag=*/ 219, circular_recording_file_operation_error_);
+  }
+  if (set_fields_[220]) {
+    SerializeField<logs::ObjectIdRecoveryRejectedInfo>(writer, /*tag=*/ 220, object_id_recovery_rejected_info_);
+  }
+  if (set_fields_[221]) {
+    SerializeField<logs::ExpiredRecoveryIdsInfo>(writer, /*tag=*/ 221, expired_recovery_ids_info_);
+  }
+  if (set_fields_[222]) {
+    SerializeField<logs::HesaiUdpReceiverInfo>(writer, /*tag=*/ 222, hesai_udp_receiver_info_);
+  }
+  if (set_fields_[223]) {
+    SerializeField<logs::DbCommitFailed>(writer, /*tag=*/ 223, db_commit_failed_);
   }
 }
 
@@ -2386,32 +2410,74 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
         set_fields_[213] = true;
         break;
       }
+      case 224: {
+        clear_data();
+        data_ = DataOneof::kTrackerStateRecoveryError;
+        DeserializeField<logs::TrackerStateRecoveryError>(reader, tracker_state_recovery_error_);
+        set_fields_[214] = true;
+        break;
+      }
+      case 225: {
+        clear_data();
+        data_ = DataOneof::kTrackerStateSaveError;
+        DeserializeField<logs::TrackerStateSaveError>(reader, tracker_state_save_error_);
+        set_fields_[215] = true;
+        break;
+      }
       case 216: {
         clear_data();
         data_ = DataOneof::kTrackerIdRecoveryFailedError;
         DeserializeField<logs::TrackerIdRecoveryFailedError>(reader, tracker_id_recovery_failed_error_);
-        set_fields_[214] = true;
+        set_fields_[216] = true;
         break;
       }
       case 217: {
         clear_data();
         data_ = DataOneof::kTrackerIdFastForwardFailedError;
         DeserializeField<logs::TrackerIdFastForwardFailedError>(reader, tracker_id_fast_forward_failed_error_);
-        set_fields_[215] = true;
+        set_fields_[217] = true;
         break;
       }
       case 218: {
         clear_data();
         data_ = DataOneof::kCircularRecordingSnapshotCreated;
         DeserializeField<logs::CircularRecordingSnapshotCreated>(reader, circular_recording_snapshot_created_);
-        set_fields_[216] = true;
+        set_fields_[218] = true;
         break;
       }
       case 219: {
         clear_data();
         data_ = DataOneof::kCircularRecordingFileOperationError;
         DeserializeField<logs::CircularRecordingFileOperationError>(reader, circular_recording_file_operation_error_);
-        set_fields_[217] = true;
+        set_fields_[219] = true;
+        break;
+      }
+      case 220: {
+        clear_data();
+        data_ = DataOneof::kObjectIdRecoveryRejectedInfo;
+        DeserializeField<logs::ObjectIdRecoveryRejectedInfo>(reader, object_id_recovery_rejected_info_);
+        set_fields_[220] = true;
+        break;
+      }
+      case 221: {
+        clear_data();
+        data_ = DataOneof::kExpiredRecoveryIdsInfo;
+        DeserializeField<logs::ExpiredRecoveryIdsInfo>(reader, expired_recovery_ids_info_);
+        set_fields_[221] = true;
+        break;
+      }
+      case 222: {
+        clear_data();
+        data_ = DataOneof::kHesaiUdpReceiverInfo;
+        DeserializeField<logs::HesaiUdpReceiverInfo>(reader, hesai_udp_receiver_info_);
+        set_fields_[222] = true;
+        break;
+      }
+      case 223: {
+        clear_data();
+        data_ = DataOneof::kDbCommitFailed;
+        DeserializeField<logs::DbCommitFailed>(reader, db_commit_failed_);
+        set_fields_[223] = true;
         break;
       }
       default: {

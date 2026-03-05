@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package horus.pb;
+
+message GpuProcessInfo {
+  uint32 pid = 1;
+  uint64 gpu_memory_usage_bytes = 2;
+}
+
+message GpuInfo {
+  uint32 gpu_id = 1;
+  string gpu_name = 2;
+
+  uint32 temperature_celsius = 3;
+  uint32 utilization_percentage = 4;
+  uint64 memory_used_bytes = 5;
+  uint64 memory_total_bytes = 6;
+
+  repeated GpuProcessInfo running_processes = 7;
+}
+
+message CpuAndMemoryUsage {
+  // CPU usage in the htop convention: 100% means one full core busy.
+  // A multi-threaded process can exceed 100%. Divide by `cpu_cores` from the
+  // parent ResourceUsage to obtain a machine-normalized (0-100%) percentage.
+  uint32 cpu_usage_percentage = 1;
+  uint64 memory_usage_bytes = 2;
+}
+
+message ResourceUsage {
+  CpuAndMemoryUsage process = 1;
+  CpuAndMemoryUsage host = 2;
+  repeated GpuInfo gpus = 3;
+  // Number of logical CPU cores on the host. Use this to normalize
+  // cpu_usage_percentage from htop-style to a 0-100% machine-level percentage.
+  uint32 cpu_cores = 4;
+}

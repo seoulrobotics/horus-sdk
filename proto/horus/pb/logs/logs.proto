@@ -1460,32 +1460,28 @@ message ProjectSaveError {
 
 // Log #193.
 //
-// > Saved static environment to $path
+// > Saved static environment
 message SaveStaticEnvironmentSuccess {
-  string path = 1;
 }
 
 // Log #194.
 //
-// > Failed to serialize static environment to $path: $details
+// > Failed to save static environment: $details
 message SaveStaticEnvironmentFailed {
-  string path = 1;
-  string details = 2;
+  string details = 1;
 }
 
 // Log #195.
 //
-// > Static environment loaded from $path
+// > Loaded static environment
 message LoadStaticEnvironmentSuccess {
-  string path = 1;
 }
 
 // Log #196.
 //
-// > Failed to load static environment from $path: $details
+// > Failed to load static environment: $details
 message LoadStaticEnvironmentFailed {
-  string path = 1;
-  string details = 2;
+  string details = 1;
 }
 
 // Log #197.
@@ -1622,6 +1618,20 @@ message TrackerStatePathUnavailableWarning {
   string project_name = 1;
 }
 
+// Log #224.
+//
+// > Failed to recover saved tracker state: $error_message
+message TrackerStateRecoveryError {
+  string error_message = 1;
+}
+
+// Log #225.
+//
+// > Failed to save tracker state: $error_message
+message TrackerStateSaveError {
+  string error_message = 1;
+}
+
 // Log #216.
 //
 // > Failed to recover tracker ID $id: $error_message
@@ -1654,4 +1664,36 @@ message CircularRecordingFileOperationError {
   string operation = 1;
   string file_path = 2;
   string details = 3;
+}
+
+// Log #220.
+//
+// > Recovery candidate with ID $id was rejected this frame because $reason. Will attempt again next frame.
+message ObjectIdRecoveryRejectedInfo {
+  uint64 id = 1;
+  string reason = 2;
+}
+
+// Log #221.
+//
+// > The following recovery candidate IDs have expired and will not be used for recovery: $expired_ids.
+message ExpiredRecoveryIdsInfo {
+  string expired_ids = 1;
+}
+
+// Log #222.
+//
+// > [$lidar_name][$lidar_id] Hesai UDP receiver $action.
+message HesaiUdpReceiverInfo {
+  string action = 1;
+  string lidar_id = 2;
+  string lidar_name = 3;
+}
+
+// Log #223.
+//
+// > Failed to $action in Horus database: $error.
+message DbCommitFailed {
+  string action = 1;
+  string error = 2;
 }

@@ -17,6 +17,7 @@
 #include "horus/pb/cow_bytes.h"
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/message.h"
+#include "horus/pb/resources_pb.h"
 #include "horus/pb/serialize.h"
 #include "horus/pb/types.h"
 #include "horus/strings/string_view.h"
@@ -35,7 +36,7 @@ namespace pb {
 
 /// No documentation.
 ///
-/// Source: horus/pb/profiling.proto:9:3
+/// Source: horus/pb/profiling.proto:11:3
 enum class ProfilingSet_ProfiledService : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kServiceUnspecified = 0,
@@ -50,7 +51,7 @@ enum class ProfilingSet_ProfiledService : PbEnum {  // NOLINT(*-enum-size)
 
 /// No documentation.
 ///
-/// Source: horus/pb/profiling.proto:17:7
+/// Source: horus/pb/profiling.proto:19:7
 enum class ProfilingSet_ProfiledDuration_PerformanceHint_ConfigParameterAction : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -68,7 +69,6 @@ enum class ProfilingSet_ProfiledDuration_PerformanceHint_ConfigParameterAction :
 class ProfilingSet_ProfiledDuration_PerformanceHint;
 class ProfilingSet_ProfiledDuration;
 class ProfilingSet_ProfiledDurationMapEntry;
-class ProfilingSet_ResourceUsage;
 class ProfilingSet;
 class ServiceProfiling;
 class PreprocessingServicePointCloudProfiling;
@@ -81,7 +81,7 @@ class ProfilingInfo;
 
 /// No documentation.
 ///
-/// Source: horus/pb/profiling.proto:16:5
+/// Source: horus/pb/profiling.proto:18:5
 class ProfilingSet_ProfiledDuration_PerformanceHint final : public PbMessage {
  public:
   /// @see ProfilingSet_ProfiledDuration_PerformanceHint_ConfigParameterAction
@@ -233,7 +233,7 @@ class ProfilingSet_ProfiledDuration_PerformanceHint final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/profiling.proto:15:3
+/// Source: horus/pb/profiling.proto:17:3
 class ProfilingSet_ProfiledDuration final : public PbMessage {
  public:
   /// @see ProfilingSet_ProfiledDuration_PerformanceHint
@@ -397,7 +397,7 @@ class ProfilingSet_ProfiledDuration final : public PbMessage {
 
 /// / A map of profiling measurements id to profiled durations.
 ///
-/// Source: horus/pb/profiling.proto:36:3
+/// Source: horus/pb/profiling.proto:38:3
 class ProfilingSet_ProfiledDurationMapEntry final : public PbMessage {
  public:
 
@@ -557,149 +557,9 @@ class ProfilingSet_ProfiledDurationMapEntry final : public PbMessage {
   std::bitset<2> set_fields_;
 };
 
-/// No documentation.
-///
-/// Source: horus/pb/profiling.proto:39:3
-class ProfilingSet_ResourceUsage final : public PbMessage {
- public:
-
-  /// Constructs a default-initialized `ProfilingSet_ResourceUsage`.
-  ProfilingSet_ResourceUsage() noexcept = default;
-
-  /// Move constructor.
-  ProfilingSet_ResourceUsage(ProfilingSet_ResourceUsage&&) noexcept = default;
-  /// Move assignment operator.
-  ProfilingSet_ResourceUsage& operator=(ProfilingSet_ResourceUsage&&) noexcept = default;
-
-  /// Constructs a clone of `other`.
-  ///
-  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
-  /// lack of available memory.
-  explicit ProfilingSet_ResourceUsage(const ProfilingSet_ResourceUsage& other) noexcept(false);  // NOLINT(*-explicit-*)
-
-  /// Cannot copy-assign to avoid implicit allocations.
-  ProfilingSet_ResourceUsage& operator=(const ProfilingSet_ResourceUsage&) = delete;
-
-  /// Default destructor.
-  ~ProfilingSet_ResourceUsage() noexcept final = default;
-
-  /// Creates a `ProfilingSet_ResourceUsage` whose contents are read from `reader`.
-  ///
-  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
-  explicit ProfilingSet_ResourceUsage(PbReader& reader) noexcept(false) : PbMessage{} {
-    DeserializeFrom(reader);
-  }
-
-  /// Serializes the message to `writer`.
-  ///
-  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
-  void SerializeTo(PbWriter& writer) const noexcept(false) final;
-
-  /// Deserializes the message from `reader`.
-  ///
-  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
-  void DeserializeFrom(PbReader& reader) noexcept(false) final;
-
-  /// Returns whether the message is empty.
-  bool IsEmpty() const noexcept final { return set_fields_.none(); }
-
-  /// The full name of the message: `horus.pb.ProfilingSet.ResourceUsage`.
-  static constexpr StringView TypeName() noexcept { return "horus.pb.ProfilingSet.ResourceUsage"; }
-
-  /// The full name of the message: `horus.pb.ProfilingSet.ResourceUsage`.
-  StringView MessageTypeName() const noexcept final { return TypeName(); }
-
-  // Field `cpu_usage_percentage` (no 1).
-  // -----
-
-  /// / CPU usage of the service in percentage.
-  /// / The percentage can be above 100% if multiple cores are used.
-  ///
-  /// Field no: 1.
-  constexpr std::uint32_t cpu_usage_percentage() const& noexcept HORUS_LIFETIME_BOUND {
-    return cpu_usage_percentage_;
-  }
-
-  /// / CPU usage of the service in percentage.
-  /// / The percentage can be above 100% if multiple cores are used.
-  ///
-  /// Field no: 1.
-  std::uint32_t& mutable_cpu_usage_percentage() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[0] = true;
-    return cpu_usage_percentage_;
-  }
-
-  /// Returns whether `cpu_usage_percentage` (no 1) is set.
-  constexpr bool has_cpu_usage_percentage() const noexcept { return set_fields_[0]; }
-
-  /// Clears `cpu_usage_percentage` (no 1).
-  void clear_cpu_usage_percentage() & noexcept {
-    set_fields_[0] = false;
-    cpu_usage_percentage_ = {};
-  }
-
-  /// Sets `cpu_usage_percentage` (no 1) and returns `*this`.
-  ProfilingSet_ResourceUsage& set_cpu_usage_percentage(std::uint32_t cpu_usage_percentage) & noexcept {
-    set_fields_[0] = true;
-    cpu_usage_percentage_ = cpu_usage_percentage;
-    return *this;
-  }
-  /// Sets `cpu_usage_percentage` (no 1) and returns `*this`.
-  ProfilingSet_ResourceUsage&& set_cpu_usage_percentage(std::uint32_t cpu_usage_percentage) && noexcept {
-    return std::move(set_cpu_usage_percentage(cpu_usage_percentage));
-  }
-
-  // Field `memory_usage` (no 2).
-  // -----
-
-  /// / Memory usage of the service in bytes.
-  ///
-  /// Field no: 2.
-  constexpr std::uint64_t memory_usage() const& noexcept HORUS_LIFETIME_BOUND {
-    return memory_usage_;
-  }
-
-  /// / Memory usage of the service in bytes.
-  ///
-  /// Field no: 2.
-  std::uint64_t& mutable_memory_usage() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[1] = true;
-    return memory_usage_;
-  }
-
-  /// Returns whether `memory_usage` (no 2) is set.
-  constexpr bool has_memory_usage() const noexcept { return set_fields_[1]; }
-
-  /// Clears `memory_usage` (no 2).
-  void clear_memory_usage() & noexcept {
-    set_fields_[1] = false;
-    memory_usage_ = {};
-  }
-
-  /// Sets `memory_usage` (no 2) and returns `*this`.
-  ProfilingSet_ResourceUsage& set_memory_usage(std::uint64_t memory_usage) & noexcept {
-    set_fields_[1] = true;
-    memory_usage_ = memory_usage;
-    return *this;
-  }
-  /// Sets `memory_usage` (no 2) and returns `*this`.
-  ProfilingSet_ResourceUsage&& set_memory_usage(std::uint64_t memory_usage) && noexcept {
-    return std::move(set_memory_usage(memory_usage));
-  }
-
- private:
-  /// @see cpu_usage_percentage()
-  std::uint32_t cpu_usage_percentage_{};
-  /// @see memory_usage()
-  std::uint64_t memory_usage_{};
-
-  /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
-};
-
 /// / A profiling set.
 ///
-/// Source: horus/pb/profiling.proto:8:1
+/// Source: horus/pb/profiling.proto:10:1
 class ProfilingSet final : public PbMessage {
  public:
   /// @see ProfilingSet_ProfiledDuration
@@ -708,8 +568,6 @@ class ProfilingSet final : public PbMessage {
   using ProfiledDurationMapEntry = ProfilingSet_ProfiledDurationMapEntry;
   /// @see ProfilingSet_ProfiledService
   using ProfiledService = ProfilingSet_ProfiledService;
-  /// @see ProfilingSet_ResourceUsage
-  using ResourceUsage = ProfilingSet_ResourceUsage;
 
   /// Constructs a default-initialized `ProfilingSet`.
   ProfilingSet() noexcept = default;
@@ -845,13 +703,13 @@ class ProfilingSet final : public PbMessage {
     return std::move(set_processing_times(std::move(processing_times)));
   }
 
-  // Field `resource_usage` (no 3).
+  // Field `resource_usage` (no 4).
   // -----
 
-  /// / Resource usage profiling of the service.
+  /// No documentation.
   ///
-  /// Field no: 3.
-  constexpr const ProfilingSet_ResourceUsage& resource_usage() const& noexcept HORUS_LIFETIME_BOUND {
+  /// Field no: 4.
+  constexpr const ResourceUsage& resource_usage() const& noexcept HORUS_LIFETIME_BOUND {
     return resource_usage_;
   }
 
@@ -859,39 +717,39 @@ class ProfilingSet final : public PbMessage {
   ///
   /// Otherwise, returns a default-initialized value.
   ///
-  /// Field no: 3.
-  ProfilingSet_ResourceUsage resource_usage() && noexcept {
+  /// Field no: 4.
+  ResourceUsage resource_usage() && noexcept {
     if (!set_fields_[2]) {
       return {};
     }
     return std::move(resource_usage_);
   }
 
-  /// / Resource usage profiling of the service.
+  /// No documentation.
   ///
-  /// Field no: 3.
-  ProfilingSet_ResourceUsage& mutable_resource_usage() & noexcept HORUS_LIFETIME_BOUND {
+  /// Field no: 4.
+  ResourceUsage& mutable_resource_usage() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[2] = true;
     return resource_usage_;
   }
 
-  /// Returns whether `resource_usage` (no 3) is set.
+  /// Returns whether `resource_usage` (no 4) is set.
   constexpr bool has_resource_usage() const noexcept { return set_fields_[2]; }
 
-  /// Clears `resource_usage` (no 3).
+  /// Clears `resource_usage` (no 4).
   void clear_resource_usage() & noexcept {
     set_fields_[2] = false;
     resource_usage_ = {};
   }
 
-  /// Sets `resource_usage` (no 3) and returns `*this`.
-  ProfilingSet& set_resource_usage(ProfilingSet_ResourceUsage&& resource_usage) & noexcept {
+  /// Sets `resource_usage` (no 4) and returns `*this`.
+  ProfilingSet& set_resource_usage(ResourceUsage&& resource_usage) & noexcept {
     set_fields_[2] = true;
     resource_usage_ = std::move(resource_usage);
     return *this;
   }
-  /// Sets `resource_usage` (no 3) and returns `*this`.
-  ProfilingSet&& set_resource_usage(ProfilingSet_ResourceUsage&& resource_usage) && noexcept {
+  /// Sets `resource_usage` (no 4) and returns `*this`.
+  ProfilingSet&& set_resource_usage(ResourceUsage&& resource_usage) && noexcept {
     return std::move(set_resource_usage(std::move(resource_usage)));
   }
 
@@ -901,7 +759,7 @@ class ProfilingSet final : public PbMessage {
   /// @see processing_times()
   CowRepeated<ProfilingSet_ProfiledDurationMapEntry> processing_times_{};
   /// @see resource_usage()
-  ProfilingSet_ResourceUsage resource_usage_{};
+  ResourceUsage resource_usage_{};
 
   /// The set of fields that have been given an explicit value.
   std::bitset<3> set_fields_;
@@ -910,7 +768,7 @@ class ProfilingSet final : public PbMessage {
 /// / The profiling of a service including the total service latency (total
 /// / processing time + total idle time) and the profiling details.
 ///
-/// Source: horus/pb/profiling.proto:53:1
+/// Source: horus/pb/profiling.proto:48:1
 class ServiceProfiling final : public PbMessage {
  public:
 
@@ -1182,7 +1040,7 @@ class ServiceProfiling final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/profiling.proto:73:1
+/// Source: horus/pb/profiling.proto:68:1
 class PreprocessingServicePointCloudProfiling final : public PbMessage {
  public:
 
@@ -1347,7 +1205,7 @@ class PreprocessingServicePointCloudProfiling final : public PbMessage {
 /// / The frame profiling. It includes important profiling for a frame such as
 /// / the overall latency or its bundling time.
 ///
-/// Source: horus/pb/profiling.proto:84:1
+/// Source: horus/pb/profiling.proto:79:1
 class FrameProfiling final : public PbMessage {
  public:
 
@@ -1519,7 +1377,7 @@ class FrameProfiling final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/profiling.proto:116:3
+/// Source: horus/pb/profiling.proto:111:3
 class BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry final : public PbMessage {
  public:
 
@@ -1683,7 +1541,7 @@ class BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry f
 /// / detection service with the profiling sets of each points in the frame
 /// / (generated by the preprocessing service).
 ///
-/// Source: horus/pb/profiling.proto:103:1
+/// Source: horus/pb/profiling.proto:98:1
 class BundledFrameProfilingSet final : public PbMessage {
  public:
   /// @see BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry
@@ -1954,7 +1812,7 @@ class BundledFrameProfilingSet final : public PbMessage {
 /// / A profiling info sent to the notification service and forward to its
 /// / subscribers.
 ///
-/// Source: horus/pb/profiling.proto:123:1
+/// Source: horus/pb/profiling.proto:118:1
 class ProfilingInfo final : public PbMessage {
  public:
 

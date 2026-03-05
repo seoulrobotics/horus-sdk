@@ -230,9 +230,15 @@ message LogData {
     logs.PersistentStorageError persistent_storage_error = 213;
     logs.TrackCapacityExceededWarning track_capacity_exceeded_warning = 214;
     logs.TrackerStatePathUnavailableWarning tracker_state_path_unavailable_warning = 215;
+    logs.TrackerStateRecoveryError tracker_state_recovery_error = 224;
+    logs.TrackerStateSaveError tracker_state_save_error = 225;
     logs.TrackerIdRecoveryFailedError tracker_id_recovery_failed_error = 216;
     logs.TrackerIdFastForwardFailedError tracker_id_fast_forward_failed_error = 217;
     logs.CircularRecordingSnapshotCreated circular_recording_snapshot_created = 218;
     logs.CircularRecordingFileOperationError circular_recording_file_operation_error = 219;
+    logs.ObjectIdRecoveryRejectedInfo object_id_recovery_rejected_info = 220;
+    logs.ExpiredRecoveryIdsInfo expired_recovery_ids_info = 221;
+    logs.HesaiUdpReceiverInfo hesai_udp_receiver_info = 222;
+    logs.DbCommitFailed db_commit_failed = 223;
   }
 }

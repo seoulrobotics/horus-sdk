@@ -167,11 +167,13 @@ void SensorInfo_PoseCorrection::DeserializeFrom(PbReader& reader) noexcept(false
 
 SensorInfo::SensorInfo(const SensorInfo& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
     , status_{other.status_}
     , measured_frequency_{other.measured_frequency_}
     , pose_correction_{other.pose_correction_}
     , num_total_dropped_packets_{other.num_total_dropped_packets_}
     , num_total_expected_packets_{other.num_total_expected_packets_}
+    , reference_alignment_{other.reference_alignment_}
     , set_fields_{other.set_fields_} {}
 
 void SensorInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -179,19 +181,25 @@ void SensorInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, lidar_id_);
   }
   if (set_fields_[1]) {
-    SerializeField<std::uint32_t>(writer, /*tag=*/ 2, status_);
+    SerializeField<CowBytes>(writer, /*tag=*/ 8, lidar_name_);
   }
   if (set_fields_[2]) {
-    SerializeField<double, PbDeserFlags::kFixed>(writer, /*tag=*/ 3, measured_frequency_);
+    SerializeField<std::uint32_t>(writer, /*tag=*/ 2, status_);
   }
   if (set_fields_[3]) {
-    SerializeField<SensorInfo_PoseCorrection>(writer, /*tag=*/ 4, pose_correction_);
+    SerializeField<double, PbDeserFlags::kFixed>(writer, /*tag=*/ 3, measured_frequency_);
   }
   if (set_fields_[4]) {
-    SerializeField<std::uint64_t>(writer, /*tag=*/ 5, num_total_dropped_packets_);
+    SerializeField<SensorInfo_PoseCorrection>(writer, /*tag=*/ 4, pose_correction_);
   }
   if (set_fields_[5]) {
+    SerializeField<std::uint64_t>(writer, /*tag=*/ 5, num_total_dropped_packets_);
+  }
+  if (set_fields_[6]) {
     SerializeField<std::uint64_t>(writer, /*tag=*/ 6, num_total_expected_packets_);
+  }
+  if (set_fields_[7]) {
+    SerializeField<ReferenceAlignmentType>(writer, /*tag=*/ 7, reference_alignment_);
   }
 }
 
@@ -203,29 +211,39 @@ void SensorInfo::DeserializeFrom(PbReader& reader) noexcept(false) {
         set_fields_[0] = true;
         break;
       }
+      case 8: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[1] = true;
+        break;
+      }
       case 2: {
         DeserializeField<std::uint32_t>(reader, status_);
-        set_fields_[1] = true;
+        set_fields_[2] = true;
         break;
       }
       case 3: {
         DeserializeField<double, PbDeserFlags::kFixed>(reader, measured_frequency_);
-        set_fields_[2] = true;
+        set_fields_[3] = true;
         break;
       }
       case 4: {
         DeserializeField<SensorInfo_PoseCorrection>(reader, pose_correction_);
-        set_fields_[3] = true;
+        set_fields_[4] = true;
         break;
       }
       case 5: {
         DeserializeField<std::uint64_t>(reader, num_total_dropped_packets_);
-        set_fields_[4] = true;
+        set_fields_[5] = true;
         break;
       }
       case 6: {
         DeserializeField<std::uint64_t>(reader, num_total_expected_packets_);
-        set_fields_[5] = true;
+        set_fields_[6] = true;
+        break;
+      }
+      case 7: {
+        DeserializeField<ReferenceAlignmentType>(reader, reference_alignment_);
+        set_fields_[7] = true;
         break;
       }
       default: {
