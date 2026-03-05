@@ -2076,6 +2076,24 @@ func (x *LogData) GetTrackerStatePathUnavailableWarning() *logs_pb.TrackerStateP
 	return nil
 }
 
+func (x *LogData) GetTrackerStateRecoveryError() *logs_pb.TrackerStateRecoveryError {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_TrackerStateRecoveryError); ok {
+			return x.TrackerStateRecoveryError
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetTrackerStateSaveError() *logs_pb.TrackerStateSaveError {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_TrackerStateSaveError); ok {
+			return x.TrackerStateSaveError
+		}
+	}
+	return nil
+}
+
 func (x *LogData) GetTrackerIdRecoveryFailedError() *logs_pb.TrackerIdRecoveryFailedError {
 	if x != nil {
 		if x, ok := x.xxx_hidden_Data.(*logData_TrackerIdRecoveryFailedError); ok {
@@ -2107,6 +2125,42 @@ func (x *LogData) GetCircularRecordingFileOperationError() *logs_pb.CircularReco
 	if x != nil {
 		if x, ok := x.xxx_hidden_Data.(*logData_CircularRecordingFileOperationError); ok {
 			return x.CircularRecordingFileOperationError
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetObjectIdRecoveryRejectedInfo() *logs_pb.ObjectIdRecoveryRejectedInfo {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_ObjectIdRecoveryRejectedInfo); ok {
+			return x.ObjectIdRecoveryRejectedInfo
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetExpiredRecoveryIdsInfo() *logs_pb.ExpiredRecoveryIdsInfo {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_ExpiredRecoveryIdsInfo); ok {
+			return x.ExpiredRecoveryIdsInfo
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetHesaiUdpReceiverInfo() *logs_pb.HesaiUdpReceiverInfo {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_HesaiUdpReceiverInfo); ok {
+			return x.HesaiUdpReceiverInfo
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetDbCommitFailed() *logs_pb.DbCommitFailed {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_DbCommitFailed); ok {
+			return x.DbCommitFailed
 		}
 	}
 	return nil
@@ -3824,6 +3878,22 @@ func (x *LogData) SetTrackerStatePathUnavailableWarning(v *logs_pb.TrackerStateP
 	x.xxx_hidden_Data = &logData_TrackerStatePathUnavailableWarning{v}
 }
 
+func (x *LogData) SetTrackerStateRecoveryError(v *logs_pb.TrackerStateRecoveryError) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_TrackerStateRecoveryError{v}
+}
+
+func (x *LogData) SetTrackerStateSaveError(v *logs_pb.TrackerStateSaveError) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_TrackerStateSaveError{v}
+}
+
 func (x *LogData) SetTrackerIdRecoveryFailedError(v *logs_pb.TrackerIdRecoveryFailedError) {
 	if v == nil {
 		x.xxx_hidden_Data = nil
@@ -3854,6 +3924,38 @@ func (x *LogData) SetCircularRecordingFileOperationError(v *logs_pb.CircularReco
 		return
 	}
 	x.xxx_hidden_Data = &logData_CircularRecordingFileOperationError{v}
+}
+
+func (x *LogData) SetObjectIdRecoveryRejectedInfo(v *logs_pb.ObjectIdRecoveryRejectedInfo) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_ObjectIdRecoveryRejectedInfo{v}
+}
+
+func (x *LogData) SetExpiredRecoveryIdsInfo(v *logs_pb.ExpiredRecoveryIdsInfo) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_ExpiredRecoveryIdsInfo{v}
+}
+
+func (x *LogData) SetHesaiUdpReceiverInfo(v *logs_pb.HesaiUdpReceiverInfo) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_HesaiUdpReceiverInfo{v}
+}
+
+func (x *LogData) SetDbCommitFailed(v *logs_pb.DbCommitFailed) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_DbCommitFailed{v}
 }
 
 func (x *LogData) HasData() bool {
@@ -5575,6 +5677,22 @@ func (x *LogData) HasTrackerStatePathUnavailableWarning() bool {
 	return ok
 }
 
+func (x *LogData) HasTrackerStateRecoveryError() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_TrackerStateRecoveryError)
+	return ok
+}
+
+func (x *LogData) HasTrackerStateSaveError() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_TrackerStateSaveError)
+	return ok
+}
+
 func (x *LogData) HasTrackerIdRecoveryFailedError() bool {
 	if x == nil {
 		return false
@@ -5604,6 +5722,38 @@ func (x *LogData) HasCircularRecordingFileOperationError() bool {
 		return false
 	}
 	_, ok := x.xxx_hidden_Data.(*logData_CircularRecordingFileOperationError)
+	return ok
+}
+
+func (x *LogData) HasObjectIdRecoveryRejectedInfo() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_ObjectIdRecoveryRejectedInfo)
+	return ok
+}
+
+func (x *LogData) HasExpiredRecoveryIdsInfo() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_ExpiredRecoveryIdsInfo)
+	return ok
+}
+
+func (x *LogData) HasHesaiUdpReceiverInfo() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_HesaiUdpReceiverInfo)
+	return ok
+}
+
+func (x *LogData) HasDbCommitFailed() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_DbCommitFailed)
 	return ok
 }
 
@@ -6895,6 +7045,18 @@ func (x *LogData) ClearTrackerStatePathUnavailableWarning() {
 	}
 }
 
+func (x *LogData) ClearTrackerStateRecoveryError() {
+	if _, ok := x.xxx_hidden_Data.(*logData_TrackerStateRecoveryError); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearTrackerStateSaveError() {
+	if _, ok := x.xxx_hidden_Data.(*logData_TrackerStateSaveError); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
 func (x *LogData) ClearTrackerIdRecoveryFailedError() {
 	if _, ok := x.xxx_hidden_Data.(*logData_TrackerIdRecoveryFailedError); ok {
 		x.xxx_hidden_Data = nil
@@ -6915,6 +7077,30 @@ func (x *LogData) ClearCircularRecordingSnapshotCreated() {
 
 func (x *LogData) ClearCircularRecordingFileOperationError() {
 	if _, ok := x.xxx_hidden_Data.(*logData_CircularRecordingFileOperationError); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearObjectIdRecoveryRejectedInfo() {
+	if _, ok := x.xxx_hidden_Data.(*logData_ObjectIdRecoveryRejectedInfo); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearExpiredRecoveryIdsInfo() {
+	if _, ok := x.xxx_hidden_Data.(*logData_ExpiredRecoveryIdsInfo); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearHesaiUdpReceiverInfo() {
+	if _, ok := x.xxx_hidden_Data.(*logData_HesaiUdpReceiverInfo); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearDbCommitFailed() {
+	if _, ok := x.xxx_hidden_Data.(*logData_DbCommitFailed); ok {
 		x.xxx_hidden_Data = nil
 	}
 }
@@ -7134,10 +7320,16 @@ const LogData_FailedToEmplaceRecoveredCarId_case case_LogData_Data = 212
 const LogData_PersistentStorageError_case case_LogData_Data = 213
 const LogData_TrackCapacityExceededWarning_case case_LogData_Data = 214
 const LogData_TrackerStatePathUnavailableWarning_case case_LogData_Data = 215
+const LogData_TrackerStateRecoveryError_case case_LogData_Data = 224
+const LogData_TrackerStateSaveError_case case_LogData_Data = 225
 const LogData_TrackerIdRecoveryFailedError_case case_LogData_Data = 216
 const LogData_TrackerIdFastForwardFailedError_case case_LogData_Data = 217
 const LogData_CircularRecordingSnapshotCreated_case case_LogData_Data = 218
 const LogData_CircularRecordingFileOperationError_case case_LogData_Data = 219
+const LogData_ObjectIdRecoveryRejectedInfo_case case_LogData_Data = 220
+const LogData_ExpiredRecoveryIdsInfo_case case_LogData_Data = 221
+const LogData_HesaiUdpReceiverInfo_case case_LogData_Data = 222
+const LogData_DbCommitFailed_case case_LogData_Data = 223
 
 func (x *LogData) WhichData() case_LogData_Data {
 	if x == nil {
@@ -7572,6 +7764,10 @@ func (x *LogData) WhichData() case_LogData_Data {
 		return LogData_TrackCapacityExceededWarning_case
 	case *logData_TrackerStatePathUnavailableWarning:
 		return LogData_TrackerStatePathUnavailableWarning_case
+	case *logData_TrackerStateRecoveryError:
+		return LogData_TrackerStateRecoveryError_case
+	case *logData_TrackerStateSaveError:
+		return LogData_TrackerStateSaveError_case
 	case *logData_TrackerIdRecoveryFailedError:
 		return LogData_TrackerIdRecoveryFailedError_case
 	case *logData_TrackerIdFastForwardFailedError:
@@ -7580,6 +7776,14 @@ func (x *LogData) WhichData() case_LogData_Data {
 		return LogData_CircularRecordingSnapshotCreated_case
 	case *logData_CircularRecordingFileOperationError:
 		return LogData_CircularRecordingFileOperationError_case
+	case *logData_ObjectIdRecoveryRejectedInfo:
+		return LogData_ObjectIdRecoveryRejectedInfo_case
+	case *logData_ExpiredRecoveryIdsInfo:
+		return LogData_ExpiredRecoveryIdsInfo_case
+	case *logData_HesaiUdpReceiverInfo:
+		return LogData_HesaiUdpReceiverInfo_case
+	case *logData_DbCommitFailed:
+		return LogData_DbCommitFailed_case
 	default:
 		return LogData_Data_not_set_case
 	}
@@ -7803,10 +8007,16 @@ type LogData_builder struct {
 	PersistentStorageError                              *logs_pb.PersistentStorageError
 	TrackCapacityExceededWarning                        *logs_pb.TrackCapacityExceededWarning
 	TrackerStatePathUnavailableWarning                  *logs_pb.TrackerStatePathUnavailableWarning
+	TrackerStateRecoveryError                           *logs_pb.TrackerStateRecoveryError
+	TrackerStateSaveError                               *logs_pb.TrackerStateSaveError
 	TrackerIdRecoveryFailedError                        *logs_pb.TrackerIdRecoveryFailedError
 	TrackerIdFastForwardFailedError                     *logs_pb.TrackerIdFastForwardFailedError
 	CircularRecordingSnapshotCreated                    *logs_pb.CircularRecordingSnapshotCreated
 	CircularRecordingFileOperationError                 *logs_pb.CircularRecordingFileOperationError
+	ObjectIdRecoveryRejectedInfo                        *logs_pb.ObjectIdRecoveryRejectedInfo
+	ExpiredRecoveryIdsInfo                              *logs_pb.ExpiredRecoveryIdsInfo
+	HesaiUdpReceiverInfo                                *logs_pb.HesaiUdpReceiverInfo
+	DbCommitFailed                                      *logs_pb.DbCommitFailed
 	// -- end of xxx_hidden_Data
 }
 
@@ -8456,6 +8666,12 @@ func (b0 LogData_builder) Build() *LogData {
 	if b.TrackerStatePathUnavailableWarning != nil {
 		x.xxx_hidden_Data = &logData_TrackerStatePathUnavailableWarning{b.TrackerStatePathUnavailableWarning}
 	}
+	if b.TrackerStateRecoveryError != nil {
+		x.xxx_hidden_Data = &logData_TrackerStateRecoveryError{b.TrackerStateRecoveryError}
+	}
+	if b.TrackerStateSaveError != nil {
+		x.xxx_hidden_Data = &logData_TrackerStateSaveError{b.TrackerStateSaveError}
+	}
 	if b.TrackerIdRecoveryFailedError != nil {
 		x.xxx_hidden_Data = &logData_TrackerIdRecoveryFailedError{b.TrackerIdRecoveryFailedError}
 	}
@@ -8467,6 +8683,18 @@ func (b0 LogData_builder) Build() *LogData {
 	}
 	if b.CircularRecordingFileOperationError != nil {
 		x.xxx_hidden_Data = &logData_CircularRecordingFileOperationError{b.CircularRecordingFileOperationError}
+	}
+	if b.ObjectIdRecoveryRejectedInfo != nil {
+		x.xxx_hidden_Data = &logData_ObjectIdRecoveryRejectedInfo{b.ObjectIdRecoveryRejectedInfo}
+	}
+	if b.ExpiredRecoveryIdsInfo != nil {
+		x.xxx_hidden_Data = &logData_ExpiredRecoveryIdsInfo{b.ExpiredRecoveryIdsInfo}
+	}
+	if b.HesaiUdpReceiverInfo != nil {
+		x.xxx_hidden_Data = &logData_HesaiUdpReceiverInfo{b.HesaiUdpReceiverInfo}
+	}
+	if b.DbCommitFailed != nil {
+		x.xxx_hidden_Data = &logData_DbCommitFailed{b.DbCommitFailed}
 	}
 	return m0
 }
@@ -9341,6 +9569,14 @@ type logData_TrackerStatePathUnavailableWarning struct {
 	TrackerStatePathUnavailableWarning *logs_pb.TrackerStatePathUnavailableWarning `protobuf:"bytes,215,opt,name=tracker_state_path_unavailable_warning,json=trackerStatePathUnavailableWarning,proto3,oneof"`
 }
 
+type logData_TrackerStateRecoveryError struct {
+	TrackerStateRecoveryError *logs_pb.TrackerStateRecoveryError `protobuf:"bytes,224,opt,name=tracker_state_recovery_error,json=trackerStateRecoveryError,proto3,oneof"`
+}
+
+type logData_TrackerStateSaveError struct {
+	TrackerStateSaveError *logs_pb.TrackerStateSaveError `protobuf:"bytes,225,opt,name=tracker_state_save_error,json=trackerStateSaveError,proto3,oneof"`
+}
+
 type logData_TrackerIdRecoveryFailedError struct {
 	TrackerIdRecoveryFailedError *logs_pb.TrackerIdRecoveryFailedError `protobuf:"bytes,216,opt,name=tracker_id_recovery_failed_error,json=trackerIdRecoveryFailedError,proto3,oneof"`
 }
@@ -9355,6 +9591,22 @@ type logData_CircularRecordingSnapshotCreated struct {
 
 type logData_CircularRecordingFileOperationError struct {
 	CircularRecordingFileOperationError *logs_pb.CircularRecordingFileOperationError `protobuf:"bytes,219,opt,name=circular_recording_file_operation_error,json=circularRecordingFileOperationError,proto3,oneof"`
+}
+
+type logData_ObjectIdRecoveryRejectedInfo struct {
+	ObjectIdRecoveryRejectedInfo *logs_pb.ObjectIdRecoveryRejectedInfo `protobuf:"bytes,220,opt,name=object_id_recovery_rejected_info,json=objectIdRecoveryRejectedInfo,proto3,oneof"`
+}
+
+type logData_ExpiredRecoveryIdsInfo struct {
+	ExpiredRecoveryIdsInfo *logs_pb.ExpiredRecoveryIdsInfo `protobuf:"bytes,221,opt,name=expired_recovery_ids_info,json=expiredRecoveryIdsInfo,proto3,oneof"`
+}
+
+type logData_HesaiUdpReceiverInfo struct {
+	HesaiUdpReceiverInfo *logs_pb.HesaiUdpReceiverInfo `protobuf:"bytes,222,opt,name=hesai_udp_receiver_info,json=hesaiUdpReceiverInfo,proto3,oneof"`
+}
+
+type logData_DbCommitFailed struct {
+	DbCommitFailed *logs_pb.DbCommitFailed `protobuf:"bytes,223,opt,name=db_commit_failed,json=dbCommitFailed,proto3,oneof"`
 }
 
 func (*logData_Generic) isLogData_Data() {}
@@ -9785,6 +10037,10 @@ func (*logData_TrackCapacityExceededWarning) isLogData_Data() {}
 
 func (*logData_TrackerStatePathUnavailableWarning) isLogData_Data() {}
 
+func (*logData_TrackerStateRecoveryError) isLogData_Data() {}
+
+func (*logData_TrackerStateSaveError) isLogData_Data() {}
+
 func (*logData_TrackerIdRecoveryFailedError) isLogData_Data() {}
 
 func (*logData_TrackerIdFastForwardFailedError) isLogData_Data() {}
@@ -9792,6 +10048,14 @@ func (*logData_TrackerIdFastForwardFailedError) isLogData_Data() {}
 func (*logData_CircularRecordingSnapshotCreated) isLogData_Data() {}
 
 func (*logData_CircularRecordingFileOperationError) isLogData_Data() {}
+
+func (*logData_ObjectIdRecoveryRejectedInfo) isLogData_Data() {}
+
+func (*logData_ExpiredRecoveryIdsInfo) isLogData_Data() {}
+
+func (*logData_HesaiUdpReceiverInfo) isLogData_Data() {}
+
+func (*logData_DbCommitFailed) isLogData_Data() {}
 
 var File_horus_pb_logs_message_proto protoreflect.FileDescriptor
 
@@ -9808,7 +10072,7 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
 	0x12, 0x25, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11,
 	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x6f, 0x67, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xb2, 0xb7, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
+	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x8a, 0xbc, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
 	0x44, 0x61, 0x74, 0x61, 0x12, 0x32, 0x0a, 0x07, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62,
 	0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x48, 0x00, 0x52,
@@ -11242,7 +11506,20 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x55, 0x6e, 0x61, 0x76, 0x61, 0x69, 0x6c, 0x61, 0x62, 0x6c, 0x65, 0x57, 0x61, 0x72, 0x6e, 0x69,
 	0x6e, 0x67, 0x48, 0x00, 0x52, 0x22, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x53, 0x74, 0x61,
 	0x74, 0x65, 0x50, 0x61, 0x74, 0x68, 0x55, 0x6e, 0x61, 0x76, 0x61, 0x69, 0x6c, 0x61, 0x62, 0x6c,
-	0x65, 0x57, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x12, 0x76, 0x0a, 0x20, 0x74, 0x72, 0x61, 0x63,
+	0x65, 0x57, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x12, 0x6c, 0x0a, 0x1c, 0x74, 0x72, 0x61, 0x63,
+	0x6b, 0x65, 0x72, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x65, 0x5f, 0x72, 0x65, 0x63, 0x6f, 0x76, 0x65,
+	0x72, 0x79, 0x5f, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0xe0, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x28, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e,
+	0x54, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x6f,
+	0x76, 0x65, 0x72, 0x79, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x48, 0x00, 0x52, 0x19, 0x74, 0x72, 0x61,
+	0x63, 0x6b, 0x65, 0x72, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x6f, 0x76, 0x65, 0x72,
+	0x79, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x12, 0x60, 0x0a, 0x18, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65,
+	0x72, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x65, 0x5f, 0x73, 0x61, 0x76, 0x65, 0x5f, 0x65, 0x72, 0x72,
+	0x6f, 0x72, 0x18, 0xe1, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x68, 0x6f, 0x72, 0x75,
+	0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x54, 0x72, 0x61, 0x63, 0x6b, 0x65,
+	0x72, 0x53, 0x74, 0x61, 0x74, 0x65, 0x53, 0x61, 0x76, 0x65, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x48,
+	0x00, 0x52, 0x15, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x53, 0x74, 0x61, 0x74, 0x65, 0x53,
+	0x61, 0x76, 0x65, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x12, 0x76, 0x0a, 0x20, 0x74, 0x72, 0x61, 0x63,
 	0x6b, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x5f, 0x72, 0x65, 0x63, 0x6f, 0x76, 0x65, 0x72, 0x79, 0x5f,
 	0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x5f, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0xd8, 0x01, 0x20,
 	0x01, 0x28, 0x0b, 0x32, 0x2b, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c,
@@ -11275,8 +11552,32 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x48, 0x00,
 	0x52, 0x23, 0x63, 0x69, 0x72, 0x63, 0x75, 0x6c, 0x61, 0x72, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64,
 	0x69, 0x6e, 0x67, 0x46, 0x69, 0x6c, 0x65, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
-	0x45, 0x72, 0x72, 0x6f, 0x72, 0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x45, 0x72, 0x72, 0x6f, 0x72, 0x12, 0x76, 0x0a, 0x20, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x5f,
+	0x69, 0x64, 0x5f, 0x72, 0x65, 0x63, 0x6f, 0x76, 0x65, 0x72, 0x79, 0x5f, 0x72, 0x65, 0x6a, 0x65,
+	0x63, 0x74, 0x65, 0x64, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0xdc, 0x01, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x2b, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73,
+	0x2e, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x52, 0x65, 0x63, 0x6f, 0x76, 0x65, 0x72,
+	0x79, 0x52, 0x65, 0x6a, 0x65, 0x63, 0x74, 0x65, 0x64, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x00, 0x52,
+	0x1c, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x52, 0x65, 0x63, 0x6f, 0x76, 0x65, 0x72,
+	0x79, 0x52, 0x65, 0x6a, 0x65, 0x63, 0x74, 0x65, 0x64, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x63, 0x0a,
+	0x19, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x64, 0x5f, 0x72, 0x65, 0x63, 0x6f, 0x76, 0x65, 0x72,
+	0x79, 0x5f, 0x69, 0x64, 0x73, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0xdd, 0x01, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x25, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67,
+	0x73, 0x2e, 0x45, 0x78, 0x70, 0x69, 0x72, 0x65, 0x64, 0x52, 0x65, 0x63, 0x6f, 0x76, 0x65, 0x72,
+	0x79, 0x49, 0x64, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x00, 0x52, 0x16, 0x65, 0x78, 0x70, 0x69,
+	0x72, 0x65, 0x64, 0x52, 0x65, 0x63, 0x6f, 0x76, 0x65, 0x72, 0x79, 0x49, 0x64, 0x73, 0x49, 0x6e,
+	0x66, 0x6f, 0x12, 0x5d, 0x0a, 0x17, 0x68, 0x65, 0x73, 0x61, 0x69, 0x5f, 0x75, 0x64, 0x70, 0x5f,
+	0x72, 0x65, 0x63, 0x65, 0x69, 0x76, 0x65, 0x72, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0xde, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e,
+	0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x48, 0x65, 0x73, 0x61, 0x69, 0x55, 0x64, 0x70, 0x52, 0x65, 0x63,
+	0x65, 0x69, 0x76, 0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x48, 0x00, 0x52, 0x14, 0x68, 0x65, 0x73,
+	0x61, 0x69, 0x55, 0x64, 0x70, 0x52, 0x65, 0x63, 0x65, 0x69, 0x76, 0x65, 0x72, 0x49, 0x6e, 0x66,
+	0x6f, 0x12, 0x4a, 0x0a, 0x10, 0x64, 0x62, 0x5f, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x5f, 0x66,
+	0x61, 0x69, 0x6c, 0x65, 0x64, 0x18, 0xdf, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x68,
+	0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x44, 0x62, 0x43,
+	0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x48, 0x00, 0x52, 0x0e, 0x64,
+	0x62, 0x43, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x42, 0x06, 0x0a,
+	0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_horus_pb_logs_message_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
@@ -11498,10 +11799,16 @@ var file_horus_pb_logs_message_proto_goTypes = []any{
 	(*logs_pb.PersistentStorageError)(nil),                              // 214: horus.pb.logs.PersistentStorageError
 	(*logs_pb.TrackCapacityExceededWarning)(nil),                        // 215: horus.pb.logs.TrackCapacityExceededWarning
 	(*logs_pb.TrackerStatePathUnavailableWarning)(nil),                  // 216: horus.pb.logs.TrackerStatePathUnavailableWarning
-	(*logs_pb.TrackerIdRecoveryFailedError)(nil),                        // 217: horus.pb.logs.TrackerIdRecoveryFailedError
-	(*logs_pb.TrackerIdFastForwardFailedError)(nil),                     // 218: horus.pb.logs.TrackerIdFastForwardFailedError
-	(*logs_pb.CircularRecordingSnapshotCreated)(nil),                    // 219: horus.pb.logs.CircularRecordingSnapshotCreated
-	(*logs_pb.CircularRecordingFileOperationError)(nil),                 // 220: horus.pb.logs.CircularRecordingFileOperationError
+	(*logs_pb.TrackerStateRecoveryError)(nil),                           // 217: horus.pb.logs.TrackerStateRecoveryError
+	(*logs_pb.TrackerStateSaveError)(nil),                               // 218: horus.pb.logs.TrackerStateSaveError
+	(*logs_pb.TrackerIdRecoveryFailedError)(nil),                        // 219: horus.pb.logs.TrackerIdRecoveryFailedError
+	(*logs_pb.TrackerIdFastForwardFailedError)(nil),                     // 220: horus.pb.logs.TrackerIdFastForwardFailedError
+	(*logs_pb.CircularRecordingSnapshotCreated)(nil),                    // 221: horus.pb.logs.CircularRecordingSnapshotCreated
+	(*logs_pb.CircularRecordingFileOperationError)(nil),                 // 222: horus.pb.logs.CircularRecordingFileOperationError
+	(*logs_pb.ObjectIdRecoveryRejectedInfo)(nil),                        // 223: horus.pb.logs.ObjectIdRecoveryRejectedInfo
+	(*logs_pb.ExpiredRecoveryIdsInfo)(nil),                              // 224: horus.pb.logs.ExpiredRecoveryIdsInfo
+	(*logs_pb.HesaiUdpReceiverInfo)(nil),                                // 225: horus.pb.logs.HesaiUdpReceiverInfo
+	(*logs_pb.DbCommitFailed)(nil),                                      // 226: horus.pb.logs.DbCommitFailed
 }
 var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	2,   // 0: horus.pb.LogMessage.metadata:type_name -> horus.pb.LogMetadata
@@ -11720,15 +12027,21 @@ var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	214, // 213: horus.pb.LogData.persistent_storage_error:type_name -> horus.pb.logs.PersistentStorageError
 	215, // 214: horus.pb.LogData.track_capacity_exceeded_warning:type_name -> horus.pb.logs.TrackCapacityExceededWarning
 	216, // 215: horus.pb.LogData.tracker_state_path_unavailable_warning:type_name -> horus.pb.logs.TrackerStatePathUnavailableWarning
-	217, // 216: horus.pb.LogData.tracker_id_recovery_failed_error:type_name -> horus.pb.logs.TrackerIdRecoveryFailedError
-	218, // 217: horus.pb.LogData.tracker_id_fast_forward_failed_error:type_name -> horus.pb.logs.TrackerIdFastForwardFailedError
-	219, // 218: horus.pb.LogData.circular_recording_snapshot_created:type_name -> horus.pb.logs.CircularRecordingSnapshotCreated
-	220, // 219: horus.pb.LogData.circular_recording_file_operation_error:type_name -> horus.pb.logs.CircularRecordingFileOperationError
-	220, // [220:220] is the sub-list for method output_type
-	220, // [220:220] is the sub-list for method input_type
-	220, // [220:220] is the sub-list for extension type_name
-	220, // [220:220] is the sub-list for extension extendee
-	0,   // [0:220] is the sub-list for field type_name
+	217, // 216: horus.pb.LogData.tracker_state_recovery_error:type_name -> horus.pb.logs.TrackerStateRecoveryError
+	218, // 217: horus.pb.LogData.tracker_state_save_error:type_name -> horus.pb.logs.TrackerStateSaveError
+	219, // 218: horus.pb.LogData.tracker_id_recovery_failed_error:type_name -> horus.pb.logs.TrackerIdRecoveryFailedError
+	220, // 219: horus.pb.LogData.tracker_id_fast_forward_failed_error:type_name -> horus.pb.logs.TrackerIdFastForwardFailedError
+	221, // 220: horus.pb.LogData.circular_recording_snapshot_created:type_name -> horus.pb.logs.CircularRecordingSnapshotCreated
+	222, // 221: horus.pb.LogData.circular_recording_file_operation_error:type_name -> horus.pb.logs.CircularRecordingFileOperationError
+	223, // 222: horus.pb.LogData.object_id_recovery_rejected_info:type_name -> horus.pb.logs.ObjectIdRecoveryRejectedInfo
+	224, // 223: horus.pb.LogData.expired_recovery_ids_info:type_name -> horus.pb.logs.ExpiredRecoveryIdsInfo
+	225, // 224: horus.pb.LogData.hesai_udp_receiver_info:type_name -> horus.pb.logs.HesaiUdpReceiverInfo
+	226, // 225: horus.pb.LogData.db_commit_failed:type_name -> horus.pb.logs.DbCommitFailed
+	226, // [226:226] is the sub-list for method output_type
+	226, // [226:226] is the sub-list for method input_type
+	226, // [226:226] is the sub-list for extension type_name
+	226, // [226:226] is the sub-list for extension extendee
+	0,   // [0:226] is the sub-list for field type_name
 }
 
 func init() { file_horus_pb_logs_message_proto_init() }
@@ -11951,10 +12264,16 @@ func file_horus_pb_logs_message_proto_init() {
 		(*logData_PersistentStorageError)(nil),
 		(*logData_TrackCapacityExceededWarning)(nil),
 		(*logData_TrackerStatePathUnavailableWarning)(nil),
+		(*logData_TrackerStateRecoveryError)(nil),
+		(*logData_TrackerStateSaveError)(nil),
 		(*logData_TrackerIdRecoveryFailedError)(nil),
 		(*logData_TrackerIdFastForwardFailedError)(nil),
 		(*logData_CircularRecordingSnapshotCreated)(nil),
 		(*logData_CircularRecordingFileOperationError)(nil),
+		(*logData_ObjectIdRecoveryRejectedInfo)(nil),
+		(*logData_ExpiredRecoveryIdsInfo)(nil),
+		(*logData_HesaiUdpReceiverInfo)(nil),
+		(*logData_DbCommitFailed)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

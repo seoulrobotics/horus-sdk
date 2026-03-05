@@ -248,10 +248,16 @@ class FailedToEmplaceRecoveredCarId;
 class PersistentStorageError;
 class TrackCapacityExceededWarning;
 class TrackerStatePathUnavailableWarning;
+class TrackerStateRecoveryError;
+class TrackerStateSaveError;
 class TrackerIdRecoveryFailedError;
 class TrackerIdFastForwardFailedError;
 class CircularRecordingSnapshotCreated;
 class CircularRecordingFileOperationError;
+class ObjectIdRecoveryRejectedInfo;
+class ExpiredRecoveryIdsInfo;
+class HesaiUdpReceiverInfo;
+class DbCommitFailed;
 
 // MARK: Message declarations
 
@@ -26709,7 +26715,7 @@ class ProjectSaveError final : public PbMessage {
 
 /// Log #193.
 /// 
-///  > Saved static environment to $path
+///  > Saved static environment
 ///
 /// Source: horus/pb/logs/logs.proto:1464:1
 class SaveStaticEnvironmentSuccess final : public PbMessage {
@@ -26727,7 +26733,7 @@ class SaveStaticEnvironmentSuccess final : public PbMessage {
   ///
   /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
   /// lack of available memory.
-  explicit SaveStaticEnvironmentSuccess(const SaveStaticEnvironmentSuccess& other) noexcept(false);  // NOLINT(*-explicit-*)
+  explicit SaveStaticEnvironmentSuccess(const SaveStaticEnvironmentSuccess&) noexcept = default;  // NOLINT(*-explicit-*)
 
   /// Cannot copy-assign to avoid implicit allocations.
   SaveStaticEnvironmentSuccess& operator=(const SaveStaticEnvironmentSuccess&) = delete;
@@ -26745,12 +26751,16 @@ class SaveStaticEnvironmentSuccess final : public PbMessage {
   /// Serializes the message to `writer`.
   ///
   /// @throws std::bad_alloc If the resulting buffer failed to allocate.
-  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+  void SerializeTo(PbWriter& writer) const noexcept(false) final {
+    static_cast<void>(writer);
+  }
 
   /// Deserializes the message from `reader`.
   ///
   /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
-  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+  void DeserializeFrom(PbReader& reader) noexcept(false) final {
+    reader.SkipMessage();
+  }
 
   /// Returns whether the message is empty.
   bool IsEmpty() const noexcept final { return set_fields_.none(); }
@@ -26761,69 +26771,17 @@ class SaveStaticEnvironmentSuccess final : public PbMessage {
   /// The full name of the message: `horus.pb.logs.SaveStaticEnvironmentSuccess`.
   StringView MessageTypeName() const noexcept final { return TypeName(); }
 
-  // Field `path` (no 1).
-  // -----
-
-  /// No documentation.
-  ///
-  /// Field no: 1.
-  constexpr const CowBytes& path() const& noexcept HORUS_LIFETIME_BOUND {
-    return path_;
-  }
-
-  /// If `path` is set, moves it out of the message (without marking it as unset).
-  ///
-  /// Otherwise, returns a default-initialized value.
-  ///
-  /// Field no: 1.
-  CowBytes path() && noexcept {
-    if (!set_fields_[0]) {
-      return {};
-    }
-    return std::move(path_);
-  }
-
-  /// No documentation.
-  ///
-  /// Field no: 1.
-  CowBytes& mutable_path() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[0] = true;
-    return path_;
-  }
-
-  /// Returns whether `path` (no 1) is set.
-  constexpr bool has_path() const noexcept { return set_fields_[0]; }
-
-  /// Clears `path` (no 1).
-  void clear_path() & noexcept {
-    set_fields_[0] = false;
-    path_ = {};
-  }
-
-  /// Sets `path` (no 1) and returns `*this`.
-  SaveStaticEnvironmentSuccess& set_path(CowBytes&& path) & noexcept {
-    set_fields_[0] = true;
-    path_ = std::move(path);
-    return *this;
-  }
-  /// Sets `path` (no 1) and returns `*this`.
-  SaveStaticEnvironmentSuccess&& set_path(CowBytes&& path) && noexcept {
-    return std::move(set_path(std::move(path)));
-  }
-
  private:
-  /// @see path()
-  CowBytes path_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<0> set_fields_;
 };
 
 /// Log #194.
 /// 
-///  > Failed to serialize static environment to $path: $details
+///  > Failed to save static environment: $details
 ///
-/// Source: horus/pb/logs/logs.proto:1471:1
+/// Source: horus/pb/logs/logs.proto:1470:1
 class SaveStaticEnvironmentFailed final : public PbMessage {
  public:
 
@@ -26873,62 +26831,12 @@ class SaveStaticEnvironmentFailed final : public PbMessage {
   /// The full name of the message: `horus.pb.logs.SaveStaticEnvironmentFailed`.
   StringView MessageTypeName() const noexcept final { return TypeName(); }
 
-  // Field `path` (no 1).
+  // Field `details` (no 1).
   // -----
 
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const CowBytes& path() const& noexcept HORUS_LIFETIME_BOUND {
-    return path_;
-  }
-
-  /// If `path` is set, moves it out of the message (without marking it as unset).
-  ///
-  /// Otherwise, returns a default-initialized value.
-  ///
-  /// Field no: 1.
-  CowBytes path() && noexcept {
-    if (!set_fields_[0]) {
-      return {};
-    }
-    return std::move(path_);
-  }
-
-  /// No documentation.
-  ///
-  /// Field no: 1.
-  CowBytes& mutable_path() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[0] = true;
-    return path_;
-  }
-
-  /// Returns whether `path` (no 1) is set.
-  constexpr bool has_path() const noexcept { return set_fields_[0]; }
-
-  /// Clears `path` (no 1).
-  void clear_path() & noexcept {
-    set_fields_[0] = false;
-    path_ = {};
-  }
-
-  /// Sets `path` (no 1) and returns `*this`.
-  SaveStaticEnvironmentFailed& set_path(CowBytes&& path) & noexcept {
-    set_fields_[0] = true;
-    path_ = std::move(path);
-    return *this;
-  }
-  /// Sets `path` (no 1) and returns `*this`.
-  SaveStaticEnvironmentFailed&& set_path(CowBytes&& path) && noexcept {
-    return std::move(set_path(std::move(path)));
-  }
-
-  // Field `details` (no 2).
-  // -----
-
-  /// No documentation.
-  ///
-  /// Field no: 2.
   constexpr const CowBytes& details() const& noexcept HORUS_LIFETIME_BOUND {
     return details_;
   }
@@ -26937,9 +26845,9 @@ class SaveStaticEnvironmentFailed final : public PbMessage {
   ///
   /// Otherwise, returns a default-initialized value.
   ///
-  /// Field no: 2.
+  /// Field no: 1.
   CowBytes details() && noexcept {
-    if (!set_fields_[1]) {
+    if (!set_fields_[0]) {
       return {};
     }
     return std::move(details_);
@@ -26947,47 +26855,45 @@ class SaveStaticEnvironmentFailed final : public PbMessage {
 
   /// No documentation.
   ///
-  /// Field no: 2.
+  /// Field no: 1.
   CowBytes& mutable_details() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[1] = true;
+    set_fields_[0] = true;
     return details_;
   }
 
-  /// Returns whether `details` (no 2) is set.
-  constexpr bool has_details() const noexcept { return set_fields_[1]; }
+  /// Returns whether `details` (no 1) is set.
+  constexpr bool has_details() const noexcept { return set_fields_[0]; }
 
-  /// Clears `details` (no 2).
+  /// Clears `details` (no 1).
   void clear_details() & noexcept {
-    set_fields_[1] = false;
+    set_fields_[0] = false;
     details_ = {};
   }
 
-  /// Sets `details` (no 2) and returns `*this`.
+  /// Sets `details` (no 1) and returns `*this`.
   SaveStaticEnvironmentFailed& set_details(CowBytes&& details) & noexcept {
-    set_fields_[1] = true;
+    set_fields_[0] = true;
     details_ = std::move(details);
     return *this;
   }
-  /// Sets `details` (no 2) and returns `*this`.
+  /// Sets `details` (no 1) and returns `*this`.
   SaveStaticEnvironmentFailed&& set_details(CowBytes&& details) && noexcept {
     return std::move(set_details(std::move(details)));
   }
 
  private:
-  /// @see path()
-  CowBytes path_{};
   /// @see details()
   CowBytes details_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<1> set_fields_;
 };
 
 /// Log #195.
 /// 
-///  > Static environment loaded from $path
+///  > Loaded static environment
 ///
-/// Source: horus/pb/logs/logs.proto:1479:1
+/// Source: horus/pb/logs/logs.proto:1477:1
 class LoadStaticEnvironmentSuccess final : public PbMessage {
  public:
 
@@ -27003,7 +26909,7 @@ class LoadStaticEnvironmentSuccess final : public PbMessage {
   ///
   /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
   /// lack of available memory.
-  explicit LoadStaticEnvironmentSuccess(const LoadStaticEnvironmentSuccess& other) noexcept(false);  // NOLINT(*-explicit-*)
+  explicit LoadStaticEnvironmentSuccess(const LoadStaticEnvironmentSuccess&) noexcept = default;  // NOLINT(*-explicit-*)
 
   /// Cannot copy-assign to avoid implicit allocations.
   LoadStaticEnvironmentSuccess& operator=(const LoadStaticEnvironmentSuccess&) = delete;
@@ -27021,12 +26927,16 @@ class LoadStaticEnvironmentSuccess final : public PbMessage {
   /// Serializes the message to `writer`.
   ///
   /// @throws std::bad_alloc If the resulting buffer failed to allocate.
-  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+  void SerializeTo(PbWriter& writer) const noexcept(false) final {
+    static_cast<void>(writer);
+  }
 
   /// Deserializes the message from `reader`.
   ///
   /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
-  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+  void DeserializeFrom(PbReader& reader) noexcept(false) final {
+    reader.SkipMessage();
+  }
 
   /// Returns whether the message is empty.
   bool IsEmpty() const noexcept final { return set_fields_.none(); }
@@ -27037,69 +26947,17 @@ class LoadStaticEnvironmentSuccess final : public PbMessage {
   /// The full name of the message: `horus.pb.logs.LoadStaticEnvironmentSuccess`.
   StringView MessageTypeName() const noexcept final { return TypeName(); }
 
-  // Field `path` (no 1).
-  // -----
-
-  /// No documentation.
-  ///
-  /// Field no: 1.
-  constexpr const CowBytes& path() const& noexcept HORUS_LIFETIME_BOUND {
-    return path_;
-  }
-
-  /// If `path` is set, moves it out of the message (without marking it as unset).
-  ///
-  /// Otherwise, returns a default-initialized value.
-  ///
-  /// Field no: 1.
-  CowBytes path() && noexcept {
-    if (!set_fields_[0]) {
-      return {};
-    }
-    return std::move(path_);
-  }
-
-  /// No documentation.
-  ///
-  /// Field no: 1.
-  CowBytes& mutable_path() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[0] = true;
-    return path_;
-  }
-
-  /// Returns whether `path` (no 1) is set.
-  constexpr bool has_path() const noexcept { return set_fields_[0]; }
-
-  /// Clears `path` (no 1).
-  void clear_path() & noexcept {
-    set_fields_[0] = false;
-    path_ = {};
-  }
-
-  /// Sets `path` (no 1) and returns `*this`.
-  LoadStaticEnvironmentSuccess& set_path(CowBytes&& path) & noexcept {
-    set_fields_[0] = true;
-    path_ = std::move(path);
-    return *this;
-  }
-  /// Sets `path` (no 1) and returns `*this`.
-  LoadStaticEnvironmentSuccess&& set_path(CowBytes&& path) && noexcept {
-    return std::move(set_path(std::move(path)));
-  }
-
  private:
-  /// @see path()
-  CowBytes path_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<1> set_fields_;
+  std::bitset<0> set_fields_;
 };
 
 /// Log #196.
 /// 
-///  > Failed to load static environment from $path: $details
+///  > Failed to load static environment: $details
 ///
-/// Source: horus/pb/logs/logs.proto:1486:1
+/// Source: horus/pb/logs/logs.proto:1483:1
 class LoadStaticEnvironmentFailed final : public PbMessage {
  public:
 
@@ -27149,62 +27007,12 @@ class LoadStaticEnvironmentFailed final : public PbMessage {
   /// The full name of the message: `horus.pb.logs.LoadStaticEnvironmentFailed`.
   StringView MessageTypeName() const noexcept final { return TypeName(); }
 
-  // Field `path` (no 1).
+  // Field `details` (no 1).
   // -----
 
   /// No documentation.
   ///
   /// Field no: 1.
-  constexpr const CowBytes& path() const& noexcept HORUS_LIFETIME_BOUND {
-    return path_;
-  }
-
-  /// If `path` is set, moves it out of the message (without marking it as unset).
-  ///
-  /// Otherwise, returns a default-initialized value.
-  ///
-  /// Field no: 1.
-  CowBytes path() && noexcept {
-    if (!set_fields_[0]) {
-      return {};
-    }
-    return std::move(path_);
-  }
-
-  /// No documentation.
-  ///
-  /// Field no: 1.
-  CowBytes& mutable_path() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[0] = true;
-    return path_;
-  }
-
-  /// Returns whether `path` (no 1) is set.
-  constexpr bool has_path() const noexcept { return set_fields_[0]; }
-
-  /// Clears `path` (no 1).
-  void clear_path() & noexcept {
-    set_fields_[0] = false;
-    path_ = {};
-  }
-
-  /// Sets `path` (no 1) and returns `*this`.
-  LoadStaticEnvironmentFailed& set_path(CowBytes&& path) & noexcept {
-    set_fields_[0] = true;
-    path_ = std::move(path);
-    return *this;
-  }
-  /// Sets `path` (no 1) and returns `*this`.
-  LoadStaticEnvironmentFailed&& set_path(CowBytes&& path) && noexcept {
-    return std::move(set_path(std::move(path)));
-  }
-
-  // Field `details` (no 2).
-  // -----
-
-  /// No documentation.
-  ///
-  /// Field no: 2.
   constexpr const CowBytes& details() const& noexcept HORUS_LIFETIME_BOUND {
     return details_;
   }
@@ -27213,9 +27021,9 @@ class LoadStaticEnvironmentFailed final : public PbMessage {
   ///
   /// Otherwise, returns a default-initialized value.
   ///
-  /// Field no: 2.
+  /// Field no: 1.
   CowBytes details() && noexcept {
-    if (!set_fields_[1]) {
+    if (!set_fields_[0]) {
       return {};
     }
     return std::move(details_);
@@ -27223,47 +27031,45 @@ class LoadStaticEnvironmentFailed final : public PbMessage {
 
   /// No documentation.
   ///
-  /// Field no: 2.
+  /// Field no: 1.
   CowBytes& mutable_details() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[1] = true;
+    set_fields_[0] = true;
     return details_;
   }
 
-  /// Returns whether `details` (no 2) is set.
-  constexpr bool has_details() const noexcept { return set_fields_[1]; }
+  /// Returns whether `details` (no 1) is set.
+  constexpr bool has_details() const noexcept { return set_fields_[0]; }
 
-  /// Clears `details` (no 2).
+  /// Clears `details` (no 1).
   void clear_details() & noexcept {
-    set_fields_[1] = false;
+    set_fields_[0] = false;
     details_ = {};
   }
 
-  /// Sets `details` (no 2) and returns `*this`.
+  /// Sets `details` (no 1) and returns `*this`.
   LoadStaticEnvironmentFailed& set_details(CowBytes&& details) & noexcept {
-    set_fields_[1] = true;
+    set_fields_[0] = true;
     details_ = std::move(details);
     return *this;
   }
-  /// Sets `details` (no 2) and returns `*this`.
+  /// Sets `details` (no 1) and returns `*this`.
   LoadStaticEnvironmentFailed&& set_details(CowBytes&& details) && noexcept {
     return std::move(set_details(std::move(details)));
   }
 
  private:
-  /// @see path()
-  CowBytes path_{};
   /// @see details()
   CowBytes details_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<1> set_fields_;
 };
 
 /// Log #197.
 /// 
 ///  > Attempt to inject invalid lidar ID $lidar_id into the system.
 ///
-/// Source: horus/pb/logs/logs.proto:1494:1
+/// Source: horus/pb/logs/logs.proto:1490:1
 class AttemptToInjectInvalidLidarIdWarning final : public PbMessage {
  public:
 
@@ -27375,7 +27181,7 @@ class AttemptToInjectInvalidLidarIdWarning final : public PbMessage {
 /// 
 ///  > Resetting bundled packet due to unexpected packet from lidar $lidar_name [$lidar_id].
 ///
-/// Source: horus/pb/logs/logs.proto:1501:1
+/// Source: horus/pb/logs/logs.proto:1497:1
 class ResetBundledPacketDueToUnexpectedPacket final : public PbMessage {
  public:
 
@@ -27539,7 +27345,7 @@ class ResetBundledPacketDueToUnexpectedPacket final : public PbMessage {
 /// 
 ///  > Lidar $lidar_name [$lidar_id] dropped $num_dropped packets over $duration
 ///
-/// Source: horus/pb/logs/logs.proto:1509:1
+/// Source: horus/pb/logs/logs.proto:1505:1
 class PacketBundlerDroppedPacketsWarning final : public PbMessage {
  public:
 
@@ -27795,7 +27601,7 @@ class PacketBundlerDroppedPacketsWarning final : public PbMessage {
 /// 
 ///  > Frame sequence jump detected on lidar $lidar_name [$lidar_id]: from $frame_id to $next_frame_id
 ///
-/// Source: horus/pb/logs/logs.proto:1519:1
+/// Source: horus/pb/logs/logs.proto:1515:1
 class PacketBundlerFrameJumpWarning final : public PbMessage {
  public:
 
@@ -28039,7 +27845,7 @@ class PacketBundlerFrameJumpWarning final : public PbMessage {
 /// 
 ///  > [$lidar_name][$lidar_id] Successfully loaded $correction_type corrections from the lidar
 ///
-/// Source: horus/pb/logs/logs.proto:1529:1
+/// Source: horus/pb/logs/logs.proto:1525:1
 class LidarCorrectionLoadingSuccess final : public PbMessage {
  public:
 
@@ -28255,7 +28061,7 @@ class LidarCorrectionLoadingSuccess final : public PbMessage {
 /// 
 ///  > [$lidar_name][$lidar_id] Failed to load $correction_type corrections from the lidar ($details); using default correction values
 ///
-/// Source: horus/pb/logs/logs.proto:1538:1
+/// Source: horus/pb/logs/logs.proto:1534:1
 class LidarCorrectionLoadingFailure final : public PbMessage {
  public:
 
@@ -28523,7 +28329,7 @@ class LidarCorrectionLoadingFailure final : public PbMessage {
 /// 
 ///  > [$lidar_id] Hesai Packet Statistics - Received: $packets_received, Published: $packets_published, Dropped: $packets_dropped, Decode Failed: $packets_decode_failed, Success Rate: $success_rate %
 ///
-/// Source: horus/pb/logs/logs.proto:1548:1
+/// Source: horus/pb/logs/logs.proto:1544:1
 class HesaiPacketStatisticsLidar final : public PbMessage {
  public:
 
@@ -28835,7 +28641,7 @@ class HesaiPacketStatisticsLidar final : public PbMessage {
 /// 
 ///  > Lidar $lidar_name [$lidar_id] is aligned to calibration map. Using the calibration map for tilt detection and auto-recalibration for this lidar.
 ///
-/// Source: horus/pb/logs/logs.proto:1560:1
+/// Source: horus/pb/logs/logs.proto:1556:1
 class LidarTiltDetectionAlignedToCalibrationMapInfo final : public PbMessage {
  public:
 
@@ -28999,7 +28805,7 @@ class LidarTiltDetectionAlignedToCalibrationMapInfo final : public PbMessage {
 /// 
 ///  > Lidar $lidar_name [$lidar_id] deviates from calibration map by $angle degrees and $distance meters. Using accumulated points as reference to avoid overwriting manual calibration.
 ///
-/// Source: horus/pb/logs/logs.proto:1568:1
+/// Source: horus/pb/logs/logs.proto:1564:1
 class LidarTiltDetectionMisalignedToCalibrationMapWarning final : public PbMessage {
  public:
 
@@ -29243,7 +29049,7 @@ class LidarTiltDetectionMisalignedToCalibrationMapWarning final : public PbMessa
 /// 
 ///  > The requested auto-correction cannot be applied because the original pose differs from the current configuration.
 ///
-/// Source: horus/pb/logs/logs.proto:1578:1
+/// Source: horus/pb/logs/logs.proto:1574:1
 class LidarOriginalPoseDiffersForAutoCorrectionError final : public PbMessage {
  public:
 
@@ -29307,7 +29113,7 @@ class LidarOriginalPoseDiffersForAutoCorrectionError final : public PbMessage {
 /// 
 ///  > Successfully recovered car IDs: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:1584:1
+/// Source: horus/pb/logs/logs.proto:1580:1
 class RecoveredCarIdsInfo final : public PbMessage {
  public:
 
@@ -29419,7 +29225,7 @@ class RecoveredCarIdsInfo final : public PbMessage {
 /// 
 ///  > Failed to recover object IDs: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:1591:1
+/// Source: horus/pb/logs/logs.proto:1587:1
 class FailedToRecoverCarIds final : public PbMessage {
  public:
 
@@ -29531,7 +29337,7 @@ class FailedToRecoverCarIds final : public PbMessage {
 /// 
 ///  > Failed to emplace recovered object ID $object_id for car. Using a newly generated ID instead.
 ///
-/// Source: horus/pb/logs/logs.proto:1598:1
+/// Source: horus/pb/logs/logs.proto:1594:1
 class FailedToEmplaceRecoveredCarId final : public PbMessage {
  public:
 
@@ -29631,7 +29437,7 @@ class FailedToEmplaceRecoveredCarId final : public PbMessage {
 /// 
 ///  > Persistent storage operation failed: $operation on $filepath
 ///
-/// Source: horus/pb/logs/logs.proto:1605:1
+/// Source: horus/pb/logs/logs.proto:1601:1
 class PersistentStorageError final : public PbMessage {
  public:
 
@@ -29795,7 +29601,7 @@ class PersistentStorageError final : public PbMessage {
 /// 
 ///  > Track storage capacity exceeded: attempted to store $attempted_count tracks, limit is $max_tracks
 ///
-/// Source: horus/pb/logs/logs.proto:1613:1
+/// Source: horus/pb/logs/logs.proto:1609:1
 class TrackCapacityExceededWarning final : public PbMessage {
  public:
 
@@ -29935,7 +29741,7 @@ class TrackCapacityExceededWarning final : public PbMessage {
 /// 
 ///  > Tracker state file path unavailable for project: $project_name
 ///
-/// Source: horus/pb/logs/logs.proto:1621:1
+/// Source: horus/pb/logs/logs.proto:1617:1
 class TrackerStatePathUnavailableWarning final : public PbMessage {
  public:
 
@@ -30043,11 +29849,235 @@ class TrackerStatePathUnavailableWarning final : public PbMessage {
   std::bitset<1> set_fields_;
 };
 
+/// Log #224.
+/// 
+///  > Failed to recover saved tracker state: $error_message
+///
+/// Source: horus/pb/logs/logs.proto:1624:1
+class TrackerStateRecoveryError final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `TrackerStateRecoveryError`.
+  TrackerStateRecoveryError() noexcept = default;
+
+  /// Move constructor.
+  TrackerStateRecoveryError(TrackerStateRecoveryError&&) noexcept = default;
+  /// Move assignment operator.
+  TrackerStateRecoveryError& operator=(TrackerStateRecoveryError&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit TrackerStateRecoveryError(const TrackerStateRecoveryError& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  TrackerStateRecoveryError& operator=(const TrackerStateRecoveryError&) = delete;
+
+  /// Default destructor.
+  ~TrackerStateRecoveryError() noexcept final = default;
+
+  /// Creates a `TrackerStateRecoveryError` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit TrackerStateRecoveryError(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.TrackerStateRecoveryError`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.TrackerStateRecoveryError"; }
+
+  /// The full name of the message: `horus.pb.logs.TrackerStateRecoveryError`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `error_message` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& error_message() const& noexcept HORUS_LIFETIME_BOUND {
+    return error_message_;
+  }
+
+  /// If `error_message` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes error_message() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(error_message_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_error_message() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return error_message_;
+  }
+
+  /// Returns whether `error_message` (no 1) is set.
+  constexpr bool has_error_message() const noexcept { return set_fields_[0]; }
+
+  /// Clears `error_message` (no 1).
+  void clear_error_message() & noexcept {
+    set_fields_[0] = false;
+    error_message_ = {};
+  }
+
+  /// Sets `error_message` (no 1) and returns `*this`.
+  TrackerStateRecoveryError& set_error_message(CowBytes&& error_message) & noexcept {
+    set_fields_[0] = true;
+    error_message_ = std::move(error_message);
+    return *this;
+  }
+  /// Sets `error_message` (no 1) and returns `*this`.
+  TrackerStateRecoveryError&& set_error_message(CowBytes&& error_message) && noexcept {
+    return std::move(set_error_message(std::move(error_message)));
+  }
+
+ private:
+  /// @see error_message()
+  CowBytes error_message_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
+};
+
+/// Log #225.
+/// 
+///  > Failed to save tracker state: $error_message
+///
+/// Source: horus/pb/logs/logs.proto:1631:1
+class TrackerStateSaveError final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `TrackerStateSaveError`.
+  TrackerStateSaveError() noexcept = default;
+
+  /// Move constructor.
+  TrackerStateSaveError(TrackerStateSaveError&&) noexcept = default;
+  /// Move assignment operator.
+  TrackerStateSaveError& operator=(TrackerStateSaveError&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit TrackerStateSaveError(const TrackerStateSaveError& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  TrackerStateSaveError& operator=(const TrackerStateSaveError&) = delete;
+
+  /// Default destructor.
+  ~TrackerStateSaveError() noexcept final = default;
+
+  /// Creates a `TrackerStateSaveError` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit TrackerStateSaveError(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.TrackerStateSaveError`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.TrackerStateSaveError"; }
+
+  /// The full name of the message: `horus.pb.logs.TrackerStateSaveError`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `error_message` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& error_message() const& noexcept HORUS_LIFETIME_BOUND {
+    return error_message_;
+  }
+
+  /// If `error_message` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes error_message() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(error_message_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_error_message() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return error_message_;
+  }
+
+  /// Returns whether `error_message` (no 1) is set.
+  constexpr bool has_error_message() const noexcept { return set_fields_[0]; }
+
+  /// Clears `error_message` (no 1).
+  void clear_error_message() & noexcept {
+    set_fields_[0] = false;
+    error_message_ = {};
+  }
+
+  /// Sets `error_message` (no 1) and returns `*this`.
+  TrackerStateSaveError& set_error_message(CowBytes&& error_message) & noexcept {
+    set_fields_[0] = true;
+    error_message_ = std::move(error_message);
+    return *this;
+  }
+  /// Sets `error_message` (no 1) and returns `*this`.
+  TrackerStateSaveError&& set_error_message(CowBytes&& error_message) && noexcept {
+    return std::move(set_error_message(std::move(error_message)));
+  }
+
+ private:
+  /// @see error_message()
+  CowBytes error_message_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
+};
+
 /// Log #216.
 /// 
 ///  > Failed to recover tracker ID $id: $error_message
 ///
-/// Source: horus/pb/logs/logs.proto:1628:1
+/// Source: horus/pb/logs/logs.proto:1638:1
 class TrackerIdRecoveryFailedError final : public PbMessage {
  public:
 
@@ -30199,7 +30229,7 @@ class TrackerIdRecoveryFailedError final : public PbMessage {
 /// 
 ///  > Failed to fast-forward ID generator to $target_id: $error_message
 ///
-/// Source: horus/pb/logs/logs.proto:1636:1
+/// Source: horus/pb/logs/logs.proto:1646:1
 class TrackerIdFastForwardFailedError final : public PbMessage {
  public:
 
@@ -30351,7 +30381,7 @@ class TrackerIdFastForwardFailedError final : public PbMessage {
 /// 
 ///  > Circular recording snapshot created with $message_count messages covering $actual_duration_seconds seconds of data
 ///
-/// Source: horus/pb/logs/logs.proto:1644:1
+/// Source: horus/pb/logs/logs.proto:1654:1
 class CircularRecordingSnapshotCreated final : public PbMessage {
  public:
 
@@ -30531,7 +30561,7 @@ class CircularRecordingSnapshotCreated final : public PbMessage {
 /// 
 ///  > Circular recording file operation failed: $operation on $file_path - $details
 ///
-/// Source: horus/pb/logs/logs.proto:1653:1
+/// Source: horus/pb/logs/logs.proto:1663:1
 class CircularRecordingFileOperationError final : public PbMessage {
  public:
 
@@ -30741,6 +30771,650 @@ class CircularRecordingFileOperationError final : public PbMessage {
 
   /// The set of fields that have been given an explicit value.
   std::bitset<3> set_fields_;
+};
+
+/// Log #220.
+/// 
+///  > Recovery candidate with ID $id was rejected this frame because $reason. Will attempt again next frame.
+///
+/// Source: horus/pb/logs/logs.proto:1672:1
+class ObjectIdRecoveryRejectedInfo final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `ObjectIdRecoveryRejectedInfo`.
+  ObjectIdRecoveryRejectedInfo() noexcept = default;
+
+  /// Move constructor.
+  ObjectIdRecoveryRejectedInfo(ObjectIdRecoveryRejectedInfo&&) noexcept = default;
+  /// Move assignment operator.
+  ObjectIdRecoveryRejectedInfo& operator=(ObjectIdRecoveryRejectedInfo&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit ObjectIdRecoveryRejectedInfo(const ObjectIdRecoveryRejectedInfo& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  ObjectIdRecoveryRejectedInfo& operator=(const ObjectIdRecoveryRejectedInfo&) = delete;
+
+  /// Default destructor.
+  ~ObjectIdRecoveryRejectedInfo() noexcept final = default;
+
+  /// Creates a `ObjectIdRecoveryRejectedInfo` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit ObjectIdRecoveryRejectedInfo(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.ObjectIdRecoveryRejectedInfo`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.ObjectIdRecoveryRejectedInfo"; }
+
+  /// The full name of the message: `horus.pb.logs.ObjectIdRecoveryRejectedInfo`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `id` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr std::uint64_t id() const& noexcept HORUS_LIFETIME_BOUND {
+    return id_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  std::uint64_t& mutable_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return id_;
+  }
+
+  /// Returns whether `id` (no 1) is set.
+  constexpr bool has_id() const noexcept { return set_fields_[0]; }
+
+  /// Clears `id` (no 1).
+  void clear_id() & noexcept {
+    set_fields_[0] = false;
+    id_ = {};
+  }
+
+  /// Sets `id` (no 1) and returns `*this`.
+  ObjectIdRecoveryRejectedInfo& set_id(std::uint64_t id) & noexcept {
+    set_fields_[0] = true;
+    id_ = id;
+    return *this;
+  }
+  /// Sets `id` (no 1) and returns `*this`.
+  ObjectIdRecoveryRejectedInfo&& set_id(std::uint64_t id) && noexcept {
+    return std::move(set_id(id));
+  }
+
+  // Field `reason` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& reason() const& noexcept HORUS_LIFETIME_BOUND {
+    return reason_;
+  }
+
+  /// If `reason` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes reason() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(reason_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_reason() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return reason_;
+  }
+
+  /// Returns whether `reason` (no 2) is set.
+  constexpr bool has_reason() const noexcept { return set_fields_[1]; }
+
+  /// Clears `reason` (no 2).
+  void clear_reason() & noexcept {
+    set_fields_[1] = false;
+    reason_ = {};
+  }
+
+  /// Sets `reason` (no 2) and returns `*this`.
+  ObjectIdRecoveryRejectedInfo& set_reason(CowBytes&& reason) & noexcept {
+    set_fields_[1] = true;
+    reason_ = std::move(reason);
+    return *this;
+  }
+  /// Sets `reason` (no 2) and returns `*this`.
+  ObjectIdRecoveryRejectedInfo&& set_reason(CowBytes&& reason) && noexcept {
+    return std::move(set_reason(std::move(reason)));
+  }
+
+ private:
+  /// @see id()
+  std::uint64_t id_{};
+  /// @see reason()
+  CowBytes reason_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// Log #221.
+/// 
+///  > The following recovery candidate IDs have expired and will not be used for recovery: $expired_ids.
+///
+/// Source: horus/pb/logs/logs.proto:1680:1
+class ExpiredRecoveryIdsInfo final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `ExpiredRecoveryIdsInfo`.
+  ExpiredRecoveryIdsInfo() noexcept = default;
+
+  /// Move constructor.
+  ExpiredRecoveryIdsInfo(ExpiredRecoveryIdsInfo&&) noexcept = default;
+  /// Move assignment operator.
+  ExpiredRecoveryIdsInfo& operator=(ExpiredRecoveryIdsInfo&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit ExpiredRecoveryIdsInfo(const ExpiredRecoveryIdsInfo& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  ExpiredRecoveryIdsInfo& operator=(const ExpiredRecoveryIdsInfo&) = delete;
+
+  /// Default destructor.
+  ~ExpiredRecoveryIdsInfo() noexcept final = default;
+
+  /// Creates a `ExpiredRecoveryIdsInfo` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit ExpiredRecoveryIdsInfo(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.ExpiredRecoveryIdsInfo`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.ExpiredRecoveryIdsInfo"; }
+
+  /// The full name of the message: `horus.pb.logs.ExpiredRecoveryIdsInfo`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `expired_ids` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& expired_ids() const& noexcept HORUS_LIFETIME_BOUND {
+    return expired_ids_;
+  }
+
+  /// If `expired_ids` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes expired_ids() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(expired_ids_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_expired_ids() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return expired_ids_;
+  }
+
+  /// Returns whether `expired_ids` (no 1) is set.
+  constexpr bool has_expired_ids() const noexcept { return set_fields_[0]; }
+
+  /// Clears `expired_ids` (no 1).
+  void clear_expired_ids() & noexcept {
+    set_fields_[0] = false;
+    expired_ids_ = {};
+  }
+
+  /// Sets `expired_ids` (no 1) and returns `*this`.
+  ExpiredRecoveryIdsInfo& set_expired_ids(CowBytes&& expired_ids) & noexcept {
+    set_fields_[0] = true;
+    expired_ids_ = std::move(expired_ids);
+    return *this;
+  }
+  /// Sets `expired_ids` (no 1) and returns `*this`.
+  ExpiredRecoveryIdsInfo&& set_expired_ids(CowBytes&& expired_ids) && noexcept {
+    return std::move(set_expired_ids(std::move(expired_ids)));
+  }
+
+ private:
+  /// @see expired_ids()
+  CowBytes expired_ids_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
+};
+
+/// Log #222.
+/// 
+///  > [$lidar_name][$lidar_id] Hesai UDP receiver $action.
+///
+/// Source: horus/pb/logs/logs.proto:1687:1
+class HesaiUdpReceiverInfo final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `HesaiUdpReceiverInfo`.
+  HesaiUdpReceiverInfo() noexcept = default;
+
+  /// Move constructor.
+  HesaiUdpReceiverInfo(HesaiUdpReceiverInfo&&) noexcept = default;
+  /// Move assignment operator.
+  HesaiUdpReceiverInfo& operator=(HesaiUdpReceiverInfo&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit HesaiUdpReceiverInfo(const HesaiUdpReceiverInfo& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  HesaiUdpReceiverInfo& operator=(const HesaiUdpReceiverInfo&) = delete;
+
+  /// Default destructor.
+  ~HesaiUdpReceiverInfo() noexcept final = default;
+
+  /// Creates a `HesaiUdpReceiverInfo` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit HesaiUdpReceiverInfo(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.HesaiUdpReceiverInfo`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.HesaiUdpReceiverInfo"; }
+
+  /// The full name of the message: `horus.pb.logs.HesaiUdpReceiverInfo`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `action` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& action() const& noexcept HORUS_LIFETIME_BOUND {
+    return action_;
+  }
+
+  /// If `action` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes action() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(action_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_action() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return action_;
+  }
+
+  /// Returns whether `action` (no 1) is set.
+  constexpr bool has_action() const noexcept { return set_fields_[0]; }
+
+  /// Clears `action` (no 1).
+  void clear_action() & noexcept {
+    set_fields_[0] = false;
+    action_ = {};
+  }
+
+  /// Sets `action` (no 1) and returns `*this`.
+  HesaiUdpReceiverInfo& set_action(CowBytes&& action) & noexcept {
+    set_fields_[0] = true;
+    action_ = std::move(action);
+    return *this;
+  }
+  /// Sets `action` (no 1) and returns `*this`.
+  HesaiUdpReceiverInfo&& set_action(CowBytes&& action) && noexcept {
+    return std::move(set_action(std::move(action)));
+  }
+
+  // Field `lidar_id` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 2) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_id` (no 2).
+  void clear_lidar_id() & noexcept {
+    set_fields_[1] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 2) and returns `*this`.
+  HesaiUdpReceiverInfo& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[1] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 2) and returns `*this`.
+  HesaiUdpReceiverInfo&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `lidar_name` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 3) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[2]; }
+
+  /// Clears `lidar_name` (no 3).
+  void clear_lidar_name() & noexcept {
+    set_fields_[2] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  HesaiUdpReceiverInfo& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[2] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 3) and returns `*this`.
+  HesaiUdpReceiverInfo&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
+ private:
+  /// @see action()
+  CowBytes action_{};
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<3> set_fields_;
+};
+
+/// Log #223.
+/// 
+///  > Failed to $action in Horus database: $error.
+///
+/// Source: horus/pb/logs/logs.proto:1696:1
+class DbCommitFailed final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `DbCommitFailed`.
+  DbCommitFailed() noexcept = default;
+
+  /// Move constructor.
+  DbCommitFailed(DbCommitFailed&&) noexcept = default;
+  /// Move assignment operator.
+  DbCommitFailed& operator=(DbCommitFailed&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit DbCommitFailed(const DbCommitFailed& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  DbCommitFailed& operator=(const DbCommitFailed&) = delete;
+
+  /// Default destructor.
+  ~DbCommitFailed() noexcept final = default;
+
+  /// Creates a `DbCommitFailed` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit DbCommitFailed(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.DbCommitFailed`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.DbCommitFailed"; }
+
+  /// The full name of the message: `horus.pb.logs.DbCommitFailed`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `action` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& action() const& noexcept HORUS_LIFETIME_BOUND {
+    return action_;
+  }
+
+  /// If `action` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes action() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(action_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_action() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return action_;
+  }
+
+  /// Returns whether `action` (no 1) is set.
+  constexpr bool has_action() const noexcept { return set_fields_[0]; }
+
+  /// Clears `action` (no 1).
+  void clear_action() & noexcept {
+    set_fields_[0] = false;
+    action_ = {};
+  }
+
+  /// Sets `action` (no 1) and returns `*this`.
+  DbCommitFailed& set_action(CowBytes&& action) & noexcept {
+    set_fields_[0] = true;
+    action_ = std::move(action);
+    return *this;
+  }
+  /// Sets `action` (no 1) and returns `*this`.
+  DbCommitFailed&& set_action(CowBytes&& action) && noexcept {
+    return std::move(set_action(std::move(action)));
+  }
+
+  // Field `error` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& error() const& noexcept HORUS_LIFETIME_BOUND {
+    return error_;
+  }
+
+  /// If `error` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes error() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(error_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_error() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return error_;
+  }
+
+  /// Returns whether `error` (no 2) is set.
+  constexpr bool has_error() const noexcept { return set_fields_[1]; }
+
+  /// Clears `error` (no 2).
+  void clear_error() & noexcept {
+    set_fields_[1] = false;
+    error_ = {};
+  }
+
+  /// Sets `error` (no 2) and returns `*this`.
+  DbCommitFailed& set_error(CowBytes&& error) & noexcept {
+    set_fields_[1] = true;
+    error_ = std::move(error);
+    return *this;
+  }
+  /// Sets `error` (no 2) and returns `*this`.
+  DbCommitFailed&& set_error(CowBytes&& error) && noexcept {
+    return std::move(set_error(std::move(error)));
+  }
+
+ private:
+  /// @see action()
+  CowBytes action_{};
+  /// @see error()
+  CowBytes error_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
 };
 
 }  // namespace logs

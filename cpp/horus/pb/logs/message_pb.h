@@ -11860,6 +11860,116 @@ class LogData final : public PbMessage {
     return std::move(set_tracker_state_path_unavailable_warning(std::move(tracker_state_path_unavailable_warning)));
   }
 
+  // Field `tracker_state_recovery_error` (no 224).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 224.
+  constexpr const logs::TrackerStateRecoveryError& tracker_state_recovery_error() const& noexcept HORUS_LIFETIME_BOUND {
+    return tracker_state_recovery_error_;
+  }
+
+  /// If `tracker_state_recovery_error` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 224.
+  logs::TrackerStateRecoveryError tracker_state_recovery_error() && noexcept {
+    if (!set_fields_[214]) {
+      return {};
+    }
+    return std::move(tracker_state_recovery_error_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 224.
+  logs::TrackerStateRecoveryError& mutable_tracker_state_recovery_error() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kTrackerStateRecoveryError;
+    set_fields_[214] = true;
+    return tracker_state_recovery_error_;
+  }
+
+  /// Returns whether `tracker_state_recovery_error` (no 224) is set.
+  constexpr bool has_tracker_state_recovery_error() const noexcept { return set_fields_[214]; }
+
+  /// Clears `tracker_state_recovery_error` (no 224).
+  void clear_tracker_state_recovery_error() & noexcept {
+    data_ = {};
+    set_fields_[214] = false;
+    tracker_state_recovery_error_ = {};
+  }
+
+  /// Sets `tracker_state_recovery_error` (no 224) and returns `*this`.
+  LogData& set_tracker_state_recovery_error(logs::TrackerStateRecoveryError&& tracker_state_recovery_error) & noexcept {
+    clear_data();
+    data_ = DataOneof::kTrackerStateRecoveryError;
+    set_fields_[214] = true;
+    tracker_state_recovery_error_ = std::move(tracker_state_recovery_error);
+    return *this;
+  }
+  /// Sets `tracker_state_recovery_error` (no 224) and returns `*this`.
+  LogData&& set_tracker_state_recovery_error(logs::TrackerStateRecoveryError&& tracker_state_recovery_error) && noexcept {
+    return std::move(set_tracker_state_recovery_error(std::move(tracker_state_recovery_error)));
+  }
+
+  // Field `tracker_state_save_error` (no 225).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 225.
+  constexpr const logs::TrackerStateSaveError& tracker_state_save_error() const& noexcept HORUS_LIFETIME_BOUND {
+    return tracker_state_save_error_;
+  }
+
+  /// If `tracker_state_save_error` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 225.
+  logs::TrackerStateSaveError tracker_state_save_error() && noexcept {
+    if (!set_fields_[215]) {
+      return {};
+    }
+    return std::move(tracker_state_save_error_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 225.
+  logs::TrackerStateSaveError& mutable_tracker_state_save_error() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kTrackerStateSaveError;
+    set_fields_[215] = true;
+    return tracker_state_save_error_;
+  }
+
+  /// Returns whether `tracker_state_save_error` (no 225) is set.
+  constexpr bool has_tracker_state_save_error() const noexcept { return set_fields_[215]; }
+
+  /// Clears `tracker_state_save_error` (no 225).
+  void clear_tracker_state_save_error() & noexcept {
+    data_ = {};
+    set_fields_[215] = false;
+    tracker_state_save_error_ = {};
+  }
+
+  /// Sets `tracker_state_save_error` (no 225) and returns `*this`.
+  LogData& set_tracker_state_save_error(logs::TrackerStateSaveError&& tracker_state_save_error) & noexcept {
+    clear_data();
+    data_ = DataOneof::kTrackerStateSaveError;
+    set_fields_[215] = true;
+    tracker_state_save_error_ = std::move(tracker_state_save_error);
+    return *this;
+  }
+  /// Sets `tracker_state_save_error` (no 225) and returns `*this`.
+  LogData&& set_tracker_state_save_error(logs::TrackerStateSaveError&& tracker_state_save_error) && noexcept {
+    return std::move(set_tracker_state_save_error(std::move(tracker_state_save_error)));
+  }
+
   // Field `tracker_id_recovery_failed_error` (no 216).
   // -----
 
@@ -11876,7 +11986,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 216.
   logs::TrackerIdRecoveryFailedError tracker_id_recovery_failed_error() && noexcept {
-    if (!set_fields_[214]) {
+    if (!set_fields_[216]) {
       return {};
     }
     return std::move(tracker_id_recovery_failed_error_);
@@ -11888,17 +11998,17 @@ class LogData final : public PbMessage {
   logs::TrackerIdRecoveryFailedError& mutable_tracker_id_recovery_failed_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kTrackerIdRecoveryFailedError;
-    set_fields_[214] = true;
+    set_fields_[216] = true;
     return tracker_id_recovery_failed_error_;
   }
 
   /// Returns whether `tracker_id_recovery_failed_error` (no 216) is set.
-  constexpr bool has_tracker_id_recovery_failed_error() const noexcept { return set_fields_[214]; }
+  constexpr bool has_tracker_id_recovery_failed_error() const noexcept { return set_fields_[216]; }
 
   /// Clears `tracker_id_recovery_failed_error` (no 216).
   void clear_tracker_id_recovery_failed_error() & noexcept {
     data_ = {};
-    set_fields_[214] = false;
+    set_fields_[216] = false;
     tracker_id_recovery_failed_error_ = {};
   }
 
@@ -11906,7 +12016,7 @@ class LogData final : public PbMessage {
   LogData& set_tracker_id_recovery_failed_error(logs::TrackerIdRecoveryFailedError&& tracker_id_recovery_failed_error) & noexcept {
     clear_data();
     data_ = DataOneof::kTrackerIdRecoveryFailedError;
-    set_fields_[214] = true;
+    set_fields_[216] = true;
     tracker_id_recovery_failed_error_ = std::move(tracker_id_recovery_failed_error);
     return *this;
   }
@@ -11931,7 +12041,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 217.
   logs::TrackerIdFastForwardFailedError tracker_id_fast_forward_failed_error() && noexcept {
-    if (!set_fields_[215]) {
+    if (!set_fields_[217]) {
       return {};
     }
     return std::move(tracker_id_fast_forward_failed_error_);
@@ -11943,17 +12053,17 @@ class LogData final : public PbMessage {
   logs::TrackerIdFastForwardFailedError& mutable_tracker_id_fast_forward_failed_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kTrackerIdFastForwardFailedError;
-    set_fields_[215] = true;
+    set_fields_[217] = true;
     return tracker_id_fast_forward_failed_error_;
   }
 
   /// Returns whether `tracker_id_fast_forward_failed_error` (no 217) is set.
-  constexpr bool has_tracker_id_fast_forward_failed_error() const noexcept { return set_fields_[215]; }
+  constexpr bool has_tracker_id_fast_forward_failed_error() const noexcept { return set_fields_[217]; }
 
   /// Clears `tracker_id_fast_forward_failed_error` (no 217).
   void clear_tracker_id_fast_forward_failed_error() & noexcept {
     data_ = {};
-    set_fields_[215] = false;
+    set_fields_[217] = false;
     tracker_id_fast_forward_failed_error_ = {};
   }
 
@@ -11961,7 +12071,7 @@ class LogData final : public PbMessage {
   LogData& set_tracker_id_fast_forward_failed_error(logs::TrackerIdFastForwardFailedError&& tracker_id_fast_forward_failed_error) & noexcept {
     clear_data();
     data_ = DataOneof::kTrackerIdFastForwardFailedError;
-    set_fields_[215] = true;
+    set_fields_[217] = true;
     tracker_id_fast_forward_failed_error_ = std::move(tracker_id_fast_forward_failed_error);
     return *this;
   }
@@ -11986,7 +12096,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 218.
   logs::CircularRecordingSnapshotCreated circular_recording_snapshot_created() && noexcept {
-    if (!set_fields_[216]) {
+    if (!set_fields_[218]) {
       return {};
     }
     return std::move(circular_recording_snapshot_created_);
@@ -11998,17 +12108,17 @@ class LogData final : public PbMessage {
   logs::CircularRecordingSnapshotCreated& mutable_circular_recording_snapshot_created() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCircularRecordingSnapshotCreated;
-    set_fields_[216] = true;
+    set_fields_[218] = true;
     return circular_recording_snapshot_created_;
   }
 
   /// Returns whether `circular_recording_snapshot_created` (no 218) is set.
-  constexpr bool has_circular_recording_snapshot_created() const noexcept { return set_fields_[216]; }
+  constexpr bool has_circular_recording_snapshot_created() const noexcept { return set_fields_[218]; }
 
   /// Clears `circular_recording_snapshot_created` (no 218).
   void clear_circular_recording_snapshot_created() & noexcept {
     data_ = {};
-    set_fields_[216] = false;
+    set_fields_[218] = false;
     circular_recording_snapshot_created_ = {};
   }
 
@@ -12016,7 +12126,7 @@ class LogData final : public PbMessage {
   LogData& set_circular_recording_snapshot_created(logs::CircularRecordingSnapshotCreated&& circular_recording_snapshot_created) & noexcept {
     clear_data();
     data_ = DataOneof::kCircularRecordingSnapshotCreated;
-    set_fields_[216] = true;
+    set_fields_[218] = true;
     circular_recording_snapshot_created_ = std::move(circular_recording_snapshot_created);
     return *this;
   }
@@ -12041,7 +12151,7 @@ class LogData final : public PbMessage {
   ///
   /// Field no: 219.
   logs::CircularRecordingFileOperationError circular_recording_file_operation_error() && noexcept {
-    if (!set_fields_[217]) {
+    if (!set_fields_[219]) {
       return {};
     }
     return std::move(circular_recording_file_operation_error_);
@@ -12053,17 +12163,17 @@ class LogData final : public PbMessage {
   logs::CircularRecordingFileOperationError& mutable_circular_recording_file_operation_error() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
     data_ = DataOneof::kCircularRecordingFileOperationError;
-    set_fields_[217] = true;
+    set_fields_[219] = true;
     return circular_recording_file_operation_error_;
   }
 
   /// Returns whether `circular_recording_file_operation_error` (no 219) is set.
-  constexpr bool has_circular_recording_file_operation_error() const noexcept { return set_fields_[217]; }
+  constexpr bool has_circular_recording_file_operation_error() const noexcept { return set_fields_[219]; }
 
   /// Clears `circular_recording_file_operation_error` (no 219).
   void clear_circular_recording_file_operation_error() & noexcept {
     data_ = {};
-    set_fields_[217] = false;
+    set_fields_[219] = false;
     circular_recording_file_operation_error_ = {};
   }
 
@@ -12071,13 +12181,233 @@ class LogData final : public PbMessage {
   LogData& set_circular_recording_file_operation_error(logs::CircularRecordingFileOperationError&& circular_recording_file_operation_error) & noexcept {
     clear_data();
     data_ = DataOneof::kCircularRecordingFileOperationError;
-    set_fields_[217] = true;
+    set_fields_[219] = true;
     circular_recording_file_operation_error_ = std::move(circular_recording_file_operation_error);
     return *this;
   }
   /// Sets `circular_recording_file_operation_error` (no 219) and returns `*this`.
   LogData&& set_circular_recording_file_operation_error(logs::CircularRecordingFileOperationError&& circular_recording_file_operation_error) && noexcept {
     return std::move(set_circular_recording_file_operation_error(std::move(circular_recording_file_operation_error)));
+  }
+
+  // Field `object_id_recovery_rejected_info` (no 220).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 220.
+  constexpr const logs::ObjectIdRecoveryRejectedInfo& object_id_recovery_rejected_info() const& noexcept HORUS_LIFETIME_BOUND {
+    return object_id_recovery_rejected_info_;
+  }
+
+  /// If `object_id_recovery_rejected_info` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 220.
+  logs::ObjectIdRecoveryRejectedInfo object_id_recovery_rejected_info() && noexcept {
+    if (!set_fields_[220]) {
+      return {};
+    }
+    return std::move(object_id_recovery_rejected_info_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 220.
+  logs::ObjectIdRecoveryRejectedInfo& mutable_object_id_recovery_rejected_info() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kObjectIdRecoveryRejectedInfo;
+    set_fields_[220] = true;
+    return object_id_recovery_rejected_info_;
+  }
+
+  /// Returns whether `object_id_recovery_rejected_info` (no 220) is set.
+  constexpr bool has_object_id_recovery_rejected_info() const noexcept { return set_fields_[220]; }
+
+  /// Clears `object_id_recovery_rejected_info` (no 220).
+  void clear_object_id_recovery_rejected_info() & noexcept {
+    data_ = {};
+    set_fields_[220] = false;
+    object_id_recovery_rejected_info_ = {};
+  }
+
+  /// Sets `object_id_recovery_rejected_info` (no 220) and returns `*this`.
+  LogData& set_object_id_recovery_rejected_info(logs::ObjectIdRecoveryRejectedInfo&& object_id_recovery_rejected_info) & noexcept {
+    clear_data();
+    data_ = DataOneof::kObjectIdRecoveryRejectedInfo;
+    set_fields_[220] = true;
+    object_id_recovery_rejected_info_ = std::move(object_id_recovery_rejected_info);
+    return *this;
+  }
+  /// Sets `object_id_recovery_rejected_info` (no 220) and returns `*this`.
+  LogData&& set_object_id_recovery_rejected_info(logs::ObjectIdRecoveryRejectedInfo&& object_id_recovery_rejected_info) && noexcept {
+    return std::move(set_object_id_recovery_rejected_info(std::move(object_id_recovery_rejected_info)));
+  }
+
+  // Field `expired_recovery_ids_info` (no 221).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 221.
+  constexpr const logs::ExpiredRecoveryIdsInfo& expired_recovery_ids_info() const& noexcept HORUS_LIFETIME_BOUND {
+    return expired_recovery_ids_info_;
+  }
+
+  /// If `expired_recovery_ids_info` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 221.
+  logs::ExpiredRecoveryIdsInfo expired_recovery_ids_info() && noexcept {
+    if (!set_fields_[221]) {
+      return {};
+    }
+    return std::move(expired_recovery_ids_info_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 221.
+  logs::ExpiredRecoveryIdsInfo& mutable_expired_recovery_ids_info() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kExpiredRecoveryIdsInfo;
+    set_fields_[221] = true;
+    return expired_recovery_ids_info_;
+  }
+
+  /// Returns whether `expired_recovery_ids_info` (no 221) is set.
+  constexpr bool has_expired_recovery_ids_info() const noexcept { return set_fields_[221]; }
+
+  /// Clears `expired_recovery_ids_info` (no 221).
+  void clear_expired_recovery_ids_info() & noexcept {
+    data_ = {};
+    set_fields_[221] = false;
+    expired_recovery_ids_info_ = {};
+  }
+
+  /// Sets `expired_recovery_ids_info` (no 221) and returns `*this`.
+  LogData& set_expired_recovery_ids_info(logs::ExpiredRecoveryIdsInfo&& expired_recovery_ids_info) & noexcept {
+    clear_data();
+    data_ = DataOneof::kExpiredRecoveryIdsInfo;
+    set_fields_[221] = true;
+    expired_recovery_ids_info_ = std::move(expired_recovery_ids_info);
+    return *this;
+  }
+  /// Sets `expired_recovery_ids_info` (no 221) and returns `*this`.
+  LogData&& set_expired_recovery_ids_info(logs::ExpiredRecoveryIdsInfo&& expired_recovery_ids_info) && noexcept {
+    return std::move(set_expired_recovery_ids_info(std::move(expired_recovery_ids_info)));
+  }
+
+  // Field `hesai_udp_receiver_info` (no 222).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 222.
+  constexpr const logs::HesaiUdpReceiverInfo& hesai_udp_receiver_info() const& noexcept HORUS_LIFETIME_BOUND {
+    return hesai_udp_receiver_info_;
+  }
+
+  /// If `hesai_udp_receiver_info` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 222.
+  logs::HesaiUdpReceiverInfo hesai_udp_receiver_info() && noexcept {
+    if (!set_fields_[222]) {
+      return {};
+    }
+    return std::move(hesai_udp_receiver_info_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 222.
+  logs::HesaiUdpReceiverInfo& mutable_hesai_udp_receiver_info() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kHesaiUdpReceiverInfo;
+    set_fields_[222] = true;
+    return hesai_udp_receiver_info_;
+  }
+
+  /// Returns whether `hesai_udp_receiver_info` (no 222) is set.
+  constexpr bool has_hesai_udp_receiver_info() const noexcept { return set_fields_[222]; }
+
+  /// Clears `hesai_udp_receiver_info` (no 222).
+  void clear_hesai_udp_receiver_info() & noexcept {
+    data_ = {};
+    set_fields_[222] = false;
+    hesai_udp_receiver_info_ = {};
+  }
+
+  /// Sets `hesai_udp_receiver_info` (no 222) and returns `*this`.
+  LogData& set_hesai_udp_receiver_info(logs::HesaiUdpReceiverInfo&& hesai_udp_receiver_info) & noexcept {
+    clear_data();
+    data_ = DataOneof::kHesaiUdpReceiverInfo;
+    set_fields_[222] = true;
+    hesai_udp_receiver_info_ = std::move(hesai_udp_receiver_info);
+    return *this;
+  }
+  /// Sets `hesai_udp_receiver_info` (no 222) and returns `*this`.
+  LogData&& set_hesai_udp_receiver_info(logs::HesaiUdpReceiverInfo&& hesai_udp_receiver_info) && noexcept {
+    return std::move(set_hesai_udp_receiver_info(std::move(hesai_udp_receiver_info)));
+  }
+
+  // Field `db_commit_failed` (no 223).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 223.
+  constexpr const logs::DbCommitFailed& db_commit_failed() const& noexcept HORUS_LIFETIME_BOUND {
+    return db_commit_failed_;
+  }
+
+  /// If `db_commit_failed` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 223.
+  logs::DbCommitFailed db_commit_failed() && noexcept {
+    if (!set_fields_[223]) {
+      return {};
+    }
+    return std::move(db_commit_failed_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 223.
+  logs::DbCommitFailed& mutable_db_commit_failed() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kDbCommitFailed;
+    set_fields_[223] = true;
+    return db_commit_failed_;
+  }
+
+  /// Returns whether `db_commit_failed` (no 223) is set.
+  constexpr bool has_db_commit_failed() const noexcept { return set_fields_[223]; }
+
+  /// Clears `db_commit_failed` (no 223).
+  void clear_db_commit_failed() & noexcept {
+    data_ = {};
+    set_fields_[223] = false;
+    db_commit_failed_ = {};
+  }
+
+  /// Sets `db_commit_failed` (no 223) and returns `*this`.
+  LogData& set_db_commit_failed(logs::DbCommitFailed&& db_commit_failed) & noexcept {
+    clear_data();
+    data_ = DataOneof::kDbCommitFailed;
+    set_fields_[223] = true;
+    db_commit_failed_ = std::move(db_commit_failed);
+    return *this;
+  }
+  /// Sets `db_commit_failed` (no 223) and returns `*this`.
+  LogData&& set_db_commit_failed(logs::DbCommitFailed&& db_commit_failed) && noexcept {
+    return std::move(set_db_commit_failed(std::move(db_commit_failed)));
   }
 
   // Oneof `data`.
@@ -12515,6 +12845,10 @@ class LogData final : public PbMessage {
     kTrackCapacityExceededWarning = 214,
     /// @see tracker_state_path_unavailable_warning()
     kTrackerStatePathUnavailableWarning = 215,
+    /// @see tracker_state_recovery_error()
+    kTrackerStateRecoveryError = 224,
+    /// @see tracker_state_save_error()
+    kTrackerStateSaveError = 225,
     /// @see tracker_id_recovery_failed_error()
     kTrackerIdRecoveryFailedError = 216,
     /// @see tracker_id_fast_forward_failed_error()
@@ -12523,6 +12857,14 @@ class LogData final : public PbMessage {
     kCircularRecordingSnapshotCreated = 218,
     /// @see circular_recording_file_operation_error()
     kCircularRecordingFileOperationError = 219,
+    /// @see object_id_recovery_rejected_info()
+    kObjectIdRecoveryRejectedInfo = 220,
+    /// @see expired_recovery_ids_info()
+    kExpiredRecoveryIdsInfo = 221,
+    /// @see hesai_udp_receiver_info()
+    kHesaiUdpReceiverInfo = 222,
+    /// @see db_commit_failed()
+    kDbCommitFailed = 223,
   };
 
   /// Returns the current case set in `data`.
@@ -13389,6 +13731,14 @@ class LogData final : public PbMessage {
         clear_tracker_state_path_unavailable_warning();
         break;
       }
+      case DataOneof::kTrackerStateRecoveryError: {
+        clear_tracker_state_recovery_error();
+        break;
+      }
+      case DataOneof::kTrackerStateSaveError: {
+        clear_tracker_state_save_error();
+        break;
+      }
       case DataOneof::kTrackerIdRecoveryFailedError: {
         clear_tracker_id_recovery_failed_error();
         break;
@@ -13403,6 +13753,22 @@ class LogData final : public PbMessage {
       }
       case DataOneof::kCircularRecordingFileOperationError: {
         clear_circular_recording_file_operation_error();
+        break;
+      }
+      case DataOneof::kObjectIdRecoveryRejectedInfo: {
+        clear_object_id_recovery_rejected_info();
+        break;
+      }
+      case DataOneof::kExpiredRecoveryIdsInfo: {
+        clear_expired_recovery_ids_info();
+        break;
+      }
+      case DataOneof::kHesaiUdpReceiverInfo: {
+        clear_hesai_udp_receiver_info();
+        break;
+      }
+      case DataOneof::kDbCommitFailed: {
+        clear_db_commit_failed();
         break;
       }
       case DataOneof::kNotSet:
@@ -13840,6 +14206,10 @@ class LogData final : public PbMessage {
   logs::TrackCapacityExceededWarning track_capacity_exceeded_warning_{};
   /// @see tracker_state_path_unavailable_warning()
   logs::TrackerStatePathUnavailableWarning tracker_state_path_unavailable_warning_{};
+  /// @see tracker_state_recovery_error()
+  logs::TrackerStateRecoveryError tracker_state_recovery_error_{};
+  /// @see tracker_state_save_error()
+  logs::TrackerStateSaveError tracker_state_save_error_{};
   /// @see tracker_id_recovery_failed_error()
   logs::TrackerIdRecoveryFailedError tracker_id_recovery_failed_error_{};
   /// @see tracker_id_fast_forward_failed_error()
@@ -13848,12 +14218,20 @@ class LogData final : public PbMessage {
   logs::CircularRecordingSnapshotCreated circular_recording_snapshot_created_{};
   /// @see circular_recording_file_operation_error()
   logs::CircularRecordingFileOperationError circular_recording_file_operation_error_{};
+  /// @see object_id_recovery_rejected_info()
+  logs::ObjectIdRecoveryRejectedInfo object_id_recovery_rejected_info_{};
+  /// @see expired_recovery_ids_info()
+  logs::ExpiredRecoveryIdsInfo expired_recovery_ids_info_{};
+  /// @see hesai_udp_receiver_info()
+  logs::HesaiUdpReceiverInfo hesai_udp_receiver_info_{};
+  /// @see db_commit_failed()
+  logs::DbCommitFailed db_commit_failed_{};
 
   /// @see data_case()
   DataOneof data_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<218> set_fields_;
+  std::bitset<224> set_fields_;
 };
 
 /// A log message notifying users about some status.

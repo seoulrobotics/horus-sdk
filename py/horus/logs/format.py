@@ -217,10 +217,16 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.PERSISTENT_STORAGE_ERROR_FIELD_NUMBER: lambda m: format_persistent_storage_error(m.persistent_storage_error),
     LogData.TRACK_CAPACITY_EXCEEDED_WARNING_FIELD_NUMBER: lambda m: format_track_capacity_exceeded_warning(m.track_capacity_exceeded_warning),
     LogData.TRACKER_STATE_PATH_UNAVAILABLE_WARNING_FIELD_NUMBER: lambda m: format_tracker_state_path_unavailable_warning(m.tracker_state_path_unavailable_warning),
+    LogData.TRACKER_STATE_RECOVERY_ERROR_FIELD_NUMBER: lambda m: format_tracker_state_recovery_error(m.tracker_state_recovery_error),
+    LogData.TRACKER_STATE_SAVE_ERROR_FIELD_NUMBER: lambda m: format_tracker_state_save_error(m.tracker_state_save_error),
     LogData.TRACKER_ID_RECOVERY_FAILED_ERROR_FIELD_NUMBER: lambda m: format_tracker_id_recovery_failed_error(m.tracker_id_recovery_failed_error),
     LogData.TRACKER_ID_FAST_FORWARD_FAILED_ERROR_FIELD_NUMBER: lambda m: format_tracker_id_fast_forward_failed_error(m.tracker_id_fast_forward_failed_error),
     LogData.CIRCULAR_RECORDING_SNAPSHOT_CREATED_FIELD_NUMBER: lambda m: format_circular_recording_snapshot_created(m.circular_recording_snapshot_created),
     LogData.CIRCULAR_RECORDING_FILE_OPERATION_ERROR_FIELD_NUMBER: lambda m: format_circular_recording_file_operation_error(m.circular_recording_file_operation_error),
+    LogData.OBJECT_ID_RECOVERY_REJECTED_INFO_FIELD_NUMBER: lambda m: format_object_id_recovery_rejected_info(m.object_id_recovery_rejected_info),
+    LogData.EXPIRED_RECOVERY_IDS_INFO_FIELD_NUMBER: lambda m: format_expired_recovery_ids_info(m.expired_recovery_ids_info),
+    LogData.HESAI_UDP_RECEIVER_INFO_FIELD_NUMBER: lambda m: format_hesai_udp_receiver_info(m.hesai_udp_receiver_info),
+    LogData.DB_COMMIT_FAILED_FIELD_NUMBER: lambda m: format_db_commit_failed(m.db_commit_failed),
 }
 
 def _unknown_format(data: LogData) -> str:
@@ -1016,19 +1022,19 @@ def format_project_save_error(log: _logs_pb.ProjectSaveError) -> str:
 
 def format_save_static_environment_success(log: _logs_pb.SaveStaticEnvironmentSuccess) -> str:
     """Formats log `SaveStaticEnvironmentSuccess` to a string."""
-    return f"Saved static environment to {log.path}"
+    return f"Saved static environment"
 
 def format_save_static_environment_failed(log: _logs_pb.SaveStaticEnvironmentFailed) -> str:
     """Formats log `SaveStaticEnvironmentFailed` to a string."""
-    return f"Failed to serialize static environment to {log.path}: {log.details}"
+    return f"Failed to save static environment: {log.details}"
 
 def format_load_static_environment_success(log: _logs_pb.LoadStaticEnvironmentSuccess) -> str:
     """Formats log `LoadStaticEnvironmentSuccess` to a string."""
-    return f"Static environment loaded from {log.path}"
+    return f"Loaded static environment"
 
 def format_load_static_environment_failed(log: _logs_pb.LoadStaticEnvironmentFailed) -> str:
     """Formats log `LoadStaticEnvironmentFailed` to a string."""
-    return f"Failed to load static environment from {log.path}: {log.details}"
+    return f"Failed to load static environment: {log.details}"
 
 def format_attempt_to_inject_invalid_lidar_id_warning(log: _logs_pb.AttemptToInjectInvalidLidarIdWarning) -> str:
     """Formats log `AttemptToInjectInvalidLidarIdWarning` to a string."""
@@ -1094,6 +1100,14 @@ def format_tracker_state_path_unavailable_warning(log: _logs_pb.TrackerStatePath
     """Formats log `TrackerStatePathUnavailableWarning` to a string."""
     return f"Tracker state file path unavailable for project: {log.project_name}"
 
+def format_tracker_state_recovery_error(log: _logs_pb.TrackerStateRecoveryError) -> str:
+    """Formats log `TrackerStateRecoveryError` to a string."""
+    return f"Failed to recover saved tracker state: {log.error_message}"
+
+def format_tracker_state_save_error(log: _logs_pb.TrackerStateSaveError) -> str:
+    """Formats log `TrackerStateSaveError` to a string."""
+    return f"Failed to save tracker state: {log.error_message}"
+
 def format_tracker_id_recovery_failed_error(log: _logs_pb.TrackerIdRecoveryFailedError) -> str:
     """Formats log `TrackerIdRecoveryFailedError` to a string."""
     return f"Failed to recover tracker ID {log.id}: {log.error_message}"
@@ -1109,3 +1123,19 @@ def format_circular_recording_snapshot_created(log: _logs_pb.CircularRecordingSn
 def format_circular_recording_file_operation_error(log: _logs_pb.CircularRecordingFileOperationError) -> str:
     """Formats log `CircularRecordingFileOperationError` to a string."""
     return f"Circular recording file operation failed: {log.operation} on {log.file_path} - {log.details}"
+
+def format_object_id_recovery_rejected_info(log: _logs_pb.ObjectIdRecoveryRejectedInfo) -> str:
+    """Formats log `ObjectIdRecoveryRejectedInfo` to a string."""
+    return f"Recovery candidate with ID {log.id} was rejected this frame because {log.reason}. Will attempt again next frame."
+
+def format_expired_recovery_ids_info(log: _logs_pb.ExpiredRecoveryIdsInfo) -> str:
+    """Formats log `ExpiredRecoveryIdsInfo` to a string."""
+    return f"The following recovery candidate IDs have expired and will not be used for recovery: {log.expired_ids}."
+
+def format_hesai_udp_receiver_info(log: _logs_pb.HesaiUdpReceiverInfo) -> str:
+    """Formats log `HesaiUdpReceiverInfo` to a string."""
+    return f"[{log.lidar_name}][{log.lidar_id}] Hesai UDP receiver {log.action}."
+
+def format_db_commit_failed(log: _logs_pb.DbCommitFailed) -> str:
+    """Formats log `DbCommitFailed` to a string."""
+    return f"Failed to {log.action} in Horus database: {log.error}."

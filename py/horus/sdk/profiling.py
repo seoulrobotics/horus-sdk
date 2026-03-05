@@ -1,5 +1,5 @@
 import dataclasses, datetime, enum, typing
-from horus.pb import profiling_pb2
+from horus.pb import profiling_pb2, resources_pb2
 from horus.sdk.common import duration_to_timedelta, timestamp_to_datetime
 
 
@@ -11,17 +11,57 @@ class ProfiledService(enum.Enum):
 
 
 @dataclasses.dataclass(frozen=True)
-class ResourceUsage:
-    """A set of profiling information for a service."""
+class CpuAndMemoryUsage:
+    """CPU and memory usage of a single process or the host."""
 
     cpu_usage_percentage: int
-    memory_usage: int
+    memory_usage_bytes: int
 
     @staticmethod
-    def _from_pb(pb: profiling_pb2.ProfilingSet.ResourceUsage) -> "ResourceUsage":
-        return ResourceUsage(
+    def _from_pb(pb: resources_pb2.CpuAndMemoryUsage) -> "CpuAndMemoryUsage":
+        return CpuAndMemoryUsage(
             cpu_usage_percentage=pb.cpu_usage_percentage,
-            memory_usage=pb.memory_usage,
+            memory_usage_bytes=pb.memory_usage_bytes,
+        )
+
+
+@dataclasses.dataclass(frozen=True)
+class GpuInfo:
+    """Resource usage for a single GPU."""
+
+    gpu_id: int
+    gpu_name: str
+    temperature_celsius: int
+    utilization_percentage: int
+    memory_used_bytes: int
+    memory_total_bytes: int
+
+    @staticmethod
+    def _from_pb(pb: resources_pb2.GpuInfo) -> "GpuInfo":
+        return GpuInfo(
+            gpu_id=pb.gpu_id,
+            gpu_name=pb.gpu_name,
+            temperature_celsius=pb.temperature_celsius,
+            utilization_percentage=pb.utilization_percentage,
+            memory_used_bytes=pb.memory_used_bytes,
+            memory_total_bytes=pb.memory_total_bytes,
+        )
+
+
+@dataclasses.dataclass(frozen=True)
+class ResourceUsage:
+    """Full resource usage snapshot: per-process, host-level, and per-GPU metrics."""
+
+    process: CpuAndMemoryUsage
+    host: CpuAndMemoryUsage
+    gpus: typing.List[GpuInfo]
+
+    @staticmethod
+    def _from_pb(pb: resources_pb2.ResourceUsage) -> "ResourceUsage":
+        return ResourceUsage(
+            process=CpuAndMemoryUsage._from_pb(pb.process),
+            host=CpuAndMemoryUsage._from_pb(pb.host),
+            gpus=[GpuInfo._from_pb(gpu) for gpu in pb.gpus],
         )
 
 

@@ -13,6 +13,7 @@
 
 #include "horus/attributes.h"
 #include "horus/internal/attributes.h"
+#include "horus/pb/cow_bytes.h"
 #include "horus/pb/cow_span.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
@@ -136,61 +137,61 @@ class CalibrationMap final : public PbMessage {
     return std::move(set_map_points(std::move(map_points)));
   }
 
-  // Field `intensities` (no 3).
+  // Field `intensities_bytes` (no 4).
   // -----
 
-  /// No documentation.
+  /// Packed uint16 intensity values (2 bytes per point, little-endian)
   ///
-  /// Field no: 3.
-  constexpr const CowSpan<float>& intensities() const& noexcept HORUS_LIFETIME_BOUND {
-    return intensities_;
+  /// Field no: 4.
+  constexpr const CowBytes& intensities_bytes() const& noexcept HORUS_LIFETIME_BOUND {
+    return intensities_bytes_;
   }
 
-  /// If `intensities` is set, moves it out of the message (without marking it as unset).
+  /// If `intensities_bytes` is set, moves it out of the message (without marking it as unset).
   ///
   /// Otherwise, returns a default-initialized value.
   ///
-  /// Field no: 3.
-  CowSpan<float> intensities() && noexcept {
+  /// Field no: 4.
+  CowBytes intensities_bytes() && noexcept {
     if (!set_fields_[1]) {
       return {};
     }
-    return std::move(intensities_);
+    return std::move(intensities_bytes_);
   }
 
-  /// No documentation.
+  /// Packed uint16 intensity values (2 bytes per point, little-endian)
   ///
-  /// Field no: 3.
-  CowSpan<float>& mutable_intensities() & noexcept HORUS_LIFETIME_BOUND {
+  /// Field no: 4.
+  CowBytes& mutable_intensities_bytes() & noexcept HORUS_LIFETIME_BOUND {
     set_fields_[1] = true;
-    return intensities_;
+    return intensities_bytes_;
   }
 
-  /// Returns whether `intensities` (no 3) is set.
-  constexpr bool has_intensities() const noexcept { return set_fields_[1]; }
+  /// Returns whether `intensities_bytes` (no 4) is set.
+  constexpr bool has_intensities_bytes() const noexcept { return set_fields_[1]; }
 
-  /// Clears `intensities` (no 3).
-  void clear_intensities() & noexcept {
+  /// Clears `intensities_bytes` (no 4).
+  void clear_intensities_bytes() & noexcept {
     set_fields_[1] = false;
-    intensities_ = {};
+    intensities_bytes_ = {};
   }
 
-  /// Sets `intensities` (no 3) and returns `*this`.
-  CalibrationMap& set_intensities(CowSpan<float>&& intensities) & noexcept {
+  /// Sets `intensities_bytes` (no 4) and returns `*this`.
+  CalibrationMap& set_intensities_bytes(CowBytes&& intensities_bytes) & noexcept {
     set_fields_[1] = true;
-    intensities_ = std::move(intensities);
+    intensities_bytes_ = std::move(intensities_bytes);
     return *this;
   }
-  /// Sets `intensities` (no 3) and returns `*this`.
-  CalibrationMap&& set_intensities(CowSpan<float>&& intensities) && noexcept {
-    return std::move(set_intensities(std::move(intensities)));
+  /// Sets `intensities_bytes` (no 4) and returns `*this`.
+  CalibrationMap&& set_intensities_bytes(CowBytes&& intensities_bytes) && noexcept {
+    return std::move(set_intensities_bytes(std::move(intensities_bytes)));
   }
 
  private:
   /// @see map_points()
   CowSpan<float> map_points_{};
-  /// @see intensities()
-  CowSpan<float> intensities_{};
+  /// @see intensities_bytes()
+  CowBytes intensities_bytes_{};
 
   /// The set of fields that have been given an explicit value.
   std::bitset<2> set_fields_;

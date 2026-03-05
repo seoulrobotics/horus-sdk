@@ -8,7 +8,7 @@ namespace pb {
 
 CalibrationMap::CalibrationMap(const CalibrationMap& other) noexcept(false)
     : map_points_{other.map_points_}
-    , intensities_{other.intensities_}
+    , intensities_bytes_{other.intensities_bytes_}
     , set_fields_{other.set_fields_} {}
 
 void CalibrationMap::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -16,7 +16,7 @@ void CalibrationMap::SerializeTo(PbWriter& writer) const noexcept(false) {
     SerializeField<CowSpan<float>, PbDeserFlags::kFixed>(writer, /*tag=*/ 2, map_points_);
   }
   if (set_fields_[1]) {
-    SerializeField<CowSpan<float>, PbDeserFlags::kFixed>(writer, /*tag=*/ 3, intensities_);
+    SerializeField<CowBytes>(writer, /*tag=*/ 4, intensities_bytes_);
   }
 }
 
@@ -28,8 +28,8 @@ void CalibrationMap::DeserializeFrom(PbReader& reader) noexcept(false) {
         set_fields_[0] = true;
         break;
       }
-      case 3: {
-        DeserializeField<CowSpan<float>, PbDeserFlags::kFixed>(reader, intensities_);
+      case 4: {
+        DeserializeField<CowBytes>(reader, intensities_bytes_);
         set_fields_[1] = true;
         break;
       }

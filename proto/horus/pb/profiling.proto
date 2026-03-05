@@ -4,6 +4,8 @@ package horus.pb;
 
 import "horus/pb/config/metadata.proto";
 
+import "horus/pb/resources.proto";
+
 /// A profiling set.
 message ProfilingSet {
   enum ProfiledService {
@@ -36,16 +38,9 @@ message ProfilingSet {
   message ProfiledDurationMapEntry { string key = 1; ProfiledDuration value = 2; }
   repeated ProfiledDurationMapEntry processing_times = 2;
 
-  message ResourceUsage {
-    /// CPU usage of the service in percentage.
-    /// The percentage can be above 100% if multiple cores are used.
-    uint32 cpu_usage_percentage = 1;
-    /// Memory usage of the service in bytes.
-    uint64 memory_usage = 2;
-  }
-
   /// Resource usage profiling of the service.
-  optional ResourceUsage resource_usage = 3;
+  reserved 3;  // replaced by shared resource usage.
+  optional ResourceUsage resource_usage = 4;
 }
 
 /// The profiling of a service including the total service latency (total

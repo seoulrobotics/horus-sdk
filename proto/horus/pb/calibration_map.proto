@@ -7,5 +7,9 @@ message CalibrationMap {
 
   // Packed 3D points (x, y, z)
   repeated float map_points = 2;
-  repeated float intensities = 3;
+
+  reserved 3;  // repeated float intensities = 3;
+
+  // Packed uint16 intensity values (2 bytes per point, little-endian)
+  bytes intensities_bytes = 4;
 }

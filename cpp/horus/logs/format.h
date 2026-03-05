@@ -614,13 +614,13 @@ void HorusStringify(const ErasedSink& sink, const PlyFileWriteFailedError& data)
 void HorusStringify(const ErasedSink& sink, const ProjectSaveError& data);
 
 /// Formats the log `logs::SaveStaticEnvironmentSuccess` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const SaveStaticEnvironmentSuccess& data);
+void HorusStringify(const ErasedSink& sink, const SaveStaticEnvironmentSuccess& /*data*/);
 
 /// Formats the log `logs::SaveStaticEnvironmentFailed` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const SaveStaticEnvironmentFailed& data);
 
 /// Formats the log `logs::LoadStaticEnvironmentSuccess` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const LoadStaticEnvironmentSuccess& data);
+void HorusStringify(const ErasedSink& sink, const LoadStaticEnvironmentSuccess& /*data*/);
 
 /// Formats the log `logs::LoadStaticEnvironmentFailed` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const LoadStaticEnvironmentFailed& data);
@@ -673,6 +673,12 @@ void HorusStringify(const ErasedSink& sink, const TrackCapacityExceededWarning& 
 /// Formats the log `logs::TrackerStatePathUnavailableWarning` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const TrackerStatePathUnavailableWarning& data);
 
+/// Formats the log `logs::TrackerStateRecoveryError` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const TrackerStateRecoveryError& data);
+
+/// Formats the log `logs::TrackerStateSaveError` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const TrackerStateSaveError& data);
+
 /// Formats the log `logs::TrackerIdRecoveryFailedError` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const TrackerIdRecoveryFailedError& data);
 
@@ -684,6 +690,18 @@ void HorusStringify(const ErasedSink& sink, const CircularRecordingSnapshotCreat
 
 /// Formats the log `logs::CircularRecordingFileOperationError` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const CircularRecordingFileOperationError& data);
+
+/// Formats the log `logs::ObjectIdRecoveryRejectedInfo` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const ObjectIdRecoveryRejectedInfo& data);
+
+/// Formats the log `logs::ExpiredRecoveryIdsInfo` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const ExpiredRecoveryIdsInfo& data);
+
+/// Formats the log `logs::HesaiUdpReceiverInfo` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const HesaiUdpReceiverInfo& data);
+
+/// Formats the log `logs::DbCommitFailed` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const DbCommitFailed& data);
 
 }  // namespace logs
 

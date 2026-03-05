@@ -6,6 +6,7 @@
 #define HORUS_STRINGS_ANSI_H_
 
 #include <cstddef>
+#include <type_traits>
 
 #include "horus/strings/str_cat.h"
 #include "horus/strings/string_view.h"
@@ -36,14 +37,14 @@ constexpr ColoredFormat<T> Colored(StringView escape_sequence, const T& value) n
 }
 
 /// Returns the expected size of formatting `value`.
-template <class T>
-constexpr void HorusStringifySize(const ColoredFormat<T>& value) noexcept {
+template <class T, std::enable_if_t<horus_internal::HasStringifySize<T>::value>* = nullptr>
+constexpr std::size_t HorusStringifySize(const ColoredFormat<T>& value) noexcept {
   // Assuming that colors are enabled...
-  constexpr std::size_t kFormattingSize{2 * 2 + 2};  // "\e[" x2, "0m"
+  constexpr std::size_t kFormattingSize{2 + 1 + 4};  // "\e[" "m" "\e[0m"
   return kFormattingSize + value.escape_sequence.size() + StrExpectedSize(value.value);
 }
 
-/// Appends `count` characters `pad` to the given `sink`.
+/// Appends `value` to `sink`, adding colors as specified.
 template <class Sink, class T>
 constexpr void HorusStringify(Sink& sink, const ColoredFormat<T>& value) noexcept(
     noexcept(HorusStringify(sink, value.value))) {

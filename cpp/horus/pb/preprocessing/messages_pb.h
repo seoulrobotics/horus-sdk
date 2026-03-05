@@ -85,6 +85,18 @@ enum class SensorStatus : PbEnum {  // NOLINT(*-enum-size)
   kUnknownWireValue = 257,
 };
 
+/// Reference alignment type for tilt detector.
+///  Indicates which reference is being used by the tilt detector.
+///
+/// Source: horus/pb/preprocessing/messages.proto:77:1
+enum class ReferenceAlignmentType : PbEnum {  // NOLINT(*-enum-size)
+  /// No documentation.
+  kUnspecified = 0,
+
+  /// Unknown value read from the wire.
+  kUnknownWireValue = 1,
+};
+
 // MARK: Message forward declarations
 
 class OccupancyGrid;
@@ -673,7 +685,7 @@ class OccupancyGridEvent final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:86:3
+/// Source: horus/pb/preprocessing/messages.proto:96:3
 class SensorInfo_PoseCorrection final : public PbMessage {
  public:
 
@@ -835,7 +847,7 @@ class SensorInfo_PoseCorrection final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:75:1
+/// Source: horus/pb/preprocessing/messages.proto:81:1
 class SensorInfo final : public PbMessage {
  public:
   /// @see SensorInfo_PoseCorrection
@@ -937,6 +949,56 @@ class SensorInfo final : public PbMessage {
     return std::move(set_lidar_id(std::move(lidar_id)));
   }
 
+  // Field `lidar_name` (no 8).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 8.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 8.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 8.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 8) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_name` (no 8).
+  void clear_lidar_name() & noexcept {
+    set_fields_[1] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 8) and returns `*this`.
+  SensorInfo& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[1] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 8) and returns `*this`.
+  SensorInfo&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
   // Field `status` (no 2).
   // -----
 
@@ -951,22 +1013,22 @@ class SensorInfo final : public PbMessage {
   ///
   /// Field no: 2.
   std::uint32_t& mutable_status() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[1] = true;
+    set_fields_[2] = true;
     return status_;
   }
 
   /// Returns whether `status` (no 2) is set.
-  constexpr bool has_status() const noexcept { return set_fields_[1]; }
+  constexpr bool has_status() const noexcept { return set_fields_[2]; }
 
   /// Clears `status` (no 2).
   void clear_status() & noexcept {
-    set_fields_[1] = false;
+    set_fields_[2] = false;
     status_ = {};
   }
 
   /// Sets `status` (no 2) and returns `*this`.
   SensorInfo& set_status(std::uint32_t status) & noexcept {
-    set_fields_[1] = true;
+    set_fields_[2] = true;
     status_ = status;
     return *this;
   }
@@ -989,22 +1051,22 @@ class SensorInfo final : public PbMessage {
   ///
   /// Field no: 3.
   double& mutable_measured_frequency() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[2] = true;
+    set_fields_[3] = true;
     return measured_frequency_;
   }
 
   /// Returns whether `measured_frequency` (no 3) is set.
-  constexpr bool has_measured_frequency() const noexcept { return set_fields_[2]; }
+  constexpr bool has_measured_frequency() const noexcept { return set_fields_[3]; }
 
   /// Clears `measured_frequency` (no 3).
   void clear_measured_frequency() & noexcept {
-    set_fields_[2] = false;
+    set_fields_[3] = false;
     measured_frequency_ = {};
   }
 
   /// Sets `measured_frequency` (no 3) and returns `*this`.
   SensorInfo& set_measured_frequency(double measured_frequency) & noexcept {
-    set_fields_[2] = true;
+    set_fields_[3] = true;
     measured_frequency_ = measured_frequency;
     return *this;
   }
@@ -1029,7 +1091,7 @@ class SensorInfo final : public PbMessage {
   ///
   /// Field no: 4.
   SensorInfo_PoseCorrection pose_correction() && noexcept {
-    if (!set_fields_[3]) {
+    if (!set_fields_[4]) {
       return {};
     }
     return std::move(pose_correction_);
@@ -1039,22 +1101,22 @@ class SensorInfo final : public PbMessage {
   ///
   /// Field no: 4.
   SensorInfo_PoseCorrection& mutable_pose_correction() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[3] = true;
+    set_fields_[4] = true;
     return pose_correction_;
   }
 
   /// Returns whether `pose_correction` (no 4) is set.
-  constexpr bool has_pose_correction() const noexcept { return set_fields_[3]; }
+  constexpr bool has_pose_correction() const noexcept { return set_fields_[4]; }
 
   /// Clears `pose_correction` (no 4).
   void clear_pose_correction() & noexcept {
-    set_fields_[3] = false;
+    set_fields_[4] = false;
     pose_correction_ = {};
   }
 
   /// Sets `pose_correction` (no 4) and returns `*this`.
   SensorInfo& set_pose_correction(SensorInfo_PoseCorrection&& pose_correction) & noexcept {
-    set_fields_[3] = true;
+    set_fields_[4] = true;
     pose_correction_ = std::move(pose_correction);
     return *this;
   }
@@ -1077,22 +1139,22 @@ class SensorInfo final : public PbMessage {
   ///
   /// Field no: 5.
   std::uint64_t& mutable_num_total_dropped_packets() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[4] = true;
+    set_fields_[5] = true;
     return num_total_dropped_packets_;
   }
 
   /// Returns whether `num_total_dropped_packets` (no 5) is set.
-  constexpr bool has_num_total_dropped_packets() const noexcept { return set_fields_[4]; }
+  constexpr bool has_num_total_dropped_packets() const noexcept { return set_fields_[5]; }
 
   /// Clears `num_total_dropped_packets` (no 5).
   void clear_num_total_dropped_packets() & noexcept {
-    set_fields_[4] = false;
+    set_fields_[5] = false;
     num_total_dropped_packets_ = {};
   }
 
   /// Sets `num_total_dropped_packets` (no 5) and returns `*this`.
   SensorInfo& set_num_total_dropped_packets(std::uint64_t num_total_dropped_packets) & noexcept {
-    set_fields_[4] = true;
+    set_fields_[5] = true;
     num_total_dropped_packets_ = num_total_dropped_packets;
     return *this;
   }
@@ -1115,22 +1177,22 @@ class SensorInfo final : public PbMessage {
   ///
   /// Field no: 6.
   std::uint64_t& mutable_num_total_expected_packets() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[5] = true;
+    set_fields_[6] = true;
     return num_total_expected_packets_;
   }
 
   /// Returns whether `num_total_expected_packets` (no 6) is set.
-  constexpr bool has_num_total_expected_packets() const noexcept { return set_fields_[5]; }
+  constexpr bool has_num_total_expected_packets() const noexcept { return set_fields_[6]; }
 
   /// Clears `num_total_expected_packets` (no 6).
   void clear_num_total_expected_packets() & noexcept {
-    set_fields_[5] = false;
+    set_fields_[6] = false;
     num_total_expected_packets_ = {};
   }
 
   /// Sets `num_total_expected_packets` (no 6) and returns `*this`.
   SensorInfo& set_num_total_expected_packets(std::uint64_t num_total_expected_packets) & noexcept {
-    set_fields_[5] = true;
+    set_fields_[6] = true;
     num_total_expected_packets_ = num_total_expected_packets;
     return *this;
   }
@@ -1139,9 +1201,49 @@ class SensorInfo final : public PbMessage {
     return std::move(set_num_total_expected_packets(num_total_expected_packets));
   }
 
+  // Field `reference_alignment` (no 7).
+  // -----
+
+  /// Reference alignment type when tilt detector is enabled.
+  ///
+  /// Field no: 7.
+  constexpr ReferenceAlignmentType reference_alignment() const& noexcept HORUS_LIFETIME_BOUND {
+    return reference_alignment_;
+  }
+
+  /// Reference alignment type when tilt detector is enabled.
+  ///
+  /// Field no: 7.
+  ReferenceAlignmentType& mutable_reference_alignment() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[7] = true;
+    return reference_alignment_;
+  }
+
+  /// Returns whether `reference_alignment` (no 7) is set.
+  constexpr bool has_reference_alignment() const noexcept { return set_fields_[7]; }
+
+  /// Clears `reference_alignment` (no 7).
+  void clear_reference_alignment() & noexcept {
+    set_fields_[7] = false;
+    reference_alignment_ = {};
+  }
+
+  /// Sets `reference_alignment` (no 7) and returns `*this`.
+  SensorInfo& set_reference_alignment(ReferenceAlignmentType reference_alignment) & noexcept {
+    set_fields_[7] = true;
+    reference_alignment_ = reference_alignment;
+    return *this;
+  }
+  /// Sets `reference_alignment` (no 7) and returns `*this`.
+  SensorInfo&& set_reference_alignment(ReferenceAlignmentType reference_alignment) && noexcept {
+    return std::move(set_reference_alignment(reference_alignment));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
   /// @see status()
   std::uint32_t status_{};
   /// @see measured_frequency()
@@ -1152,9 +1254,11 @@ class SensorInfo final : public PbMessage {
   std::uint64_t num_total_dropped_packets_{};
   /// @see num_total_expected_packets()
   std::uint64_t num_total_expected_packets_{};
+  /// @see reference_alignment()
+  ReferenceAlignmentType reference_alignment_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<6> set_fields_;
+  std::bitset<8> set_fields_;
 };
 
 }  // namespace pb
@@ -1390,6 +1494,45 @@ class PbTraits<horus::sdk::pb::SensorStatus> final {
   }
 };
 
+template <>
+class PbEnumTraits<horus::sdk::pb::ReferenceAlignmentType> final {
+ public:
+  /// The full name of the enum: `horus.sdk.pb.ReferenceAlignmentType`.
+  static constexpr StringView EnumName() noexcept { return "horus.sdk.pb.ReferenceAlignmentType"; }
+
+  /// Returns the name of the given enumerator, or an empty string.
+  static constexpr StringView NameOf(horus::sdk::pb::ReferenceAlignmentType value) noexcept {
+    return value == horus::sdk::pb::ReferenceAlignmentType::kUnspecified ? "REFERENCE_ALIGNMENT_TYPE_UNSPECIFIED" : "";
+  }
+
+  /// Returns the value corresponding to the given name, or `default_value`.
+  static constexpr horus::sdk::pb::ReferenceAlignmentType ValueOf(PbEnum value, horus::sdk::pb::ReferenceAlignmentType default_value = horus::sdk::pb::ReferenceAlignmentType::kUnknownWireValue) noexcept {
+    return value == 0 ? horus::sdk::pb::ReferenceAlignmentType::kUnspecified : default_value;
+  }
+
+  /// Returns the value corresponding to the given name, or `default_value`.
+  static constexpr horus::sdk::pb::ReferenceAlignmentType ValueOf(StringView name, horus::sdk::pb::ReferenceAlignmentType default_value = horus::sdk::pb::ReferenceAlignmentType::kUnknownWireValue) noexcept {
+    if (name == "REFERENCE_ALIGNMENT_TYPE_UNSPECIFIED") {
+      return horus::sdk::pb::ReferenceAlignmentType::kUnspecified;
+    }
+    return default_value;
+  }
+};
+
+template <>
+class PbTraits<horus::sdk::pb::ReferenceAlignmentType> final {
+ public:
+  /// Serializes `value` into `writer`.
+  static void Serialize(PbWriter& writer, PbTag tag, horus::sdk::pb::ReferenceAlignmentType value) {
+    writer.Writer().add_enum(tag, static_cast<PbEnum>(value));
+  }
+
+  /// Deserializes `horus::sdk::pb::ReferenceAlignmentType` from `reader`.
+  static horus::sdk::pb::ReferenceAlignmentType Deserialize(PbReader& reader) {
+    return PbEnumTraits<horus::sdk::pb::ReferenceAlignmentType>::ValueOf(reader.Reader().get_enum());
+  }
+};
+
 }  // namespace horus
 
 namespace horus {
@@ -1406,6 +1549,12 @@ void HorusStringify(Sink& sink, OccupancyClassification value) noexcept(noexcept
 template <class Sink>
 void HorusStringify(Sink& sink, SensorStatus value) noexcept(noexcept(sink.Append(StringView{}))) {
   sink.Append(PbEnumTraits<SensorStatus>::NameOf(value));
+}
+
+/// Appends `value` to `sink`.
+template <class Sink>
+void HorusStringify(Sink& sink, ReferenceAlignmentType value) noexcept(noexcept(sink.Append(StringView{}))) {
+  sink.Append(PbEnumTraits<ReferenceAlignmentType>::NameOf(value));
 }
 
 }  // namespace pb

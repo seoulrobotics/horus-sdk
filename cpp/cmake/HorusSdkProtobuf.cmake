@@ -49,6 +49,8 @@ set(horus_sdk_pb_sources
   horus/pb/project_manager/service_handler.h
   horus/pb/project_manager/service_pb.cpp
   horus/pb/project_manager/service_pb.h
+  horus/pb/resources_pb.cpp
+  horus/pb/resources_pb.h
   horus/pb/rpc/message_pb.cpp
   horus/pb/rpc/message_pb.h
   horus/pb/rpc_pb.cpp

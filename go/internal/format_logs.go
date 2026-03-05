@@ -399,13 +399,13 @@ func FormatAnyLogMessage(message proto.Message) string {
 	case *logs_pb.ProjectSaveError:
 		return fmt.Sprintf("Failed to save project: %v.", data.GetErrorMessage())
 	case *logs_pb.SaveStaticEnvironmentSuccess:
-		return fmt.Sprintf("Saved static environment to %v", data.GetPath())
+		return "Saved static environment"
 	case *logs_pb.SaveStaticEnvironmentFailed:
-		return fmt.Sprintf("Failed to serialize static environment to %v: %v", data.GetPath(), data.GetDetails())
+		return fmt.Sprintf("Failed to save static environment: %v", data.GetDetails())
 	case *logs_pb.LoadStaticEnvironmentSuccess:
-		return fmt.Sprintf("Static environment loaded from %v", data.GetPath())
+		return "Loaded static environment"
 	case *logs_pb.LoadStaticEnvironmentFailed:
-		return fmt.Sprintf("Failed to load static environment from %v: %v", data.GetPath(), data.GetDetails())
+		return fmt.Sprintf("Failed to load static environment: %v", data.GetDetails())
 	case *logs_pb.AttemptToInjectInvalidLidarIdWarning:
 		return fmt.Sprintf("Attempt to inject invalid lidar ID %v into the system.", data.GetLidarId())
 	case *logs_pb.ResetBundledPacketDueToUnexpectedPacket:
@@ -438,6 +438,10 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return fmt.Sprintf("Track storage capacity exceeded: attempted to store %v tracks, limit is %v", data.GetAttemptedCount(), data.GetMaxTracks())
 	case *logs_pb.TrackerStatePathUnavailableWarning:
 		return fmt.Sprintf("Tracker state file path unavailable for project: %v", data.GetProjectName())
+	case *logs_pb.TrackerStateRecoveryError:
+		return fmt.Sprintf("Failed to recover saved tracker state: %v", data.GetErrorMessage())
+	case *logs_pb.TrackerStateSaveError:
+		return fmt.Sprintf("Failed to save tracker state: %v", data.GetErrorMessage())
 	case *logs_pb.TrackerIdRecoveryFailedError:
 		return fmt.Sprintf("Failed to recover tracker ID %v: %v", data.GetId(), data.GetErrorMessage())
 	case *logs_pb.TrackerIdFastForwardFailedError:
@@ -446,6 +450,14 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return fmt.Sprintf("Circular recording snapshot created with %v messages covering %v seconds of data", data.GetMessageCount(), data.GetActualDurationSeconds())
 	case *logs_pb.CircularRecordingFileOperationError:
 		return fmt.Sprintf("Circular recording file operation failed: %v on %v - %v", data.GetOperation(), data.GetFilePath(), data.GetDetails())
+	case *logs_pb.ObjectIdRecoveryRejectedInfo:
+		return fmt.Sprintf("Recovery candidate with ID %v was rejected this frame because %v. Will attempt again next frame.", data.GetId(), data.GetReason())
+	case *logs_pb.ExpiredRecoveryIdsInfo:
+		return fmt.Sprintf("The following recovery candidate IDs have expired and will not be used for recovery: %v.", data.GetExpiredIds())
+	case *logs_pb.HesaiUdpReceiverInfo:
+		return fmt.Sprintf("[%v][%v] Hesai UDP receiver %v.", data.GetLidarName(), data.GetLidarId(), data.GetAction())
+	case *logs_pb.DbCommitFailed:
+		return fmt.Sprintf("Failed to %v in Horus database: %v.", data.GetAction(), data.GetError())
 	default:
 		return "unknown log message"
 	}

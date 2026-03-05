@@ -887,6 +887,14 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     logs::HorusStringify(sink, log_data.tracker_state_path_unavailable_warning());
     break;
   }
+  case LogData::DataOneof::kTrackerStateRecoveryError: {
+    logs::HorusStringify(sink, log_data.tracker_state_recovery_error());
+    break;
+  }
+  case LogData::DataOneof::kTrackerStateSaveError: {
+    logs::HorusStringify(sink, log_data.tracker_state_save_error());
+    break;
+  }
   case LogData::DataOneof::kTrackerIdRecoveryFailedError: {
     logs::HorusStringify(sink, log_data.tracker_id_recovery_failed_error());
     break;
@@ -901,6 +909,22 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
   }
   case LogData::DataOneof::kCircularRecordingFileOperationError: {
     logs::HorusStringify(sink, log_data.circular_recording_file_operation_error());
+    break;
+  }
+  case LogData::DataOneof::kObjectIdRecoveryRejectedInfo: {
+    logs::HorusStringify(sink, log_data.object_id_recovery_rejected_info());
+    break;
+  }
+  case LogData::DataOneof::kExpiredRecoveryIdsInfo: {
+    logs::HorusStringify(sink, log_data.expired_recovery_ids_info());
+    break;
+  }
+  case LogData::DataOneof::kHesaiUdpReceiverInfo: {
+    logs::HorusStringify(sink, log_data.hesai_udp_receiver_info());
+    break;
+  }
+  case LogData::DataOneof::kDbCommitFailed: {
+    logs::HorusStringify(sink, log_data.db_commit_failed());
     break;
   }
   case LogData::DataOneof::kNotSet:
@@ -1689,20 +1713,20 @@ void HorusStringify(const ErasedSink& sink, const ProjectSaveError& data) {
   StringifyTo(sink, "Failed to save project: ", data.error_message(), ".");
 }
 
-void HorusStringify(const ErasedSink& sink, const SaveStaticEnvironmentSuccess& data) {
-  StringifyTo(sink, "Saved static environment to ", data.path());
+void HorusStringify(const ErasedSink& sink, const SaveStaticEnvironmentSuccess& /*data*/) {
+  StringifyTo(sink, "Saved static environment");
 }
 
 void HorusStringify(const ErasedSink& sink, const SaveStaticEnvironmentFailed& data) {
-  StringifyTo(sink, "Failed to serialize static environment to ", data.path(), ": ", data.details());
+  StringifyTo(sink, "Failed to save static environment: ", data.details());
 }
 
-void HorusStringify(const ErasedSink& sink, const LoadStaticEnvironmentSuccess& data) {
-  StringifyTo(sink, "Static environment loaded from ", data.path());
+void HorusStringify(const ErasedSink& sink, const LoadStaticEnvironmentSuccess& /*data*/) {
+  StringifyTo(sink, "Loaded static environment");
 }
 
 void HorusStringify(const ErasedSink& sink, const LoadStaticEnvironmentFailed& data) {
-  StringifyTo(sink, "Failed to load static environment from ", data.path(), ": ", data.details());
+  StringifyTo(sink, "Failed to load static environment: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const AttemptToInjectInvalidLidarIdWarning& data) {
@@ -1769,6 +1793,14 @@ void HorusStringify(const ErasedSink& sink, const TrackerStatePathUnavailableWar
   StringifyTo(sink, "Tracker state file path unavailable for project: ", data.project_name());
 }
 
+void HorusStringify(const ErasedSink& sink, const TrackerStateRecoveryError& data) {
+  StringifyTo(sink, "Failed to recover saved tracker state: ", data.error_message());
+}
+
+void HorusStringify(const ErasedSink& sink, const TrackerStateSaveError& data) {
+  StringifyTo(sink, "Failed to save tracker state: ", data.error_message());
+}
+
 void HorusStringify(const ErasedSink& sink, const TrackerIdRecoveryFailedError& data) {
   StringifyTo(sink, "Failed to recover tracker ID ", data.id(), ": ", data.error_message());
 }
@@ -1783,6 +1815,22 @@ void HorusStringify(const ErasedSink& sink, const CircularRecordingSnapshotCreat
 
 void HorusStringify(const ErasedSink& sink, const CircularRecordingFileOperationError& data) {
   StringifyTo(sink, "Circular recording file operation failed: ", data.operation(), " on ", data.file_path(), " - ", data.details());
+}
+
+void HorusStringify(const ErasedSink& sink, const ObjectIdRecoveryRejectedInfo& data) {
+  StringifyTo(sink, "Recovery candidate with ID ", data.id(), " was rejected this frame because ", data.reason(), ". Will attempt again next frame.");
+}
+
+void HorusStringify(const ErasedSink& sink, const ExpiredRecoveryIdsInfo& data) {
+  StringifyTo(sink, "The following recovery candidate IDs have expired and will not be used for recovery: ", data.expired_ids(), ".");
+}
+
+void HorusStringify(const ErasedSink& sink, const HesaiUdpReceiverInfo& data) {
+  StringifyTo(sink, "[", data.lidar_name(), "][", data.lidar_id(), "] Hesai UDP receiver ", data.action(), ".");
+}
+
+void HorusStringify(const ErasedSink& sink, const DbCommitFailed& data) {
+  StringifyTo(sink, "Failed to ", data.action(), " in Horus database: ", data.error(), ".");
 }
 
 }  // namespace logs
