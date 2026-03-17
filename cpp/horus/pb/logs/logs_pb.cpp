@@ -6506,6 +6506,67 @@ void DbCommitFailed::DeserializeFrom(PbReader& reader) noexcept(false) {
   }
 }
 
+DetectionServiceRpcQueueFull::DetectionServiceRpcQueueFull(const DetectionServiceRpcQueueFull& other) noexcept(false)
+    : num_packets_{other.num_packets_}
+    , queue_size_{other.queue_size_}
+    , set_fields_{other.set_fields_} {}
+
+void DetectionServiceRpcQueueFull::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<std::uint64_t>(writer, /*tag=*/ 1, num_packets_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<std::uint64_t>(writer, /*tag=*/ 2, queue_size_);
+  }
+}
+
+void DetectionServiceRpcQueueFull::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<std::uint64_t>(reader, num_packets_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<std::uint64_t>(reader, queue_size_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+ProjectMigrationFailed::ProjectMigrationFailed(const ProjectMigrationFailed& other) noexcept(false)
+    : details_{other.details_}
+    , set_fields_{other.set_fields_} {}
+
+void ProjectMigrationFailed::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, details_);
+  }
+}
+
+void ProjectMigrationFailed::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, details_);
+        set_fields_[0] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
 }  // namespace logs
 }  // namespace pb
 }  // namespace sdk

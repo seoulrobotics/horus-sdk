@@ -258,6 +258,8 @@ class ObjectIdRecoveryRejectedInfo;
 class ExpiredRecoveryIdsInfo;
 class HesaiUdpReceiverInfo;
 class DbCommitFailed;
+class DetectionServiceRpcQueueFull;
+class ProjectMigrationFailed;
 
 // MARK: Message declarations
 
@@ -31415,6 +31417,258 @@ class DbCommitFailed final : public PbMessage {
 
   /// The set of fields that have been given an explicit value.
   std::bitset<2> set_fields_;
+};
+
+/// Log #226.
+/// 
+///  > Dropping $num_packets buffered packet(s) because the detection service RPC queue is full (queue size: $queue_size).
+///
+/// Source: horus/pb/logs/logs.proto:1704:1
+class DetectionServiceRpcQueueFull final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `DetectionServiceRpcQueueFull`.
+  DetectionServiceRpcQueueFull() noexcept = default;
+
+  /// Move constructor.
+  DetectionServiceRpcQueueFull(DetectionServiceRpcQueueFull&&) noexcept = default;
+  /// Move assignment operator.
+  DetectionServiceRpcQueueFull& operator=(DetectionServiceRpcQueueFull&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit DetectionServiceRpcQueueFull(const DetectionServiceRpcQueueFull& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  DetectionServiceRpcQueueFull& operator=(const DetectionServiceRpcQueueFull&) = delete;
+
+  /// Default destructor.
+  ~DetectionServiceRpcQueueFull() noexcept final = default;
+
+  /// Creates a `DetectionServiceRpcQueueFull` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit DetectionServiceRpcQueueFull(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.DetectionServiceRpcQueueFull`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.DetectionServiceRpcQueueFull"; }
+
+  /// The full name of the message: `horus.pb.logs.DetectionServiceRpcQueueFull`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `num_packets` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr std::uint64_t num_packets() const& noexcept HORUS_LIFETIME_BOUND {
+    return num_packets_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  std::uint64_t& mutable_num_packets() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return num_packets_;
+  }
+
+  /// Returns whether `num_packets` (no 1) is set.
+  constexpr bool has_num_packets() const noexcept { return set_fields_[0]; }
+
+  /// Clears `num_packets` (no 1).
+  void clear_num_packets() & noexcept {
+    set_fields_[0] = false;
+    num_packets_ = {};
+  }
+
+  /// Sets `num_packets` (no 1) and returns `*this`.
+  DetectionServiceRpcQueueFull& set_num_packets(std::uint64_t num_packets) & noexcept {
+    set_fields_[0] = true;
+    num_packets_ = num_packets;
+    return *this;
+  }
+  /// Sets `num_packets` (no 1) and returns `*this`.
+  DetectionServiceRpcQueueFull&& set_num_packets(std::uint64_t num_packets) && noexcept {
+    return std::move(set_num_packets(num_packets));
+  }
+
+  // Field `queue_size` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr std::uint64_t queue_size() const& noexcept HORUS_LIFETIME_BOUND {
+    return queue_size_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  std::uint64_t& mutable_queue_size() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return queue_size_;
+  }
+
+  /// Returns whether `queue_size` (no 2) is set.
+  constexpr bool has_queue_size() const noexcept { return set_fields_[1]; }
+
+  /// Clears `queue_size` (no 2).
+  void clear_queue_size() & noexcept {
+    set_fields_[1] = false;
+    queue_size_ = {};
+  }
+
+  /// Sets `queue_size` (no 2) and returns `*this`.
+  DetectionServiceRpcQueueFull& set_queue_size(std::uint64_t queue_size) & noexcept {
+    set_fields_[1] = true;
+    queue_size_ = queue_size;
+    return *this;
+  }
+  /// Sets `queue_size` (no 2) and returns `*this`.
+  DetectionServiceRpcQueueFull&& set_queue_size(std::uint64_t queue_size) && noexcept {
+    return std::move(set_queue_size(queue_size));
+  }
+
+ private:
+  /// @see num_packets()
+  std::uint64_t num_packets_{};
+  /// @see queue_size()
+  std::uint64_t queue_size_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// Log #227.
+/// 
+///  > Project migration failed: $details.
+///
+/// Source: horus/pb/logs/logs.proto:1712:1
+class ProjectMigrationFailed final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `ProjectMigrationFailed`.
+  ProjectMigrationFailed() noexcept = default;
+
+  /// Move constructor.
+  ProjectMigrationFailed(ProjectMigrationFailed&&) noexcept = default;
+  /// Move assignment operator.
+  ProjectMigrationFailed& operator=(ProjectMigrationFailed&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit ProjectMigrationFailed(const ProjectMigrationFailed& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  ProjectMigrationFailed& operator=(const ProjectMigrationFailed&) = delete;
+
+  /// Default destructor.
+  ~ProjectMigrationFailed() noexcept final = default;
+
+  /// Creates a `ProjectMigrationFailed` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit ProjectMigrationFailed(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.ProjectMigrationFailed`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.ProjectMigrationFailed"; }
+
+  /// The full name of the message: `horus.pb.logs.ProjectMigrationFailed`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `details` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& details() const& noexcept HORUS_LIFETIME_BOUND {
+    return details_;
+  }
+
+  /// If `details` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes details() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(details_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_details() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return details_;
+  }
+
+  /// Returns whether `details` (no 1) is set.
+  constexpr bool has_details() const noexcept { return set_fields_[0]; }
+
+  /// Clears `details` (no 1).
+  void clear_details() & noexcept {
+    set_fields_[0] = false;
+    details_ = {};
+  }
+
+  /// Sets `details` (no 1) and returns `*this`.
+  ProjectMigrationFailed& set_details(CowBytes&& details) & noexcept {
+    set_fields_[0] = true;
+    details_ = std::move(details);
+    return *this;
+  }
+  /// Sets `details` (no 1) and returns `*this`.
+  ProjectMigrationFailed&& set_details(CowBytes&& details) && noexcept {
+    return std::move(set_details(std::move(details)));
+  }
+
+ private:
+  /// @see details()
+  CowBytes details_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
 };
 
 }  // namespace logs

@@ -12410,6 +12410,116 @@ class LogData final : public PbMessage {
     return std::move(set_db_commit_failed(std::move(db_commit_failed)));
   }
 
+  // Field `detection_service_rpc_queue_full` (no 226).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 226.
+  constexpr const logs::DetectionServiceRpcQueueFull& detection_service_rpc_queue_full() const& noexcept HORUS_LIFETIME_BOUND {
+    return detection_service_rpc_queue_full_;
+  }
+
+  /// If `detection_service_rpc_queue_full` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 226.
+  logs::DetectionServiceRpcQueueFull detection_service_rpc_queue_full() && noexcept {
+    if (!set_fields_[224]) {
+      return {};
+    }
+    return std::move(detection_service_rpc_queue_full_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 226.
+  logs::DetectionServiceRpcQueueFull& mutable_detection_service_rpc_queue_full() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kDetectionServiceRpcQueueFull;
+    set_fields_[224] = true;
+    return detection_service_rpc_queue_full_;
+  }
+
+  /// Returns whether `detection_service_rpc_queue_full` (no 226) is set.
+  constexpr bool has_detection_service_rpc_queue_full() const noexcept { return set_fields_[224]; }
+
+  /// Clears `detection_service_rpc_queue_full` (no 226).
+  void clear_detection_service_rpc_queue_full() & noexcept {
+    data_ = {};
+    set_fields_[224] = false;
+    detection_service_rpc_queue_full_ = {};
+  }
+
+  /// Sets `detection_service_rpc_queue_full` (no 226) and returns `*this`.
+  LogData& set_detection_service_rpc_queue_full(logs::DetectionServiceRpcQueueFull&& detection_service_rpc_queue_full) & noexcept {
+    clear_data();
+    data_ = DataOneof::kDetectionServiceRpcQueueFull;
+    set_fields_[224] = true;
+    detection_service_rpc_queue_full_ = std::move(detection_service_rpc_queue_full);
+    return *this;
+  }
+  /// Sets `detection_service_rpc_queue_full` (no 226) and returns `*this`.
+  LogData&& set_detection_service_rpc_queue_full(logs::DetectionServiceRpcQueueFull&& detection_service_rpc_queue_full) && noexcept {
+    return std::move(set_detection_service_rpc_queue_full(std::move(detection_service_rpc_queue_full)));
+  }
+
+  // Field `project_migration_failed` (no 227).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 227.
+  constexpr const logs::ProjectMigrationFailed& project_migration_failed() const& noexcept HORUS_LIFETIME_BOUND {
+    return project_migration_failed_;
+  }
+
+  /// If `project_migration_failed` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 227.
+  logs::ProjectMigrationFailed project_migration_failed() && noexcept {
+    if (!set_fields_[225]) {
+      return {};
+    }
+    return std::move(project_migration_failed_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 227.
+  logs::ProjectMigrationFailed& mutable_project_migration_failed() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kProjectMigrationFailed;
+    set_fields_[225] = true;
+    return project_migration_failed_;
+  }
+
+  /// Returns whether `project_migration_failed` (no 227) is set.
+  constexpr bool has_project_migration_failed() const noexcept { return set_fields_[225]; }
+
+  /// Clears `project_migration_failed` (no 227).
+  void clear_project_migration_failed() & noexcept {
+    data_ = {};
+    set_fields_[225] = false;
+    project_migration_failed_ = {};
+  }
+
+  /// Sets `project_migration_failed` (no 227) and returns `*this`.
+  LogData& set_project_migration_failed(logs::ProjectMigrationFailed&& project_migration_failed) & noexcept {
+    clear_data();
+    data_ = DataOneof::kProjectMigrationFailed;
+    set_fields_[225] = true;
+    project_migration_failed_ = std::move(project_migration_failed);
+    return *this;
+  }
+  /// Sets `project_migration_failed` (no 227) and returns `*this`.
+  LogData&& set_project_migration_failed(logs::ProjectMigrationFailed&& project_migration_failed) && noexcept {
+    return std::move(set_project_migration_failed(std::move(project_migration_failed)));
+  }
+
   // Oneof `data`.
   // -----
 
@@ -12865,6 +12975,10 @@ class LogData final : public PbMessage {
     kHesaiUdpReceiverInfo = 222,
     /// @see db_commit_failed()
     kDbCommitFailed = 223,
+    /// @see detection_service_rpc_queue_full()
+    kDetectionServiceRpcQueueFull = 226,
+    /// @see project_migration_failed()
+    kProjectMigrationFailed = 227,
   };
 
   /// Returns the current case set in `data`.
@@ -13771,6 +13885,14 @@ class LogData final : public PbMessage {
         clear_db_commit_failed();
         break;
       }
+      case DataOneof::kDetectionServiceRpcQueueFull: {
+        clear_detection_service_rpc_queue_full();
+        break;
+      }
+      case DataOneof::kProjectMigrationFailed: {
+        clear_project_migration_failed();
+        break;
+      }
       case DataOneof::kNotSet:
       default:
         break;
@@ -14226,12 +14348,16 @@ class LogData final : public PbMessage {
   logs::HesaiUdpReceiverInfo hesai_udp_receiver_info_{};
   /// @see db_commit_failed()
   logs::DbCommitFailed db_commit_failed_{};
+  /// @see detection_service_rpc_queue_full()
+  logs::DetectionServiceRpcQueueFull detection_service_rpc_queue_full_{};
+  /// @see project_migration_failed()
+  logs::ProjectMigrationFailed project_migration_failed_{};
 
   /// @see data_case()
   DataOneof data_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<224> set_fields_;
+  std::bitset<226> set_fields_;
 };
 
 /// A log message notifying users about some status.

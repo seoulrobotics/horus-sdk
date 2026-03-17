@@ -231,6 +231,8 @@ LogData::LogData(const LogData& other) noexcept(false)
     , expired_recovery_ids_info_{other.expired_recovery_ids_info_}
     , hesai_udp_receiver_info_{other.hesai_udp_receiver_info_}
     , db_commit_failed_{other.db_commit_failed_}
+    , detection_service_rpc_queue_full_{other.detection_service_rpc_queue_full_}
+    , project_migration_failed_{other.project_migration_failed_}
     , data_{other.data_}
     , set_fields_{other.set_fields_} {}
 
@@ -906,6 +908,12 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[223]) {
     SerializeField<logs::DbCommitFailed>(writer, /*tag=*/ 223, db_commit_failed_);
+  }
+  if (set_fields_[224]) {
+    SerializeField<logs::DetectionServiceRpcQueueFull>(writer, /*tag=*/ 226, detection_service_rpc_queue_full_);
+  }
+  if (set_fields_[225]) {
+    SerializeField<logs::ProjectMigrationFailed>(writer, /*tag=*/ 227, project_migration_failed_);
   }
 }
 
@@ -2478,6 +2486,20 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
         data_ = DataOneof::kDbCommitFailed;
         DeserializeField<logs::DbCommitFailed>(reader, db_commit_failed_);
         set_fields_[223] = true;
+        break;
+      }
+      case 226: {
+        clear_data();
+        data_ = DataOneof::kDetectionServiceRpcQueueFull;
+        DeserializeField<logs::DetectionServiceRpcQueueFull>(reader, detection_service_rpc_queue_full_);
+        set_fields_[224] = true;
+        break;
+      }
+      case 227: {
+        clear_data();
+        data_ = DataOneof::kProjectMigrationFailed;
+        DeserializeField<logs::ProjectMigrationFailed>(reader, project_migration_failed_);
+        set_fields_[225] = true;
         break;
       }
       default: {

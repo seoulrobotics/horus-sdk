@@ -60,6 +60,7 @@ message PointFrame {
   // TODO(HRS-1898): This is kept until the frontend handles
   // decompression/dequantization
   optional AttributedPoints points = 9;
+
 }
 
 /// Point cloud data with attributes.

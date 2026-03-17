@@ -2166,6 +2166,24 @@ func (x *LogData) GetDbCommitFailed() *logs_pb.DbCommitFailed {
 	return nil
 }
 
+func (x *LogData) GetDetectionServiceRpcQueueFull() *logs_pb.DetectionServiceRpcQueueFull {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_DetectionServiceRpcQueueFull); ok {
+			return x.DetectionServiceRpcQueueFull
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetProjectMigrationFailed() *logs_pb.ProjectMigrationFailed {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_ProjectMigrationFailed); ok {
+			return x.ProjectMigrationFailed
+		}
+	}
+	return nil
+}
+
 func (x *LogData) SetGeneric(v *logs_pb.Generic) {
 	if v == nil {
 		x.xxx_hidden_Data = nil
@@ -3956,6 +3974,22 @@ func (x *LogData) SetDbCommitFailed(v *logs_pb.DbCommitFailed) {
 		return
 	}
 	x.xxx_hidden_Data = &logData_DbCommitFailed{v}
+}
+
+func (x *LogData) SetDetectionServiceRpcQueueFull(v *logs_pb.DetectionServiceRpcQueueFull) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_DetectionServiceRpcQueueFull{v}
+}
+
+func (x *LogData) SetProjectMigrationFailed(v *logs_pb.ProjectMigrationFailed) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_ProjectMigrationFailed{v}
 }
 
 func (x *LogData) HasData() bool {
@@ -5757,6 +5791,22 @@ func (x *LogData) HasDbCommitFailed() bool {
 	return ok
 }
 
+func (x *LogData) HasDetectionServiceRpcQueueFull() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_DetectionServiceRpcQueueFull)
+	return ok
+}
+
+func (x *LogData) HasProjectMigrationFailed() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_ProjectMigrationFailed)
+	return ok
+}
+
 func (x *LogData) ClearData() {
 	x.xxx_hidden_Data = nil
 }
@@ -7105,6 +7155,18 @@ func (x *LogData) ClearDbCommitFailed() {
 	}
 }
 
+func (x *LogData) ClearDetectionServiceRpcQueueFull() {
+	if _, ok := x.xxx_hidden_Data.(*logData_DetectionServiceRpcQueueFull); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearProjectMigrationFailed() {
+	if _, ok := x.xxx_hidden_Data.(*logData_ProjectMigrationFailed); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
 const LogData_Data_not_set_case case_LogData_Data = 0
 const LogData_Generic_case case_LogData_Data = 1
 const LogData_Oom_case case_LogData_Data = 2
@@ -7330,6 +7392,8 @@ const LogData_ObjectIdRecoveryRejectedInfo_case case_LogData_Data = 220
 const LogData_ExpiredRecoveryIdsInfo_case case_LogData_Data = 221
 const LogData_HesaiUdpReceiverInfo_case case_LogData_Data = 222
 const LogData_DbCommitFailed_case case_LogData_Data = 223
+const LogData_DetectionServiceRpcQueueFull_case case_LogData_Data = 226
+const LogData_ProjectMigrationFailed_case case_LogData_Data = 227
 
 func (x *LogData) WhichData() case_LogData_Data {
 	if x == nil {
@@ -7784,6 +7848,10 @@ func (x *LogData) WhichData() case_LogData_Data {
 		return LogData_HesaiUdpReceiverInfo_case
 	case *logData_DbCommitFailed:
 		return LogData_DbCommitFailed_case
+	case *logData_DetectionServiceRpcQueueFull:
+		return LogData_DetectionServiceRpcQueueFull_case
+	case *logData_ProjectMigrationFailed:
+		return LogData_ProjectMigrationFailed_case
 	default:
 		return LogData_Data_not_set_case
 	}
@@ -8017,6 +8085,8 @@ type LogData_builder struct {
 	ExpiredRecoveryIdsInfo                              *logs_pb.ExpiredRecoveryIdsInfo
 	HesaiUdpReceiverInfo                                *logs_pb.HesaiUdpReceiverInfo
 	DbCommitFailed                                      *logs_pb.DbCommitFailed
+	DetectionServiceRpcQueueFull                        *logs_pb.DetectionServiceRpcQueueFull
+	ProjectMigrationFailed                              *logs_pb.ProjectMigrationFailed
 	// -- end of xxx_hidden_Data
 }
 
@@ -8695,6 +8765,12 @@ func (b0 LogData_builder) Build() *LogData {
 	}
 	if b.DbCommitFailed != nil {
 		x.xxx_hidden_Data = &logData_DbCommitFailed{b.DbCommitFailed}
+	}
+	if b.DetectionServiceRpcQueueFull != nil {
+		x.xxx_hidden_Data = &logData_DetectionServiceRpcQueueFull{b.DetectionServiceRpcQueueFull}
+	}
+	if b.ProjectMigrationFailed != nil {
+		x.xxx_hidden_Data = &logData_ProjectMigrationFailed{b.ProjectMigrationFailed}
 	}
 	return m0
 }
@@ -9609,6 +9685,14 @@ type logData_DbCommitFailed struct {
 	DbCommitFailed *logs_pb.DbCommitFailed `protobuf:"bytes,223,opt,name=db_commit_failed,json=dbCommitFailed,proto3,oneof"`
 }
 
+type logData_DetectionServiceRpcQueueFull struct {
+	DetectionServiceRpcQueueFull *logs_pb.DetectionServiceRpcQueueFull `protobuf:"bytes,226,opt,name=detection_service_rpc_queue_full,json=detectionServiceRpcQueueFull,proto3,oneof"`
+}
+
+type logData_ProjectMigrationFailed struct {
+	ProjectMigrationFailed *logs_pb.ProjectMigrationFailed `protobuf:"bytes,227,opt,name=project_migration_failed,json=projectMigrationFailed,proto3,oneof"`
+}
+
 func (*logData_Generic) isLogData_Data() {}
 
 func (*logData_Oom) isLogData_Data() {}
@@ -10057,6 +10141,10 @@ func (*logData_HesaiUdpReceiverInfo) isLogData_Data() {}
 
 func (*logData_DbCommitFailed) isLogData_Data() {}
 
+func (*logData_DetectionServiceRpcQueueFull) isLogData_Data() {}
+
+func (*logData_ProjectMigrationFailed) isLogData_Data() {}
+
 var File_horus_pb_logs_message_proto protoreflect.FileDescriptor
 
 var file_horus_pb_logs_message_proto_rawDesc = []byte{
@@ -10072,7 +10160,7 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
 	0x12, 0x25, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11,
 	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x6f, 0x67, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x8a, 0xbc, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
+	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xe6, 0xbd, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
 	0x44, 0x61, 0x74, 0x61, 0x12, 0x32, 0x0a, 0x07, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62,
 	0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x48, 0x00, 0x52,
@@ -11576,8 +11664,22 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x61, 0x69, 0x6c, 0x65, 0x64, 0x18, 0xdf, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x68,
 	0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x44, 0x62, 0x43,
 	0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x48, 0x00, 0x52, 0x0e, 0x64,
-	0x62, 0x43, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x42, 0x06, 0x0a,
-	0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x62, 0x43, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x12, 0x76, 0x0a,
+	0x20, 0x64, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69,
+	0x63, 0x65, 0x5f, 0x72, 0x70, 0x63, 0x5f, 0x71, 0x75, 0x65, 0x75, 0x65, 0x5f, 0x66, 0x75, 0x6c,
+	0x6c, 0x18, 0xe2, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2b, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73,
+	0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x52, 0x70, 0x63, 0x51, 0x75, 0x65, 0x75,
+	0x65, 0x46, 0x75, 0x6c, 0x6c, 0x48, 0x00, 0x52, 0x1c, 0x64, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x52, 0x70, 0x63, 0x51, 0x75, 0x65, 0x75,
+	0x65, 0x46, 0x75, 0x6c, 0x6c, 0x12, 0x62, 0x0a, 0x18, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74,
+	0x5f, 0x6d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x66, 0x61, 0x69, 0x6c, 0x65,
+	0x64, 0x18, 0xe3, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x25, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73,
+	0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74,
+	0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x48,
+	0x00, 0x52, 0x16, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74,
+	0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_horus_pb_logs_message_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
@@ -11809,6 +11911,8 @@ var file_horus_pb_logs_message_proto_goTypes = []any{
 	(*logs_pb.ExpiredRecoveryIdsInfo)(nil),                              // 224: horus.pb.logs.ExpiredRecoveryIdsInfo
 	(*logs_pb.HesaiUdpReceiverInfo)(nil),                                // 225: horus.pb.logs.HesaiUdpReceiverInfo
 	(*logs_pb.DbCommitFailed)(nil),                                      // 226: horus.pb.logs.DbCommitFailed
+	(*logs_pb.DetectionServiceRpcQueueFull)(nil),                        // 227: horus.pb.logs.DetectionServiceRpcQueueFull
+	(*logs_pb.ProjectMigrationFailed)(nil),                              // 228: horus.pb.logs.ProjectMigrationFailed
 }
 var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	2,   // 0: horus.pb.LogMessage.metadata:type_name -> horus.pb.LogMetadata
@@ -12037,11 +12141,13 @@ var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	224, // 223: horus.pb.LogData.expired_recovery_ids_info:type_name -> horus.pb.logs.ExpiredRecoveryIdsInfo
 	225, // 224: horus.pb.LogData.hesai_udp_receiver_info:type_name -> horus.pb.logs.HesaiUdpReceiverInfo
 	226, // 225: horus.pb.LogData.db_commit_failed:type_name -> horus.pb.logs.DbCommitFailed
-	226, // [226:226] is the sub-list for method output_type
-	226, // [226:226] is the sub-list for method input_type
-	226, // [226:226] is the sub-list for extension type_name
-	226, // [226:226] is the sub-list for extension extendee
-	0,   // [0:226] is the sub-list for field type_name
+	227, // 226: horus.pb.LogData.detection_service_rpc_queue_full:type_name -> horus.pb.logs.DetectionServiceRpcQueueFull
+	228, // 227: horus.pb.LogData.project_migration_failed:type_name -> horus.pb.logs.ProjectMigrationFailed
+	228, // [228:228] is the sub-list for method output_type
+	228, // [228:228] is the sub-list for method input_type
+	228, // [228:228] is the sub-list for extension type_name
+	228, // [228:228] is the sub-list for extension extendee
+	0,   // [0:228] is the sub-list for field type_name
 }
 
 func init() { file_horus_pb_logs_message_proto_init() }
@@ -12274,6 +12380,8 @@ func file_horus_pb_logs_message_proto_init() {
 		(*logData_ExpiredRecoveryIdsInfo)(nil),
 		(*logData_HesaiUdpReceiverInfo)(nil),
 		(*logData_DbCommitFailed)(nil),
+		(*logData_DetectionServiceRpcQueueFull)(nil),
+		(*logData_ProjectMigrationFailed)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

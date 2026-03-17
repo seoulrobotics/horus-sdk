@@ -1697,3 +1697,18 @@ message DbCommitFailed {
   string action = 1;
   string error = 2;
 }
+
+// Log #226.
+//
+// > Dropping $num_packets buffered packet(s) because the detection service RPC queue is full (queue size: $queue_size).
+message DetectionServiceRpcQueueFull {
+  uint64 num_packets = 1;
+  uint64 queue_size = 2;
+}
+
+// Log #227.
+//
+// > Project migration failed: $details.
+message ProjectMigrationFailed {
+  string details = 1;
+}

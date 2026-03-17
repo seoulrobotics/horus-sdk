@@ -927,6 +927,14 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     logs::HorusStringify(sink, log_data.db_commit_failed());
     break;
   }
+  case LogData::DataOneof::kDetectionServiceRpcQueueFull: {
+    logs::HorusStringify(sink, log_data.detection_service_rpc_queue_full());
+    break;
+  }
+  case LogData::DataOneof::kProjectMigrationFailed: {
+    logs::HorusStringify(sink, log_data.project_migration_failed());
+    break;
+  }
   case LogData::DataOneof::kNotSet:
   default: {
     sink.Append("Unknown log message");
@@ -1831,6 +1839,14 @@ void HorusStringify(const ErasedSink& sink, const HesaiUdpReceiverInfo& data) {
 
 void HorusStringify(const ErasedSink& sink, const DbCommitFailed& data) {
   StringifyTo(sink, "Failed to ", data.action(), " in Horus database: ", data.error(), ".");
+}
+
+void HorusStringify(const ErasedSink& sink, const DetectionServiceRpcQueueFull& data) {
+  StringifyTo(sink, "Dropping ", data.num_packets(), " buffered packet(s) because the detection service RPC queue is full (queue size: ", data.queue_size(), ").");
+}
+
+void HorusStringify(const ErasedSink& sink, const ProjectMigrationFailed& data) {
+  StringifyTo(sink, "Project migration failed: ", data.details(), ".");
 }
 
 }  // namespace logs
