@@ -227,6 +227,8 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.EXPIRED_RECOVERY_IDS_INFO_FIELD_NUMBER: lambda m: format_expired_recovery_ids_info(m.expired_recovery_ids_info),
     LogData.HESAI_UDP_RECEIVER_INFO_FIELD_NUMBER: lambda m: format_hesai_udp_receiver_info(m.hesai_udp_receiver_info),
     LogData.DB_COMMIT_FAILED_FIELD_NUMBER: lambda m: format_db_commit_failed(m.db_commit_failed),
+    LogData.DETECTION_SERVICE_RPC_QUEUE_FULL_FIELD_NUMBER: lambda m: format_detection_service_rpc_queue_full(m.detection_service_rpc_queue_full),
+    LogData.PROJECT_MIGRATION_FAILED_FIELD_NUMBER: lambda m: format_project_migration_failed(m.project_migration_failed),
 }
 
 def _unknown_format(data: LogData) -> str:
@@ -1139,3 +1141,11 @@ def format_hesai_udp_receiver_info(log: _logs_pb.HesaiUdpReceiverInfo) -> str:
 def format_db_commit_failed(log: _logs_pb.DbCommitFailed) -> str:
     """Formats log `DbCommitFailed` to a string."""
     return f"Failed to {log.action} in Horus database: {log.error}."
+
+def format_detection_service_rpc_queue_full(log: _logs_pb.DetectionServiceRpcQueueFull) -> str:
+    """Formats log `DetectionServiceRpcQueueFull` to a string."""
+    return f"Dropping {log.num_packets} buffered packet(s) because the detection service RPC queue is full (queue size: {log.queue_size})."
+
+def format_project_migration_failed(log: _logs_pb.ProjectMigrationFailed) -> str:
+    """Formats log `ProjectMigrationFailed` to a string."""
+    return f"Project migration failed: {log.details}."

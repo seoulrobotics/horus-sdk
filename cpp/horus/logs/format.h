@@ -703,6 +703,12 @@ void HorusStringify(const ErasedSink& sink, const HesaiUdpReceiverInfo& data);
 /// Formats the log `logs::DbCommitFailed` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const DbCommitFailed& data);
 
+/// Formats the log `logs::DetectionServiceRpcQueueFull` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const DetectionServiceRpcQueueFull& data);
+
+/// Formats the log `logs::ProjectMigrationFailed` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const ProjectMigrationFailed& data);
+
 }  // namespace logs
 
 }  // namespace pb

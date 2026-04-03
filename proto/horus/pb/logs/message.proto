@@ -240,5 +240,7 @@ message LogData {
     logs.ExpiredRecoveryIdsInfo expired_recovery_ids_info = 221;
     logs.HesaiUdpReceiverInfo hesai_udp_receiver_info = 222;
     logs.DbCommitFailed db_commit_failed = 223;
+    logs.DetectionServiceRpcQueueFull detection_service_rpc_queue_full = 226;
+    logs.ProjectMigrationFailed project_migration_failed = 227;
   }
 }

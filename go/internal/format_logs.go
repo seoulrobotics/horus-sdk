@@ -458,6 +458,10 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return fmt.Sprintf("[%v][%v] Hesai UDP receiver %v.", data.GetLidarName(), data.GetLidarId(), data.GetAction())
 	case *logs_pb.DbCommitFailed:
 		return fmt.Sprintf("Failed to %v in Horus database: %v.", data.GetAction(), data.GetError())
+	case *logs_pb.DetectionServiceRpcQueueFull:
+		return fmt.Sprintf("Dropping %v buffered packet(s) because the detection service RPC queue is full (queue size: %v).", data.GetNumPackets(), data.GetQueueSize())
+	case *logs_pb.ProjectMigrationFailed:
+		return fmt.Sprintf("Project migration failed: %v.", data.GetDetails())
 	default:
 		return "unknown log message"
 	}

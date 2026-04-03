@@ -80,6 +80,11 @@ cmake --build build --target horus_sdk
 cmake --install build --prefix install
 ```
 
+> [!TIP]
+> Due to false positives with `gcc`, you may need to add
+> `-D CMAKE_CXX_FLAGS=-Wno-maybe-uninitialized` when building the SDK with
+> AddressSanitizer.
+
 It can then be loaded in CMake with (assuming that the install prefix is in the
 `CMAKE_PREFIX_PATH`):
 

@@ -15477,6 +15477,140 @@ func (b0 DbCommitFailed_builder) Build() *DbCommitFailed {
 	return m0
 }
 
+// Log #226.
+//
+// > Dropping $num_packets buffered packet(s) because the detection service RPC queue is full (queue size: $queue_size).
+type DetectionServiceRpcQueueFull struct {
+	state                 protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_NumPackets uint64                 `protobuf:"varint,1,opt,name=num_packets,json=numPackets,proto3" json:"num_packets,omitempty"`
+	xxx_hidden_QueueSize  uint64                 `protobuf:"varint,2,opt,name=queue_size,json=queueSize,proto3" json:"queue_size,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *DetectionServiceRpcQueueFull) Reset() {
+	*x = DetectionServiceRpcQueueFull{}
+	mi := &file_horus_pb_logs_logs_proto_msgTypes[224]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DetectionServiceRpcQueueFull) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DetectionServiceRpcQueueFull) ProtoMessage() {}
+
+func (x *DetectionServiceRpcQueueFull) ProtoReflect() protoreflect.Message {
+	mi := &file_horus_pb_logs_logs_proto_msgTypes[224]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *DetectionServiceRpcQueueFull) GetNumPackets() uint64 {
+	if x != nil {
+		return x.xxx_hidden_NumPackets
+	}
+	return 0
+}
+
+func (x *DetectionServiceRpcQueueFull) GetQueueSize() uint64 {
+	if x != nil {
+		return x.xxx_hidden_QueueSize
+	}
+	return 0
+}
+
+func (x *DetectionServiceRpcQueueFull) SetNumPackets(v uint64) {
+	x.xxx_hidden_NumPackets = v
+}
+
+func (x *DetectionServiceRpcQueueFull) SetQueueSize(v uint64) {
+	x.xxx_hidden_QueueSize = v
+}
+
+type DetectionServiceRpcQueueFull_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	NumPackets uint64
+	QueueSize  uint64
+}
+
+func (b0 DetectionServiceRpcQueueFull_builder) Build() *DetectionServiceRpcQueueFull {
+	m0 := &DetectionServiceRpcQueueFull{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_NumPackets = b.NumPackets
+	x.xxx_hidden_QueueSize = b.QueueSize
+	return m0
+}
+
+// Log #227.
+//
+// > Project migration failed: $details.
+type ProjectMigrationFailed struct {
+	state              protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Details string                 `protobuf:"bytes,1,opt,name=details,proto3" json:"details,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *ProjectMigrationFailed) Reset() {
+	*x = ProjectMigrationFailed{}
+	mi := &file_horus_pb_logs_logs_proto_msgTypes[225]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ProjectMigrationFailed) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ProjectMigrationFailed) ProtoMessage() {}
+
+func (x *ProjectMigrationFailed) ProtoReflect() protoreflect.Message {
+	mi := &file_horus_pb_logs_logs_proto_msgTypes[225]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *ProjectMigrationFailed) GetDetails() string {
+	if x != nil {
+		return x.xxx_hidden_Details
+	}
+	return ""
+}
+
+func (x *ProjectMigrationFailed) SetDetails(v string) {
+	x.xxx_hidden_Details = v
+}
+
+type ProjectMigrationFailed_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Details string
+}
+
+func (b0 ProjectMigrationFailed_builder) Build() *ProjectMigrationFailed {
+	m0 := &ProjectMigrationFailed{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_Details = b.Details
+	return m0
+}
+
 var File_horus_pb_logs_logs_proto protoreflect.FileDescriptor
 
 var file_horus_pb_logs_logs_proto_rawDesc = []byte{
@@ -16586,11 +16720,20 @@ var file_horus_pb_logs_logs_proto_rawDesc = []byte{
 	0x62, 0x43, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x12, 0x16, 0x0a,
 	0x06, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x61,
 	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x22, 0x5e, 0x0a, 0x1c, 0x44,
+	0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x52,
+	0x70, 0x63, 0x51, 0x75, 0x65, 0x75, 0x65, 0x46, 0x75, 0x6c, 0x6c, 0x12, 0x1f, 0x0a, 0x0b, 0x6e,
+	0x75, 0x6d, 0x5f, 0x70, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04,
+	0x52, 0x0a, 0x6e, 0x75, 0x6d, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x12, 0x1d, 0x0a, 0x0a,
+	0x71, 0x75, 0x65, 0x75, 0x65, 0x5f, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04,
+	0x52, 0x09, 0x71, 0x75, 0x65, 0x75, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x22, 0x32, 0x0a, 0x16, 0x50,
+	0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x46,
+	0x61, 0x69, 0x6c, 0x65, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
-var file_horus_pb_logs_logs_proto_msgTypes = make([]protoimpl.MessageInfo, 224)
+var file_horus_pb_logs_logs_proto_msgTypes = make([]protoimpl.MessageInfo, 226)
 var file_horus_pb_logs_logs_proto_goTypes = []any{
 	(*Generic)(nil),                                             // 0: horus.pb.logs.Generic
 	(*Oom)(nil),                                                 // 1: horus.pb.logs.Oom
@@ -16816,37 +16959,39 @@ var file_horus_pb_logs_logs_proto_goTypes = []any{
 	(*ExpiredRecoveryIdsInfo)(nil),                              // 221: horus.pb.logs.ExpiredRecoveryIdsInfo
 	(*HesaiUdpReceiverInfo)(nil),                                // 222: horus.pb.logs.HesaiUdpReceiverInfo
 	(*DbCommitFailed)(nil),                                      // 223: horus.pb.logs.DbCommitFailed
-	(*metadata_pb.LogMetadata_SourceLocation)(nil),              // 224: horus.pb.LogMetadata.SourceLocation
-	(*common_pb.ValidationError)(nil),                           // 225: horus.pb.logs.ValidationError
-	(*metadata_pb.LogMetadata_Timestamp)(nil),                   // 226: horus.pb.LogMetadata.Timestamp
-	(*metadata_pb.LogMetadata_Duration)(nil),                    // 227: horus.pb.LogMetadata.Duration
+	(*DetectionServiceRpcQueueFull)(nil),                        // 224: horus.pb.logs.DetectionServiceRpcQueueFull
+	(*ProjectMigrationFailed)(nil),                              // 225: horus.pb.logs.ProjectMigrationFailed
+	(*metadata_pb.LogMetadata_SourceLocation)(nil),              // 226: horus.pb.LogMetadata.SourceLocation
+	(*common_pb.ValidationError)(nil),                           // 227: horus.pb.logs.ValidationError
+	(*metadata_pb.LogMetadata_Timestamp)(nil),                   // 228: horus.pb.LogMetadata.Timestamp
+	(*metadata_pb.LogMetadata_Duration)(nil),                    // 229: horus.pb.LogMetadata.Duration
 }
 var file_horus_pb_logs_logs_proto_depIdxs = []int32{
-	224, // 0: horus.pb.logs.Generic.location:type_name -> horus.pb.LogMetadata.SourceLocation
-	225, // 1: horus.pb.logs.InvalidConfiguration.validation_errors:type_name -> horus.pb.logs.ValidationError
-	226, // 2: horus.pb.logs.LicenseExpiredError.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
-	226, // 3: horus.pb.logs.LicenseCurrentLicenseStatusInfo.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
-	227, // 4: horus.pb.logs.RpcTimeoutWarning.elapsed:type_name -> horus.pb.LogMetadata.Duration
-	224, // 5: horus.pb.logs.UnhandledEnumCaseError.location:type_name -> horus.pb.LogMetadata.SourceLocation
-	226, // 6: horus.pb.logs.BagTimestampOutOfOrderError.prior_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
-	226, // 7: horus.pb.logs.BagTimestampOutOfOrderError.current_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
-	226, // 8: horus.pb.logs.BagReplayUnexpectedTimestampError.expected_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
-	226, // 9: horus.pb.logs.BagReplayUnexpectedTimestampError.received_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
-	227, // 10: horus.pb.logs.ThreadPoolNotRespondingWarning.not_responding_for:type_name -> horus.pb.LogMetadata.Duration
-	227, // 11: horus.pb.logs.IrregularBroadcastingPeriodWarning.duration:type_name -> horus.pb.LogMetadata.Duration
-	227, // 12: horus.pb.logs.IrregularBroadcastingPeriodWarning.mean_deviation:type_name -> horus.pb.LogMetadata.Duration
-	226, // 13: horus.pb.logs.LicenseExpiredWarning.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
-	227, // 14: horus.pb.logs.StaticThreadPoolSlowTaskWarning.time_elapsed:type_name -> horus.pb.LogMetadata.Duration
-	224, // 15: horus.pb.logs.StaticThreadPoolSlowTaskWarning.enqueue_location:type_name -> horus.pb.LogMetadata.SourceLocation
-	227, // 16: horus.pb.logs.PreprocessingToPointAggregatorPointsSkipped.check_interval:type_name -> horus.pb.LogMetadata.Duration
-	227, // 17: horus.pb.logs.MinMsgIntervalLessThanThreshold.threshold:type_name -> horus.pb.LogMetadata.Duration
-	226, // 18: horus.pb.logs.TimeDiffOutOfRangeWarning.prev_time:type_name -> horus.pb.LogMetadata.Timestamp
-	226, // 19: horus.pb.logs.TimeDiffOutOfRangeWarning.curr_time:type_name -> horus.pb.LogMetadata.Timestamp
-	227, // 20: horus.pb.logs.TimeDiffOutOfRangeWarning.diff:type_name -> horus.pb.LogMetadata.Duration
-	227, // 21: horus.pb.logs.RpcTimeoutWithResolutionWarning.elapsed:type_name -> horus.pb.LogMetadata.Duration
-	226, // 22: horus.pb.logs.InvalidLidarTimestamp.timestamp:type_name -> horus.pb.LogMetadata.Timestamp
-	227, // 23: horus.pb.logs.CalibrationAccumulatingPointsInfo.time:type_name -> horus.pb.LogMetadata.Duration
-	227, // 24: horus.pb.logs.PacketBundlerDroppedPacketsWarning.duration:type_name -> horus.pb.LogMetadata.Duration
+	226, // 0: horus.pb.logs.Generic.location:type_name -> horus.pb.LogMetadata.SourceLocation
+	227, // 1: horus.pb.logs.InvalidConfiguration.validation_errors:type_name -> horus.pb.logs.ValidationError
+	228, // 2: horus.pb.logs.LicenseExpiredError.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
+	228, // 3: horus.pb.logs.LicenseCurrentLicenseStatusInfo.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
+	229, // 4: horus.pb.logs.RpcTimeoutWarning.elapsed:type_name -> horus.pb.LogMetadata.Duration
+	226, // 5: horus.pb.logs.UnhandledEnumCaseError.location:type_name -> horus.pb.LogMetadata.SourceLocation
+	228, // 6: horus.pb.logs.BagTimestampOutOfOrderError.prior_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
+	228, // 7: horus.pb.logs.BagTimestampOutOfOrderError.current_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
+	228, // 8: horus.pb.logs.BagReplayUnexpectedTimestampError.expected_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
+	228, // 9: horus.pb.logs.BagReplayUnexpectedTimestampError.received_timestamp:type_name -> horus.pb.LogMetadata.Timestamp
+	229, // 10: horus.pb.logs.ThreadPoolNotRespondingWarning.not_responding_for:type_name -> horus.pb.LogMetadata.Duration
+	229, // 11: horus.pb.logs.IrregularBroadcastingPeriodWarning.duration:type_name -> horus.pb.LogMetadata.Duration
+	229, // 12: horus.pb.logs.IrregularBroadcastingPeriodWarning.mean_deviation:type_name -> horus.pb.LogMetadata.Duration
+	228, // 13: horus.pb.logs.LicenseExpiredWarning.expiration_time:type_name -> horus.pb.LogMetadata.Timestamp
+	229, // 14: horus.pb.logs.StaticThreadPoolSlowTaskWarning.time_elapsed:type_name -> horus.pb.LogMetadata.Duration
+	226, // 15: horus.pb.logs.StaticThreadPoolSlowTaskWarning.enqueue_location:type_name -> horus.pb.LogMetadata.SourceLocation
+	229, // 16: horus.pb.logs.PreprocessingToPointAggregatorPointsSkipped.check_interval:type_name -> horus.pb.LogMetadata.Duration
+	229, // 17: horus.pb.logs.MinMsgIntervalLessThanThreshold.threshold:type_name -> horus.pb.LogMetadata.Duration
+	228, // 18: horus.pb.logs.TimeDiffOutOfRangeWarning.prev_time:type_name -> horus.pb.LogMetadata.Timestamp
+	228, // 19: horus.pb.logs.TimeDiffOutOfRangeWarning.curr_time:type_name -> horus.pb.LogMetadata.Timestamp
+	229, // 20: horus.pb.logs.TimeDiffOutOfRangeWarning.diff:type_name -> horus.pb.LogMetadata.Duration
+	229, // 21: horus.pb.logs.RpcTimeoutWithResolutionWarning.elapsed:type_name -> horus.pb.LogMetadata.Duration
+	228, // 22: horus.pb.logs.InvalidLidarTimestamp.timestamp:type_name -> horus.pb.LogMetadata.Timestamp
+	229, // 23: horus.pb.logs.CalibrationAccumulatingPointsInfo.time:type_name -> horus.pb.LogMetadata.Duration
+	229, // 24: horus.pb.logs.PacketBundlerDroppedPacketsWarning.duration:type_name -> horus.pb.LogMetadata.Duration
 	25,  // [25:25] is the sub-list for method output_type
 	25,  // [25:25] is the sub-list for method input_type
 	25,  // [25:25] is the sub-list for extension type_name
@@ -16865,7 +17010,7 @@ func file_horus_pb_logs_logs_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_horus_pb_logs_logs_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   224,
+			NumMessages:   226,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -1600,3 +1600,17 @@ class DbCommitFailed(_message.Message):
     action: str
     error: str
     def __init__(self, action: _Optional[str] = ..., error: _Optional[str] = ...) -> None: ...
+
+class DetectionServiceRpcQueueFull(_message.Message):
+    __slots__ = ("num_packets", "queue_size")
+    NUM_PACKETS_FIELD_NUMBER: _ClassVar[int]
+    QUEUE_SIZE_FIELD_NUMBER: _ClassVar[int]
+    num_packets: int
+    queue_size: int
+    def __init__(self, num_packets: _Optional[int] = ..., queue_size: _Optional[int] = ...) -> None: ...
+
+class ProjectMigrationFailed(_message.Message):
+    __slots__ = ("details",)
+    DETAILS_FIELD_NUMBER: _ClassVar[int]
+    details: str
+    def __init__(self, details: _Optional[str] = ...) -> None: ...
