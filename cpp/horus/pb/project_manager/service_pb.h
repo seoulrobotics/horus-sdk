@@ -38,7 +38,7 @@ namespace pb {
 /// Different actions allowed by a license level
 ///  Encoded through a bitwise encoding
 ///
-/// Source: horus/pb/project_manager/service.proto:31:1
+/// Source: horus/pb/project_manager/service.proto:30:1
 enum class LicensePrivilege : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -64,7 +64,7 @@ enum class LicensePrivilege : PbEnum {  // NOLINT(*-enum-size)
 
 /// Service represented by the node.
 ///
-/// Source: horus/pb/project_manager/service.proto:127:5
+/// Source: horus/pb/project_manager/service.proto:126:5
 enum class GetHealthStatusResponse_NodeHealth_Service : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -87,7 +87,7 @@ enum class GetHealthStatusResponse_NodeHealth_Service : PbEnum {  // NOLINT(*-en
 
 /// Connectivity status.
 ///
-/// Source: horus/pb/project_manager/service.proto:138:5
+/// Source: horus/pb/project_manager/service.proto:137:5
 enum class GetHealthStatusResponse_NodeHealth_Status : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -118,7 +118,7 @@ class GetHealthStatusResponse;
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:68:3
+/// Source: horus/pb/project_manager/service.proto:67:3
 class LicenseLevel_Level1 final : public PbMessage {
  public:
 
@@ -265,7 +265,7 @@ class LicenseLevel_Level1 final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:73:3
+/// Source: horus/pb/project_manager/service.proto:72:3
 class LicenseLevel_Level2 final : public PbMessage {
  public:
 
@@ -412,7 +412,7 @@ class LicenseLevel_Level2 final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:78:3
+/// Source: horus/pb/project_manager/service.proto:77:3
 class LicenseLevel_Level3 final : public PbMessage {
  public:
 
@@ -622,7 +622,7 @@ class LicenseLevel_Level3 final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:84:3
+/// Source: horus/pb/project_manager/service.proto:83:3
 class LicenseLevel_Level4 final : public PbMessage {
  public:
 
@@ -769,7 +769,7 @@ class LicenseLevel_Level4 final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:54:1
+/// Source: horus/pb/project_manager/service.proto:53:1
 class LicenseLevel final : public PbMessage {
  public:
   /// @see LicenseLevel_Level1
@@ -1155,7 +1155,7 @@ class LicenseLevel final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:91:1
+/// Source: horus/pb/project_manager/service.proto:90:1
 class LicenseStatus final : public PbMessage {
  public:
 
@@ -1317,7 +1317,7 @@ class LicenseStatus final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:116:1
+/// Source: horus/pb/project_manager/service.proto:115:1
 class GetHealthStatusRequest final : public PbMessage {
  public:
 
@@ -1379,7 +1379,7 @@ class GetHealthStatusRequest final : public PbMessage {
 
 /// Connectivity status of a single node.
 ///
-/// Source: horus/pb/project_manager/service.proto:125:3
+/// Source: horus/pb/project_manager/service.proto:124:3
 class GetHealthStatusResponse_NodeHealth final : public PbMessage {
  public:
   /// @see GetHealthStatusResponse_NodeHealth_Service
@@ -1573,7 +1573,7 @@ class GetHealthStatusResponse_NodeHealth final : public PbMessage {
 
 /// Wraps SensorInfo with node unreachable error
 ///
-/// Source: horus/pb/project_manager/service.proto:149:3
+/// Source: horus/pb/project_manager/service.proto:148:3
 class GetHealthStatusResponse_SensorHealth final : public PbMessage {
  public:
 
@@ -1825,7 +1825,7 @@ class GetHealthStatusResponse_SensorHealth final : public PbMessage {
 /// Resource usage of each relevant node (preprocessing service & detection
 ///  service).
 ///
-/// Source: horus/pb/project_manager/service.proto:173:3
+/// Source: horus/pb/project_manager/service.proto:172:3
 class GetHealthStatusResponse_NodeResources final : public PbMessage {
  public:
 
@@ -1891,7 +1891,7 @@ class GetHealthStatusResponse_NodeResources final : public PbMessage {
 ///  - Lidar status
 ///  - Services connectivity
 ///
-/// Source: horus/pb/project_manager/service.proto:123:1
+/// Source: horus/pb/project_manager/service.proto:122:1
 class GetHealthStatusResponse final : public PbMessage {
  public:
   /// @see GetHealthStatusResponse_NodeHealth

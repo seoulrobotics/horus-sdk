@@ -25,7 +25,7 @@ message RpcServiceOptions {
   // The description of the service shown in the generated code.
   string description = 2;
 
-  // Identifiers which are on longer available for methods in a service.
+  // Identifiers which are no longer available for methods in a service.
   repeated uint32 reserved_ids = 3;
 }
 

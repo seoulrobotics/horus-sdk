@@ -85,6 +85,8 @@ void LabeledPointCloud::DeserializeFrom(PbReader& reader) noexcept(false) {
   }
 }
 
+
+
 DetectedObject_Classification::DetectedObject_Classification(const DetectedObject_Classification& other) noexcept(false)
     : class_label_{other.class_label_}
     , class_confidence_{other.class_confidence_}
@@ -194,6 +196,7 @@ DetectedObject_Status::DetectedObject_Status(const DetectedObject_Status& other)
     : id_{other.id_}
     , tracking_status_{other.tracking_status_}
     , last_seen_{other.last_seen_}
+    , observation_time_range_{other.observation_time_range_}
     , set_fields_{other.set_fields_} {}
 
 void DetectedObject_Status::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -205,6 +208,9 @@ void DetectedObject_Status::SerializeTo(PbWriter& writer) const noexcept(false) 
   }
   if (set_fields_[2]) {
     SerializeField<Timestamp>(writer, /*tag=*/ 3, last_seen_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<TimeRange>(writer, /*tag=*/ 4, observation_time_range_);
   }
 }
 
@@ -224,6 +230,11 @@ void DetectedObject_Status::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 3: {
         DeserializeField<Timestamp>(reader, last_seen_);
         set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        DeserializeField<TimeRange>(reader, observation_time_range_);
+        set_fields_[3] = true;
         break;
       }
       default: {

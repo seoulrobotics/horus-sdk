@@ -52,6 +52,10 @@ class LabeledPointCloud(_message.Message):
     point_index_to_object_id: _metadata_pb2.UInt32List
     def __init__(self, point_cloud: _Optional[_Union[_point_message_pb2.PointFrame, _Mapping]] = ..., point_index_to_object_id: _Optional[_Union[_metadata_pb2.UInt32List, _Mapping]] = ...) -> None: ...
 
+class TimeRange(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
+
 class DetectedObject(_message.Message):
     __slots__ = ("classification", "kinematics", "shape", "status")
     class Classification(_message.Message):
@@ -76,14 +80,16 @@ class DetectedObject(_message.Message):
         tight_bounding_box: BoundingBox
         def __init__(self, bounding_box: _Optional[_Union[BoundingBox, _Mapping]] = ..., tight_bounding_box: _Optional[_Union[BoundingBox, _Mapping]] = ...) -> None: ...
     class Status(_message.Message):
-        __slots__ = ("id", "tracking_status", "last_seen")
+        __slots__ = ("id", "tracking_status", "last_seen", "observation_time_range")
         ID_FIELD_NUMBER: _ClassVar[int]
         TRACKING_STATUS_FIELD_NUMBER: _ClassVar[int]
         LAST_SEEN_FIELD_NUMBER: _ClassVar[int]
+        OBSERVATION_TIME_RANGE_FIELD_NUMBER: _ClassVar[int]
         id: int
         tracking_status: TrackingStatus
         last_seen: _metadata_pb2.Timestamp
-        def __init__(self, id: _Optional[int] = ..., tracking_status: _Optional[_Union[TrackingStatus, str]] = ..., last_seen: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+        observation_time_range: TimeRange
+        def __init__(self, id: _Optional[int] = ..., tracking_status: _Optional[_Union[TrackingStatus, str]] = ..., last_seen: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ..., observation_time_range: _Optional[_Union[TimeRange, _Mapping]] = ...) -> None: ...
     CLASSIFICATION_FIELD_NUMBER: _ClassVar[int]
     KINEMATICS_FIELD_NUMBER: _ClassVar[int]
     SHAPE_FIELD_NUMBER: _ClassVar[int]

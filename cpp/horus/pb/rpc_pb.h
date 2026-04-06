@@ -266,7 +266,7 @@ class RpcServiceOptions final : public PbMessage {
   // Field `reserved_ids` (no 3).
   // -----
 
-  /// Identifiers which are on longer available for methods in a service.
+  /// Identifiers which are no longer available for methods in a service.
   ///
   /// Field no: 3.
   constexpr const CowRepeated<std::uint32_t>& reserved_ids() const& noexcept HORUS_LIFETIME_BOUND {
@@ -285,7 +285,7 @@ class RpcServiceOptions final : public PbMessage {
     return std::move(reserved_ids_);
   }
 
-  /// Identifiers which are on longer available for methods in a service.
+  /// Identifiers which are no longer available for methods in a service.
   ///
   /// Field no: 3.
   CowRepeated<std::uint32_t>& mutable_reserved_ids() & noexcept HORUS_LIFETIME_BOUND {

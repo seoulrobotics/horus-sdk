@@ -238,7 +238,7 @@ def _unknown_format(data: LogData) -> str:
 
 def format_log_field_no(data: LogData) -> int:
     if fields := data.ListFields():
-        return typing.cast(int, fields[0][0].number)
+        return typing.cast(int, fields[0][0].number)  # type: ignore[redundant-cast]
     return 0
 
 def format_log_data(data: LogData) -> str:

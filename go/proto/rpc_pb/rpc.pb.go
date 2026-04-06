@@ -149,7 +149,7 @@ type RpcServiceOptions_builder struct {
 	Id uint32
 	// The description of the service shown in the generated code.
 	Description string
-	// Identifiers which are on longer available for methods in a service.
+	// Identifiers which are no longer available for methods in a service.
 	ReservedIds []uint32
 }
 
