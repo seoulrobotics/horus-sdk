@@ -46,7 +46,8 @@ enum TrackingStatus {
 
 // A timestamp range.
 message TimeRange {
-
+  Timestamp start = 1;
+  Timestamp end = 2;
 }
 
 // A singular detection object message.
