@@ -75,6 +75,7 @@ enum class TrackingStatus : PbEnum {  // NOLINT(*-enum-size)
 
 class BoundingBox;
 class LabeledPointCloud;
+class TimeRange;
 class DetectedObject_Classification;
 class DetectedObject_Kinematics;
 class DetectedObject_Shape;
@@ -455,9 +456,71 @@ class LabeledPointCloud final : public PbMessage {
   std::bitset<2> set_fields_;
 };
 
+/// A timestamp range.
+///
+/// Source: horus/pb/detection_service/detection.proto:48:1
+class TimeRange final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `TimeRange`.
+  TimeRange() noexcept = default;
+
+  /// Move constructor.
+  TimeRange(TimeRange&&) noexcept = default;
+  /// Move assignment operator.
+  TimeRange& operator=(TimeRange&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit TimeRange(const TimeRange&) noexcept = default;  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  TimeRange& operator=(const TimeRange&) = delete;
+
+  /// Default destructor.
+  ~TimeRange() noexcept final = default;
+
+  /// Creates a `TimeRange` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit TimeRange(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final {
+    static_cast<void>(writer);
+  }
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final {
+    reader.SkipMessage();
+  }
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.TimeRange`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.TimeRange"; }
+
+  /// The full name of the message: `horus.pb.TimeRange`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+ private:
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<0> set_fields_;
+};
+
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:49:3
+/// Source: horus/pb/detection_service/detection.proto:54:3
 class DetectedObject_Classification final : public PbMessage {
  public:
 
@@ -595,7 +658,7 @@ class DetectedObject_Classification final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:56:3
+/// Source: horus/pb/detection_service/detection.proto:61:3
 class DetectedObject_Kinematics final : public PbMessage {
  public:
 
@@ -749,7 +812,7 @@ class DetectedObject_Kinematics final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:66:3
+/// Source: horus/pb/detection_service/detection.proto:71:3
 class DetectedObject_Shape final : public PbMessage {
  public:
 
@@ -911,7 +974,7 @@ class DetectedObject_Shape final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:73:3
+/// Source: horus/pb/detection_service/detection.proto:78:3
 class DetectedObject_Status final : public PbMessage {
  public:
 
@@ -1089,6 +1152,58 @@ class DetectedObject_Status final : public PbMessage {
     return std::move(set_last_seen(std::move(last_seen)));
   }
 
+  // Field `observation_time_range` (no 4).
+  // -----
+
+  /// The start and end timestamps of the observation time range for the
+  ///  detected object points.
+  ///
+  /// Field no: 4.
+  constexpr const TimeRange& observation_time_range() const& noexcept HORUS_LIFETIME_BOUND {
+    return observation_time_range_;
+  }
+
+  /// If `observation_time_range` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  TimeRange observation_time_range() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(observation_time_range_);
+  }
+
+  /// The start and end timestamps of the observation time range for the
+  ///  detected object points.
+  ///
+  /// Field no: 4.
+  TimeRange& mutable_observation_time_range() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return observation_time_range_;
+  }
+
+  /// Returns whether `observation_time_range` (no 4) is set.
+  constexpr bool has_observation_time_range() const noexcept { return set_fields_[3]; }
+
+  /// Clears `observation_time_range` (no 4).
+  void clear_observation_time_range() & noexcept {
+    set_fields_[3] = false;
+    observation_time_range_ = {};
+  }
+
+  /// Sets `observation_time_range` (no 4) and returns `*this`.
+  DetectedObject_Status& set_observation_time_range(TimeRange&& observation_time_range) & noexcept {
+    set_fields_[3] = true;
+    observation_time_range_ = std::move(observation_time_range);
+    return *this;
+  }
+  /// Sets `observation_time_range` (no 4) and returns `*this`.
+  DetectedObject_Status&& set_observation_time_range(TimeRange&& observation_time_range) && noexcept {
+    return std::move(set_observation_time_range(std::move(observation_time_range)));
+  }
+
  private:
   /// @see id()
   std::uint32_t id_{};
@@ -1096,14 +1211,16 @@ class DetectedObject_Status final : public PbMessage {
   TrackingStatus tracking_status_{};
   /// @see last_seen()
   Timestamp last_seen_{};
+  /// @see observation_time_range()
+  TimeRange observation_time_range_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<3> set_fields_;
+  std::bitset<4> set_fields_;
 };
 
 /// A singular detection object message.
 ///
-/// Source: horus/pb/detection_service/detection.proto:48:1
+/// Source: horus/pb/detection_service/detection.proto:53:1
 class DetectedObject final : public PbMessage {
  public:
   /// @see DetectedObject_Classification
@@ -1377,7 +1494,7 @@ class DetectedObject final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:93:3
+/// Source: horus/pb/detection_service/detection.proto:102:3
 class DeepLearningObject_Classification final : public PbMessage {
  public:
 
@@ -1515,7 +1632,7 @@ class DeepLearningObject_Classification final : public PbMessage {
 
 /// / A deep learning object message.
 ///
-/// Source: horus/pb/detection_service/detection.proto:92:1
+/// Source: horus/pb/detection_service/detection.proto:101:1
 class DeepLearningObject final : public PbMessage {
  public:
   /// @see DeepLearningObject_Classification
@@ -1679,7 +1796,7 @@ class DeepLearningObject final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:108:3
+/// Source: horus/pb/detection_service/detection.proto:117:3
 class DetectionEvent_FrameInfo final : public PbMessage {
  public:
 
@@ -1789,7 +1906,7 @@ class DetectionEvent_FrameInfo final : public PbMessage {
 
 /// A detection event message.
 ///
-/// Source: horus/pb/detection_service/detection.proto:107:1
+/// Source: horus/pb/detection_service/detection.proto:116:1
 class DetectionEvent final : public PbMessage {
  public:
   /// @see DetectionEvent_FrameInfo

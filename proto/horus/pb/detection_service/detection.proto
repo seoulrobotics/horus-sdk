@@ -44,6 +44,11 @@ enum TrackingStatus {
   TRACKING = 4;
 }
 
+// A timestamp range.
+message TimeRange {
+
+}
+
 // A singular detection object message.
 message DetectedObject {
   message Classification {
@@ -80,6 +85,10 @@ message DetectedObject {
 
     // The timestamp at which the detected object was last seen.
     Timestamp last_seen = 3;
+
+    // The start and end timestamps of the observation time range for the
+    // detected object points.
+    TimeRange observation_time_range = 4;
   }
 
   Classification classification = 1;

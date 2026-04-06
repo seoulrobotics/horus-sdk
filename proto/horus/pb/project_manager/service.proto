@@ -23,7 +23,6 @@ service ProjectManagerService {
       description: "Provides horus health indicators."
     };
   }
-
 }
 
 // Different actions allowed by a license level
