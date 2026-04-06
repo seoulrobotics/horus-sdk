@@ -474,7 +474,7 @@ class TimeRange final : public PbMessage {
   ///
   /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
   /// lack of available memory.
-  explicit TimeRange(const TimeRange&) noexcept = default;  // NOLINT(*-explicit-*)
+  explicit TimeRange(const TimeRange& other) noexcept(false);  // NOLINT(*-explicit-*)
 
   /// Cannot copy-assign to avoid implicit allocations.
   TimeRange& operator=(const TimeRange&) = delete;
@@ -492,16 +492,12 @@ class TimeRange final : public PbMessage {
   /// Serializes the message to `writer`.
   ///
   /// @throws std::bad_alloc If the resulting buffer failed to allocate.
-  void SerializeTo(PbWriter& writer) const noexcept(false) final {
-    static_cast<void>(writer);
-  }
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
 
   /// Deserializes the message from `reader`.
   ///
   /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
-  void DeserializeFrom(PbReader& reader) noexcept(false) final {
-    reader.SkipMessage();
-  }
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
 
   /// Returns whether the message is empty.
   bool IsEmpty() const noexcept final { return set_fields_.none(); }
@@ -512,15 +508,119 @@ class TimeRange final : public PbMessage {
   /// The full name of the message: `horus.pb.TimeRange`.
   StringView MessageTypeName() const noexcept final { return TypeName(); }
 
+  // Field `start` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const Timestamp& start() const& noexcept HORUS_LIFETIME_BOUND {
+    return start_;
+  }
+
+  /// If `start` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  Timestamp start() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(start_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  Timestamp& mutable_start() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return start_;
+  }
+
+  /// Returns whether `start` (no 1) is set.
+  constexpr bool has_start() const noexcept { return set_fields_[0]; }
+
+  /// Clears `start` (no 1).
+  void clear_start() & noexcept {
+    set_fields_[0] = false;
+    start_ = {};
+  }
+
+  /// Sets `start` (no 1) and returns `*this`.
+  TimeRange& set_start(Timestamp&& start) & noexcept {
+    set_fields_[0] = true;
+    start_ = std::move(start);
+    return *this;
+  }
+  /// Sets `start` (no 1) and returns `*this`.
+  TimeRange&& set_start(Timestamp&& start) && noexcept {
+    return std::move(set_start(std::move(start)));
+  }
+
+  // Field `end` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const Timestamp& end() const& noexcept HORUS_LIFETIME_BOUND {
+    return end_;
+  }
+
+  /// If `end` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  Timestamp end() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(end_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  Timestamp& mutable_end() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return end_;
+  }
+
+  /// Returns whether `end` (no 2) is set.
+  constexpr bool has_end() const noexcept { return set_fields_[1]; }
+
+  /// Clears `end` (no 2).
+  void clear_end() & noexcept {
+    set_fields_[1] = false;
+    end_ = {};
+  }
+
+  /// Sets `end` (no 2) and returns `*this`.
+  TimeRange& set_end(Timestamp&& end) & noexcept {
+    set_fields_[1] = true;
+    end_ = std::move(end);
+    return *this;
+  }
+  /// Sets `end` (no 2) and returns `*this`.
+  TimeRange&& set_end(Timestamp&& end) && noexcept {
+    return std::move(set_end(std::move(end)));
+  }
+
  private:
+  /// @see start()
+  Timestamp start_{};
+  /// @see end()
+  Timestamp end_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<0> set_fields_;
+  std::bitset<2> set_fields_;
 };
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:54:3
+/// Source: horus/pb/detection_service/detection.proto:55:3
 class DetectedObject_Classification final : public PbMessage {
  public:
 
@@ -658,7 +758,7 @@ class DetectedObject_Classification final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:61:3
+/// Source: horus/pb/detection_service/detection.proto:62:3
 class DetectedObject_Kinematics final : public PbMessage {
  public:
 
@@ -812,7 +912,7 @@ class DetectedObject_Kinematics final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:71:3
+/// Source: horus/pb/detection_service/detection.proto:72:3
 class DetectedObject_Shape final : public PbMessage {
  public:
 
@@ -974,7 +1074,7 @@ class DetectedObject_Shape final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:78:3
+/// Source: horus/pb/detection_service/detection.proto:79:3
 class DetectedObject_Status final : public PbMessage {
  public:
 
@@ -1220,7 +1320,7 @@ class DetectedObject_Status final : public PbMessage {
 
 /// A singular detection object message.
 ///
-/// Source: horus/pb/detection_service/detection.proto:53:1
+/// Source: horus/pb/detection_service/detection.proto:54:1
 class DetectedObject final : public PbMessage {
  public:
   /// @see DetectedObject_Classification
@@ -1494,7 +1594,7 @@ class DetectedObject final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:102:3
+/// Source: horus/pb/detection_service/detection.proto:103:3
 class DeepLearningObject_Classification final : public PbMessage {
  public:
 
@@ -1632,7 +1732,7 @@ class DeepLearningObject_Classification final : public PbMessage {
 
 /// / A deep learning object message.
 ///
-/// Source: horus/pb/detection_service/detection.proto:101:1
+/// Source: horus/pb/detection_service/detection.proto:102:1
 class DeepLearningObject final : public PbMessage {
  public:
   /// @see DeepLearningObject_Classification
@@ -1796,7 +1896,7 @@ class DeepLearningObject final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:117:3
+/// Source: horus/pb/detection_service/detection.proto:118:3
 class DetectionEvent_FrameInfo final : public PbMessage {
  public:
 
@@ -1906,7 +2006,7 @@ class DetectionEvent_FrameInfo final : public PbMessage {
 
 /// A detection event message.
 ///
-/// Source: horus/pb/detection_service/detection.proto:116:1
+/// Source: horus/pb/detection_service/detection.proto:117:1
 class DetectionEvent final : public PbMessage {
  public:
   /// @see DetectionEvent_FrameInfo

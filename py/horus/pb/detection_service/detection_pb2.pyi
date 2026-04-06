@@ -53,8 +53,12 @@ class LabeledPointCloud(_message.Message):
     def __init__(self, point_cloud: _Optional[_Union[_point_message_pb2.PointFrame, _Mapping]] = ..., point_index_to_object_id: _Optional[_Union[_metadata_pb2.UInt32List, _Mapping]] = ...) -> None: ...
 
 class TimeRange(_message.Message):
-    __slots__ = ()
-    def __init__(self) -> None: ...
+    __slots__ = ("start", "end")
+    START_FIELD_NUMBER: _ClassVar[int]
+    END_FIELD_NUMBER: _ClassVar[int]
+    start: _metadata_pb2.Timestamp
+    end: _metadata_pb2.Timestamp
+    def __init__(self, start: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ..., end: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class DetectedObject(_message.Message):
     __slots__ = ("classification", "kinematics", "shape", "status")
