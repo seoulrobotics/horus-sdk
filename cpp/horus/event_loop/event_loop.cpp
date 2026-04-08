@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <memory>
 #include <mutex>
+#include <stdexcept>
 #include <thread>
 #include <utility>
 
@@ -80,6 +81,7 @@ void EventLoop::State::Run() noexcept {
 void EventLoop::State::Shutdown() noexcept {
   uv_close(&UvToHandle(ticket_handle_), nullptr);
   const std::unique_lock<std::mutex> lock{mutex_};
+  shutting_down_ = true;
   if (tickets_.first != nullptr) {
     std::move(*tickets_.first).DestroyChain();
   }
@@ -130,28 +132,26 @@ void EventLoop::Task::Spawn(EventLoop& loop) noexcept {
   waker_owner_.Wake();
 }
 
-bool EventLoop::AwaitTask::Await(EventLoop& loop) noexcept(false) {
-  State::InvokeInLoop(loop.InternalState(),
-                      [this](EventLoop& inner_loop) noexcept { Spawn(inner_loop); });
+void EventLoop::AwaitTask::Await(EventLoop& loop) noexcept(false) {
+  if (!State::InvokeInLoop(loop.InternalState(),
+                           [this](EventLoop& inner_loop) noexcept { Spawn(inner_loop); })) {
+    throw std::runtime_error{"event loop is shutting down"};
+  }
 
   std::unique_lock<std::mutex> lock{mutex_};
   end_cv_.wait(lock, [this]() noexcept -> bool { return FutureCompleted(); });
-  return true;
 }
 
 void EventLoop::State::Ticket::Register(const std::shared_ptr<State>& state) noexcept {
   state_ = state;
-  {
-    const std::unique_lock<std::mutex> lock{state->mutex_};
-    if (state->tickets_.last == nullptr) {
-      // We're the first (and last) ticket.
-      state->tickets_.first = this;
-      state->tickets_.last = this;
-    } else {
-      state->tickets_.last->next_ = this;
-    }
+  if (state->tickets_.last == nullptr) {
+    // We're the first (and last) ticket.
+    state->tickets_.first = this;
     state->tickets_.last = this;
+  } else {
+    state->tickets_.last->next_ = this;
   }
+  state->tickets_.last = this;
   // `uv_async_send()` coalesces multiple calls to `uv_async_send()` into one.
   UvAssert(uv_async_send(&state->ticket_handle_.Get()));
 }
