@@ -23,27 +23,30 @@ _sym_db = _symbol_database.Default()
 
 
 from horus.pb.config import metadata_pb2 as horus_dot_pb_dot_config_dot_metadata__pb2
+from horus.pb.config.schema import detection_range_pb2 as horus_dot_pb_dot_config_dot_schema_dot_detection__range__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n%horus/pb/preprocessing/messages.proto\x12\x08horus.pb\x1a\x1ehorus/pb/config/metadata.proto\":\n\rOccupancyGrid\x12\x0c\n\x04rows\x18\x01 \x01(\r\x12\x0c\n\x04\x63ols\x18\x02 \x01(\r\x12\r\n\x05\x63\x65lls\x18\x03 \x03(\r\"\xb3\x01\n\x12OccupancyGridEvent\x12%\n\x04grid\x18\x01 \x01(\x0b\x32\x17.horus.pb.OccupancyGrid\x12\r\n\x05x_min\x18\x02 \x01(\x02\x12\r\n\x05x_max\x18\x03 \x01(\x02\x12\r\n\x05y_min\x18\x04 \x01(\x02\x12\r\n\x05y_max\x18\x05 \x01(\x02\x12\x12\n\nresolution\x18\x06 \x01(\x02\x12&\n\ttimestamp\x18\x07 \x01(\x0b\x32\x13.horus.pb.Timestamp\"\xe6\x03\n\nSensorInfo\x12\x10\n\x08lidar_id\x18\x01 \x01(\t\x12\x12\n\nlidar_name\x18\x08 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\r\x12\x1a\n\x12measured_frequency\x18\x03 \x01(\x01\x12\x41\n\x0fpose_correction\x18\x04 \x01(\x0b\x32#.horus.pb.SensorInfo.PoseCorrectionH\x00\x88\x01\x01\x12&\n\x19num_total_dropped_packets\x18\x05 \x01(\x04H\x01\x88\x01\x01\x12\'\n\x1anum_total_expected_packets\x18\x06 \x01(\x04H\x02\x88\x01\x01\x12=\n\x13reference_alignment\x18\x07 \x01(\x0e\x32 .horus.pb.ReferenceAlignmentType\x1a\x62\n\x0ePoseCorrection\x12\'\n\x0btranslation\x18\x01 \x01(\x0b\x32\x12.horus.pb.Vector3f\x12\'\n\x08rotation\x18\x02 \x01(\x0b\x32\x15.horus.pb.QuaterniondB\x12\n\x10_pose_correctionB\x1c\n\x1a_num_total_dropped_packetsB\x1d\n\x1b_num_total_expected_packets*\x81\x01\n\x17OccupancyClassification\x12\'\n#OCCUPANCYCLASSIFICATION_UNSPECIFIED\x10\x00\x12\x08\n\x04\x46REE\x10\x01\x12\x0c\n\x08OCCLUDED\x10\x02\x12\x17\n\x13STATIONARY_OCCUPIED\x10\x03\x12\x0c\n\x08\x45XCLUDED\x10\x04*\xde\x01\n\x0cSensorStatus\x12\x1d\n\x19SENSOR_STATUS_UNSPECIFIED\x10\x00\x12\x0b\n\x07NO_DATA\x10\x01\x12\x12\n\x0eRECEIVING_DATA\x10\x02\x12\x11\n\rLOW_FREQUENCY\x10\x04\x12\x12\n\x0eHIGH_FREQUENCY\x10\x08\x12\n\n\x06TILTED\x10\x10\x12\x0e\n\nOBSTRUCTED\x10 \x12\x0f\n\x0bPACKET_DROP\x10@\x12\x1d\n\x18\x41UTO_CORRECTION_MODERATE\x10\x80\x01\x12\x1b\n\x16\x41UTO_CORRECTION_SEVERE\x10\x80\x02*B\n\x16ReferenceAlignmentType\x12(\n$REFERENCE_ALIGNMENT_TYPE_UNSPECIFIED\x10\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n%horus/pb/preprocessing/messages.proto\x12\x08horus.pb\x1a\x1ehorus/pb/config/metadata.proto\x1a,horus/pb/config/schema/detection_range.proto\":\n\rOccupancyGrid\x12\x0c\n\x04rows\x18\x01 \x01(\r\x12\x0c\n\x04\x63ols\x18\x02 \x01(\r\x12\r\n\x05\x63\x65lls\x18\x03 \x03(\r\"\xdf\x01\n\x12OccupancyGridEvent\x12%\n\x04grid\x18\x01 \x01(\x0b\x32\x17.horus.pb.OccupancyGrid\x12\x12\n\nresolution\x18\x06 \x01(\x02\x12\x31\n\x0f\x64\x65tection_range\x18\x08 \x01(\x0b\x32\x18.horus.pb.DetectionRange\x12&\n\ttimestamp\x18\x07 \x01(\x0b\x32\x13.horus.pb.Timestamp\x12\x0f\n\x07node_id\x18\n \x01(\t\x12\x1c\n\x14\x64\x65tection_range_name\x18\x0b \x01(\tJ\x04\x08\x02\x10\x06\"U\n\x16OccupancyGridListEvent\x12;\n\x15occupancy_grid_events\x18\x01 \x03(\x0b\x32\x1c.horus.pb.OccupancyGridEvent\"\xe6\x03\n\nSensorInfo\x12\x10\n\x08lidar_id\x18\x01 \x01(\t\x12\x12\n\nlidar_name\x18\x08 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\r\x12\x1a\n\x12measured_frequency\x18\x03 \x01(\x01\x12\x41\n\x0fpose_correction\x18\x04 \x01(\x0b\x32#.horus.pb.SensorInfo.PoseCorrectionH\x00\x88\x01\x01\x12&\n\x19num_total_dropped_packets\x18\x05 \x01(\x04H\x01\x88\x01\x01\x12\'\n\x1anum_total_expected_packets\x18\x06 \x01(\x04H\x02\x88\x01\x01\x12=\n\x13reference_alignment\x18\x07 \x01(\x0e\x32 .horus.pb.ReferenceAlignmentType\x1a\x62\n\x0ePoseCorrection\x12\'\n\x0btranslation\x18\x01 \x01(\x0b\x32\x12.horus.pb.Vector3f\x12\'\n\x08rotation\x18\x02 \x01(\x0b\x32\x15.horus.pb.QuaterniondB\x12\n\x10_pose_correctionB\x1c\n\x1a_num_total_dropped_packetsB\x1d\n\x1b_num_total_expected_packets*\x81\x01\n\x17OccupancyClassification\x12\'\n#OCCUPANCYCLASSIFICATION_UNSPECIFIED\x10\x00\x12\x08\n\x04\x46REE\x10\x01\x12\x0c\n\x08OCCLUDED\x10\x02\x12\x17\n\x13STATIONARY_OCCUPIED\x10\x03\x12\x0c\n\x08\x45XCLUDED\x10\x04*\xde\x01\n\x0cSensorStatus\x12\x1d\n\x19SENSOR_STATUS_UNSPECIFIED\x10\x00\x12\x0b\n\x07NO_DATA\x10\x01\x12\x12\n\x0eRECEIVING_DATA\x10\x02\x12\x11\n\rLOW_FREQUENCY\x10\x04\x12\x12\n\x0eHIGH_FREQUENCY\x10\x08\x12\n\n\x06TILTED\x10\x10\x12\x0e\n\nOBSTRUCTED\x10 \x12\x0f\n\x0bPACKET_DROP\x10@\x12\x1d\n\x18\x41UTO_CORRECTION_MODERATE\x10\x80\x01\x12\x1b\n\x16\x41UTO_CORRECTION_SEVERE\x10\x80\x02*B\n\x16ReferenceAlignmentType\x12(\n$REFERENCE_ALIGNMENT_TYPE_UNSPECIFIED\x10\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'horus.pb.preprocessing.messages_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_OCCUPANCYCLASSIFICATION']._serialized_start=815
-  _globals['_OCCUPANCYCLASSIFICATION']._serialized_end=944
-  _globals['_SENSORSTATUS']._serialized_start=947
-  _globals['_SENSORSTATUS']._serialized_end=1169
-  _globals['_REFERENCEALIGNMENTTYPE']._serialized_start=1171
-  _globals['_REFERENCEALIGNMENTTYPE']._serialized_end=1237
-  _globals['_OCCUPANCYGRID']._serialized_start=83
-  _globals['_OCCUPANCYGRID']._serialized_end=141
-  _globals['_OCCUPANCYGRIDEVENT']._serialized_start=144
-  _globals['_OCCUPANCYGRIDEVENT']._serialized_end=323
-  _globals['_SENSORINFO']._serialized_start=326
-  _globals['_SENSORINFO']._serialized_end=812
-  _globals['_SENSORINFO_POSECORRECTION']._serialized_start=633
-  _globals['_SENSORINFO_POSECORRECTION']._serialized_end=731
+  _globals['_OCCUPANCYCLASSIFICATION']._serialized_start=992
+  _globals['_OCCUPANCYCLASSIFICATION']._serialized_end=1121
+  _globals['_SENSORSTATUS']._serialized_start=1124
+  _globals['_SENSORSTATUS']._serialized_end=1346
+  _globals['_REFERENCEALIGNMENTTYPE']._serialized_start=1348
+  _globals['_REFERENCEALIGNMENTTYPE']._serialized_end=1414
+  _globals['_OCCUPANCYGRID']._serialized_start=129
+  _globals['_OCCUPANCYGRID']._serialized_end=187
+  _globals['_OCCUPANCYGRIDEVENT']._serialized_start=190
+  _globals['_OCCUPANCYGRIDEVENT']._serialized_end=413
+  _globals['_OCCUPANCYGRIDLISTEVENT']._serialized_start=415
+  _globals['_OCCUPANCYGRIDLISTEVENT']._serialized_end=500
+  _globals['_SENSORINFO']._serialized_start=503
+  _globals['_SENSORINFO']._serialized_end=989
+  _globals['_SENSORINFO_POSECORRECTION']._serialized_start=810
+  _globals['_SENSORINFO_POSECORRECTION']._serialized_end=908
 # @@protoc_insertion_point(module_scope)

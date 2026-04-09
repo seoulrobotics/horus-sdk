@@ -13,6 +13,7 @@
 
 #include "examples/helpers.h"
 #include "horus/pb/config/metadata_pb.h"
+#include "horus/pb/cow.h"
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/preprocessing/messages_pb.h"
 #include "horus/rpc/services.h"
@@ -32,51 +33,67 @@ int main(int argc, const char* argv[]) {
   horus::Sdk sdk{service_map};
   horus::SdkSubscription const subscription{
       sdk.SubscribeToOccupancyGrid(
-             {/*on_occupancy_grid=*/[](horus::pb::OccupancyGridEvent const& event) {
-               horus::StringifyTo(horus::StdoutSink(), "Occupancy Grid received\n");
-               horus::StringifyTo(horus::StdoutSink(), "  resolution: ", event.resolution(), "\n");
-               horus::StringifyTo(horus::StdoutSink(), "  rows: ", event.grid().rows(), "\n");
-               horus::StringifyTo(horus::StdoutSink(), "  cols: ", event.grid().cols(), "\n");
-               horus::StringifyTo(horus::StdoutSink(), "  cells: ", event.grid().cells().size(),
-                                  "\n");
-               horus::StringifyTo(horus::StdoutSink(), "  detection range x: ", event.x_min(),
-                                  " - ", event.x_min(), "\n");
-               horus::StringifyTo(horus::StdoutSink(), "  detection range y: ", event.y_min(),
-                                  " - ", event.y_min(), "\n");
-               horus::StringifyTo(horus::StdoutSink(), "  timestamp: ", event.timestamp().seconds(),
-                                  "s ", event.timestamp().nanos(), "ns\n");
+             {/*on_occupancy_grid=*/[](const horus::pb::OccupancyGridListEvent& grids_event) {
+               for (const horus::Cow<horus::pb::OccupancyGridEvent>& node :
+                    grids_event.occupancy_grid_events()) {
+                 const horus::pb::OccupancyGridEvent& event{node.Ref()};
+                 horus::StringifyTo(horus::StdoutSink(), "Occupancy Grid received\n");
+                 horus::StringifyTo(horus::StdoutSink(), "  node_id: ", event.node_id().Str(),
+                                    "\n");
+                 horus::StringifyTo(horus::StdoutSink(),
+                                    "  detection_range_name: ", event.detection_range_name().Str(),
+                                    "\n");
+                 horus::StringifyTo(horus::StdoutSink(), "  resolution: ", event.resolution(),
+                                    "\n");
+                 horus::StringifyTo(horus::StdoutSink(), "  rows: ", event.grid().rows(), "\n");
+                 horus::StringifyTo(horus::StdoutSink(), "  cols: ", event.grid().cols(), "\n");
+                 horus::StringifyTo(horus::StdoutSink(), "  cells: ", event.grid().cells().size(),
+                                    "\n");
+                 horus::StringifyTo(horus::StdoutSink(), "  detection range x: ",
+                                    event.detection_range().x_range().start(), " - ",
+                                    event.detection_range().x_range().end(), "\n");
+                 horus::StringifyTo(horus::StdoutSink(), "  detection range y: ",
+                                    event.detection_range().y_range().start(), " - ",
+                                    event.detection_range().y_range().end(), "\n");
+                 horus::StringifyTo(horus::StdoutSink(), "  detection range z: ",
+                                    event.detection_range().z_range().start(), " - ",
+                                    event.detection_range().z_range().end(), "\n");
+                 horus::StringifyTo(horus::StdoutSink(),
+                                    "  timestamp: ", event.timestamp().seconds(), "s ",
+                                    event.timestamp().nanos(), "ns\n");
 
-               std::vector<horus::pb::OccupancyClassification> classifications;
+                 std::vector<horus::pb::OccupancyClassification> classifications;
 
-               std::size_t const rows{event.grid().rows()};
-               std::size_t const cols{event.grid().cols()};
-               classifications.reserve(rows * cols);
+                 std::size_t const rows{event.grid().rows()};
+                 std::size_t const cols{event.grid().cols()};
+                 classifications.reserve(rows * cols);
 
-               constexpr std::uint32_t const kNumCountBits{29U};
-               constexpr std::uint32_t const kValueMask{(1U << kNumCountBits) - 1U};
-               for (const std::uint32_t cell : event.grid().cells()) {
-                 std::uint32_t const value{cell >> kNumCountBits};
-                 std::uint32_t const count{cell & kValueMask};
-                 classifications.insert(classifications.end(), count,
-                                        static_cast<horus::pb::OccupancyClassification>(value));
+                 constexpr std::uint32_t const kNumCountBits{29U};
+                 constexpr std::uint32_t const kValueMask{(1U << kNumCountBits) - 1U};
+                 for (const std::uint32_t cell : event.grid().cells()) {
+                   std::uint32_t const value{cell >> kNumCountBits};
+                   std::uint32_t const count{cell & kValueMask};
+                   classifications.insert(classifications.end(), count,
+                                          static_cast<horus::pb::OccupancyClassification>(value));
+                 }
+
+                 auto const num_occluded = std::count_if(
+                     classifications.begin(), classifications.end(),
+                     [](horus::pb::OccupancyClassification const& classification) {
+                       return classification == horus::pb::OccupancyClassification::kOccluded;
+                     });
+                 auto const num_static_occupied =
+                     std::count_if(classifications.begin(), classifications.end(),
+                                   [](horus::pb::OccupancyClassification const& classification) {
+                                     return classification ==
+                                            horus::pb::OccupancyClassification::kStationaryOccupied;
+                                   });
+                 auto const num_free =
+                     static_cast<std::uint32_t>(rows * cols) - num_occluded - num_static_occupied;
+                 horus::StringifyTo(horus::StdoutSink(), "  num occluded: ", num_occluded,
+                                    " num static occupied: ", num_static_occupied,
+                                    " num free: ", num_free, "\n");
                }
-
-               auto const num_occluded = std::count_if(
-                   classifications.begin(), classifications.end(),
-                   [](horus::pb::OccupancyClassification const& classification) {
-                     return classification == horus::pb::OccupancyClassification::kOccluded;
-                   });
-               auto const num_static_occupied =
-                   std::count_if(classifications.begin(), classifications.end(),
-                                 [](horus::pb::OccupancyClassification const& classification) {
-                                   return classification ==
-                                          horus::pb::OccupancyClassification::kStationaryOccupied;
-                                 });
-               auto const num_free =
-                   static_cast<std::uint32_t>(rows * cols) - num_occluded - num_static_occupied;
-               horus::StringifyTo(horus::StdoutSink(), "  num occluded: ", num_occluded,
-                                  " num static occupied: ", num_static_occupied,
-                                  " num free: ", num_free, "\n");
              }})
           .Wait()};
 

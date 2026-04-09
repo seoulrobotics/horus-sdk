@@ -6,6 +6,7 @@
 #define HORUS_SDK_SENSOR_H_
 
 #include "horus/pb/notification_service/service_pb.h"
+#include "horus/pb/point_aggregator/point_aggregator_service_pb.h"
 #include "horus/pb/preprocessing/messages_pb.h"
 
 namespace horus {
@@ -20,7 +21,7 @@ struct SensorInfoSubscriptionRequest {
 /// A request to subscribe to global sensor occupancy grid information events.
 struct OccupancyGridSubscriptionRequest {
   /// Function to call when occupancy grid information is received.
-  std::function<void(pb::OccupancyGridEvent&&)> on_occupancy_grid;
+  std::function<void(pb::OccupancyGridListEvent&&)> on_occupancy_grid;
 };
 
 }  // namespace sdk

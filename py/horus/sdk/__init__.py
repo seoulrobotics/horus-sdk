@@ -44,7 +44,7 @@ from horus.pb.point_aggregator.point_aggregator_service_client import (
     PointAggregatorServiceClient as _PointAggregatorServiceClient,
 )
 from horus.sdk.profiling import ProfilingInfo
-from horus.sdk.sensor import OccupancyGridEvent
+from horus.sdk.sensor import OccupancyGridEvent, OccupancyGridListEvent
 from horus.proto import *
 from horus.sdk.health import (
     HealthStatus,
@@ -138,11 +138,11 @@ class Sdk:
         return Subscription(lambda: self._subscribe_to_logs_async(on_log_message))
 
     def subscribe_to_occupancy_grid(
-        self, on_occupancy_grid_event: typing.Callable[[OccupancyGridEvent], None]
+        self, on_occupancy_grid_event: typing.Callable[[OccupancyGridListEvent], None]
     ) -> "Subscription":
-        """Returns a `Subscription` which will call `on_occupancy_grid()` with new occupancy grids until destroyed."""
+        """Returns a `Subscription` which will call `on_occupancy_grid_event()` with new occupancy grids until destroyed."""
         if not callable(on_occupancy_grid_event):
-            raise TypeError("on_occupancy_grid must be callable")
+            raise TypeError("on_occupancy_grid_event must be callable")
 
         return Subscription(
             lambda: self._subscribe_to_occupancy_grid_async(on_occupancy_grid_event)
@@ -250,7 +250,7 @@ class Sdk:
         )
 
     async def _subscribe_to_occupancy_grid_async(
-        self, on_occupancy_grid_event: typing.Callable[[OccupancyGridEvent], None]
+        self, on_occupancy_grid_event: typing.Callable[[OccupancyGridListEvent], None]
     ) -> _UnsubscribeCallable:
         _, listener = await self._ensure_point_aggregator_service()
 

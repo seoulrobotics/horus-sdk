@@ -1,7 +1,7 @@
 from ...rpc.base_client import BaseRpcClient
 
 from ..point.point_message_pb2 import AggregatedPointEvents
-from ..preprocessing.messages_pb2 import OccupancyGridEvent
+from ..preprocessing.messages_pb2 import OccupancyGridEvent, OccupancyGridListEvent
 from ..rpc_pb2 import DefaultSubscribeRequest, DefaultSubscribeResponse, DefaultUnsubscribeRequest, DefaultUnsubscribeResponse
 
 class PointAggregatorServiceClient(BaseRpcClient):
@@ -59,3 +59,12 @@ class PointAggregatorSubscriberServiceClient(BaseRpcClient):
             raise TypeError("request must be a OccupancyGridEvent")
 
         await self._send_rpc(3, request)
+
+    async def broadcast_occupancy_grid_list(self, request: OccupancyGridListEvent) -> None:
+        """
+        Service exposed by clients of the `PointAggregatorService` that wish to receive updates when new processed points are received.
+        """
+        if not isinstance(request, OccupancyGridListEvent):
+            raise TypeError("request must be a OccupancyGridListEvent")
+
+        await self._send_rpc(4, request)

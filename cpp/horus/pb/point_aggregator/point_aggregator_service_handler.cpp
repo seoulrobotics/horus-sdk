@@ -46,6 +46,9 @@ AnyFuture<pb::RpcMessage> PointAggregatorSubscriberServiceHandler::Handle(const 
     case 3: {
       return DoDispatch(&PointAggregatorSubscriberServiceHandler::BroadcastOccupancyGrid, context, owned_request);
     }
+    case 4: {
+      return DoDispatch(&PointAggregatorSubscriberServiceHandler::BroadcastOccupancyGridList, context, owned_request);
+    }
     default: {
       throw horus_internal::UnknownRpcMethodError{};
     }

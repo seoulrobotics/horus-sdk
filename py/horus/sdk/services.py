@@ -154,7 +154,7 @@ class PointAggregatorServiceListener(PointAggregatorSubscriberServiceHandler):
         super().__init__(ws)
 
         self._on_occupancy_grid_event: typing.Set[
-            typing.Callable[[sensor.OccupancyGridEvent], None]
+            typing.Callable[[sensor.OccupancyGridListEvent], None]
         ] = set()
 
         self._logger = logger
@@ -163,20 +163,26 @@ class PointAggregatorServiceListener(PointAggregatorSubscriberServiceHandler):
     async def broadcast_occupancy_grid(
         self, request: messages_pb2.OccupancyGridEvent
     ) -> None:
+        pass  # Deprecated: use broadcast_occupancy_grid_list instead.
+
+    @override
+    async def broadcast_occupancy_grid_list(
+        self, request: messages_pb2.OccupancyGridListEvent
+    ) -> None:
         if not self._on_occupancy_grid_event:
             return
 
         try:
-            occupancy_grid_event = sensor.OccupancyGridEvent._from_pb(request)
+            occupancy_grids_event = sensor.OccupancyGridListEvent._from_pb(request)
         except ValueError:
             self._logger.error(
-                "cannot parse OccupancyGridEvent",
-                extra={"broadcast_occupancy_grid": request},
+                "cannot parse OccupancyGridListEvent",
+                extra={"broadcast_occupancy_grid_list": request},
             )
             return
 
         for subscriber in self._on_occupancy_grid_event:
-            subscriber(occupancy_grid_event)
+            subscriber(occupancy_grids_event)
 
     @override
     async def broadcast_processed_points(
