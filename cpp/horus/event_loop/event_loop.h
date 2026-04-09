@@ -80,9 +80,14 @@ class EventLoop final {
     /// Schedules for `invocable(EventLoop&)` to be invoked by the event loop soon. If called on the
     /// event loop, immediately executes `invocable()`.
     ///
+    /// @returns `true` if the invocation was successfully scheduled or executed, or `false` if the
+    /// event loop is shutting down (in which case the invocable will not be executed).
+    ///
+    /// @note `invocable` will only be moved if this function returns `true`.
+    ///
     /// @throws std::bad_alloc If the invocation state cannot be allocated.
     template <class F>
-    static void InvokeInLoop(const std::shared_ptr<State>& state, F&& invocable) noexcept(false);
+    static bool InvokeInLoop(const std::shared_ptr<State>& state, F&& invocable) noexcept(false);
 
    private:
     /// The initial value of `task_capacity_`.
@@ -95,13 +100,17 @@ class EventLoop final {
 
     /// Mutex which guards `active_tasks_`.
     std::mutex mutex_;
+    /// Condition variable used to notify `IncTasks()` that capacity is now available.
+    std::condition_variable task_capacity_cv_;
     /// The number of tasks which are available to be enqueued now, decreased with `IncTasks()` and
     /// increased with `DecTasks()`.
     std::uint32_t task_capacity_{kTaskCapacity};
-    /// Condition variable used to notify `IncTasks()` that capacity is now available.
-    std::condition_variable task_capacity_cv_;
 
-    /// Async handle used to schedule
+    /// Whether the loop is shutting down. If `true`, no new tasks should be accepted, but existing
+    /// tasks should still be driven to completion.
+    bool shutting_down_{false};
+
+    /// Async handle used to schedule tasks on the event loop from other threads.
     Uv<uv_async_t> ticket_handle_;
     /// A queue of tickets requesting execution of some function on the event loop.
     TicketQueue tickets_;
@@ -231,6 +240,8 @@ class EventLoop::State::Ticket {
   /// The reason why this isn't done in the constructor is that, when the `Ticket` is constructed,
   /// the derived class may not have finished initializing, but we want it to be fully initialized
   /// before registering the ticket to avoid race conditions.
+  ///
+  /// Requires `state->mutex_` to be locked.
   void Register(const std::shared_ptr<State>& state) noexcept;
 
  private:
@@ -254,9 +265,15 @@ class EventLoop::State::TicketFor final : public Ticket {
   /// Creates a ticket which will execute in the background and free itself in the future.
   ///
   /// @throw std::bad_alloc
-  static void CreateAndRelease(const std::shared_ptr<State>& state, F&& invocable) noexcept(false) {
+  static bool CreateAndRelease(const std::shared_ptr<State>& state, F&& invocable) noexcept(false) {
+    const std::unique_lock<std::mutex> lock{state->mutex_};
+    if (state->shutting_down_) {
+      // The loop is shutting down, so we shouldn't accept new tasks.
+      return false;
+    }
     TicketFor* const ticket{new TicketFor{std::move(invocable)}};
     ticket->Register(state);
+    return true;
   }
 
  protected:
@@ -279,15 +296,15 @@ class EventLoop::State::TicketFor final : public Ticket {
 
 template <class F>
 // static
-void EventLoop::State::InvokeInLoop(const std::shared_ptr<State>& state,
+bool EventLoop::State::InvokeInLoop(const std::shared_ptr<State>& state,
                                     F&& invocable) noexcept(false) {
   if (!state->IncTasks()) {
     // We're already on the event loop.
     std::forward<F>(invocable)(state->Loop());
-    return;
+    return true;
   }
   try {
-    TicketFor<F>::CreateAndRelease(state, std::forward<F>(invocable));
+    return TicketFor<F>::CreateAndRelease(state, std::forward<F>(invocable));
   } catch (const std::bad_alloc&) {
     state->DecTasks();
     throw;
@@ -455,9 +472,12 @@ void EventLoop::SpawnFuture(F&& future, SourceLocation source_location) noexcept
   std::unique_ptr<SpawnFutureTask<F>> task{
       std::make_unique<SpawnFutureTask<F>>(std::forward<F>(future), source_location)};
 
-  State::InvokeInLoop(loop_, [task_ptr{std::move(task)}](EventLoop& loop) mutable noexcept {
-    task_ptr.release()->Spawn(loop);
-  });
+  // If the loop is shutting down, `release()` won't be called and the `task` will be destroyed
+  // here.
+  static_cast<void>(
+      State::InvokeInLoop(loop_, [task_ptr{std::move(task)}](EventLoop& loop) mutable noexcept {
+        task_ptr.release()->Spawn(loop);
+      }));
 }
 
 // MARK: AwaitFuture()
@@ -485,7 +505,7 @@ class EventLoop::AwaitTask : public Task {
   /// Awaits the underlying future from the calling thread (which must be different from the
   /// event loop thread), awaiting its completion. The caller is responsible for checking that the
   /// future did (or did not) throw.
-  bool Await(EventLoop& loop) noexcept(false);
+  void Await(EventLoop& loop) noexcept(false);
 
  protected:
   /// Destroys the task.
@@ -591,8 +611,13 @@ class EventLoop::Invoker final {
     if (loop_ptr == nullptr) {
       return false;
     }
-    State::InvokeInLoop(loop_ptr, std::forward<F>(invocable));
-    return true;
+    if (State::InvokeInLoop(loop_ptr, std::forward<F>(invocable))) {
+      return true;
+    }
+    // Discard `invocable`.
+    const F discarded{std::forward<F>(invocable)};
+    static_cast<void>(discarded);
+    return false;
   }
 
   /// Same as `TryInvoke()`, but only moves `invocable` if it can be invoked.
@@ -605,8 +630,7 @@ class EventLoop::Invoker final {
     if (loop_ptr == nullptr) {
       return false;
     }
-    State::InvokeInLoop(loop_ptr, std::move(invocable));
-    return true;
+    return State::InvokeInLoop(loop_ptr, std::move(invocable));
   }
 
  private:
