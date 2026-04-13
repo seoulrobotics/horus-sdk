@@ -1602,12 +1602,14 @@ class DbCommitFailed(_message.Message):
     def __init__(self, action: _Optional[str] = ..., error: _Optional[str] = ...) -> None: ...
 
 class DetectionServiceRpcQueueFull(_message.Message):
-    __slots__ = ("num_packets", "queue_size")
+    __slots__ = ("num_packets", "queue_size", "node_id")
     NUM_PACKETS_FIELD_NUMBER: _ClassVar[int]
     QUEUE_SIZE_FIELD_NUMBER: _ClassVar[int]
+    NODE_ID_FIELD_NUMBER: _ClassVar[int]
     num_packets: int
     queue_size: int
-    def __init__(self, num_packets: _Optional[int] = ..., queue_size: _Optional[int] = ...) -> None: ...
+    node_id: str
+    def __init__(self, num_packets: _Optional[int] = ..., queue_size: _Optional[int] = ..., node_id: _Optional[str] = ...) -> None: ...
 
 class ProjectMigrationFailed(_message.Message):
     __slots__ = ("details",)

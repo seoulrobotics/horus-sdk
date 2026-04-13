@@ -93,9 +93,14 @@ func (c *PointAggregatorSubscriberServiceClient) BroadcastProcessedPoints(ctx co
 	return c.e.SendOneWay(ctx, c.ServiceId(), 2, req)
 }
 
-// Notify new occupancy grid input.
+// Deprecated: Use BroadcastOccupancyGridList instead.
 func (c *PointAggregatorSubscriberServiceClient) BroadcastOccupancyGrid(ctx context.Context, req *messages_pb.OccupancyGridEvent) error {
 	return c.e.SendOneWay(ctx, c.ServiceId(), 3, req)
+}
+
+// Notify new occupancy grid input.
+func (c *PointAggregatorSubscriberServiceClient) BroadcastOccupancyGridList(ctx context.Context, req *messages_pb.OccupancyGridListEvent) error {
+	return c.e.SendOneWay(ctx, c.ServiceId(), 4, req)
 }
 
 // PointAggregatorServiceHandler defines how to handle requests sent to a PointAggregatorService:
@@ -162,8 +167,10 @@ func PointAggregatorServiceInterfaceToHandler(h PointAggregatorServiceInterface)
 type PointAggregatorSubscriberServiceHandler struct {
 	// Notify new processed points input.
 	BroadcastProcessedPoints func(ctx context.Context, req *point_message_pb.AggregatedPointEvents) error
-	// Notify new occupancy grid input.
+	// Deprecated: Use BroadcastOccupancyGridList instead.
 	BroadcastOccupancyGrid func(ctx context.Context, req *messages_pb.OccupancyGridEvent) error
+	// Notify new occupancy grid input.
+	BroadcastOccupancyGridList func(ctx context.Context, req *messages_pb.OccupancyGridListEvent) error
 }
 
 // ServiceId returns the service ID of the PointAggregatorSubscriberService (5).
@@ -194,6 +201,16 @@ func (h *PointAggregatorSubscriberServiceHandler) Handle(ctx context.Context, me
 			return nil, nil
 		}
 		return nil, h.BroadcastOccupancyGrid(ctx, req)
+	case 4:
+		req := &messages_pb.OccupancyGridListEvent{}
+		err := proto.Unmarshal(bytes, req)
+		if err != nil {
+			return nil, fmt.Errorf("failed to deserialize request: %v", err)
+		}
+		if h.BroadcastOccupancyGridList == nil {
+			return nil, nil
+		}
+		return nil, h.BroadcastOccupancyGridList(ctx, req)
 	default:
 		return nil, fmt.Errorf("method not found: %d", method)
 	}
@@ -204,8 +221,10 @@ func (h *PointAggregatorSubscriberServiceHandler) Handle(ctx context.Context, me
 type PointAggregatorSubscriberServiceInterface interface {
 	// Notify new processed points input.
 	BroadcastProcessedPoints(ctx context.Context, req *point_message_pb.AggregatedPointEvents) error
-	// Notify new occupancy grid input.
+	// Deprecated: Use BroadcastOccupancyGridList instead.
 	BroadcastOccupancyGrid(ctx context.Context, req *messages_pb.OccupancyGridEvent) error
+	// Notify new occupancy grid input.
+	BroadcastOccupancyGridList(ctx context.Context, req *messages_pb.OccupancyGridListEvent) error
 }
 
 // PointAggregatorSubscriberServiceInterfaceToHandler converts a [PointAggregatorSubscriberServiceInterface] to a [rpc.Handler].
@@ -213,5 +232,6 @@ func PointAggregatorSubscriberServiceInterfaceToHandler(h PointAggregatorSubscri
 	return &PointAggregatorSubscriberServiceHandler{
 		BroadcastProcessedPoints: h.BroadcastProcessedPoints,
 		BroadcastOccupancyGrid: h.BroadcastOccupancyGrid,
+		BroadcastOccupancyGridList: h.BroadcastOccupancyGridList,
 	}
 }

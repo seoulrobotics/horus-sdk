@@ -88,6 +88,8 @@ message FrameProfiling {
   /// overhead of our pipeline for the frame.
   Duration frame_bundling_latency = 2;
 
+  Duration preprocessing_overhead = 4;
+
   /// The removed earliest_packet_to_detection_latency field.
   reserved 3;
 }

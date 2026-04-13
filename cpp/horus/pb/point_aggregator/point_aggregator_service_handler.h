@@ -144,6 +144,10 @@ class PointAggregatorSubscriberServiceHandler : public horus_internal::RpcBaseHa
   using BroadcastOccupancyGridRequestType = pb::OccupancyGridEvent;
   /// The response type of `BroadcastOccupancyGrid()`.
   using BroadcastOccupancyGridResponseType = void;
+  /// The request type of `BroadcastOccupancyGridList()`.
+  using BroadcastOccupancyGridListRequestType = pb::OccupancyGridListEvent;
+  /// The response type of `BroadcastOccupancyGridList()`.
+  using BroadcastOccupancyGridListResponseType = void;
 
   /// Default constructor.
   PointAggregatorSubscriberServiceHandler() noexcept = default;
@@ -163,35 +167,48 @@ class PointAggregatorSubscriberServiceHandler : public horus_internal::RpcBaseHa
   virtual AnyFuture<void> BroadcastProcessedPoints(const RpcContext& context,
                                                    pb::AggregatedPointEvents&& request) noexcept(false) = 0;
 
-  /// Notify new occupancy grid input.
+  /// Deprecated: Use BroadcastOccupancyGridList instead.
   virtual AnyFuture<void> BroadcastOccupancyGrid(const RpcContext& context,
                                                  pb::OccupancyGridEvent&& request) noexcept(false) = 0;
+
+  /// Notify new occupancy grid input.
+  virtual AnyFuture<void> BroadcastOccupancyGridList(const RpcContext& context,
+                                                     pb::OccupancyGridListEvent&& request) noexcept(false) = 0;
 };
 
 /// A `PointAggregatorSubscriberServiceHandler` which forwards received messages to function objects.
-template <class SharedState, class OnBroadcastProcessedPoints, class OnBroadcastOccupancyGrid>
+template <class SharedState, class OnBroadcastProcessedPoints, class OnBroadcastOccupancyGrid, class OnBroadcastOccupancyGridList>
 class FunctionalPointAggregatorSubscriberService final : public PointAggregatorSubscriberServiceHandler {
  public:
   /// Constructs a `FunctionalPointAggregatorSubscriberService` which forwards received messages to function objects.
-  FunctionalPointAggregatorSubscriberService(SharedState shared_state, OnBroadcastProcessedPoints&& on_broadcast_processed_points, OnBroadcastOccupancyGrid&& on_broadcast_occupancy_grid) noexcept
+  FunctionalPointAggregatorSubscriberService(SharedState shared_state, OnBroadcastProcessedPoints&& on_broadcast_processed_points, OnBroadcastOccupancyGrid&& on_broadcast_occupancy_grid, OnBroadcastOccupancyGridList&& on_broadcast_occupancy_grid_list) noexcept
       : shared_state_{std::forward<SharedState>(shared_state)}
       , on_broadcast_processed_points_{std::move(on_broadcast_processed_points)}
-      , on_broadcast_occupancy_grid_{std::move(on_broadcast_occupancy_grid)} {}
+      , on_broadcast_occupancy_grid_{std::move(on_broadcast_occupancy_grid)}
+      , on_broadcast_occupancy_grid_list_{std::move(on_broadcast_occupancy_grid_list)} {}
 
   /// Returns a `FunctionalPointAggregatorSubscriberService` which handles `BroadcastProcessedPoints()` with `on_broadcast_processed_points()`.
   template <class F>
-  FunctionalPointAggregatorSubscriberService<SharedState, F, OnBroadcastOccupancyGrid>
+  FunctionalPointAggregatorSubscriberService<SharedState, F, OnBroadcastOccupancyGrid, OnBroadcastOccupancyGridList>
   BroadcastProcessedPointsWith(F&& on_broadcast_processed_points) && noexcept {
-    return FunctionalPointAggregatorSubscriberService<SharedState, F, OnBroadcastOccupancyGrid>{
-        std::move(shared_state_), std::forward<F>(on_broadcast_processed_points), std::move(on_broadcast_occupancy_grid_)};
+    return FunctionalPointAggregatorSubscriberService<SharedState, F, OnBroadcastOccupancyGrid, OnBroadcastOccupancyGridList>{
+        std::move(shared_state_), std::forward<F>(on_broadcast_processed_points), std::move(on_broadcast_occupancy_grid_), std::move(on_broadcast_occupancy_grid_list_)};
   }
 
   /// Returns a `FunctionalPointAggregatorSubscriberService` which handles `BroadcastOccupancyGrid()` with `on_broadcast_occupancy_grid()`.
   template <class F>
-  FunctionalPointAggregatorSubscriberService<SharedState, OnBroadcastProcessedPoints, F>
+  FunctionalPointAggregatorSubscriberService<SharedState, OnBroadcastProcessedPoints, F, OnBroadcastOccupancyGridList>
   BroadcastOccupancyGridWith(F&& on_broadcast_occupancy_grid) && noexcept {
-    return FunctionalPointAggregatorSubscriberService<SharedState, OnBroadcastProcessedPoints, F>{
-        std::move(shared_state_), std::move(on_broadcast_processed_points_), std::forward<F>(on_broadcast_occupancy_grid)};
+    return FunctionalPointAggregatorSubscriberService<SharedState, OnBroadcastProcessedPoints, F, OnBroadcastOccupancyGridList>{
+        std::move(shared_state_), std::move(on_broadcast_processed_points_), std::forward<F>(on_broadcast_occupancy_grid), std::move(on_broadcast_occupancy_grid_list_)};
+  }
+
+  /// Returns a `FunctionalPointAggregatorSubscriberService` which handles `BroadcastOccupancyGridList()` with `on_broadcast_occupancy_grid_list()`.
+  template <class F>
+  FunctionalPointAggregatorSubscriberService<SharedState, OnBroadcastProcessedPoints, OnBroadcastOccupancyGrid, F>
+  BroadcastOccupancyGridListWith(F&& on_broadcast_occupancy_grid_list) && noexcept {
+    return FunctionalPointAggregatorSubscriberService<SharedState, OnBroadcastProcessedPoints, OnBroadcastOccupancyGrid, F>{
+        std::move(shared_state_), std::move(on_broadcast_processed_points_), std::move(on_broadcast_occupancy_grid_), std::forward<F>(on_broadcast_occupancy_grid_list)};
   }
 
  protected:
@@ -205,6 +222,11 @@ class FunctionalPointAggregatorSubscriberService final : public PointAggregatorS
                                          pb::OccupancyGridEvent&& request) noexcept(false) final {
     return horus_internal::ForwardToFunctionalHandler<void>(shared_state_, on_broadcast_occupancy_grid_, context, std::move(request));
   }
+  /// Forwards `BroadcastOccupancyGridList()` to `OnBroadcastOccupancyGridList`.
+  AnyFuture<void> BroadcastOccupancyGridList(const RpcContext& context,
+                                             pb::OccupancyGridListEvent&& request) noexcept(false) final {
+    return horus_internal::ForwardToFunctionalHandler<void>(shared_state_, on_broadcast_occupancy_grid_list_, context, std::move(request));
+  }
  private:
   /// State shared between all callbacks.
   HORUS_SDK_ATTRIBUTE_NO_UNIQUE_ADDRESS SharedState shared_state_;
@@ -212,21 +234,23 @@ class FunctionalPointAggregatorSubscriberService final : public PointAggregatorS
   HORUS_SDK_ATTRIBUTE_NO_UNIQUE_ADDRESS OnBroadcastProcessedPoints on_broadcast_processed_points_;
   /// Handler of `BroadcastOccupancyGrid`.
   HORUS_SDK_ATTRIBUTE_NO_UNIQUE_ADDRESS OnBroadcastOccupancyGrid on_broadcast_occupancy_grid_;
+  /// Handler of `BroadcastOccupancyGridList`.
+  HORUS_SDK_ATTRIBUTE_NO_UNIQUE_ADDRESS OnBroadcastOccupancyGridList on_broadcast_occupancy_grid_list_;
 };
 
 /// Returns a `FunctionalPointAggregatorSubscriberService` with the given shared state.
 template <class SharedState>
-FunctionalPointAggregatorSubscriberService<SharedState, decltype(&horus_internal::IgnoreRpc<pb::AggregatedPointEvents, void>), decltype(&horus_internal::IgnoreRpc<pb::OccupancyGridEvent, void>)>
+FunctionalPointAggregatorSubscriberService<SharedState, decltype(&horus_internal::IgnoreRpc<pb::AggregatedPointEvents, void>), decltype(&horus_internal::IgnoreRpc<pb::OccupancyGridEvent, void>), decltype(&horus_internal::IgnoreRpc<pb::OccupancyGridListEvent, void>)>
 CreateFunctionalPointAggregatorSubscriberService(SharedState&& shared_state) noexcept {
-  return FunctionalPointAggregatorSubscriberService<SharedState, decltype(&horus_internal::IgnoreRpc<pb::AggregatedPointEvents, void>), decltype(&horus_internal::IgnoreRpc<pb::OccupancyGridEvent, void>)>{
-      std::forward<SharedState>(shared_state), &horus_internal::IgnoreRpc<pb::AggregatedPointEvents, void>, &horus_internal::IgnoreRpc<pb::OccupancyGridEvent, void>};
+  return FunctionalPointAggregatorSubscriberService<SharedState, decltype(&horus_internal::IgnoreRpc<pb::AggregatedPointEvents, void>), decltype(&horus_internal::IgnoreRpc<pb::OccupancyGridEvent, void>), decltype(&horus_internal::IgnoreRpc<pb::OccupancyGridListEvent, void>)>{
+      std::forward<SharedState>(shared_state), &horus_internal::IgnoreRpc<pb::AggregatedPointEvents, void>, &horus_internal::IgnoreRpc<pb::OccupancyGridEvent, void>, &horus_internal::IgnoreRpc<pb::OccupancyGridListEvent, void>};
 }
 
 /// Returns a `FunctionalPointAggregatorSubscriberService` with no shared state.
-inline FunctionalPointAggregatorSubscriberService<decltype(nullptr), decltype(&horus_internal::IgnoreRpc<pb::AggregatedPointEvents, void>), decltype(&horus_internal::IgnoreRpc<pb::OccupancyGridEvent, void>)>
+inline FunctionalPointAggregatorSubscriberService<decltype(nullptr), decltype(&horus_internal::IgnoreRpc<pb::AggregatedPointEvents, void>), decltype(&horus_internal::IgnoreRpc<pb::OccupancyGridEvent, void>), decltype(&horus_internal::IgnoreRpc<pb::OccupancyGridListEvent, void>)>
 CreateFunctionalPointAggregatorSubscriberService() noexcept {
-  return FunctionalPointAggregatorSubscriberService<decltype(nullptr), decltype(&horus_internal::IgnoreRpc<pb::AggregatedPointEvents, void>), decltype(&horus_internal::IgnoreRpc<pb::OccupancyGridEvent, void>)>{
-      nullptr, &horus_internal::IgnoreRpc<pb::AggregatedPointEvents, void>, &horus_internal::IgnoreRpc<pb::OccupancyGridEvent, void>};
+  return FunctionalPointAggregatorSubscriberService<decltype(nullptr), decltype(&horus_internal::IgnoreRpc<pb::AggregatedPointEvents, void>), decltype(&horus_internal::IgnoreRpc<pb::OccupancyGridEvent, void>), decltype(&horus_internal::IgnoreRpc<pb::OccupancyGridListEvent, void>)>{
+      nullptr, &horus_internal::IgnoreRpc<pb::AggregatedPointEvents, void>, &horus_internal::IgnoreRpc<pb::OccupancyGridEvent, void>, &horus_internal::IgnoreRpc<pb::OccupancyGridListEvent, void>};
 }
 
 }  // namespace pb

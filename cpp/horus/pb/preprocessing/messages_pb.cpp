@@ -52,12 +52,11 @@ void OccupancyGrid::DeserializeFrom(PbReader& reader) noexcept(false) {
 
 OccupancyGridEvent::OccupancyGridEvent(const OccupancyGridEvent& other) noexcept(false)
     : grid_{other.grid_}
-    , x_min_{other.x_min_}
-    , x_max_{other.x_max_}
-    , y_min_{other.y_min_}
-    , y_max_{other.y_max_}
     , resolution_{other.resolution_}
+    , detection_range_{other.detection_range_}
     , timestamp_{other.timestamp_}
+    , node_id_{other.node_id_}
+    , detection_range_name_{other.detection_range_name_}
     , set_fields_{other.set_fields_} {}
 
 void OccupancyGridEvent::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -65,22 +64,19 @@ void OccupancyGridEvent::SerializeTo(PbWriter& writer) const noexcept(false) {
     SerializeField<OccupancyGrid>(writer, /*tag=*/ 1, grid_);
   }
   if (set_fields_[1]) {
-    SerializeField<float, PbDeserFlags::kFixed>(writer, /*tag=*/ 2, x_min_);
-  }
-  if (set_fields_[2]) {
-    SerializeField<float, PbDeserFlags::kFixed>(writer, /*tag=*/ 3, x_max_);
-  }
-  if (set_fields_[3]) {
-    SerializeField<float, PbDeserFlags::kFixed>(writer, /*tag=*/ 4, y_min_);
-  }
-  if (set_fields_[4]) {
-    SerializeField<float, PbDeserFlags::kFixed>(writer, /*tag=*/ 5, y_max_);
-  }
-  if (set_fields_[5]) {
     SerializeField<float, PbDeserFlags::kFixed>(writer, /*tag=*/ 6, resolution_);
   }
-  if (set_fields_[6]) {
+  if (set_fields_[2]) {
+    SerializeField<DetectionRange>(writer, /*tag=*/ 8, detection_range_);
+  }
+  if (set_fields_[3]) {
     SerializeField<Timestamp>(writer, /*tag=*/ 7, timestamp_);
+  }
+  if (set_fields_[4]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 10, node_id_);
+  }
+  if (set_fields_[5]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 11, detection_range_name_);
   }
 }
 
@@ -92,34 +88,55 @@ void OccupancyGridEvent::DeserializeFrom(PbReader& reader) noexcept(false) {
         set_fields_[0] = true;
         break;
       }
-      case 2: {
-        DeserializeField<float, PbDeserFlags::kFixed>(reader, x_min_);
+      case 6: {
+        DeserializeField<float, PbDeserFlags::kFixed>(reader, resolution_);
         set_fields_[1] = true;
         break;
       }
-      case 3: {
-        DeserializeField<float, PbDeserFlags::kFixed>(reader, x_max_);
+      case 8: {
+        DeserializeField<DetectionRange>(reader, detection_range_);
         set_fields_[2] = true;
-        break;
-      }
-      case 4: {
-        DeserializeField<float, PbDeserFlags::kFixed>(reader, y_min_);
-        set_fields_[3] = true;
-        break;
-      }
-      case 5: {
-        DeserializeField<float, PbDeserFlags::kFixed>(reader, y_max_);
-        set_fields_[4] = true;
-        break;
-      }
-      case 6: {
-        DeserializeField<float, PbDeserFlags::kFixed>(reader, resolution_);
-        set_fields_[5] = true;
         break;
       }
       case 7: {
         DeserializeField<Timestamp>(reader, timestamp_);
-        set_fields_[6] = true;
+        set_fields_[3] = true;
+        break;
+      }
+      case 10: {
+        DeserializeField<CowBytes>(reader, node_id_);
+        set_fields_[4] = true;
+        break;
+      }
+      case 11: {
+        DeserializeField<CowBytes>(reader, detection_range_name_);
+        set_fields_[5] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+OccupancyGridListEvent::OccupancyGridListEvent(const OccupancyGridListEvent& other) noexcept(false)
+    : occupancy_grid_events_{other.occupancy_grid_events_}
+    , set_fields_{other.set_fields_} {}
+
+void OccupancyGridListEvent::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowRepeated<OccupancyGridEvent>>(writer, /*tag=*/ 1, occupancy_grid_events_);
+  }
+}
+
+void OccupancyGridListEvent::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowRepeated<OccupancyGridEvent>>(reader, occupancy_grid_events_);
+        set_fields_[0] = true;
         break;
       }
       default: {

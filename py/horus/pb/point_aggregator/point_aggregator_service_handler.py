@@ -2,7 +2,7 @@ import abc as _abc
 from ...rpc.base_handler import BaseRpcHandler, RpcMessage, WebSocket
 
 from ..point.point_message_pb2 import AggregatedPointEvents
-from ..preprocessing.messages_pb2 import OccupancyGridEvent
+from ..preprocessing.messages_pb2 import OccupancyGridEvent, OccupancyGridListEvent
 from ..rpc_pb2 import DefaultSubscribeRequest, DefaultSubscribeResponse, DefaultUnsubscribeRequest, DefaultUnsubscribeResponse
 
 class PointAggregatorServiceHandler(BaseRpcHandler, metaclass=_abc.ABCMeta):
@@ -49,6 +49,7 @@ class PointAggregatorSubscriberServiceHandler(BaseRpcHandler, metaclass=_abc.ABC
         super().__init__(ws, {
             2: (AggregatedPointEvents, None, self.broadcast_processed_points),
             3: (OccupancyGridEvent, None, self.broadcast_occupancy_grid),
+            4: (OccupancyGridListEvent, None, self.broadcast_occupancy_grid_list),
         })
 
     @_abc.abstractmethod
@@ -60,6 +61,13 @@ class PointAggregatorSubscriberServiceHandler(BaseRpcHandler, metaclass=_abc.ABC
 
     @_abc.abstractmethod
     async def broadcast_occupancy_grid(self, request: OccupancyGridEvent) -> None:
+        """
+        Deprecated: Use BroadcastOccupancyGridList instead.
+        """
+        raise NotImplementedError
+
+    @_abc.abstractmethod
+    async def broadcast_occupancy_grid_list(self, request: OccupancyGridListEvent) -> None:
         """
         Notify new occupancy grid input.
         """

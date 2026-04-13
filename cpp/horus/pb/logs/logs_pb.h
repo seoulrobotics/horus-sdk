@@ -31421,7 +31421,7 @@ class DbCommitFailed final : public PbMessage {
 
 /// Log #226.
 /// 
-///  > Dropping $num_packets buffered packet(s) because the detection service RPC queue is full (queue size: $queue_size).
+///  > Dropping $num_packets buffered packet(s) for node $node_id because the detection service RPC queue is full (queue size: $queue_size).
 ///
 /// Source: horus/pb/logs/logs.proto:1704:1
 class DetectionServiceRpcQueueFull final : public PbMessage {
@@ -31549,21 +31549,73 @@ class DetectionServiceRpcQueueFull final : public PbMessage {
     return std::move(set_queue_size(queue_size));
   }
 
+  // Field `node_id` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& node_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return node_id_;
+  }
+
+  /// If `node_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes node_id() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(node_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_node_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return node_id_;
+  }
+
+  /// Returns whether `node_id` (no 3) is set.
+  constexpr bool has_node_id() const noexcept { return set_fields_[2]; }
+
+  /// Clears `node_id` (no 3).
+  void clear_node_id() & noexcept {
+    set_fields_[2] = false;
+    node_id_ = {};
+  }
+
+  /// Sets `node_id` (no 3) and returns `*this`.
+  DetectionServiceRpcQueueFull& set_node_id(CowBytes&& node_id) & noexcept {
+    set_fields_[2] = true;
+    node_id_ = std::move(node_id);
+    return *this;
+  }
+  /// Sets `node_id` (no 3) and returns `*this`.
+  DetectionServiceRpcQueueFull&& set_node_id(CowBytes&& node_id) && noexcept {
+    return std::move(set_node_id(std::move(node_id)));
+  }
+
  private:
   /// @see num_packets()
   std::uint64_t num_packets_{};
   /// @see queue_size()
   std::uint64_t queue_size_{};
+  /// @see node_id()
+  CowBytes node_id_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 /// Log #227.
 /// 
 ///  > Project migration failed: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:1712:1
+/// Source: horus/pb/logs/logs.proto:1713:1
 class ProjectMigrationFailed final : public PbMessage {
  public:
 

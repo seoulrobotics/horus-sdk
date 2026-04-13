@@ -140,34 +140,61 @@ class OccupancyGrid:
 
 @dataclasses.dataclass(frozen=True)
 class OccupancyGridEvent:
-    """An occupancy grid."""
+    """An occupancy grid event for a single detection node."""
 
     """The grid data."""
     grid: OccupancyGrid
-
-    """The x min of the detection range."""
+    """The x min of the detection range in meters."""
     x_min: float
-    """The x max of the detection range."""
+    """The x max of the detection range in meters."""
     x_max: float
-    """The y min of the detection range."""
+    """The y min of the detection range in meters."""
     y_min: float
-    """The y max of the detection range."""
+    """The y max of the detection range in meters."""
     y_max: float
-    """The resolution of the grid."""
+    """The z min of the detection range in meters."""
+    z_min: float
+    """The z max of the detection range in meters."""
+    z_max: float
+    """The resolution of the grid in meters."""
     resolution: float
     """The timestamp of the event."""
     timestamp: datetime.datetime
+    """The detection node ID this grid belongs to."""
+    node_id: str
+    """The human-readable name of the detection range."""
+    detection_range_name: str
 
     @staticmethod
     def _from_pb(pb: messages_pb2.OccupancyGridEvent) -> "OccupancyGridEvent":
         return OccupancyGridEvent(
             grid=OccupancyGrid._from_pb(pb.grid),
-            x_min=pb.x_min,
-            x_max=pb.x_max,
-            y_min=pb.y_min,
-            y_max=pb.y_max,
+            x_min=pb.detection_range.x_range.start,
+            x_max=pb.detection_range.x_range.end,
+            y_min=pb.detection_range.y_range.start,
+            y_max=pb.detection_range.y_range.end,
+            z_min=pb.detection_range.z_range.start,
+            z_max=pb.detection_range.z_range.end,
             resolution=pb.resolution,
             timestamp=datetime.datetime.fromtimestamp(
                 pb.timestamp.seconds + pb.timestamp.nanos / 1e9
             ),
+            node_id=pb.node_id,
+            detection_range_name=pb.detection_range_name,
+        )
+
+
+@dataclasses.dataclass(frozen=True)
+class OccupancyGridListEvent:
+    """A list of occupancy grid events, which may correspond to multiple detection nodes' ranges."""
+
+    """One occupancy grid per detection node."""
+    occupancy_grid_events: typing.List[OccupancyGridEvent]
+
+    @staticmethod
+    def _from_pb(pb: typing.Any) -> "OccupancyGridListEvent":
+        return OccupancyGridListEvent(
+            occupancy_grid_events=[
+                OccupancyGridEvent._from_pb(e) for e in pb.occupancy_grid_events
+            ],
         )

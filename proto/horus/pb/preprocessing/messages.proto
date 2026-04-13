@@ -4,6 +4,8 @@ package horus.pb;
 
 import "horus/pb/config/metadata.proto";
 
+import "horus/pb/config/schema/detection_range.proto";
+
 /// The classification of the occupancy grid cell.
 /// @note The maximum number of classification enum values supported is 2^3=8.
 /// @see `OccupancyGrid` message and `occupancy_map_constants` for more details.
@@ -46,14 +48,28 @@ message OccupancyGrid {
 ///   To determine the grid cell corresponding to a point in space:
 ///     `grid_x = floor((point.x - x_min) / resolution)`
 ///     `grid_y = floor((point.y - y_min) / resolution)`
+/// Each event corresponds to a single detection node's range.
 message OccupancyGridEvent {
+  reserved 2 to 5;
+
+  /// The grid data.
   OccupancyGrid grid = 1;
-  float x_min = 2;
-  float x_max = 3;
-  float y_min = 4;
-  float y_max = 5;
   float resolution = 6;
+  /// The resolution of the grid.
+  DetectionRange detection_range = 8;
+  /// The timestamp of the event.
   Timestamp timestamp = 7;
+
+  /// The detection node ID this grid belongs to.
+  string node_id = 10;
+  /// The human-readable name of the detection range.
+  string detection_range_name = 11;
+}
+
+/// A list of occupancy grid events, which may correspond to multiple detection
+/// nodes' ranges.
+message OccupancyGridListEvent {
+  repeated OccupancyGridEvent occupancy_grid_events = 1;
 }
 
 // Sensor status enum.

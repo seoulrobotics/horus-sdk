@@ -76,12 +76,14 @@ class PreprocessingServicePointCloudProfiling(_message.Message):
     def __init__(self, service_profiling: _Optional[_Union[ServiceProfiling, _Mapping]] = ..., point_cloud_sending_latency: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ...) -> None: ...
 
 class FrameProfiling(_message.Message):
-    __slots__ = ("overall_frame_latency", "frame_bundling_latency")
+    __slots__ = ("overall_frame_latency", "frame_bundling_latency", "preprocessing_overhead")
     OVERALL_FRAME_LATENCY_FIELD_NUMBER: _ClassVar[int]
     FRAME_BUNDLING_LATENCY_FIELD_NUMBER: _ClassVar[int]
+    PREPROCESSING_OVERHEAD_FIELD_NUMBER: _ClassVar[int]
     overall_frame_latency: _metadata_pb2.Duration
     frame_bundling_latency: _metadata_pb2.Duration
-    def __init__(self, overall_frame_latency: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ..., frame_bundling_latency: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ...) -> None: ...
+    preprocessing_overhead: _metadata_pb2.Duration
+    def __init__(self, overall_frame_latency: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ..., frame_bundling_latency: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ..., preprocessing_overhead: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ...) -> None: ...
 
 class BundledFrameProfilingSet(_message.Message):
     __slots__ = ("frame_timestamp", "frame_profiling", "detection_service_profiling", "preprocessing_service_point_cloud_profiling")
