@@ -369,6 +369,7 @@ void DeepLearningObject_Classification::DeserializeFrom(PbReader& reader) noexce
 DeepLearningObject::DeepLearningObject(const DeepLearningObject& other) noexcept(false)
     : classification_{other.classification_}
     , bounding_box_{other.bounding_box_}
+    , associated_object_id_{other.associated_object_id_}
     , set_fields_{other.set_fields_} {}
 
 void DeepLearningObject::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -377,6 +378,9 @@ void DeepLearningObject::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[1]) {
     SerializeField<BoundingBox>(writer, /*tag=*/ 2, bounding_box_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<std::uint32_t>(writer, /*tag=*/ 3, associated_object_id_);
   }
 }
 
@@ -391,6 +395,11 @@ void DeepLearningObject::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 2: {
         DeserializeField<BoundingBox>(reader, bounding_box_);
         set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<std::uint32_t>(reader, associated_object_id_);
+        set_fields_[2] = true;
         break;
       }
       default: {

@@ -105,7 +105,7 @@ class DetectedObject(_message.Message):
     def __init__(self, classification: _Optional[_Union[DetectedObject.Classification, _Mapping]] = ..., kinematics: _Optional[_Union[DetectedObject.Kinematics, _Mapping]] = ..., shape: _Optional[_Union[DetectedObject.Shape, _Mapping]] = ..., status: _Optional[_Union[DetectedObject.Status, _Mapping]] = ...) -> None: ...
 
 class DeepLearningObject(_message.Message):
-    __slots__ = ("classification", "bounding_box")
+    __slots__ = ("classification", "bounding_box", "associated_object_id")
     class Classification(_message.Message):
         __slots__ = ("class_label", "class_confidence")
         CLASS_LABEL_FIELD_NUMBER: _ClassVar[int]
@@ -115,9 +115,11 @@ class DeepLearningObject(_message.Message):
         def __init__(self, class_label: _Optional[_Union[ObjectLabel, str]] = ..., class_confidence: _Optional[float] = ...) -> None: ...
     CLASSIFICATION_FIELD_NUMBER: _ClassVar[int]
     BOUNDING_BOX_FIELD_NUMBER: _ClassVar[int]
+    ASSOCIATED_OBJECT_ID_FIELD_NUMBER: _ClassVar[int]
     classification: DeepLearningObject.Classification
     bounding_box: BoundingBox
-    def __init__(self, classification: _Optional[_Union[DeepLearningObject.Classification, _Mapping]] = ..., bounding_box: _Optional[_Union[BoundingBox, _Mapping]] = ...) -> None: ...
+    associated_object_id: int
+    def __init__(self, classification: _Optional[_Union[DeepLearningObject.Classification, _Mapping]] = ..., bounding_box: _Optional[_Union[BoundingBox, _Mapping]] = ..., associated_object_id: _Optional[int] = ...) -> None: ...
 
 class DetectionEvent(_message.Message):
     __slots__ = ("objects", "labeled_point_clouds", "frame_info", "raw_deep_learning_objects", "unrecovered_object_ids")

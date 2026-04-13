@@ -62,6 +62,10 @@ class PointAggregatorSubscriberServiceClient : public horus_internal::RpcBaseCli
   using BroadcastOccupancyGridRequestType = pb::OccupancyGridEvent;
   /// The response type of `BroadcastOccupancyGrid()`.
   using BroadcastOccupancyGridResponseType = void;
+  /// The request type of `BroadcastOccupancyGridList()`.
+  using BroadcastOccupancyGridListRequestType = pb::OccupancyGridListEvent;
+  /// The response type of `BroadcastOccupancyGridList()`.
+  using BroadcastOccupancyGridListResponseType = void;
 
   /// @copydoc horus_internal::RpcBaseClient::RpcBaseClient()
   using horus_internal::RpcBaseClient::RpcBaseClient;
@@ -76,9 +80,14 @@ class PointAggregatorSubscriberServiceClient : public horus_internal::RpcBaseCli
     return InvokeOneWayRpc(2, request, options);
   }
 
-  /// Notify new occupancy grid input.
+  /// Deprecated: Use BroadcastOccupancyGridList instead.
   AnyFuture<void> BroadcastOccupancyGrid(const pb::OccupancyGridEvent& request, const RpcOptions& options) noexcept(false) {
     return InvokeOneWayRpc(3, request, options);
+  }
+
+  /// Notify new occupancy grid input.
+  AnyFuture<void> BroadcastOccupancyGridList(const pb::OccupancyGridListEvent& request, const RpcOptions& options) noexcept(false) {
+    return InvokeOneWayRpc(4, request, options);
   }
 };
 

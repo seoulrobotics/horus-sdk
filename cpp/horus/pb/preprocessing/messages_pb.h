@@ -14,6 +14,7 @@
 #include "horus/attributes.h"
 #include "horus/internal/attributes.h"
 #include "horus/pb/config/metadata_pb.h"
+#include "horus/pb/config/schema/detection_range_pb.h"
 #include "horus/pb/cow_bytes.h"
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/message.h"
@@ -37,7 +38,7 @@ namespace pb {
 /// / @note The maximum number of classification enum values supported is 2^3=8.
 /// / @see `OccupancyGrid` message and `occupancy_map_constants` for more details.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:10:1
+/// Source: horus/pb/preprocessing/messages.proto:12:1
 enum class OccupancyClassification : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kOccupancyclassificationUnspecified = 0,
@@ -58,7 +59,7 @@ enum class OccupancyClassification : PbEnum {  // NOLINT(*-enum-size)
 ///  @note Each enum value should be a power of two.
 ///  @note No status should have the same value.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:62:1
+/// Source: horus/pb/preprocessing/messages.proto:78:1
 enum class SensorStatus : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -88,7 +89,7 @@ enum class SensorStatus : PbEnum {  // NOLINT(*-enum-size)
 /// Reference alignment type for tilt detector.
 ///  Indicates which reference is being used by the tilt detector.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:77:1
+/// Source: horus/pb/preprocessing/messages.proto:93:1
 enum class ReferenceAlignmentType : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -101,6 +102,7 @@ enum class ReferenceAlignmentType : PbEnum {  // NOLINT(*-enum-size)
 
 class OccupancyGrid;
 class OccupancyGridEvent;
+class OccupancyGridListEvent;
 class SensorInfo_PoseCorrection;
 class SensorInfo;
 
@@ -111,7 +113,7 @@ class SensorInfo;
 /// / Consecutive cells of the same classification are compressed into a single
 /// / uint32.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:23:1
+/// Source: horus/pb/preprocessing/messages.proto:25:1
 class OccupancyGrid final : public PbMessage {
  public:
 
@@ -322,8 +324,9 @@ class OccupancyGrid final : public PbMessage {
 /// /   To determine the grid cell corresponding to a point in space:
 /// /     `grid_x = floor((point.x - x_min) / resolution)`
 /// /     `grid_y = floor((point.y - y_min) / resolution)`
+/// / Each event corresponds to a single detection node's range.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:49:1
+/// Source: horus/pb/preprocessing/messages.proto:52:1
 class OccupancyGridEvent final : public PbMessage {
  public:
 
@@ -376,7 +379,7 @@ class OccupancyGridEvent final : public PbMessage {
   // Field `grid` (no 1).
   // -----
 
-  /// No documentation.
+  /// / The grid data.
   ///
   /// Field no: 1.
   constexpr const OccupancyGrid& grid() const& noexcept HORUS_LIFETIME_BOUND {
@@ -395,7 +398,7 @@ class OccupancyGridEvent final : public PbMessage {
     return std::move(grid_);
   }
 
-  /// No documentation.
+  /// / The grid data.
   ///
   /// Field no: 1.
   OccupancyGrid& mutable_grid() & noexcept HORUS_LIFETIME_BOUND {
@@ -423,158 +426,6 @@ class OccupancyGridEvent final : public PbMessage {
     return std::move(set_grid(std::move(grid)));
   }
 
-  // Field `x_min` (no 2).
-  // -----
-
-  /// No documentation.
-  ///
-  /// Field no: 2.
-  constexpr float x_min() const& noexcept HORUS_LIFETIME_BOUND {
-    return x_min_;
-  }
-
-  /// No documentation.
-  ///
-  /// Field no: 2.
-  float& mutable_x_min() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[1] = true;
-    return x_min_;
-  }
-
-  /// Returns whether `x_min` (no 2) is set.
-  constexpr bool has_x_min() const noexcept { return set_fields_[1]; }
-
-  /// Clears `x_min` (no 2).
-  void clear_x_min() & noexcept {
-    set_fields_[1] = false;
-    x_min_ = {};
-  }
-
-  /// Sets `x_min` (no 2) and returns `*this`.
-  OccupancyGridEvent& set_x_min(float x_min) & noexcept {
-    set_fields_[1] = true;
-    x_min_ = x_min;
-    return *this;
-  }
-  /// Sets `x_min` (no 2) and returns `*this`.
-  OccupancyGridEvent&& set_x_min(float x_min) && noexcept {
-    return std::move(set_x_min(x_min));
-  }
-
-  // Field `x_max` (no 3).
-  // -----
-
-  /// No documentation.
-  ///
-  /// Field no: 3.
-  constexpr float x_max() const& noexcept HORUS_LIFETIME_BOUND {
-    return x_max_;
-  }
-
-  /// No documentation.
-  ///
-  /// Field no: 3.
-  float& mutable_x_max() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[2] = true;
-    return x_max_;
-  }
-
-  /// Returns whether `x_max` (no 3) is set.
-  constexpr bool has_x_max() const noexcept { return set_fields_[2]; }
-
-  /// Clears `x_max` (no 3).
-  void clear_x_max() & noexcept {
-    set_fields_[2] = false;
-    x_max_ = {};
-  }
-
-  /// Sets `x_max` (no 3) and returns `*this`.
-  OccupancyGridEvent& set_x_max(float x_max) & noexcept {
-    set_fields_[2] = true;
-    x_max_ = x_max;
-    return *this;
-  }
-  /// Sets `x_max` (no 3) and returns `*this`.
-  OccupancyGridEvent&& set_x_max(float x_max) && noexcept {
-    return std::move(set_x_max(x_max));
-  }
-
-  // Field `y_min` (no 4).
-  // -----
-
-  /// No documentation.
-  ///
-  /// Field no: 4.
-  constexpr float y_min() const& noexcept HORUS_LIFETIME_BOUND {
-    return y_min_;
-  }
-
-  /// No documentation.
-  ///
-  /// Field no: 4.
-  float& mutable_y_min() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[3] = true;
-    return y_min_;
-  }
-
-  /// Returns whether `y_min` (no 4) is set.
-  constexpr bool has_y_min() const noexcept { return set_fields_[3]; }
-
-  /// Clears `y_min` (no 4).
-  void clear_y_min() & noexcept {
-    set_fields_[3] = false;
-    y_min_ = {};
-  }
-
-  /// Sets `y_min` (no 4) and returns `*this`.
-  OccupancyGridEvent& set_y_min(float y_min) & noexcept {
-    set_fields_[3] = true;
-    y_min_ = y_min;
-    return *this;
-  }
-  /// Sets `y_min` (no 4) and returns `*this`.
-  OccupancyGridEvent&& set_y_min(float y_min) && noexcept {
-    return std::move(set_y_min(y_min));
-  }
-
-  // Field `y_max` (no 5).
-  // -----
-
-  /// No documentation.
-  ///
-  /// Field no: 5.
-  constexpr float y_max() const& noexcept HORUS_LIFETIME_BOUND {
-    return y_max_;
-  }
-
-  /// No documentation.
-  ///
-  /// Field no: 5.
-  float& mutable_y_max() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[4] = true;
-    return y_max_;
-  }
-
-  /// Returns whether `y_max` (no 5) is set.
-  constexpr bool has_y_max() const noexcept { return set_fields_[4]; }
-
-  /// Clears `y_max` (no 5).
-  void clear_y_max() & noexcept {
-    set_fields_[4] = false;
-    y_max_ = {};
-  }
-
-  /// Sets `y_max` (no 5) and returns `*this`.
-  OccupancyGridEvent& set_y_max(float y_max) & noexcept {
-    set_fields_[4] = true;
-    y_max_ = y_max;
-    return *this;
-  }
-  /// Sets `y_max` (no 5) and returns `*this`.
-  OccupancyGridEvent&& set_y_max(float y_max) && noexcept {
-    return std::move(set_y_max(y_max));
-  }
-
   // Field `resolution` (no 6).
   // -----
 
@@ -589,22 +440,22 @@ class OccupancyGridEvent final : public PbMessage {
   ///
   /// Field no: 6.
   float& mutable_resolution() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[5] = true;
+    set_fields_[1] = true;
     return resolution_;
   }
 
   /// Returns whether `resolution` (no 6) is set.
-  constexpr bool has_resolution() const noexcept { return set_fields_[5]; }
+  constexpr bool has_resolution() const noexcept { return set_fields_[1]; }
 
   /// Clears `resolution` (no 6).
   void clear_resolution() & noexcept {
-    set_fields_[5] = false;
+    set_fields_[1] = false;
     resolution_ = {};
   }
 
   /// Sets `resolution` (no 6) and returns `*this`.
   OccupancyGridEvent& set_resolution(float resolution) & noexcept {
-    set_fields_[5] = true;
+    set_fields_[1] = true;
     resolution_ = resolution;
     return *this;
   }
@@ -613,10 +464,60 @@ class OccupancyGridEvent final : public PbMessage {
     return std::move(set_resolution(resolution));
   }
 
+  // Field `detection_range` (no 8).
+  // -----
+
+  /// / The resolution of the grid.
+  ///
+  /// Field no: 8.
+  constexpr const DetectionRange& detection_range() const& noexcept HORUS_LIFETIME_BOUND {
+    return detection_range_;
+  }
+
+  /// If `detection_range` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 8.
+  DetectionRange detection_range() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(detection_range_);
+  }
+
+  /// / The resolution of the grid.
+  ///
+  /// Field no: 8.
+  DetectionRange& mutable_detection_range() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return detection_range_;
+  }
+
+  /// Returns whether `detection_range` (no 8) is set.
+  constexpr bool has_detection_range() const noexcept { return set_fields_[2]; }
+
+  /// Clears `detection_range` (no 8).
+  void clear_detection_range() & noexcept {
+    set_fields_[2] = false;
+    detection_range_ = {};
+  }
+
+  /// Sets `detection_range` (no 8) and returns `*this`.
+  OccupancyGridEvent& set_detection_range(DetectionRange&& detection_range) & noexcept {
+    set_fields_[2] = true;
+    detection_range_ = std::move(detection_range);
+    return *this;
+  }
+  /// Sets `detection_range` (no 8) and returns `*this`.
+  OccupancyGridEvent&& set_detection_range(DetectionRange&& detection_range) && noexcept {
+    return std::move(set_detection_range(std::move(detection_range)));
+  }
+
   // Field `timestamp` (no 7).
   // -----
 
-  /// No documentation.
+  /// / The timestamp of the event.
   ///
   /// Field no: 7.
   constexpr const Timestamp& timestamp() const& noexcept HORUS_LIFETIME_BOUND {
@@ -629,32 +530,32 @@ class OccupancyGridEvent final : public PbMessage {
   ///
   /// Field no: 7.
   Timestamp timestamp() && noexcept {
-    if (!set_fields_[6]) {
+    if (!set_fields_[3]) {
       return {};
     }
     return std::move(timestamp_);
   }
 
-  /// No documentation.
+  /// / The timestamp of the event.
   ///
   /// Field no: 7.
   Timestamp& mutable_timestamp() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[6] = true;
+    set_fields_[3] = true;
     return timestamp_;
   }
 
   /// Returns whether `timestamp` (no 7) is set.
-  constexpr bool has_timestamp() const noexcept { return set_fields_[6]; }
+  constexpr bool has_timestamp() const noexcept { return set_fields_[3]; }
 
   /// Clears `timestamp` (no 7).
   void clear_timestamp() & noexcept {
-    set_fields_[6] = false;
+    set_fields_[3] = false;
     timestamp_ = {};
   }
 
   /// Sets `timestamp` (no 7) and returns `*this`.
   OccupancyGridEvent& set_timestamp(Timestamp&& timestamp) & noexcept {
-    set_fields_[6] = true;
+    set_fields_[3] = true;
     timestamp_ = std::move(timestamp);
     return *this;
   }
@@ -663,29 +564,238 @@ class OccupancyGridEvent final : public PbMessage {
     return std::move(set_timestamp(std::move(timestamp)));
   }
 
+  // Field `node_id` (no 10).
+  // -----
+
+  /// / The detection node ID this grid belongs to.
+  ///
+  /// Field no: 10.
+  constexpr const CowBytes& node_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return node_id_;
+  }
+
+  /// If `node_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 10.
+  CowBytes node_id() && noexcept {
+    if (!set_fields_[4]) {
+      return {};
+    }
+    return std::move(node_id_);
+  }
+
+  /// / The detection node ID this grid belongs to.
+  ///
+  /// Field no: 10.
+  CowBytes& mutable_node_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[4] = true;
+    return node_id_;
+  }
+
+  /// Returns whether `node_id` (no 10) is set.
+  constexpr bool has_node_id() const noexcept { return set_fields_[4]; }
+
+  /// Clears `node_id` (no 10).
+  void clear_node_id() & noexcept {
+    set_fields_[4] = false;
+    node_id_ = {};
+  }
+
+  /// Sets `node_id` (no 10) and returns `*this`.
+  OccupancyGridEvent& set_node_id(CowBytes&& node_id) & noexcept {
+    set_fields_[4] = true;
+    node_id_ = std::move(node_id);
+    return *this;
+  }
+  /// Sets `node_id` (no 10) and returns `*this`.
+  OccupancyGridEvent&& set_node_id(CowBytes&& node_id) && noexcept {
+    return std::move(set_node_id(std::move(node_id)));
+  }
+
+  // Field `detection_range_name` (no 11).
+  // -----
+
+  /// / The human-readable name of the detection range.
+  ///
+  /// Field no: 11.
+  constexpr const CowBytes& detection_range_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return detection_range_name_;
+  }
+
+  /// If `detection_range_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 11.
+  CowBytes detection_range_name() && noexcept {
+    if (!set_fields_[5]) {
+      return {};
+    }
+    return std::move(detection_range_name_);
+  }
+
+  /// / The human-readable name of the detection range.
+  ///
+  /// Field no: 11.
+  CowBytes& mutable_detection_range_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[5] = true;
+    return detection_range_name_;
+  }
+
+  /// Returns whether `detection_range_name` (no 11) is set.
+  constexpr bool has_detection_range_name() const noexcept { return set_fields_[5]; }
+
+  /// Clears `detection_range_name` (no 11).
+  void clear_detection_range_name() & noexcept {
+    set_fields_[5] = false;
+    detection_range_name_ = {};
+  }
+
+  /// Sets `detection_range_name` (no 11) and returns `*this`.
+  OccupancyGridEvent& set_detection_range_name(CowBytes&& detection_range_name) & noexcept {
+    set_fields_[5] = true;
+    detection_range_name_ = std::move(detection_range_name);
+    return *this;
+  }
+  /// Sets `detection_range_name` (no 11) and returns `*this`.
+  OccupancyGridEvent&& set_detection_range_name(CowBytes&& detection_range_name) && noexcept {
+    return std::move(set_detection_range_name(std::move(detection_range_name)));
+  }
+
  private:
   /// @see grid()
   OccupancyGrid grid_{};
-  /// @see x_min()
-  float x_min_{};
-  /// @see x_max()
-  float x_max_{};
-  /// @see y_min()
-  float y_min_{};
-  /// @see y_max()
-  float y_max_{};
   /// @see resolution()
   float resolution_{};
+  /// @see detection_range()
+  DetectionRange detection_range_{};
   /// @see timestamp()
   Timestamp timestamp_{};
+  /// @see node_id()
+  CowBytes node_id_{};
+  /// @see detection_range_name()
+  CowBytes detection_range_name_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<7> set_fields_;
+  std::bitset<6> set_fields_;
+};
+
+/// / A list of occupancy grid events, which may correspond to multiple detection
+/// / nodes' ranges.
+///
+/// Source: horus/pb/preprocessing/messages.proto:71:1
+class OccupancyGridListEvent final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `OccupancyGridListEvent`.
+  OccupancyGridListEvent() noexcept = default;
+
+  /// Move constructor.
+  OccupancyGridListEvent(OccupancyGridListEvent&&) noexcept = default;
+  /// Move assignment operator.
+  OccupancyGridListEvent& operator=(OccupancyGridListEvent&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit OccupancyGridListEvent(const OccupancyGridListEvent& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  OccupancyGridListEvent& operator=(const OccupancyGridListEvent&) = delete;
+
+  /// Default destructor.
+  ~OccupancyGridListEvent() noexcept final = default;
+
+  /// Creates a `OccupancyGridListEvent` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit OccupancyGridListEvent(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.OccupancyGridListEvent`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.OccupancyGridListEvent"; }
+
+  /// The full name of the message: `horus.pb.OccupancyGridListEvent`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `occupancy_grid_events` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowRepeated<OccupancyGridEvent>& occupancy_grid_events() const& noexcept HORUS_LIFETIME_BOUND {
+    return occupancy_grid_events_;
+  }
+
+  /// If `occupancy_grid_events` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowRepeated<OccupancyGridEvent> occupancy_grid_events() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(occupancy_grid_events_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowRepeated<OccupancyGridEvent>& mutable_occupancy_grid_events() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return occupancy_grid_events_;
+  }
+
+  /// Returns whether `occupancy_grid_events` (no 1) is set.
+  constexpr bool has_occupancy_grid_events() const noexcept { return set_fields_[0]; }
+
+  /// Clears `occupancy_grid_events` (no 1).
+  void clear_occupancy_grid_events() & noexcept {
+    set_fields_[0] = false;
+    occupancy_grid_events_ = {};
+  }
+
+  /// Sets `occupancy_grid_events` (no 1) and returns `*this`.
+  OccupancyGridListEvent& set_occupancy_grid_events(CowRepeated<OccupancyGridEvent>&& occupancy_grid_events) & noexcept {
+    set_fields_[0] = true;
+    occupancy_grid_events_ = std::move(occupancy_grid_events);
+    return *this;
+  }
+  /// Sets `occupancy_grid_events` (no 1) and returns `*this`.
+  OccupancyGridListEvent&& set_occupancy_grid_events(CowRepeated<OccupancyGridEvent>&& occupancy_grid_events) && noexcept {
+    return std::move(set_occupancy_grid_events(std::move(occupancy_grid_events)));
+  }
+
+ private:
+  /// @see occupancy_grid_events()
+  CowRepeated<OccupancyGridEvent> occupancy_grid_events_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
 };
 
 /// No documentation.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:96:3
+/// Source: horus/pb/preprocessing/messages.proto:112:3
 class SensorInfo_PoseCorrection final : public PbMessage {
  public:
 
@@ -847,7 +957,7 @@ class SensorInfo_PoseCorrection final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:81:1
+/// Source: horus/pb/preprocessing/messages.proto:97:1
 class SensorInfo final : public PbMessage {
  public:
   /// @see SensorInfo_PoseCorrection

@@ -205,15 +205,16 @@ SdkFuture<SdkSubscription> Sdk::SubscribeToObjects(sdk::ObjectSubscriptionReques
 
 SdkFuture<SdkSubscription> Sdk::SubscribeToOccupancyGrid(
     sdk::OccupancyGridSubscriptionRequest&& request) {
-  auto listener = pb::CreateFunctionalPointAggregatorSubscriberService().BroadcastOccupancyGridWith(
-      [this, user_callback{std::move(request).on_occupancy_grid}](
-          pb::OccupancyGridEvent&& event) -> ChannelSendFuture<Task> {
-        MoveOnlyFunction<void(pb::OccupancyGridEvent&&)> move_only_user_callback{
-            std::function<void(pb::OccupancyGridEvent&&)>{
-                user_callback}};  // Copy `user_callback` into a `MoveOnlyFunction`.
-        return InvokeUserCallbackWithinEventLoop(std::move(move_only_user_callback),
-                                                 std::move(event));
-      });
+  auto listener =
+      pb::CreateFunctionalPointAggregatorSubscriberService().BroadcastOccupancyGridListWith(
+          [this, user_callback{std::move(request).on_occupancy_grid}](
+              pb::OccupancyGridListEvent&& event) -> ChannelSendFuture<Task> {
+            MoveOnlyFunction<void(pb::OccupancyGridListEvent&&)> move_only_user_callback{
+                std::function<void(pb::OccupancyGridListEvent&&)>{
+                    user_callback}};  // Copy `user_callback` into a `MoveOnlyFunction`.
+            return InvokeUserCallbackWithinEventLoop(std::move(move_only_user_callback),
+                                                     std::move(event));
+          });
   return CreateSubscription<pb::PointAggregatorServiceClient>(
       service_map_.point_aggregator, std::move(listener), pb::DefaultSubscribeRequest{});
 }

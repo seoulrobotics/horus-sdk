@@ -1,4 +1,5 @@
 from horus.pb.config import metadata_pb2 as _metadata_pb2
+from horus.pb.config.schema import detection_range_pb2 as _detection_range_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
@@ -59,22 +60,26 @@ class OccupancyGrid(_message.Message):
     def __init__(self, rows: _Optional[int] = ..., cols: _Optional[int] = ..., cells: _Optional[_Iterable[int]] = ...) -> None: ...
 
 class OccupancyGridEvent(_message.Message):
-    __slots__ = ("grid", "x_min", "x_max", "y_min", "y_max", "resolution", "timestamp")
+    __slots__ = ("grid", "resolution", "detection_range", "timestamp", "node_id", "detection_range_name")
     GRID_FIELD_NUMBER: _ClassVar[int]
-    X_MIN_FIELD_NUMBER: _ClassVar[int]
-    X_MAX_FIELD_NUMBER: _ClassVar[int]
-    Y_MIN_FIELD_NUMBER: _ClassVar[int]
-    Y_MAX_FIELD_NUMBER: _ClassVar[int]
     RESOLUTION_FIELD_NUMBER: _ClassVar[int]
+    DETECTION_RANGE_FIELD_NUMBER: _ClassVar[int]
     TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+    NODE_ID_FIELD_NUMBER: _ClassVar[int]
+    DETECTION_RANGE_NAME_FIELD_NUMBER: _ClassVar[int]
     grid: OccupancyGrid
-    x_min: float
-    x_max: float
-    y_min: float
-    y_max: float
     resolution: float
+    detection_range: _detection_range_pb2.DetectionRange
     timestamp: _metadata_pb2.Timestamp
-    def __init__(self, grid: _Optional[_Union[OccupancyGrid, _Mapping]] = ..., x_min: _Optional[float] = ..., x_max: _Optional[float] = ..., y_min: _Optional[float] = ..., y_max: _Optional[float] = ..., resolution: _Optional[float] = ..., timestamp: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    node_id: str
+    detection_range_name: str
+    def __init__(self, grid: _Optional[_Union[OccupancyGrid, _Mapping]] = ..., resolution: _Optional[float] = ..., detection_range: _Optional[_Union[_detection_range_pb2.DetectionRange, _Mapping]] = ..., timestamp: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ..., node_id: _Optional[str] = ..., detection_range_name: _Optional[str] = ...) -> None: ...
+
+class OccupancyGridListEvent(_message.Message):
+    __slots__ = ("occupancy_grid_events",)
+    OCCUPANCY_GRID_EVENTS_FIELD_NUMBER: _ClassVar[int]
+    occupancy_grid_events: _containers.RepeatedCompositeFieldContainer[OccupancyGridEvent]
+    def __init__(self, occupancy_grid_events: _Optional[_Iterable[_Union[OccupancyGridEvent, _Mapping]]] = ...) -> None: ...
 
 class SensorInfo(_message.Message):
     __slots__ = ("lidar_id", "lidar_name", "status", "measured_frequency", "pose_correction", "num_total_dropped_packets", "num_total_expected_packets", "reference_alignment")

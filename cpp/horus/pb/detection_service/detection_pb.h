@@ -1884,19 +1884,63 @@ class DeepLearningObject final : public PbMessage {
     return std::move(set_bounding_box(std::move(bounding_box)));
   }
 
+  // Field `associated_object_id` (no 3).
+  // -----
+
+  /// The object ID of the tracked object this DL detection was associated with
+  ///  in the detection pipeline. Unset if the DL detection was not associated
+  ///  with any tracked object.
+  ///
+  /// Field no: 3.
+  constexpr std::uint32_t associated_object_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return associated_object_id_;
+  }
+
+  /// The object ID of the tracked object this DL detection was associated with
+  ///  in the detection pipeline. Unset if the DL detection was not associated
+  ///  with any tracked object.
+  ///
+  /// Field no: 3.
+  std::uint32_t& mutable_associated_object_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return associated_object_id_;
+  }
+
+  /// Returns whether `associated_object_id` (no 3) is set.
+  constexpr bool has_associated_object_id() const noexcept { return set_fields_[2]; }
+
+  /// Clears `associated_object_id` (no 3).
+  void clear_associated_object_id() & noexcept {
+    set_fields_[2] = false;
+    associated_object_id_ = {};
+  }
+
+  /// Sets `associated_object_id` (no 3) and returns `*this`.
+  DeepLearningObject& set_associated_object_id(std::uint32_t associated_object_id) & noexcept {
+    set_fields_[2] = true;
+    associated_object_id_ = associated_object_id;
+    return *this;
+  }
+  /// Sets `associated_object_id` (no 3) and returns `*this`.
+  DeepLearningObject&& set_associated_object_id(std::uint32_t associated_object_id) && noexcept {
+    return std::move(set_associated_object_id(associated_object_id));
+  }
+
  private:
   /// @see classification()
   DeepLearningObject_Classification classification_{};
   /// @see bounding_box()
   BoundingBox bounding_box_{};
+  /// @see associated_object_id()
+  std::uint32_t associated_object_id_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:118:3
+/// Source: horus/pb/detection_service/detection.proto:122:3
 class DetectionEvent_FrameInfo final : public PbMessage {
  public:
 
@@ -2006,7 +2050,7 @@ class DetectionEvent_FrameInfo final : public PbMessage {
 
 /// A detection event message.
 ///
-/// Source: horus/pb/detection_service/detection.proto:117:1
+/// Source: horus/pb/detection_service/detection.proto:121:1
 class DetectionEvent final : public PbMessage {
  public:
   /// @see DetectionEvent_FrameInfo

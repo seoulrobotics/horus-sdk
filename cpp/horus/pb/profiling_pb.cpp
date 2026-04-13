@@ -246,6 +246,7 @@ void PreprocessingServicePointCloudProfiling::DeserializeFrom(PbReader& reader) 
 FrameProfiling::FrameProfiling(const FrameProfiling& other) noexcept(false)
     : overall_frame_latency_{other.overall_frame_latency_}
     , frame_bundling_latency_{other.frame_bundling_latency_}
+    , preprocessing_overhead_{other.preprocessing_overhead_}
     , set_fields_{other.set_fields_} {}
 
 void FrameProfiling::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -254,6 +255,9 @@ void FrameProfiling::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[1]) {
     SerializeField<Duration>(writer, /*tag=*/ 2, frame_bundling_latency_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<Duration>(writer, /*tag=*/ 4, preprocessing_overhead_);
   }
 }
 
@@ -268,6 +272,11 @@ void FrameProfiling::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 2: {
         DeserializeField<Duration>(reader, frame_bundling_latency_);
         set_fields_[1] = true;
+        break;
+      }
+      case 4: {
+        DeserializeField<Duration>(reader, preprocessing_overhead_);
+        set_fields_[2] = true;
         break;
       }
       default: {

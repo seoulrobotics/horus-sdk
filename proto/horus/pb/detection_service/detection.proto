@@ -111,6 +111,10 @@ message DeepLearningObject {
   Classification classification = 1;
   // The bounding box of the detected object.
   BoundingBox bounding_box = 2;
+  // The object ID of the tracked object this DL detection was associated with
+  // in the detection pipeline. Unset if the DL detection was not associated
+  // with any tracked object.
+  optional uint32 associated_object_id = 3;
 }
 
 // A detection event message.

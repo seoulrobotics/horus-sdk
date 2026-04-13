@@ -1842,7 +1842,7 @@ void HorusStringify(const ErasedSink& sink, const DbCommitFailed& data) {
 }
 
 void HorusStringify(const ErasedSink& sink, const DetectionServiceRpcQueueFull& data) {
-  StringifyTo(sink, "Dropping ", data.num_packets(), " buffered packet(s) because the detection service RPC queue is full (queue size: ", data.queue_size(), ").");
+  StringifyTo(sink, "Dropping ", data.num_packets(), " buffered packet(s) for node ", data.node_id(), " because the detection service RPC queue is full (queue size: ", data.queue_size(), ").");
 }
 
 void HorusStringify(const ErasedSink& sink, const ProjectMigrationFailed& data) {

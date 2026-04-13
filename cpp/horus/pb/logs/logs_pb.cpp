@@ -6509,6 +6509,7 @@ void DbCommitFailed::DeserializeFrom(PbReader& reader) noexcept(false) {
 DetectionServiceRpcQueueFull::DetectionServiceRpcQueueFull(const DetectionServiceRpcQueueFull& other) noexcept(false)
     : num_packets_{other.num_packets_}
     , queue_size_{other.queue_size_}
+    , node_id_{other.node_id_}
     , set_fields_{other.set_fields_} {}
 
 void DetectionServiceRpcQueueFull::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -6517,6 +6518,9 @@ void DetectionServiceRpcQueueFull::SerializeTo(PbWriter& writer) const noexcept(
   }
   if (set_fields_[1]) {
     SerializeField<std::uint64_t>(writer, /*tag=*/ 2, queue_size_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, node_id_);
   }
 }
 
@@ -6531,6 +6535,11 @@ void DetectionServiceRpcQueueFull::DeserializeFrom(PbReader& reader) noexcept(fa
       case 2: {
         DeserializeField<std::uint64_t>(reader, queue_size_);
         set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<CowBytes>(reader, node_id_);
+        set_fields_[2] = true;
         break;
       }
       default: {

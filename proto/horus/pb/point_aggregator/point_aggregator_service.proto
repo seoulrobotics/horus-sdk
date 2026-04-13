@@ -47,9 +47,18 @@ service PointAggregatorSubscriberService {
     };
   }
 
+  // Deprecated: Use BroadcastOccupancyGridList instead.
   rpc BroadcastOccupancyGrid(OccupancyGridEvent) returns (NoResponse) {
+
     option (method_options) = {
       id: 3
+      description: "Deprecated: Use BroadcastOccupancyGridList instead."
+    };
+  }
+
+  rpc BroadcastOccupancyGridList(OccupancyGridListEvent) returns (NoResponse) {
+    option (method_options) = {
+      id: 4
       description: "Notify new occupancy grid input."
     };
   }
