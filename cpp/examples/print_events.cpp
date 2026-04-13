@@ -38,6 +38,7 @@ void PrintObject(const pb::DetectedObject& object) {
 void PrintDetectionResults(const pb::DetectionEvent& event) {
   StringifyTo(StdoutSink(), event.objects().size(), " object(s) in ",
               event.labeled_point_clouds().size(), " point cloud(s)",
+              " (is_replaying=", event.is_replaying() ? "True" : "False", ")",
               event.objects().empty() ? "" : ":", "\n");
   for (const Cow<pb::DetectedObject>& object : event.objects()) {
     StringifyTo(StdoutSink(), "  ");
