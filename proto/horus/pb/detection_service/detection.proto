@@ -136,4 +136,12 @@ message DetectionEvent {
   // to a new detection within the recovery window.
   // Subscribers should remove these IDs from their cache.
   repeated uint32 unrecovered_object_ids = 5;
+  // Whether the detection data originates from a Horus bag replay
+  // rather than live lidar sensors.
+  bool is_replaying = 6;
+  // The total frame latency computed by this detection service node, from the
+  // earliest LiDAR point arrival to the publishing of this event.
+  Duration overall_frame_latency = 7;
+  // The system time when this detection service published this event.
+  Timestamp publishing_time = 8;
 }

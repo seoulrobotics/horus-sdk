@@ -2356,6 +2356,148 @@ class DetectionEvent final : public PbMessage {
     return std::move(set_unrecovered_object_ids(std::move(unrecovered_object_ids)));
   }
 
+  // Field `is_replaying` (no 6).
+  // -----
+
+  /// Whether the detection data originates from a Horus bag replay
+  ///  rather than live lidar sensors.
+  ///
+  /// Field no: 6.
+  constexpr bool is_replaying() const& noexcept HORUS_LIFETIME_BOUND {
+    return is_replaying_;
+  }
+
+  /// Whether the detection data originates from a Horus bag replay
+  ///  rather than live lidar sensors.
+  ///
+  /// Field no: 6.
+  bool& mutable_is_replaying() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[5] = true;
+    return is_replaying_;
+  }
+
+  /// Returns whether `is_replaying` (no 6) is set.
+  constexpr bool has_is_replaying() const noexcept { return set_fields_[5]; }
+
+  /// Clears `is_replaying` (no 6).
+  void clear_is_replaying() & noexcept {
+    set_fields_[5] = false;
+    is_replaying_ = {};
+  }
+
+  /// Sets `is_replaying` (no 6) and returns `*this`.
+  DetectionEvent& set_is_replaying(bool is_replaying) & noexcept {
+    set_fields_[5] = true;
+    is_replaying_ = is_replaying;
+    return *this;
+  }
+  /// Sets `is_replaying` (no 6) and returns `*this`.
+  DetectionEvent&& set_is_replaying(bool is_replaying) && noexcept {
+    return std::move(set_is_replaying(is_replaying));
+  }
+
+  // Field `overall_frame_latency` (no 7).
+  // -----
+
+  /// The total frame latency computed by this detection service node, from the
+  ///  earliest LiDAR point arrival to the publishing of this event.
+  ///
+  /// Field no: 7.
+  constexpr const Duration& overall_frame_latency() const& noexcept HORUS_LIFETIME_BOUND {
+    return overall_frame_latency_;
+  }
+
+  /// If `overall_frame_latency` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 7.
+  Duration overall_frame_latency() && noexcept {
+    if (!set_fields_[6]) {
+      return {};
+    }
+    return std::move(overall_frame_latency_);
+  }
+
+  /// The total frame latency computed by this detection service node, from the
+  ///  earliest LiDAR point arrival to the publishing of this event.
+  ///
+  /// Field no: 7.
+  Duration& mutable_overall_frame_latency() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[6] = true;
+    return overall_frame_latency_;
+  }
+
+  /// Returns whether `overall_frame_latency` (no 7) is set.
+  constexpr bool has_overall_frame_latency() const noexcept { return set_fields_[6]; }
+
+  /// Clears `overall_frame_latency` (no 7).
+  void clear_overall_frame_latency() & noexcept {
+    set_fields_[6] = false;
+    overall_frame_latency_ = {};
+  }
+
+  /// Sets `overall_frame_latency` (no 7) and returns `*this`.
+  DetectionEvent& set_overall_frame_latency(Duration&& overall_frame_latency) & noexcept {
+    set_fields_[6] = true;
+    overall_frame_latency_ = std::move(overall_frame_latency);
+    return *this;
+  }
+  /// Sets `overall_frame_latency` (no 7) and returns `*this`.
+  DetectionEvent&& set_overall_frame_latency(Duration&& overall_frame_latency) && noexcept {
+    return std::move(set_overall_frame_latency(std::move(overall_frame_latency)));
+  }
+
+  // Field `publishing_time` (no 8).
+  // -----
+
+  /// The system time when this detection service published this event.
+  ///
+  /// Field no: 8.
+  constexpr const Timestamp& publishing_time() const& noexcept HORUS_LIFETIME_BOUND {
+    return publishing_time_;
+  }
+
+  /// If `publishing_time` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 8.
+  Timestamp publishing_time() && noexcept {
+    if (!set_fields_[7]) {
+      return {};
+    }
+    return std::move(publishing_time_);
+  }
+
+  /// The system time when this detection service published this event.
+  ///
+  /// Field no: 8.
+  Timestamp& mutable_publishing_time() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[7] = true;
+    return publishing_time_;
+  }
+
+  /// Returns whether `publishing_time` (no 8) is set.
+  constexpr bool has_publishing_time() const noexcept { return set_fields_[7]; }
+
+  /// Clears `publishing_time` (no 8).
+  void clear_publishing_time() & noexcept {
+    set_fields_[7] = false;
+    publishing_time_ = {};
+  }
+
+  /// Sets `publishing_time` (no 8) and returns `*this`.
+  DetectionEvent& set_publishing_time(Timestamp&& publishing_time) & noexcept {
+    set_fields_[7] = true;
+    publishing_time_ = std::move(publishing_time);
+    return *this;
+  }
+  /// Sets `publishing_time` (no 8) and returns `*this`.
+  DetectionEvent&& set_publishing_time(Timestamp&& publishing_time) && noexcept {
+    return std::move(set_publishing_time(std::move(publishing_time)));
+  }
+
  private:
   /// @see objects()
   CowRepeated<DetectedObject> objects_{};
@@ -2367,9 +2509,15 @@ class DetectionEvent final : public PbMessage {
   CowRepeated<DeepLearningObject> raw_deep_learning_objects_{};
   /// @see unrecovered_object_ids()
   CowRepeated<std::uint32_t> unrecovered_object_ids_{};
+  /// @see is_replaying()
+  bool is_replaying_{};
+  /// @see overall_frame_latency()
+  Duration overall_frame_latency_{};
+  /// @see publishing_time()
+  Timestamp publishing_time_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<5> set_fields_;
+  std::bitset<8> set_fields_;
 };
 
 }  // namespace pb

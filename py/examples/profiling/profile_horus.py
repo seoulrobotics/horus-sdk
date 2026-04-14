@@ -162,6 +162,9 @@ class HorusProfiler:
         self.detection.profiling[FRAME_BUNDLING_WAITING].append(
             frame_profiling.frame_bundling_latency.total_seconds() * 1000
         )
+        self.detection.profiling[PREPROCESSING_OVERHEAD].append(
+            frame_profiling.preprocessing_overhead.total_seconds() * 1000
+        )
 
     def _on_profiling_info(self, profiling_info: horus.ProfilingInfo) -> None:
         if profiling_info.profile_type == profiling.ProfileType.BUNDLED:
@@ -189,27 +192,12 @@ class HorusProfiler:
                 )
                 self.detection.profiling[DETECTION_IDLE].append(total_idle * 1000)
 
-                profiled_services = (
-                    bundled_frame.preprocessing_service_point_cloud_profiling
+        if profiling_info.profile_type == profiling.ProfileType.PREPROCESSING_FRAME:
+            preprocessing_frame = profiling_info.preprocessing_frame_profiling
+            if preprocessing_frame:
+                self._parse_profiling_set(
+                    preprocessing_frame.service_profiling.details_profiling_set
                 )
-                for _, profiled_service in profiled_services.items():
-                    self._parse_profiling_set(
-                        profiled_service.service_profiling.details_profiling_set
-                    )
-
-                if (
-                    self.detection.profiling[OVERALL_FRAME_LATENCY]
-                    and self.detection.profiling[FRAME_BUNDLING_WAITING]
-                ):
-                    preprocessing_overhead = (
-                        self.detection.profiling[OVERALL_FRAME_LATENCY][-1]
-                        - self.detection.profiling[FRAME_BUNDLING_WAITING][-1]
-                        - bundled_frame.detection_service_profiling.total_service_latency.total_seconds()
-                        * 1000
-                    )
-                    self.preprocessing.profiling[PREPROCESSING_OVERHEAD].append(
-                        preprocessing_overhead
-                    )
 
         if profiling_info.profile_type == profiling.ProfileType.GENERAL:
             self._parse_profiling_set(

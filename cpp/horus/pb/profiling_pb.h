@@ -44,14 +44,16 @@ enum class ProfilingSet_ProfiledService : PbEnum {  // NOLINT(*-enum-size)
   kPreprocessingService = 1,
   /// No documentation.
   kDetectionService = 2,
+  /// No documentation.
+  kDetectionMergerService = 3,
 
   /// Unknown value read from the wire.
-  kUnknownWireValue = 3,
+  kUnknownWireValue = 4,
 };
 
 /// No documentation.
 ///
-/// Source: horus/pb/profiling.proto:19:7
+/// Source: horus/pb/profiling.proto:20:7
 enum class ProfilingSet_ProfiledDuration_PerformanceHint_ConfigParameterAction : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -71,17 +73,16 @@ class ProfilingSet_ProfiledDuration;
 class ProfilingSet_ProfiledDurationMapEntry;
 class ProfilingSet;
 class ServiceProfiling;
-class PreprocessingServicePointCloudProfiling;
 class FrameProfiling;
-class BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry;
 class BundledFrameProfilingSet;
+class PreprocessingFrameProfiling;
 class ProfilingInfo;
 
 // MARK: Message declarations
 
 /// No documentation.
 ///
-/// Source: horus/pb/profiling.proto:18:5
+/// Source: horus/pb/profiling.proto:19:5
 class ProfilingSet_ProfiledDuration_PerformanceHint final : public PbMessage {
  public:
   /// @see ProfilingSet_ProfiledDuration_PerformanceHint_ConfigParameterAction
@@ -233,7 +234,7 @@ class ProfilingSet_ProfiledDuration_PerformanceHint final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/profiling.proto:17:3
+/// Source: horus/pb/profiling.proto:18:3
 class ProfilingSet_ProfiledDuration final : public PbMessage {
  public:
   /// @see ProfilingSet_ProfiledDuration_PerformanceHint
@@ -397,7 +398,7 @@ class ProfilingSet_ProfiledDuration final : public PbMessage {
 
 /// / A map of profiling measurements id to profiled durations.
 ///
-/// Source: horus/pb/profiling.proto:38:3
+/// Source: horus/pb/profiling.proto:39:3
 class ProfilingSet_ProfiledDurationMapEntry final : public PbMessage {
  public:
 
@@ -768,7 +769,7 @@ class ProfilingSet final : public PbMessage {
 /// / The profiling of a service including the total service latency (total
 /// / processing time + total idle time) and the profiling details.
 ///
-/// Source: horus/pb/profiling.proto:48:1
+/// Source: horus/pb/profiling.proto:49:1
 class ServiceProfiling final : public PbMessage {
  public:
 
@@ -1024,6 +1025,56 @@ class ServiceProfiling final : public PbMessage {
     return std::move(set_intra_component_idle_time(std::move(intra_component_idle_time)));
   }
 
+  // Field `node_id` (no 6).
+  // -----
+
+  /// / The node ID of the service that generated this profiling data.
+  ///
+  /// Field no: 6.
+  constexpr const CowBytes& node_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return node_id_;
+  }
+
+  /// If `node_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 6.
+  CowBytes node_id() && noexcept {
+    if (!set_fields_[4]) {
+      return {};
+    }
+    return std::move(node_id_);
+  }
+
+  /// / The node ID of the service that generated this profiling data.
+  ///
+  /// Field no: 6.
+  CowBytes& mutable_node_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[4] = true;
+    return node_id_;
+  }
+
+  /// Returns whether `node_id` (no 6) is set.
+  constexpr bool has_node_id() const noexcept { return set_fields_[4]; }
+
+  /// Clears `node_id` (no 6).
+  void clear_node_id() & noexcept {
+    set_fields_[4] = false;
+    node_id_ = {};
+  }
+
+  /// Sets `node_id` (no 6) and returns `*this`.
+  ServiceProfiling& set_node_id(CowBytes&& node_id) & noexcept {
+    set_fields_[4] = true;
+    node_id_ = std::move(node_id);
+    return *this;
+  }
+  /// Sets `node_id` (no 6) and returns `*this`.
+  ServiceProfiling&& set_node_id(CowBytes&& node_id) && noexcept {
+    return std::move(set_node_id(std::move(node_id)));
+  }
+
  private:
   /// @see details_profiling_set()
   ProfilingSet details_profiling_set_{};
@@ -1033,179 +1084,17 @@ class ServiceProfiling final : public PbMessage {
   Duration idle_time_before_processing_{};
   /// @see intra_component_idle_time()
   Duration intra_component_idle_time_{};
+  /// @see node_id()
+  CowBytes node_id_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<4> set_fields_;
-};
-
-/// No documentation.
-///
-/// Source: horus/pb/profiling.proto:68:1
-class PreprocessingServicePointCloudProfiling final : public PbMessage {
- public:
-
-  /// Constructs a default-initialized `PreprocessingServicePointCloudProfiling`.
-  PreprocessingServicePointCloudProfiling() noexcept = default;
-
-  /// Move constructor.
-  PreprocessingServicePointCloudProfiling(PreprocessingServicePointCloudProfiling&&) noexcept = default;
-  /// Move assignment operator.
-  PreprocessingServicePointCloudProfiling& operator=(PreprocessingServicePointCloudProfiling&&) noexcept = default;
-
-  /// Constructs a clone of `other`.
-  ///
-  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
-  /// lack of available memory.
-  explicit PreprocessingServicePointCloudProfiling(const PreprocessingServicePointCloudProfiling& other) noexcept(false);  // NOLINT(*-explicit-*)
-
-  /// Cannot copy-assign to avoid implicit allocations.
-  PreprocessingServicePointCloudProfiling& operator=(const PreprocessingServicePointCloudProfiling&) = delete;
-
-  /// Default destructor.
-  ~PreprocessingServicePointCloudProfiling() noexcept final = default;
-
-  /// Creates a `PreprocessingServicePointCloudProfiling` whose contents are read from `reader`.
-  ///
-  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
-  explicit PreprocessingServicePointCloudProfiling(PbReader& reader) noexcept(false) : PbMessage{} {
-    DeserializeFrom(reader);
-  }
-
-  /// Serializes the message to `writer`.
-  ///
-  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
-  void SerializeTo(PbWriter& writer) const noexcept(false) final;
-
-  /// Deserializes the message from `reader`.
-  ///
-  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
-  void DeserializeFrom(PbReader& reader) noexcept(false) final;
-
-  /// Returns whether the message is empty.
-  bool IsEmpty() const noexcept final { return set_fields_.none(); }
-
-  /// The full name of the message: `horus.pb.PreprocessingServicePointCloudProfiling`.
-  static constexpr StringView TypeName() noexcept { return "horus.pb.PreprocessingServicePointCloudProfiling"; }
-
-  /// The full name of the message: `horus.pb.PreprocessingServicePointCloudProfiling`.
-  StringView MessageTypeName() const noexcept final { return TypeName(); }
-
-  // Field `service_profiling` (no 1).
-  // -----
-
-  /// / The preprocessing service profiling for a given point cloud.
-  ///
-  /// Field no: 1.
-  constexpr const ServiceProfiling& service_profiling() const& noexcept HORUS_LIFETIME_BOUND {
-    return service_profiling_;
-  }
-
-  /// If `service_profiling` is set, moves it out of the message (without marking it as unset).
-  ///
-  /// Otherwise, returns a default-initialized value.
-  ///
-  /// Field no: 1.
-  ServiceProfiling service_profiling() && noexcept {
-    if (!set_fields_[0]) {
-      return {};
-    }
-    return std::move(service_profiling_);
-  }
-
-  /// / The preprocessing service profiling for a given point cloud.
-  ///
-  /// Field no: 1.
-  ServiceProfiling& mutable_service_profiling() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[0] = true;
-    return service_profiling_;
-  }
-
-  /// Returns whether `service_profiling` (no 1) is set.
-  constexpr bool has_service_profiling() const noexcept { return set_fields_[0]; }
-
-  /// Clears `service_profiling` (no 1).
-  void clear_service_profiling() & noexcept {
-    set_fields_[0] = false;
-    service_profiling_ = {};
-  }
-
-  /// Sets `service_profiling` (no 1) and returns `*this`.
-  PreprocessingServicePointCloudProfiling& set_service_profiling(ServiceProfiling&& service_profiling) & noexcept {
-    set_fields_[0] = true;
-    service_profiling_ = std::move(service_profiling);
-    return *this;
-  }
-  /// Sets `service_profiling` (no 1) and returns `*this`.
-  PreprocessingServicePointCloudProfiling&& set_service_profiling(ServiceProfiling&& service_profiling) && noexcept {
-    return std::move(set_service_profiling(std::move(service_profiling)));
-  }
-
-  // Field `point_cloud_sending_latency` (no 2).
-  // -----
-
-  /// / The latency to send the given point cloud from the preprocessing
-  /// / service to the detection service.
-  ///
-  /// Field no: 2.
-  constexpr const Duration& point_cloud_sending_latency() const& noexcept HORUS_LIFETIME_BOUND {
-    return point_cloud_sending_latency_;
-  }
-
-  /// If `point_cloud_sending_latency` is set, moves it out of the message (without marking it as unset).
-  ///
-  /// Otherwise, returns a default-initialized value.
-  ///
-  /// Field no: 2.
-  Duration point_cloud_sending_latency() && noexcept {
-    if (!set_fields_[1]) {
-      return {};
-    }
-    return std::move(point_cloud_sending_latency_);
-  }
-
-  /// / The latency to send the given point cloud from the preprocessing
-  /// / service to the detection service.
-  ///
-  /// Field no: 2.
-  Duration& mutable_point_cloud_sending_latency() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[1] = true;
-    return point_cloud_sending_latency_;
-  }
-
-  /// Returns whether `point_cloud_sending_latency` (no 2) is set.
-  constexpr bool has_point_cloud_sending_latency() const noexcept { return set_fields_[1]; }
-
-  /// Clears `point_cloud_sending_latency` (no 2).
-  void clear_point_cloud_sending_latency() & noexcept {
-    set_fields_[1] = false;
-    point_cloud_sending_latency_ = {};
-  }
-
-  /// Sets `point_cloud_sending_latency` (no 2) and returns `*this`.
-  PreprocessingServicePointCloudProfiling& set_point_cloud_sending_latency(Duration&& point_cloud_sending_latency) & noexcept {
-    set_fields_[1] = true;
-    point_cloud_sending_latency_ = std::move(point_cloud_sending_latency);
-    return *this;
-  }
-  /// Sets `point_cloud_sending_latency` (no 2) and returns `*this`.
-  PreprocessingServicePointCloudProfiling&& set_point_cloud_sending_latency(Duration&& point_cloud_sending_latency) && noexcept {
-    return std::move(set_point_cloud_sending_latency(std::move(point_cloud_sending_latency)));
-  }
-
- private:
-  /// @see service_profiling()
-  ServiceProfiling service_profiling_{};
-  /// @see point_cloud_sending_latency()
-  Duration point_cloud_sending_latency_{};
-
-  /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<5> set_fields_;
 };
 
 /// / The frame profiling. It includes important profiling for a frame such as
 /// / the overall latency or its bundling time.
 ///
-/// Source: horus/pb/profiling.proto:79:1
+/// Source: horus/pb/profiling.proto:74:1
 class FrameProfiling final : public PbMessage {
  public:
 
@@ -1427,177 +1316,13 @@ class FrameProfiling final : public PbMessage {
   std::bitset<3> set_fields_;
 };
 
-/// No documentation.
-///
-/// Source: horus/pb/profiling.proto:113:3
-class BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry final : public PbMessage {
- public:
-
-  /// Constructs a default-initialized `BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry`.
-  BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry() noexcept = default;
-
-  /// Move constructor.
-  BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry(BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry&&) noexcept = default;
-  /// Move assignment operator.
-  BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry& operator=(BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry&&) noexcept = default;
-
-  /// Constructs a clone of `other`.
-  ///
-  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
-  /// lack of available memory.
-  explicit BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry(const BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry& other) noexcept(false);  // NOLINT(*-explicit-*)
-
-  /// Cannot copy-assign to avoid implicit allocations.
-  BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry& operator=(const BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry&) = delete;
-
-  /// Default destructor.
-  ~BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry() noexcept final = default;
-
-  /// Creates a `BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry` whose contents are read from `reader`.
-  ///
-  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
-  explicit BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry(PbReader& reader) noexcept(false) : PbMessage{} {
-    DeserializeFrom(reader);
-  }
-
-  /// Serializes the message to `writer`.
-  ///
-  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
-  void SerializeTo(PbWriter& writer) const noexcept(false) final;
-
-  /// Deserializes the message from `reader`.
-  ///
-  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
-  void DeserializeFrom(PbReader& reader) noexcept(false) final;
-
-  /// Returns whether the message is empty.
-  bool IsEmpty() const noexcept final { return set_fields_.none(); }
-
-  /// The full name of the message: `horus.pb.BundledFrameProfilingSet.PreprocessingServicePointCloudProfilingMapEntry`.
-  static constexpr StringView TypeName() noexcept { return "horus.pb.BundledFrameProfilingSet.PreprocessingServicePointCloudProfilingMapEntry"; }
-
-  /// The full name of the message: `horus.pb.BundledFrameProfilingSet.PreprocessingServicePointCloudProfilingMapEntry`.
-  StringView MessageTypeName() const noexcept final { return TypeName(); }
-
-  // Field `key` (no 1).
-  // -----
-
-  /// No documentation.
-  ///
-  /// Field no: 1.
-  constexpr const CowBytes& key() const& noexcept HORUS_LIFETIME_BOUND {
-    return key_;
-  }
-
-  /// If `key` is set, moves it out of the message (without marking it as unset).
-  ///
-  /// Otherwise, returns a default-initialized value.
-  ///
-  /// Field no: 1.
-  CowBytes key() && noexcept {
-    if (!set_fields_[0]) {
-      return {};
-    }
-    return std::move(key_);
-  }
-
-  /// No documentation.
-  ///
-  /// Field no: 1.
-  CowBytes& mutable_key() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[0] = true;
-    return key_;
-  }
-
-  /// Returns whether `key` (no 1) is set.
-  constexpr bool has_key() const noexcept { return set_fields_[0]; }
-
-  /// Clears `key` (no 1).
-  void clear_key() & noexcept {
-    set_fields_[0] = false;
-    key_ = {};
-  }
-
-  /// Sets `key` (no 1) and returns `*this`.
-  BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry& set_key(CowBytes&& key) & noexcept {
-    set_fields_[0] = true;
-    key_ = std::move(key);
-    return *this;
-  }
-  /// Sets `key` (no 1) and returns `*this`.
-  BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry&& set_key(CowBytes&& key) && noexcept {
-    return std::move(set_key(std::move(key)));
-  }
-
-  // Field `value` (no 2).
-  // -----
-
-  /// No documentation.
-  ///
-  /// Field no: 2.
-  constexpr const PreprocessingServicePointCloudProfiling& value() const& noexcept HORUS_LIFETIME_BOUND {
-    return value_;
-  }
-
-  /// If `value` is set, moves it out of the message (without marking it as unset).
-  ///
-  /// Otherwise, returns a default-initialized value.
-  ///
-  /// Field no: 2.
-  PreprocessingServicePointCloudProfiling value() && noexcept {
-    if (!set_fields_[1]) {
-      return {};
-    }
-    return std::move(value_);
-  }
-
-  /// No documentation.
-  ///
-  /// Field no: 2.
-  PreprocessingServicePointCloudProfiling& mutable_value() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[1] = true;
-    return value_;
-  }
-
-  /// Returns whether `value` (no 2) is set.
-  constexpr bool has_value() const noexcept { return set_fields_[1]; }
-
-  /// Clears `value` (no 2).
-  void clear_value() & noexcept {
-    set_fields_[1] = false;
-    value_ = {};
-  }
-
-  /// Sets `value` (no 2) and returns `*this`.
-  BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry& set_value(PreprocessingServicePointCloudProfiling&& value) & noexcept {
-    set_fields_[1] = true;
-    value_ = std::move(value);
-    return *this;
-  }
-  /// Sets `value` (no 2) and returns `*this`.
-  BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry&& set_value(PreprocessingServicePointCloudProfiling&& value) && noexcept {
-    return std::move(set_value(std::move(value)));
-  }
-
- private:
-  /// @see key()
-  CowBytes key_{};
-  /// @see value()
-  PreprocessingServicePointCloudProfiling value_{};
-
-  /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
-};
-
 /// / A bundled profiling set bundling bundled frame profiling set of the
 /// / detection service with the profiling sets of each points in the frame
 /// / (generated by the preprocessing service).
 ///
-/// Source: horus/pb/profiling.proto:100:1
+/// Source: horus/pb/profiling.proto:95:1
 class BundledFrameProfilingSet final : public PbMessage {
  public:
-  /// @see BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry
-  using PreprocessingServicePointCloudProfilingMapEntry = BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry;
 
   /// Constructs a default-initialized `BundledFrameProfilingSet`.
   BundledFrameProfilingSet() noexcept = default;
@@ -1797,56 +1522,6 @@ class BundledFrameProfilingSet final : public PbMessage {
     return std::move(set_detection_service_profiling(std::move(detection_service_profiling)));
   }
 
-  // Field `preprocessing_service_point_cloud_profiling` (no 7).
-  // -----
-
-  /// No documentation.
-  ///
-  /// Field no: 7.
-  constexpr const CowRepeated<BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry>& preprocessing_service_point_cloud_profiling() const& noexcept HORUS_LIFETIME_BOUND {
-    return preprocessing_service_point_cloud_profiling_;
-  }
-
-  /// If `preprocessing_service_point_cloud_profiling` is set, moves it out of the message (without marking it as unset).
-  ///
-  /// Otherwise, returns a default-initialized value.
-  ///
-  /// Field no: 7.
-  CowRepeated<BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry> preprocessing_service_point_cloud_profiling() && noexcept {
-    if (!set_fields_[3]) {
-      return {};
-    }
-    return std::move(preprocessing_service_point_cloud_profiling_);
-  }
-
-  /// No documentation.
-  ///
-  /// Field no: 7.
-  CowRepeated<BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry>& mutable_preprocessing_service_point_cloud_profiling() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[3] = true;
-    return preprocessing_service_point_cloud_profiling_;
-  }
-
-  /// Returns whether `preprocessing_service_point_cloud_profiling` (no 7) is set.
-  constexpr bool has_preprocessing_service_point_cloud_profiling() const noexcept { return set_fields_[3]; }
-
-  /// Clears `preprocessing_service_point_cloud_profiling` (no 7).
-  void clear_preprocessing_service_point_cloud_profiling() & noexcept {
-    set_fields_[3] = false;
-    preprocessing_service_point_cloud_profiling_ = {};
-  }
-
-  /// Sets `preprocessing_service_point_cloud_profiling` (no 7) and returns `*this`.
-  BundledFrameProfilingSet& set_preprocessing_service_point_cloud_profiling(CowRepeated<BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry>&& preprocessing_service_point_cloud_profiling) & noexcept {
-    set_fields_[3] = true;
-    preprocessing_service_point_cloud_profiling_ = std::move(preprocessing_service_point_cloud_profiling);
-    return *this;
-  }
-  /// Sets `preprocessing_service_point_cloud_profiling` (no 7) and returns `*this`.
-  BundledFrameProfilingSet&& set_preprocessing_service_point_cloud_profiling(CowRepeated<BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry>&& preprocessing_service_point_cloud_profiling) && noexcept {
-    return std::move(set_preprocessing_service_point_cloud_profiling(std::move(preprocessing_service_point_cloud_profiling)));
-  }
-
  private:
   /// @see frame_timestamp()
   Timestamp frame_timestamp_{};
@@ -1854,17 +1529,231 @@ class BundledFrameProfilingSet final : public PbMessage {
   FrameProfiling frame_profiling_{};
   /// @see detection_service_profiling()
   ServiceProfiling detection_service_profiling_{};
-  /// @see preprocessing_service_point_cloud_profiling()
-  CowRepeated<BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry> preprocessing_service_point_cloud_profiling_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<4> set_fields_;
+  std::bitset<3> set_fields_;
+};
+
+/// / The profiling of a single LiDAR frame produced by the preprocessing service.
+/// / Sent directly from the preprocessing service to the notification service,
+/// / once per LiDAR frame (approximately every 100ms).
+///
+/// Source: horus/pb/profiling.proto:116:1
+class PreprocessingFrameProfiling final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `PreprocessingFrameProfiling`.
+  PreprocessingFrameProfiling() noexcept = default;
+
+  /// Move constructor.
+  PreprocessingFrameProfiling(PreprocessingFrameProfiling&&) noexcept = default;
+  /// Move assignment operator.
+  PreprocessingFrameProfiling& operator=(PreprocessingFrameProfiling&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit PreprocessingFrameProfiling(const PreprocessingFrameProfiling& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  PreprocessingFrameProfiling& operator=(const PreprocessingFrameProfiling&) = delete;
+
+  /// Default destructor.
+  ~PreprocessingFrameProfiling() noexcept final = default;
+
+  /// Creates a `PreprocessingFrameProfiling` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit PreprocessingFrameProfiling(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.PreprocessingFrameProfiling`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.PreprocessingFrameProfiling"; }
+
+  /// The full name of the message: `horus.pb.PreprocessingFrameProfiling`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `frame_timestamp` (no 1).
+  // -----
+
+  /// / The frame timestamp (average point cloud arrival timestamp).
+  ///
+  /// Field no: 1.
+  constexpr const Timestamp& frame_timestamp() const& noexcept HORUS_LIFETIME_BOUND {
+    return frame_timestamp_;
+  }
+
+  /// If `frame_timestamp` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  Timestamp frame_timestamp() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(frame_timestamp_);
+  }
+
+  /// / The frame timestamp (average point cloud arrival timestamp).
+  ///
+  /// Field no: 1.
+  Timestamp& mutable_frame_timestamp() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return frame_timestamp_;
+  }
+
+  /// Returns whether `frame_timestamp` (no 1) is set.
+  constexpr bool has_frame_timestamp() const noexcept { return set_fields_[0]; }
+
+  /// Clears `frame_timestamp` (no 1).
+  void clear_frame_timestamp() & noexcept {
+    set_fields_[0] = false;
+    frame_timestamp_ = {};
+  }
+
+  /// Sets `frame_timestamp` (no 1) and returns `*this`.
+  PreprocessingFrameProfiling& set_frame_timestamp(Timestamp&& frame_timestamp) & noexcept {
+    set_fields_[0] = true;
+    frame_timestamp_ = std::move(frame_timestamp);
+    return *this;
+  }
+  /// Sets `frame_timestamp` (no 1) and returns `*this`.
+  PreprocessingFrameProfiling&& set_frame_timestamp(Timestamp&& frame_timestamp) && noexcept {
+    return std::move(set_frame_timestamp(std::move(frame_timestamp)));
+  }
+
+  // Field `lidar_id` (no 2).
+  // -----
+
+  /// / The LiDAR ID this profiling data belongs to.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// / The LiDAR ID this profiling data belongs to.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 2) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[1]; }
+
+  /// Clears `lidar_id` (no 2).
+  void clear_lidar_id() & noexcept {
+    set_fields_[1] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 2) and returns `*this`.
+  PreprocessingFrameProfiling& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[1] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 2) and returns `*this`.
+  PreprocessingFrameProfiling&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `service_profiling` (no 3).
+  // -----
+
+  /// / The preprocessing service profiling for this frame.
+  ///
+  /// Field no: 3.
+  constexpr const ServiceProfiling& service_profiling() const& noexcept HORUS_LIFETIME_BOUND {
+    return service_profiling_;
+  }
+
+  /// If `service_profiling` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  ServiceProfiling service_profiling() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(service_profiling_);
+  }
+
+  /// / The preprocessing service profiling for this frame.
+  ///
+  /// Field no: 3.
+  ServiceProfiling& mutable_service_profiling() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return service_profiling_;
+  }
+
+  /// Returns whether `service_profiling` (no 3) is set.
+  constexpr bool has_service_profiling() const noexcept { return set_fields_[2]; }
+
+  /// Clears `service_profiling` (no 3).
+  void clear_service_profiling() & noexcept {
+    set_fields_[2] = false;
+    service_profiling_ = {};
+  }
+
+  /// Sets `service_profiling` (no 3) and returns `*this`.
+  PreprocessingFrameProfiling& set_service_profiling(ServiceProfiling&& service_profiling) & noexcept {
+    set_fields_[2] = true;
+    service_profiling_ = std::move(service_profiling);
+    return *this;
+  }
+  /// Sets `service_profiling` (no 3) and returns `*this`.
+  PreprocessingFrameProfiling&& set_service_profiling(ServiceProfiling&& service_profiling) && noexcept {
+    return std::move(set_service_profiling(std::move(service_profiling)));
+  }
+
+ private:
+  /// @see frame_timestamp()
+  Timestamp frame_timestamp_{};
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see service_profiling()
+  ServiceProfiling service_profiling_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<3> set_fields_;
 };
 
 /// / A profiling info sent to the notification service and forward to its
 /// / subscribers.
 ///
-/// Source: horus/pb/profiling.proto:120:1
+/// Source: horus/pb/profiling.proto:129:1
 class ProfilingInfo final : public PbMessage {
  public:
 
@@ -1973,7 +1862,7 @@ class ProfilingInfo final : public PbMessage {
   // -----
 
   /// / Bundled frame profiling set (pipeline profiling sets of the detection
-  /// / and preprocessing services).
+  /// / service).
   ///
   /// Field no: 2.
   constexpr const BundledFrameProfilingSet& bundled_frame_profiling_set() const& noexcept HORUS_LIFETIME_BOUND {
@@ -1993,7 +1882,7 @@ class ProfilingInfo final : public PbMessage {
   }
 
   /// / Bundled frame profiling set (pipeline profiling sets of the detection
-  /// / and preprocessing services).
+  /// / service).
   ///
   /// Field no: 2.
   BundledFrameProfilingSet& mutable_bundled_frame_profiling_set() & noexcept HORUS_LIFETIME_BOUND {
@@ -2026,6 +1915,61 @@ class ProfilingInfo final : public PbMessage {
     return std::move(set_bundled_frame_profiling_set(std::move(bundled_frame_profiling_set)));
   }
 
+  // Field `preprocessing_frame_profiling` (no 3).
+  // -----
+
+  /// / Per-LiDAR frame profiling produced by the preprocessing service.
+  ///
+  /// Field no: 3.
+  constexpr const PreprocessingFrameProfiling& preprocessing_frame_profiling() const& noexcept HORUS_LIFETIME_BOUND {
+    return preprocessing_frame_profiling_;
+  }
+
+  /// If `preprocessing_frame_profiling` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  PreprocessingFrameProfiling preprocessing_frame_profiling() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(preprocessing_frame_profiling_);
+  }
+
+  /// / Per-LiDAR frame profiling produced by the preprocessing service.
+  ///
+  /// Field no: 3.
+  PreprocessingFrameProfiling& mutable_preprocessing_frame_profiling() & noexcept HORUS_LIFETIME_BOUND {
+    clear_profiling_set();
+    profiling_set_ = ProfilingSetOneof::kPreprocessingFrameProfiling;
+    set_fields_[2] = true;
+    return preprocessing_frame_profiling_;
+  }
+
+  /// Returns whether `preprocessing_frame_profiling` (no 3) is set.
+  constexpr bool has_preprocessing_frame_profiling() const noexcept { return set_fields_[2]; }
+
+  /// Clears `preprocessing_frame_profiling` (no 3).
+  void clear_preprocessing_frame_profiling() & noexcept {
+    profiling_set_ = {};
+    set_fields_[2] = false;
+    preprocessing_frame_profiling_ = {};
+  }
+
+  /// Sets `preprocessing_frame_profiling` (no 3) and returns `*this`.
+  ProfilingInfo& set_preprocessing_frame_profiling(PreprocessingFrameProfiling&& preprocessing_frame_profiling) & noexcept {
+    clear_profiling_set();
+    profiling_set_ = ProfilingSetOneof::kPreprocessingFrameProfiling;
+    set_fields_[2] = true;
+    preprocessing_frame_profiling_ = std::move(preprocessing_frame_profiling);
+    return *this;
+  }
+  /// Sets `preprocessing_frame_profiling` (no 3) and returns `*this`.
+  ProfilingInfo&& set_preprocessing_frame_profiling(PreprocessingFrameProfiling&& preprocessing_frame_profiling) && noexcept {
+    return std::move(set_preprocessing_frame_profiling(std::move(preprocessing_frame_profiling)));
+  }
+
   // Oneof `profiling_set`.
   // -----
 
@@ -2037,6 +1981,8 @@ class ProfilingInfo final : public PbMessage {
     kGeneralProfilingSet = 1,
     /// @see bundled_frame_profiling_set()
     kBundledFrameProfilingSet = 2,
+    /// @see preprocessing_frame_profiling()
+    kPreprocessingFrameProfiling = 3,
   };
 
   /// Returns the current case set in `profiling_set`.
@@ -2055,6 +2001,10 @@ class ProfilingInfo final : public PbMessage {
         clear_bundled_frame_profiling_set();
         break;
       }
+      case ProfilingSetOneof::kPreprocessingFrameProfiling: {
+        clear_preprocessing_frame_profiling();
+        break;
+      }
       case ProfilingSetOneof::kNotSet:
       default:
         break;
@@ -2066,12 +2016,14 @@ class ProfilingInfo final : public PbMessage {
   ProfilingSet general_profiling_set_{};
   /// @see bundled_frame_profiling_set()
   BundledFrameProfilingSet bundled_frame_profiling_set_{};
+  /// @see preprocessing_frame_profiling()
+  PreprocessingFrameProfiling preprocessing_frame_profiling_{};
 
   /// @see profiling_set_case()
   ProfilingSetOneof profiling_set_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<2> set_fields_;
+  std::bitset<3> set_fields_;
 };
 
 }  // namespace pb
@@ -2100,6 +2052,9 @@ class PbEnumTraits<horus::sdk::pb::ProfilingSet_ProfiledService> final {
       case horus::sdk::pb::ProfilingSet_ProfiledService::kDetectionService: {
         return "DETECTION_SERVICE";
       }
+      case horus::sdk::pb::ProfilingSet_ProfiledService::kDetectionMergerService: {
+        return "DETECTION_MERGER_SERVICE";
+      }
       case horus::sdk::pb::ProfilingSet_ProfiledService::kUnknownWireValue:
       default: {
         return "";
@@ -2119,6 +2074,9 @@ class PbEnumTraits<horus::sdk::pb::ProfilingSet_ProfiledService> final {
       case 2: {
         return horus::sdk::pb::ProfilingSet_ProfiledService::kDetectionService;
       }
+      case 3: {
+        return horus::sdk::pb::ProfilingSet_ProfiledService::kDetectionMergerService;
+      }
       default: {
         return default_value;
       }
@@ -2135,6 +2093,9 @@ class PbEnumTraits<horus::sdk::pb::ProfilingSet_ProfiledService> final {
     }
     if (name == "DETECTION_SERVICE") {
       return horus::sdk::pb::ProfilingSet_ProfiledService::kDetectionService;
+    }
+    if (name == "DETECTION_MERGER_SERVICE") {
+      return horus::sdk::pb::ProfilingSet_ProfiledService::kDetectionMergerService;
     }
     return default_value;
   }

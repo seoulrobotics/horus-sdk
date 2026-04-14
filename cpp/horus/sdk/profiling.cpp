@@ -53,13 +53,6 @@ ServiceProfiling::ServiceProfiling(const pb::ServiceProfiling& service_profiling
       intra_component_idle_time_{
           ParseProtoDuration(service_profiling_pb.intra_component_idle_time())} {}
 
-PreprocessingServicePointCloudProfiling::PreprocessingServicePointCloudProfiling(
-    const pb::PreprocessingServicePointCloudProfiling&
-        preprocessing_service_point_cloud_profiling) noexcept
-    : service_profiling_{preprocessing_service_point_cloud_profiling.service_profiling()},
-      sending_latency_{ParseProtoDuration(
-          preprocessing_service_point_cloud_profiling.point_cloud_sending_latency())} {}
-
 FrameProfiling::FrameProfiling(const pb::FrameProfiling& frame_profiling_pb) noexcept
     : overall_frame_latency_{ParseProtoDuration(frame_profiling_pb.overall_frame_latency())},
       frame_bundling_latency_{ParseProtoDuration(frame_profiling_pb.frame_bundling_latency())} {}
@@ -68,16 +61,7 @@ BundledFrameProfilingSet::BundledFrameProfilingSet(
     const pb::BundledFrameProfilingSet& bundled_profile_pb) noexcept
     : detection_service_profiling_{bundled_profile_pb.detection_service_profiling()},
       frame_timestamp_{ParseProtoTimestamp(bundled_profile_pb.frame_timestamp())},
-      frame_profiling_{bundled_profile_pb.frame_profiling()} {
-  preprocessing_service_point_cloud_profiling_.reserve(
-      bundled_profile_pb.preprocessing_service_point_cloud_profiling().size());
-  for (const auto& cloud_proc_time :
-       bundled_profile_pb.preprocessing_service_point_cloud_profiling()) {
-    preprocessing_service_point_cloud_profiling_.emplace(
-        cloud_proc_time.Ref().key().Str(),
-        sdk::PreprocessingServicePointCloudProfiling{cloud_proc_time.Ref().value()});
-  }
-}
+      frame_profiling_{bundled_profile_pb.frame_profiling()} {}
 
 ProfilingInfo::ProfilingInfo(const pb::ProfilingInfo& profiling_info_pb)
     : profile_type_{profiling_info_pb.profiling_set_case()}, profiling_set_{InPlaceType<void>} {
@@ -89,6 +73,7 @@ ProfilingInfo::ProfilingInfo(const pb::ProfilingInfo& profiling_info_pb)
       profiling_set_.Emplace<BundledFrameProfilingSet>(
           profiling_info_pb.bundled_frame_profiling_set());
       break;
+    case ProfilingSetOneof::kPreprocessingFrameProfiling:
     case ProfilingSetOneof::kNotSet:
     default:
       throw std::runtime_error("invalid profiling information received");
