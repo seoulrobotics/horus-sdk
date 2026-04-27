@@ -2,6 +2,12 @@ syntax = "proto3";
 
 package horus.pb;
 
+// Status of a repeated message.
+enum RepeatedMessageStatus {
+  // Unspecified status; this is an invalid value.
+  STATUS_UNSPECIFIED = 0;
+}
+
 
 
 
@@ -43,6 +49,12 @@ message Range {
 message UInt32List {
 
   repeated uint32 values = 1;
+}
+
+// Contains a list of `Vector2d` values. Used when a list of repeated `Vector2d`
+// values should be `optional`.
+message Vector2dList {
+
 }
 
 // A timestamp.

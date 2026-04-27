@@ -173,6 +173,7 @@ class DetectionEvent:
     objects: typing.List[DetectedObject]
     labeled_point_clouds: typing.List[LabeledPointCloud]
     raw_deep_learning_objects: typing.List[DeepLearningObject]
+    is_replaying: bool
 
     @staticmethod
     def _from_pb(pb: detection_pb2.DetectionEvent) -> "DetectionEvent":
@@ -187,4 +188,5 @@ class DetectionEvent:
                 DeepLearningObject._from_pb(dl_object)
                 for dl_object in pb.raw_deep_learning_objects
             ],
+            is_replaying=pb.is_replaying,
         )

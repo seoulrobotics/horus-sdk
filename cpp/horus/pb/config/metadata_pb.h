@@ -17,6 +17,7 @@
 #include "horus/pb/cow_span.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
+#include "horus/pb/types.h"
 #include "horus/strings/string_view.h"
 
 #if HORUS_SDK_USE_PB_NAMESPACE_ALIAS
@@ -29,6 +30,19 @@ namespace horus {
 namespace sdk {
 namespace pb {
 
+// MARK: Enum declarations
+
+/// Status of a repeated message.
+///
+/// Source: horus/pb/config/metadata.proto:6:1
+enum class RepeatedMessageStatus : PbEnum {  // NOLINT(*-enum-size)
+  /// Unspecified status; this is an invalid value.
+  kStatusUnspecified = 0,
+
+  /// Unknown value read from the wire.
+  kUnknownWireValue = 1,
+};
+
 // MARK: Message forward declarations
 
 class Vector2f;
@@ -36,6 +50,7 @@ class Vector3f;
 class Quaterniond;
 class Range;
 class UInt32List;
+class Vector2dList;
 class Timestamp;
 class Duration;
 class AffineTransform3f;
@@ -44,7 +59,7 @@ class AffineTransform3f;
 
 /// A vector with 2 `float` fields.
 ///
-/// Source: horus/pb/config/metadata.proto:10:1
+/// Source: horus/pb/config/metadata.proto:16:1
 class Vector2f final : public PbMessage {
  public:
 
@@ -182,7 +197,7 @@ class Vector2f final : public PbMessage {
 
 /// A vector with 3 `float` fields.
 ///
-/// Source: horus/pb/config/metadata.proto:17:1
+/// Source: horus/pb/config/metadata.proto:23:1
 class Vector3f final : public PbMessage {
  public:
 
@@ -360,7 +375,7 @@ class Vector3f final : public PbMessage {
 
 /// A quaternion with 4 `double` fields.
 ///
-/// Source: horus/pb/config/metadata.proto:25:1
+/// Source: horus/pb/config/metadata.proto:31:1
 class Quaterniond final : public PbMessage {
  public:
 
@@ -579,7 +594,7 @@ class Quaterniond final : public PbMessage {
 /// A vector with two `double` fields representing a range (where the `start`
 ///  must be lower than or equal to the `end`).
 ///
-/// Source: horus/pb/config/metadata.proto:35:1
+/// Source: horus/pb/config/metadata.proto:41:1
 class Range final : public PbMessage {
  public:
 
@@ -718,7 +733,7 @@ class Range final : public PbMessage {
 /// Contains a list of `uint32` values. Used when a list of repeated `uint32`
 ///  values should be `optional`.
 ///
-/// Source: horus/pb/config/metadata.proto:43:1
+/// Source: horus/pb/config/metadata.proto:49:1
 class UInt32List final : public PbMessage {
  public:
 
@@ -826,13 +841,76 @@ class UInt32List final : public PbMessage {
   std::bitset<1> set_fields_;
 };
 
+/// Contains a list of `Vector2d` values. Used when a list of repeated `Vector2d`
+///  values should be `optional`.
+///
+/// Source: horus/pb/config/metadata.proto:56:1
+class Vector2dList final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `Vector2dList`.
+  Vector2dList() noexcept = default;
+
+  /// Move constructor.
+  Vector2dList(Vector2dList&&) noexcept = default;
+  /// Move assignment operator.
+  Vector2dList& operator=(Vector2dList&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit Vector2dList(const Vector2dList&) noexcept = default;  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  Vector2dList& operator=(const Vector2dList&) = delete;
+
+  /// Default destructor.
+  ~Vector2dList() noexcept final = default;
+
+  /// Creates a `Vector2dList` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit Vector2dList(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final {
+    static_cast<void>(writer);
+  }
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final {
+    reader.SkipMessage();
+  }
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.Vector2dList`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.Vector2dList"; }
+
+  /// The full name of the message: `horus.pb.Vector2dList`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+ private:
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<0> set_fields_;
+};
+
 /// A timestamp.
 /// 
 ///  We do not use google.protobuf.Timestamp as it is defined in libprotobuf, but
 ///  not libprotobuf-lite, and generating metadata for such messages would lead to
 ///  binary conflicts.
 ///
-/// Source: horus/pb/config/metadata.proto:53:1
+/// Source: horus/pb/config/metadata.proto:65:1
 class Timestamp final : public PbMessage {
  public:
 
@@ -976,7 +1054,7 @@ class Timestamp final : public PbMessage {
 ///  not libprotobuf-lite, and generating metadata for such messages would lead to
 ///  binary conflicts.
 ///
-/// Source: horus/pb/config/metadata.proto:67:1
+/// Source: horus/pb/config/metadata.proto:79:1
 class Duration final : public PbMessage {
  public:
 
@@ -1116,7 +1194,7 @@ class Duration final : public PbMessage {
 ///  ------------
 ///  TODO(HRS-495) Reuse Matrixf for representing affine transform.
 ///
-/// Source: horus/pb/config/metadata.proto:76:1
+/// Source: horus/pb/config/metadata.proto:88:1
 class AffineTransform3f final : public PbMessage {
  public:
 
@@ -1223,6 +1301,65 @@ class AffineTransform3f final : public PbMessage {
   /// The set of fields that have been given an explicit value.
   std::bitset<1> set_fields_;
 };
+
+}  // namespace pb
+}  // namespace sdk
+}  // namespace horus
+
+// MARK: Enum traits
+
+namespace horus {
+
+template <>
+class PbEnumTraits<horus::sdk::pb::RepeatedMessageStatus> final {
+ public:
+  /// The full name of the enum: `horus.sdk.pb.RepeatedMessageStatus`.
+  static constexpr StringView EnumName() noexcept { return "horus.sdk.pb.RepeatedMessageStatus"; }
+
+  /// Returns the name of the given enumerator, or an empty string.
+  static constexpr StringView NameOf(horus::sdk::pb::RepeatedMessageStatus value) noexcept {
+    return value == horus::sdk::pb::RepeatedMessageStatus::kStatusUnspecified ? "STATUS_UNSPECIFIED" : "";
+  }
+
+  /// Returns the value corresponding to the given name, or `default_value`.
+  static constexpr horus::sdk::pb::RepeatedMessageStatus ValueOf(PbEnum value, horus::sdk::pb::RepeatedMessageStatus default_value = horus::sdk::pb::RepeatedMessageStatus::kUnknownWireValue) noexcept {
+    return value == 0 ? horus::sdk::pb::RepeatedMessageStatus::kStatusUnspecified : default_value;
+  }
+
+  /// Returns the value corresponding to the given name, or `default_value`.
+  static constexpr horus::sdk::pb::RepeatedMessageStatus ValueOf(StringView name, horus::sdk::pb::RepeatedMessageStatus default_value = horus::sdk::pb::RepeatedMessageStatus::kUnknownWireValue) noexcept {
+    if (name == "STATUS_UNSPECIFIED") {
+      return horus::sdk::pb::RepeatedMessageStatus::kStatusUnspecified;
+    }
+    return default_value;
+  }
+};
+
+template <>
+class PbTraits<horus::sdk::pb::RepeatedMessageStatus> final {
+ public:
+  /// Serializes `value` into `writer`.
+  static void Serialize(PbWriter& writer, PbTag tag, horus::sdk::pb::RepeatedMessageStatus value) {
+    writer.Writer().add_enum(tag, static_cast<PbEnum>(value));
+  }
+
+  /// Deserializes `horus::sdk::pb::RepeatedMessageStatus` from `reader`.
+  static horus::sdk::pb::RepeatedMessageStatus Deserialize(PbReader& reader) {
+    return PbEnumTraits<horus::sdk::pb::RepeatedMessageStatus>::ValueOf(reader.Reader().get_enum());
+  }
+};
+
+}  // namespace horus
+
+namespace horus {
+namespace sdk {
+namespace pb {
+
+/// Appends `value` to `sink`.
+template <class Sink>
+void HorusStringify(Sink& sink, RepeatedMessageStatus value) noexcept(noexcept(sink.Append(StringView{}))) {
+  sink.Append(PbEnumTraits<RepeatedMessageStatus>::NameOf(value));
+}
 
 }  // namespace pb
 }  // namespace sdk

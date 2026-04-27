@@ -12,6 +12,7 @@ message ProfilingSet {
     SERVICE_UNSPECIFIED = 0;
     PREPROCESSING_SERVICE = 1;
     DETECTION_SERVICE = 2;
+    DETECTION_MERGER_SERVICE = 3;
   }
 
   message ProfiledDuration {
@@ -63,15 +64,9 @@ message ServiceProfiling {
   /// The intra idle time of the service (when the data is not being processed
   /// between two processing times).
   Duration intra_component_idle_time = 5;
-}
 
-message PreprocessingServicePointCloudProfiling {
-  /// The preprocessing service profiling for a given point cloud.
-  ServiceProfiling service_profiling = 1;
-
-  /// The latency to send the given point cloud from the preprocessing
-  /// service to the detection service.
-  Duration point_cloud_sending_latency = 2;
+  /// The node ID of the service that generated this profiling data.
+  string node_id = 6;
 }
 
 /// The frame profiling. It includes important profiling for a frame such as
@@ -110,9 +105,23 @@ message BundledFrameProfilingSet {
 
   reserved 6;
 
-  message PreprocessingServicePointCloudProfilingMapEntry { string key = 1; PreprocessingServicePointCloudProfiling value = 2; }
+  /// The removed preprocessing_service_point_cloud_profiling field (now sent
+  /// directly to the notification service as PreprocessingFrameProfiling).
+  reserved 7;
+}
 
-  repeated PreprocessingServicePointCloudProfilingMapEntry preprocessing_service_point_cloud_profiling = 7;
+/// The profiling of a single LiDAR frame produced by the preprocessing service.
+/// Sent directly from the preprocessing service to the notification service,
+/// once per LiDAR frame (approximately every 100ms).
+message PreprocessingFrameProfiling {
+  /// The frame timestamp (average point cloud arrival timestamp).
+  Timestamp frame_timestamp = 1;
+
+  /// The LiDAR ID this profiling data belongs to.
+  string lidar_id = 2;
+
+  /// The preprocessing service profiling for this frame.
+  ServiceProfiling service_profiling = 3;
 }
 
 /// A profiling info sent to the notification service and forward to its
@@ -122,7 +131,9 @@ message ProfilingInfo {
     /// General profiling set of a service.
     ProfilingSet general_profiling_set = 1;
     /// Bundled frame profiling set (pipeline profiling sets of the detection
-    /// and preprocessing services).
+    /// service).
     BundledFrameProfilingSet bundled_frame_profiling_set = 2;
+    /// Per-LiDAR frame profiling produced by the preprocessing service.
+    PreprocessingFrameProfiling preprocessing_frame_profiling = 3;
   }
 }

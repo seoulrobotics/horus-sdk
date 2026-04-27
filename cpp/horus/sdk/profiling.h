@@ -85,32 +85,6 @@ class ServiceProfiling final {
   std::chrono::nanoseconds intra_component_idle_time_;
 };
 
-/// A wrapper around a `pb::PreprocessingServicePointCloudProfiling` with native C++ types.
-class PreprocessingServicePointCloudProfiling final {
- public:
-  /// Constructs a `PreprocessingServicePointCloudProfiling` which refers to a
-  /// `preprocessing_service_point_cloud_profiling_pb`.
-  explicit PreprocessingServicePointCloudProfiling(
-      const pb::PreprocessingServicePointCloudProfiling&
-          preprocessing_service_point_cloud_profiling) noexcept;
-
-  /// The preprocessing service profiling.
-  constexpr const ServiceProfiling& PreprocessingServiceProfiling() const noexcept
-      HORUS_LIFETIME_BOUND {
-    return service_profiling_;
-  }
-
-  /// The sending latency.
-  constexpr std::chrono::nanoseconds SendingLatency() const noexcept { return sending_latency_; }
-
- private:
-  /// The service point cloud profiling.
-  ServiceProfiling service_profiling_;
-
-  /// The sending latency.
-  std::chrono::nanoseconds sending_latency_;
-};
-
 /// A wrapper around a `pb::FrameProfiling` with native C++ types.
 class FrameProfiling final {
  public:
@@ -152,19 +126,9 @@ class BundledFrameProfilingSet final {
     return frame_timestamp_;
   }
 
-  /// Returns the profiling set for the point cloud preprocessing.
-  const std::unordered_map<std::string, sdk::PreprocessingServicePointCloudProfiling>&
-  PreprocessingServicePointCloudProfiling() const noexcept HORUS_LIFETIME_BOUND {
-    return preprocessing_service_point_cloud_profiling_;
-  }
-
  private:
   /// The detection profiling set.
   ServiceProfiling detection_service_profiling_;
-
-  /// Mappings of lidar ID to its profiling set.
-  std::unordered_map<std::string, sdk::PreprocessingServicePointCloudProfiling>
-      preprocessing_service_point_cloud_profiling_;
 
   /// The timestamp of the bundled frame.
   std::chrono::system_clock::time_point frame_timestamp_;

@@ -160,6 +160,7 @@ ServiceProfiling::ServiceProfiling(const ServiceProfiling& other) noexcept(false
     , total_service_latency_{other.total_service_latency_}
     , idle_time_before_processing_{other.idle_time_before_processing_}
     , intra_component_idle_time_{other.intra_component_idle_time_}
+    , node_id_{other.node_id_}
     , set_fields_{other.set_fields_} {}
 
 void ServiceProfiling::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -174,6 +175,9 @@ void ServiceProfiling::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[3]) {
     SerializeField<Duration>(writer, /*tag=*/ 5, intra_component_idle_time_);
+  }
+  if (set_fields_[4]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 6, node_id_);
   }
 }
 
@@ -200,39 +204,9 @@ void ServiceProfiling::DeserializeFrom(PbReader& reader) noexcept(false) {
         set_fields_[3] = true;
         break;
       }
-      default: {
-        reader.Reader().skip();
-        break;
-      }
-    }
-  }
-}
-
-PreprocessingServicePointCloudProfiling::PreprocessingServicePointCloudProfiling(const PreprocessingServicePointCloudProfiling& other) noexcept(false)
-    : service_profiling_{other.service_profiling_}
-    , point_cloud_sending_latency_{other.point_cloud_sending_latency_}
-    , set_fields_{other.set_fields_} {}
-
-void PreprocessingServicePointCloudProfiling::SerializeTo(PbWriter& writer) const noexcept(false) {
-  if (set_fields_[0]) {
-    SerializeField<ServiceProfiling>(writer, /*tag=*/ 1, service_profiling_);
-  }
-  if (set_fields_[1]) {
-    SerializeField<Duration>(writer, /*tag=*/ 2, point_cloud_sending_latency_);
-  }
-}
-
-void PreprocessingServicePointCloudProfiling::DeserializeFrom(PbReader& reader) noexcept(false) {
-  while (reader.Reader().next()) {
-    switch (reader.Reader().tag()) {
-      case 1: {
-        DeserializeField<ServiceProfiling>(reader, service_profiling_);
-        set_fields_[0] = true;
-        break;
-      }
-      case 2: {
-        DeserializeField<Duration>(reader, point_cloud_sending_latency_);
-        set_fields_[1] = true;
+      case 6: {
+        DeserializeField<CowBytes>(reader, node_id_);
+        set_fields_[4] = true;
         break;
       }
       default: {
@@ -287,46 +261,10 @@ void FrameProfiling::DeserializeFrom(PbReader& reader) noexcept(false) {
   }
 }
 
-BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry::BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry(const BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry& other) noexcept(false)
-    : key_{other.key_}
-    , value_{other.value_}
-    , set_fields_{other.set_fields_} {}
-
-void BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry::SerializeTo(PbWriter& writer) const noexcept(false) {
-  if (set_fields_[0]) {
-    SerializeField<CowBytes>(writer, /*tag=*/ 1, key_);
-  }
-  if (set_fields_[1]) {
-    SerializeField<PreprocessingServicePointCloudProfiling>(writer, /*tag=*/ 2, value_);
-  }
-}
-
-void BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry::DeserializeFrom(PbReader& reader) noexcept(false) {
-  while (reader.Reader().next()) {
-    switch (reader.Reader().tag()) {
-      case 1: {
-        DeserializeField<CowBytes>(reader, key_);
-        set_fields_[0] = true;
-        break;
-      }
-      case 2: {
-        DeserializeField<PreprocessingServicePointCloudProfiling>(reader, value_);
-        set_fields_[1] = true;
-        break;
-      }
-      default: {
-        reader.Reader().skip();
-        break;
-      }
-    }
-  }
-}
-
 BundledFrameProfilingSet::BundledFrameProfilingSet(const BundledFrameProfilingSet& other) noexcept(false)
     : frame_timestamp_{other.frame_timestamp_}
     , frame_profiling_{other.frame_profiling_}
     , detection_service_profiling_{other.detection_service_profiling_}
-    , preprocessing_service_point_cloud_profiling_{other.preprocessing_service_point_cloud_profiling_}
     , set_fields_{other.set_fields_} {}
 
 void BundledFrameProfilingSet::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -338,9 +276,6 @@ void BundledFrameProfilingSet::SerializeTo(PbWriter& writer) const noexcept(fals
   }
   if (set_fields_[2]) {
     SerializeField<ServiceProfiling>(writer, /*tag=*/ 5, detection_service_profiling_);
-  }
-  if (set_fields_[3]) {
-    SerializeField<CowRepeated<BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry>>(writer, /*tag=*/ 7, preprocessing_service_point_cloud_profiling_);
   }
 }
 
@@ -362,9 +297,48 @@ void BundledFrameProfilingSet::DeserializeFrom(PbReader& reader) noexcept(false)
         set_fields_[2] = true;
         break;
       }
-      case 7: {
-        DeserializeField<CowRepeated<BundledFrameProfilingSet_PreprocessingServicePointCloudProfilingMapEntry>>(reader, preprocessing_service_point_cloud_profiling_);
-        set_fields_[3] = true;
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+PreprocessingFrameProfiling::PreprocessingFrameProfiling(const PreprocessingFrameProfiling& other) noexcept(false)
+    : frame_timestamp_{other.frame_timestamp_}
+    , lidar_id_{other.lidar_id_}
+    , service_profiling_{other.service_profiling_}
+    , set_fields_{other.set_fields_} {}
+
+void PreprocessingFrameProfiling::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<Timestamp>(writer, /*tag=*/ 1, frame_timestamp_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, lidar_id_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<ServiceProfiling>(writer, /*tag=*/ 3, service_profiling_);
+  }
+}
+
+void PreprocessingFrameProfiling::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<Timestamp>(reader, frame_timestamp_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<ServiceProfiling>(reader, service_profiling_);
+        set_fields_[2] = true;
         break;
       }
       default: {
@@ -378,6 +352,7 @@ void BundledFrameProfilingSet::DeserializeFrom(PbReader& reader) noexcept(false)
 ProfilingInfo::ProfilingInfo(const ProfilingInfo& other) noexcept(false)
     : general_profiling_set_{other.general_profiling_set_}
     , bundled_frame_profiling_set_{other.bundled_frame_profiling_set_}
+    , preprocessing_frame_profiling_{other.preprocessing_frame_profiling_}
     , profiling_set_{other.profiling_set_}
     , set_fields_{other.set_fields_} {}
 
@@ -387,6 +362,9 @@ void ProfilingInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[1]) {
     SerializeField<BundledFrameProfilingSet>(writer, /*tag=*/ 2, bundled_frame_profiling_set_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<PreprocessingFrameProfiling>(writer, /*tag=*/ 3, preprocessing_frame_profiling_);
   }
 }
 
@@ -405,6 +383,13 @@ void ProfilingInfo::DeserializeFrom(PbReader& reader) noexcept(false) {
         profiling_set_ = ProfilingSetOneof::kBundledFrameProfilingSet;
         DeserializeField<BundledFrameProfilingSet>(reader, bundled_frame_profiling_set_);
         set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        clear_profiling_set();
+        profiling_set_ = ProfilingSetOneof::kPreprocessingFrameProfiling;
+        DeserializeField<PreprocessingFrameProfiling>(reader, preprocessing_frame_profiling_);
+        set_fields_[2] = true;
         break;
       }
       default: {
