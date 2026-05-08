@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+import "horus/pb/config/metadata.proto";
+
+package horus.pb;
+
+enum ZoneType {
+  ZONE_TYPE_UNSPECIFIED = 0;
+  EXCLUSION = 1;
+  STATIC_DETECTION = 2;
+  REFLECTION = 3;
+  STATIC_EXCLUSION = 4;
+}
+
+message Zone {
+
+  string zone_id = 1;
+  RepeatedMessageStatus status = 2;
+
+  optional ZoneType type = 3;
+
+  optional string name = 4;
+
+  optional Range z_range = 5;
+
+  optional Vector2dList vertices = 6;
+}

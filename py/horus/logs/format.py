@@ -108,7 +108,7 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.RPC_UNSUPPORTED_SERVICE_WARNING_FIELD_NUMBER: lambda m: format_rpc_unsupported_service_warning(m.rpc_unsupported_service_warning),
     LogData.WEBSOCKET_HANDLER_PROBLEM_FIELD_NUMBER: lambda m: format_websocket_handler_problem(m.websocket_handler_problem),
     LogData.WEBSOCKET_DESERIALIZE_ERROR_FIELD_NUMBER: lambda m: format_websocket_deserialize_error(m.websocket_deserialize_error),
-    LogData.WEBSOCKET_EXPIRED_RPC_ENDPOINT_ERROR_FIELD_NUMBER: lambda m: format_websocket_expired_rpc_endpoint_error(m.websocket_expired_rpc_endpoint_error),
+    LogData.WEBSOCKET_EXPIRED_RPC_ENDPOINT_WARNING_FIELD_NUMBER: lambda m: format_websocket_expired_rpc_endpoint_warning(m.websocket_expired_rpc_endpoint_warning),
     LogData.WEBSOCKET_QUEUE_OVERLOADED_WARNING_FIELD_NUMBER: lambda m: format_websocket_queue_overloaded_warning(m.websocket_queue_overloaded_warning),
     LogData.RPC_FAILED_TO_NOTIFY_WARNING_FIELD_NUMBER: lambda m: format_rpc_failed_to_notify_warning(m.rpc_failed_to_notify_warning),
     LogData.CONFIG_SUBSCRIPTION_FAILED_WARNING_FIELD_NUMBER: lambda m: format_config_subscription_failed_warning(m.config_subscription_failed_warning),
@@ -666,9 +666,9 @@ def format_websocket_deserialize_error(log: _logs_pb.WebsocketDeserializeError) 
     """Formats log `WebsocketDeserializeError` to a string."""
     return f"WebSocket RPC received message cannot be deserialized: {log.what}"
 
-def format_websocket_expired_rpc_endpoint_error(log: _logs_pb.WebsocketExpiredRpcEndpointError) -> str:
-    """Formats log `WebsocketExpiredRpcEndpointError` to a string."""
-    return f"Attempting to access expired WebSocket RPC endpoint {log.uri}"
+def format_websocket_expired_rpc_endpoint_warning(log: _logs_pb.WebsocketExpiredRpcEndpointWarning) -> str:
+    """Formats log `WebsocketExpiredRpcEndpointWarning` to a string."""
+    return f"Received message for expired WebSocket RPC endpoint {log.uri}"
 
 def format_websocket_queue_overloaded_warning(log: _logs_pb.WebsocketQueueOverloadedWarning) -> str:
     """Formats log `WebsocketQueueOverloadedWarning` to a string."""

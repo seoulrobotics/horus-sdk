@@ -451,8 +451,8 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     logs::HorusStringify(sink, log_data.websocket_deserialize_error());
     break;
   }
-  case LogData::DataOneof::kWebsocketExpiredRpcEndpointError: {
-    logs::HorusStringify(sink, log_data.websocket_expired_rpc_endpoint_error());
+  case LogData::DataOneof::kWebsocketExpiredRpcEndpointWarning: {
+    logs::HorusStringify(sink, log_data.websocket_expired_rpc_endpoint_warning());
     break;
   }
   case LogData::DataOneof::kWebsocketQueueOverloadedWarning: {
@@ -1365,8 +1365,8 @@ void HorusStringify(const ErasedSink& sink, const WebsocketDeserializeError& dat
   StringifyTo(sink, "WebSocket RPC received message cannot be deserialized: ", data.what());
 }
 
-void HorusStringify(const ErasedSink& sink, const WebsocketExpiredRpcEndpointError& data) {
-  StringifyTo(sink, "Attempting to access expired WebSocket RPC endpoint ", data.uri());
+void HorusStringify(const ErasedSink& sink, const WebsocketExpiredRpcEndpointWarning& data) {
+  StringifyTo(sink, "Received message for expired WebSocket RPC endpoint ", data.uri());
 }
 
 void HorusStringify(const ErasedSink& sink, const WebsocketQueueOverloadedWarning& data) {

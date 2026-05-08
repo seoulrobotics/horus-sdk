@@ -139,7 +139,7 @@ class StaticThreadPoolSlowTaskWarning;
 class RpcUnsupportedServiceWarning;
 class WebsocketHandlerProblem;
 class WebsocketDeserializeError;
-class WebsocketExpiredRpcEndpointError;
+class WebsocketExpiredRpcEndpointWarning;
 class WebsocketQueueOverloadedWarning;
 class RpcFailedToNotifyWarning;
 class ConfigSubscriptionFailedWarning;
@@ -14341,36 +14341,36 @@ class WebsocketDeserializeError final : public PbMessage {
 
 /// Log #98.
 /// 
-///  > Attempting to access expired WebSocket RPC endpoint $uri
+///  > Received message for expired WebSocket RPC endpoint $uri
 ///
 /// Source: horus/pb/logs/logs.proto:793:1
-class WebsocketExpiredRpcEndpointError final : public PbMessage {
+class WebsocketExpiredRpcEndpointWarning final : public PbMessage {
  public:
 
-  /// Constructs a default-initialized `WebsocketExpiredRpcEndpointError`.
-  WebsocketExpiredRpcEndpointError() noexcept = default;
+  /// Constructs a default-initialized `WebsocketExpiredRpcEndpointWarning`.
+  WebsocketExpiredRpcEndpointWarning() noexcept = default;
 
   /// Move constructor.
-  WebsocketExpiredRpcEndpointError(WebsocketExpiredRpcEndpointError&&) noexcept = default;
+  WebsocketExpiredRpcEndpointWarning(WebsocketExpiredRpcEndpointWarning&&) noexcept = default;
   /// Move assignment operator.
-  WebsocketExpiredRpcEndpointError& operator=(WebsocketExpiredRpcEndpointError&&) noexcept = default;
+  WebsocketExpiredRpcEndpointWarning& operator=(WebsocketExpiredRpcEndpointWarning&&) noexcept = default;
 
   /// Constructs a clone of `other`.
   ///
   /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
   /// lack of available memory.
-  explicit WebsocketExpiredRpcEndpointError(const WebsocketExpiredRpcEndpointError& other) noexcept(false);  // NOLINT(*-explicit-*)
+  explicit WebsocketExpiredRpcEndpointWarning(const WebsocketExpiredRpcEndpointWarning& other) noexcept(false);  // NOLINT(*-explicit-*)
 
   /// Cannot copy-assign to avoid implicit allocations.
-  WebsocketExpiredRpcEndpointError& operator=(const WebsocketExpiredRpcEndpointError&) = delete;
+  WebsocketExpiredRpcEndpointWarning& operator=(const WebsocketExpiredRpcEndpointWarning&) = delete;
 
   /// Default destructor.
-  ~WebsocketExpiredRpcEndpointError() noexcept final = default;
+  ~WebsocketExpiredRpcEndpointWarning() noexcept final = default;
 
-  /// Creates a `WebsocketExpiredRpcEndpointError` whose contents are read from `reader`.
+  /// Creates a `WebsocketExpiredRpcEndpointWarning` whose contents are read from `reader`.
   ///
   /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
-  explicit WebsocketExpiredRpcEndpointError(PbReader& reader) noexcept(false) : PbMessage{} {
+  explicit WebsocketExpiredRpcEndpointWarning(PbReader& reader) noexcept(false) : PbMessage{} {
     DeserializeFrom(reader);
   }
 
@@ -14387,10 +14387,10 @@ class WebsocketExpiredRpcEndpointError final : public PbMessage {
   /// Returns whether the message is empty.
   bool IsEmpty() const noexcept final { return set_fields_.none(); }
 
-  /// The full name of the message: `horus.pb.logs.WebsocketExpiredRpcEndpointError`.
-  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.WebsocketExpiredRpcEndpointError"; }
+  /// The full name of the message: `horus.pb.logs.WebsocketExpiredRpcEndpointWarning`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.WebsocketExpiredRpcEndpointWarning"; }
 
-  /// The full name of the message: `horus.pb.logs.WebsocketExpiredRpcEndpointError`.
+  /// The full name of the message: `horus.pb.logs.WebsocketExpiredRpcEndpointWarning`.
   StringView MessageTypeName() const noexcept final { return TypeName(); }
 
   // Field `uri` (no 1).
@@ -14433,13 +14433,13 @@ class WebsocketExpiredRpcEndpointError final : public PbMessage {
   }
 
   /// Sets `uri` (no 1) and returns `*this`.
-  WebsocketExpiredRpcEndpointError& set_uri(CowBytes&& uri) & noexcept {
+  WebsocketExpiredRpcEndpointWarning& set_uri(CowBytes&& uri) & noexcept {
     set_fields_[0] = true;
     uri_ = std::move(uri);
     return *this;
   }
   /// Sets `uri` (no 1) and returns `*this`.
-  WebsocketExpiredRpcEndpointError&& set_uri(CowBytes&& uri) && noexcept {
+  WebsocketExpiredRpcEndpointWarning&& set_uri(CowBytes&& uri) && noexcept {
     return std::move(set_uri(std::move(uri)));
   }
 

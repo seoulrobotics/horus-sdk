@@ -121,7 +121,7 @@ message LogData {
     logs.RpcUnsupportedServiceWarning rpc_unsupported_service_warning = 95;
     logs.WebsocketHandlerProblem websocket_handler_problem = 96;
     logs.WebsocketDeserializeError websocket_deserialize_error = 97;
-    logs.WebsocketExpiredRpcEndpointError websocket_expired_rpc_endpoint_error = 98;
+    logs.WebsocketExpiredRpcEndpointWarning websocket_expired_rpc_endpoint_warning = 98;
     logs.WebsocketQueueOverloadedWarning websocket_queue_overloaded_warning = 99;
     logs.RpcFailedToNotifyWarning rpc_failed_to_notify_warning = 100;
     logs.ConfigSubscriptionFailedWarning config_subscription_failed_warning = 101;

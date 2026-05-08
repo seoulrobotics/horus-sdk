@@ -1,9 +1,15 @@
 from google.protobuf.internal import containers as _containers
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from typing import ClassVar as _ClassVar, Iterable as _Iterable, Optional as _Optional
 
 DESCRIPTOR: _descriptor.FileDescriptor
+
+class RepeatedMessageStatus(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    STATUS_UNSPECIFIED: _ClassVar[RepeatedMessageStatus]
+STATUS_UNSPECIFIED: RepeatedMessageStatus
 
 class Vector2f(_message.Message):
     __slots__ = ("x", "y")
@@ -48,6 +54,10 @@ class UInt32List(_message.Message):
     VALUES_FIELD_NUMBER: _ClassVar[int]
     values: _containers.RepeatedScalarFieldContainer[int]
     def __init__(self, values: _Optional[_Iterable[int]] = ...) -> None: ...
+
+class Vector2dList(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
 
 class Timestamp(_message.Message):
     __slots__ = ("seconds", "nanos")
