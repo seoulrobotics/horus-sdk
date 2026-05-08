@@ -24,13 +24,15 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1ehorus/pb/config/metadata.proto\x12\x08horus.pb\" \n\x08Vector2f\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\"+\n\x08Vector3f\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"=\n\x0bQuaterniond\x12\n\n\x02qw\x18\x01 \x01(\x01\x12\n\n\x02qx\x18\x02 \x01(\x01\x12\n\n\x02qy\x18\x03 \x01(\x01\x12\n\n\x02qz\x18\x04 \x01(\x01\"#\n\x05Range\x12\r\n\x05start\x18\x01 \x01(\x01\x12\x0b\n\x03\x65nd\x18\x02 \x01(\x01\"\x1c\n\nUInt32List\x12\x0e\n\x06values\x18\x01 \x03(\r\"+\n\tTimestamp\x12\x0f\n\x07seconds\x18\x01 \x01(\x03\x12\r\n\x05nanos\x18\x02 \x01(\x05\"*\n\x08\x44uration\x12\x0f\n\x07seconds\x18\x01 \x01(\x03\x12\r\n\x05nanos\x18\x02 \x01(\x05\"!\n\x11\x41\x66\x66ineTransform3f\x12\x0c\n\x04\x64\x61ta\x18\x01 \x03(\x02\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1ehorus/pb/config/metadata.proto\x12\x08horus.pb\" \n\x08Vector2f\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\"+\n\x08Vector3f\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"=\n\x0bQuaterniond\x12\n\n\x02qw\x18\x01 \x01(\x01\x12\n\n\x02qx\x18\x02 \x01(\x01\x12\n\n\x02qy\x18\x03 \x01(\x01\x12\n\n\x02qz\x18\x04 \x01(\x01\"#\n\x05Range\x12\r\n\x05start\x18\x01 \x01(\x01\x12\x0b\n\x03\x65nd\x18\x02 \x01(\x01\"\x1c\n\nUInt32List\x12\x0e\n\x06values\x18\x01 \x03(\r\"\x0e\n\x0cVector2dList\"+\n\tTimestamp\x12\x0f\n\x07seconds\x18\x01 \x01(\x03\x12\r\n\x05nanos\x18\x02 \x01(\x05\"*\n\x08\x44uration\x12\x0f\n\x07seconds\x18\x01 \x01(\x03\x12\r\n\x05nanos\x18\x02 \x01(\x05\"!\n\x11\x41\x66\x66ineTransform3f\x12\x0c\n\x04\x64\x61ta\x18\x01 \x03(\x02*/\n\x15RepeatedMessageStatus\x12\x16\n\x12STATUS_UNSPECIFIED\x10\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'horus.pb.config.metadata_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
+  _globals['_REPEATEDMESSAGESTATUS']._serialized_start=393
+  _globals['_REPEATEDMESSAGESTATUS']._serialized_end=440
   _globals['_VECTOR2F']._serialized_start=44
   _globals['_VECTOR2F']._serialized_end=76
   _globals['_VECTOR3F']._serialized_start=78
@@ -41,10 +43,12 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_RANGE']._serialized_end=221
   _globals['_UINT32LIST']._serialized_start=223
   _globals['_UINT32LIST']._serialized_end=251
-  _globals['_TIMESTAMP']._serialized_start=253
-  _globals['_TIMESTAMP']._serialized_end=296
-  _globals['_DURATION']._serialized_start=298
-  _globals['_DURATION']._serialized_end=340
-  _globals['_AFFINETRANSFORM3F']._serialized_start=342
-  _globals['_AFFINETRANSFORM3F']._serialized_end=375
+  _globals['_VECTOR2DLIST']._serialized_start=253
+  _globals['_VECTOR2DLIST']._serialized_end=267
+  _globals['_TIMESTAMP']._serialized_start=269
+  _globals['_TIMESTAMP']._serialized_end=312
+  _globals['_DURATION']._serialized_start=314
+  _globals['_DURATION']._serialized_end=356
+  _globals['_AFFINETRANSFORM3F']._serialized_start=358
+  _globals['_AFFINETRANSFORM3F']._serialized_end=391
 # @@protoc_insertion_point(module_scope)

@@ -112,7 +112,7 @@ LogData::LogData(const LogData& other) noexcept(false)
     , rpc_unsupported_service_warning_{other.rpc_unsupported_service_warning_}
     , websocket_handler_problem_{other.websocket_handler_problem_}
     , websocket_deserialize_error_{other.websocket_deserialize_error_}
-    , websocket_expired_rpc_endpoint_error_{other.websocket_expired_rpc_endpoint_error_}
+    , websocket_expired_rpc_endpoint_warning_{other.websocket_expired_rpc_endpoint_warning_}
     , websocket_queue_overloaded_warning_{other.websocket_queue_overloaded_warning_}
     , rpc_failed_to_notify_warning_{other.rpc_failed_to_notify_warning_}
     , config_subscription_failed_warning_{other.config_subscription_failed_warning_}
@@ -553,7 +553,7 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
     SerializeField<logs::WebsocketDeserializeError>(writer, /*tag=*/ 97, websocket_deserialize_error_);
   }
   if (set_fields_[105]) {
-    SerializeField<logs::WebsocketExpiredRpcEndpointError>(writer, /*tag=*/ 98, websocket_expired_rpc_endpoint_error_);
+    SerializeField<logs::WebsocketExpiredRpcEndpointWarning>(writer, /*tag=*/ 98, websocket_expired_rpc_endpoint_warning_);
   }
   if (set_fields_[106]) {
     SerializeField<logs::WebsocketQueueOverloadedWarning>(writer, /*tag=*/ 99, websocket_queue_overloaded_warning_);
@@ -1657,8 +1657,8 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
       }
       case 98: {
         clear_data();
-        data_ = DataOneof::kWebsocketExpiredRpcEndpointError;
-        DeserializeField<logs::WebsocketExpiredRpcEndpointError>(reader, websocket_expired_rpc_endpoint_error_);
+        data_ = DataOneof::kWebsocketExpiredRpcEndpointWarning;
+        DeserializeField<logs::WebsocketExpiredRpcEndpointWarning>(reader, websocket_expired_rpc_endpoint_warning_);
         set_fields_[105] = true;
         break;
       }

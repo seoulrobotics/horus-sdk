@@ -220,8 +220,8 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return fmt.Sprintf("WebSocket RPC handler encountered an error: %v", data.GetWhat())
 	case *logs_pb.WebsocketDeserializeError:
 		return fmt.Sprintf("WebSocket RPC received message cannot be deserialized: %v", data.GetWhat())
-	case *logs_pb.WebsocketExpiredRpcEndpointError:
-		return fmt.Sprintf("Attempting to access expired WebSocket RPC endpoint %v", data.GetUri())
+	case *logs_pb.WebsocketExpiredRpcEndpointWarning:
+		return fmt.Sprintf("Received message for expired WebSocket RPC endpoint %v", data.GetUri())
 	case *logs_pb.WebsocketQueueOverloadedWarning:
 		return fmt.Sprintf("Websocket message queue overloaded: %v / %v", data.GetCurrent(), data.GetMax())
 	case *logs_pb.RpcFailedToNotifyWarning:

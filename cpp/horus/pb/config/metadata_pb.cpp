@@ -199,6 +199,8 @@ void UInt32List::DeserializeFrom(PbReader& reader) noexcept(false) {
   }
 }
 
+
+
 Timestamp::Timestamp(const Timestamp& other) noexcept(false)
     : seconds_{other.seconds_}
     , nanos_{other.nanos_}

@@ -731,7 +731,7 @@ class WebsocketDeserializeError(_message.Message):
     what: str
     def __init__(self, what: _Optional[str] = ...) -> None: ...
 
-class WebsocketExpiredRpcEndpointError(_message.Message):
+class WebsocketExpiredRpcEndpointWarning(_message.Message):
     __slots__ = ("uri",)
     URI_FIELD_NUMBER: _ClassVar[int]
     uri: str

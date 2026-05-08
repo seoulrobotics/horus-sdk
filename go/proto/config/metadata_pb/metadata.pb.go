@@ -19,6 +19,46 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Status of a repeated message.
+type RepeatedMessageStatus int32
+
+const (
+	// Unspecified status; this is an invalid value.
+	RepeatedMessageStatus_STATUS_UNSPECIFIED RepeatedMessageStatus = 0
+)
+
+// Enum value maps for RepeatedMessageStatus.
+var (
+	RepeatedMessageStatus_name = map[int32]string{
+		0: "STATUS_UNSPECIFIED",
+	}
+	RepeatedMessageStatus_value = map[string]int32{
+		"STATUS_UNSPECIFIED": 0,
+	}
+)
+
+func (x RepeatedMessageStatus) Enum() *RepeatedMessageStatus {
+	p := new(RepeatedMessageStatus)
+	*p = x
+	return p
+}
+
+func (x RepeatedMessageStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (RepeatedMessageStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_horus_pb_config_metadata_proto_enumTypes[0].Descriptor()
+}
+
+func (RepeatedMessageStatus) Type() protoreflect.EnumType {
+	return &file_horus_pb_config_metadata_proto_enumTypes[0]
+}
+
+func (x RepeatedMessageStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
 // A vector with 2 `float` fields.
 type Vector2F struct {
 	state         protoimpl.MessageState `protogen:"opaque.v1"`
@@ -409,6 +449,51 @@ func (b0 UInt32List_builder) Build() *UInt32List {
 	return m0
 }
 
+// Contains a list of `Vector2d` values. Used when a list of repeated `Vector2d`
+// values should be `optional`.
+type Vector2DList struct {
+	state         protoimpl.MessageState `protogen:"opaque.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Vector2DList) Reset() {
+	*x = Vector2DList{}
+	mi := &file_horus_pb_config_metadata_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Vector2DList) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Vector2DList) ProtoMessage() {}
+
+func (x *Vector2DList) ProtoReflect() protoreflect.Message {
+	mi := &file_horus_pb_config_metadata_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+type Vector2DList_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+}
+
+func (b0 Vector2DList_builder) Build() *Vector2DList {
+	m0 := &Vector2DList{}
+	b, x := &b0, m0
+	_, _ = b, x
+	return m0
+}
+
 // A timestamp.
 //
 // We do not use google.protobuf.Timestamp as it is defined in libprotobuf, but
@@ -424,7 +509,7 @@ type Timestamp struct {
 
 func (x *Timestamp) Reset() {
 	*x = Timestamp{}
-	mi := &file_horus_pb_config_metadata_proto_msgTypes[5]
+	mi := &file_horus_pb_config_metadata_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -436,7 +521,7 @@ func (x *Timestamp) String() string {
 func (*Timestamp) ProtoMessage() {}
 
 func (x *Timestamp) ProtoReflect() protoreflect.Message {
-	mi := &file_horus_pb_config_metadata_proto_msgTypes[5]
+	mi := &file_horus_pb_config_metadata_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -503,7 +588,7 @@ type Duration struct {
 
 func (x *Duration) Reset() {
 	*x = Duration{}
-	mi := &file_horus_pb_config_metadata_proto_msgTypes[6]
+	mi := &file_horus_pb_config_metadata_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -515,7 +600,7 @@ func (x *Duration) String() string {
 func (*Duration) ProtoMessage() {}
 
 func (x *Duration) ProtoReflect() protoreflect.Message {
-	mi := &file_horus_pb_config_metadata_proto_msgTypes[6]
+	mi := &file_horus_pb_config_metadata_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -576,7 +661,7 @@ type AffineTransform3F struct {
 
 func (x *AffineTransform3F) Reset() {
 	*x = AffineTransform3F{}
-	mi := &file_horus_pb_config_metadata_proto_msgTypes[7]
+	mi := &file_horus_pb_config_metadata_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -588,7 +673,7 @@ func (x *AffineTransform3F) String() string {
 func (*AffineTransform3F) ProtoMessage() {}
 
 func (x *AffineTransform3F) ProtoReflect() protoreflect.Message {
-	mi := &file_horus_pb_config_metadata_proto_msgTypes[7]
+	mi := &file_horus_pb_config_metadata_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -645,7 +730,8 @@ var file_horus_pb_config_metadata_proto_rawDesc = []byte{
 	0x05, 0x73, 0x74, 0x61, 0x72, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x65, 0x6e, 0x64, 0x18, 0x02, 0x20,
 	0x01, 0x28, 0x01, 0x52, 0x03, 0x65, 0x6e, 0x64, 0x22, 0x24, 0x0a, 0x0a, 0x55, 0x49, 0x6e, 0x74,
 	0x33, 0x32, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x73,
-	0x18, 0x01, 0x20, 0x03, 0x28, 0x0d, 0x52, 0x06, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x22, 0x3b,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x0d, 0x52, 0x06, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x22, 0x0e,
+	0x0a, 0x0c, 0x56, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x32, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x22, 0x3b,
 	0x0a, 0x09, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x18, 0x0a, 0x07, 0x73,
 	0x65, 0x63, 0x6f, 0x6e, 0x64, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x73, 0x65,
 	0x63, 0x6f, 0x6e, 0x64, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x6e, 0x61, 0x6e, 0x6f, 0x73, 0x18, 0x02,
@@ -656,19 +742,25 @@ var file_horus_pb_config_metadata_proto_rawDesc = []byte{
 	0x52, 0x05, 0x6e, 0x61, 0x6e, 0x6f, 0x73, 0x22, 0x27, 0x0a, 0x11, 0x41, 0x66, 0x66, 0x69, 0x6e,
 	0x65, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x6f, 0x72, 0x6d, 0x33, 0x66, 0x12, 0x12, 0x0a, 0x04,
 	0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x02, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x2a, 0x2f, 0x0a, 0x15, 0x52, 0x65, 0x70, 0x65, 0x61, 0x74, 0x65, 0x64, 0x4d, 0x65, 0x73, 0x73,
+	0x61, 0x67, 0x65, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x16, 0x0a, 0x12, 0x53, 0x54, 0x41,
+	0x54, 0x55, 0x53, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10,
+	0x00, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
-var file_horus_pb_config_metadata_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_horus_pb_config_metadata_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_horus_pb_config_metadata_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_horus_pb_config_metadata_proto_goTypes = []any{
-	(*Vector2F)(nil),          // 0: horus.pb.Vector2f
-	(*Vector3F)(nil),          // 1: horus.pb.Vector3f
-	(*Quaterniond)(nil),       // 2: horus.pb.Quaterniond
-	(*Range)(nil),             // 3: horus.pb.Range
-	(*UInt32List)(nil),        // 4: horus.pb.UInt32List
-	(*Timestamp)(nil),         // 5: horus.pb.Timestamp
-	(*Duration)(nil),          // 6: horus.pb.Duration
-	(*AffineTransform3F)(nil), // 7: horus.pb.AffineTransform3f
+	(RepeatedMessageStatus)(0), // 0: horus.pb.RepeatedMessageStatus
+	(*Vector2F)(nil),           // 1: horus.pb.Vector2f
+	(*Vector3F)(nil),           // 2: horus.pb.Vector3f
+	(*Quaterniond)(nil),        // 3: horus.pb.Quaterniond
+	(*Range)(nil),              // 4: horus.pb.Range
+	(*UInt32List)(nil),         // 5: horus.pb.UInt32List
+	(*Vector2DList)(nil),       // 6: horus.pb.Vector2dList
+	(*Timestamp)(nil),          // 7: horus.pb.Timestamp
+	(*Duration)(nil),           // 8: horus.pb.Duration
+	(*AffineTransform3F)(nil),  // 9: horus.pb.AffineTransform3f
 }
 var file_horus_pb_config_metadata_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -688,13 +780,14 @@ func file_horus_pb_config_metadata_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_horus_pb_config_metadata_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   8,
+			NumEnums:      1,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_horus_pb_config_metadata_proto_goTypes,
 		DependencyIndexes: file_horus_pb_config_metadata_proto_depIdxs,
+		EnumInfos:         file_horus_pb_config_metadata_proto_enumTypes,
 		MessageInfos:      file_horus_pb_config_metadata_proto_msgTypes,
 	}.Build()
 	File_horus_pb_config_metadata_proto = out.File

@@ -55,6 +55,10 @@ message PointFrame {
 
   reserved 3 to 5;
 
+  /// The removed preprocessing service profiling field (preprocessing now sends
+  /// profiling directly to the notification service).
+  reserved 6;
+
   reserved 7;
 
   // TODO(HRS-1898): This is kept until the frontend handles

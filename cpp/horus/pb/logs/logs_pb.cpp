@@ -3010,17 +3010,17 @@ void WebsocketDeserializeError::DeserializeFrom(PbReader& reader) noexcept(false
   }
 }
 
-WebsocketExpiredRpcEndpointError::WebsocketExpiredRpcEndpointError(const WebsocketExpiredRpcEndpointError& other) noexcept(false)
+WebsocketExpiredRpcEndpointWarning::WebsocketExpiredRpcEndpointWarning(const WebsocketExpiredRpcEndpointWarning& other) noexcept(false)
     : uri_{other.uri_}
     , set_fields_{other.set_fields_} {}
 
-void WebsocketExpiredRpcEndpointError::SerializeTo(PbWriter& writer) const noexcept(false) {
+void WebsocketExpiredRpcEndpointWarning::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 1, uri_);
   }
 }
 
-void WebsocketExpiredRpcEndpointError::DeserializeFrom(PbReader& reader) noexcept(false) {
+void WebsocketExpiredRpcEndpointWarning::DeserializeFrom(PbReader& reader) noexcept(false) {
   while (reader.Reader().next()) {
     switch (reader.Reader().tag()) {
       case 1: {

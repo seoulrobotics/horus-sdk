@@ -5865,59 +5865,59 @@ class LogData final : public PbMessage {
     return std::move(set_websocket_deserialize_error(std::move(websocket_deserialize_error)));
   }
 
-  // Field `websocket_expired_rpc_endpoint_error` (no 98).
+  // Field `websocket_expired_rpc_endpoint_warning` (no 98).
   // -----
 
   /// No documentation.
   ///
   /// Field no: 98.
-  constexpr const logs::WebsocketExpiredRpcEndpointError& websocket_expired_rpc_endpoint_error() const& noexcept HORUS_LIFETIME_BOUND {
-    return websocket_expired_rpc_endpoint_error_;
+  constexpr const logs::WebsocketExpiredRpcEndpointWarning& websocket_expired_rpc_endpoint_warning() const& noexcept HORUS_LIFETIME_BOUND {
+    return websocket_expired_rpc_endpoint_warning_;
   }
 
-  /// If `websocket_expired_rpc_endpoint_error` is set, moves it out of the message (without marking it as unset).
+  /// If `websocket_expired_rpc_endpoint_warning` is set, moves it out of the message (without marking it as unset).
   ///
   /// Otherwise, returns a default-initialized value.
   ///
   /// Field no: 98.
-  logs::WebsocketExpiredRpcEndpointError websocket_expired_rpc_endpoint_error() && noexcept {
+  logs::WebsocketExpiredRpcEndpointWarning websocket_expired_rpc_endpoint_warning() && noexcept {
     if (!set_fields_[105]) {
       return {};
     }
-    return std::move(websocket_expired_rpc_endpoint_error_);
+    return std::move(websocket_expired_rpc_endpoint_warning_);
   }
 
   /// No documentation.
   ///
   /// Field no: 98.
-  logs::WebsocketExpiredRpcEndpointError& mutable_websocket_expired_rpc_endpoint_error() & noexcept HORUS_LIFETIME_BOUND {
+  logs::WebsocketExpiredRpcEndpointWarning& mutable_websocket_expired_rpc_endpoint_warning() & noexcept HORUS_LIFETIME_BOUND {
     clear_data();
-    data_ = DataOneof::kWebsocketExpiredRpcEndpointError;
+    data_ = DataOneof::kWebsocketExpiredRpcEndpointWarning;
     set_fields_[105] = true;
-    return websocket_expired_rpc_endpoint_error_;
+    return websocket_expired_rpc_endpoint_warning_;
   }
 
-  /// Returns whether `websocket_expired_rpc_endpoint_error` (no 98) is set.
-  constexpr bool has_websocket_expired_rpc_endpoint_error() const noexcept { return set_fields_[105]; }
+  /// Returns whether `websocket_expired_rpc_endpoint_warning` (no 98) is set.
+  constexpr bool has_websocket_expired_rpc_endpoint_warning() const noexcept { return set_fields_[105]; }
 
-  /// Clears `websocket_expired_rpc_endpoint_error` (no 98).
-  void clear_websocket_expired_rpc_endpoint_error() & noexcept {
+  /// Clears `websocket_expired_rpc_endpoint_warning` (no 98).
+  void clear_websocket_expired_rpc_endpoint_warning() & noexcept {
     data_ = {};
     set_fields_[105] = false;
-    websocket_expired_rpc_endpoint_error_ = {};
+    websocket_expired_rpc_endpoint_warning_ = {};
   }
 
-  /// Sets `websocket_expired_rpc_endpoint_error` (no 98) and returns `*this`.
-  LogData& set_websocket_expired_rpc_endpoint_error(logs::WebsocketExpiredRpcEndpointError&& websocket_expired_rpc_endpoint_error) & noexcept {
+  /// Sets `websocket_expired_rpc_endpoint_warning` (no 98) and returns `*this`.
+  LogData& set_websocket_expired_rpc_endpoint_warning(logs::WebsocketExpiredRpcEndpointWarning&& websocket_expired_rpc_endpoint_warning) & noexcept {
     clear_data();
-    data_ = DataOneof::kWebsocketExpiredRpcEndpointError;
+    data_ = DataOneof::kWebsocketExpiredRpcEndpointWarning;
     set_fields_[105] = true;
-    websocket_expired_rpc_endpoint_error_ = std::move(websocket_expired_rpc_endpoint_error);
+    websocket_expired_rpc_endpoint_warning_ = std::move(websocket_expired_rpc_endpoint_warning);
     return *this;
   }
-  /// Sets `websocket_expired_rpc_endpoint_error` (no 98) and returns `*this`.
-  LogData&& set_websocket_expired_rpc_endpoint_error(logs::WebsocketExpiredRpcEndpointError&& websocket_expired_rpc_endpoint_error) && noexcept {
-    return std::move(set_websocket_expired_rpc_endpoint_error(std::move(websocket_expired_rpc_endpoint_error)));
+  /// Sets `websocket_expired_rpc_endpoint_warning` (no 98) and returns `*this`.
+  LogData&& set_websocket_expired_rpc_endpoint_warning(logs::WebsocketExpiredRpcEndpointWarning&& websocket_expired_rpc_endpoint_warning) && noexcept {
+    return std::move(set_websocket_expired_rpc_endpoint_warning(std::move(websocket_expired_rpc_endpoint_warning)));
   }
 
   // Field `websocket_queue_overloaded_warning` (no 99).
@@ -12737,8 +12737,8 @@ class LogData final : public PbMessage {
     kWebsocketHandlerProblem = 96,
     /// @see websocket_deserialize_error()
     kWebsocketDeserializeError = 97,
-    /// @see websocket_expired_rpc_endpoint_error()
-    kWebsocketExpiredRpcEndpointError = 98,
+    /// @see websocket_expired_rpc_endpoint_warning()
+    kWebsocketExpiredRpcEndpointWarning = 98,
     /// @see websocket_queue_overloaded_warning()
     kWebsocketQueueOverloadedWarning = 99,
     /// @see rpc_failed_to_notify_warning()
@@ -13409,8 +13409,8 @@ class LogData final : public PbMessage {
         clear_websocket_deserialize_error();
         break;
       }
-      case DataOneof::kWebsocketExpiredRpcEndpointError: {
-        clear_websocket_expired_rpc_endpoint_error();
+      case DataOneof::kWebsocketExpiredRpcEndpointWarning: {
+        clear_websocket_expired_rpc_endpoint_warning();
         break;
       }
       case DataOneof::kWebsocketQueueOverloadedWarning: {
@@ -14110,8 +14110,8 @@ class LogData final : public PbMessage {
   logs::WebsocketHandlerProblem websocket_handler_problem_{};
   /// @see websocket_deserialize_error()
   logs::WebsocketDeserializeError websocket_deserialize_error_{};
-  /// @see websocket_expired_rpc_endpoint_error()
-  logs::WebsocketExpiredRpcEndpointError websocket_expired_rpc_endpoint_error_{};
+  /// @see websocket_expired_rpc_endpoint_warning()
+  logs::WebsocketExpiredRpcEndpointWarning websocket_expired_rpc_endpoint_warning_{};
   /// @see websocket_queue_overloaded_warning()
   logs::WebsocketQueueOverloadedWarning websocket_queue_overloaded_warning_{};
   /// @see rpc_failed_to_notify_warning()

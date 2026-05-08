@@ -15,9 +15,11 @@ class ProfilingSet(_message.Message):
         SERVICE_UNSPECIFIED: _ClassVar[ProfilingSet.ProfiledService]
         PREPROCESSING_SERVICE: _ClassVar[ProfilingSet.ProfiledService]
         DETECTION_SERVICE: _ClassVar[ProfilingSet.ProfiledService]
+        DETECTION_MERGER_SERVICE: _ClassVar[ProfilingSet.ProfiledService]
     SERVICE_UNSPECIFIED: ProfilingSet.ProfiledService
     PREPROCESSING_SERVICE: ProfilingSet.ProfiledService
     DETECTION_SERVICE: ProfilingSet.ProfiledService
+    DETECTION_MERGER_SERVICE: ProfilingSet.ProfiledService
     class ProfiledDuration(_message.Message):
         __slots__ = ("duration", "performance_hints")
         class PerformanceHint(_message.Message):
@@ -56,24 +58,18 @@ class ProfilingSet(_message.Message):
     def __init__(self, profiled_service: _Optional[_Union[ProfilingSet.ProfiledService, str]] = ..., processing_times: _Optional[_Iterable[_Union[ProfilingSet.ProfiledDurationMapEntry, _Mapping]]] = ..., resource_usage: _Optional[_Union[_resources_pb2.ResourceUsage, _Mapping]] = ...) -> None: ...
 
 class ServiceProfiling(_message.Message):
-    __slots__ = ("details_profiling_set", "total_service_latency", "idle_time_before_processing", "intra_component_idle_time")
+    __slots__ = ("details_profiling_set", "total_service_latency", "idle_time_before_processing", "intra_component_idle_time", "node_id")
     DETAILS_PROFILING_SET_FIELD_NUMBER: _ClassVar[int]
     TOTAL_SERVICE_LATENCY_FIELD_NUMBER: _ClassVar[int]
     IDLE_TIME_BEFORE_PROCESSING_FIELD_NUMBER: _ClassVar[int]
     INTRA_COMPONENT_IDLE_TIME_FIELD_NUMBER: _ClassVar[int]
+    NODE_ID_FIELD_NUMBER: _ClassVar[int]
     details_profiling_set: ProfilingSet
     total_service_latency: _metadata_pb2.Duration
     idle_time_before_processing: _metadata_pb2.Duration
     intra_component_idle_time: _metadata_pb2.Duration
-    def __init__(self, details_profiling_set: _Optional[_Union[ProfilingSet, _Mapping]] = ..., total_service_latency: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ..., idle_time_before_processing: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ..., intra_component_idle_time: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ...) -> None: ...
-
-class PreprocessingServicePointCloudProfiling(_message.Message):
-    __slots__ = ("service_profiling", "point_cloud_sending_latency")
-    SERVICE_PROFILING_FIELD_NUMBER: _ClassVar[int]
-    POINT_CLOUD_SENDING_LATENCY_FIELD_NUMBER: _ClassVar[int]
-    service_profiling: ServiceProfiling
-    point_cloud_sending_latency: _metadata_pb2.Duration
-    def __init__(self, service_profiling: _Optional[_Union[ServiceProfiling, _Mapping]] = ..., point_cloud_sending_latency: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ...) -> None: ...
+    node_id: str
+    def __init__(self, details_profiling_set: _Optional[_Union[ProfilingSet, _Mapping]] = ..., total_service_latency: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ..., idle_time_before_processing: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ..., intra_component_idle_time: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ..., node_id: _Optional[str] = ...) -> None: ...
 
 class FrameProfiling(_message.Message):
     __slots__ = ("overall_frame_latency", "frame_bundling_latency", "preprocessing_overhead")
@@ -86,28 +82,31 @@ class FrameProfiling(_message.Message):
     def __init__(self, overall_frame_latency: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ..., frame_bundling_latency: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ..., preprocessing_overhead: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ...) -> None: ...
 
 class BundledFrameProfilingSet(_message.Message):
-    __slots__ = ("frame_timestamp", "frame_profiling", "detection_service_profiling", "preprocessing_service_point_cloud_profiling")
-    class PreprocessingServicePointCloudProfilingMapEntry(_message.Message):
-        __slots__ = ("key", "value")
-        KEY_FIELD_NUMBER: _ClassVar[int]
-        VALUE_FIELD_NUMBER: _ClassVar[int]
-        key: str
-        value: PreprocessingServicePointCloudProfiling
-        def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[PreprocessingServicePointCloudProfiling, _Mapping]] = ...) -> None: ...
+    __slots__ = ("frame_timestamp", "frame_profiling", "detection_service_profiling")
     FRAME_TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
     FRAME_PROFILING_FIELD_NUMBER: _ClassVar[int]
     DETECTION_SERVICE_PROFILING_FIELD_NUMBER: _ClassVar[int]
-    PREPROCESSING_SERVICE_POINT_CLOUD_PROFILING_FIELD_NUMBER: _ClassVar[int]
     frame_timestamp: _metadata_pb2.Timestamp
     frame_profiling: FrameProfiling
     detection_service_profiling: ServiceProfiling
-    preprocessing_service_point_cloud_profiling: _containers.RepeatedCompositeFieldContainer[BundledFrameProfilingSet.PreprocessingServicePointCloudProfilingMapEntry]
-    def __init__(self, frame_timestamp: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ..., frame_profiling: _Optional[_Union[FrameProfiling, _Mapping]] = ..., detection_service_profiling: _Optional[_Union[ServiceProfiling, _Mapping]] = ..., preprocessing_service_point_cloud_profiling: _Optional[_Iterable[_Union[BundledFrameProfilingSet.PreprocessingServicePointCloudProfilingMapEntry, _Mapping]]] = ...) -> None: ...
+    def __init__(self, frame_timestamp: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ..., frame_profiling: _Optional[_Union[FrameProfiling, _Mapping]] = ..., detection_service_profiling: _Optional[_Union[ServiceProfiling, _Mapping]] = ...) -> None: ...
+
+class PreprocessingFrameProfiling(_message.Message):
+    __slots__ = ("frame_timestamp", "lidar_id", "service_profiling")
+    FRAME_TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    SERVICE_PROFILING_FIELD_NUMBER: _ClassVar[int]
+    frame_timestamp: _metadata_pb2.Timestamp
+    lidar_id: str
+    service_profiling: ServiceProfiling
+    def __init__(self, frame_timestamp: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ..., lidar_id: _Optional[str] = ..., service_profiling: _Optional[_Union[ServiceProfiling, _Mapping]] = ...) -> None: ...
 
 class ProfilingInfo(_message.Message):
-    __slots__ = ("general_profiling_set", "bundled_frame_profiling_set")
+    __slots__ = ("general_profiling_set", "bundled_frame_profiling_set", "preprocessing_frame_profiling")
     GENERAL_PROFILING_SET_FIELD_NUMBER: _ClassVar[int]
     BUNDLED_FRAME_PROFILING_SET_FIELD_NUMBER: _ClassVar[int]
+    PREPROCESSING_FRAME_PROFILING_FIELD_NUMBER: _ClassVar[int]
     general_profiling_set: ProfilingSet
     bundled_frame_profiling_set: BundledFrameProfilingSet
-    def __init__(self, general_profiling_set: _Optional[_Union[ProfilingSet, _Mapping]] = ..., bundled_frame_profiling_set: _Optional[_Union[BundledFrameProfilingSet, _Mapping]] = ...) -> None: ...
+    preprocessing_frame_profiling: PreprocessingFrameProfiling
+    def __init__(self, general_profiling_set: _Optional[_Union[ProfilingSet, _Mapping]] = ..., bundled_frame_profiling_set: _Optional[_Union[BundledFrameProfilingSet, _Mapping]] = ..., preprocessing_frame_profiling: _Optional[_Union[PreprocessingFrameProfiling, _Mapping]] = ...) -> None: ...

@@ -346,8 +346,8 @@ void HorusStringify(const ErasedSink& sink, const WebsocketHandlerProblem& data)
 /// Formats the log `logs::WebsocketDeserializeError` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const WebsocketDeserializeError& data);
 
-/// Formats the log `logs::WebsocketExpiredRpcEndpointError` to a `sink`.
-void HorusStringify(const ErasedSink& sink, const WebsocketExpiredRpcEndpointError& data);
+/// Formats the log `logs::WebsocketExpiredRpcEndpointWarning` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const WebsocketExpiredRpcEndpointWarning& data);
 
 /// Formats the log `logs::WebsocketQueueOverloadedWarning` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const WebsocketQueueOverloadedWarning& data);

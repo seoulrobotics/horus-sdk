@@ -83,6 +83,7 @@ class DetectedObject_Status;
 class DetectedObject;
 class DeepLearningObject_Classification;
 class DeepLearningObject;
+class DebugMergerInfo;
 class DetectionEvent_FrameInfo;
 class DetectionEvent;
 
@@ -1938,9 +1939,72 @@ class DeepLearningObject final : public PbMessage {
   std::bitset<3> set_fields_;
 };
 
+/// Debug information from the detection merger, containing pre-merge local
+///  objects grouped by their merged object and source detection node.
+///
+/// Source: horus/pb/detection_service/detection.proto:122:1
+class DebugMergerInfo final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `DebugMergerInfo`.
+  DebugMergerInfo() noexcept = default;
+
+  /// Move constructor.
+  DebugMergerInfo(DebugMergerInfo&&) noexcept = default;
+  /// Move assignment operator.
+  DebugMergerInfo& operator=(DebugMergerInfo&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit DebugMergerInfo(const DebugMergerInfo&) noexcept = default;  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  DebugMergerInfo& operator=(const DebugMergerInfo&) = delete;
+
+  /// Default destructor.
+  ~DebugMergerInfo() noexcept final = default;
+
+  /// Creates a `DebugMergerInfo` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit DebugMergerInfo(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final {
+    static_cast<void>(writer);
+  }
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final {
+    reader.SkipMessage();
+  }
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.DebugMergerInfo`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.DebugMergerInfo"; }
+
+  /// The full name of the message: `horus.pb.DebugMergerInfo`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+ private:
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<0> set_fields_;
+};
+
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:122:3
+/// Source: horus/pb/detection_service/detection.proto:127:3
 class DetectionEvent_FrameInfo final : public PbMessage {
  public:
 
@@ -2050,7 +2114,7 @@ class DetectionEvent_FrameInfo final : public PbMessage {
 
 /// A detection event message.
 ///
-/// Source: horus/pb/detection_service/detection.proto:121:1
+/// Source: horus/pb/detection_service/detection.proto:126:1
 class DetectionEvent final : public PbMessage {
  public:
   /// @see DetectionEvent_FrameInfo
@@ -2356,6 +2420,202 @@ class DetectionEvent final : public PbMessage {
     return std::move(set_unrecovered_object_ids(std::move(unrecovered_object_ids)));
   }
 
+  // Field `is_replaying` (no 6).
+  // -----
+
+  /// Whether the detection data originates from a Horus bag replay
+  ///  rather than live lidar sensors.
+  ///
+  /// Field no: 6.
+  constexpr bool is_replaying() const& noexcept HORUS_LIFETIME_BOUND {
+    return is_replaying_;
+  }
+
+  /// Whether the detection data originates from a Horus bag replay
+  ///  rather than live lidar sensors.
+  ///
+  /// Field no: 6.
+  bool& mutable_is_replaying() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[5] = true;
+    return is_replaying_;
+  }
+
+  /// Returns whether `is_replaying` (no 6) is set.
+  constexpr bool has_is_replaying() const noexcept { return set_fields_[5]; }
+
+  /// Clears `is_replaying` (no 6).
+  void clear_is_replaying() & noexcept {
+    set_fields_[5] = false;
+    is_replaying_ = {};
+  }
+
+  /// Sets `is_replaying` (no 6) and returns `*this`.
+  DetectionEvent& set_is_replaying(bool is_replaying) & noexcept {
+    set_fields_[5] = true;
+    is_replaying_ = is_replaying;
+    return *this;
+  }
+  /// Sets `is_replaying` (no 6) and returns `*this`.
+  DetectionEvent&& set_is_replaying(bool is_replaying) && noexcept {
+    return std::move(set_is_replaying(is_replaying));
+  }
+
+  // Field `overall_frame_latency` (no 7).
+  // -----
+
+  /// The total frame latency computed by this detection service node, from the
+  ///  earliest LiDAR point arrival to the publishing of this event.
+  ///
+  /// Field no: 7.
+  constexpr const Duration& overall_frame_latency() const& noexcept HORUS_LIFETIME_BOUND {
+    return overall_frame_latency_;
+  }
+
+  /// If `overall_frame_latency` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 7.
+  Duration overall_frame_latency() && noexcept {
+    if (!set_fields_[6]) {
+      return {};
+    }
+    return std::move(overall_frame_latency_);
+  }
+
+  /// The total frame latency computed by this detection service node, from the
+  ///  earliest LiDAR point arrival to the publishing of this event.
+  ///
+  /// Field no: 7.
+  Duration& mutable_overall_frame_latency() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[6] = true;
+    return overall_frame_latency_;
+  }
+
+  /// Returns whether `overall_frame_latency` (no 7) is set.
+  constexpr bool has_overall_frame_latency() const noexcept { return set_fields_[6]; }
+
+  /// Clears `overall_frame_latency` (no 7).
+  void clear_overall_frame_latency() & noexcept {
+    set_fields_[6] = false;
+    overall_frame_latency_ = {};
+  }
+
+  /// Sets `overall_frame_latency` (no 7) and returns `*this`.
+  DetectionEvent& set_overall_frame_latency(Duration&& overall_frame_latency) & noexcept {
+    set_fields_[6] = true;
+    overall_frame_latency_ = std::move(overall_frame_latency);
+    return *this;
+  }
+  /// Sets `overall_frame_latency` (no 7) and returns `*this`.
+  DetectionEvent&& set_overall_frame_latency(Duration&& overall_frame_latency) && noexcept {
+    return std::move(set_overall_frame_latency(std::move(overall_frame_latency)));
+  }
+
+  // Field `publishing_time` (no 8).
+  // -----
+
+  /// The system time when this detection service published this event.
+  ///
+  /// Field no: 8.
+  constexpr const Timestamp& publishing_time() const& noexcept HORUS_LIFETIME_BOUND {
+    return publishing_time_;
+  }
+
+  /// If `publishing_time` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 8.
+  Timestamp publishing_time() && noexcept {
+    if (!set_fields_[7]) {
+      return {};
+    }
+    return std::move(publishing_time_);
+  }
+
+  /// The system time when this detection service published this event.
+  ///
+  /// Field no: 8.
+  Timestamp& mutable_publishing_time() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[7] = true;
+    return publishing_time_;
+  }
+
+  /// Returns whether `publishing_time` (no 8) is set.
+  constexpr bool has_publishing_time() const noexcept { return set_fields_[7]; }
+
+  /// Clears `publishing_time` (no 8).
+  void clear_publishing_time() & noexcept {
+    set_fields_[7] = false;
+    publishing_time_ = {};
+  }
+
+  /// Sets `publishing_time` (no 8) and returns `*this`.
+  DetectionEvent& set_publishing_time(Timestamp&& publishing_time) & noexcept {
+    set_fields_[7] = true;
+    publishing_time_ = std::move(publishing_time);
+    return *this;
+  }
+  /// Sets `publishing_time` (no 8) and returns `*this`.
+  DetectionEvent&& set_publishing_time(Timestamp&& publishing_time) && noexcept {
+    return std::move(set_publishing_time(std::move(publishing_time)));
+  }
+
+  // Field `debug_merger_info` (no 9).
+  // -----
+
+  /// Optional debug info containing pre-merge local objects from each detection
+  ///  node. Only populated when debug local objects are enabled in the detection
+  ///  merger configuration.
+  ///
+  /// Field no: 9.
+  constexpr const DebugMergerInfo& debug_merger_info() const& noexcept HORUS_LIFETIME_BOUND {
+    return debug_merger_info_;
+  }
+
+  /// If `debug_merger_info` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 9.
+  DebugMergerInfo debug_merger_info() && noexcept {
+    if (!set_fields_[8]) {
+      return {};
+    }
+    return std::move(debug_merger_info_);
+  }
+
+  /// Optional debug info containing pre-merge local objects from each detection
+  ///  node. Only populated when debug local objects are enabled in the detection
+  ///  merger configuration.
+  ///
+  /// Field no: 9.
+  DebugMergerInfo& mutable_debug_merger_info() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[8] = true;
+    return debug_merger_info_;
+  }
+
+  /// Returns whether `debug_merger_info` (no 9) is set.
+  constexpr bool has_debug_merger_info() const noexcept { return set_fields_[8]; }
+
+  /// Clears `debug_merger_info` (no 9).
+  void clear_debug_merger_info() & noexcept {
+    set_fields_[8] = false;
+    debug_merger_info_ = {};
+  }
+
+  /// Sets `debug_merger_info` (no 9) and returns `*this`.
+  DetectionEvent& set_debug_merger_info(DebugMergerInfo&& debug_merger_info) & noexcept {
+    set_fields_[8] = true;
+    debug_merger_info_ = std::move(debug_merger_info);
+    return *this;
+  }
+  /// Sets `debug_merger_info` (no 9) and returns `*this`.
+  DetectionEvent&& set_debug_merger_info(DebugMergerInfo&& debug_merger_info) && noexcept {
+    return std::move(set_debug_merger_info(std::move(debug_merger_info)));
+  }
+
  private:
   /// @see objects()
   CowRepeated<DetectedObject> objects_{};
@@ -2367,9 +2627,17 @@ class DetectionEvent final : public PbMessage {
   CowRepeated<DeepLearningObject> raw_deep_learning_objects_{};
   /// @see unrecovered_object_ids()
   CowRepeated<std::uint32_t> unrecovered_object_ids_{};
+  /// @see is_replaying()
+  bool is_replaying_{};
+  /// @see overall_frame_latency()
+  Duration overall_frame_latency_{};
+  /// @see publishing_time()
+  Timestamp publishing_time_{};
+  /// @see debug_merger_info()
+  DebugMergerInfo debug_merger_info_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<5> set_fields_;
+  std::bitset<9> set_fields_;
 };
 
 }  // namespace pb

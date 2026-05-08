@@ -8,6 +8,7 @@ class ProfiledService(enum.Enum):
 
     PREPROCESSING_SERVICE = 1
     DETECTION_SERVICE = 2
+    DETECTION_MERGER_SERVICE = 3
 
 
 @dataclasses.dataclass(frozen=True)
@@ -93,6 +94,7 @@ class ServiceProfiling:
     total_service_latency: datetime.timedelta
     idle_time_before_processing: datetime.timedelta
     intra_component_idle_time: datetime.timedelta
+    node_id: str
 
     @staticmethod
     def _from_pb(pb: profiling_pb2.ServiceProfiling) -> "ServiceProfiling":
@@ -105,25 +107,26 @@ class ServiceProfiling:
             intra_component_idle_time=duration_to_timedelta(
                 pb.intra_component_idle_time
             ),
+            node_id=pb.node_id,
         )
 
 
 @dataclasses.dataclass(frozen=True)
-class PreprocessingServicePointCloudProfiling:
-    """Profiling information for a preprocessing service point cloud."""
+class PreprocessingFrameProfiling:
+    """Profiling information for a single LiDAR frame produced by the preprocessing service."""
 
+    frame_timestamp: datetime.datetime
+    lidar_id: str
     service_profiling: ServiceProfiling
-    point_cloud_sending_latency: datetime.timedelta
 
     @staticmethod
     def _from_pb(
-        pb: profiling_pb2.PreprocessingServicePointCloudProfiling,
-    ) -> "PreprocessingServicePointCloudProfiling":
-        return PreprocessingServicePointCloudProfiling(
+        pb: profiling_pb2.PreprocessingFrameProfiling,
+    ) -> "PreprocessingFrameProfiling":
+        return PreprocessingFrameProfiling(
+            frame_timestamp=timestamp_to_datetime(pb.frame_timestamp),
+            lidar_id=pb.lidar_id,
             service_profiling=ServiceProfiling._from_pb(pb.service_profiling),
-            point_cloud_sending_latency=duration_to_timedelta(
-                pb.point_cloud_sending_latency
-            ),
         )
 
 
@@ -133,12 +136,14 @@ class FrameProfiling:
 
     overall_frame_latency: datetime.timedelta
     frame_bundling_latency: datetime.timedelta
+    preprocessing_overhead: datetime.timedelta
 
     @staticmethod
     def _from_pb(pb: profiling_pb2.FrameProfiling) -> "FrameProfiling":
         return FrameProfiling(
             overall_frame_latency=duration_to_timedelta(pb.overall_frame_latency),
             frame_bundling_latency=duration_to_timedelta(pb.frame_bundling_latency),
+            preprocessing_overhead=duration_to_timedelta(pb.preprocessing_overhead),
         )
 
 
@@ -149,9 +154,6 @@ class BundledFrameProfilingSet:
     frame_timestamp: datetime.datetime
     frame_profiling: FrameProfiling
     detection_service_profiling: ServiceProfiling
-    preprocessing_service_point_cloud_profiling: typing.Dict[
-        str, PreprocessingServicePointCloudProfiling
-    ]
 
     @staticmethod
     def _from_pb(
@@ -163,10 +165,6 @@ class BundledFrameProfilingSet:
             ),
             frame_timestamp=timestamp_to_datetime(pb.frame_timestamp),
             frame_profiling=FrameProfiling._from_pb(pb.frame_profiling),
-            preprocessing_service_point_cloud_profiling={
-                entry.key: PreprocessingServicePointCloudProfiling._from_pb(entry.value)
-                for entry in pb.preprocessing_service_point_cloud_profiling
-            },
         )
 
 
@@ -175,6 +173,7 @@ class ProfileType(enum.Enum):
 
     GENERAL = 1
     BUNDLED = 2
+    PREPROCESSING_FRAME = 3
 
 
 @dataclasses.dataclass(frozen=True)
@@ -187,12 +186,14 @@ class ProfilingInfo:
 
     general_profiling_set: typing.Optional[ProfilingSet]
     bundled_frame_profiling_set: typing.Optional[BundledFrameProfilingSet]
+    preprocessing_frame_profiling: typing.Optional[PreprocessingFrameProfiling]
     profile_type: ProfileType
 
     @staticmethod
     def _from_pb(pb: profiling_pb2.ProfilingInfo) -> "ProfilingInfo":
         general = None
         bundled = None
+        preprocessing_frame = None
         profile_type = None
 
         field = pb.WhichOneof("profiling_set")
@@ -203,11 +204,17 @@ class ProfilingInfo:
         elif field == "bundled_frame_profiling_set":
             bundled = BundledFrameProfilingSet._from_pb(pb.bundled_frame_profiling_set)
             profile_type = ProfileType.BUNDLED
+        elif field == "preprocessing_frame_profiling":
+            preprocessing_frame = PreprocessingFrameProfiling._from_pb(
+                pb.preprocessing_frame_profiling
+            )
+            profile_type = ProfileType.PREPROCESSING_FRAME
         else:
             raise TypeError("Invalid ProfilingInfo protobuf")
 
         return ProfilingInfo(
             general_profiling_set=general,
             bundled_frame_profiling_set=bundled,
+            preprocessing_frame_profiling=preprocessing_frame,
             profile_type=profile_type,
         )

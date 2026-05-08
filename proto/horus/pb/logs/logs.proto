@@ -789,8 +789,8 @@ message WebsocketDeserializeError {
 
 // Log #98.
 //
-// > Attempting to access expired WebSocket RPC endpoint $uri
-message WebsocketExpiredRpcEndpointError {
+// > Received message for expired WebSocket RPC endpoint $uri
+message WebsocketExpiredRpcEndpointWarning {
   string uri = 1;
 }
 
