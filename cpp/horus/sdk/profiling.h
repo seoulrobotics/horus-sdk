@@ -36,11 +36,17 @@ class ProfilingSet final {
     return processing_times_;
   }
 
+  /// Returns the node ID of the service that produced this profiling set, or an empty string
+  /// if no node ID was set.
+  const std::string& NodeId() const noexcept HORUS_LIFETIME_BOUND { return node_id_; }
+
  private:
   /// The profiled service enum.
   pb::ProfilingSet::ProfiledService profiled_service_;
   /// Map of algorithm names to processing times.
   std::unordered_map<std::string, std::chrono::nanoseconds> processing_times_;
+  /// The node ID of the service that produced this profiling set.
+  std::string node_id_;
 };
 
 /// A wrapper around a `pb::ServiceProfiling` with native C++ types.
@@ -71,6 +77,9 @@ class ServiceProfiling final {
     return intra_component_idle_time_;
   }
 
+  /// Returns the node ID of the service that generated this profiling data.
+  const std::string& NodeId() const noexcept HORUS_LIFETIME_BOUND { return node_id_; }
+
  private:
   /// The details profiling set.
   ProfilingSet details_profiling_set_;
@@ -83,6 +92,9 @@ class ServiceProfiling final {
 
   /// The intra idle time of the service.
   std::chrono::nanoseconds intra_component_idle_time_;
+
+  /// The node ID of the service.
+  std::string node_id_;
 };
 
 /// A wrapper around a `pb::FrameProfiling` with native C++ types.
@@ -101,12 +113,80 @@ class FrameProfiling final {
     return frame_bundling_latency_;
   }
 
+  /// Returns the preprocessing overhead.
+  constexpr std::chrono::nanoseconds PreprocessingOverhead() const noexcept {
+    return preprocessing_overhead_;
+  }
+
  private:
   /// The overall frame latency.
   std::chrono::nanoseconds overall_frame_latency_;
 
   /// The frame bundling latency.
   std::chrono::nanoseconds frame_bundling_latency_;
+
+  /// The preprocessing overhead.
+  std::chrono::nanoseconds preprocessing_overhead_;
+};
+
+/// A wrapper around a `pb::PreprocessingFrameProfiling` with native C++ types.
+///
+/// Sent directly from the preprocessing service to the notification service, once per LiDAR frame.
+class PreprocessingFrameProfiling final {
+ public:
+  /// Constructs a `PreprocessingFrameProfiling` which refers to a `preprocessing_profile_pb`.
+  explicit PreprocessingFrameProfiling(
+      const pb::PreprocessingFrameProfiling& preprocessing_profile_pb) noexcept;
+
+  /// Returns the frame timestamp (average point cloud arrival timestamp).
+  constexpr std::chrono::system_clock::time_point FrameTimestamp() const noexcept {
+    return frame_timestamp_;
+  }
+
+  /// Returns the LiDAR ID this profiling data belongs to.
+  const std::string& LidarId() const noexcept HORUS_LIFETIME_BOUND { return lidar_id_; }
+
+  /// Returns the preprocessing service profiling for this frame.
+  const ServiceProfiling& ServiceProfile() const noexcept HORUS_LIFETIME_BOUND {
+    return service_profiling_;
+  }
+
+ private:
+  /// The frame timestamp.
+  std::chrono::system_clock::time_point frame_timestamp_;
+
+  /// The LiDAR ID.
+  std::string lidar_id_;
+
+  /// The preprocessing service profiling for this frame.
+  ServiceProfiling service_profiling_;
+};
+
+/// A wrapper around a `pb::DetectionMergerFrameProfiling` with native C++ types.
+class DetectionMergerFrameProfiling final {
+ public:
+  /// Constructs a `DetectionMergerFrameProfiling` which refers to a `merger_profile_pb`.
+  explicit DetectionMergerFrameProfiling(
+      const pb::DetectionMergerFrameProfiling& merger_profile_pb) noexcept;
+
+  /// Returns the detection merger overhead: time from the latest received detection service event
+  /// (by its publishing time) to the publishing of the merged event by the detection merger.
+  constexpr std::chrono::nanoseconds DetectionMergerOverhead() const noexcept {
+    return detection_merger_overhead_;
+  }
+
+  /// Returns the total overall frame latency: the maximum overall frame latency across all
+  /// detection service events received in this window, plus the detection merger overhead.
+  constexpr std::chrono::nanoseconds TotalOverallFrameLatency() const noexcept {
+    return total_overall_frame_latency_;
+  }
+
+ private:
+  /// The detection merger overhead.
+  std::chrono::nanoseconds detection_merger_overhead_;
+
+  /// The total overall frame latency.
+  std::chrono::nanoseconds total_overall_frame_latency_;
 };
 
 /// A wrapper around a `pb::BundledFrameProfilingSet` with native C++ types.
@@ -157,11 +237,21 @@ class ProfilingInfo final {
   /// kBundledFrameProfilingSet.
   OneOf<BundledFrameProfilingSet, void> BundledFrameProfile() const;
 
+  /// Returns either the preprocessing frame profiling or void if the profiling type is not
+  /// kPreprocessingFrameProfiling.
+  OneOf<PreprocessingFrameProfiling, void> PreprocessingFrameProfile() const;
+
+  /// Returns either the detection merger frame profiling or void if the profiling type is not
+  /// kDetectionMergerFrameProfiling.
+  OneOf<DetectionMergerFrameProfiling, void> DetectionMergerFrameProfile() const;
+
  private:
   /// Alias for the variant of the profiling set.
   ///
   /// @note `void` is a placeholder for the default case.
-  using ProfilingSetVariant = OneOf<ProfilingSet, BundledFrameProfilingSet, void>;
+  using ProfilingSetVariant =
+      OneOf<ProfilingSet, BundledFrameProfilingSet, PreprocessingFrameProfiling,
+            DetectionMergerFrameProfiling, void>;
 
   /// The profile type.
   ProfilingSetOneof profile_type_;
