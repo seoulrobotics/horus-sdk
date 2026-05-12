@@ -1,7 +1,7 @@
 import abc as _abc
 from ...rpc.base_handler import BaseRpcHandler, RpcMessage, WebSocket
 
-from ..detection_service.detection_pb2 import DetectionEvent
+from ..detection_service.detection_pb2 import DetectionEvent, ZoneEventList
 from ..rpc_pb2 import DefaultSubscribeRequest, DefaultSubscribeResponse, DefaultUnsubscribeRequest, DefaultUnsubscribeResponse
 
 class DetectionMergerServiceHandler(BaseRpcHandler, metaclass=_abc.ABCMeta):
@@ -47,11 +47,19 @@ class DetectionMergerSubscriberServiceHandler(BaseRpcHandler, metaclass=_abc.ABC
     def __init__(self, ws: WebSocket):
         super().__init__(ws, {
             1: (DetectionEvent, None, self.broadcast_detection),
+            2: (ZoneEventList, None, self.broadcast_zone_events),
         })
 
     @_abc.abstractmethod
     async def broadcast_detection(self, request: DetectionEvent) -> None:
         """
         Receive merged detection results.
+        """
+        raise NotImplementedError
+
+    @_abc.abstractmethod
+    async def broadcast_zone_events(self, request: ZoneEventList) -> None:
+        """
+        Receive zone entry/exit events for a frame.
         """
         raise NotImplementedError

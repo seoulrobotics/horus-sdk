@@ -14,6 +14,7 @@
 #include "horus/attributes.h"
 #include "horus/internal/attributes.h"
 #include "horus/pb/config/metadata_pb.h"
+#include "horus/pb/cow_bytes.h"
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/message.h"
 #include "horus/pb/point/point_message_pb.h"
@@ -71,6 +72,21 @@ enum class TrackingStatus : PbEnum {  // NOLINT(*-enum-size)
   kUnknownWireValue = 5,
 };
 
+/// No documentation.
+///
+/// Source: horus/pb/detection_service/detection.proto:105:3
+enum class ZoneEvent_Type : PbEnum {  // NOLINT(*-enum-size)
+  /// No documentation.
+  kZoneEventUnspecified = 0,
+  /// No documentation.
+  kEntry = 1,
+  /// No documentation.
+  kExit = 2,
+
+  /// Unknown value read from the wire.
+  kUnknownWireValue = 3,
+};
+
 // MARK: Message forward declarations
 
 class BoundingBox;
@@ -81,6 +97,8 @@ class DetectedObject_Kinematics;
 class DetectedObject_Shape;
 class DetectedObject_Status;
 class DetectedObject;
+class ZoneEvent;
+class ZoneEventList;
 class DeepLearningObject_Classification;
 class DeepLearningObject;
 class DebugMergerInfo;
@@ -1579,6 +1597,56 @@ class DetectedObject final : public PbMessage {
     return std::move(set_status(std::move(status)));
   }
 
+  // Field `event_zone_ids` (no 5).
+  // -----
+
+  /// IDs of event zones the object currently overlaps with, if any.
+  ///
+  /// Field no: 5.
+  constexpr const CowRepeated<CowBytes>& event_zone_ids() const& noexcept HORUS_LIFETIME_BOUND {
+    return event_zone_ids_;
+  }
+
+  /// If `event_zone_ids` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 5.
+  CowRepeated<CowBytes> event_zone_ids() && noexcept {
+    if (!set_fields_[4]) {
+      return {};
+    }
+    return std::move(event_zone_ids_);
+  }
+
+  /// IDs of event zones the object currently overlaps with, if any.
+  ///
+  /// Field no: 5.
+  CowRepeated<CowBytes>& mutable_event_zone_ids() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[4] = true;
+    return event_zone_ids_;
+  }
+
+  /// Returns whether `event_zone_ids` (no 5) is set.
+  constexpr bool has_event_zone_ids() const noexcept { return set_fields_[4]; }
+
+  /// Clears `event_zone_ids` (no 5).
+  void clear_event_zone_ids() & noexcept {
+    set_fields_[4] = false;
+    event_zone_ids_ = {};
+  }
+
+  /// Sets `event_zone_ids` (no 5) and returns `*this`.
+  DetectedObject& set_event_zone_ids(CowRepeated<CowBytes>&& event_zone_ids) & noexcept {
+    set_fields_[4] = true;
+    event_zone_ids_ = std::move(event_zone_ids);
+    return *this;
+  }
+  /// Sets `event_zone_ids` (no 5) and returns `*this`.
+  DetectedObject&& set_event_zone_ids(CowRepeated<CowBytes>&& event_zone_ids) && noexcept {
+    return std::move(set_event_zone_ids(std::move(event_zone_ids)));
+  }
+
  private:
   /// @see classification()
   DetectedObject_Classification classification_{};
@@ -1588,14 +1656,470 @@ class DetectedObject final : public PbMessage {
   DetectedObject_Shape shape_{};
   /// @see status()
   DetectedObject_Status status_{};
+  /// @see event_zone_ids()
+  CowRepeated<CowBytes> event_zone_ids_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<4> set_fields_;
+  std::bitset<5> set_fields_;
+};
+
+/// An event raised when a tracked object enters or exits an event zone.
+///
+/// Source: horus/pb/detection_service/detection.proto:104:1
+class ZoneEvent final : public PbMessage {
+ public:
+  /// @see ZoneEvent_Type
+  using Type = ZoneEvent_Type;
+
+  /// Constructs a default-initialized `ZoneEvent`.
+  ZoneEvent() noexcept = default;
+
+  /// Move constructor.
+  ZoneEvent(ZoneEvent&&) noexcept = default;
+  /// Move assignment operator.
+  ZoneEvent& operator=(ZoneEvent&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit ZoneEvent(const ZoneEvent& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  ZoneEvent& operator=(const ZoneEvent&) = delete;
+
+  /// Default destructor.
+  ~ZoneEvent() noexcept final = default;
+
+  /// Creates a `ZoneEvent` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit ZoneEvent(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.ZoneEvent`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.ZoneEvent"; }
+
+  /// The full name of the message: `horus.pb.ZoneEvent`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `timestamp` (no 1).
+  // -----
+
+  /// The frame timestamp at which the event occurred.
+  ///
+  /// Field no: 1.
+  constexpr const Timestamp& timestamp() const& noexcept HORUS_LIFETIME_BOUND {
+    return timestamp_;
+  }
+
+  /// If `timestamp` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  Timestamp timestamp() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(timestamp_);
+  }
+
+  /// The frame timestamp at which the event occurred.
+  ///
+  /// Field no: 1.
+  Timestamp& mutable_timestamp() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return timestamp_;
+  }
+
+  /// Returns whether `timestamp` (no 1) is set.
+  constexpr bool has_timestamp() const noexcept { return set_fields_[0]; }
+
+  /// Clears `timestamp` (no 1).
+  void clear_timestamp() & noexcept {
+    set_fields_[0] = false;
+    timestamp_ = {};
+  }
+
+  /// Sets `timestamp` (no 1) and returns `*this`.
+  ZoneEvent& set_timestamp(Timestamp&& timestamp) & noexcept {
+    set_fields_[0] = true;
+    timestamp_ = std::move(timestamp);
+    return *this;
+  }
+  /// Sets `timestamp` (no 1) and returns `*this`.
+  ZoneEvent&& set_timestamp(Timestamp&& timestamp) && noexcept {
+    return std::move(set_timestamp(std::move(timestamp)));
+  }
+
+  // Field `zone_id` (no 2).
+  // -----
+
+  /// The id of the event zone.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& zone_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return zone_id_;
+  }
+
+  /// If `zone_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes zone_id() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(zone_id_);
+  }
+
+  /// The id of the event zone.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_zone_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return zone_id_;
+  }
+
+  /// Returns whether `zone_id` (no 2) is set.
+  constexpr bool has_zone_id() const noexcept { return set_fields_[1]; }
+
+  /// Clears `zone_id` (no 2).
+  void clear_zone_id() & noexcept {
+    set_fields_[1] = false;
+    zone_id_ = {};
+  }
+
+  /// Sets `zone_id` (no 2) and returns `*this`.
+  ZoneEvent& set_zone_id(CowBytes&& zone_id) & noexcept {
+    set_fields_[1] = true;
+    zone_id_ = std::move(zone_id);
+    return *this;
+  }
+  /// Sets `zone_id` (no 2) and returns `*this`.
+  ZoneEvent&& set_zone_id(CowBytes&& zone_id) && noexcept {
+    return std::move(set_zone_id(std::move(zone_id)));
+  }
+
+  // Field `type` (no 3).
+  // -----
+
+  /// Whether the object entered or exited the zone.
+  ///
+  /// Field no: 3.
+  constexpr ZoneEvent_Type type() const& noexcept HORUS_LIFETIME_BOUND {
+    return type_;
+  }
+
+  /// Whether the object entered or exited the zone.
+  ///
+  /// Field no: 3.
+  ZoneEvent_Type& mutable_type() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return type_;
+  }
+
+  /// Returns whether `type` (no 3) is set.
+  constexpr bool has_type() const noexcept { return set_fields_[2]; }
+
+  /// Clears `type` (no 3).
+  void clear_type() & noexcept {
+    set_fields_[2] = false;
+    type_ = {};
+  }
+
+  /// Sets `type` (no 3) and returns `*this`.
+  ZoneEvent& set_type(ZoneEvent_Type type) & noexcept {
+    set_fields_[2] = true;
+    type_ = type;
+    return *this;
+  }
+  /// Sets `type` (no 3) and returns `*this`.
+  ZoneEvent&& set_type(ZoneEvent_Type type) && noexcept {
+    return std::move(set_type(type));
+  }
+
+  // Field `object` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr const DetectedObject& object() const& noexcept HORUS_LIFETIME_BOUND {
+    return object_;
+  }
+
+  /// If `object` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  DetectedObject object() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(object_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  DetectedObject& mutable_object() & noexcept HORUS_LIFETIME_BOUND {
+    clear_object_info();
+    object_info_ = ObjectInfoOneof::kObject;
+    set_fields_[3] = true;
+    return object_;
+  }
+
+  /// Returns whether `object` (no 4) is set.
+  constexpr bool has_object() const noexcept { return set_fields_[3]; }
+
+  /// Clears `object` (no 4).
+  void clear_object() & noexcept {
+    object_info_ = {};
+    set_fields_[3] = false;
+    object_ = {};
+  }
+
+  /// Sets `object` (no 4) and returns `*this`.
+  ZoneEvent& set_object(DetectedObject&& object) & noexcept {
+    clear_object_info();
+    object_info_ = ObjectInfoOneof::kObject;
+    set_fields_[3] = true;
+    object_ = std::move(object);
+    return *this;
+  }
+  /// Sets `object` (no 4) and returns `*this`.
+  ZoneEvent&& set_object(DetectedObject&& object) && noexcept {
+    return std::move(set_object(std::move(object)));
+  }
+
+  // Field `object_id` (no 5).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 5.
+  constexpr std::uint32_t object_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return object_id_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 5.
+  std::uint32_t& mutable_object_id() & noexcept HORUS_LIFETIME_BOUND {
+    clear_object_info();
+    object_info_ = ObjectInfoOneof::kObjectId;
+    set_fields_[4] = true;
+    return object_id_;
+  }
+
+  /// Returns whether `object_id` (no 5) is set.
+  constexpr bool has_object_id() const noexcept { return set_fields_[4]; }
+
+  /// Clears `object_id` (no 5).
+  void clear_object_id() & noexcept {
+    object_info_ = {};
+    set_fields_[4] = false;
+    object_id_ = {};
+  }
+
+  /// Sets `object_id` (no 5) and returns `*this`.
+  ZoneEvent& set_object_id(std::uint32_t object_id) & noexcept {
+    clear_object_info();
+    object_info_ = ObjectInfoOneof::kObjectId;
+    set_fields_[4] = true;
+    object_id_ = object_id;
+    return *this;
+  }
+  /// Sets `object_id` (no 5) and returns `*this`.
+  ZoneEvent&& set_object_id(std::uint32_t object_id) && noexcept {
+    return std::move(set_object_id(object_id));
+  }
+
+  // Oneof `object_info`.
+  // -----
+
+  /// Return value of `object_info_case()`.
+  enum class ObjectInfoOneof : std::uint32_t {  // NOLINT(*-enum-size)
+    /// No field set in the oneof.
+    kNotSet = 0,
+    /// @see object()
+    kObject = 4,
+    /// @see object_id()
+    kObjectId = 5,
+  };
+
+  /// Returns the current case set in `object_info`.
+  constexpr ObjectInfoOneof object_info_case() const noexcept {
+    return object_info_;
+  }
+
+  /// Clears the oneof value in `object_info`.
+  void clear_object_info() noexcept {
+    switch (object_info_) {
+      case ObjectInfoOneof::kObject: {
+        clear_object();
+        break;
+      }
+      case ObjectInfoOneof::kObjectId: {
+        clear_object_id();
+        break;
+      }
+      case ObjectInfoOneof::kNotSet:
+      default:
+        break;
+    }
+  }
+
+ private:
+  /// @see timestamp()
+  Timestamp timestamp_{};
+  /// @see zone_id()
+  CowBytes zone_id_{};
+  /// @see type()
+  ZoneEvent_Type type_{};
+  /// @see object()
+  DetectedObject object_{};
+  /// @see object_id()
+  std::uint32_t object_id_{};
+
+  /// @see object_info_case()
+  ObjectInfoOneof object_info_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<5> set_fields_;
+};
+
+/// A list of zone events, broadcast together for a single frame.
+///
+/// Source: horus/pb/detection_service/detection.proto:127:1
+class ZoneEventList final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `ZoneEventList`.
+  ZoneEventList() noexcept = default;
+
+  /// Move constructor.
+  ZoneEventList(ZoneEventList&&) noexcept = default;
+  /// Move assignment operator.
+  ZoneEventList& operator=(ZoneEventList&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit ZoneEventList(const ZoneEventList& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  ZoneEventList& operator=(const ZoneEventList&) = delete;
+
+  /// Default destructor.
+  ~ZoneEventList() noexcept final = default;
+
+  /// Creates a `ZoneEventList` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit ZoneEventList(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.ZoneEventList`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.ZoneEventList"; }
+
+  /// The full name of the message: `horus.pb.ZoneEventList`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `zone_events` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowRepeated<ZoneEvent>& zone_events() const& noexcept HORUS_LIFETIME_BOUND {
+    return zone_events_;
+  }
+
+  /// If `zone_events` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowRepeated<ZoneEvent> zone_events() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(zone_events_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowRepeated<ZoneEvent>& mutable_zone_events() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return zone_events_;
+  }
+
+  /// Returns whether `zone_events` (no 1) is set.
+  constexpr bool has_zone_events() const noexcept { return set_fields_[0]; }
+
+  /// Clears `zone_events` (no 1).
+  void clear_zone_events() & noexcept {
+    set_fields_[0] = false;
+    zone_events_ = {};
+  }
+
+  /// Sets `zone_events` (no 1) and returns `*this`.
+  ZoneEventList& set_zone_events(CowRepeated<ZoneEvent>&& zone_events) & noexcept {
+    set_fields_[0] = true;
+    zone_events_ = std::move(zone_events);
+    return *this;
+  }
+  /// Sets `zone_events` (no 1) and returns `*this`.
+  ZoneEventList&& set_zone_events(CowRepeated<ZoneEvent>&& zone_events) && noexcept {
+    return std::move(set_zone_events(std::move(zone_events)));
+  }
+
+ private:
+  /// @see zone_events()
+  CowRepeated<ZoneEvent> zone_events_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<1> set_fields_;
 };
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:103:3
+/// Source: horus/pb/detection_service/detection.proto:133:3
 class DeepLearningObject_Classification final : public PbMessage {
  public:
 
@@ -1733,7 +2257,7 @@ class DeepLearningObject_Classification final : public PbMessage {
 
 /// / A deep learning object message.
 ///
-/// Source: horus/pb/detection_service/detection.proto:102:1
+/// Source: horus/pb/detection_service/detection.proto:132:1
 class DeepLearningObject final : public PbMessage {
  public:
   /// @see DeepLearningObject_Classification
@@ -1942,7 +2466,7 @@ class DeepLearningObject final : public PbMessage {
 /// Debug information from the detection merger, containing pre-merge local
 ///  objects grouped by their merged object and source detection node.
 ///
-/// Source: horus/pb/detection_service/detection.proto:122:1
+/// Source: horus/pb/detection_service/detection.proto:152:1
 class DebugMergerInfo final : public PbMessage {
  public:
 
@@ -2004,7 +2528,7 @@ class DebugMergerInfo final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:127:3
+/// Source: horus/pb/detection_service/detection.proto:157:3
 class DetectionEvent_FrameInfo final : public PbMessage {
  public:
 
@@ -2114,7 +2638,7 @@ class DetectionEvent_FrameInfo final : public PbMessage {
 
 /// A detection event message.
 ///
-/// Source: horus/pb/detection_service/detection.proto:126:1
+/// Source: horus/pb/detection_service/detection.proto:156:1
 class DetectionEvent final : public PbMessage {
  public:
   /// @see DetectionEvent_FrameInfo
@@ -2828,6 +3352,78 @@ class PbTraits<horus::sdk::pb::TrackingStatus> final {
   }
 };
 
+template <>
+class PbEnumTraits<horus::sdk::pb::ZoneEvent_Type> final {
+ public:
+  /// The full name of the enum: `horus.sdk.pb.ZoneEvent.Type`.
+  static constexpr StringView EnumName() noexcept { return "horus.sdk.pb.ZoneEvent.Type"; }
+
+  /// Returns the name of the given enumerator, or an empty string.
+  static constexpr StringView NameOf(horus::sdk::pb::ZoneEvent_Type value) noexcept {
+    switch (value) {
+      case horus::sdk::pb::ZoneEvent_Type::kZoneEventUnspecified: {
+        return "ZONE_EVENT_TYPE_UNSPECIFIED";
+      }
+      case horus::sdk::pb::ZoneEvent_Type::kEntry: {
+        return "ENTRY";
+      }
+      case horus::sdk::pb::ZoneEvent_Type::kExit: {
+        return "EXIT";
+      }
+      case horus::sdk::pb::ZoneEvent_Type::kUnknownWireValue:
+      default: {
+        return "";
+      }
+    }
+  }
+
+  /// Returns the value corresponding to the given name, or `default_value`.
+  static constexpr horus::sdk::pb::ZoneEvent_Type ValueOf(PbEnum value, horus::sdk::pb::ZoneEvent_Type default_value = horus::sdk::pb::ZoneEvent_Type::kUnknownWireValue) noexcept {
+    switch (value) {
+      case 0: {
+        return horus::sdk::pb::ZoneEvent_Type::kZoneEventUnspecified;
+      }
+      case 1: {
+        return horus::sdk::pb::ZoneEvent_Type::kEntry;
+      }
+      case 2: {
+        return horus::sdk::pb::ZoneEvent_Type::kExit;
+      }
+      default: {
+        return default_value;
+      }
+    }
+  }
+
+  /// Returns the value corresponding to the given name, or `default_value`.
+  static constexpr horus::sdk::pb::ZoneEvent_Type ValueOf(StringView name, horus::sdk::pb::ZoneEvent_Type default_value = horus::sdk::pb::ZoneEvent_Type::kUnknownWireValue) noexcept {
+    if (name == "ZONE_EVENT_TYPE_UNSPECIFIED") {
+      return horus::sdk::pb::ZoneEvent_Type::kZoneEventUnspecified;
+    }
+    if (name == "ENTRY") {
+      return horus::sdk::pb::ZoneEvent_Type::kEntry;
+    }
+    if (name == "EXIT") {
+      return horus::sdk::pb::ZoneEvent_Type::kExit;
+    }
+    return default_value;
+  }
+};
+
+template <>
+class PbTraits<horus::sdk::pb::ZoneEvent_Type> final {
+ public:
+  /// Serializes `value` into `writer`.
+  static void Serialize(PbWriter& writer, PbTag tag, horus::sdk::pb::ZoneEvent_Type value) {
+    writer.Writer().add_enum(tag, static_cast<PbEnum>(value));
+  }
+
+  /// Deserializes `horus::sdk::pb::ZoneEvent_Type` from `reader`.
+  static horus::sdk::pb::ZoneEvent_Type Deserialize(PbReader& reader) {
+    return PbEnumTraits<horus::sdk::pb::ZoneEvent_Type>::ValueOf(reader.Reader().get_enum());
+  }
+};
+
 }  // namespace horus
 
 namespace horus {
@@ -2844,6 +3440,12 @@ void HorusStringify(Sink& sink, ObjectLabel value) noexcept(noexcept(sink.Append
 template <class Sink>
 void HorusStringify(Sink& sink, TrackingStatus value) noexcept(noexcept(sink.Append(StringView{}))) {
   sink.Append(PbEnumTraits<TrackingStatus>::NameOf(value));
+}
+
+/// Appends `value` to `sink`.
+template <class Sink>
+void HorusStringify(Sink& sink, ZoneEvent_Type value) noexcept(noexcept(sink.Append(StringView{}))) {
+  sink.Append(PbEnumTraits<ZoneEvent_Type>::NameOf(value));
 }
 
 }  // namespace pb
