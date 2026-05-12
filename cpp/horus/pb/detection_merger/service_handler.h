@@ -139,6 +139,10 @@ class DetectionMergerSubscriberServiceHandler : public horus_internal::RpcBaseHa
   using BroadcastDetectionRequestType = pb::DetectionEvent;
   /// The response type of `BroadcastDetection()`.
   using BroadcastDetectionResponseType = void;
+  /// The request type of `BroadcastZoneEvents()`.
+  using BroadcastZoneEventsRequestType = pb::ZoneEventList;
+  /// The response type of `BroadcastZoneEvents()`.
+  using BroadcastZoneEventsResponseType = void;
 
   /// Default constructor.
   DetectionMergerSubscriberServiceHandler() noexcept = default;
@@ -157,23 +161,36 @@ class DetectionMergerSubscriberServiceHandler : public horus_internal::RpcBaseHa
   /// Receive merged detection results.
   virtual AnyFuture<void> BroadcastDetection(const RpcContext& context,
                                              pb::DetectionEvent&& request) noexcept(false) = 0;
+
+  /// Receive zone entry/exit events for a frame.
+  virtual AnyFuture<void> BroadcastZoneEvents(const RpcContext& context,
+                                              pb::ZoneEventList&& request) noexcept(false) = 0;
 };
 
 /// A `DetectionMergerSubscriberServiceHandler` which forwards received messages to function objects.
-template <class SharedState, class OnBroadcastDetection>
+template <class SharedState, class OnBroadcastDetection, class OnBroadcastZoneEvents>
 class FunctionalDetectionMergerSubscriberService final : public DetectionMergerSubscriberServiceHandler {
  public:
   /// Constructs a `FunctionalDetectionMergerSubscriberService` which forwards received messages to function objects.
-  FunctionalDetectionMergerSubscriberService(SharedState shared_state, OnBroadcastDetection&& on_broadcast_detection) noexcept
+  FunctionalDetectionMergerSubscriberService(SharedState shared_state, OnBroadcastDetection&& on_broadcast_detection, OnBroadcastZoneEvents&& on_broadcast_zone_events) noexcept
       : shared_state_{std::forward<SharedState>(shared_state)}
-      , on_broadcast_detection_{std::move(on_broadcast_detection)} {}
+      , on_broadcast_detection_{std::move(on_broadcast_detection)}
+      , on_broadcast_zone_events_{std::move(on_broadcast_zone_events)} {}
 
   /// Returns a `FunctionalDetectionMergerSubscriberService` which handles `BroadcastDetection()` with `on_broadcast_detection()`.
   template <class F>
-  FunctionalDetectionMergerSubscriberService<SharedState, F>
+  FunctionalDetectionMergerSubscriberService<SharedState, F, OnBroadcastZoneEvents>
   BroadcastDetectionWith(F&& on_broadcast_detection) && noexcept {
-    return FunctionalDetectionMergerSubscriberService<SharedState, F>{
-        std::move(shared_state_), std::forward<F>(on_broadcast_detection)};
+    return FunctionalDetectionMergerSubscriberService<SharedState, F, OnBroadcastZoneEvents>{
+        std::move(shared_state_), std::forward<F>(on_broadcast_detection), std::move(on_broadcast_zone_events_)};
+  }
+
+  /// Returns a `FunctionalDetectionMergerSubscriberService` which handles `BroadcastZoneEvents()` with `on_broadcast_zone_events()`.
+  template <class F>
+  FunctionalDetectionMergerSubscriberService<SharedState, OnBroadcastDetection, F>
+  BroadcastZoneEventsWith(F&& on_broadcast_zone_events) && noexcept {
+    return FunctionalDetectionMergerSubscriberService<SharedState, OnBroadcastDetection, F>{
+        std::move(shared_state_), std::move(on_broadcast_detection_), std::forward<F>(on_broadcast_zone_events)};
   }
 
  protected:
@@ -182,26 +199,33 @@ class FunctionalDetectionMergerSubscriberService final : public DetectionMergerS
                                      pb::DetectionEvent&& request) noexcept(false) final {
     return horus_internal::ForwardToFunctionalHandler<void>(shared_state_, on_broadcast_detection_, context, std::move(request));
   }
+  /// Forwards `BroadcastZoneEvents()` to `OnBroadcastZoneEvents`.
+  AnyFuture<void> BroadcastZoneEvents(const RpcContext& context,
+                                      pb::ZoneEventList&& request) noexcept(false) final {
+    return horus_internal::ForwardToFunctionalHandler<void>(shared_state_, on_broadcast_zone_events_, context, std::move(request));
+  }
  private:
   /// State shared between all callbacks.
   HORUS_SDK_ATTRIBUTE_NO_UNIQUE_ADDRESS SharedState shared_state_;
   /// Handler of `BroadcastDetection`.
   HORUS_SDK_ATTRIBUTE_NO_UNIQUE_ADDRESS OnBroadcastDetection on_broadcast_detection_;
+  /// Handler of `BroadcastZoneEvents`.
+  HORUS_SDK_ATTRIBUTE_NO_UNIQUE_ADDRESS OnBroadcastZoneEvents on_broadcast_zone_events_;
 };
 
 /// Returns a `FunctionalDetectionMergerSubscriberService` with the given shared state.
 template <class SharedState>
-FunctionalDetectionMergerSubscriberService<SharedState, decltype(&horus_internal::IgnoreRpc<pb::DetectionEvent, void>)>
+FunctionalDetectionMergerSubscriberService<SharedState, decltype(&horus_internal::IgnoreRpc<pb::DetectionEvent, void>), decltype(&horus_internal::IgnoreRpc<pb::ZoneEventList, void>)>
 CreateFunctionalDetectionMergerSubscriberService(SharedState&& shared_state) noexcept {
-  return FunctionalDetectionMergerSubscriberService<SharedState, decltype(&horus_internal::IgnoreRpc<pb::DetectionEvent, void>)>{
-      std::forward<SharedState>(shared_state), &horus_internal::IgnoreRpc<pb::DetectionEvent, void>};
+  return FunctionalDetectionMergerSubscriberService<SharedState, decltype(&horus_internal::IgnoreRpc<pb::DetectionEvent, void>), decltype(&horus_internal::IgnoreRpc<pb::ZoneEventList, void>)>{
+      std::forward<SharedState>(shared_state), &horus_internal::IgnoreRpc<pb::DetectionEvent, void>, &horus_internal::IgnoreRpc<pb::ZoneEventList, void>};
 }
 
 /// Returns a `FunctionalDetectionMergerSubscriberService` with no shared state.
-inline FunctionalDetectionMergerSubscriberService<decltype(nullptr), decltype(&horus_internal::IgnoreRpc<pb::DetectionEvent, void>)>
+inline FunctionalDetectionMergerSubscriberService<decltype(nullptr), decltype(&horus_internal::IgnoreRpc<pb::DetectionEvent, void>), decltype(&horus_internal::IgnoreRpc<pb::ZoneEventList, void>)>
 CreateFunctionalDetectionMergerSubscriberService() noexcept {
-  return FunctionalDetectionMergerSubscriberService<decltype(nullptr), decltype(&horus_internal::IgnoreRpc<pb::DetectionEvent, void>)>{
-      nullptr, &horus_internal::IgnoreRpc<pb::DetectionEvent, void>};
+  return FunctionalDetectionMergerSubscriberService<decltype(nullptr), decltype(&horus_internal::IgnoreRpc<pb::DetectionEvent, void>), decltype(&horus_internal::IgnoreRpc<pb::ZoneEventList, void>)>{
+      nullptr, &horus_internal::IgnoreRpc<pb::DetectionEvent, void>, &horus_internal::IgnoreRpc<pb::ZoneEventList, void>};
 }
 
 }  // namespace pb

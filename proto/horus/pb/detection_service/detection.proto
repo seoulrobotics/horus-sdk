@@ -96,6 +96,36 @@ message DetectedObject {
   Kinematics kinematics = 2;
   Shape shape = 3;
   Status status = 4;
+  // IDs of event zones the object currently overlaps with, if any.
+  repeated string event_zone_ids = 5;
+}
+
+// An event raised when a tracked object enters or exits an event zone.
+message ZoneEvent {
+  enum Type {
+    ZONE_EVENT_TYPE_UNSPECIFIED = 0;
+    ENTRY = 1;
+    EXIT = 2;
+  }
+  // The frame timestamp at which the event occurred.
+  Timestamp timestamp = 1;
+  // The id of the event zone.
+  string zone_id = 2;
+  // Whether the object entered or exited the zone.
+  Type type = 3;
+  // Identifies the object that triggered the event. `object` carries the full
+  // detection state for objects still present in the frame; `object_id` is set
+  // when the object is no longer being tracked (e.g., on EXIT for an
+  // unrecovered object) and only the id is known.
+  oneof object_info {
+    DetectedObject object = 4;
+    uint32 object_id = 5;
+  }
+}
+
+// A list of zone events, broadcast together for a single frame.
+message ZoneEventList {
+  repeated ZoneEvent zone_events = 1;
 }
 
 /// A deep learning object message.

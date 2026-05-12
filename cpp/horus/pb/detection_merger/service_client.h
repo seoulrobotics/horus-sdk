@@ -57,6 +57,10 @@ class DetectionMergerSubscriberServiceClient : public horus_internal::RpcBaseCli
   using BroadcastDetectionRequestType = pb::DetectionEvent;
   /// The response type of `BroadcastDetection()`.
   using BroadcastDetectionResponseType = void;
+  /// The request type of `BroadcastZoneEvents()`.
+  using BroadcastZoneEventsRequestType = pb::ZoneEventList;
+  /// The response type of `BroadcastZoneEvents()`.
+  using BroadcastZoneEventsResponseType = void;
 
   /// @copydoc horus_internal::RpcBaseClient::RpcBaseClient()
   using horus_internal::RpcBaseClient::RpcBaseClient;
@@ -69,6 +73,11 @@ class DetectionMergerSubscriberServiceClient : public horus_internal::RpcBaseCli
   /// Receive merged detection results.
   AnyFuture<void> BroadcastDetection(const pb::DetectionEvent& request, const RpcOptions& options) noexcept(false) {
     return InvokeOneWayRpc(1, request, options);
+  }
+
+  /// Receive zone entry/exit events for a frame.
+  AnyFuture<void> BroadcastZoneEvents(const pb::ZoneEventList& request, const RpcOptions& options) noexcept(false) {
+    return InvokeOneWayRpc(2, request, options);
   }
 };
 

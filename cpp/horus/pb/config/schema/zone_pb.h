@@ -46,9 +46,11 @@ enum class ZoneType : PbEnum {  // NOLINT(*-enum-size)
   kReflection = 3,
   /// No documentation.
   kStaticExclusion = 4,
+  /// No documentation.
+  kEvent = 5,
 
   /// Unknown value read from the wire.
-  kUnknownWireValue = 5,
+  kUnknownWireValue = 6,
 };
 
 // MARK: Message forward declarations
@@ -59,7 +61,7 @@ class Zone;
 
 /// No documentation.
 ///
-/// Source: horus/pb/config/schema/zone.proto:15:1
+/// Source: horus/pb/config/schema/zone.proto:16:1
 class Zone final : public PbMessage {
  public:
 
@@ -435,6 +437,9 @@ class PbEnumTraits<horus::sdk::pb::ZoneType> final {
       case horus::sdk::pb::ZoneType::kStaticExclusion: {
         return "STATIC_EXCLUSION";
       }
+      case horus::sdk::pb::ZoneType::kEvent: {
+        return "EVENT";
+      }
       case horus::sdk::pb::ZoneType::kUnknownWireValue:
       default: {
         return "";
@@ -460,6 +465,9 @@ class PbEnumTraits<horus::sdk::pb::ZoneType> final {
       case 4: {
         return horus::sdk::pb::ZoneType::kStaticExclusion;
       }
+      case 5: {
+        return horus::sdk::pb::ZoneType::kEvent;
+      }
       default: {
         return default_value;
       }
@@ -482,6 +490,9 @@ class PbEnumTraits<horus::sdk::pb::ZoneType> final {
     }
     if (name == "STATIC_EXCLUSION") {
       return horus::sdk::pb::ZoneType::kStaticExclusion;
+    }
+    if (name == "EVENT") {
+      return horus::sdk::pb::ZoneType::kEvent;
     }
     return default_value;
   }
