@@ -26,7 +26,7 @@ from horus.pb.detection_service import detection_pb2 as horus_dot_pb_dot_detecti
 from horus.pb import rpc_pb2 as horus_dot_pb_dot_rpc__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\'horus/pb/detection_merger/service.proto\x12\x08horus.pb\x1a*horus/pb/detection_service/detection.proto\x1a\x12horus/pb/rpc.proto2\xc5\x03\n\x16\x44\x65tectionMergerService\x12\xaf\x01\n\tSubscribe\x12!.horus.pb.DefaultSubscribeRequest\x1a\".horus.pb.DefaultSubscribeResponse\"[\xc2\xab\xb1.V\x08\x01\x12.Subscribe to receive merged detection results.\x1a\"\n DetectionMergerSubscriberService\x12\xb1\x01\n\x0bUnsubscribe\x12#.horus.pb.DefaultUnsubscribeRequest\x1a$.horus.pb.DefaultUnsubscribeResponse\"W\xc2\xab\xb1.R\x08\x02\x12*Unsubscribe from merged detection results.\"\"\n DetectionMergerSubscriberService\x1a\x45\xc2\xab\xb1.@\x08\x0b\x12<Service for merging detection results from multiple sources.2\xce\x01\n DetectionMergerSubscriberService\x12p\n\x12\x42roadcastDetection\x12\x18.horus.pb.DetectionEvent\x1a\x14.horus.pb.NoResponse\"*\xc2\xab\xb1.%\x08\x01\x12!Receive merged detection results.\x1a\x38\xc2\xab\xb1.3\x08\x10\x12/Service for receiving merged detection results.b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\'horus/pb/detection_merger/service.proto\x12\x08horus.pb\x1a*horus/pb/detection_service/detection.proto\x1a\x12horus/pb/rpc.proto2\xc5\x03\n\x16\x44\x65tectionMergerService\x12\xaf\x01\n\tSubscribe\x12!.horus.pb.DefaultSubscribeRequest\x1a\".horus.pb.DefaultSubscribeResponse\"[\xc2\xab\xb1.V\x08\x01\x12.Subscribe to receive merged detection results.\x1a\"\n DetectionMergerSubscriberService\x12\xb1\x01\n\x0bUnsubscribe\x12#.horus.pb.DefaultUnsubscribeRequest\x1a$.horus.pb.DefaultUnsubscribeResponse\"W\xc2\xab\xb1.R\x08\x02\x12*Unsubscribe from merged detection results.\"\"\n DetectionMergerSubscriberService\x1a\x45\xc2\xab\xb1.@\x08\x0b\x12<Service for merging detection results from multiple sources.2\xca\x02\n DetectionMergerSubscriberService\x12p\n\x12\x42roadcastDetection\x12\x18.horus.pb.DetectionEvent\x1a\x14.horus.pb.NoResponse\"*\xc2\xab\xb1.%\x08\x01\x12!Receive merged detection results.\x12z\n\x13\x42roadcastZoneEvents\x12\x17.horus.pb.ZoneEventList\x1a\x14.horus.pb.NoResponse\"4\xc2\xab\xb1./\x08\x02\x12+Receive zone entry/exit events for a frame.\x1a\x38\xc2\xab\xb1.3\x08\x10\x12/Service for receiving merged detection results.b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -43,8 +43,10 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_DETECTIONMERGERSUBSCRIBERSERVICE']._serialized_options = b'\302\253\261.3\010\020\022/Service for receiving merged detection results.'
   _globals['_DETECTIONMERGERSUBSCRIBERSERVICE'].methods_by_name['BroadcastDetection']._loaded_options = None
   _globals['_DETECTIONMERGERSUBSCRIBERSERVICE'].methods_by_name['BroadcastDetection']._serialized_options = b'\302\253\261.%\010\001\022!Receive merged detection results.'
+  _globals['_DETECTIONMERGERSUBSCRIBERSERVICE'].methods_by_name['BroadcastZoneEvents']._loaded_options = None
+  _globals['_DETECTIONMERGERSUBSCRIBERSERVICE'].methods_by_name['BroadcastZoneEvents']._serialized_options = b'\302\253\261./\010\002\022+Receive zone entry/exit events for a frame.'
   _globals['_DETECTIONMERGERSERVICE']._serialized_start=118
   _globals['_DETECTIONMERGERSERVICE']._serialized_end=571
   _globals['_DETECTIONMERGERSUBSCRIBERSERVICE']._serialized_start=574
-  _globals['_DETECTIONMERGERSUBSCRIBERSERVICE']._serialized_end=780
+  _globals['_DETECTIONMERGERSUBSCRIBERSERVICE']._serialized_end=904
 # @@protoc_insertion_point(module_scope)

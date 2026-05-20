@@ -72,6 +72,9 @@ void PrintProfilingInformation(const pb::ProfilingInfo& profiling_info) {
     case pb::ProfilingInfo::ProfilingSetOneof::kPreprocessingFrameProfiling:
       StringifyTo(StdoutSink(), "preprocessing frame profiling\n");
       break;
+    case pb::ProfilingInfo::ProfilingSetOneof::kDetectionMergerFrameProfiling:
+      StringifyTo(StdoutSink(), "detection merger frame profiling\n");
+      break;
     default:
       StringifyTo(StdoutSink(), "(unknown)\n");
       break;
