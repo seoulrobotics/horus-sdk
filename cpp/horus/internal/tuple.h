@@ -19,10 +19,8 @@ constexpr void ForEachIndexOfImpl() noexcept {}
 /// Calls `invocable(std::integral_constant<std::size_t, I>)` for all invocables.
 template <std::size_t Index, class Invocable, class... Rest>
 void ForEachIndexOfImpl(Invocable&& invocable, Rest&&... rest) noexcept(
-    noexcept(std::forward<Invocable>(invocable)(
-        std::integral_constant<std::size_t, Index>{})) && noexcept(ForEachIndexOfImpl<Index +
-                                                                                      1>(
-        std::forward<Rest>(rest)...))) {
+    noexcept(std::forward<Invocable>(invocable)(std::integral_constant<std::size_t, Index>{})) &&
+    noexcept(ForEachIndexOfImpl<Index + 1>(std::forward<Rest>(rest)...))) {
   std::forward<Invocable>(invocable)(std::integral_constant<std::size_t, Index>{});
   ForEachIndexOfImpl<Index + 1>(std::forward<Rest>(rest)...);
 }

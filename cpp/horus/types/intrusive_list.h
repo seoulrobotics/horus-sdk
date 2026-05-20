@@ -151,13 +151,13 @@ class IntrusiveList final {
 
 /// Returns the `IntrusiveListLink` of a node given a field. Prefer using `IntrusiveListByField`
 /// directly instead.
-template <class T, IntrusiveListLink<T>(T::*LinkField)>
+template <class T, IntrusiveListLink<T>(T::* LinkField)>
 constexpr IntrusiveListLink<T>& IntrusiveListLinkFromField(T& node HORUS_LIFETIME_BOUND) noexcept {
   return node.*LinkField;
 }
 
 /// An `IntrusiveList` whose link is made available by a field of `T`.
-template <class T, IntrusiveListLink<T>(T::*LinkField) = &T::link>
+template <class T, IntrusiveListLink<T>(T::* LinkField) = &T::link>
 using IntrusiveListByField = IntrusiveList<T, &IntrusiveListLinkFromField<T, LinkField>>;
 
 /// Returns the `IntrusiveListLink` of a node given a field. Prefer using `IntrusiveListByField`

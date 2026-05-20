@@ -7,7 +7,7 @@ if typing.TYPE_CHECKING:
 else:
     Self = None
 
-from horus.sdk.detection import DetectionEvent
+from horus.sdk.detection import DetectionEvent, ZoneEvent
 from horus.pb.detection_merger.service_client import (
     DetectionMergerServiceClient as _DetectionMergerServiceClient,
 )
@@ -29,7 +29,7 @@ from horus.pb.rpc_pb2 import DefaultUnsubscribeRequest as _DefaultUnsubscribeReq
 from horus.rpc.client_listener_pair import ClientListenerPair as _ClientListenerPair
 from horus.rpc.client import Client as _Client
 from horus.rpc.services import RpcServices
-from horus.sdk.detection import DetectionEvent
+from horus.sdk.detection import DetectionEvent, ZoneEvent
 from horus.sdk.services import (
     DetectionMergerServiceListener as _DetectionMergerServiceListener,
 )
@@ -127,6 +127,15 @@ class Sdk:
         return Subscription(
             lambda: self._subscribe_to_detections_async(on_detection_event)
         )
+
+    def subscribe_to_zone_events(
+        self, on_zone_event: typing.Callable[[ZoneEvent], None]
+    ) -> "Subscription":
+        """Returns a `Subscription` which will call `on_zone_event()` for each entry/exit of an object in an event zone until destroyed."""
+        if not callable(on_zone_event):
+            raise TypeError("on_zone_event must be callable")
+
+        return Subscription(lambda: self._subscribe_to_zone_events_async(on_zone_event))
 
     def subscribe_to_logs(
         self, on_log_message: typing.Callable[[Log], None]
@@ -231,6 +240,20 @@ class Sdk:
         return lambda: _disconnect_if_set_emptied(
             listener._on_detection_event,
             on_detection_event,
+            self._detection_service,
+            listener.has_no_subscriber,
+        )
+
+    async def _subscribe_to_zone_events_async(
+        self, on_zone_event: typing.Callable[[ZoneEvent], None]
+    ) -> _UnsubscribeCallable:
+        _, listener = await self._ensure_detection_service()
+
+        listener._on_zone_event.add(on_zone_event)
+
+        return lambda: _disconnect_if_set_emptied(
+            listener._on_zone_event,
+            on_zone_event,
             self._detection_service,
             listener.has_no_subscriber,
         )

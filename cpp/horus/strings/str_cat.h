@@ -96,7 +96,7 @@ class StringSink final {
 
   /// Appends the given string to the output string.
   ///
-  /// @throws std::bad_alloc
+  /// @throws std::bad_alloc if the string allocation fails
   void Append(StringView string) const { Discard(output_.append(string.data(), string.size())); }
 
  private:
@@ -117,7 +117,7 @@ constexpr std::size_t StrExpectedSize(Ts const&... values) noexcept {
 
 /// Appends all the given values into a `std::string`.
 ///
-/// @throws std::bad_alloc
+/// @throws std::bad_alloc if the string allocation fails
 template <class... Ts>
 void StrAppendTo(std::string& string, Ts const&... values) {
   std::size_t const expected_size{StrExpectedSize(values...)};
@@ -130,7 +130,7 @@ void StrAppendTo(std::string& string, Ts const&... values) {
 
 /// Concatenates all the given values into a `std::string`.
 ///
-/// @throws std::bad_alloc
+/// @throws std::bad_alloc if the string allocation fails
 template <class... Ts>
 std::string StrCat(Ts const&... values) {
   std::string result;

@@ -13,11 +13,13 @@ class ZoneType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     STATIC_DETECTION: _ClassVar[ZoneType]
     REFLECTION: _ClassVar[ZoneType]
     STATIC_EXCLUSION: _ClassVar[ZoneType]
+    EVENT: _ClassVar[ZoneType]
 ZONE_TYPE_UNSPECIFIED: ZoneType
 EXCLUSION: ZoneType
 STATIC_DETECTION: ZoneType
 REFLECTION: ZoneType
 STATIC_EXCLUSION: ZoneType
+EVENT: ZoneType
 
 class Zone(_message.Message):
     __slots__ = ("zone_id", "status", "type", "name", "z_range", "vertices")

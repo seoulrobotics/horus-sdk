@@ -305,7 +305,7 @@ class OneOf final {
 
   /// Ensures that the stored value is `T`. If false, throws an exception.
   ///
-  /// @throws InvalidOneOfAccess
+  /// @throws InvalidOneOfAccess if the stored type is not `T`
   template <class T>
   void EnsureIs() const& noexcept(false) {
     if (!Is<T>()) {
@@ -318,7 +318,7 @@ class OneOf final {
   /// Returns a reference to the stored value of type `T`, throwing an exception if it is of a
   /// different type.
   ///
-  /// @throws InvalidOneOfAccess
+  /// @throws InvalidOneOfAccess if the stored type is not `T`
   template <class T, std::enable_if_t<!std::is_void<T>::value>* = nullptr>
   T& As() & noexcept(false) HORUS_LIFETIME_BOUND {
     EnsureIs<T>();
@@ -328,7 +328,7 @@ class OneOf final {
   /// Returns a reference to the stored value of type `T`, throwing an exception if it is of a
   /// different type.
   ///
-  /// @throws InvalidOneOfAccess
+  /// @throws InvalidOneOfAccess if the stored type is not `T`
   template <class T, std::enable_if_t<!std::is_void<T>::value>* = nullptr>
   T const& As() const& noexcept(false) HORUS_LIFETIME_BOUND {
     EnsureIs<T>();
@@ -338,7 +338,7 @@ class OneOf final {
   /// Returns a reference to the stored value of type `T`, throwing an exception if it is of a
   /// different type.
   ///
-  /// @throws InvalidOneOfAccess
+  /// @throws InvalidOneOfAccess if the stored type is not `T`
   template <class T, std::enable_if_t<!std::is_void<T>::value>* = nullptr>
   T&& As() && noexcept(false) HORUS_LIFETIME_BOUND {
     return std::move(As<T>());
@@ -351,7 +351,7 @@ class OneOf final {
   ///
   ///   T Foo() { return one_of_.As<T>(); }
   ///
-  /// @throws InvalidOneOfAccess
+  /// @throws InvalidOneOfAccess if the stored type is not `T`
   template <class T, std::enable_if_t<std::is_void<T>::value>* = nullptr>
   void As() const& noexcept(false) HORUS_LIFETIME_BOUND {
     EnsureIs<T>();

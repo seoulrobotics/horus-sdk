@@ -52,7 +52,7 @@ class HORUS_VIEW_TYPE Span final {
 
   /// Constructs a span from a `std::vector<T>`-like container.
   template <class Container,
-            std::enable_if_t<std::is_same<const typename Container::value_type, T>::value &&
+            std::enable_if_t<std::is_same<typename Container::value_type const, T>::value &&
                              !std::is_same<std::decay_t<Container>, Span>::value>* = nullptr>
   constexpr Span(Container const& container  // NOLINT(*-explicit-*)
                      HORUS_LIFETIME_BOUND) noexcept

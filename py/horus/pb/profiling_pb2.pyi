@@ -9,7 +9,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class ProfilingSet(_message.Message):
-    __slots__ = ("profiled_service", "processing_times", "resource_usage")
+    __slots__ = ("profiled_service", "processing_times", "resource_usage", "node_id")
     class ProfiledService(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         SERVICE_UNSPECIFIED: _ClassVar[ProfilingSet.ProfiledService]
@@ -52,10 +52,12 @@ class ProfilingSet(_message.Message):
     PROFILED_SERVICE_FIELD_NUMBER: _ClassVar[int]
     PROCESSING_TIMES_FIELD_NUMBER: _ClassVar[int]
     RESOURCE_USAGE_FIELD_NUMBER: _ClassVar[int]
+    NODE_ID_FIELD_NUMBER: _ClassVar[int]
     profiled_service: ProfilingSet.ProfiledService
     processing_times: _containers.RepeatedCompositeFieldContainer[ProfilingSet.ProfiledDurationMapEntry]
     resource_usage: _resources_pb2.ResourceUsage
-    def __init__(self, profiled_service: _Optional[_Union[ProfilingSet.ProfiledService, str]] = ..., processing_times: _Optional[_Iterable[_Union[ProfilingSet.ProfiledDurationMapEntry, _Mapping]]] = ..., resource_usage: _Optional[_Union[_resources_pb2.ResourceUsage, _Mapping]] = ...) -> None: ...
+    node_id: str
+    def __init__(self, profiled_service: _Optional[_Union[ProfilingSet.ProfiledService, str]] = ..., processing_times: _Optional[_Iterable[_Union[ProfilingSet.ProfiledDurationMapEntry, _Mapping]]] = ..., resource_usage: _Optional[_Union[_resources_pb2.ResourceUsage, _Mapping]] = ..., node_id: _Optional[str] = ...) -> None: ...
 
 class ServiceProfiling(_message.Message):
     __slots__ = ("details_profiling_set", "total_service_latency", "idle_time_before_processing", "intra_component_idle_time", "node_id")
@@ -101,12 +103,22 @@ class PreprocessingFrameProfiling(_message.Message):
     service_profiling: ServiceProfiling
     def __init__(self, frame_timestamp: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ..., lidar_id: _Optional[str] = ..., service_profiling: _Optional[_Union[ServiceProfiling, _Mapping]] = ...) -> None: ...
 
+class DetectionMergerFrameProfiling(_message.Message):
+    __slots__ = ("detection_merger_overhead", "total_overall_frame_latency")
+    DETECTION_MERGER_OVERHEAD_FIELD_NUMBER: _ClassVar[int]
+    TOTAL_OVERALL_FRAME_LATENCY_FIELD_NUMBER: _ClassVar[int]
+    detection_merger_overhead: _metadata_pb2.Duration
+    total_overall_frame_latency: _metadata_pb2.Duration
+    def __init__(self, detection_merger_overhead: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ..., total_overall_frame_latency: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ...) -> None: ...
+
 class ProfilingInfo(_message.Message):
-    __slots__ = ("general_profiling_set", "bundled_frame_profiling_set", "preprocessing_frame_profiling")
+    __slots__ = ("general_profiling_set", "bundled_frame_profiling_set", "preprocessing_frame_profiling", "detection_merger_frame_profiling")
     GENERAL_PROFILING_SET_FIELD_NUMBER: _ClassVar[int]
     BUNDLED_FRAME_PROFILING_SET_FIELD_NUMBER: _ClassVar[int]
     PREPROCESSING_FRAME_PROFILING_FIELD_NUMBER: _ClassVar[int]
+    DETECTION_MERGER_FRAME_PROFILING_FIELD_NUMBER: _ClassVar[int]
     general_profiling_set: ProfilingSet
     bundled_frame_profiling_set: BundledFrameProfilingSet
     preprocessing_frame_profiling: PreprocessingFrameProfiling
-    def __init__(self, general_profiling_set: _Optional[_Union[ProfilingSet, _Mapping]] = ..., bundled_frame_profiling_set: _Optional[_Union[BundledFrameProfilingSet, _Mapping]] = ..., preprocessing_frame_profiling: _Optional[_Union[PreprocessingFrameProfiling, _Mapping]] = ...) -> None: ...
+    detection_merger_frame_profiling: DetectionMergerFrameProfiling
+    def __init__(self, general_profiling_set: _Optional[_Union[ProfilingSet, _Mapping]] = ..., bundled_frame_profiling_set: _Optional[_Union[BundledFrameProfilingSet, _Mapping]] = ..., preprocessing_frame_profiling: _Optional[_Union[PreprocessingFrameProfiling, _Mapping]] = ..., detection_merger_frame_profiling: _Optional[_Union[DetectionMergerFrameProfiling, _Mapping]] = ...) -> None: ...

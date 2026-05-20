@@ -31,7 +31,7 @@ class CompleteInFuture final : public Future<void> {
 
   /// Polls the future until the given timeout has passed.
   ///
-  /// @throws std::bad_alloc
+  /// @throws std::bad_alloc if the timer allocation fails
   PollResult<void> UnsafePoll(PollContext& context) final;
 
  private:
@@ -67,7 +67,7 @@ class CompleteAtFuture final : public Future<void> {
 
   /// Polls the future until the given deadline is reached.
   ///
-  /// @throws std::bad_alloc
+  /// @throws std::bad_alloc if the timer allocation fails
   PollResult<void> UnsafePoll(PollContext& context) final {
     if (state_.template Is<std::chrono::time_point<Clock>>()) {
       state_.template Emplace<CompleteInFuture>(
