@@ -26,7 +26,7 @@ from horus.pb.config import metadata_pb2 as horus_dot_pb_dot_config_dot_metadata
 from horus.pb import resources_pb2 as horus_dot_pb_dot_resources__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x18horus/pb/profiling.proto\x12\x08horus.pb\x1a\x1ehorus/pb/config/metadata.proto\x1a\x18horus/pb/resources.proto\"\xd7\x06\n\x0cProfilingSet\x12@\n\x10profiled_service\x18\x01 \x01(\x0e\x32&.horus.pb.ProfilingSet.ProfiledService\x12I\n\x10processing_times\x18\x02 \x03(\x0b\x32/.horus.pb.ProfilingSet.ProfiledDurationMapEntry\x12\x34\n\x0eresource_usage\x18\x04 \x01(\x0b\x32\x17.horus.pb.ResourceUsageH\x00\x88\x01\x01\x1a\x8d\x03\n\x10ProfiledDuration\x12$\n\x08\x64uration\x18\x01 \x01(\x0b\x32\x12.horus.pb.Duration\x12R\n\x11performance_hints\x18\x02 \x03(\x0b\x32\x37.horus.pb.ProfilingSet.ProfiledDuration.PerformanceHint\x1a\xfe\x01\n\x0fPerformanceHint\x12n\n\x17\x63onfig_parameter_action\x18\x01 \x01(\x0e\x32M.horus.pb.ProfilingSet.ProfiledDuration.PerformanceHint.ConfigParameterAction\x12\x1d\n\x15\x63onfig_parameter_name\x18\x02 \x01(\t\"\\\n\x15\x43onfigParameterAction\x12\'\n#CONFIG_PARAMETER_ACTION_UNSPECIFIED\x10\x00\x12\x0c\n\x08INCREASE\x10\x01\x12\x0c\n\x08\x44\x45\x43REASE\x10\x02\x1a_\n\x18ProfiledDurationMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x36\n\x05value\x18\x02 \x01(\x0b\x32\'.horus.pb.ProfilingSet.ProfiledDuration\"z\n\x0fProfiledService\x12\x17\n\x13SERVICE_UNSPECIFIED\x10\x00\x12\x19\n\x15PREPROCESSING_SERVICE\x10\x01\x12\x15\n\x11\x44\x45TECTION_SERVICE\x10\x02\x12\x1c\n\x18\x44\x45TECTION_MERGER_SERVICE\x10\x03\x42\x11\n\x0f_resource_usageJ\x04\x08\x03\x10\x04\"\x83\x02\n\x10ServiceProfiling\x12\x35\n\x15\x64\x65tails_profiling_set\x18\x01 \x01(\x0b\x32\x16.horus.pb.ProfilingSet\x12\x31\n\x15total_service_latency\x18\x02 \x01(\x0b\x32\x12.horus.pb.Duration\x12\x37\n\x1bidle_time_before_processing\x18\x04 \x01(\x0b\x32\x12.horus.pb.Duration\x12\x35\n\x19intra_component_idle_time\x18\x05 \x01(\x0b\x32\x12.horus.pb.Duration\x12\x0f\n\x07node_id\x18\x06 \x01(\tJ\x04\x08\x03\x10\x04\"\xb1\x01\n\x0e\x46rameProfiling\x12\x31\n\x15overall_frame_latency\x18\x01 \x01(\x0b\x32\x12.horus.pb.Duration\x12\x32\n\x16\x66rame_bundling_latency\x18\x02 \x01(\x0b\x32\x12.horus.pb.Duration\x12\x32\n\x16preprocessing_overhead\x18\x04 \x01(\x0b\x32\x12.horus.pb.DurationJ\x04\x08\x03\x10\x04\"\xd4\x01\n\x18\x42undledFrameProfilingSet\x12,\n\x0f\x66rame_timestamp\x18\x03 \x01(\x0b\x32\x13.horus.pb.Timestamp\x12\x31\n\x0f\x66rame_profiling\x18\x04 \x01(\x0b\x32\x18.horus.pb.FrameProfiling\x12?\n\x1b\x64\x65tection_service_profiling\x18\x05 \x01(\x0b\x32\x1a.horus.pb.ServiceProfilingJ\x04\x08\x01\x10\x02J\x04\x08\x02\x10\x03J\x04\x08\x06\x10\x07J\x04\x08\x07\x10\x08\"\x94\x01\n\x1bPreprocessingFrameProfiling\x12,\n\x0f\x66rame_timestamp\x18\x01 \x01(\x0b\x32\x13.horus.pb.Timestamp\x12\x10\n\x08lidar_id\x18\x02 \x01(\t\x12\x35\n\x11service_profiling\x18\x03 \x01(\x0b\x32\x1a.horus.pb.ServiceProfiling\"\xf4\x01\n\rProfilingInfo\x12\x37\n\x15general_profiling_set\x18\x01 \x01(\x0b\x32\x16.horus.pb.ProfilingSetH\x00\x12I\n\x1b\x62undled_frame_profiling_set\x18\x02 \x01(\x0b\x32\".horus.pb.BundledFrameProfilingSetH\x00\x12N\n\x1dpreprocessing_frame_profiling\x18\x03 \x01(\x0b\x32%.horus.pb.PreprocessingFrameProfilingH\x00\x42\x0f\n\rprofiling_setb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x18horus/pb/profiling.proto\x12\x08horus.pb\x1a\x1ehorus/pb/config/metadata.proto\x1a\x18horus/pb/resources.proto\"\xe8\x06\n\x0cProfilingSet\x12@\n\x10profiled_service\x18\x01 \x01(\x0e\x32&.horus.pb.ProfilingSet.ProfiledService\x12I\n\x10processing_times\x18\x02 \x03(\x0b\x32/.horus.pb.ProfilingSet.ProfiledDurationMapEntry\x12\x34\n\x0eresource_usage\x18\x04 \x01(\x0b\x32\x17.horus.pb.ResourceUsageH\x00\x88\x01\x01\x12\x0f\n\x07node_id\x18\x05 \x01(\t\x1a\x8d\x03\n\x10ProfiledDuration\x12$\n\x08\x64uration\x18\x01 \x01(\x0b\x32\x12.horus.pb.Duration\x12R\n\x11performance_hints\x18\x02 \x03(\x0b\x32\x37.horus.pb.ProfilingSet.ProfiledDuration.PerformanceHint\x1a\xfe\x01\n\x0fPerformanceHint\x12n\n\x17\x63onfig_parameter_action\x18\x01 \x01(\x0e\x32M.horus.pb.ProfilingSet.ProfiledDuration.PerformanceHint.ConfigParameterAction\x12\x1d\n\x15\x63onfig_parameter_name\x18\x02 \x01(\t\"\\\n\x15\x43onfigParameterAction\x12\'\n#CONFIG_PARAMETER_ACTION_UNSPECIFIED\x10\x00\x12\x0c\n\x08INCREASE\x10\x01\x12\x0c\n\x08\x44\x45\x43REASE\x10\x02\x1a_\n\x18ProfiledDurationMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x36\n\x05value\x18\x02 \x01(\x0b\x32\'.horus.pb.ProfilingSet.ProfiledDuration\"z\n\x0fProfiledService\x12\x17\n\x13SERVICE_UNSPECIFIED\x10\x00\x12\x19\n\x15PREPROCESSING_SERVICE\x10\x01\x12\x15\n\x11\x44\x45TECTION_SERVICE\x10\x02\x12\x1c\n\x18\x44\x45TECTION_MERGER_SERVICE\x10\x03\x42\x11\n\x0f_resource_usageJ\x04\x08\x03\x10\x04\"\x83\x02\n\x10ServiceProfiling\x12\x35\n\x15\x64\x65tails_profiling_set\x18\x01 \x01(\x0b\x32\x16.horus.pb.ProfilingSet\x12\x31\n\x15total_service_latency\x18\x02 \x01(\x0b\x32\x12.horus.pb.Duration\x12\x37\n\x1bidle_time_before_processing\x18\x04 \x01(\x0b\x32\x12.horus.pb.Duration\x12\x35\n\x19intra_component_idle_time\x18\x05 \x01(\x0b\x32\x12.horus.pb.Duration\x12\x0f\n\x07node_id\x18\x06 \x01(\tJ\x04\x08\x03\x10\x04\"\xb1\x01\n\x0e\x46rameProfiling\x12\x31\n\x15overall_frame_latency\x18\x01 \x01(\x0b\x32\x12.horus.pb.Duration\x12\x32\n\x16\x66rame_bundling_latency\x18\x02 \x01(\x0b\x32\x12.horus.pb.Duration\x12\x32\n\x16preprocessing_overhead\x18\x04 \x01(\x0b\x32\x12.horus.pb.DurationJ\x04\x08\x03\x10\x04\"\xd4\x01\n\x18\x42undledFrameProfilingSet\x12,\n\x0f\x66rame_timestamp\x18\x03 \x01(\x0b\x32\x13.horus.pb.Timestamp\x12\x31\n\x0f\x66rame_profiling\x18\x04 \x01(\x0b\x32\x18.horus.pb.FrameProfiling\x12?\n\x1b\x64\x65tection_service_profiling\x18\x05 \x01(\x0b\x32\x1a.horus.pb.ServiceProfilingJ\x04\x08\x01\x10\x02J\x04\x08\x02\x10\x03J\x04\x08\x06\x10\x07J\x04\x08\x07\x10\x08\"\x94\x01\n\x1bPreprocessingFrameProfiling\x12,\n\x0f\x66rame_timestamp\x18\x01 \x01(\x0b\x32\x13.horus.pb.Timestamp\x12\x10\n\x08lidar_id\x18\x02 \x01(\t\x12\x35\n\x11service_profiling\x18\x03 \x01(\x0b\x32\x1a.horus.pb.ServiceProfiling\"\x8f\x01\n\x1d\x44\x65tectionMergerFrameProfiling\x12\x35\n\x19\x64\x65tection_merger_overhead\x18\x01 \x01(\x0b\x32\x12.horus.pb.Duration\x12\x37\n\x1btotal_overall_frame_latency\x18\x02 \x01(\x0b\x32\x12.horus.pb.Duration\"\xc9\x02\n\rProfilingInfo\x12\x37\n\x15general_profiling_set\x18\x01 \x01(\x0b\x32\x16.horus.pb.ProfilingSetH\x00\x12I\n\x1b\x62undled_frame_profiling_set\x18\x02 \x01(\x0b\x32\".horus.pb.BundledFrameProfilingSetH\x00\x12N\n\x1dpreprocessing_frame_profiling\x18\x03 \x01(\x0b\x32%.horus.pb.PreprocessingFrameProfilingH\x00\x12S\n detection_merger_frame_profiling\x18\x04 \x01(\x0b\x32\'.horus.pb.DetectionMergerFrameProfilingH\x00\x42\x0f\n\rprofiling_setb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -34,25 +34,27 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'horus.pb.profiling_pb2', _g
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_PROFILINGSET']._serialized_start=97
-  _globals['_PROFILINGSET']._serialized_end=952
-  _globals['_PROFILINGSET_PROFILEDDURATION']._serialized_start=309
-  _globals['_PROFILINGSET_PROFILEDDURATION']._serialized_end=706
-  _globals['_PROFILINGSET_PROFILEDDURATION_PERFORMANCEHINT']._serialized_start=452
-  _globals['_PROFILINGSET_PROFILEDDURATION_PERFORMANCEHINT']._serialized_end=706
-  _globals['_PROFILINGSET_PROFILEDDURATION_PERFORMANCEHINT_CONFIGPARAMETERACTION']._serialized_start=614
-  _globals['_PROFILINGSET_PROFILEDDURATION_PERFORMANCEHINT_CONFIGPARAMETERACTION']._serialized_end=706
-  _globals['_PROFILINGSET_PROFILEDDURATIONMAPENTRY']._serialized_start=708
-  _globals['_PROFILINGSET_PROFILEDDURATIONMAPENTRY']._serialized_end=803
-  _globals['_PROFILINGSET_PROFILEDSERVICE']._serialized_start=805
-  _globals['_PROFILINGSET_PROFILEDSERVICE']._serialized_end=927
-  _globals['_SERVICEPROFILING']._serialized_start=955
-  _globals['_SERVICEPROFILING']._serialized_end=1214
-  _globals['_FRAMEPROFILING']._serialized_start=1217
-  _globals['_FRAMEPROFILING']._serialized_end=1394
-  _globals['_BUNDLEDFRAMEPROFILINGSET']._serialized_start=1397
-  _globals['_BUNDLEDFRAMEPROFILINGSET']._serialized_end=1609
-  _globals['_PREPROCESSINGFRAMEPROFILING']._serialized_start=1612
-  _globals['_PREPROCESSINGFRAMEPROFILING']._serialized_end=1760
-  _globals['_PROFILINGINFO']._serialized_start=1763
-  _globals['_PROFILINGINFO']._serialized_end=2007
+  _globals['_PROFILINGSET']._serialized_end=969
+  _globals['_PROFILINGSET_PROFILEDDURATION']._serialized_start=326
+  _globals['_PROFILINGSET_PROFILEDDURATION']._serialized_end=723
+  _globals['_PROFILINGSET_PROFILEDDURATION_PERFORMANCEHINT']._serialized_start=469
+  _globals['_PROFILINGSET_PROFILEDDURATION_PERFORMANCEHINT']._serialized_end=723
+  _globals['_PROFILINGSET_PROFILEDDURATION_PERFORMANCEHINT_CONFIGPARAMETERACTION']._serialized_start=631
+  _globals['_PROFILINGSET_PROFILEDDURATION_PERFORMANCEHINT_CONFIGPARAMETERACTION']._serialized_end=723
+  _globals['_PROFILINGSET_PROFILEDDURATIONMAPENTRY']._serialized_start=725
+  _globals['_PROFILINGSET_PROFILEDDURATIONMAPENTRY']._serialized_end=820
+  _globals['_PROFILINGSET_PROFILEDSERVICE']._serialized_start=822
+  _globals['_PROFILINGSET_PROFILEDSERVICE']._serialized_end=944
+  _globals['_SERVICEPROFILING']._serialized_start=972
+  _globals['_SERVICEPROFILING']._serialized_end=1231
+  _globals['_FRAMEPROFILING']._serialized_start=1234
+  _globals['_FRAMEPROFILING']._serialized_end=1411
+  _globals['_BUNDLEDFRAMEPROFILINGSET']._serialized_start=1414
+  _globals['_BUNDLEDFRAMEPROFILINGSET']._serialized_end=1626
+  _globals['_PREPROCESSINGFRAMEPROFILING']._serialized_start=1629
+  _globals['_PREPROCESSINGFRAMEPROFILING']._serialized_end=1777
+  _globals['_DETECTIONMERGERFRAMEPROFILING']._serialized_start=1780
+  _globals['_DETECTIONMERGERFRAMEPROFILING']._serialized_end=1923
+  _globals['_PROFILINGINFO']._serialized_start=1926
+  _globals['_PROFILINGINFO']._serialized_end=2255
 # @@protoc_insertion_point(module_scope)

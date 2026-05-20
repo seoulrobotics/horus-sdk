@@ -1,6 +1,6 @@
 from ...rpc.base_client import BaseRpcClient
 
-from ..detection_service.detection_pb2 import DetectionEvent
+from ..detection_service.detection_pb2 import DetectionEvent, ZoneEventList
 from ..rpc_pb2 import DefaultSubscribeRequest, DefaultSubscribeResponse, DefaultUnsubscribeRequest, DefaultUnsubscribeResponse
 
 class DetectionMergerServiceClient(BaseRpcClient):
@@ -49,3 +49,12 @@ class DetectionMergerSubscriberServiceClient(BaseRpcClient):
             raise TypeError("request must be a DetectionEvent")
 
         await self._send_rpc(1, request)
+
+    async def broadcast_zone_events(self, request: ZoneEventList) -> None:
+        """
+        Service for receiving merged detection results.
+        """
+        if not isinstance(request, ZoneEventList):
+            raise TypeError("request must be a ZoneEventList")
+
+        await self._send_rpc(2, request)
