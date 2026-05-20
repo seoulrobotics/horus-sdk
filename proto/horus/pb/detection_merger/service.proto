@@ -41,4 +41,11 @@ service DetectionMergerSubscriberService {
       description: "Receive merged detection results."
     };
   }
+
+  rpc BroadcastZoneEvents(ZoneEventList) returns (NoResponse) {
+    option (method_options) = {
+      id: 2
+      description: "Receive zone entry/exit events for a frame."
+    };
+  }
 }

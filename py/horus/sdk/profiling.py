@@ -73,6 +73,7 @@ class ProfilingSet:
     profiled_service: ProfiledService
     processing_times: typing.Dict[str, datetime.timedelta]
     resource_usage: ResourceUsage
+    node_id: str
 
     @staticmethod
     def _from_pb(pb: profiling_pb2.ProfilingSet) -> "ProfilingSet":
@@ -83,6 +84,7 @@ class ProfilingSet:
                 for entry in pb.processing_times
             },
             resource_usage=ResourceUsage._from_pb(pb.resource_usage),
+            node_id=pb.node_id,
         )
 
 
@@ -168,12 +170,35 @@ class BundledFrameProfilingSet:
         )
 
 
+@dataclasses.dataclass(frozen=True)
+class DetectionMergerFrameProfiling:
+    """Profiling information for a merged frame produced by the detection merger service."""
+
+    detection_merger_overhead: datetime.timedelta
+    total_overall_frame_latency: datetime.timedelta
+
+    @staticmethod
+    def _from_pb(
+        pb: profiling_pb2.DetectionMergerFrameProfiling,
+    ) -> "DetectionMergerFrameProfiling":
+        return DetectionMergerFrameProfiling(
+            detection_merger_overhead=duration_to_timedelta(
+                pb.detection_merger_overhead
+            ),
+            total_overall_frame_latency=duration_to_timedelta(
+                pb.total_overall_frame_latency
+            ),
+        )
+
+
 class ProfileType(enum.Enum):
     """The type of profiling information."""
 
+    UNKNOWN = 0
     GENERAL = 1
     BUNDLED = 2
     PREPROCESSING_FRAME = 3
+    DETECTION_MERGER_FRAME = 4
 
 
 @dataclasses.dataclass(frozen=True)
@@ -187,6 +212,7 @@ class ProfilingInfo:
     general_profiling_set: typing.Optional[ProfilingSet]
     bundled_frame_profiling_set: typing.Optional[BundledFrameProfilingSet]
     preprocessing_frame_profiling: typing.Optional[PreprocessingFrameProfiling]
+    detection_merger_frame_profiling: typing.Optional[DetectionMergerFrameProfiling]
     profile_type: ProfileType
 
     @staticmethod
@@ -194,7 +220,8 @@ class ProfilingInfo:
         general = None
         bundled = None
         preprocessing_frame = None
-        profile_type = None
+        detection_merger_frame = None
+        profile_type = ProfileType.UNKNOWN
 
         field = pb.WhichOneof("profiling_set")
 
@@ -209,12 +236,16 @@ class ProfilingInfo:
                 pb.preprocessing_frame_profiling
             )
             profile_type = ProfileType.PREPROCESSING_FRAME
-        else:
-            raise TypeError("Invalid ProfilingInfo protobuf")
+        elif field == "detection_merger_frame_profiling":
+            detection_merger_frame = DetectionMergerFrameProfiling._from_pb(
+                pb.detection_merger_frame_profiling
+            )
+            profile_type = ProfileType.DETECTION_MERGER_FRAME
 
         return ProfilingInfo(
             general_profiling_set=general,
             bundled_frame_profiling_set=bundled,
             preprocessing_frame_profiling=preprocessing_frame,
+            detection_merger_frame_profiling=detection_merger_frame,
             profile_type=profile_type,
         )

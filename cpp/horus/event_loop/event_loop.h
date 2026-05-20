@@ -264,7 +264,7 @@ class EventLoop::State::TicketFor final : public Ticket {
 
   /// Creates a ticket which will execute in the background and free itself in the future.
   ///
-  /// @throw std::bad_alloc
+  /// @throws std::bad_alloc if the allocation fails
   static bool CreateAndRelease(const std::shared_ptr<State>& state, F&& invocable) noexcept(false) {
     const std::unique_lock<std::mutex> lock{state->mutex_};
     if (state->shutting_down_) {

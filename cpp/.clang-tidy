@@ -1,5 +1,5 @@
-Checks: >
-  *,
+Checks: [
+  "*",
 
   -altera-*,
   -android-*,
@@ -19,6 +19,7 @@ Checks: >
   -cppcoreguidelines-avoid-do-while,
   -cppcoreguidelines-avoid-magic-numbers,
   -misc-confusable-identifiers,
+  -misc-include-cleaner, # TODO(ATI-2304): check includes
   -modernize-concat-nested-namespaces,
   -modernize-type-traits,
   -modernize-unary-static-assert,
@@ -31,6 +32,7 @@ Checks: >
   -readability-magic-numbers,
   -readability-redundant-declaration,
   -readability-redundant-member-init,
+]
 
 CheckOptions:
   misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic: true

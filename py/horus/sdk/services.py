@@ -15,7 +15,7 @@ from horus.pb.point_aggregator.point_aggregator_service_handler import (
 )
 
 from horus.rpc.websocket import WebSocket
-from horus.sdk.detection import DetectionEvent
+from horus.sdk.detection import DetectionEvent, ZoneEvent
 
 from horus.sdk.profiling import ProfilingInfo
 from horus.sdk import sensor
@@ -44,6 +44,7 @@ class DetectionMergerServiceListener(DetectionMergerSubscriberServiceHandler):
         self._on_detection_event: typing.Set[
             typing.Callable[[DetectionEvent], None]
         ] = set()
+        self._on_zone_event: typing.Set[typing.Callable[[ZoneEvent], None]] = set()
         self._logger = logger
 
     @override
@@ -63,8 +64,26 @@ class DetectionMergerServiceListener(DetectionMergerSubscriberServiceHandler):
         for subscriber in self._on_detection_event:
             subscriber(detection_event)
 
+    @override
+    async def broadcast_zone_events(self, request: detection_pb2.ZoneEventList) -> None:
+        if not self._on_zone_event:
+            return
+
+        for zone_event_pb in request.zone_events:
+            try:
+                zone_event = ZoneEvent._from_pb(zone_event_pb)
+            except ValueError:
+                self._logger.error(
+                    "cannot parse ZoneEvent",
+                    extra={"zone_event": zone_event_pb},
+                )
+                continue
+
+            for subscriber in self._on_zone_event:
+                subscriber(zone_event)
+
     def has_no_subscriber(self) -> bool:
-        return not self._on_detection_event
+        return not self._on_detection_event and not self._on_zone_event
 
 
 class NotificationServiceListener(NotificationListenerServiceHandler):

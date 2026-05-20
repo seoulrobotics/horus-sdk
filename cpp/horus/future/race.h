@@ -159,7 +159,7 @@ auto RaceFuture<Futures...>::PollFutures(PollContext& context) -> PollResult<Res
   }
   return ReadyResult<Result>(horus_internal::SwitchVoid<FutureResult>(
       /*if_void=*/[](auto const& /*forward*/) noexcept
-      -> Result { return Result{InPlaceType<FutureResult>}; },
+                      -> Result { return Result{InPlaceType<FutureResult>}; },
       /*if_not_void=*/
       [result](auto forward) noexcept -> Result {
         return Result{InPlaceType<FutureResult>, std::move(*forward(result))};
@@ -179,8 +179,10 @@ auto RaceArrayFuture<F, N>::UnsafePoll(PollContext& context) -> PollResult<Resul
     Result* result{maybe_result.template TryAs<Result>()};
     if (result != nullptr) {
       return horus_internal::SwitchVoid<Result>(
-          /*if_void=*/[](auto forward) noexcept
-          -> PollResult<Result> { return PollResult<Result>{InPlaceType<decltype(forward())>}; },
+          /*if_void=*/
+          [](auto forward) noexcept -> PollResult<Result> {
+            return PollResult<Result>{InPlaceType<decltype(forward())>};
+          },
           /*if_not_void=*/
           [result](auto forward) noexcept -> PollResult<Result> {
             return ReadyResult<Result>(std::move(*forward(result)));

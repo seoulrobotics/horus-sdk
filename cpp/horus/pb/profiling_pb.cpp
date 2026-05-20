@@ -115,6 +115,7 @@ ProfilingSet::ProfilingSet(const ProfilingSet& other) noexcept(false)
     : profiled_service_{other.profiled_service_}
     , processing_times_{other.processing_times_}
     , resource_usage_{other.resource_usage_}
+    , node_id_{other.node_id_}
     , set_fields_{other.set_fields_} {}
 
 void ProfilingSet::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -126,6 +127,9 @@ void ProfilingSet::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[2]) {
     SerializeField<ResourceUsage>(writer, /*tag=*/ 4, resource_usage_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 5, node_id_);
   }
 }
 
@@ -145,6 +149,11 @@ void ProfilingSet::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 4: {
         DeserializeField<ResourceUsage>(reader, resource_usage_);
         set_fields_[2] = true;
+        break;
+      }
+      case 5: {
+        DeserializeField<CowBytes>(reader, node_id_);
+        set_fields_[3] = true;
         break;
       }
       default: {
@@ -349,10 +358,46 @@ void PreprocessingFrameProfiling::DeserializeFrom(PbReader& reader) noexcept(fal
   }
 }
 
+DetectionMergerFrameProfiling::DetectionMergerFrameProfiling(const DetectionMergerFrameProfiling& other) noexcept(false)
+    : detection_merger_overhead_{other.detection_merger_overhead_}
+    , total_overall_frame_latency_{other.total_overall_frame_latency_}
+    , set_fields_{other.set_fields_} {}
+
+void DetectionMergerFrameProfiling::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<Duration>(writer, /*tag=*/ 1, detection_merger_overhead_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<Duration>(writer, /*tag=*/ 2, total_overall_frame_latency_);
+  }
+}
+
+void DetectionMergerFrameProfiling::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<Duration>(reader, detection_merger_overhead_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<Duration>(reader, total_overall_frame_latency_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
 ProfilingInfo::ProfilingInfo(const ProfilingInfo& other) noexcept(false)
     : general_profiling_set_{other.general_profiling_set_}
     , bundled_frame_profiling_set_{other.bundled_frame_profiling_set_}
     , preprocessing_frame_profiling_{other.preprocessing_frame_profiling_}
+    , detection_merger_frame_profiling_{other.detection_merger_frame_profiling_}
     , profiling_set_{other.profiling_set_}
     , set_fields_{other.set_fields_} {}
 
@@ -365,6 +410,9 @@ void ProfilingInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[2]) {
     SerializeField<PreprocessingFrameProfiling>(writer, /*tag=*/ 3, preprocessing_frame_profiling_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<DetectionMergerFrameProfiling>(writer, /*tag=*/ 4, detection_merger_frame_profiling_);
   }
 }
 
@@ -390,6 +438,13 @@ void ProfilingInfo::DeserializeFrom(PbReader& reader) noexcept(false) {
         profiling_set_ = ProfilingSetOneof::kPreprocessingFrameProfiling;
         DeserializeField<PreprocessingFrameProfiling>(reader, preprocessing_frame_profiling_);
         set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        clear_profiling_set();
+        profiling_set_ = ProfilingSetOneof::kDetectionMergerFrameProfiling;
+        DeserializeField<DetectionMergerFrameProfiling>(reader, detection_merger_frame_profiling_);
+        set_fields_[3] = true;
         break;
       }
       default: {

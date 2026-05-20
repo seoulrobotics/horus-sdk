@@ -92,6 +92,11 @@ func (c *DetectionMergerSubscriberServiceClient) BroadcastDetection(ctx context.
 	return c.e.SendOneWay(ctx, c.ServiceId(), 1, req)
 }
 
+// Receive zone entry/exit events for a frame.
+func (c *DetectionMergerSubscriberServiceClient) BroadcastZoneEvents(ctx context.Context, req *detection_pb.ZoneEventList) error {
+	return c.e.SendOneWay(ctx, c.ServiceId(), 2, req)
+}
+
 // DetectionMergerServiceHandler defines how to handle requests sent to a DetectionMergerService:
 // Service for merging detection results from multiple sources.
 type DetectionMergerServiceHandler struct {
@@ -156,6 +161,8 @@ func DetectionMergerServiceInterfaceToHandler(h DetectionMergerServiceInterface)
 type DetectionMergerSubscriberServiceHandler struct {
 	// Receive merged detection results.
 	BroadcastDetection func(ctx context.Context, req *detection_pb.DetectionEvent) error
+	// Receive zone entry/exit events for a frame.
+	BroadcastZoneEvents func(ctx context.Context, req *detection_pb.ZoneEventList) error
 }
 
 // ServiceId returns the service ID of the DetectionMergerSubscriberService (16).
@@ -176,6 +183,16 @@ func (h *DetectionMergerSubscriberServiceHandler) Handle(ctx context.Context, me
 			return nil, nil
 		}
 		return nil, h.BroadcastDetection(ctx, req)
+	case 2:
+		req := &detection_pb.ZoneEventList{}
+		err := proto.Unmarshal(bytes, req)
+		if err != nil {
+			return nil, fmt.Errorf("failed to deserialize request: %v", err)
+		}
+		if h.BroadcastZoneEvents == nil {
+			return nil, nil
+		}
+		return nil, h.BroadcastZoneEvents(ctx, req)
 	default:
 		return nil, fmt.Errorf("method not found: %d", method)
 	}
@@ -186,11 +203,14 @@ func (h *DetectionMergerSubscriberServiceHandler) Handle(ctx context.Context, me
 type DetectionMergerSubscriberServiceInterface interface {
 	// Receive merged detection results.
 	BroadcastDetection(ctx context.Context, req *detection_pb.DetectionEvent) error
+	// Receive zone entry/exit events for a frame.
+	BroadcastZoneEvents(ctx context.Context, req *detection_pb.ZoneEventList) error
 }
 
 // DetectionMergerSubscriberServiceInterfaceToHandler converts a [DetectionMergerSubscriberServiceInterface] to a [rpc.Handler].
 func DetectionMergerSubscriberServiceInterfaceToHandler(h DetectionMergerSubscriberServiceInterface) rpc.Handler {
 	return &DetectionMergerSubscriberServiceHandler{
 		BroadcastDetection: h.BroadcastDetection,
+		BroadcastZoneEvents: h.BroadcastZoneEvents,
 	}
 }

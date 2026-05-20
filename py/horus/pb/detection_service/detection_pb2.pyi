@@ -61,7 +61,7 @@ class TimeRange(_message.Message):
     def __init__(self, start: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ..., end: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class DetectedObject(_message.Message):
-    __slots__ = ("classification", "kinematics", "shape", "status")
+    __slots__ = ("classification", "kinematics", "shape", "status", "event_zone_ids")
     class Classification(_message.Message):
         __slots__ = ("class_label", "class_confidence")
         CLASS_LABEL_FIELD_NUMBER: _ClassVar[int]
@@ -98,11 +98,41 @@ class DetectedObject(_message.Message):
     KINEMATICS_FIELD_NUMBER: _ClassVar[int]
     SHAPE_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
+    EVENT_ZONE_IDS_FIELD_NUMBER: _ClassVar[int]
     classification: DetectedObject.Classification
     kinematics: DetectedObject.Kinematics
     shape: DetectedObject.Shape
     status: DetectedObject.Status
-    def __init__(self, classification: _Optional[_Union[DetectedObject.Classification, _Mapping]] = ..., kinematics: _Optional[_Union[DetectedObject.Kinematics, _Mapping]] = ..., shape: _Optional[_Union[DetectedObject.Shape, _Mapping]] = ..., status: _Optional[_Union[DetectedObject.Status, _Mapping]] = ...) -> None: ...
+    event_zone_ids: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, classification: _Optional[_Union[DetectedObject.Classification, _Mapping]] = ..., kinematics: _Optional[_Union[DetectedObject.Kinematics, _Mapping]] = ..., shape: _Optional[_Union[DetectedObject.Shape, _Mapping]] = ..., status: _Optional[_Union[DetectedObject.Status, _Mapping]] = ..., event_zone_ids: _Optional[_Iterable[str]] = ...) -> None: ...
+
+class ZoneEvent(_message.Message):
+    __slots__ = ("timestamp", "zone_id", "type", "object", "object_id")
+    class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = ()
+        ZONE_EVENT_TYPE_UNSPECIFIED: _ClassVar[ZoneEvent.Type]
+        ENTRY: _ClassVar[ZoneEvent.Type]
+        EXIT: _ClassVar[ZoneEvent.Type]
+    ZONE_EVENT_TYPE_UNSPECIFIED: ZoneEvent.Type
+    ENTRY: ZoneEvent.Type
+    EXIT: ZoneEvent.Type
+    TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+    ZONE_ID_FIELD_NUMBER: _ClassVar[int]
+    TYPE_FIELD_NUMBER: _ClassVar[int]
+    OBJECT_FIELD_NUMBER: _ClassVar[int]
+    OBJECT_ID_FIELD_NUMBER: _ClassVar[int]
+    timestamp: _metadata_pb2.Timestamp
+    zone_id: str
+    type: ZoneEvent.Type
+    object: DetectedObject
+    object_id: int
+    def __init__(self, timestamp: _Optional[_Union[_metadata_pb2.Timestamp, _Mapping]] = ..., zone_id: _Optional[str] = ..., type: _Optional[_Union[ZoneEvent.Type, str]] = ..., object: _Optional[_Union[DetectedObject, _Mapping]] = ..., object_id: _Optional[int] = ...) -> None: ...
+
+class ZoneEventList(_message.Message):
+    __slots__ = ("zone_events",)
+    ZONE_EVENTS_FIELD_NUMBER: _ClassVar[int]
+    zone_events: _containers.RepeatedCompositeFieldContainer[ZoneEvent]
+    def __init__(self, zone_events: _Optional[_Iterable[_Union[ZoneEvent, _Mapping]]] = ...) -> None: ...
 
 class DeepLearningObject(_message.Message):
     __slots__ = ("classification", "bounding_box", "associated_object_id")

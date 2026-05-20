@@ -43,6 +43,9 @@ AnyFuture<pb::RpcMessage> DetectionMergerSubscriberServiceHandler::Handle(const 
     case 1: {
       return DoDispatch(&DetectionMergerSubscriberServiceHandler::BroadcastDetection, context, owned_request);
     }
+    case 2: {
+      return DoDispatch(&DetectionMergerSubscriberServiceHandler::BroadcastZoneEvents, context, owned_request);
+    }
     default: {
       throw horus_internal::UnknownRpcMethodError{};
     }

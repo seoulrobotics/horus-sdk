@@ -63,7 +63,7 @@ class Handle final : public BaseHandle {
   /// This function may be called multiple times, although it must always be called with a `context`
   /// which refers to a same `EventLoop` and `FutureWaker`.
   template <class... Args>
-  bool Engage(Owner* owner, Handle(Owner::*handle), PollContext& context,
+  bool Engage(Owner* owner, Handle(Owner::* handle), PollContext& context,
               std::int32_t (*init)(uv_loop_t* loop, H* handle, Args... args), Args... args) {
     assert(&(owner->*handle) == this);
     static_cast<void>(handle);
@@ -82,7 +82,7 @@ class Handle final : public BaseHandle {
   /// Engages the handle, then calls `F` with a reference to the handle. If the handle had already
   /// been engaged, does nothing and returns false.
   template <class... Args, class F>
-  bool Engage(Owner* owner, Handle(Owner::*handle), PollContext& context,
+  bool Engage(Owner* owner, Handle(Owner::* handle), PollContext& context,
               std::int32_t (*init)(uv_loop_t* loop, H* handle, Args... args), Args... args,
               const F& with_handle) {
     if (!Engage(owner, handle, context, init, std::forward<Args>(args)...)) {

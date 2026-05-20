@@ -28,13 +28,13 @@ class OstreamSink final {
 
 /// Returns a formatting sink which outputs values to `stdout`.
 inline OstreamSink const& StdoutSink() noexcept {
-  static const OstreamSink kSink{std::cout};
+  static OstreamSink const kSink{std::cout};
   return kSink;
 }
 
 /// Returns a formatting sink which outputs values to `stderr`.
 inline OstreamSink const& StderrSink() noexcept {
-  static const OstreamSink kSink{std::cerr};
+  static OstreamSink const kSink{std::cerr};
   return kSink;
 }
 

@@ -84,7 +84,7 @@ constexpr void HorusStringify(Sink& sink, char const* value) noexcept(IsNoexcept
 /// Appends `value` into `sink` as a boolean literal ("true" or "false").
 template <class Sink, class T>
 constexpr void HorusStringify(Sink& sink, bool value) noexcept(IsNoexceptSink<Sink>()) {
-  const StringView string{value ? "true" : "false"};
+  StringView const string{value ? "true" : "false"};
   sink.Append(string);
 }
 
