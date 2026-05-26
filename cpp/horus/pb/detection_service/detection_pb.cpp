@@ -283,6 +283,7 @@ DetectedObject::DetectedObject(const DetectedObject& other) noexcept(false)
     , kinematics_{other.kinematics_}
     , shape_{other.shape_}
     , status_{other.status_}
+    , event_zone_ids_{other.event_zone_ids_}
     , set_fields_{other.set_fields_} {}
 
 void DetectedObject::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -297,6 +298,9 @@ void DetectedObject::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[3]) {
     SerializeField<DetectedObject_Status>(writer, /*tag=*/ 4, status_);
+  }
+  if (set_fields_[4]) {
+    SerializeField<CowRepeated<CowBytes>>(writer, /*tag=*/ 5, event_zone_ids_);
   }
 }
 
@@ -321,6 +325,104 @@ void DetectedObject::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 4: {
         DeserializeField<DetectedObject_Status>(reader, status_);
         set_fields_[3] = true;
+        break;
+      }
+      case 5: {
+        DeserializeField<CowRepeated<CowBytes>>(reader, event_zone_ids_);
+        set_fields_[4] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+ZoneEvent::ZoneEvent(const ZoneEvent& other) noexcept(false)
+    : timestamp_{other.timestamp_}
+    , zone_id_{other.zone_id_}
+    , type_{other.type_}
+    , object_{other.object_}
+    , object_id_{other.object_id_}
+    , object_info_{other.object_info_}
+    , set_fields_{other.set_fields_} {}
+
+void ZoneEvent::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<Timestamp>(writer, /*tag=*/ 1, timestamp_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, zone_id_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<ZoneEvent_Type>(writer, /*tag=*/ 3, type_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<DetectedObject>(writer, /*tag=*/ 4, object_);
+  }
+  if (set_fields_[4]) {
+    SerializeField<std::uint32_t>(writer, /*tag=*/ 5, object_id_);
+  }
+}
+
+void ZoneEvent::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<Timestamp>(reader, timestamp_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, zone_id_);
+        set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<ZoneEvent_Type>(reader, type_);
+        set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        clear_object_info();
+        object_info_ = ObjectInfoOneof::kObject;
+        DeserializeField<DetectedObject>(reader, object_);
+        set_fields_[3] = true;
+        break;
+      }
+      case 5: {
+        clear_object_info();
+        object_info_ = ObjectInfoOneof::kObjectId;
+        DeserializeField<std::uint32_t>(reader, object_id_);
+        set_fields_[4] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+ZoneEventList::ZoneEventList(const ZoneEventList& other) noexcept(false)
+    : zone_events_{other.zone_events_}
+    , set_fields_{other.set_fields_} {}
+
+void ZoneEventList::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowRepeated<ZoneEvent>>(writer, /*tag=*/ 1, zone_events_);
+  }
+}
+
+void ZoneEventList::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowRepeated<ZoneEvent>>(reader, zone_events_);
+        set_fields_[0] = true;
         break;
       }
       default: {
