@@ -55,6 +55,7 @@
 #include "horus/sdk/profiling.h"
 #include "horus/sdk/sensor.h"
 #include "horus/sdk/version.h"
+#include "horus/sdk/zone_events.h"
 #include "horus/strings/logging.h"
 #include "horus/types/in_place.h"
 #include "horus/types/one_of.h"
@@ -195,6 +196,20 @@ SdkFuture<SdkSubscription> Sdk::SubscribeToObjects(sdk::ObjectSubscriptionReques
           pb::DetectionEvent&& event) -> ChannelSendFuture<Task> {
         MoveOnlyFunction<void(pb::DetectionEvent&&)> move_only_user_callback{
             std::function<void(pb::DetectionEvent&&)>{
+                user_callback}};  // Copy `user_callback` into a `MoveOnlyFunction`.
+        return InvokeUserCallbackWithinEventLoop(std::move(move_only_user_callback),
+                                                 std::move(event));
+      });
+  return CreateSubscription<pb::DetectionMergerServiceClient>(
+      service_map_.detection_merger, std::move(listener), pb::DefaultSubscribeRequest{});
+}
+
+SdkFuture<SdkSubscription> Sdk::SubscribeToZoneEvents(sdk::ZoneEventSubscriptionRequest&& request) {
+  auto listener = pb::CreateFunctionalDetectionMergerSubscriberService().BroadcastZoneEventsWith(
+      [this, user_callback{std::move(request).on_zone_events}](
+          pb::ZoneEventList&& event) -> ChannelSendFuture<Task> {
+        MoveOnlyFunction<void(pb::ZoneEventList&&)> move_only_user_callback{
+            std::function<void(pb::ZoneEventList&&)>{
                 user_callback}};  // Copy `user_callback` into a `MoveOnlyFunction`.
         return InvokeUserCallbackWithinEventLoop(std::move(move_only_user_callback),
                                                  std::move(event));

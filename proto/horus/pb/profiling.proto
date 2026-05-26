@@ -42,6 +42,10 @@ message ProfilingSet {
   /// Resource usage profiling of the service.
   reserved 3;  // replaced by shared resource usage.
   optional ResourceUsage resource_usage = 4;
+
+  /// The node ID of the service that generated this profiling set. Empty when
+  /// not applicable (e.g. profiling sets aggregated across nodes).
+  string node_id = 5;
 }
 
 /// The profiling of a service including the total service latency (total
@@ -124,6 +128,19 @@ message PreprocessingFrameProfiling {
   ServiceProfiling service_profiling = 3;
 }
 
+/// The profiling of a merged frame produced by the detection merger service.
+message DetectionMergerFrameProfiling {
+  /// The detection merger overhead: time from the latest received detection
+  /// service event (by its publishing time) to the publishing of the merged
+  /// event by the detection merger.
+  Duration detection_merger_overhead = 1;
+
+  /// The total overall frame latency: the maximum overall frame latency across
+  /// all detection service events received in this window, plus the detection
+  /// merger overhead.
+  Duration total_overall_frame_latency = 2;
+}
+
 /// A profiling info sent to the notification service and forward to its
 /// subscribers.
 message ProfilingInfo {
@@ -135,5 +152,7 @@ message ProfilingInfo {
     BundledFrameProfilingSet bundled_frame_profiling_set = 2;
     /// Per-LiDAR frame profiling produced by the preprocessing service.
     PreprocessingFrameProfiling preprocessing_frame_profiling = 3;
+    /// Per-merged-frame profiling produced by the detection merger service.
+    DetectionMergerFrameProfiling detection_merger_frame_profiling = 4;
   }
 }

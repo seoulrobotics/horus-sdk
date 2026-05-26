@@ -32,6 +32,7 @@
 #include "horus/sdk/profiling.h"
 #include "horus/sdk/sensor.h"
 #include "horus/sdk/version.h"
+#include "horus/sdk/zone_events.h"
 #include "horus/types/in_place.h"
 #include "horus/types/one_of.h"
 
@@ -91,6 +92,10 @@ class Sdk final {
 
   /// Subscribes to receive object information.
   Future<Subscription> SubscribeToObjects(sdk::ObjectSubscriptionRequest&& request);
+
+  /// Subscribes to receive zone-entry/exit events emitted by the detection
+  /// merger.
+  Future<Subscription> SubscribeToZoneEvents(sdk::ZoneEventSubscriptionRequest&& request);
 
   /// Subscribes to receive occupancy grid information.
   Future<Subscription> SubscribeToOccupancyGrid(sdk::OccupancyGridSubscriptionRequest&& request);

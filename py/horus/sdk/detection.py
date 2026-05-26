@@ -113,6 +113,7 @@ class DetectedObject:
     kinematics: Kinematics
     shape: Shape
     status: Status
+    event_zone_ids: typing.List[str]
 
     @staticmethod
     def _from_pb(pb: detection_pb2.DetectedObject) -> "DetectedObject":
@@ -121,6 +122,7 @@ class DetectedObject:
             kinematics=Kinematics._from_pb(pb.kinematics),
             shape=Shape._from_pb(pb.shape),
             status=Status._from_pb(pb.status),
+            event_zone_ids=list(pb.event_zone_ids),
         )
 
 
@@ -162,6 +164,41 @@ class DeepLearningObject:
         return DeepLearningObject(
             bounding_box=BoundingBox._from_pb(pb.bounding_box),
             classification=Classification._from_pb(pb.classification),
+        )
+
+
+class ZoneEventType(enum.Enum):
+    """Whether an object entered or exited an event zone."""
+
+    UNSPECIFIED = 0
+    ENTRY = 1
+    EXIT = 2
+
+
+@dataclasses.dataclass(frozen=True)
+class ZoneEvent:
+    """An entry or exit of a tracked object in an event zone.
+
+    `object` carries the full detection state when the object is still being
+    tracked. For an EXIT triggered by an unrecovered object, only `object_id`
+    is set and `object` is None.
+    """
+
+    timestamp: datetime.datetime
+    zone_id: str
+    type: ZoneEventType
+    object: typing.Optional[DetectedObject]
+    object_id: typing.Optional[int]
+
+    @staticmethod
+    def _from_pb(pb: detection_pb2.ZoneEvent) -> "ZoneEvent":
+        which = pb.WhichOneof("object_info")
+        return ZoneEvent(
+            timestamp=timestamp_to_datetime(pb.timestamp),
+            zone_id=pb.zone_id,
+            type=ZoneEventType(pb.type),
+            object=DetectedObject._from_pb(pb.object) if which == "object" else None,
+            object_id=pb.object_id if which == "object_id" else None,
         )
 
 

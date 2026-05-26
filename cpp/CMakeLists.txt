@@ -140,6 +140,14 @@ add_custom_command(
     horus_uv_handles_generator
 )
 
+# Target wrapping the custom command above so that other directories can depend
+# on the generated header without having to know its on-disk path. CMake's
+# cross-directory custom-command tracking is fragile pre-3.20; a custom target
+# is the portable bridge.
+add_custom_target(horus_sdk_uv_handles_generated
+  DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/horus/event_loop/uv_handles.h"
+)
+
 
 # Library
 # -----
@@ -247,6 +255,7 @@ add_library(horus_sdk
   horus/sdk/sensor.h
   horus/sdk/version.cpp
   horus/sdk/version.h
+  horus/sdk/zone_events.h
   horus/source_location.h
   horus/strings/ansi.cpp
   horus/strings/ansi.h

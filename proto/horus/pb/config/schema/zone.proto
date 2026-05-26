@@ -10,6 +10,7 @@ enum ZoneType {
   STATIC_DETECTION = 2;
   REFLECTION = 3;
   STATIC_EXCLUSION = 4;
+  EVENT = 5;
 }
 
 message Zone {
