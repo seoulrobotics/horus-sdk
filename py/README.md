@@ -37,14 +37,14 @@ python3 examples/print_logs.py
 When working inside the `horus` monorepo, `horus/pb/` contains only a stub
 `__init__.py`. All `*_pb2.py`, `*.pyi`, `*_client.py`, and `*_handler.py` files
 are generated from the `.proto` sources in `common/horus_pb/` by the `horus`
-build tool, and written to `build/RelWithDebInfo/sdk/py/horus/pb/`.
+build tool, and written to `build/rules/sdk/py/horus/pb/`.
 
 Run the following from the **repository root** to generate and copy them into
 the source tree, then build and install the wheel:
 
 ```sh
 tools/bin/horus build 'sdk/py/horus/**'
-cp -r build/RelWithDebInfo/sdk/py/horus/. sdk/py/horus/
+cp -r build/rules/sdk/py/horus/. sdk/py/horus/
 cd sdk/py && python3 -m pip install --upgrade build && python3 -m build
 python3 -m pip install dist/horus-*-py3-none-any.whl --force-reinstall
 ```

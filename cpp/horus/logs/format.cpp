@@ -1694,11 +1694,11 @@ void HorusStringify(const ErasedSink& sink, const PlyFileLoadFailedError& data) 
 }
 
 void HorusStringify(const ErasedSink& sink, const HesaiDriverLifecycle& data) {
-  StringifyTo(sink, "[", data.lidar_name(), "][", data.lidar_id(), "] Hesai XT32 driver ", data.action(), ".");
+  StringifyTo(sink, "[", data.lidar_name(), "][", data.lidar_id(), "] Hesai ", data.lidar_type(), " driver ", data.action(), ".");
 }
 
 void HorusStringify(const ErasedSink& sink, const HesaiDriverError& data) {
-  StringifyTo(sink, "[", data.lidar_name(), "][", data.lidar_id(), "] Hesai XT32 driver error: ", data.details());
+  StringifyTo(sink, "[", data.lidar_name(), "][", data.lidar_id(), "] Hesai ", data.lidar_type(), " driver error: ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const HesaiPacketProcessingFailed& data) {
@@ -1706,7 +1706,7 @@ void HorusStringify(const ErasedSink& sink, const HesaiPacketProcessingFailed& d
 }
 
 void HorusStringify(const ErasedSink& sink, const HesaiCorrectionFileError& data) {
-  StringifyTo(sink, "[", data.lidar_name(), "][", data.lidar_id(), "] Failed to load Hesai XT32 correction file ", data.file_type(), ": ", data.details());
+  StringifyTo(sink, "[", data.lidar_name(), "][", data.lidar_id(), "] Failed to load Hesai ", data.lidar_type(), " correction file ", data.file_type(), ": ", data.details());
 }
 
 void HorusStringify(const ErasedSink& sink, const HesaiPacketStatistics& data) {

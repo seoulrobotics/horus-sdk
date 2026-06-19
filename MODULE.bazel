@@ -6,9 +6,13 @@ This is experimental and is not intended for external use.
 
 module(name = "horus_sdk")
 
-bazel_dep(name = "googletest", version = "1.17.0", dev_dependency = True)
 bazel_dep(name = "libuv", version = "1.48.0")
+bazel_dep(name = "platforms", version = "1.1.0")
 bazel_dep(name = "rules_cc", version = "0.2.1")
+bazel_dep(name = "rules_python", version = "2.0.3")
+
+bazel_dep(name = "bazel_skylib", version = "1.9.0", dev_dependency = True)
+bazel_dep(name = "googletest", version = "1.17.0", dev_dependency = True)
 
 # --------------------------------------------------------------------------------------------------
 # MARK: HTTP dependencies
@@ -17,9 +21,6 @@ http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "ht
 
 http_archive(
     name = "ixwebsocket",
-    urls = ["https://github.com/machinezone/IXWebSocket/archive/refs/tags/v11.4.6.zip"],
-    strip_prefix = "IXWebSocket-11.4.6",
-    integrity = "sha256-mfkojg90KtCLxg2Zq+72Fpo78Tf5we8cyl05/7vp1Es=",
     build_file_content = """
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 
@@ -37,16 +38,13 @@ cc_library(
     visibility = ["//visibility:public"],
 )
 """,
+    integrity = "sha256-mfkojg90KtCLxg2Zq+72Fpo78Tf5we8cyl05/7vp1Es=",
+    strip_prefix = "IXWebSocket-11.4.6",
+    urls = ["https://github.com/machinezone/IXWebSocket/archive/refs/tags/v11.4.6.zip"],
 )
 
 http_archive(
     name = "protozero",
-    urls = ["https://github.com/mapbox/protozero/archive/refs/tags/v1.8.1.zip"],
-    strip_prefix = "protozero-1.8.1",
-    integrity = "sha256-LLLTy2r1DAk6RnUqpOKAvTRVP2M4Z/k4VpoZgg2DMrM=",
-    patch_cmds = [
-        "sed -i 's/^class basic_pbf_writer {$/class basic_pbf_writer { public:/g' include/protozero/basic_pbf_writer.hpp",
-    ],
     build_file_content = """
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 
@@ -57,4 +55,27 @@ cc_library(
     visibility = ["//visibility:public"],
 )
 """,
+    integrity = "sha256-LLLTy2r1DAk6RnUqpOKAvTRVP2M4Z/k4VpoZgg2DMrM=",
+    patch_cmds = [
+        "sed -i 's/^class basic_pbf_writer {$/class basic_pbf_writer { public:/g' include/protozero/basic_pbf_writer.hpp",
+    ],
+    strip_prefix = "protozero-1.8.1",
+    urls = ["https://github.com/mapbox/protozero/archive/refs/tags/v1.8.1.zip"],
 )
+
+# --------------------------------------------------------------------------------------------------
+# MARK: Python
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(python_version = "3.9")
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(
+    hub_name = "pip",
+    python_version = "3.9",
+    requirements_lock = "//py:requirements_lock.txt",  # Update with `bazel run //py:requirements.update`.
+)
+use_repo(pip, "pip")
+
+uv = use_extension("@rules_python//python/uv:uv.bzl", "uv", dev_dependency = True)
+uv.configure(version = "0.11.7")

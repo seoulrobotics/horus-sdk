@@ -1288,24 +1288,28 @@ class PlyFileLoadFailedError(_message.Message):
     def __init__(self, file_path: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
 
 class HesaiDriverLifecycle(_message.Message):
-    __slots__ = ("action", "lidar_id", "lidar_name")
+    __slots__ = ("action", "lidar_id", "lidar_name", "lidar_type")
     ACTION_FIELD_NUMBER: _ClassVar[int]
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_TYPE_FIELD_NUMBER: _ClassVar[int]
     action: str
     lidar_id: str
     lidar_name: str
-    def __init__(self, action: _Optional[str] = ..., lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
+    lidar_type: str
+    def __init__(self, action: _Optional[str] = ..., lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ..., lidar_type: _Optional[str] = ...) -> None: ...
 
 class HesaiDriverError(_message.Message):
-    __slots__ = ("details", "lidar_id", "lidar_name")
+    __slots__ = ("details", "lidar_id", "lidar_name", "lidar_type")
     DETAILS_FIELD_NUMBER: _ClassVar[int]
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_TYPE_FIELD_NUMBER: _ClassVar[int]
     details: str
     lidar_id: str
     lidar_name: str
-    def __init__(self, details: _Optional[str] = ..., lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
+    lidar_type: str
+    def __init__(self, details: _Optional[str] = ..., lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ..., lidar_type: _Optional[str] = ...) -> None: ...
 
 class HesaiPacketProcessingFailed(_message.Message):
     __slots__ = ("lidar_id", "details", "lidar_name")
@@ -1318,16 +1322,18 @@ class HesaiPacketProcessingFailed(_message.Message):
     def __init__(self, lidar_id: _Optional[str] = ..., details: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
 
 class HesaiCorrectionFileError(_message.Message):
-    __slots__ = ("file_type", "details", "lidar_id", "lidar_name")
+    __slots__ = ("file_type", "details", "lidar_id", "lidar_name", "lidar_type")
     FILE_TYPE_FIELD_NUMBER: _ClassVar[int]
     DETAILS_FIELD_NUMBER: _ClassVar[int]
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_TYPE_FIELD_NUMBER: _ClassVar[int]
     file_type: str
     details: str
     lidar_id: str
     lidar_name: str
-    def __init__(self, file_type: _Optional[str] = ..., details: _Optional[str] = ..., lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...
+    lidar_type: str
+    def __init__(self, file_type: _Optional[str] = ..., details: _Optional[str] = ..., lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ..., lidar_type: _Optional[str] = ...) -> None: ...
 
 class HesaiPacketStatistics(_message.Message):
     __slots__ = ("packets_received", "packets_published", "packets_dropped", "packets_decode_failed", "success_rate", "lidar_id", "lidar_name")

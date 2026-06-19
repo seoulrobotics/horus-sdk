@@ -25161,7 +25161,7 @@ class PlyFileLoadFailedError final : public PbMessage {
 
 /// Log #186.
 /// 
-///  > [$lidar_name][$lidar_id] Hesai XT32 driver $action.
+///  > [$lidar_name][$lidar_id] Hesai $lidar_type driver $action.
 ///
 /// Source: horus/pb/logs/logs.proto:1399:1
 class HesaiDriverLifecycle final : public PbMessage {
@@ -25363,6 +25363,56 @@ class HesaiDriverLifecycle final : public PbMessage {
     return std::move(set_lidar_name(std::move(lidar_name)));
   }
 
+  // Field `lidar_type` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr const CowBytes& lidar_type() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_type_;
+  }
+
+  /// If `lidar_type` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  CowBytes lidar_type() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(lidar_type_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  CowBytes& mutable_lidar_type() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return lidar_type_;
+  }
+
+  /// Returns whether `lidar_type` (no 4) is set.
+  constexpr bool has_lidar_type() const noexcept { return set_fields_[3]; }
+
+  /// Clears `lidar_type` (no 4).
+  void clear_lidar_type() & noexcept {
+    set_fields_[3] = false;
+    lidar_type_ = {};
+  }
+
+  /// Sets `lidar_type` (no 4) and returns `*this`.
+  HesaiDriverLifecycle& set_lidar_type(CowBytes&& lidar_type) & noexcept {
+    set_fields_[3] = true;
+    lidar_type_ = std::move(lidar_type);
+    return *this;
+  }
+  /// Sets `lidar_type` (no 4) and returns `*this`.
+  HesaiDriverLifecycle&& set_lidar_type(CowBytes&& lidar_type) && noexcept {
+    return std::move(set_lidar_type(std::move(lidar_type)));
+  }
+
  private:
   /// @see action()
   CowBytes action_{};
@@ -25370,16 +25420,18 @@ class HesaiDriverLifecycle final : public PbMessage {
   CowBytes lidar_id_{};
   /// @see lidar_name()
   CowBytes lidar_name_{};
+  /// @see lidar_type()
+  CowBytes lidar_type_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<3> set_fields_;
+  std::bitset<4> set_fields_;
 };
 
 /// Log #187.
 /// 
-///  > [$lidar_name][$lidar_id] Hesai XT32 driver error: $details
+///  > [$lidar_name][$lidar_id] Hesai $lidar_type driver error: $details
 ///
-/// Source: horus/pb/logs/logs.proto:1408:1
+/// Source: horus/pb/logs/logs.proto:1409:1
 class HesaiDriverError final : public PbMessage {
  public:
 
@@ -25579,6 +25631,56 @@ class HesaiDriverError final : public PbMessage {
     return std::move(set_lidar_name(std::move(lidar_name)));
   }
 
+  // Field `lidar_type` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr const CowBytes& lidar_type() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_type_;
+  }
+
+  /// If `lidar_type` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  CowBytes lidar_type() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(lidar_type_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  CowBytes& mutable_lidar_type() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return lidar_type_;
+  }
+
+  /// Returns whether `lidar_type` (no 4) is set.
+  constexpr bool has_lidar_type() const noexcept { return set_fields_[3]; }
+
+  /// Clears `lidar_type` (no 4).
+  void clear_lidar_type() & noexcept {
+    set_fields_[3] = false;
+    lidar_type_ = {};
+  }
+
+  /// Sets `lidar_type` (no 4) and returns `*this`.
+  HesaiDriverError& set_lidar_type(CowBytes&& lidar_type) & noexcept {
+    set_fields_[3] = true;
+    lidar_type_ = std::move(lidar_type);
+    return *this;
+  }
+  /// Sets `lidar_type` (no 4) and returns `*this`.
+  HesaiDriverError&& set_lidar_type(CowBytes&& lidar_type) && noexcept {
+    return std::move(set_lidar_type(std::move(lidar_type)));
+  }
+
  private:
   /// @see details()
   CowBytes details_{};
@@ -25586,16 +25688,18 @@ class HesaiDriverError final : public PbMessage {
   CowBytes lidar_id_{};
   /// @see lidar_name()
   CowBytes lidar_name_{};
+  /// @see lidar_type()
+  CowBytes lidar_type_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<3> set_fields_;
+  std::bitset<4> set_fields_;
 };
 
 /// Log #188.
 /// 
 ///  > [$lidar_name][$lidar_id] Failed to process packet: $details
 ///
-/// Source: horus/pb/logs/logs.proto:1417:1
+/// Source: horus/pb/logs/logs.proto:1419:1
 class HesaiPacketProcessingFailed final : public PbMessage {
  public:
 
@@ -25809,9 +25913,9 @@ class HesaiPacketProcessingFailed final : public PbMessage {
 
 /// Log #189.
 /// 
-///  > [$lidar_name][$lidar_id] Failed to load Hesai XT32 correction file $file_type: $details
+///  > [$lidar_name][$lidar_id] Failed to load Hesai $lidar_type correction file $file_type: $details
 ///
-/// Source: horus/pb/logs/logs.proto:1426:1
+/// Source: horus/pb/logs/logs.proto:1428:1
 class HesaiCorrectionFileError final : public PbMessage {
  public:
 
@@ -26061,6 +26165,56 @@ class HesaiCorrectionFileError final : public PbMessage {
     return std::move(set_lidar_name(std::move(lidar_name)));
   }
 
+  // Field `lidar_type` (no 5).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 5.
+  constexpr const CowBytes& lidar_type() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_type_;
+  }
+
+  /// If `lidar_type` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 5.
+  CowBytes lidar_type() && noexcept {
+    if (!set_fields_[4]) {
+      return {};
+    }
+    return std::move(lidar_type_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 5.
+  CowBytes& mutable_lidar_type() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[4] = true;
+    return lidar_type_;
+  }
+
+  /// Returns whether `lidar_type` (no 5) is set.
+  constexpr bool has_lidar_type() const noexcept { return set_fields_[4]; }
+
+  /// Clears `lidar_type` (no 5).
+  void clear_lidar_type() & noexcept {
+    set_fields_[4] = false;
+    lidar_type_ = {};
+  }
+
+  /// Sets `lidar_type` (no 5) and returns `*this`.
+  HesaiCorrectionFileError& set_lidar_type(CowBytes&& lidar_type) & noexcept {
+    set_fields_[4] = true;
+    lidar_type_ = std::move(lidar_type);
+    return *this;
+  }
+  /// Sets `lidar_type` (no 5) and returns `*this`.
+  HesaiCorrectionFileError&& set_lidar_type(CowBytes&& lidar_type) && noexcept {
+    return std::move(set_lidar_type(std::move(lidar_type)));
+  }
+
  private:
   /// @see file_type()
   CowBytes file_type_{};
@@ -26070,16 +26224,18 @@ class HesaiCorrectionFileError final : public PbMessage {
   CowBytes lidar_id_{};
   /// @see lidar_name()
   CowBytes lidar_name_{};
+  /// @see lidar_type()
+  CowBytes lidar_type_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<4> set_fields_;
+  std::bitset<5> set_fields_;
 };
 
 /// Log #190.
 /// 
 ///  > [$lidar_name][$lidar_id] Hesai packet statistics - Received: $packets_received, Published: $packets_published, Dropped: $packets_dropped, Decode Failed: $packets_decode_failed, Success Rate: $success_rate %
 ///
-/// Source: horus/pb/logs/logs.proto:1436:1
+/// Source: horus/pb/logs/logs.proto:1439:1
 class HesaiPacketStatistics final : public PbMessage {
  public:
 
@@ -26443,7 +26599,7 @@ class HesaiPacketStatistics final : public PbMessage {
 /// 
 ///  > Failed to write PLY file $file_path: $details
 ///
-/// Source: horus/pb/logs/logs.proto:1449:1
+/// Source: horus/pb/logs/logs.proto:1452:1
 class PlyFileWriteFailedError final : public PbMessage {
  public:
 
@@ -26607,7 +26763,7 @@ class PlyFileWriteFailedError final : public PbMessage {
 /// 
 ///  > Failed to save project: $error_message.
 ///
-/// Source: horus/pb/logs/logs.proto:1457:1
+/// Source: horus/pb/logs/logs.proto:1460:1
 class ProjectSaveError final : public PbMessage {
  public:
 
@@ -26719,7 +26875,7 @@ class ProjectSaveError final : public PbMessage {
 /// 
 ///  > Saved static environment
 ///
-/// Source: horus/pb/logs/logs.proto:1464:1
+/// Source: horus/pb/logs/logs.proto:1467:1
 class SaveStaticEnvironmentSuccess final : public PbMessage {
  public:
 
@@ -26783,7 +26939,7 @@ class SaveStaticEnvironmentSuccess final : public PbMessage {
 /// 
 ///  > Failed to save static environment: $details
 ///
-/// Source: horus/pb/logs/logs.proto:1470:1
+/// Source: horus/pb/logs/logs.proto:1473:1
 class SaveStaticEnvironmentFailed final : public PbMessage {
  public:
 
@@ -26895,7 +27051,7 @@ class SaveStaticEnvironmentFailed final : public PbMessage {
 /// 
 ///  > Loaded static environment
 ///
-/// Source: horus/pb/logs/logs.proto:1477:1
+/// Source: horus/pb/logs/logs.proto:1480:1
 class LoadStaticEnvironmentSuccess final : public PbMessage {
  public:
 
@@ -26959,7 +27115,7 @@ class LoadStaticEnvironmentSuccess final : public PbMessage {
 /// 
 ///  > Failed to load static environment: $details
 ///
-/// Source: horus/pb/logs/logs.proto:1483:1
+/// Source: horus/pb/logs/logs.proto:1486:1
 class LoadStaticEnvironmentFailed final : public PbMessage {
  public:
 
@@ -27071,7 +27227,7 @@ class LoadStaticEnvironmentFailed final : public PbMessage {
 /// 
 ///  > Attempt to inject invalid lidar ID $lidar_id into the system.
 ///
-/// Source: horus/pb/logs/logs.proto:1490:1
+/// Source: horus/pb/logs/logs.proto:1493:1
 class AttemptToInjectInvalidLidarIdWarning final : public PbMessage {
  public:
 
@@ -27183,7 +27339,7 @@ class AttemptToInjectInvalidLidarIdWarning final : public PbMessage {
 /// 
 ///  > Resetting bundled packet due to unexpected packet from lidar $lidar_name [$lidar_id].
 ///
-/// Source: horus/pb/logs/logs.proto:1497:1
+/// Source: horus/pb/logs/logs.proto:1500:1
 class ResetBundledPacketDueToUnexpectedPacket final : public PbMessage {
  public:
 
@@ -27347,7 +27503,7 @@ class ResetBundledPacketDueToUnexpectedPacket final : public PbMessage {
 /// 
 ///  > Lidar $lidar_name [$lidar_id] dropped $num_dropped packets over $duration
 ///
-/// Source: horus/pb/logs/logs.proto:1505:1
+/// Source: horus/pb/logs/logs.proto:1508:1
 class PacketBundlerDroppedPacketsWarning final : public PbMessage {
  public:
 
@@ -27603,7 +27759,7 @@ class PacketBundlerDroppedPacketsWarning final : public PbMessage {
 /// 
 ///  > Frame sequence jump detected on lidar $lidar_name [$lidar_id]: from $frame_id to $next_frame_id
 ///
-/// Source: horus/pb/logs/logs.proto:1515:1
+/// Source: horus/pb/logs/logs.proto:1518:1
 class PacketBundlerFrameJumpWarning final : public PbMessage {
  public:
 
@@ -27847,7 +28003,7 @@ class PacketBundlerFrameJumpWarning final : public PbMessage {
 /// 
 ///  > [$lidar_name][$lidar_id] Successfully loaded $correction_type corrections from the lidar
 ///
-/// Source: horus/pb/logs/logs.proto:1525:1
+/// Source: horus/pb/logs/logs.proto:1528:1
 class LidarCorrectionLoadingSuccess final : public PbMessage {
  public:
 
@@ -28063,7 +28219,7 @@ class LidarCorrectionLoadingSuccess final : public PbMessage {
 /// 
 ///  > [$lidar_name][$lidar_id] Failed to load $correction_type corrections from the lidar ($details); using default correction values
 ///
-/// Source: horus/pb/logs/logs.proto:1534:1
+/// Source: horus/pb/logs/logs.proto:1537:1
 class LidarCorrectionLoadingFailure final : public PbMessage {
  public:
 
@@ -28331,7 +28487,7 @@ class LidarCorrectionLoadingFailure final : public PbMessage {
 /// 
 ///  > [$lidar_id] Hesai Packet Statistics - Received: $packets_received, Published: $packets_published, Dropped: $packets_dropped, Decode Failed: $packets_decode_failed, Success Rate: $success_rate %
 ///
-/// Source: horus/pb/logs/logs.proto:1544:1
+/// Source: horus/pb/logs/logs.proto:1547:1
 class HesaiPacketStatisticsLidar final : public PbMessage {
  public:
 
@@ -28643,7 +28799,7 @@ class HesaiPacketStatisticsLidar final : public PbMessage {
 /// 
 ///  > Lidar $lidar_name [$lidar_id] is aligned to calibration map. Using the calibration map for tilt detection and auto-recalibration for this lidar.
 ///
-/// Source: horus/pb/logs/logs.proto:1556:1
+/// Source: horus/pb/logs/logs.proto:1559:1
 class LidarTiltDetectionAlignedToCalibrationMapInfo final : public PbMessage {
  public:
 
@@ -28807,7 +28963,7 @@ class LidarTiltDetectionAlignedToCalibrationMapInfo final : public PbMessage {
 /// 
 ///  > Lidar $lidar_name [$lidar_id] deviates from calibration map by $angle degrees and $distance meters. Using accumulated points as reference to avoid overwriting manual calibration.
 ///
-/// Source: horus/pb/logs/logs.proto:1564:1
+/// Source: horus/pb/logs/logs.proto:1567:1
 class LidarTiltDetectionMisalignedToCalibrationMapWarning final : public PbMessage {
  public:
 
@@ -29051,7 +29207,7 @@ class LidarTiltDetectionMisalignedToCalibrationMapWarning final : public PbMessa
 /// 
 ///  > The requested auto-correction cannot be applied because the original pose differs from the current configuration.
 ///
-/// Source: horus/pb/logs/logs.proto:1574:1
+/// Source: horus/pb/logs/logs.proto:1577:1
 class LidarOriginalPoseDiffersForAutoCorrectionError final : public PbMessage {
  public:
 
@@ -29115,7 +29271,7 @@ class LidarOriginalPoseDiffersForAutoCorrectionError final : public PbMessage {
 /// 
 ///  > Successfully recovered car IDs: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:1580:1
+/// Source: horus/pb/logs/logs.proto:1583:1
 class RecoveredCarIdsInfo final : public PbMessage {
  public:
 
@@ -29227,7 +29383,7 @@ class RecoveredCarIdsInfo final : public PbMessage {
 /// 
 ///  > Failed to recover object IDs: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:1587:1
+/// Source: horus/pb/logs/logs.proto:1590:1
 class FailedToRecoverCarIds final : public PbMessage {
  public:
 
@@ -29339,7 +29495,7 @@ class FailedToRecoverCarIds final : public PbMessage {
 /// 
 ///  > Failed to emplace recovered object ID $object_id for car. Using a newly generated ID instead.
 ///
-/// Source: horus/pb/logs/logs.proto:1594:1
+/// Source: horus/pb/logs/logs.proto:1597:1
 class FailedToEmplaceRecoveredCarId final : public PbMessage {
  public:
 
@@ -29439,7 +29595,7 @@ class FailedToEmplaceRecoveredCarId final : public PbMessage {
 /// 
 ///  > Persistent storage operation failed: $operation on $filepath
 ///
-/// Source: horus/pb/logs/logs.proto:1601:1
+/// Source: horus/pb/logs/logs.proto:1604:1
 class PersistentStorageError final : public PbMessage {
  public:
 
@@ -29603,7 +29759,7 @@ class PersistentStorageError final : public PbMessage {
 /// 
 ///  > Track storage capacity exceeded: attempted to store $attempted_count tracks, limit is $max_tracks
 ///
-/// Source: horus/pb/logs/logs.proto:1609:1
+/// Source: horus/pb/logs/logs.proto:1612:1
 class TrackCapacityExceededWarning final : public PbMessage {
  public:
 
@@ -29743,7 +29899,7 @@ class TrackCapacityExceededWarning final : public PbMessage {
 /// 
 ///  > Tracker state file path unavailable for project: $project_name
 ///
-/// Source: horus/pb/logs/logs.proto:1617:1
+/// Source: horus/pb/logs/logs.proto:1620:1
 class TrackerStatePathUnavailableWarning final : public PbMessage {
  public:
 
@@ -29855,7 +30011,7 @@ class TrackerStatePathUnavailableWarning final : public PbMessage {
 /// 
 ///  > Failed to recover saved tracker state: $error_message
 ///
-/// Source: horus/pb/logs/logs.proto:1624:1
+/// Source: horus/pb/logs/logs.proto:1627:1
 class TrackerStateRecoveryError final : public PbMessage {
  public:
 
@@ -29967,7 +30123,7 @@ class TrackerStateRecoveryError final : public PbMessage {
 /// 
 ///  > Failed to save tracker state: $error_message
 ///
-/// Source: horus/pb/logs/logs.proto:1631:1
+/// Source: horus/pb/logs/logs.proto:1634:1
 class TrackerStateSaveError final : public PbMessage {
  public:
 
@@ -30079,7 +30235,7 @@ class TrackerStateSaveError final : public PbMessage {
 /// 
 ///  > Failed to recover tracker ID $id: $error_message
 ///
-/// Source: horus/pb/logs/logs.proto:1638:1
+/// Source: horus/pb/logs/logs.proto:1641:1
 class TrackerIdRecoveryFailedError final : public PbMessage {
  public:
 
@@ -30231,7 +30387,7 @@ class TrackerIdRecoveryFailedError final : public PbMessage {
 /// 
 ///  > Failed to fast-forward ID generator to $target_id: $error_message
 ///
-/// Source: horus/pb/logs/logs.proto:1646:1
+/// Source: horus/pb/logs/logs.proto:1649:1
 class TrackerIdFastForwardFailedError final : public PbMessage {
  public:
 
@@ -30383,7 +30539,7 @@ class TrackerIdFastForwardFailedError final : public PbMessage {
 /// 
 ///  > Circular recording snapshot created with $message_count messages covering $actual_duration_seconds seconds of data
 ///
-/// Source: horus/pb/logs/logs.proto:1654:1
+/// Source: horus/pb/logs/logs.proto:1657:1
 class CircularRecordingSnapshotCreated final : public PbMessage {
  public:
 
@@ -30563,7 +30719,7 @@ class CircularRecordingSnapshotCreated final : public PbMessage {
 /// 
 ///  > Circular recording file operation failed: $operation on $file_path - $details
 ///
-/// Source: horus/pb/logs/logs.proto:1663:1
+/// Source: horus/pb/logs/logs.proto:1666:1
 class CircularRecordingFileOperationError final : public PbMessage {
  public:
 
@@ -30779,7 +30935,7 @@ class CircularRecordingFileOperationError final : public PbMessage {
 /// 
 ///  > Recovery candidate with ID $id was rejected this frame because $reason. Will attempt again next frame.
 ///
-/// Source: horus/pb/logs/logs.proto:1672:1
+/// Source: horus/pb/logs/logs.proto:1675:1
 class ObjectIdRecoveryRejectedInfo final : public PbMessage {
  public:
 
@@ -30931,7 +31087,7 @@ class ObjectIdRecoveryRejectedInfo final : public PbMessage {
 /// 
 ///  > The following recovery candidate IDs have expired and will not be used for recovery: $expired_ids.
 ///
-/// Source: horus/pb/logs/logs.proto:1680:1
+/// Source: horus/pb/logs/logs.proto:1683:1
 class ExpiredRecoveryIdsInfo final : public PbMessage {
  public:
 
@@ -31043,7 +31199,7 @@ class ExpiredRecoveryIdsInfo final : public PbMessage {
 /// 
 ///  > [$lidar_name][$lidar_id] Hesai UDP receiver $action.
 ///
-/// Source: horus/pb/logs/logs.proto:1687:1
+/// Source: horus/pb/logs/logs.proto:1690:1
 class HesaiUdpReceiverInfo final : public PbMessage {
  public:
 
@@ -31259,7 +31415,7 @@ class HesaiUdpReceiverInfo final : public PbMessage {
 /// 
 ///  > Failed to $action in Horus database: $error.
 ///
-/// Source: horus/pb/logs/logs.proto:1696:1
+/// Source: horus/pb/logs/logs.proto:1699:1
 class DbCommitFailed final : public PbMessage {
  public:
 
@@ -31423,7 +31579,7 @@ class DbCommitFailed final : public PbMessage {
 /// 
 ///  > Dropping $num_packets buffered packet(s) for node $node_id because the detection service RPC queue is full (queue size: $queue_size).
 ///
-/// Source: horus/pb/logs/logs.proto:1704:1
+/// Source: horus/pb/logs/logs.proto:1707:1
 class DetectionServiceRpcQueueFull final : public PbMessage {
  public:
 
@@ -31615,7 +31771,7 @@ class DetectionServiceRpcQueueFull final : public PbMessage {
 /// 
 ///  > Project migration failed: $details.
 ///
-/// Source: horus/pb/logs/logs.proto:1713:1
+/// Source: horus/pb/logs/logs.proto:1716:1
 class ProjectMigrationFailed final : public PbMessage {
  public:
 

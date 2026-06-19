@@ -1,0 +1,19 @@
+load("@rules_python//python:py_binary.bzl", "py_binary")
+
+[
+    py_binary(
+        name = example,
+        srcs = ["{}.py".format(example)],
+        deps = ["//py"],
+    )
+    for example in [
+        "print_all",
+        "print_dl_boxes",
+        "print_health_status",
+        "print_logs",
+        "print_object_counts",
+        "print_object_zones_and_zone_events",
+        "print_sensor_status",
+        "profile_detection",
+    ]
+]
