@@ -996,11 +996,11 @@ def format_ply_file_load_failed_error(log: _logs_pb.PlyFileLoadFailedError) -> s
 
 def format_hesai_driver_lifecycle(log: _logs_pb.HesaiDriverLifecycle) -> str:
     """Formats log `HesaiDriverLifecycle` to a string."""
-    return f"[{log.lidar_name}][{log.lidar_id}] Hesai XT32 driver {log.action}."
+    return f"[{log.lidar_name}][{log.lidar_id}] Hesai {log.lidar_type} driver {log.action}."
 
 def format_hesai_driver_error(log: _logs_pb.HesaiDriverError) -> str:
     """Formats log `HesaiDriverError` to a string."""
-    return f"[{log.lidar_name}][{log.lidar_id}] Hesai XT32 driver error: {log.details}"
+    return f"[{log.lidar_name}][{log.lidar_id}] Hesai {log.lidar_type} driver error: {log.details}"
 
 def format_hesai_packet_processing_failed(log: _logs_pb.HesaiPacketProcessingFailed) -> str:
     """Formats log `HesaiPacketProcessingFailed` to a string."""
@@ -1008,7 +1008,7 @@ def format_hesai_packet_processing_failed(log: _logs_pb.HesaiPacketProcessingFai
 
 def format_hesai_correction_file_error(log: _logs_pb.HesaiCorrectionFileError) -> str:
     """Formats log `HesaiCorrectionFileError` to a string."""
-    return f"[{log.lidar_name}][{log.lidar_id}] Failed to load Hesai XT32 correction file {log.file_type}: {log.details}"
+    return f"[{log.lidar_name}][{log.lidar_id}] Failed to load Hesai {log.lidar_type} correction file {log.file_type}: {log.details}"
 
 def format_hesai_packet_statistics(log: _logs_pb.HesaiPacketStatistics) -> str:
     """Formats log `HesaiPacketStatistics` to a string."""

@@ -385,13 +385,13 @@ func FormatAnyLogMessage(message proto.Message) string {
 	case *logs_pb.PlyFileLoadFailedError:
 		return fmt.Sprintf("Failed to load PLY file %v: %v", data.GetFilePath(), data.GetDetails())
 	case *logs_pb.HesaiDriverLifecycle:
-		return fmt.Sprintf("[%v][%v] Hesai XT32 driver %v.", data.GetLidarName(), data.GetLidarId(), data.GetAction())
+		return fmt.Sprintf("[%v][%v] Hesai %v driver %v.", data.GetLidarName(), data.GetLidarId(), data.GetLidarType(), data.GetAction())
 	case *logs_pb.HesaiDriverError:
-		return fmt.Sprintf("[%v][%v] Hesai XT32 driver error: %v", data.GetLidarName(), data.GetLidarId(), data.GetDetails())
+		return fmt.Sprintf("[%v][%v] Hesai %v driver error: %v", data.GetLidarName(), data.GetLidarId(), data.GetLidarType(), data.GetDetails())
 	case *logs_pb.HesaiPacketProcessingFailed:
 		return fmt.Sprintf("[%v][%v] Failed to process packet: %v", data.GetLidarName(), data.GetLidarId(), data.GetDetails())
 	case *logs_pb.HesaiCorrectionFileError:
-		return fmt.Sprintf("[%v][%v] Failed to load Hesai XT32 correction file %v: %v", data.GetLidarName(), data.GetLidarId(), data.GetFileType(), data.GetDetails())
+		return fmt.Sprintf("[%v][%v] Failed to load Hesai %v correction file %v: %v", data.GetLidarName(), data.GetLidarId(), data.GetLidarType(), data.GetFileType(), data.GetDetails())
 	case *logs_pb.HesaiPacketStatistics:
 		return fmt.Sprintf("[%v][%v] Hesai packet statistics - Received: %v, Published: %v, Dropped: %v, Decode Failed: %v, Success Rate: %v %%", data.GetLidarName(), data.GetLidarId(), data.GetPacketsReceived(), data.GetPacketsPublished(), data.GetPacketsDropped(), data.GetPacketsDecodeFailed(), data.GetSuccessRate())
 	case *logs_pb.PlyFileWriteFailedError:

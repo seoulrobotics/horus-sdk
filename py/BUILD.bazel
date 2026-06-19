@@ -1,0 +1,25 @@
+load("@bazel_skylib//rules:native_binary.bzl", "native_test")
+load("@rules_python//python:py_library.bzl", "py_library")
+load("@rules_python//python/uv:lock.bzl", "lock")
+
+py_library(
+    name = "py",
+    srcs = glob(["horus/**/*.py"]),
+    imports = ["."],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@pip//protobuf",
+        "@pip//websockets",
+    ],
+)
+
+lock(
+    name = "requirements",
+    srcs = ["pyproject.toml"],
+    out = "requirements_lock.txt",
+)
+
+native_test(
+    name = "requirements_test",
+    src = "requirements.update",
+)

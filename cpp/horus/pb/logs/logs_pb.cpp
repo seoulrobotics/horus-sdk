@@ -5179,6 +5179,7 @@ HesaiDriverLifecycle::HesaiDriverLifecycle(const HesaiDriverLifecycle& other) no
     : action_{other.action_}
     , lidar_id_{other.lidar_id_}
     , lidar_name_{other.lidar_name_}
+    , lidar_type_{other.lidar_type_}
     , set_fields_{other.set_fields_} {}
 
 void HesaiDriverLifecycle::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -5190,6 +5191,9 @@ void HesaiDriverLifecycle::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[2]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 3, lidar_name_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 4, lidar_type_);
   }
 }
 
@@ -5211,6 +5215,11 @@ void HesaiDriverLifecycle::DeserializeFrom(PbReader& reader) noexcept(false) {
         set_fields_[2] = true;
         break;
       }
+      case 4: {
+        DeserializeField<CowBytes>(reader, lidar_type_);
+        set_fields_[3] = true;
+        break;
+      }
       default: {
         reader.Reader().skip();
         break;
@@ -5223,6 +5232,7 @@ HesaiDriverError::HesaiDriverError(const HesaiDriverError& other) noexcept(false
     : details_{other.details_}
     , lidar_id_{other.lidar_id_}
     , lidar_name_{other.lidar_name_}
+    , lidar_type_{other.lidar_type_}
     , set_fields_{other.set_fields_} {}
 
 void HesaiDriverError::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -5234,6 +5244,9 @@ void HesaiDriverError::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[2]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 3, lidar_name_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 4, lidar_type_);
   }
 }
 
@@ -5253,6 +5266,11 @@ void HesaiDriverError::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 3: {
         DeserializeField<CowBytes>(reader, lidar_name_);
         set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        DeserializeField<CowBytes>(reader, lidar_type_);
+        set_fields_[3] = true;
         break;
       }
       default: {
@@ -5312,6 +5330,7 @@ HesaiCorrectionFileError::HesaiCorrectionFileError(const HesaiCorrectionFileErro
     , details_{other.details_}
     , lidar_id_{other.lidar_id_}
     , lidar_name_{other.lidar_name_}
+    , lidar_type_{other.lidar_type_}
     , set_fields_{other.set_fields_} {}
 
 void HesaiCorrectionFileError::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -5326,6 +5345,9 @@ void HesaiCorrectionFileError::SerializeTo(PbWriter& writer) const noexcept(fals
   }
   if (set_fields_[3]) {
     SerializeField<CowBytes>(writer, /*tag=*/ 4, lidar_name_);
+  }
+  if (set_fields_[4]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 5, lidar_type_);
   }
 }
 
@@ -5350,6 +5372,11 @@ void HesaiCorrectionFileError::DeserializeFrom(PbReader& reader) noexcept(false)
       case 4: {
         DeserializeField<CowBytes>(reader, lidar_name_);
         set_fields_[3] = true;
+        break;
+      }
+      case 5: {
+        DeserializeField<CowBytes>(reader, lidar_type_);
+        set_fields_[4] = true;
         break;
       }
       default: {

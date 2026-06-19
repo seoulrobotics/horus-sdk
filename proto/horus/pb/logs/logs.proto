@@ -1395,20 +1395,22 @@ message PlyFileLoadFailedError {
 
 // Log #186.
 //
-// > [$lidar_name][$lidar_id] Hesai XT32 driver $action.
+// > [$lidar_name][$lidar_id] Hesai $lidar_type driver $action.
 message HesaiDriverLifecycle {
   string action = 1;
   string lidar_id = 2;
   string lidar_name = 3;
+  string lidar_type = 4;
 }
 
 // Log #187.
 //
-// > [$lidar_name][$lidar_id] Hesai XT32 driver error: $details
+// > [$lidar_name][$lidar_id] Hesai $lidar_type driver error: $details
 message HesaiDriverError {
   string details = 1;
   string lidar_id = 2;
   string lidar_name = 3;
+  string lidar_type = 4;
 }
 
 // Log #188.
@@ -1422,12 +1424,13 @@ message HesaiPacketProcessingFailed {
 
 // Log #189.
 //
-// > [$lidar_name][$lidar_id] Failed to load Hesai XT32 correction file $file_type: $details
+// > [$lidar_name][$lidar_id] Failed to load Hesai $lidar_type correction file $file_type: $details
 message HesaiCorrectionFileError {
   string file_type = 1;
   string details = 2;
   string lidar_id = 3;
   string lidar_name = 4;
+  string lidar_type = 5;
 }
 
 // Log #190.
