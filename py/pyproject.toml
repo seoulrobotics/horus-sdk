@@ -13,6 +13,10 @@ dependencies = ["protobuf ~= 5.27", "websockets ~= 13.0"]
 [project.urls]
 Homepage = "https://github.com/seoulrobotics/horus-sdk"
 
+[tool.hatch.build.targets.wheel]
+packages = ["horus"]
+artifacts = ["horus/py.typed"]
+
 [tool.black]
 exclude = '''
 logs/format.py
