@@ -43,6 +43,7 @@ from horus.sdk.services import (
 from horus.pb.point_aggregator.point_aggregator_service_client import (
     PointAggregatorServiceClient as _PointAggregatorServiceClient,
 )
+from horus.sdk.point_frame import PointFrame
 from horus.sdk.profiling import ProfilingInfo
 from horus.sdk.sensor import OccupancyGridEvent, OccupancyGridListEvent
 from horus.proto import *
@@ -155,6 +156,17 @@ class Sdk:
 
         return Subscription(
             lambda: self._subscribe_to_occupancy_grid_async(on_occupancy_grid_event)
+        )
+
+    def subscribe_to_point_clouds(
+        self, on_aggregated_point_event: typing.Callable[[PointFrame], None]
+    ) -> "Subscription":
+        """Returns a `Subscription` which will call `_on_aggregated_point_event()` with each processed point frame until destroyed."""
+        if not callable(on_aggregated_point_event):
+            raise TypeError("on_point_cloud must be callable")
+
+        return Subscription(
+            lambda: self._subscribe_to_point_clouds_async(on_aggregated_point_event)
         )
 
     def subscribe_to_profiling(
@@ -282,6 +294,20 @@ class Sdk:
         return lambda: _disconnect_if_set_emptied(
             listener._on_occupancy_grid_event,
             on_occupancy_grid_event,
+            self._point_aggregator_service,
+            listener.has_no_subscriber,
+        )
+
+    async def _subscribe_to_point_clouds_async(
+        self, on_aggregated_point_event: typing.Callable[[PointFrame], None]
+    ) -> _UnsubscribeCallable:
+        _, listener = await self._ensure_point_aggregator_service()
+
+        listener._on_aggregated_point_event.add(on_aggregated_point_event)
+
+        return lambda: _disconnect_if_set_emptied(
+            listener._on_aggregated_point_event,
+            on_aggregated_point_event,
             self._point_aggregator_service,
             listener.has_no_subscriber,
         )

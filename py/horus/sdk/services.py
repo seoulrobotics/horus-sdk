@@ -20,6 +20,7 @@ from horus.sdk.detection import DetectionEvent, ZoneEvent
 from horus.sdk.profiling import ProfilingInfo
 from horus.sdk import sensor
 from horus.sdk.logs import Log
+from horus.sdk.point_frame import PointFrame
 from horus.pb.point import point_message_pb2
 
 if typing.TYPE_CHECKING:
@@ -175,6 +176,9 @@ class PointAggregatorServiceListener(PointAggregatorSubscriberServiceHandler):
         self._on_occupancy_grid_event: typing.Set[
             typing.Callable[[sensor.OccupancyGridListEvent], None]
         ] = set()
+        self._on_aggregated_point_event: typing.Set[
+            typing.Callable[[PointFrame], None]
+        ] = set()
 
         self._logger = logger
 
@@ -205,9 +209,23 @@ class PointAggregatorServiceListener(PointAggregatorSubscriberServiceHandler):
 
     @override
     async def broadcast_processed_points(
-        self, _: point_message_pb2.AggregatedPointEvents
+        self, request: point_message_pb2.AggregatedPointEvents
     ) -> None:
-        pass
+        if not self._on_aggregated_point_event:
+            return
+
+        for event in request.events:
+            try:
+                point_frame = PointFrame._from_pb(event.point_frame)
+            except ValueError:
+                self._logger.error(
+                    "cannot parse PointFrame",
+                    extra={"processed_points_event": event},
+                )
+                continue
+
+            for subscriber in self._on_aggregated_point_event:
+                subscriber(point_frame)
 
     def has_no_subscriber(self) -> bool:
-        return not self._on_occupancy_grid_event
+        return not self._on_occupancy_grid_event and not self._on_aggregated_point_event

@@ -86,6 +86,9 @@ class PointFrame:
         lidar_id: str
         point_cloud_creation_timestamp: datetime.datetime
 
+        calibration_transform: typing.List[float]
+        """Sensor-to-origin transform: 16 floats, row-major 4x4 matrix."""
+
         @staticmethod
         def _from_pb(pb: point_message_pb2.PointFrame.Header) -> "PointFrame.Header":
             return PointFrame.Header(
@@ -93,4 +96,5 @@ class PointFrame:
                 point_cloud_creation_timestamp=timestamp_to_datetime(
                     pb.point_cloud_creation_timestamp
                 ),
+                calibration_transform=list(pb.calibration_transform.data),
             )
