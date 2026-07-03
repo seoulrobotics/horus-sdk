@@ -159,9 +159,10 @@ class Sdk:
         )
 
     def subscribe_to_point_clouds(
-        self, on_aggregated_point_event: typing.Callable[[PointFrame], None]
+        self,
+        on_aggregated_point_event: typing.Callable[[typing.Sequence[PointFrame]], None],
     ) -> "Subscription":
-        """Returns a `Subscription` which will call `_on_aggregated_point_event()` with each processed point frame until destroyed."""
+        """Returns a `Subscription` which will call `on_aggregated_point_event()` once per broadcast with all the processed point frames of that aggregation tick until destroyed."""
         if not callable(on_aggregated_point_event):
             raise TypeError("on_point_cloud must be callable")
 
@@ -299,7 +300,8 @@ class Sdk:
         )
 
     async def _subscribe_to_point_clouds_async(
-        self, on_aggregated_point_event: typing.Callable[[PointFrame], None]
+        self,
+        on_aggregated_point_event: typing.Callable[[typing.Sequence[PointFrame]], None],
     ) -> _UnsubscribeCallable:
         _, listener = await self._ensure_point_aggregator_service()
 

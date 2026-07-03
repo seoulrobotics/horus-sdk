@@ -177,7 +177,7 @@ class PointAggregatorServiceListener(PointAggregatorSubscriberServiceHandler):
             typing.Callable[[sensor.OccupancyGridListEvent], None]
         ] = set()
         self._on_aggregated_point_event: typing.Set[
-            typing.Callable[[PointFrame], None]
+            typing.Callable[[typing.Sequence[PointFrame]], None]
         ] = set()
 
         self._logger = logger
@@ -214,9 +214,10 @@ class PointAggregatorServiceListener(PointAggregatorSubscriberServiceHandler):
         if not self._on_aggregated_point_event:
             return
 
+        point_frames: typing.List[PointFrame] = []
         for event in request.events:
             try:
-                point_frame = PointFrame._from_pb(event.point_frame)
+                point_frames.append(PointFrame._from_pb(event.point_frame))
             except ValueError:
                 self._logger.error(
                     "cannot parse PointFrame",
@@ -224,8 +225,12 @@ class PointAggregatorServiceListener(PointAggregatorSubscriberServiceHandler):
                 )
                 continue
 
-            for subscriber in self._on_aggregated_point_event:
-                subscriber(point_frame)
+        if not point_frames:
+            return
+
+        snapshot = tuple(point_frames)
+        for subscriber in self._on_aggregated_point_event:
+            subscriber(snapshot)
 
     def has_no_subscriber(self) -> bool:
         return not self._on_occupancy_grid_event and not self._on_aggregated_point_event
