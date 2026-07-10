@@ -208,7 +208,6 @@ class WebSocket:
         INITIAL_BACKOFF = timedelta(milliseconds=500)
         MAX_BACKOFF = timedelta(seconds=4)
 
-        message = RpcMessage()
         backoff = INITIAL_BACKOFF
 
         # Keep reconnecting until the user explicitly requests the definite end of the connection
@@ -234,6 +233,8 @@ class WebSocket:
                     if not isinstance(data, bytes):
                         self.log_error(f"received {type(data)}, but expected bytes")
                         continue
+
+                    message = RpcMessage()
 
                     try:
                         message.ParseFromString(data)
