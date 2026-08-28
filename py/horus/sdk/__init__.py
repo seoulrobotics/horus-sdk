@@ -40,12 +40,13 @@ from horus.sdk.services import (
 from horus.sdk.services import (
     PointAggregatorServiceListener as _PointAggregatorServiceListener,
 )
+from horus.sdk.services import PointCloudSubscriber as _PointCloudSubscriber
 from horus.pb.point_aggregator.point_aggregator_service_client import (
     PointAggregatorServiceClient as _PointAggregatorServiceClient,
 )
-from horus.sdk.point_frame import PointFrame
+from horus.sdk.point_frame import PointFrame, PointFrameFields
 from horus.sdk.profiling import ProfilingInfo
-from horus.sdk.sensor import OccupancyGridEvent, OccupancyGridListEvent
+from horus.sdk.sensor import OccupancyGridListEvent
 from horus.proto import *
 from horus.sdk.health import (
     HealthStatus,
@@ -161,13 +162,38 @@ class Sdk:
     def subscribe_to_point_clouds(
         self,
         on_aggregated_point_event: typing.Callable[[typing.Sequence[PointFrame]], None],
+        *,
+        fields: PointFrameFields = PointFrameFields.ALL,
+        queue_size: int = 0,
+        on_drop: typing.Optional[typing.Callable[[int], None]] = None,
     ) -> "Subscription":
-        """Returns a `Subscription` which will call `on_aggregated_point_event()` once per broadcast with all the processed point frames of that aggregation tick until destroyed."""
+        """
+        Returns a `Subscription` which will call `on_aggregated_point_event()` once per broadcast
+        with all the processed point frames of that aggregation tick until destroyed.
+
+        `fields` selects the per-point arrays to decode besides the coordinates; the ones left out
+        are exposed as empty by every `PointFrame` of the broadcast.
+
+        `queue_size` buffers broadcasts between the connection and `on_aggregated_point_event()`.
+        With the default of zero the callback runs in the receive loop itself, so no broadcast is
+        ever dropped, but a slow callback holds up the connection. A positive `queue_size` lets the
+        connection run ahead by that many broadcasts, dropping the oldest pending one (and calling
+        `on_drop()` with the running count of dropped broadcasts) once the queue is full.
+
+        `on_aggregated_point_event` and `on_drop` both run on the event loop the SDK runs on, so
+        anything slow in either of them delays reception of every other event. Hand heavy work to
+        a thread or a process rather than doing it in the callback.
+
+        Point frames are held for as long as they are queued or referenced, so this subscription
+        retains up to `queue_size + 1` broadcasts.
+        """
         if not callable(on_aggregated_point_event):
             raise TypeError("on_point_cloud must be callable")
 
         return Subscription(
-            lambda: self._subscribe_to_point_clouds_async(on_aggregated_point_event)
+            lambda: self._subscribe_to_point_clouds_async(
+                on_aggregated_point_event, fields, queue_size, on_drop
+            )
         )
 
     def subscribe_to_profiling(
@@ -302,16 +328,20 @@ class Sdk:
     async def _subscribe_to_point_clouds_async(
         self,
         on_aggregated_point_event: typing.Callable[[typing.Sequence[PointFrame]], None],
+        fields: PointFrameFields,
+        queue_size: int,
+        on_drop: typing.Optional[typing.Callable[[int], None]],
     ) -> _UnsubscribeCallable:
         _, listener = await self._ensure_point_aggregator_service()
 
-        listener._on_aggregated_point_event.add(on_aggregated_point_event)
+        subscriber = listener._add_point_cloud_subscriber(
+            on_aggregated_point_event, fields, queue_size, on_drop
+        )
 
-        return lambda: _disconnect_if_set_emptied(
-            listener._on_aggregated_point_event,
-            on_aggregated_point_event,
+        return lambda: _disconnect_point_cloud_subscriber(
+            listener,
+            subscriber,
             self._point_aggregator_service,
-            listener.has_no_subscriber,
         )
 
     async def _subscribe_to_profiling_async(
@@ -444,4 +474,18 @@ async def _disconnect_if_set_emptied(
     set.discard(value)
 
     if not set and is_empty():
+        await client_listener_pair.disconnect()
+
+
+async def _disconnect_point_cloud_subscriber(
+    listener: _PointAggregatorServiceListener,
+    subscriber: _PointCloudSubscriber,
+    client_listener_pair: _ClientListenerPair[
+        typing.Any, typing.Any, typing.Any, typing.Any
+    ],
+) -> None:
+    """Unregisters `subscriber` and calls `unsubscribe()` if it was the last one."""
+    await listener._remove_point_cloud_subscriber(subscriber)
+
+    if listener.has_no_subscriber():
         await client_listener_pair.disconnect()
