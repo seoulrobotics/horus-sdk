@@ -20,6 +20,9 @@ Value of `RpcMessage.method_id` for two-way RPC responses.
 Other values of `method_id` indicate a one-way RPC request.
 """
 
+MAX_MESSAGE_SIZE = 256 << 20
+"""Maximum size of a message we accept from an endpoint, in bytes."""
+
 
 class WebSocket:
     """
@@ -169,7 +172,7 @@ class WebSocket:
                 ws = await connect(
                     self._url,
                     logger=self._logger.getChild("websockets"),
-                    max_size=10 << 20,  # 10 MB
+                    max_size=MAX_MESSAGE_SIZE,
                 )
 
                 if self._connection is cached:
@@ -254,6 +257,7 @@ class WebSocket:
                         await self._handle_req(message)
 
             except websockets.exceptions.ConnectionClosed as e:
+                self._logger.warning(f"connection to {self._url} closed: {e}")
                 self._mark_disconnected(e)
 
     async def _handle_req(self, message: RpcMessage) -> None:

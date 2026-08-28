@@ -40,6 +40,34 @@ class BaseRpcHandler:
     def __del__(self) -> None:
         self._ws.remove_handler(self.service_id)
 
+    def _decode_request_as(
+        self,
+        method: typing.Callable[[typing.Any], typing.Awaitable[typing.Any]],
+        request_type: typing.Type[Message],
+        generated_type: typing.Type[Message],
+    ) -> None:
+        """
+        Rebinds the type used to decode requests to `method` from `generated_type` to
+        `request_type`, which must parse the same wire bytes.
+
+        Used to decode a message into a wire-compatible alias which materializes only the fields
+        the handler reads.
+
+        Asserts that `method` is a handler of this service decoding `generated_type`, since the
+        alias would otherwise decode the wrong bytes without failing.
+        """
+        for method_id, (req_type, res_type, handle) in self._handlers.items():
+            # `method` is a bound method rebuilt on every attribute access, so it is equal to,
+            # but not the same object as, the one the generated handler registered.
+            if handle == method and req_type is generated_type:
+                self._handlers[method_id] = (request_type, res_type, handle)
+                return
+
+        assert False, (
+            f"{self.service_full_name}.{method.__name__}() no longer decodes "
+            f"{generated_type.DESCRIPTOR.name}: the Horus SDK must be updated alongside it"
+        )
+
     async def _handle_req(self, message: RpcMessage) -> None:
         """
         Calls the handler for the given message, handling errors and sending a response if the
