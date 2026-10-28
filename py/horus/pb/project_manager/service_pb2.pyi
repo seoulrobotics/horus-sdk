@@ -1,3 +1,4 @@
+from horus.pb.config import metadata_pb2 as _metadata_pb2
 from horus.pb.logs import logs_pb2 as _logs_pb2
 from horus.pb.preprocessing import messages_pb2 as _messages_pb2
 from horus.pb.license_server import messages_pb2 as _messages_pb2_1
@@ -74,9 +75,9 @@ class GetHealthStatusRequest(_message.Message):
     def __init__(self) -> None: ...
 
 class GetHealthStatusResponse(_message.Message):
-    __slots__ = ("license_status", "sensor_statuses", "service_statuses", "node_resources")
+    __slots__ = ("project_name", "version", "license_status", "sensor_statuses", "service_statuses", "node_resources", "detection_merger_total_overall_frame_latency")
     class NodeHealth(_message.Message):
-        __slots__ = ("service", "node_id", "node_status")
+        __slots__ = ("service", "node_id", "node_status", "latency_us")
         class Service(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
             __slots__ = ()
             SERVICE_UNSPECIFIED: _ClassVar[GetHealthStatusResponse.NodeHealth.Service]
@@ -86,6 +87,7 @@ class GetHealthStatusResponse(_message.Message):
             SERVICE_POINT_AGGREGATOR: _ClassVar[GetHealthStatusResponse.NodeHealth.Service]
             SERVICE_PREPROCESSING: _ClassVar[GetHealthStatusResponse.NodeHealth.Service]
             SERVICE_PROJECT_MANAGER: _ClassVar[GetHealthStatusResponse.NodeHealth.Service]
+            SERVICE_DETECTION_MERGER: _ClassVar[GetHealthStatusResponse.NodeHealth.Service]
         SERVICE_UNSPECIFIED: GetHealthStatusResponse.NodeHealth.Service
         SERVICE_DETECTION: GetHealthStatusResponse.NodeHealth.Service
         SERVICE_LIDAR_RUNNER: GetHealthStatusResponse.NodeHealth.Service
@@ -93,6 +95,7 @@ class GetHealthStatusResponse(_message.Message):
         SERVICE_POINT_AGGREGATOR: GetHealthStatusResponse.NodeHealth.Service
         SERVICE_PREPROCESSING: GetHealthStatusResponse.NodeHealth.Service
         SERVICE_PROJECT_MANAGER: GetHealthStatusResponse.NodeHealth.Service
+        SERVICE_DETECTION_MERGER: GetHealthStatusResponse.NodeHealth.Service
         class Status(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
             __slots__ = ()
             STATUS_UNSPECIFIED: _ClassVar[GetHealthStatusResponse.NodeHealth.Status]
@@ -104,10 +107,12 @@ class GetHealthStatusResponse(_message.Message):
         SERVICE_FIELD_NUMBER: _ClassVar[int]
         NODE_ID_FIELD_NUMBER: _ClassVar[int]
         NODE_STATUS_FIELD_NUMBER: _ClassVar[int]
+        LATENCY_US_FIELD_NUMBER: _ClassVar[int]
         service: GetHealthStatusResponse.NodeHealth.Service
         node_id: str
         node_status: GetHealthStatusResponse.NodeHealth.Status
-        def __init__(self, service: _Optional[_Union[GetHealthStatusResponse.NodeHealth.Service, str]] = ..., node_id: _Optional[str] = ..., node_status: _Optional[_Union[GetHealthStatusResponse.NodeHealth.Status, str]] = ...) -> None: ...
+        latency_us: int
+        def __init__(self, service: _Optional[_Union[GetHealthStatusResponse.NodeHealth.Service, str]] = ..., node_id: _Optional[str] = ..., node_status: _Optional[_Union[GetHealthStatusResponse.NodeHealth.Status, str]] = ..., latency_us: _Optional[int] = ...) -> None: ...
     class SensorHealth(_message.Message):
         __slots__ = ("preprocessing_node_id", "info", "timeout")
         PREPROCESSING_NODE_ID_FIELD_NUMBER: _ClassVar[int]
@@ -120,12 +125,18 @@ class GetHealthStatusResponse(_message.Message):
     class NodeResources(_message.Message):
         __slots__ = ()
         def __init__(self) -> None: ...
+    PROJECT_NAME_FIELD_NUMBER: _ClassVar[int]
+    VERSION_FIELD_NUMBER: _ClassVar[int]
     LICENSE_STATUS_FIELD_NUMBER: _ClassVar[int]
     SENSOR_STATUSES_FIELD_NUMBER: _ClassVar[int]
     SERVICE_STATUSES_FIELD_NUMBER: _ClassVar[int]
     NODE_RESOURCES_FIELD_NUMBER: _ClassVar[int]
+    DETECTION_MERGER_TOTAL_OVERALL_FRAME_LATENCY_FIELD_NUMBER: _ClassVar[int]
+    project_name: str
+    version: str
     license_status: LicenseStatus
     sensor_statuses: _containers.RepeatedCompositeFieldContainer[GetHealthStatusResponse.SensorHealth]
     service_statuses: _containers.RepeatedCompositeFieldContainer[GetHealthStatusResponse.NodeHealth]
     node_resources: _containers.RepeatedCompositeFieldContainer[GetHealthStatusResponse.NodeResources]
-    def __init__(self, license_status: _Optional[_Union[LicenseStatus, _Mapping]] = ..., sensor_statuses: _Optional[_Iterable[_Union[GetHealthStatusResponse.SensorHealth, _Mapping]]] = ..., service_statuses: _Optional[_Iterable[_Union[GetHealthStatusResponse.NodeHealth, _Mapping]]] = ..., node_resources: _Optional[_Iterable[_Union[GetHealthStatusResponse.NodeResources, _Mapping]]] = ...) -> None: ...
+    detection_merger_total_overall_frame_latency: _metadata_pb2.Duration
+    def __init__(self, project_name: _Optional[str] = ..., version: _Optional[str] = ..., license_status: _Optional[_Union[LicenseStatus, _Mapping]] = ..., sensor_statuses: _Optional[_Iterable[_Union[GetHealthStatusResponse.SensorHealth, _Mapping]]] = ..., service_statuses: _Optional[_Iterable[_Union[GetHealthStatusResponse.NodeHealth, _Mapping]]] = ..., node_resources: _Optional[_Iterable[_Union[GetHealthStatusResponse.NodeResources, _Mapping]]] = ..., detection_merger_total_overall_frame_latency: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ...) -> None: ...

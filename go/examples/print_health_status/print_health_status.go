@@ -89,6 +89,8 @@ func printHealthStatus(healthStatus *horus.HealthStatus) {
 	printService(horus.NodeHealthServiceServiceNotification)
 	printService(horus.NodeHealthServiceServicePointAggregator)
 	printService(horus.NodeHealthServiceServicePreprocessing)
+	printService(horus.NodeHealthServiceServiceProjectManager)
+	printService(horus.NodeHealthServiceServiceDetectionMerger)
 }
 
 func main() {

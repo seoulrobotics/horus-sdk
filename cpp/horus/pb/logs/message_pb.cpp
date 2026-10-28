@@ -233,6 +233,10 @@ LogData::LogData(const LogData& other) noexcept(false)
     , db_commit_failed_{other.db_commit_failed_}
     , detection_service_rpc_queue_full_{other.detection_service_rpc_queue_full_}
     , project_migration_failed_{other.project_migration_failed_}
+    , project_cluster_mismatch_{other.project_cluster_mismatch_}
+    , migrated_project_{other.migrated_project_}
+    , opened_default_project_after_cluster_change_warning_{other.opened_default_project_after_cluster_change_warning_}
+    , lidar_correction_loading_from_cache_{other.lidar_correction_loading_from_cache_}
     , data_{other.data_}
     , set_fields_{other.set_fields_} {}
 
@@ -914,6 +918,18 @@ void LogData::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[225]) {
     SerializeField<logs::ProjectMigrationFailed>(writer, /*tag=*/ 227, project_migration_failed_);
+  }
+  if (set_fields_[226]) {
+    SerializeField<logs::ProjectClusterMismatch>(writer, /*tag=*/ 228, project_cluster_mismatch_);
+  }
+  if (set_fields_[227]) {
+    SerializeField<logs::MigratedProject>(writer, /*tag=*/ 229, migrated_project_);
+  }
+  if (set_fields_[228]) {
+    SerializeField<logs::OpenedDefaultProjectAfterClusterChangeWarning>(writer, /*tag=*/ 230, opened_default_project_after_cluster_change_warning_);
+  }
+  if (set_fields_[229]) {
+    SerializeField<logs::LidarCorrectionLoadingFromCache>(writer, /*tag=*/ 231, lidar_correction_loading_from_cache_);
   }
 }
 
@@ -2500,6 +2516,34 @@ void LogData::DeserializeFrom(PbReader& reader) noexcept(false) {
         data_ = DataOneof::kProjectMigrationFailed;
         DeserializeField<logs::ProjectMigrationFailed>(reader, project_migration_failed_);
         set_fields_[225] = true;
+        break;
+      }
+      case 228: {
+        clear_data();
+        data_ = DataOneof::kProjectClusterMismatch;
+        DeserializeField<logs::ProjectClusterMismatch>(reader, project_cluster_mismatch_);
+        set_fields_[226] = true;
+        break;
+      }
+      case 229: {
+        clear_data();
+        data_ = DataOneof::kMigratedProject;
+        DeserializeField<logs::MigratedProject>(reader, migrated_project_);
+        set_fields_[227] = true;
+        break;
+      }
+      case 230: {
+        clear_data();
+        data_ = DataOneof::kOpenedDefaultProjectAfterClusterChangeWarning;
+        DeserializeField<logs::OpenedDefaultProjectAfterClusterChangeWarning>(reader, opened_default_project_after_cluster_change_warning_);
+        set_fields_[228] = true;
+        break;
+      }
+      case 231: {
+        clear_data();
+        data_ = DataOneof::kLidarCorrectionLoadingFromCache;
+        DeserializeField<logs::LidarCorrectionLoadingFromCache>(reader, lidar_correction_loading_from_cache_);
+        set_fields_[229] = true;
         break;
       }
       default: {

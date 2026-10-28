@@ -1622,3 +1622,39 @@ class ProjectMigrationFailed(_message.Message):
     DETAILS_FIELD_NUMBER: _ClassVar[int]
     details: str
     def __init__(self, details: _Optional[str] = ...) -> None: ...
+
+class ProjectClusterMismatch(_message.Message):
+    __slots__ = ("project_name", "details")
+    PROJECT_NAME_FIELD_NUMBER: _ClassVar[int]
+    DETAILS_FIELD_NUMBER: _ClassVar[int]
+    project_name: str
+    details: str
+    def __init__(self, project_name: _Optional[str] = ..., details: _Optional[str] = ...) -> None: ...
+
+class MigratedProject(_message.Message):
+    __slots__ = ("project_name", "source_name")
+    PROJECT_NAME_FIELD_NUMBER: _ClassVar[int]
+    SOURCE_NAME_FIELD_NUMBER: _ClassVar[int]
+    project_name: str
+    source_name: str
+    def __init__(self, project_name: _Optional[str] = ..., source_name: _Optional[str] = ...) -> None: ...
+
+class OpenedDefaultProjectAfterClusterChangeWarning(_message.Message):
+    __slots__ = ("project_name", "opened_project_name")
+    PROJECT_NAME_FIELD_NUMBER: _ClassVar[int]
+    OPENED_PROJECT_NAME_FIELD_NUMBER: _ClassVar[int]
+    project_name: str
+    opened_project_name: str
+    def __init__(self, project_name: _Optional[str] = ..., opened_project_name: _Optional[str] = ...) -> None: ...
+
+class LidarCorrectionLoadingFromCache(_message.Message):
+    __slots__ = ("correction_type", "details", "lidar_id", "lidar_name")
+    CORRECTION_TYPE_FIELD_NUMBER: _ClassVar[int]
+    DETAILS_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
+    LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
+    correction_type: str
+    details: str
+    lidar_id: str
+    lidar_name: str
+    def __init__(self, correction_type: _Optional[str] = ..., details: _Optional[str] = ..., lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ...) -> None: ...

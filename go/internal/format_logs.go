@@ -462,6 +462,14 @@ func FormatAnyLogMessage(message proto.Message) string {
 		return fmt.Sprintf("Dropping %v buffered packet(s) for node %v because the detection service RPC queue is full (queue size: %v).", data.GetNumPackets(), data.GetNodeId(), data.GetQueueSize())
 	case *logs_pb.ProjectMigrationFailed:
 		return fmt.Sprintf("Project migration failed: %v.", data.GetDetails())
+	case *logs_pb.ProjectClusterMismatch:
+		return fmt.Sprintf("Project `%v` does not match the current cluster: %v", data.GetProjectName(), data.GetDetails())
+	case *logs_pb.MigratedProject:
+		return fmt.Sprintf("Migrated project %v onto the current cluster as %v", data.GetSourceName(), data.GetProjectName())
+	case *logs_pb.OpenedDefaultProjectAfterClusterChangeWarning:
+		return fmt.Sprintf("Project `%v` does not match the current cluster and was not opened; opened `%v` instead. Migrate `%v` to keep using it.", data.GetProjectName(), data.GetOpenedProjectName(), data.GetProjectName())
+	case *logs_pb.LidarCorrectionLoadingFromCache:
+		return fmt.Sprintf("[%v][%v] Failed to load %v corrections from the lidar (%v); using the corrections cached when they were last loaded from this lidar", data.GetLidarName(), data.GetLidarId(), data.GetCorrectionType(), data.GetDetails())
 	default:
 		return "unknown log message"
 	}

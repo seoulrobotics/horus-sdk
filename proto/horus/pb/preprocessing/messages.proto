@@ -109,8 +109,21 @@ message SensorInfo {
   // Reference alignment type when tilt detector is enabled.
   ReferenceAlignmentType reference_alignment = 7;
 
+  // Status reported by the LiDAR device itself. Only available for LiDARs that
+  // support it (Hesai).
+  optional DeviceStatus device_status = 9;
+
   message PoseCorrection {
     Vector3f translation = 1;
     Quaterniond rotation = 2;
+  }
+
+  message DeviceStatus {
+    // Highest temperature reported by the LiDAR's temperature sensors.
+    float temperature_celsius = 1;
+    // Time since the LiDAR was powered on.
+    uint32 uptime_seconds = 2;
+    // Total time the LiDAR has been operating over its lifetime.
+    uint32 total_operation_time_minutes = 3;
   }
 }

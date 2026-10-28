@@ -82,7 +82,7 @@ class OccupancyGridListEvent(_message.Message):
     def __init__(self, occupancy_grid_events: _Optional[_Iterable[_Union[OccupancyGridEvent, _Mapping]]] = ...) -> None: ...
 
 class SensorInfo(_message.Message):
-    __slots__ = ("lidar_id", "lidar_name", "status", "measured_frequency", "pose_correction", "num_total_dropped_packets", "num_total_expected_packets", "reference_alignment")
+    __slots__ = ("lidar_id", "lidar_name", "status", "measured_frequency", "pose_correction", "num_total_dropped_packets", "num_total_expected_packets", "reference_alignment", "device_status")
     class PoseCorrection(_message.Message):
         __slots__ = ("translation", "rotation")
         TRANSLATION_FIELD_NUMBER: _ClassVar[int]
@@ -90,6 +90,15 @@ class SensorInfo(_message.Message):
         translation: _metadata_pb2.Vector3f
         rotation: _metadata_pb2.Quaterniond
         def __init__(self, translation: _Optional[_Union[_metadata_pb2.Vector3f, _Mapping]] = ..., rotation: _Optional[_Union[_metadata_pb2.Quaterniond, _Mapping]] = ...) -> None: ...
+    class DeviceStatus(_message.Message):
+        __slots__ = ("temperature_celsius", "uptime_seconds", "total_operation_time_minutes")
+        TEMPERATURE_CELSIUS_FIELD_NUMBER: _ClassVar[int]
+        UPTIME_SECONDS_FIELD_NUMBER: _ClassVar[int]
+        TOTAL_OPERATION_TIME_MINUTES_FIELD_NUMBER: _ClassVar[int]
+        temperature_celsius: float
+        uptime_seconds: int
+        total_operation_time_minutes: int
+        def __init__(self, temperature_celsius: _Optional[float] = ..., uptime_seconds: _Optional[int] = ..., total_operation_time_minutes: _Optional[int] = ...) -> None: ...
     LIDAR_ID_FIELD_NUMBER: _ClassVar[int]
     LIDAR_NAME_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -98,6 +107,7 @@ class SensorInfo(_message.Message):
     NUM_TOTAL_DROPPED_PACKETS_FIELD_NUMBER: _ClassVar[int]
     NUM_TOTAL_EXPECTED_PACKETS_FIELD_NUMBER: _ClassVar[int]
     REFERENCE_ALIGNMENT_FIELD_NUMBER: _ClassVar[int]
+    DEVICE_STATUS_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
     lidar_name: str
     status: int
@@ -106,4 +116,5 @@ class SensorInfo(_message.Message):
     num_total_dropped_packets: int
     num_total_expected_packets: int
     reference_alignment: ReferenceAlignmentType
-    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ..., status: _Optional[int] = ..., measured_frequency: _Optional[float] = ..., pose_correction: _Optional[_Union[SensorInfo.PoseCorrection, _Mapping]] = ..., num_total_dropped_packets: _Optional[int] = ..., num_total_expected_packets: _Optional[int] = ..., reference_alignment: _Optional[_Union[ReferenceAlignmentType, str]] = ...) -> None: ...
+    device_status: SensorInfo.DeviceStatus
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ..., status: _Optional[int] = ..., measured_frequency: _Optional[float] = ..., pose_correction: _Optional[_Union[SensorInfo.PoseCorrection, _Mapping]] = ..., num_total_dropped_packets: _Optional[int] = ..., num_total_expected_packets: _Optional[int] = ..., reference_alignment: _Optional[_Union[ReferenceAlignmentType, str]] = ..., device_status: _Optional[_Union[SensorInfo.DeviceStatus, _Mapping]] = ...) -> None: ...

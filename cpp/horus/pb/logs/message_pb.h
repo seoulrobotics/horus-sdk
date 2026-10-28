@@ -12520,6 +12520,226 @@ class LogData final : public PbMessage {
     return std::move(set_project_migration_failed(std::move(project_migration_failed)));
   }
 
+  // Field `project_cluster_mismatch` (no 228).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 228.
+  constexpr const logs::ProjectClusterMismatch& project_cluster_mismatch() const& noexcept HORUS_LIFETIME_BOUND {
+    return project_cluster_mismatch_;
+  }
+
+  /// If `project_cluster_mismatch` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 228.
+  logs::ProjectClusterMismatch project_cluster_mismatch() && noexcept {
+    if (!set_fields_[226]) {
+      return {};
+    }
+    return std::move(project_cluster_mismatch_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 228.
+  logs::ProjectClusterMismatch& mutable_project_cluster_mismatch() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kProjectClusterMismatch;
+    set_fields_[226] = true;
+    return project_cluster_mismatch_;
+  }
+
+  /// Returns whether `project_cluster_mismatch` (no 228) is set.
+  constexpr bool has_project_cluster_mismatch() const noexcept { return set_fields_[226]; }
+
+  /// Clears `project_cluster_mismatch` (no 228).
+  void clear_project_cluster_mismatch() & noexcept {
+    data_ = {};
+    set_fields_[226] = false;
+    project_cluster_mismatch_ = {};
+  }
+
+  /// Sets `project_cluster_mismatch` (no 228) and returns `*this`.
+  LogData& set_project_cluster_mismatch(logs::ProjectClusterMismatch&& project_cluster_mismatch) & noexcept {
+    clear_data();
+    data_ = DataOneof::kProjectClusterMismatch;
+    set_fields_[226] = true;
+    project_cluster_mismatch_ = std::move(project_cluster_mismatch);
+    return *this;
+  }
+  /// Sets `project_cluster_mismatch` (no 228) and returns `*this`.
+  LogData&& set_project_cluster_mismatch(logs::ProjectClusterMismatch&& project_cluster_mismatch) && noexcept {
+    return std::move(set_project_cluster_mismatch(std::move(project_cluster_mismatch)));
+  }
+
+  // Field `migrated_project` (no 229).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 229.
+  constexpr const logs::MigratedProject& migrated_project() const& noexcept HORUS_LIFETIME_BOUND {
+    return migrated_project_;
+  }
+
+  /// If `migrated_project` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 229.
+  logs::MigratedProject migrated_project() && noexcept {
+    if (!set_fields_[227]) {
+      return {};
+    }
+    return std::move(migrated_project_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 229.
+  logs::MigratedProject& mutable_migrated_project() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kMigratedProject;
+    set_fields_[227] = true;
+    return migrated_project_;
+  }
+
+  /// Returns whether `migrated_project` (no 229) is set.
+  constexpr bool has_migrated_project() const noexcept { return set_fields_[227]; }
+
+  /// Clears `migrated_project` (no 229).
+  void clear_migrated_project() & noexcept {
+    data_ = {};
+    set_fields_[227] = false;
+    migrated_project_ = {};
+  }
+
+  /// Sets `migrated_project` (no 229) and returns `*this`.
+  LogData& set_migrated_project(logs::MigratedProject&& migrated_project) & noexcept {
+    clear_data();
+    data_ = DataOneof::kMigratedProject;
+    set_fields_[227] = true;
+    migrated_project_ = std::move(migrated_project);
+    return *this;
+  }
+  /// Sets `migrated_project` (no 229) and returns `*this`.
+  LogData&& set_migrated_project(logs::MigratedProject&& migrated_project) && noexcept {
+    return std::move(set_migrated_project(std::move(migrated_project)));
+  }
+
+  // Field `opened_default_project_after_cluster_change_warning` (no 230).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 230.
+  constexpr const logs::OpenedDefaultProjectAfterClusterChangeWarning& opened_default_project_after_cluster_change_warning() const& noexcept HORUS_LIFETIME_BOUND {
+    return opened_default_project_after_cluster_change_warning_;
+  }
+
+  /// If `opened_default_project_after_cluster_change_warning` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 230.
+  logs::OpenedDefaultProjectAfterClusterChangeWarning opened_default_project_after_cluster_change_warning() && noexcept {
+    if (!set_fields_[228]) {
+      return {};
+    }
+    return std::move(opened_default_project_after_cluster_change_warning_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 230.
+  logs::OpenedDefaultProjectAfterClusterChangeWarning& mutable_opened_default_project_after_cluster_change_warning() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kOpenedDefaultProjectAfterClusterChangeWarning;
+    set_fields_[228] = true;
+    return opened_default_project_after_cluster_change_warning_;
+  }
+
+  /// Returns whether `opened_default_project_after_cluster_change_warning` (no 230) is set.
+  constexpr bool has_opened_default_project_after_cluster_change_warning() const noexcept { return set_fields_[228]; }
+
+  /// Clears `opened_default_project_after_cluster_change_warning` (no 230).
+  void clear_opened_default_project_after_cluster_change_warning() & noexcept {
+    data_ = {};
+    set_fields_[228] = false;
+    opened_default_project_after_cluster_change_warning_ = {};
+  }
+
+  /// Sets `opened_default_project_after_cluster_change_warning` (no 230) and returns `*this`.
+  LogData& set_opened_default_project_after_cluster_change_warning(logs::OpenedDefaultProjectAfterClusterChangeWarning&& opened_default_project_after_cluster_change_warning) & noexcept {
+    clear_data();
+    data_ = DataOneof::kOpenedDefaultProjectAfterClusterChangeWarning;
+    set_fields_[228] = true;
+    opened_default_project_after_cluster_change_warning_ = std::move(opened_default_project_after_cluster_change_warning);
+    return *this;
+  }
+  /// Sets `opened_default_project_after_cluster_change_warning` (no 230) and returns `*this`.
+  LogData&& set_opened_default_project_after_cluster_change_warning(logs::OpenedDefaultProjectAfterClusterChangeWarning&& opened_default_project_after_cluster_change_warning) && noexcept {
+    return std::move(set_opened_default_project_after_cluster_change_warning(std::move(opened_default_project_after_cluster_change_warning)));
+  }
+
+  // Field `lidar_correction_loading_from_cache` (no 231).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 231.
+  constexpr const logs::LidarCorrectionLoadingFromCache& lidar_correction_loading_from_cache() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_correction_loading_from_cache_;
+  }
+
+  /// If `lidar_correction_loading_from_cache` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 231.
+  logs::LidarCorrectionLoadingFromCache lidar_correction_loading_from_cache() && noexcept {
+    if (!set_fields_[229]) {
+      return {};
+    }
+    return std::move(lidar_correction_loading_from_cache_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 231.
+  logs::LidarCorrectionLoadingFromCache& mutable_lidar_correction_loading_from_cache() & noexcept HORUS_LIFETIME_BOUND {
+    clear_data();
+    data_ = DataOneof::kLidarCorrectionLoadingFromCache;
+    set_fields_[229] = true;
+    return lidar_correction_loading_from_cache_;
+  }
+
+  /// Returns whether `lidar_correction_loading_from_cache` (no 231) is set.
+  constexpr bool has_lidar_correction_loading_from_cache() const noexcept { return set_fields_[229]; }
+
+  /// Clears `lidar_correction_loading_from_cache` (no 231).
+  void clear_lidar_correction_loading_from_cache() & noexcept {
+    data_ = {};
+    set_fields_[229] = false;
+    lidar_correction_loading_from_cache_ = {};
+  }
+
+  /// Sets `lidar_correction_loading_from_cache` (no 231) and returns `*this`.
+  LogData& set_lidar_correction_loading_from_cache(logs::LidarCorrectionLoadingFromCache&& lidar_correction_loading_from_cache) & noexcept {
+    clear_data();
+    data_ = DataOneof::kLidarCorrectionLoadingFromCache;
+    set_fields_[229] = true;
+    lidar_correction_loading_from_cache_ = std::move(lidar_correction_loading_from_cache);
+    return *this;
+  }
+  /// Sets `lidar_correction_loading_from_cache` (no 231) and returns `*this`.
+  LogData&& set_lidar_correction_loading_from_cache(logs::LidarCorrectionLoadingFromCache&& lidar_correction_loading_from_cache) && noexcept {
+    return std::move(set_lidar_correction_loading_from_cache(std::move(lidar_correction_loading_from_cache)));
+  }
+
   // Oneof `data`.
   // -----
 
@@ -12979,6 +13199,14 @@ class LogData final : public PbMessage {
     kDetectionServiceRpcQueueFull = 226,
     /// @see project_migration_failed()
     kProjectMigrationFailed = 227,
+    /// @see project_cluster_mismatch()
+    kProjectClusterMismatch = 228,
+    /// @see migrated_project()
+    kMigratedProject = 229,
+    /// @see opened_default_project_after_cluster_change_warning()
+    kOpenedDefaultProjectAfterClusterChangeWarning = 230,
+    /// @see lidar_correction_loading_from_cache()
+    kLidarCorrectionLoadingFromCache = 231,
   };
 
   /// Returns the current case set in `data`.
@@ -13893,6 +14121,22 @@ class LogData final : public PbMessage {
         clear_project_migration_failed();
         break;
       }
+      case DataOneof::kProjectClusterMismatch: {
+        clear_project_cluster_mismatch();
+        break;
+      }
+      case DataOneof::kMigratedProject: {
+        clear_migrated_project();
+        break;
+      }
+      case DataOneof::kOpenedDefaultProjectAfterClusterChangeWarning: {
+        clear_opened_default_project_after_cluster_change_warning();
+        break;
+      }
+      case DataOneof::kLidarCorrectionLoadingFromCache: {
+        clear_lidar_correction_loading_from_cache();
+        break;
+      }
       case DataOneof::kNotSet:
       default:
         break;
@@ -14352,12 +14596,20 @@ class LogData final : public PbMessage {
   logs::DetectionServiceRpcQueueFull detection_service_rpc_queue_full_{};
   /// @see project_migration_failed()
   logs::ProjectMigrationFailed project_migration_failed_{};
+  /// @see project_cluster_mismatch()
+  logs::ProjectClusterMismatch project_cluster_mismatch_{};
+  /// @see migrated_project()
+  logs::MigratedProject migrated_project_{};
+  /// @see opened_default_project_after_cluster_change_warning()
+  logs::OpenedDefaultProjectAfterClusterChangeWarning opened_default_project_after_cluster_change_warning_{};
+  /// @see lidar_correction_loading_from_cache()
+  logs::LidarCorrectionLoadingFromCache lidar_correction_loading_from_cache_{};
 
   /// @see data_case()
   DataOneof data_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<226> set_fields_;
+  std::bitset<230> set_fields_;
 };
 
 /// A log message notifying users about some status.

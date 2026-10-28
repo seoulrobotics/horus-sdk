@@ -167,6 +167,7 @@ class NodeHealth:
         POINT_AGGREGATOR = 4
         PREPROCESSING = 5
         PROJECT_MANAGER = 6
+        DETECTION_MERGER = 7
 
     class Status(enum.Enum):
         """Connectivity status of a node."""

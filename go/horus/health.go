@@ -275,6 +275,7 @@ const (
 	NodeHealthServiceServicePointAggregator NodeHealthService = NodeHealthService(pm_pb.GetHealthStatusResponse_NodeHealth_SERVICE_POINT_AGGREGATOR)
 	NodeHealthServiceServicePreprocessing   NodeHealthService = NodeHealthService(pm_pb.GetHealthStatusResponse_NodeHealth_SERVICE_PREPROCESSING)
 	NodeHealthServiceServiceProjectManager  NodeHealthService = NodeHealthService(pm_pb.GetHealthStatusResponse_NodeHealth_SERVICE_PROJECT_MANAGER)
+	NodeHealthServiceServiceDetectionMerger NodeHealthService = NodeHealthService(pm_pb.GetHealthStatusResponse_NodeHealth_SERVICE_DETECTION_MERGER)
 )
 
 // Converts NodeHealthService enum to string.
@@ -290,6 +291,10 @@ func (service NodeHealthService) String() string {
 		return "Point aggregator"
 	case NodeHealthServiceServicePreprocessing:
 		return "Preprocessing"
+	case NodeHealthServiceServiceProjectManager:
+		return "Project manager"
+	case NodeHealthServiceServiceDetectionMerger:
+		return "Detection merger"
 	default:
 		return "Unknown"
 	}

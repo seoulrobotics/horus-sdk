@@ -242,5 +242,9 @@ message LogData {
     logs.DbCommitFailed db_commit_failed = 223;
     logs.DetectionServiceRpcQueueFull detection_service_rpc_queue_full = 226;
     logs.ProjectMigrationFailed project_migration_failed = 227;
+    logs.ProjectClusterMismatch project_cluster_mismatch = 228;
+    logs.MigratedProject migrated_project = 229;
+    logs.OpenedDefaultProjectAfterClusterChangeWarning opened_default_project_after_cluster_change_warning = 230;
+    logs.LidarCorrectionLoadingFromCache lidar_correction_loading_from_cache = 231;
   }
 }

@@ -182,6 +182,50 @@ void SensorInfo_PoseCorrection::DeserializeFrom(PbReader& reader) noexcept(false
   }
 }
 
+SensorInfo_DeviceStatus::SensorInfo_DeviceStatus(const SensorInfo_DeviceStatus& other) noexcept(false)
+    : temperature_celsius_{other.temperature_celsius_}
+    , uptime_seconds_{other.uptime_seconds_}
+    , total_operation_time_minutes_{other.total_operation_time_minutes_}
+    , set_fields_{other.set_fields_} {}
+
+void SensorInfo_DeviceStatus::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<float, PbDeserFlags::kFixed>(writer, /*tag=*/ 1, temperature_celsius_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<std::uint32_t>(writer, /*tag=*/ 2, uptime_seconds_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<std::uint32_t>(writer, /*tag=*/ 3, total_operation_time_minutes_);
+  }
+}
+
+void SensorInfo_DeviceStatus::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<float, PbDeserFlags::kFixed>(reader, temperature_celsius_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<std::uint32_t>(reader, uptime_seconds_);
+        set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<std::uint32_t>(reader, total_operation_time_minutes_);
+        set_fields_[2] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
 SensorInfo::SensorInfo(const SensorInfo& other) noexcept(false)
     : lidar_id_{other.lidar_id_}
     , lidar_name_{other.lidar_name_}
@@ -191,6 +235,7 @@ SensorInfo::SensorInfo(const SensorInfo& other) noexcept(false)
     , num_total_dropped_packets_{other.num_total_dropped_packets_}
     , num_total_expected_packets_{other.num_total_expected_packets_}
     , reference_alignment_{other.reference_alignment_}
+    , device_status_{other.device_status_}
     , set_fields_{other.set_fields_} {}
 
 void SensorInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -217,6 +262,9 @@ void SensorInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[7]) {
     SerializeField<ReferenceAlignmentType>(writer, /*tag=*/ 7, reference_alignment_);
+  }
+  if (set_fields_[8]) {
+    SerializeField<SensorInfo_DeviceStatus>(writer, /*tag=*/ 9, device_status_);
   }
 }
 
@@ -261,6 +309,11 @@ void SensorInfo::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 7: {
         DeserializeField<ReferenceAlignmentType>(reader, reference_alignment_);
         set_fields_[7] = true;
+        break;
+      }
+      case 9: {
+        DeserializeField<SensorInfo_DeviceStatus>(reader, device_status_);
+        set_fields_[8] = true;
         break;
       }
       default: {

@@ -229,6 +229,10 @@ _formatters: typing.Dict[int, typing.Callable[[LogData], str]] = {
     LogData.DB_COMMIT_FAILED_FIELD_NUMBER: lambda m: format_db_commit_failed(m.db_commit_failed),
     LogData.DETECTION_SERVICE_RPC_QUEUE_FULL_FIELD_NUMBER: lambda m: format_detection_service_rpc_queue_full(m.detection_service_rpc_queue_full),
     LogData.PROJECT_MIGRATION_FAILED_FIELD_NUMBER: lambda m: format_project_migration_failed(m.project_migration_failed),
+    LogData.PROJECT_CLUSTER_MISMATCH_FIELD_NUMBER: lambda m: format_project_cluster_mismatch(m.project_cluster_mismatch),
+    LogData.MIGRATED_PROJECT_FIELD_NUMBER: lambda m: format_migrated_project(m.migrated_project),
+    LogData.OPENED_DEFAULT_PROJECT_AFTER_CLUSTER_CHANGE_WARNING_FIELD_NUMBER: lambda m: format_opened_default_project_after_cluster_change_warning(m.opened_default_project_after_cluster_change_warning),
+    LogData.LIDAR_CORRECTION_LOADING_FROM_CACHE_FIELD_NUMBER: lambda m: format_lidar_correction_loading_from_cache(m.lidar_correction_loading_from_cache),
 }
 
 def _unknown_format(data: LogData) -> str:
@@ -1149,3 +1153,19 @@ def format_detection_service_rpc_queue_full(log: _logs_pb.DetectionServiceRpcQue
 def format_project_migration_failed(log: _logs_pb.ProjectMigrationFailed) -> str:
     """Formats log `ProjectMigrationFailed` to a string."""
     return f"Project migration failed: {log.details}."
+
+def format_project_cluster_mismatch(log: _logs_pb.ProjectClusterMismatch) -> str:
+    """Formats log `ProjectClusterMismatch` to a string."""
+    return f"Project `{log.project_name}` does not match the current cluster: {log.details}"
+
+def format_migrated_project(log: _logs_pb.MigratedProject) -> str:
+    """Formats log `MigratedProject` to a string."""
+    return f"Migrated project {log.source_name} onto the current cluster as {log.project_name}"
+
+def format_opened_default_project_after_cluster_change_warning(log: _logs_pb.OpenedDefaultProjectAfterClusterChangeWarning) -> str:
+    """Formats log `OpenedDefaultProjectAfterClusterChangeWarning` to a string."""
+    return f"Project `{log.project_name}` does not match the current cluster and was not opened; opened `{log.opened_project_name}` instead. Migrate `{log.project_name}` to keep using it."
+
+def format_lidar_correction_loading_from_cache(log: _logs_pb.LidarCorrectionLoadingFromCache) -> str:
+    """Formats log `LidarCorrectionLoadingFromCache` to a string."""
+    return f"[{log.lidar_name}][{log.lidar_id}] Failed to load {log.correction_type} corrections from the lidar ({log.details}); using the corrections cached when they were last loaded from this lidar"

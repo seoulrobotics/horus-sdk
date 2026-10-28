@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package horus.pb;
 
+import "horus/pb/config/metadata.proto";
+
 import "horus/pb/logs/logs.proto";
 
 import "horus/pb/preprocessing/messages.proto";
@@ -23,6 +25,7 @@ service ProjectManagerService {
       description: "Provides horus health indicators."
     };
   }
+
 }
 
 // Different actions allowed by a license level
@@ -131,6 +134,7 @@ message GetHealthStatusResponse {
       SERVICE_POINT_AGGREGATOR = 4;
       SERVICE_PREPROCESSING = 5;
       SERVICE_PROJECT_MANAGER = 6;
+      SERVICE_DETECTION_MERGER = 7;
     }
 
     // Connectivity status.
@@ -142,6 +146,7 @@ message GetHealthStatusResponse {
     Service service = 1;
     string node_id = 2;
     Status node_status = 3;
+    int64 latency_us = 4;
   }
 
   // Wraps SensorInfo with node unreachable error
@@ -155,6 +160,9 @@ message GetHealthStatusResponse {
       logs.ServiceConnectionTimedOut timeout = 3;
     }
   }
+
+  string project_name = 5;
+  string version = 6;
 
   LicenseStatus license_status = 1;
   // Connectivity status of the sensors.
@@ -173,4 +181,9 @@ message GetHealthStatusResponse {
 
   }
   repeated NodeResources node_resources = 4;
+
+  // The last total overall frame latency published by the detection merger
+  // service. Unset if unavailable (e.g. the detection merger node is
+  // unreachable, or no frame has been merged yet).
+  optional Duration detection_merger_total_overall_frame_latency = 7;
 }

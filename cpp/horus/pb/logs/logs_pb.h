@@ -260,6 +260,10 @@ class HesaiUdpReceiverInfo;
 class DbCommitFailed;
 class DetectionServiceRpcQueueFull;
 class ProjectMigrationFailed;
+class ProjectClusterMismatch;
+class MigratedProject;
+class OpenedDefaultProjectAfterClusterChangeWarning;
+class LidarCorrectionLoadingFromCache;
 
 // MARK: Message declarations
 
@@ -31877,6 +31881,766 @@ class ProjectMigrationFailed final : public PbMessage {
 
   /// The set of fields that have been given an explicit value.
   std::bitset<1> set_fields_;
+};
+
+/// Log #228.
+/// 
+///  > Project `$project_name` does not match the current cluster: $details
+///
+/// Source: horus/pb/logs/logs.proto:1723:1
+class ProjectClusterMismatch final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `ProjectClusterMismatch`.
+  ProjectClusterMismatch() noexcept = default;
+
+  /// Move constructor.
+  ProjectClusterMismatch(ProjectClusterMismatch&&) noexcept = default;
+  /// Move assignment operator.
+  ProjectClusterMismatch& operator=(ProjectClusterMismatch&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit ProjectClusterMismatch(const ProjectClusterMismatch& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  ProjectClusterMismatch& operator=(const ProjectClusterMismatch&) = delete;
+
+  /// Default destructor.
+  ~ProjectClusterMismatch() noexcept final = default;
+
+  /// Creates a `ProjectClusterMismatch` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit ProjectClusterMismatch(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.ProjectClusterMismatch`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.ProjectClusterMismatch"; }
+
+  /// The full name of the message: `horus.pb.logs.ProjectClusterMismatch`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `project_name` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& project_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return project_name_;
+  }
+
+  /// If `project_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes project_name() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(project_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_project_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return project_name_;
+  }
+
+  /// Returns whether `project_name` (no 1) is set.
+  constexpr bool has_project_name() const noexcept { return set_fields_[0]; }
+
+  /// Clears `project_name` (no 1).
+  void clear_project_name() & noexcept {
+    set_fields_[0] = false;
+    project_name_ = {};
+  }
+
+  /// Sets `project_name` (no 1) and returns `*this`.
+  ProjectClusterMismatch& set_project_name(CowBytes&& project_name) & noexcept {
+    set_fields_[0] = true;
+    project_name_ = std::move(project_name);
+    return *this;
+  }
+  /// Sets `project_name` (no 1) and returns `*this`.
+  ProjectClusterMismatch&& set_project_name(CowBytes&& project_name) && noexcept {
+    return std::move(set_project_name(std::move(project_name)));
+  }
+
+  // Field `details` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& details() const& noexcept HORUS_LIFETIME_BOUND {
+    return details_;
+  }
+
+  /// If `details` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes details() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(details_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_details() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return details_;
+  }
+
+  /// Returns whether `details` (no 2) is set.
+  constexpr bool has_details() const noexcept { return set_fields_[1]; }
+
+  /// Clears `details` (no 2).
+  void clear_details() & noexcept {
+    set_fields_[1] = false;
+    details_ = {};
+  }
+
+  /// Sets `details` (no 2) and returns `*this`.
+  ProjectClusterMismatch& set_details(CowBytes&& details) & noexcept {
+    set_fields_[1] = true;
+    details_ = std::move(details);
+    return *this;
+  }
+  /// Sets `details` (no 2) and returns `*this`.
+  ProjectClusterMismatch&& set_details(CowBytes&& details) && noexcept {
+    return std::move(set_details(std::move(details)));
+  }
+
+ private:
+  /// @see project_name()
+  CowBytes project_name_{};
+  /// @see details()
+  CowBytes details_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// Log #229.
+/// 
+///  > Migrated project $source_name onto the current cluster as $project_name
+///
+/// Source: horus/pb/logs/logs.proto:1731:1
+class MigratedProject final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `MigratedProject`.
+  MigratedProject() noexcept = default;
+
+  /// Move constructor.
+  MigratedProject(MigratedProject&&) noexcept = default;
+  /// Move assignment operator.
+  MigratedProject& operator=(MigratedProject&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit MigratedProject(const MigratedProject& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  MigratedProject& operator=(const MigratedProject&) = delete;
+
+  /// Default destructor.
+  ~MigratedProject() noexcept final = default;
+
+  /// Creates a `MigratedProject` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit MigratedProject(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.MigratedProject`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.MigratedProject"; }
+
+  /// The full name of the message: `horus.pb.logs.MigratedProject`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `project_name` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& project_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return project_name_;
+  }
+
+  /// If `project_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes project_name() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(project_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_project_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return project_name_;
+  }
+
+  /// Returns whether `project_name` (no 1) is set.
+  constexpr bool has_project_name() const noexcept { return set_fields_[0]; }
+
+  /// Clears `project_name` (no 1).
+  void clear_project_name() & noexcept {
+    set_fields_[0] = false;
+    project_name_ = {};
+  }
+
+  /// Sets `project_name` (no 1) and returns `*this`.
+  MigratedProject& set_project_name(CowBytes&& project_name) & noexcept {
+    set_fields_[0] = true;
+    project_name_ = std::move(project_name);
+    return *this;
+  }
+  /// Sets `project_name` (no 1) and returns `*this`.
+  MigratedProject&& set_project_name(CowBytes&& project_name) && noexcept {
+    return std::move(set_project_name(std::move(project_name)));
+  }
+
+  // Field `source_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& source_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return source_name_;
+  }
+
+  /// If `source_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes source_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(source_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_source_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return source_name_;
+  }
+
+  /// Returns whether `source_name` (no 2) is set.
+  constexpr bool has_source_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `source_name` (no 2).
+  void clear_source_name() & noexcept {
+    set_fields_[1] = false;
+    source_name_ = {};
+  }
+
+  /// Sets `source_name` (no 2) and returns `*this`.
+  MigratedProject& set_source_name(CowBytes&& source_name) & noexcept {
+    set_fields_[1] = true;
+    source_name_ = std::move(source_name);
+    return *this;
+  }
+  /// Sets `source_name` (no 2) and returns `*this`.
+  MigratedProject&& set_source_name(CowBytes&& source_name) && noexcept {
+    return std::move(set_source_name(std::move(source_name)));
+  }
+
+ private:
+  /// @see project_name()
+  CowBytes project_name_{};
+  /// @see source_name()
+  CowBytes source_name_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// Log #230.
+/// 
+///  > Project `$project_name` does not match the current cluster and was not opened; opened `$opened_project_name` instead. Migrate `$project_name` to keep using it.
+///
+/// Source: horus/pb/logs/logs.proto:1739:1
+class OpenedDefaultProjectAfterClusterChangeWarning final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `OpenedDefaultProjectAfterClusterChangeWarning`.
+  OpenedDefaultProjectAfterClusterChangeWarning() noexcept = default;
+
+  /// Move constructor.
+  OpenedDefaultProjectAfterClusterChangeWarning(OpenedDefaultProjectAfterClusterChangeWarning&&) noexcept = default;
+  /// Move assignment operator.
+  OpenedDefaultProjectAfterClusterChangeWarning& operator=(OpenedDefaultProjectAfterClusterChangeWarning&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit OpenedDefaultProjectAfterClusterChangeWarning(const OpenedDefaultProjectAfterClusterChangeWarning& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  OpenedDefaultProjectAfterClusterChangeWarning& operator=(const OpenedDefaultProjectAfterClusterChangeWarning&) = delete;
+
+  /// Default destructor.
+  ~OpenedDefaultProjectAfterClusterChangeWarning() noexcept final = default;
+
+  /// Creates a `OpenedDefaultProjectAfterClusterChangeWarning` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit OpenedDefaultProjectAfterClusterChangeWarning(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.OpenedDefaultProjectAfterClusterChangeWarning`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.OpenedDefaultProjectAfterClusterChangeWarning"; }
+
+  /// The full name of the message: `horus.pb.logs.OpenedDefaultProjectAfterClusterChangeWarning`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `project_name` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& project_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return project_name_;
+  }
+
+  /// If `project_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes project_name() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(project_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_project_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return project_name_;
+  }
+
+  /// Returns whether `project_name` (no 1) is set.
+  constexpr bool has_project_name() const noexcept { return set_fields_[0]; }
+
+  /// Clears `project_name` (no 1).
+  void clear_project_name() & noexcept {
+    set_fields_[0] = false;
+    project_name_ = {};
+  }
+
+  /// Sets `project_name` (no 1) and returns `*this`.
+  OpenedDefaultProjectAfterClusterChangeWarning& set_project_name(CowBytes&& project_name) & noexcept {
+    set_fields_[0] = true;
+    project_name_ = std::move(project_name);
+    return *this;
+  }
+  /// Sets `project_name` (no 1) and returns `*this`.
+  OpenedDefaultProjectAfterClusterChangeWarning&& set_project_name(CowBytes&& project_name) && noexcept {
+    return std::move(set_project_name(std::move(project_name)));
+  }
+
+  // Field `opened_project_name` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& opened_project_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return opened_project_name_;
+  }
+
+  /// If `opened_project_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes opened_project_name() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(opened_project_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_opened_project_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return opened_project_name_;
+  }
+
+  /// Returns whether `opened_project_name` (no 2) is set.
+  constexpr bool has_opened_project_name() const noexcept { return set_fields_[1]; }
+
+  /// Clears `opened_project_name` (no 2).
+  void clear_opened_project_name() & noexcept {
+    set_fields_[1] = false;
+    opened_project_name_ = {};
+  }
+
+  /// Sets `opened_project_name` (no 2) and returns `*this`.
+  OpenedDefaultProjectAfterClusterChangeWarning& set_opened_project_name(CowBytes&& opened_project_name) & noexcept {
+    set_fields_[1] = true;
+    opened_project_name_ = std::move(opened_project_name);
+    return *this;
+  }
+  /// Sets `opened_project_name` (no 2) and returns `*this`.
+  OpenedDefaultProjectAfterClusterChangeWarning&& set_opened_project_name(CowBytes&& opened_project_name) && noexcept {
+    return std::move(set_opened_project_name(std::move(opened_project_name)));
+  }
+
+ private:
+  /// @see project_name()
+  CowBytes project_name_{};
+  /// @see opened_project_name()
+  CowBytes opened_project_name_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<2> set_fields_;
+};
+
+/// Log #231.
+/// 
+///  > [$lidar_name][$lidar_id] Failed to load $correction_type corrections from the lidar ($details); using the corrections cached when they were last loaded from this lidar
+///
+/// Source: horus/pb/logs/logs.proto:1747:1
+class LidarCorrectionLoadingFromCache final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `LidarCorrectionLoadingFromCache`.
+  LidarCorrectionLoadingFromCache() noexcept = default;
+
+  /// Move constructor.
+  LidarCorrectionLoadingFromCache(LidarCorrectionLoadingFromCache&&) noexcept = default;
+  /// Move assignment operator.
+  LidarCorrectionLoadingFromCache& operator=(LidarCorrectionLoadingFromCache&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit LidarCorrectionLoadingFromCache(const LidarCorrectionLoadingFromCache& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  LidarCorrectionLoadingFromCache& operator=(const LidarCorrectionLoadingFromCache&) = delete;
+
+  /// Default destructor.
+  ~LidarCorrectionLoadingFromCache() noexcept final = default;
+
+  /// Creates a `LidarCorrectionLoadingFromCache` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit LidarCorrectionLoadingFromCache(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.logs.LidarCorrectionLoadingFromCache`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.logs.LidarCorrectionLoadingFromCache"; }
+
+  /// The full name of the message: `horus.pb.logs.LidarCorrectionLoadingFromCache`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `correction_type` (no 1).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  constexpr const CowBytes& correction_type() const& noexcept HORUS_LIFETIME_BOUND {
+    return correction_type_;
+  }
+
+  /// If `correction_type` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 1.
+  CowBytes correction_type() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(correction_type_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 1.
+  CowBytes& mutable_correction_type() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return correction_type_;
+  }
+
+  /// Returns whether `correction_type` (no 1) is set.
+  constexpr bool has_correction_type() const noexcept { return set_fields_[0]; }
+
+  /// Clears `correction_type` (no 1).
+  void clear_correction_type() & noexcept {
+    set_fields_[0] = false;
+    correction_type_ = {};
+  }
+
+  /// Sets `correction_type` (no 1) and returns `*this`.
+  LidarCorrectionLoadingFromCache& set_correction_type(CowBytes&& correction_type) & noexcept {
+    set_fields_[0] = true;
+    correction_type_ = std::move(correction_type);
+    return *this;
+  }
+  /// Sets `correction_type` (no 1) and returns `*this`.
+  LidarCorrectionLoadingFromCache&& set_correction_type(CowBytes&& correction_type) && noexcept {
+    return std::move(set_correction_type(std::move(correction_type)));
+  }
+
+  // Field `details` (no 2).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  constexpr const CowBytes& details() const& noexcept HORUS_LIFETIME_BOUND {
+    return details_;
+  }
+
+  /// If `details` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 2.
+  CowBytes details() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(details_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 2.
+  CowBytes& mutable_details() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return details_;
+  }
+
+  /// Returns whether `details` (no 2) is set.
+  constexpr bool has_details() const noexcept { return set_fields_[1]; }
+
+  /// Clears `details` (no 2).
+  void clear_details() & noexcept {
+    set_fields_[1] = false;
+    details_ = {};
+  }
+
+  /// Sets `details` (no 2) and returns `*this`.
+  LidarCorrectionLoadingFromCache& set_details(CowBytes&& details) & noexcept {
+    set_fields_[1] = true;
+    details_ = std::move(details);
+    return *this;
+  }
+  /// Sets `details` (no 2) and returns `*this`.
+  LidarCorrectionLoadingFromCache&& set_details(CowBytes&& details) && noexcept {
+    return std::move(set_details(std::move(details)));
+  }
+
+  // Field `lidar_id` (no 3).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  constexpr const CowBytes& lidar_id() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_id_;
+  }
+
+  /// If `lidar_id` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 3.
+  CowBytes lidar_id() && noexcept {
+    if (!set_fields_[2]) {
+      return {};
+    }
+    return std::move(lidar_id_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 3.
+  CowBytes& mutable_lidar_id() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return lidar_id_;
+  }
+
+  /// Returns whether `lidar_id` (no 3) is set.
+  constexpr bool has_lidar_id() const noexcept { return set_fields_[2]; }
+
+  /// Clears `lidar_id` (no 3).
+  void clear_lidar_id() & noexcept {
+    set_fields_[2] = false;
+    lidar_id_ = {};
+  }
+
+  /// Sets `lidar_id` (no 3) and returns `*this`.
+  LidarCorrectionLoadingFromCache& set_lidar_id(CowBytes&& lidar_id) & noexcept {
+    set_fields_[2] = true;
+    lidar_id_ = std::move(lidar_id);
+    return *this;
+  }
+  /// Sets `lidar_id` (no 3) and returns `*this`.
+  LidarCorrectionLoadingFromCache&& set_lidar_id(CowBytes&& lidar_id) && noexcept {
+    return std::move(set_lidar_id(std::move(lidar_id)));
+  }
+
+  // Field `lidar_name` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr const CowBytes& lidar_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return lidar_name_;
+  }
+
+  /// If `lidar_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 4.
+  CowBytes lidar_name() && noexcept {
+    if (!set_fields_[3]) {
+      return {};
+    }
+    return std::move(lidar_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  CowBytes& mutable_lidar_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return lidar_name_;
+  }
+
+  /// Returns whether `lidar_name` (no 4) is set.
+  constexpr bool has_lidar_name() const noexcept { return set_fields_[3]; }
+
+  /// Clears `lidar_name` (no 4).
+  void clear_lidar_name() & noexcept {
+    set_fields_[3] = false;
+    lidar_name_ = {};
+  }
+
+  /// Sets `lidar_name` (no 4) and returns `*this`.
+  LidarCorrectionLoadingFromCache& set_lidar_name(CowBytes&& lidar_name) & noexcept {
+    set_fields_[3] = true;
+    lidar_name_ = std::move(lidar_name);
+    return *this;
+  }
+  /// Sets `lidar_name` (no 4) and returns `*this`.
+  LidarCorrectionLoadingFromCache&& set_lidar_name(CowBytes&& lidar_name) && noexcept {
+    return std::move(set_lidar_name(std::move(lidar_name)));
+  }
+
+ private:
+  /// @see correction_type()
+  CowBytes correction_type_{};
+  /// @see details()
+  CowBytes details_{};
+  /// @see lidar_id()
+  CowBytes lidar_id_{};
+  /// @see lidar_name()
+  CowBytes lidar_name_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<4> set_fields_;
 };
 
 }  // namespace logs

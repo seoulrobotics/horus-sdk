@@ -13,6 +13,7 @@
 
 #include "horus/attributes.h"
 #include "horus/internal/attributes.h"
+#include "horus/pb/config/metadata_pb.h"
 #include "horus/pb/cow_bytes.h"
 #include "horus/pb/cow_repeated.h"
 #include "horus/pb/license_server/messages_pb.h"
@@ -38,7 +39,7 @@ namespace pb {
 /// Different actions allowed by a license level
 ///  Encoded through a bitwise encoding
 ///
-/// Source: horus/pb/project_manager/service.proto:30:1
+/// Source: horus/pb/project_manager/service.proto:33:1
 enum class LicensePrivilege : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -64,7 +65,7 @@ enum class LicensePrivilege : PbEnum {  // NOLINT(*-enum-size)
 
 /// Service represented by the node.
 ///
-/// Source: horus/pb/project_manager/service.proto:126:5
+/// Source: horus/pb/project_manager/service.proto:129:5
 enum class GetHealthStatusResponse_NodeHealth_Service : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -80,14 +81,16 @@ enum class GetHealthStatusResponse_NodeHealth_Service : PbEnum {  // NOLINT(*-en
   kPreprocessing = 5,
   /// No documentation.
   kProjectManager = 6,
+  /// No documentation.
+  kDetectionMerger = 7,
 
   /// Unknown value read from the wire.
-  kUnknownWireValue = 7,
+  kUnknownWireValue = 8,
 };
 
 /// Connectivity status.
 ///
-/// Source: horus/pb/project_manager/service.proto:137:5
+/// Source: horus/pb/project_manager/service.proto:141:5
 enum class GetHealthStatusResponse_NodeHealth_Status : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -118,7 +121,7 @@ class GetHealthStatusResponse;
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:67:3
+/// Source: horus/pb/project_manager/service.proto:70:3
 class LicenseLevel_Level1 final : public PbMessage {
  public:
 
@@ -265,7 +268,7 @@ class LicenseLevel_Level1 final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:72:3
+/// Source: horus/pb/project_manager/service.proto:75:3
 class LicenseLevel_Level2 final : public PbMessage {
  public:
 
@@ -412,7 +415,7 @@ class LicenseLevel_Level2 final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:77:3
+/// Source: horus/pb/project_manager/service.proto:80:3
 class LicenseLevel_Level3 final : public PbMessage {
  public:
 
@@ -622,7 +625,7 @@ class LicenseLevel_Level3 final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:83:3
+/// Source: horus/pb/project_manager/service.proto:86:3
 class LicenseLevel_Level4 final : public PbMessage {
  public:
 
@@ -769,7 +772,7 @@ class LicenseLevel_Level4 final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:53:1
+/// Source: horus/pb/project_manager/service.proto:56:1
 class LicenseLevel final : public PbMessage {
  public:
   /// @see LicenseLevel_Level1
@@ -1155,7 +1158,7 @@ class LicenseLevel final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:90:1
+/// Source: horus/pb/project_manager/service.proto:93:1
 class LicenseStatus final : public PbMessage {
  public:
 
@@ -1317,7 +1320,7 @@ class LicenseStatus final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:115:1
+/// Source: horus/pb/project_manager/service.proto:118:1
 class GetHealthStatusRequest final : public PbMessage {
  public:
 
@@ -1379,7 +1382,7 @@ class GetHealthStatusRequest final : public PbMessage {
 
 /// Connectivity status of a single node.
 ///
-/// Source: horus/pb/project_manager/service.proto:124:3
+/// Source: horus/pb/project_manager/service.proto:127:3
 class GetHealthStatusResponse_NodeHealth final : public PbMessage {
  public:
   /// @see GetHealthStatusResponse_NodeHealth_Service
@@ -1559,6 +1562,44 @@ class GetHealthStatusResponse_NodeHealth final : public PbMessage {
     return std::move(set_node_status(node_status));
   }
 
+  // Field `latency_us` (no 4).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  constexpr std::int64_t latency_us() const& noexcept HORUS_LIFETIME_BOUND {
+    return latency_us_;
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 4.
+  std::int64_t& mutable_latency_us() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[3] = true;
+    return latency_us_;
+  }
+
+  /// Returns whether `latency_us` (no 4) is set.
+  constexpr bool has_latency_us() const noexcept { return set_fields_[3]; }
+
+  /// Clears `latency_us` (no 4).
+  void clear_latency_us() & noexcept {
+    set_fields_[3] = false;
+    latency_us_ = {};
+  }
+
+  /// Sets `latency_us` (no 4) and returns `*this`.
+  GetHealthStatusResponse_NodeHealth& set_latency_us(std::int64_t latency_us) & noexcept {
+    set_fields_[3] = true;
+    latency_us_ = latency_us;
+    return *this;
+  }
+  /// Sets `latency_us` (no 4) and returns `*this`.
+  GetHealthStatusResponse_NodeHealth&& set_latency_us(std::int64_t latency_us) && noexcept {
+    return std::move(set_latency_us(latency_us));
+  }
+
  private:
   /// @see service()
   GetHealthStatusResponse_NodeHealth_Service service_{};
@@ -1566,14 +1607,16 @@ class GetHealthStatusResponse_NodeHealth final : public PbMessage {
   CowBytes node_id_{};
   /// @see node_status()
   GetHealthStatusResponse_NodeHealth_Status node_status_{};
+  /// @see latency_us()
+  std::int64_t latency_us_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<3> set_fields_;
+  std::bitset<4> set_fields_;
 };
 
 /// Wraps SensorInfo with node unreachable error
 ///
-/// Source: horus/pb/project_manager/service.proto:148:3
+/// Source: horus/pb/project_manager/service.proto:153:3
 class GetHealthStatusResponse_SensorHealth final : public PbMessage {
  public:
 
@@ -1825,7 +1868,7 @@ class GetHealthStatusResponse_SensorHealth final : public PbMessage {
 /// Resource usage of each relevant node (preprocessing service & detection
 ///  service).
 ///
-/// Source: horus/pb/project_manager/service.proto:172:3
+/// Source: horus/pb/project_manager/service.proto:180:3
 class GetHealthStatusResponse_NodeResources final : public PbMessage {
  public:
 
@@ -1891,7 +1934,7 @@ class GetHealthStatusResponse_NodeResources final : public PbMessage {
 ///  - Lidar status
 ///  - Services connectivity
 ///
-/// Source: horus/pb/project_manager/service.proto:122:1
+/// Source: horus/pb/project_manager/service.proto:125:1
 class GetHealthStatusResponse final : public PbMessage {
  public:
   /// @see GetHealthStatusResponse_NodeHealth
@@ -1947,6 +1990,106 @@ class GetHealthStatusResponse final : public PbMessage {
   /// The full name of the message: `horus.pb.GetHealthStatusResponse`.
   StringView MessageTypeName() const noexcept final { return TypeName(); }
 
+  // Field `project_name` (no 5).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 5.
+  constexpr const CowBytes& project_name() const& noexcept HORUS_LIFETIME_BOUND {
+    return project_name_;
+  }
+
+  /// If `project_name` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 5.
+  CowBytes project_name() && noexcept {
+    if (!set_fields_[0]) {
+      return {};
+    }
+    return std::move(project_name_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 5.
+  CowBytes& mutable_project_name() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return project_name_;
+  }
+
+  /// Returns whether `project_name` (no 5) is set.
+  constexpr bool has_project_name() const noexcept { return set_fields_[0]; }
+
+  /// Clears `project_name` (no 5).
+  void clear_project_name() & noexcept {
+    set_fields_[0] = false;
+    project_name_ = {};
+  }
+
+  /// Sets `project_name` (no 5) and returns `*this`.
+  GetHealthStatusResponse& set_project_name(CowBytes&& project_name) & noexcept {
+    set_fields_[0] = true;
+    project_name_ = std::move(project_name);
+    return *this;
+  }
+  /// Sets `project_name` (no 5) and returns `*this`.
+  GetHealthStatusResponse&& set_project_name(CowBytes&& project_name) && noexcept {
+    return std::move(set_project_name(std::move(project_name)));
+  }
+
+  // Field `version` (no 6).
+  // -----
+
+  /// No documentation.
+  ///
+  /// Field no: 6.
+  constexpr const CowBytes& version() const& noexcept HORUS_LIFETIME_BOUND {
+    return version_;
+  }
+
+  /// If `version` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 6.
+  CowBytes version() && noexcept {
+    if (!set_fields_[1]) {
+      return {};
+    }
+    return std::move(version_);
+  }
+
+  /// No documentation.
+  ///
+  /// Field no: 6.
+  CowBytes& mutable_version() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return version_;
+  }
+
+  /// Returns whether `version` (no 6) is set.
+  constexpr bool has_version() const noexcept { return set_fields_[1]; }
+
+  /// Clears `version` (no 6).
+  void clear_version() & noexcept {
+    set_fields_[1] = false;
+    version_ = {};
+  }
+
+  /// Sets `version` (no 6) and returns `*this`.
+  GetHealthStatusResponse& set_version(CowBytes&& version) & noexcept {
+    set_fields_[1] = true;
+    version_ = std::move(version);
+    return *this;
+  }
+  /// Sets `version` (no 6) and returns `*this`.
+  GetHealthStatusResponse&& set_version(CowBytes&& version) && noexcept {
+    return std::move(set_version(std::move(version)));
+  }
+
   // Field `license_status` (no 1).
   // -----
 
@@ -1963,7 +2106,7 @@ class GetHealthStatusResponse final : public PbMessage {
   ///
   /// Field no: 1.
   LicenseStatus license_status() && noexcept {
-    if (!set_fields_[0]) {
+    if (!set_fields_[2]) {
       return {};
     }
     return std::move(license_status_);
@@ -1973,22 +2116,22 @@ class GetHealthStatusResponse final : public PbMessage {
   ///
   /// Field no: 1.
   LicenseStatus& mutable_license_status() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[0] = true;
+    set_fields_[2] = true;
     return license_status_;
   }
 
   /// Returns whether `license_status` (no 1) is set.
-  constexpr bool has_license_status() const noexcept { return set_fields_[0]; }
+  constexpr bool has_license_status() const noexcept { return set_fields_[2]; }
 
   /// Clears `license_status` (no 1).
   void clear_license_status() & noexcept {
-    set_fields_[0] = false;
+    set_fields_[2] = false;
     license_status_ = {};
   }
 
   /// Sets `license_status` (no 1) and returns `*this`.
   GetHealthStatusResponse& set_license_status(LicenseStatus&& license_status) & noexcept {
-    set_fields_[0] = true;
+    set_fields_[2] = true;
     license_status_ = std::move(license_status);
     return *this;
   }
@@ -2017,7 +2160,7 @@ class GetHealthStatusResponse final : public PbMessage {
   ///
   /// Field no: 2.
   CowRepeated<GetHealthStatusResponse_SensorHealth> sensor_statuses() && noexcept {
-    if (!set_fields_[1]) {
+    if (!set_fields_[3]) {
       return {};
     }
     return std::move(sensor_statuses_);
@@ -2031,22 +2174,22 @@ class GetHealthStatusResponse final : public PbMessage {
   ///
   /// Field no: 2.
   CowRepeated<GetHealthStatusResponse_SensorHealth>& mutable_sensor_statuses() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[1] = true;
+    set_fields_[3] = true;
     return sensor_statuses_;
   }
 
   /// Returns whether `sensor_statuses` (no 2) is set.
-  constexpr bool has_sensor_statuses() const noexcept { return set_fields_[1]; }
+  constexpr bool has_sensor_statuses() const noexcept { return set_fields_[3]; }
 
   /// Clears `sensor_statuses` (no 2).
   void clear_sensor_statuses() & noexcept {
-    set_fields_[1] = false;
+    set_fields_[3] = false;
     sensor_statuses_ = {};
   }
 
   /// Sets `sensor_statuses` (no 2) and returns `*this`.
   GetHealthStatusResponse& set_sensor_statuses(CowRepeated<GetHealthStatusResponse_SensorHealth>&& sensor_statuses) & noexcept {
-    set_fields_[1] = true;
+    set_fields_[3] = true;
     sensor_statuses_ = std::move(sensor_statuses);
     return *this;
   }
@@ -2071,7 +2214,7 @@ class GetHealthStatusResponse final : public PbMessage {
   ///
   /// Field no: 3.
   CowRepeated<GetHealthStatusResponse_NodeHealth> service_statuses() && noexcept {
-    if (!set_fields_[2]) {
+    if (!set_fields_[4]) {
       return {};
     }
     return std::move(service_statuses_);
@@ -2081,22 +2224,22 @@ class GetHealthStatusResponse final : public PbMessage {
   ///
   /// Field no: 3.
   CowRepeated<GetHealthStatusResponse_NodeHealth>& mutable_service_statuses() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[2] = true;
+    set_fields_[4] = true;
     return service_statuses_;
   }
 
   /// Returns whether `service_statuses` (no 3) is set.
-  constexpr bool has_service_statuses() const noexcept { return set_fields_[2]; }
+  constexpr bool has_service_statuses() const noexcept { return set_fields_[4]; }
 
   /// Clears `service_statuses` (no 3).
   void clear_service_statuses() & noexcept {
-    set_fields_[2] = false;
+    set_fields_[4] = false;
     service_statuses_ = {};
   }
 
   /// Sets `service_statuses` (no 3) and returns `*this`.
   GetHealthStatusResponse& set_service_statuses(CowRepeated<GetHealthStatusResponse_NodeHealth>&& service_statuses) & noexcept {
-    set_fields_[2] = true;
+    set_fields_[4] = true;
     service_statuses_ = std::move(service_statuses);
     return *this;
   }
@@ -2121,7 +2264,7 @@ class GetHealthStatusResponse final : public PbMessage {
   ///
   /// Field no: 4.
   CowRepeated<GetHealthStatusResponse_NodeResources> node_resources() && noexcept {
-    if (!set_fields_[3]) {
+    if (!set_fields_[5]) {
       return {};
     }
     return std::move(node_resources_);
@@ -2131,22 +2274,22 @@ class GetHealthStatusResponse final : public PbMessage {
   ///
   /// Field no: 4.
   CowRepeated<GetHealthStatusResponse_NodeResources>& mutable_node_resources() & noexcept HORUS_LIFETIME_BOUND {
-    set_fields_[3] = true;
+    set_fields_[5] = true;
     return node_resources_;
   }
 
   /// Returns whether `node_resources` (no 4) is set.
-  constexpr bool has_node_resources() const noexcept { return set_fields_[3]; }
+  constexpr bool has_node_resources() const noexcept { return set_fields_[5]; }
 
   /// Clears `node_resources` (no 4).
   void clear_node_resources() & noexcept {
-    set_fields_[3] = false;
+    set_fields_[5] = false;
     node_resources_ = {};
   }
 
   /// Sets `node_resources` (no 4) and returns `*this`.
   GetHealthStatusResponse& set_node_resources(CowRepeated<GetHealthStatusResponse_NodeResources>&& node_resources) & noexcept {
-    set_fields_[3] = true;
+    set_fields_[5] = true;
     node_resources_ = std::move(node_resources);
     return *this;
   }
@@ -2155,7 +2298,65 @@ class GetHealthStatusResponse final : public PbMessage {
     return std::move(set_node_resources(std::move(node_resources)));
   }
 
+  // Field `detection_merger_total_overall_frame_latency` (no 7).
+  // -----
+
+  /// The last total overall frame latency published by the detection merger
+  ///  service. Unset if unavailable (e.g. the detection merger node is
+  ///  unreachable, or no frame has been merged yet).
+  ///
+  /// Field no: 7.
+  constexpr const Duration& detection_merger_total_overall_frame_latency() const& noexcept HORUS_LIFETIME_BOUND {
+    return detection_merger_total_overall_frame_latency_;
+  }
+
+  /// If `detection_merger_total_overall_frame_latency` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 7.
+  Duration detection_merger_total_overall_frame_latency() && noexcept {
+    if (!set_fields_[6]) {
+      return {};
+    }
+    return std::move(detection_merger_total_overall_frame_latency_);
+  }
+
+  /// The last total overall frame latency published by the detection merger
+  ///  service. Unset if unavailable (e.g. the detection merger node is
+  ///  unreachable, or no frame has been merged yet).
+  ///
+  /// Field no: 7.
+  Duration& mutable_detection_merger_total_overall_frame_latency() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[6] = true;
+    return detection_merger_total_overall_frame_latency_;
+  }
+
+  /// Returns whether `detection_merger_total_overall_frame_latency` (no 7) is set.
+  constexpr bool has_detection_merger_total_overall_frame_latency() const noexcept { return set_fields_[6]; }
+
+  /// Clears `detection_merger_total_overall_frame_latency` (no 7).
+  void clear_detection_merger_total_overall_frame_latency() & noexcept {
+    set_fields_[6] = false;
+    detection_merger_total_overall_frame_latency_ = {};
+  }
+
+  /// Sets `detection_merger_total_overall_frame_latency` (no 7) and returns `*this`.
+  GetHealthStatusResponse& set_detection_merger_total_overall_frame_latency(Duration&& detection_merger_total_overall_frame_latency) & noexcept {
+    set_fields_[6] = true;
+    detection_merger_total_overall_frame_latency_ = std::move(detection_merger_total_overall_frame_latency);
+    return *this;
+  }
+  /// Sets `detection_merger_total_overall_frame_latency` (no 7) and returns `*this`.
+  GetHealthStatusResponse&& set_detection_merger_total_overall_frame_latency(Duration&& detection_merger_total_overall_frame_latency) && noexcept {
+    return std::move(set_detection_merger_total_overall_frame_latency(std::move(detection_merger_total_overall_frame_latency)));
+  }
+
  private:
+  /// @see project_name()
+  CowBytes project_name_{};
+  /// @see version()
+  CowBytes version_{};
   /// @see license_status()
   LicenseStatus license_status_{};
   /// @see sensor_statuses()
@@ -2164,9 +2365,11 @@ class GetHealthStatusResponse final : public PbMessage {
   CowRepeated<GetHealthStatusResponse_NodeHealth> service_statuses_{};
   /// @see node_resources()
   CowRepeated<GetHealthStatusResponse_NodeResources> node_resources_{};
+  /// @see detection_merger_total_overall_frame_latency()
+  Duration detection_merger_total_overall_frame_latency_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<4> set_fields_;
+  std::bitset<7> set_fields_;
 };
 
 }  // namespace pb
@@ -2306,6 +2509,9 @@ class PbEnumTraits<horus::sdk::pb::GetHealthStatusResponse_NodeHealth_Service> f
       case horus::sdk::pb::GetHealthStatusResponse_NodeHealth_Service::kProjectManager: {
         return "SERVICE_PROJECT_MANAGER";
       }
+      case horus::sdk::pb::GetHealthStatusResponse_NodeHealth_Service::kDetectionMerger: {
+        return "SERVICE_DETECTION_MERGER";
+      }
       case horus::sdk::pb::GetHealthStatusResponse_NodeHealth_Service::kUnknownWireValue:
       default: {
         return "";
@@ -2337,6 +2543,9 @@ class PbEnumTraits<horus::sdk::pb::GetHealthStatusResponse_NodeHealth_Service> f
       case 6: {
         return horus::sdk::pb::GetHealthStatusResponse_NodeHealth_Service::kProjectManager;
       }
+      case 7: {
+        return horus::sdk::pb::GetHealthStatusResponse_NodeHealth_Service::kDetectionMerger;
+      }
       default: {
         return default_value;
       }
@@ -2365,6 +2574,9 @@ class PbEnumTraits<horus::sdk::pb::GetHealthStatusResponse_NodeHealth_Service> f
     }
     if (name == "SERVICE_PROJECT_MANAGER") {
       return horus::sdk::pb::GetHealthStatusResponse_NodeHealth_Service::kProjectManager;
+    }
+    if (name == "SERVICE_DETECTION_MERGER") {
+      return horus::sdk::pb::GetHealthStatusResponse_NodeHealth_Service::kDetectionMerger;
     }
     return default_value;
   }

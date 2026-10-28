@@ -205,6 +205,8 @@ void PrintServiceStatuses(horus::Span<const horus::sdk::NodeHealth> service_heal
                                   horus::sdk::NodeHealth::Service::kPreprocessing);
   stringify_service_health_status("Project manager service",
                                   horus::sdk::NodeHealth::Service::kProjectManager);
+  stringify_service_health_status("Detection merger service",
+                                  horus::sdk::NodeHealth::Service::kDetectionMerger);
 }
 }  // namespace
 

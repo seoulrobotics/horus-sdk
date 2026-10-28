@@ -1716,3 +1716,37 @@ message DetectionServiceRpcQueueFull {
 message ProjectMigrationFailed {
   string details = 1;
 }
+
+// Log #228.
+//
+// > Project `$project_name` does not match the current cluster: $details
+message ProjectClusterMismatch {
+  string project_name = 1;
+  string details = 2;
+}
+
+// Log #229.
+//
+// > Migrated project $source_name onto the current cluster as $project_name
+message MigratedProject {
+  string project_name = 1;
+  string source_name = 2;
+}
+
+// Log #230.
+//
+// > Project `$project_name` does not match the current cluster and was not opened; opened `$opened_project_name` instead. Migrate `$project_name` to keep using it.
+message OpenedDefaultProjectAfterClusterChangeWarning {
+  string project_name = 1;
+  string opened_project_name = 2;
+}
+
+// Log #231.
+//
+// > [$lidar_name][$lidar_id] Failed to load $correction_type corrections from the lidar ($details); using the corrections cached when they were last loaded from this lidar
+message LidarCorrectionLoadingFromCache {
+  string correction_type = 1;
+  string details = 2;
+  string lidar_id = 3;
+  string lidar_name = 4;
+}
