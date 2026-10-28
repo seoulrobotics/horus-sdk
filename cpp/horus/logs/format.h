@@ -709,6 +709,18 @@ void HorusStringify(const ErasedSink& sink, const DetectionServiceRpcQueueFull& 
 /// Formats the log `logs::ProjectMigrationFailed` to a `sink`.
 void HorusStringify(const ErasedSink& sink, const ProjectMigrationFailed& data);
 
+/// Formats the log `logs::ProjectClusterMismatch` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const ProjectClusterMismatch& data);
+
+/// Formats the log `logs::MigratedProject` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const MigratedProject& data);
+
+/// Formats the log `logs::OpenedDefaultProjectAfterClusterChangeWarning` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const OpenedDefaultProjectAfterClusterChangeWarning& data);
+
+/// Formats the log `logs::LidarCorrectionLoadingFromCache` to a `sink`.
+void HorusStringify(const ErasedSink& sink, const LidarCorrectionLoadingFromCache& data);
+
 }  // namespace logs
 
 }  // namespace pb

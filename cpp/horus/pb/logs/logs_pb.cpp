@@ -6603,6 +6603,164 @@ void ProjectMigrationFailed::DeserializeFrom(PbReader& reader) noexcept(false) {
   }
 }
 
+ProjectClusterMismatch::ProjectClusterMismatch(const ProjectClusterMismatch& other) noexcept(false)
+    : project_name_{other.project_name_}
+    , details_{other.details_}
+    , set_fields_{other.set_fields_} {}
+
+void ProjectClusterMismatch::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, project_name_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+}
+
+void ProjectClusterMismatch::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, project_name_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, details_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+MigratedProject::MigratedProject(const MigratedProject& other) noexcept(false)
+    : project_name_{other.project_name_}
+    , source_name_{other.source_name_}
+    , set_fields_{other.set_fields_} {}
+
+void MigratedProject::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, project_name_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, source_name_);
+  }
+}
+
+void MigratedProject::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, project_name_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, source_name_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+OpenedDefaultProjectAfterClusterChangeWarning::OpenedDefaultProjectAfterClusterChangeWarning(const OpenedDefaultProjectAfterClusterChangeWarning& other) noexcept(false)
+    : project_name_{other.project_name_}
+    , opened_project_name_{other.opened_project_name_}
+    , set_fields_{other.set_fields_} {}
+
+void OpenedDefaultProjectAfterClusterChangeWarning::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, project_name_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, opened_project_name_);
+  }
+}
+
+void OpenedDefaultProjectAfterClusterChangeWarning::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, project_name_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, opened_project_name_);
+        set_fields_[1] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
+LidarCorrectionLoadingFromCache::LidarCorrectionLoadingFromCache(const LidarCorrectionLoadingFromCache& other) noexcept(false)
+    : correction_type_{other.correction_type_}
+    , details_{other.details_}
+    , lidar_id_{other.lidar_id_}
+    , lidar_name_{other.lidar_name_}
+    , set_fields_{other.set_fields_} {}
+
+void LidarCorrectionLoadingFromCache::SerializeTo(PbWriter& writer) const noexcept(false) {
+  if (set_fields_[0]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 1, correction_type_);
+  }
+  if (set_fields_[1]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 2, details_);
+  }
+  if (set_fields_[2]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 3, lidar_id_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<CowBytes>(writer, /*tag=*/ 4, lidar_name_);
+  }
+}
+
+void LidarCorrectionLoadingFromCache::DeserializeFrom(PbReader& reader) noexcept(false) {
+  while (reader.Reader().next()) {
+    switch (reader.Reader().tag()) {
+      case 1: {
+        DeserializeField<CowBytes>(reader, correction_type_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 2: {
+        DeserializeField<CowBytes>(reader, details_);
+        set_fields_[1] = true;
+        break;
+      }
+      case 3: {
+        DeserializeField<CowBytes>(reader, lidar_id_);
+        set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        DeserializeField<CowBytes>(reader, lidar_name_);
+        set_fields_[3] = true;
+        break;
+      }
+      default: {
+        reader.Reader().skip();
+        break;
+      }
+    }
+  }
+}
+
 }  // namespace logs
 }  // namespace pb
 }  // namespace sdk

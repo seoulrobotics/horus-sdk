@@ -27,6 +27,7 @@ service DetectionMergerService {
       unsubscribe { subscriber_name: "DetectionMergerSubscriberService" }
     };
   }
+
 }
 
 service DetectionMergerSubscriberService {

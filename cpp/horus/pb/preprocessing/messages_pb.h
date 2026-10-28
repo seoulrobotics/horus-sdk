@@ -104,6 +104,7 @@ class OccupancyGrid;
 class OccupancyGridEvent;
 class OccupancyGridListEvent;
 class SensorInfo_PoseCorrection;
+class SensorInfo_DeviceStatus;
 class SensorInfo;
 
 // MARK: Message declarations
@@ -795,7 +796,7 @@ class OccupancyGridListEvent final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:112:3
+/// Source: horus/pb/preprocessing/messages.proto:116:3
 class SensorInfo_PoseCorrection final : public PbMessage {
  public:
 
@@ -957,9 +958,189 @@ class SensorInfo_PoseCorrection final : public PbMessage {
 
 /// No documentation.
 ///
+/// Source: horus/pb/preprocessing/messages.proto:121:3
+class SensorInfo_DeviceStatus final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `SensorInfo_DeviceStatus`.
+  SensorInfo_DeviceStatus() noexcept = default;
+
+  /// Move constructor.
+  SensorInfo_DeviceStatus(SensorInfo_DeviceStatus&&) noexcept = default;
+  /// Move assignment operator.
+  SensorInfo_DeviceStatus& operator=(SensorInfo_DeviceStatus&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit SensorInfo_DeviceStatus(const SensorInfo_DeviceStatus& other) noexcept(false);  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  SensorInfo_DeviceStatus& operator=(const SensorInfo_DeviceStatus&) = delete;
+
+  /// Default destructor.
+  ~SensorInfo_DeviceStatus() noexcept final = default;
+
+  /// Creates a `SensorInfo_DeviceStatus` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit SensorInfo_DeviceStatus(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final;
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final;
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.SensorInfo.DeviceStatus`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.SensorInfo.DeviceStatus"; }
+
+  /// The full name of the message: `horus.pb.SensorInfo.DeviceStatus`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+  // Field `temperature_celsius` (no 1).
+  // -----
+
+  /// Highest temperature reported by the LiDAR's temperature sensors.
+  ///
+  /// Field no: 1.
+  constexpr float temperature_celsius() const& noexcept HORUS_LIFETIME_BOUND {
+    return temperature_celsius_;
+  }
+
+  /// Highest temperature reported by the LiDAR's temperature sensors.
+  ///
+  /// Field no: 1.
+  float& mutable_temperature_celsius() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[0] = true;
+    return temperature_celsius_;
+  }
+
+  /// Returns whether `temperature_celsius` (no 1) is set.
+  constexpr bool has_temperature_celsius() const noexcept { return set_fields_[0]; }
+
+  /// Clears `temperature_celsius` (no 1).
+  void clear_temperature_celsius() & noexcept {
+    set_fields_[0] = false;
+    temperature_celsius_ = {};
+  }
+
+  /// Sets `temperature_celsius` (no 1) and returns `*this`.
+  SensorInfo_DeviceStatus& set_temperature_celsius(float temperature_celsius) & noexcept {
+    set_fields_[0] = true;
+    temperature_celsius_ = temperature_celsius;
+    return *this;
+  }
+  /// Sets `temperature_celsius` (no 1) and returns `*this`.
+  SensorInfo_DeviceStatus&& set_temperature_celsius(float temperature_celsius) && noexcept {
+    return std::move(set_temperature_celsius(temperature_celsius));
+  }
+
+  // Field `uptime_seconds` (no 2).
+  // -----
+
+  /// Time since the LiDAR was powered on.
+  ///
+  /// Field no: 2.
+  constexpr std::uint32_t uptime_seconds() const& noexcept HORUS_LIFETIME_BOUND {
+    return uptime_seconds_;
+  }
+
+  /// Time since the LiDAR was powered on.
+  ///
+  /// Field no: 2.
+  std::uint32_t& mutable_uptime_seconds() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[1] = true;
+    return uptime_seconds_;
+  }
+
+  /// Returns whether `uptime_seconds` (no 2) is set.
+  constexpr bool has_uptime_seconds() const noexcept { return set_fields_[1]; }
+
+  /// Clears `uptime_seconds` (no 2).
+  void clear_uptime_seconds() & noexcept {
+    set_fields_[1] = false;
+    uptime_seconds_ = {};
+  }
+
+  /// Sets `uptime_seconds` (no 2) and returns `*this`.
+  SensorInfo_DeviceStatus& set_uptime_seconds(std::uint32_t uptime_seconds) & noexcept {
+    set_fields_[1] = true;
+    uptime_seconds_ = uptime_seconds;
+    return *this;
+  }
+  /// Sets `uptime_seconds` (no 2) and returns `*this`.
+  SensorInfo_DeviceStatus&& set_uptime_seconds(std::uint32_t uptime_seconds) && noexcept {
+    return std::move(set_uptime_seconds(uptime_seconds));
+  }
+
+  // Field `total_operation_time_minutes` (no 3).
+  // -----
+
+  /// Total time the LiDAR has been operating over its lifetime.
+  ///
+  /// Field no: 3.
+  constexpr std::uint32_t total_operation_time_minutes() const& noexcept HORUS_LIFETIME_BOUND {
+    return total_operation_time_minutes_;
+  }
+
+  /// Total time the LiDAR has been operating over its lifetime.
+  ///
+  /// Field no: 3.
+  std::uint32_t& mutable_total_operation_time_minutes() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[2] = true;
+    return total_operation_time_minutes_;
+  }
+
+  /// Returns whether `total_operation_time_minutes` (no 3) is set.
+  constexpr bool has_total_operation_time_minutes() const noexcept { return set_fields_[2]; }
+
+  /// Clears `total_operation_time_minutes` (no 3).
+  void clear_total_operation_time_minutes() & noexcept {
+    set_fields_[2] = false;
+    total_operation_time_minutes_ = {};
+  }
+
+  /// Sets `total_operation_time_minutes` (no 3) and returns `*this`.
+  SensorInfo_DeviceStatus& set_total_operation_time_minutes(std::uint32_t total_operation_time_minutes) & noexcept {
+    set_fields_[2] = true;
+    total_operation_time_minutes_ = total_operation_time_minutes;
+    return *this;
+  }
+  /// Sets `total_operation_time_minutes` (no 3) and returns `*this`.
+  SensorInfo_DeviceStatus&& set_total_operation_time_minutes(std::uint32_t total_operation_time_minutes) && noexcept {
+    return std::move(set_total_operation_time_minutes(total_operation_time_minutes));
+  }
+
+ private:
+  /// @see temperature_celsius()
+  float temperature_celsius_{};
+  /// @see uptime_seconds()
+  std::uint32_t uptime_seconds_{};
+  /// @see total_operation_time_minutes()
+  std::uint32_t total_operation_time_minutes_{};
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<3> set_fields_;
+};
+
+/// No documentation.
+///
 /// Source: horus/pb/preprocessing/messages.proto:97:1
 class SensorInfo final : public PbMessage {
  public:
+  /// @see SensorInfo_DeviceStatus
+  using DeviceStatus = SensorInfo_DeviceStatus;
   /// @see SensorInfo_PoseCorrection
   using PoseCorrection = SensorInfo_PoseCorrection;
 
@@ -1349,6 +1530,58 @@ class SensorInfo final : public PbMessage {
     return std::move(set_reference_alignment(reference_alignment));
   }
 
+  // Field `device_status` (no 9).
+  // -----
+
+  /// Status reported by the LiDAR device itself. Only available for LiDARs that
+  ///  support it (Hesai).
+  ///
+  /// Field no: 9.
+  constexpr const SensorInfo_DeviceStatus& device_status() const& noexcept HORUS_LIFETIME_BOUND {
+    return device_status_;
+  }
+
+  /// If `device_status` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 9.
+  SensorInfo_DeviceStatus device_status() && noexcept {
+    if (!set_fields_[8]) {
+      return {};
+    }
+    return std::move(device_status_);
+  }
+
+  /// Status reported by the LiDAR device itself. Only available for LiDARs that
+  ///  support it (Hesai).
+  ///
+  /// Field no: 9.
+  SensorInfo_DeviceStatus& mutable_device_status() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[8] = true;
+    return device_status_;
+  }
+
+  /// Returns whether `device_status` (no 9) is set.
+  constexpr bool has_device_status() const noexcept { return set_fields_[8]; }
+
+  /// Clears `device_status` (no 9).
+  void clear_device_status() & noexcept {
+    set_fields_[8] = false;
+    device_status_ = {};
+  }
+
+  /// Sets `device_status` (no 9) and returns `*this`.
+  SensorInfo& set_device_status(SensorInfo_DeviceStatus&& device_status) & noexcept {
+    set_fields_[8] = true;
+    device_status_ = std::move(device_status);
+    return *this;
+  }
+  /// Sets `device_status` (no 9) and returns `*this`.
+  SensorInfo&& set_device_status(SensorInfo_DeviceStatus&& device_status) && noexcept {
+    return std::move(set_device_status(std::move(device_status)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
@@ -1366,9 +1599,11 @@ class SensorInfo final : public PbMessage {
   std::uint64_t num_total_expected_packets_{};
   /// @see reference_alignment()
   ReferenceAlignmentType reference_alignment_{};
+  /// @see device_status()
+  SensorInfo_DeviceStatus device_status_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<8> set_fields_;
+  std::bitset<9> set_fields_;
 };
 
 }  // namespace pb

@@ -245,6 +245,7 @@ GetHealthStatusResponse_NodeHealth::GetHealthStatusResponse_NodeHealth(const Get
     : service_{other.service_}
     , node_id_{other.node_id_}
     , node_status_{other.node_status_}
+    , latency_us_{other.latency_us_}
     , set_fields_{other.set_fields_} {}
 
 void GetHealthStatusResponse_NodeHealth::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -256,6 +257,9 @@ void GetHealthStatusResponse_NodeHealth::SerializeTo(PbWriter& writer) const noe
   }
   if (set_fields_[2]) {
     SerializeField<GetHealthStatusResponse_NodeHealth_Status>(writer, /*tag=*/ 3, node_status_);
+  }
+  if (set_fields_[3]) {
+    SerializeField<std::int64_t>(writer, /*tag=*/ 4, latency_us_);
   }
 }
 
@@ -275,6 +279,11 @@ void GetHealthStatusResponse_NodeHealth::DeserializeFrom(PbReader& reader) noexc
       case 3: {
         DeserializeField<GetHealthStatusResponse_NodeHealth_Status>(reader, node_status_);
         set_fields_[2] = true;
+        break;
+      }
+      case 4: {
+        DeserializeField<std::int64_t>(reader, latency_us_);
+        set_fields_[3] = true;
         break;
       }
       default: {
@@ -335,48 +344,75 @@ void GetHealthStatusResponse_SensorHealth::DeserializeFrom(PbReader& reader) noe
 
 
 GetHealthStatusResponse::GetHealthStatusResponse(const GetHealthStatusResponse& other) noexcept(false)
-    : license_status_{other.license_status_}
+    : project_name_{other.project_name_}
+    , version_{other.version_}
+    , license_status_{other.license_status_}
     , sensor_statuses_{other.sensor_statuses_}
     , service_statuses_{other.service_statuses_}
     , node_resources_{other.node_resources_}
+    , detection_merger_total_overall_frame_latency_{other.detection_merger_total_overall_frame_latency_}
     , set_fields_{other.set_fields_} {}
 
 void GetHealthStatusResponse::SerializeTo(PbWriter& writer) const noexcept(false) {
   if (set_fields_[0]) {
-    SerializeField<LicenseStatus>(writer, /*tag=*/ 1, license_status_);
+    SerializeField<CowBytes>(writer, /*tag=*/ 5, project_name_);
   }
   if (set_fields_[1]) {
-    SerializeField<CowRepeated<GetHealthStatusResponse_SensorHealth>>(writer, /*tag=*/ 2, sensor_statuses_);
+    SerializeField<CowBytes>(writer, /*tag=*/ 6, version_);
   }
   if (set_fields_[2]) {
-    SerializeField<CowRepeated<GetHealthStatusResponse_NodeHealth>>(writer, /*tag=*/ 3, service_statuses_);
+    SerializeField<LicenseStatus>(writer, /*tag=*/ 1, license_status_);
   }
   if (set_fields_[3]) {
+    SerializeField<CowRepeated<GetHealthStatusResponse_SensorHealth>>(writer, /*tag=*/ 2, sensor_statuses_);
+  }
+  if (set_fields_[4]) {
+    SerializeField<CowRepeated<GetHealthStatusResponse_NodeHealth>>(writer, /*tag=*/ 3, service_statuses_);
+  }
+  if (set_fields_[5]) {
     SerializeField<CowRepeated<GetHealthStatusResponse_NodeResources>>(writer, /*tag=*/ 4, node_resources_);
+  }
+  if (set_fields_[6]) {
+    SerializeField<Duration>(writer, /*tag=*/ 7, detection_merger_total_overall_frame_latency_);
   }
 }
 
 void GetHealthStatusResponse::DeserializeFrom(PbReader& reader) noexcept(false) {
   while (reader.Reader().next()) {
     switch (reader.Reader().tag()) {
+      case 5: {
+        DeserializeField<CowBytes>(reader, project_name_);
+        set_fields_[0] = true;
+        break;
+      }
+      case 6: {
+        DeserializeField<CowBytes>(reader, version_);
+        set_fields_[1] = true;
+        break;
+      }
       case 1: {
         DeserializeField<LicenseStatus>(reader, license_status_);
-        set_fields_[0] = true;
+        set_fields_[2] = true;
         break;
       }
       case 2: {
         DeserializeField<CowRepeated<GetHealthStatusResponse_SensorHealth>>(reader, sensor_statuses_);
-        set_fields_[1] = true;
+        set_fields_[3] = true;
         break;
       }
       case 3: {
         DeserializeField<CowRepeated<GetHealthStatusResponse_NodeHealth>>(reader, service_statuses_);
-        set_fields_[2] = true;
+        set_fields_[4] = true;
         break;
       }
       case 4: {
         DeserializeField<CowRepeated<GetHealthStatusResponse_NodeResources>>(reader, node_resources_);
-        set_fields_[3] = true;
+        set_fields_[5] = true;
+        break;
+      }
+      case 7: {
+        DeserializeField<Duration>(reader, detection_merger_total_overall_frame_latency_);
+        set_fields_[6] = true;
         break;
       }
       default: {

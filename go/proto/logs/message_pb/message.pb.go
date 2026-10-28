@@ -2184,6 +2184,42 @@ func (x *LogData) GetProjectMigrationFailed() *logs_pb.ProjectMigrationFailed {
 	return nil
 }
 
+func (x *LogData) GetProjectClusterMismatch() *logs_pb.ProjectClusterMismatch {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_ProjectClusterMismatch); ok {
+			return x.ProjectClusterMismatch
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetMigratedProject() *logs_pb.MigratedProject {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_MigratedProject); ok {
+			return x.MigratedProject
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetOpenedDefaultProjectAfterClusterChangeWarning() *logs_pb.OpenedDefaultProjectAfterClusterChangeWarning {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_OpenedDefaultProjectAfterClusterChangeWarning); ok {
+			return x.OpenedDefaultProjectAfterClusterChangeWarning
+		}
+	}
+	return nil
+}
+
+func (x *LogData) GetLidarCorrectionLoadingFromCache() *logs_pb.LidarCorrectionLoadingFromCache {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Data.(*logData_LidarCorrectionLoadingFromCache); ok {
+			return x.LidarCorrectionLoadingFromCache
+		}
+	}
+	return nil
+}
+
 func (x *LogData) SetGeneric(v *logs_pb.Generic) {
 	if v == nil {
 		x.xxx_hidden_Data = nil
@@ -3990,6 +4026,38 @@ func (x *LogData) SetProjectMigrationFailed(v *logs_pb.ProjectMigrationFailed) {
 		return
 	}
 	x.xxx_hidden_Data = &logData_ProjectMigrationFailed{v}
+}
+
+func (x *LogData) SetProjectClusterMismatch(v *logs_pb.ProjectClusterMismatch) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_ProjectClusterMismatch{v}
+}
+
+func (x *LogData) SetMigratedProject(v *logs_pb.MigratedProject) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_MigratedProject{v}
+}
+
+func (x *LogData) SetOpenedDefaultProjectAfterClusterChangeWarning(v *logs_pb.OpenedDefaultProjectAfterClusterChangeWarning) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_OpenedDefaultProjectAfterClusterChangeWarning{v}
+}
+
+func (x *LogData) SetLidarCorrectionLoadingFromCache(v *logs_pb.LidarCorrectionLoadingFromCache) {
+	if v == nil {
+		x.xxx_hidden_Data = nil
+		return
+	}
+	x.xxx_hidden_Data = &logData_LidarCorrectionLoadingFromCache{v}
 }
 
 func (x *LogData) HasData() bool {
@@ -5807,6 +5875,38 @@ func (x *LogData) HasProjectMigrationFailed() bool {
 	return ok
 }
 
+func (x *LogData) HasProjectClusterMismatch() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_ProjectClusterMismatch)
+	return ok
+}
+
+func (x *LogData) HasMigratedProject() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_MigratedProject)
+	return ok
+}
+
+func (x *LogData) HasOpenedDefaultProjectAfterClusterChangeWarning() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_OpenedDefaultProjectAfterClusterChangeWarning)
+	return ok
+}
+
+func (x *LogData) HasLidarCorrectionLoadingFromCache() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Data.(*logData_LidarCorrectionLoadingFromCache)
+	return ok
+}
+
 func (x *LogData) ClearData() {
 	x.xxx_hidden_Data = nil
 }
@@ -7167,6 +7267,30 @@ func (x *LogData) ClearProjectMigrationFailed() {
 	}
 }
 
+func (x *LogData) ClearProjectClusterMismatch() {
+	if _, ok := x.xxx_hidden_Data.(*logData_ProjectClusterMismatch); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearMigratedProject() {
+	if _, ok := x.xxx_hidden_Data.(*logData_MigratedProject); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearOpenedDefaultProjectAfterClusterChangeWarning() {
+	if _, ok := x.xxx_hidden_Data.(*logData_OpenedDefaultProjectAfterClusterChangeWarning); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
+func (x *LogData) ClearLidarCorrectionLoadingFromCache() {
+	if _, ok := x.xxx_hidden_Data.(*logData_LidarCorrectionLoadingFromCache); ok {
+		x.xxx_hidden_Data = nil
+	}
+}
+
 const LogData_Data_not_set_case case_LogData_Data = 0
 const LogData_Generic_case case_LogData_Data = 1
 const LogData_Oom_case case_LogData_Data = 2
@@ -7394,6 +7518,10 @@ const LogData_HesaiUdpReceiverInfo_case case_LogData_Data = 222
 const LogData_DbCommitFailed_case case_LogData_Data = 223
 const LogData_DetectionServiceRpcQueueFull_case case_LogData_Data = 226
 const LogData_ProjectMigrationFailed_case case_LogData_Data = 227
+const LogData_ProjectClusterMismatch_case case_LogData_Data = 228
+const LogData_MigratedProject_case case_LogData_Data = 229
+const LogData_OpenedDefaultProjectAfterClusterChangeWarning_case case_LogData_Data = 230
+const LogData_LidarCorrectionLoadingFromCache_case case_LogData_Data = 231
 
 func (x *LogData) WhichData() case_LogData_Data {
 	if x == nil {
@@ -7852,6 +7980,14 @@ func (x *LogData) WhichData() case_LogData_Data {
 		return LogData_DetectionServiceRpcQueueFull_case
 	case *logData_ProjectMigrationFailed:
 		return LogData_ProjectMigrationFailed_case
+	case *logData_ProjectClusterMismatch:
+		return LogData_ProjectClusterMismatch_case
+	case *logData_MigratedProject:
+		return LogData_MigratedProject_case
+	case *logData_OpenedDefaultProjectAfterClusterChangeWarning:
+		return LogData_OpenedDefaultProjectAfterClusterChangeWarning_case
+	case *logData_LidarCorrectionLoadingFromCache:
+		return LogData_LidarCorrectionLoadingFromCache_case
 	default:
 		return LogData_Data_not_set_case
 	}
@@ -8087,6 +8223,10 @@ type LogData_builder struct {
 	DbCommitFailed                                      *logs_pb.DbCommitFailed
 	DetectionServiceRpcQueueFull                        *logs_pb.DetectionServiceRpcQueueFull
 	ProjectMigrationFailed                              *logs_pb.ProjectMigrationFailed
+	ProjectClusterMismatch                              *logs_pb.ProjectClusterMismatch
+	MigratedProject                                     *logs_pb.MigratedProject
+	OpenedDefaultProjectAfterClusterChangeWarning       *logs_pb.OpenedDefaultProjectAfterClusterChangeWarning
+	LidarCorrectionLoadingFromCache                     *logs_pb.LidarCorrectionLoadingFromCache
 	// -- end of xxx_hidden_Data
 }
 
@@ -8771,6 +8911,18 @@ func (b0 LogData_builder) Build() *LogData {
 	}
 	if b.ProjectMigrationFailed != nil {
 		x.xxx_hidden_Data = &logData_ProjectMigrationFailed{b.ProjectMigrationFailed}
+	}
+	if b.ProjectClusterMismatch != nil {
+		x.xxx_hidden_Data = &logData_ProjectClusterMismatch{b.ProjectClusterMismatch}
+	}
+	if b.MigratedProject != nil {
+		x.xxx_hidden_Data = &logData_MigratedProject{b.MigratedProject}
+	}
+	if b.OpenedDefaultProjectAfterClusterChangeWarning != nil {
+		x.xxx_hidden_Data = &logData_OpenedDefaultProjectAfterClusterChangeWarning{b.OpenedDefaultProjectAfterClusterChangeWarning}
+	}
+	if b.LidarCorrectionLoadingFromCache != nil {
+		x.xxx_hidden_Data = &logData_LidarCorrectionLoadingFromCache{b.LidarCorrectionLoadingFromCache}
 	}
 	return m0
 }
@@ -9693,6 +9845,22 @@ type logData_ProjectMigrationFailed struct {
 	ProjectMigrationFailed *logs_pb.ProjectMigrationFailed `protobuf:"bytes,227,opt,name=project_migration_failed,json=projectMigrationFailed,proto3,oneof"`
 }
 
+type logData_ProjectClusterMismatch struct {
+	ProjectClusterMismatch *logs_pb.ProjectClusterMismatch `protobuf:"bytes,228,opt,name=project_cluster_mismatch,json=projectClusterMismatch,proto3,oneof"`
+}
+
+type logData_MigratedProject struct {
+	MigratedProject *logs_pb.MigratedProject `protobuf:"bytes,229,opt,name=migrated_project,json=migratedProject,proto3,oneof"`
+}
+
+type logData_OpenedDefaultProjectAfterClusterChangeWarning struct {
+	OpenedDefaultProjectAfterClusterChangeWarning *logs_pb.OpenedDefaultProjectAfterClusterChangeWarning `protobuf:"bytes,230,opt,name=opened_default_project_after_cluster_change_warning,json=openedDefaultProjectAfterClusterChangeWarning,proto3,oneof"`
+}
+
+type logData_LidarCorrectionLoadingFromCache struct {
+	LidarCorrectionLoadingFromCache *logs_pb.LidarCorrectionLoadingFromCache `protobuf:"bytes,231,opt,name=lidar_correction_loading_from_cache,json=lidarCorrectionLoadingFromCache,proto3,oneof"`
+}
+
 func (*logData_Generic) isLogData_Data() {}
 
 func (*logData_Oom) isLogData_Data() {}
@@ -10145,6 +10313,14 @@ func (*logData_DetectionServiceRpcQueueFull) isLogData_Data() {}
 
 func (*logData_ProjectMigrationFailed) isLogData_Data() {}
 
+func (*logData_ProjectClusterMismatch) isLogData_Data() {}
+
+func (*logData_MigratedProject) isLogData_Data() {}
+
+func (*logData_OpenedDefaultProjectAfterClusterChangeWarning) isLogData_Data() {}
+
+func (*logData_LidarCorrectionLoadingFromCache) isLogData_Data() {}
+
 var File_horus_pb_logs_message_proto protoreflect.FileDescriptor
 
 var file_horus_pb_logs_message_proto_rawDesc = []byte{
@@ -10160,7 +10336,7 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
 	0x12, 0x25, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11,
 	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x4c, 0x6f, 0x67, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xec, 0xbd, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
+	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xcd, 0xc1, 0x01, 0x0a, 0x07, 0x4c, 0x6f, 0x67,
 	0x44, 0x61, 0x74, 0x61, 0x12, 0x32, 0x0a, 0x07, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62,
 	0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x69, 0x63, 0x48, 0x00, 0x52,
@@ -11678,8 +11854,38 @@ var file_horus_pb_logs_message_proto_rawDesc = []byte{
 	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x50,
 	0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x46,
 	0x61, 0x69, 0x6c, 0x65, 0x64, 0x48, 0x00, 0x52, 0x16, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74,
-	0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x42,
-	0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x12,
+	0x62, 0x0a, 0x18, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x5f, 0x63, 0x6c, 0x75, 0x73, 0x74,
+	0x65, 0x72, 0x5f, 0x6d, 0x69, 0x73, 0x6d, 0x61, 0x74, 0x63, 0x68, 0x18, 0xe4, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x25, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f,
+	0x67, 0x73, 0x2e, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x43, 0x6c, 0x75, 0x73, 0x74, 0x65,
+	0x72, 0x4d, 0x69, 0x73, 0x6d, 0x61, 0x74, 0x63, 0x68, 0x48, 0x00, 0x52, 0x16, 0x70, 0x72, 0x6f,
+	0x6a, 0x65, 0x63, 0x74, 0x43, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x4d, 0x69, 0x73, 0x6d, 0x61,
+	0x74, 0x63, 0x68, 0x12, 0x4c, 0x0a, 0x10, 0x6d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x65, 0x64, 0x5f,
+	0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x18, 0xe5, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e,
+	0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x4d,
+	0x69, 0x67, 0x72, 0x61, 0x74, 0x65, 0x64, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x48, 0x00,
+	0x52, 0x0f, 0x6d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x65, 0x64, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63,
+	0x74, 0x12, 0xab, 0x01, 0x0a, 0x33, 0x6f, 0x70, 0x65, 0x6e, 0x65, 0x64, 0x5f, 0x64, 0x65, 0x66,
+	0x61, 0x75, 0x6c, 0x74, 0x5f, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x5f, 0x61, 0x66, 0x74,
+	0x65, 0x72, 0x5f, 0x63, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x5f, 0x63, 0x68, 0x61, 0x6e, 0x67,
+	0x65, 0x5f, 0x77, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x18, 0xe6, 0x01, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x3c, 0x2e, 0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73,
+	0x2e, 0x4f, 0x70, 0x65, 0x6e, 0x65, 0x64, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x50, 0x72,
+	0x6f, 0x6a, 0x65, 0x63, 0x74, 0x41, 0x66, 0x74, 0x65, 0x72, 0x43, 0x6c, 0x75, 0x73, 0x74, 0x65,
+	0x72, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x57, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x48, 0x00,
+	0x52, 0x2d, 0x6f, 0x70, 0x65, 0x6e, 0x65, 0x64, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x50,
+	0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x41, 0x66, 0x74, 0x65, 0x72, 0x43, 0x6c, 0x75, 0x73, 0x74,
+	0x65, 0x72, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x57, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x12,
+	0x7f, 0x0a, 0x23, 0x6c, 0x69, 0x64, 0x61, 0x72, 0x5f, 0x63, 0x6f, 0x72, 0x72, 0x65, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x5f, 0x6c, 0x6f, 0x61, 0x64, 0x69, 0x6e, 0x67, 0x5f, 0x66, 0x72, 0x6f, 0x6d,
+	0x5f, 0x63, 0x61, 0x63, 0x68, 0x65, 0x18, 0xe7, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2e, 0x2e,
+	0x68, 0x6f, 0x72, 0x75, 0x73, 0x2e, 0x70, 0x62, 0x2e, 0x6c, 0x6f, 0x67, 0x73, 0x2e, 0x4c, 0x69,
+	0x64, 0x61, 0x72, 0x43, 0x6f, 0x72, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4c, 0x6f, 0x61,
+	0x64, 0x69, 0x6e, 0x67, 0x46, 0x72, 0x6f, 0x6d, 0x43, 0x61, 0x63, 0x68, 0x65, 0x48, 0x00, 0x52,
+	0x1f, 0x6c, 0x69, 0x64, 0x61, 0x72, 0x43, 0x6f, 0x72, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x4c, 0x6f, 0x61, 0x64, 0x69, 0x6e, 0x67, 0x46, 0x72, 0x6f, 0x6d, 0x43, 0x61, 0x63, 0x68, 0x65,
+	0x42, 0x06, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_horus_pb_logs_message_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
@@ -11913,6 +12119,10 @@ var file_horus_pb_logs_message_proto_goTypes = []any{
 	(*logs_pb.DbCommitFailed)(nil),                                      // 226: horus.pb.logs.DbCommitFailed
 	(*logs_pb.DetectionServiceRpcQueueFull)(nil),                        // 227: horus.pb.logs.DetectionServiceRpcQueueFull
 	(*logs_pb.ProjectMigrationFailed)(nil),                              // 228: horus.pb.logs.ProjectMigrationFailed
+	(*logs_pb.ProjectClusterMismatch)(nil),                              // 229: horus.pb.logs.ProjectClusterMismatch
+	(*logs_pb.MigratedProject)(nil),                                     // 230: horus.pb.logs.MigratedProject
+	(*logs_pb.OpenedDefaultProjectAfterClusterChangeWarning)(nil),       // 231: horus.pb.logs.OpenedDefaultProjectAfterClusterChangeWarning
+	(*logs_pb.LidarCorrectionLoadingFromCache)(nil),                     // 232: horus.pb.logs.LidarCorrectionLoadingFromCache
 }
 var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	2,   // 0: horus.pb.LogMessage.metadata:type_name -> horus.pb.LogMetadata
@@ -12143,11 +12353,15 @@ var file_horus_pb_logs_message_proto_depIdxs = []int32{
 	226, // 225: horus.pb.LogData.db_commit_failed:type_name -> horus.pb.logs.DbCommitFailed
 	227, // 226: horus.pb.LogData.detection_service_rpc_queue_full:type_name -> horus.pb.logs.DetectionServiceRpcQueueFull
 	228, // 227: horus.pb.LogData.project_migration_failed:type_name -> horus.pb.logs.ProjectMigrationFailed
-	228, // [228:228] is the sub-list for method output_type
-	228, // [228:228] is the sub-list for method input_type
-	228, // [228:228] is the sub-list for extension type_name
-	228, // [228:228] is the sub-list for extension extendee
-	0,   // [0:228] is the sub-list for field type_name
+	229, // 228: horus.pb.LogData.project_cluster_mismatch:type_name -> horus.pb.logs.ProjectClusterMismatch
+	230, // 229: horus.pb.LogData.migrated_project:type_name -> horus.pb.logs.MigratedProject
+	231, // 230: horus.pb.LogData.opened_default_project_after_cluster_change_warning:type_name -> horus.pb.logs.OpenedDefaultProjectAfterClusterChangeWarning
+	232, // 231: horus.pb.LogData.lidar_correction_loading_from_cache:type_name -> horus.pb.logs.LidarCorrectionLoadingFromCache
+	232, // [232:232] is the sub-list for method output_type
+	232, // [232:232] is the sub-list for method input_type
+	232, // [232:232] is the sub-list for extension type_name
+	232, // [232:232] is the sub-list for extension extendee
+	0,   // [0:232] is the sub-list for field type_name
 }
 
 func init() { file_horus_pb_logs_message_proto_init() }
@@ -12382,6 +12596,10 @@ func file_horus_pb_logs_message_proto_init() {
 		(*logData_DbCommitFailed)(nil),
 		(*logData_DetectionServiceRpcQueueFull)(nil),
 		(*logData_ProjectMigrationFailed)(nil),
+		(*logData_ProjectClusterMismatch)(nil),
+		(*logData_MigratedProject)(nil),
+		(*logData_OpenedDefaultProjectAfterClusterChangeWarning)(nil),
+		(*logData_LidarCorrectionLoadingFromCache)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

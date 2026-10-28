@@ -935,6 +935,22 @@ void HorusStringify(const ErasedSink& sink, const LogData& log_data) {
     logs::HorusStringify(sink, log_data.project_migration_failed());
     break;
   }
+  case LogData::DataOneof::kProjectClusterMismatch: {
+    logs::HorusStringify(sink, log_data.project_cluster_mismatch());
+    break;
+  }
+  case LogData::DataOneof::kMigratedProject: {
+    logs::HorusStringify(sink, log_data.migrated_project());
+    break;
+  }
+  case LogData::DataOneof::kOpenedDefaultProjectAfterClusterChangeWarning: {
+    logs::HorusStringify(sink, log_data.opened_default_project_after_cluster_change_warning());
+    break;
+  }
+  case LogData::DataOneof::kLidarCorrectionLoadingFromCache: {
+    logs::HorusStringify(sink, log_data.lidar_correction_loading_from_cache());
+    break;
+  }
   case LogData::DataOneof::kNotSet:
   default: {
     sink.Append("Unknown log message");
@@ -1847,6 +1863,22 @@ void HorusStringify(const ErasedSink& sink, const DetectionServiceRpcQueueFull& 
 
 void HorusStringify(const ErasedSink& sink, const ProjectMigrationFailed& data) {
   StringifyTo(sink, "Project migration failed: ", data.details(), ".");
+}
+
+void HorusStringify(const ErasedSink& sink, const ProjectClusterMismatch& data) {
+  StringifyTo(sink, "Project `", data.project_name(), "` does not match the current cluster: ", data.details());
+}
+
+void HorusStringify(const ErasedSink& sink, const MigratedProject& data) {
+  StringifyTo(sink, "Migrated project ", data.source_name(), " onto the current cluster as ", data.project_name());
+}
+
+void HorusStringify(const ErasedSink& sink, const OpenedDefaultProjectAfterClusterChangeWarning& data) {
+  StringifyTo(sink, "Project `", data.project_name(), "` does not match the current cluster and was not opened; opened `", data.opened_project_name(), "` instead. Migrate `", data.project_name(), "` to keep using it.");
+}
+
+void HorusStringify(const ErasedSink& sink, const LidarCorrectionLoadingFromCache& data) {
+  StringifyTo(sink, "[", data.lidar_name(), "][", data.lidar_id(), "] Failed to load ", data.correction_type(), " corrections from the lidar (", data.details(), "); using the corrections cached when they were last loaded from this lidar");
 }
 
 }  // namespace logs
