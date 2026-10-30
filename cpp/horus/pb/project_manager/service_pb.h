@@ -16,6 +16,7 @@
 #include "horus/pb/config/metadata_pb.h"
 #include "horus/pb/cow_bytes.h"
 #include "horus/pb/cow_repeated.h"
+#include "horus/pb/detection_service/detection_pb.h"
 #include "horus/pb/license_server/messages_pb.h"
 #include "horus/pb/logs/logs_pb.h"
 #include "horus/pb/message.h"
@@ -39,7 +40,7 @@ namespace pb {
 /// Different actions allowed by a license level
 ///  Encoded through a bitwise encoding
 ///
-/// Source: horus/pb/project_manager/service.proto:33:1
+/// Source: horus/pb/project_manager/service.proto:34:1
 enum class LicensePrivilege : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -65,7 +66,7 @@ enum class LicensePrivilege : PbEnum {  // NOLINT(*-enum-size)
 
 /// Service represented by the node.
 ///
-/// Source: horus/pb/project_manager/service.proto:129:5
+/// Source: horus/pb/project_manager/service.proto:130:5
 enum class GetHealthStatusResponse_NodeHealth_Service : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -90,7 +91,7 @@ enum class GetHealthStatusResponse_NodeHealth_Service : PbEnum {  // NOLINT(*-en
 
 /// Connectivity status.
 ///
-/// Source: horus/pb/project_manager/service.proto:141:5
+/// Source: horus/pb/project_manager/service.proto:142:5
 enum class GetHealthStatusResponse_NodeHealth_Status : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -121,7 +122,7 @@ class GetHealthStatusResponse;
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:70:3
+/// Source: horus/pb/project_manager/service.proto:71:3
 class LicenseLevel_Level1 final : public PbMessage {
  public:
 
@@ -268,7 +269,7 @@ class LicenseLevel_Level1 final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:75:3
+/// Source: horus/pb/project_manager/service.proto:76:3
 class LicenseLevel_Level2 final : public PbMessage {
  public:
 
@@ -415,7 +416,7 @@ class LicenseLevel_Level2 final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:80:3
+/// Source: horus/pb/project_manager/service.proto:81:3
 class LicenseLevel_Level3 final : public PbMessage {
  public:
 
@@ -625,7 +626,7 @@ class LicenseLevel_Level3 final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:86:3
+/// Source: horus/pb/project_manager/service.proto:87:3
 class LicenseLevel_Level4 final : public PbMessage {
  public:
 
@@ -772,7 +773,7 @@ class LicenseLevel_Level4 final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:56:1
+/// Source: horus/pb/project_manager/service.proto:57:1
 class LicenseLevel final : public PbMessage {
  public:
   /// @see LicenseLevel_Level1
@@ -1158,7 +1159,7 @@ class LicenseLevel final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:93:1
+/// Source: horus/pb/project_manager/service.proto:94:1
 class LicenseStatus final : public PbMessage {
  public:
 
@@ -1320,7 +1321,7 @@ class LicenseStatus final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/project_manager/service.proto:118:1
+/// Source: horus/pb/project_manager/service.proto:119:1
 class GetHealthStatusRequest final : public PbMessage {
  public:
 
@@ -1382,7 +1383,7 @@ class GetHealthStatusRequest final : public PbMessage {
 
 /// Connectivity status of a single node.
 ///
-/// Source: horus/pb/project_manager/service.proto:127:3
+/// Source: horus/pb/project_manager/service.proto:128:3
 class GetHealthStatusResponse_NodeHealth final : public PbMessage {
  public:
   /// @see GetHealthStatusResponse_NodeHealth_Service
@@ -1616,7 +1617,7 @@ class GetHealthStatusResponse_NodeHealth final : public PbMessage {
 
 /// Wraps SensorInfo with node unreachable error
 ///
-/// Source: horus/pb/project_manager/service.proto:153:3
+/// Source: horus/pb/project_manager/service.proto:154:3
 class GetHealthStatusResponse_SensorHealth final : public PbMessage {
  public:
 
@@ -1868,7 +1869,7 @@ class GetHealthStatusResponse_SensorHealth final : public PbMessage {
 /// Resource usage of each relevant node (preprocessing service & detection
 ///  service).
 ///
-/// Source: horus/pb/project_manager/service.proto:180:3
+/// Source: horus/pb/project_manager/service.proto:181:3
 class GetHealthStatusResponse_NodeResources final : public PbMessage {
  public:
 
@@ -1934,7 +1935,7 @@ class GetHealthStatusResponse_NodeResources final : public PbMessage {
 ///  - Lidar status
 ///  - Services connectivity
 ///
-/// Source: horus/pb/project_manager/service.proto:125:1
+/// Source: horus/pb/project_manager/service.proto:126:1
 class GetHealthStatusResponse final : public PbMessage {
  public:
   /// @see GetHealthStatusResponse_NodeHealth
@@ -2352,6 +2353,60 @@ class GetHealthStatusResponse final : public PbMessage {
     return std::move(set_detection_merger_total_overall_frame_latency(std::move(detection_merger_total_overall_frame_latency)));
   }
 
+  // Field `detection_merger_object_counts` (no 8).
+  // -----
+
+  /// The number of detected objects per label in the last merged event published
+  ///  by the detection merger service. Unset if unavailable (e.g. the detection
+  ///  merger node is unreachable, or no frame has been merged yet).
+  ///
+  /// Field no: 8.
+  constexpr const DetectedObjectCounts& detection_merger_object_counts() const& noexcept HORUS_LIFETIME_BOUND {
+    return detection_merger_object_counts_;
+  }
+
+  /// If `detection_merger_object_counts` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 8.
+  DetectedObjectCounts detection_merger_object_counts() && noexcept {
+    if (!set_fields_[7]) {
+      return {};
+    }
+    return std::move(detection_merger_object_counts_);
+  }
+
+  /// The number of detected objects per label in the last merged event published
+  ///  by the detection merger service. Unset if unavailable (e.g. the detection
+  ///  merger node is unreachable, or no frame has been merged yet).
+  ///
+  /// Field no: 8.
+  DetectedObjectCounts& mutable_detection_merger_object_counts() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[7] = true;
+    return detection_merger_object_counts_;
+  }
+
+  /// Returns whether `detection_merger_object_counts` (no 8) is set.
+  constexpr bool has_detection_merger_object_counts() const noexcept { return set_fields_[7]; }
+
+  /// Clears `detection_merger_object_counts` (no 8).
+  void clear_detection_merger_object_counts() & noexcept {
+    set_fields_[7] = false;
+    detection_merger_object_counts_ = {};
+  }
+
+  /// Sets `detection_merger_object_counts` (no 8) and returns `*this`.
+  GetHealthStatusResponse& set_detection_merger_object_counts(DetectedObjectCounts&& detection_merger_object_counts) & noexcept {
+    set_fields_[7] = true;
+    detection_merger_object_counts_ = std::move(detection_merger_object_counts);
+    return *this;
+  }
+  /// Sets `detection_merger_object_counts` (no 8) and returns `*this`.
+  GetHealthStatusResponse&& set_detection_merger_object_counts(DetectedObjectCounts&& detection_merger_object_counts) && noexcept {
+    return std::move(set_detection_merger_object_counts(std::move(detection_merger_object_counts)));
+  }
+
  private:
   /// @see project_name()
   CowBytes project_name_{};
@@ -2367,9 +2422,11 @@ class GetHealthStatusResponse final : public PbMessage {
   CowRepeated<GetHealthStatusResponse_NodeResources> node_resources_{};
   /// @see detection_merger_total_overall_frame_latency()
   Duration detection_merger_total_overall_frame_latency_{};
+  /// @see detection_merger_object_counts()
+  DetectedObjectCounts detection_merger_object_counts_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<7> set_fields_;
+  std::bitset<8> set_fields_;
 };
 
 }  // namespace pb

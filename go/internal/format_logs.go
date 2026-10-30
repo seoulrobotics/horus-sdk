@@ -459,7 +459,7 @@ func FormatAnyLogMessage(message proto.Message) string {
 	case *logs_pb.DbCommitFailed:
 		return fmt.Sprintf("Failed to %v in Horus database: %v.", data.GetAction(), data.GetError())
 	case *logs_pb.DetectionServiceRpcQueueFull:
-		return fmt.Sprintf("Dropping %v buffered packet(s) for node %v because the detection service RPC queue is full (queue size: %v).", data.GetNumPackets(), data.GetNodeId(), data.GetQueueSize())
+		return fmt.Sprintf("Dropping %v buffered packet(s) for node %v because the connection to the detection service is backed up (%v bytes buffered).", data.GetNumPackets(), data.GetNodeId(), data.GetQueueSize())
 	case *logs_pb.ProjectMigrationFailed:
 		return fmt.Sprintf("Project migration failed: %v.", data.GetDetails())
 	case *logs_pb.ProjectClusterMismatch:

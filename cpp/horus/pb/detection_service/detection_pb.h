@@ -102,6 +102,7 @@ class ZoneEventList;
 class DeepLearningObject_Classification;
 class DeepLearningObject;
 class DebugMergerInfo;
+class DetectedObjectCounts;
 class DetectionEvent_FrameInfo;
 class DetectionEvent;
 
@@ -2526,9 +2527,71 @@ class DebugMergerInfo final : public PbMessage {
   std::bitset<0> set_fields_;
 };
 
+/// The number of detected objects per label in a detection frame.
+///
+/// Source: horus/pb/detection_service/detection.proto:156:1
+class DetectedObjectCounts final : public PbMessage {
+ public:
+
+  /// Constructs a default-initialized `DetectedObjectCounts`.
+  DetectedObjectCounts() noexcept = default;
+
+  /// Move constructor.
+  DetectedObjectCounts(DetectedObjectCounts&&) noexcept = default;
+  /// Move assignment operator.
+  DetectedObjectCounts& operator=(DetectedObjectCounts&&) noexcept = default;
+
+  /// Constructs a clone of `other`.
+  ///
+  /// @throws std::bad_alloc If `other` owns heap-allocated data which could not be cloned due to a
+  /// lack of available memory.
+  explicit DetectedObjectCounts(const DetectedObjectCounts&) noexcept = default;  // NOLINT(*-explicit-*)
+
+  /// Cannot copy-assign to avoid implicit allocations.
+  DetectedObjectCounts& operator=(const DetectedObjectCounts&) = delete;
+
+  /// Default destructor.
+  ~DetectedObjectCounts() noexcept final = default;
+
+  /// Creates a `DetectedObjectCounts` whose contents are read from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  explicit DetectedObjectCounts(PbReader& reader) noexcept(false) : PbMessage{} {
+    DeserializeFrom(reader);
+  }
+
+  /// Serializes the message to `writer`.
+  ///
+  /// @throws std::bad_alloc If the resulting buffer failed to allocate.
+  void SerializeTo(PbWriter& writer) const noexcept(false) final {
+    static_cast<void>(writer);
+  }
+
+  /// Deserializes the message from `reader`.
+  ///
+  /// @throws InvalidProtobufMessage If the `reader` contains an invalid Protobuf message.
+  void DeserializeFrom(PbReader& reader) noexcept(false) final {
+    reader.SkipMessage();
+  }
+
+  /// Returns whether the message is empty.
+  bool IsEmpty() const noexcept final { return set_fields_.none(); }
+
+  /// The full name of the message: `horus.pb.DetectedObjectCounts`.
+  static constexpr StringView TypeName() noexcept { return "horus.pb.DetectedObjectCounts"; }
+
+  /// The full name of the message: `horus.pb.DetectedObjectCounts`.
+  StringView MessageTypeName() const noexcept final { return TypeName(); }
+
+ private:
+
+  /// The set of fields that have been given an explicit value.
+  std::bitset<0> set_fields_;
+};
+
 /// No documentation.
 ///
-/// Source: horus/pb/detection_service/detection.proto:157:3
+/// Source: horus/pb/detection_service/detection.proto:162:3
 class DetectionEvent_FrameInfo final : public PbMessage {
  public:
 
@@ -2638,7 +2701,7 @@ class DetectionEvent_FrameInfo final : public PbMessage {
 
 /// A detection event message.
 ///
-/// Source: horus/pb/detection_service/detection.proto:156:1
+/// Source: horus/pb/detection_service/detection.proto:161:1
 class DetectionEvent final : public PbMessage {
  public:
   /// @see DetectionEvent_FrameInfo

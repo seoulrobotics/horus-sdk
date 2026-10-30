@@ -152,6 +152,11 @@ message DeepLearningObject {
 message DebugMergerInfo {
 }
 
+// The number of detected objects per label in a detection frame.
+message DetectedObjectCounts {
+
+}
+
 // A detection event message.
 message DetectionEvent {
   message FrameInfo {

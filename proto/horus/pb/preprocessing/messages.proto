@@ -4,6 +4,8 @@ package horus.pb;
 
 import "horus/pb/config/metadata.proto";
 
+import "horus/pb/lidar_driver/model_type.proto";
+
 import "horus/pb/config/schema/detection_range.proto";
 
 /// The classification of the occupancy grid cell.
@@ -112,6 +114,9 @@ message SensorInfo {
   // Status reported by the LiDAR device itself. Only available for LiDARs that
   // support it (Hesai).
   optional DeviceStatus device_status = 9;
+
+  // The configured model type of the LiDAR.
+  LidarModelType model_type = 10;
 
   message PoseCorrection {
     Vector3f translation = 1;

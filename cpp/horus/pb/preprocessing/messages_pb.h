@@ -17,6 +17,7 @@
 #include "horus/pb/config/schema/detection_range_pb.h"
 #include "horus/pb/cow_bytes.h"
 #include "horus/pb/cow_repeated.h"
+#include "horus/pb/lidar_driver/model_type_pb.h"
 #include "horus/pb/message.h"
 #include "horus/pb/serialize.h"
 #include "horus/pb/types.h"
@@ -38,7 +39,7 @@ namespace pb {
 /// / @note The maximum number of classification enum values supported is 2^3=8.
 /// / @see `OccupancyGrid` message and `occupancy_map_constants` for more details.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:12:1
+/// Source: horus/pb/preprocessing/messages.proto:14:1
 enum class OccupancyClassification : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kOccupancyclassificationUnspecified = 0,
@@ -59,7 +60,7 @@ enum class OccupancyClassification : PbEnum {  // NOLINT(*-enum-size)
 ///  @note Each enum value should be a power of two.
 ///  @note No status should have the same value.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:78:1
+/// Source: horus/pb/preprocessing/messages.proto:80:1
 enum class SensorStatus : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -89,7 +90,7 @@ enum class SensorStatus : PbEnum {  // NOLINT(*-enum-size)
 /// Reference alignment type for tilt detector.
 ///  Indicates which reference is being used by the tilt detector.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:93:1
+/// Source: horus/pb/preprocessing/messages.proto:95:1
 enum class ReferenceAlignmentType : PbEnum {  // NOLINT(*-enum-size)
   /// No documentation.
   kUnspecified = 0,
@@ -114,7 +115,7 @@ class SensorInfo;
 /// / Consecutive cells of the same classification are compressed into a single
 /// / uint32.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:25:1
+/// Source: horus/pb/preprocessing/messages.proto:27:1
 class OccupancyGrid final : public PbMessage {
  public:
 
@@ -327,7 +328,7 @@ class OccupancyGrid final : public PbMessage {
 /// /     `grid_y = floor((point.y - y_min) / resolution)`
 /// / Each event corresponds to a single detection node's range.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:52:1
+/// Source: horus/pb/preprocessing/messages.proto:54:1
 class OccupancyGridEvent final : public PbMessage {
  public:
 
@@ -686,7 +687,7 @@ class OccupancyGridEvent final : public PbMessage {
 /// / A list of occupancy grid events, which may correspond to multiple detection
 /// / nodes' ranges.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:71:1
+/// Source: horus/pb/preprocessing/messages.proto:73:1
 class OccupancyGridListEvent final : public PbMessage {
  public:
 
@@ -796,7 +797,7 @@ class OccupancyGridListEvent final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:116:3
+/// Source: horus/pb/preprocessing/messages.proto:121:3
 class SensorInfo_PoseCorrection final : public PbMessage {
  public:
 
@@ -958,7 +959,7 @@ class SensorInfo_PoseCorrection final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:121:3
+/// Source: horus/pb/preprocessing/messages.proto:126:3
 class SensorInfo_DeviceStatus final : public PbMessage {
  public:
 
@@ -1136,7 +1137,7 @@ class SensorInfo_DeviceStatus final : public PbMessage {
 
 /// No documentation.
 ///
-/// Source: horus/pb/preprocessing/messages.proto:97:1
+/// Source: horus/pb/preprocessing/messages.proto:99:1
 class SensorInfo final : public PbMessage {
  public:
   /// @see SensorInfo_DeviceStatus
@@ -1582,6 +1583,56 @@ class SensorInfo final : public PbMessage {
     return std::move(set_device_status(std::move(device_status)));
   }
 
+  // Field `model_type` (no 10).
+  // -----
+
+  /// The configured model type of the LiDAR.
+  ///
+  /// Field no: 10.
+  constexpr const LidarModelType& model_type() const& noexcept HORUS_LIFETIME_BOUND {
+    return model_type_;
+  }
+
+  /// If `model_type` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 10.
+  LidarModelType model_type() && noexcept {
+    if (!set_fields_[9]) {
+      return {};
+    }
+    return std::move(model_type_);
+  }
+
+  /// The configured model type of the LiDAR.
+  ///
+  /// Field no: 10.
+  LidarModelType& mutable_model_type() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[9] = true;
+    return model_type_;
+  }
+
+  /// Returns whether `model_type` (no 10) is set.
+  constexpr bool has_model_type() const noexcept { return set_fields_[9]; }
+
+  /// Clears `model_type` (no 10).
+  void clear_model_type() & noexcept {
+    set_fields_[9] = false;
+    model_type_ = {};
+  }
+
+  /// Sets `model_type` (no 10) and returns `*this`.
+  SensorInfo& set_model_type(LidarModelType&& model_type) & noexcept {
+    set_fields_[9] = true;
+    model_type_ = std::move(model_type);
+    return *this;
+  }
+  /// Sets `model_type` (no 10) and returns `*this`.
+  SensorInfo&& set_model_type(LidarModelType&& model_type) && noexcept {
+    return std::move(set_model_type(std::move(model_type)));
+  }
+
  private:
   /// @see lidar_id()
   CowBytes lidar_id_{};
@@ -1601,9 +1652,11 @@ class SensorInfo final : public PbMessage {
   ReferenceAlignmentType reference_alignment_{};
   /// @see device_status()
   SensorInfo_DeviceStatus device_status_{};
+  /// @see model_type()
+  LidarModelType model_type_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<9> set_fields_;
+  std::bitset<10> set_fields_;
 };
 
 }  // namespace pb
