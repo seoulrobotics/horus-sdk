@@ -351,6 +351,7 @@ GetHealthStatusResponse::GetHealthStatusResponse(const GetHealthStatusResponse& 
     , service_statuses_{other.service_statuses_}
     , node_resources_{other.node_resources_}
     , detection_merger_total_overall_frame_latency_{other.detection_merger_total_overall_frame_latency_}
+    , detection_merger_object_counts_{other.detection_merger_object_counts_}
     , set_fields_{other.set_fields_} {}
 
 void GetHealthStatusResponse::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -374,6 +375,9 @@ void GetHealthStatusResponse::SerializeTo(PbWriter& writer) const noexcept(false
   }
   if (set_fields_[6]) {
     SerializeField<Duration>(writer, /*tag=*/ 7, detection_merger_total_overall_frame_latency_);
+  }
+  if (set_fields_[7]) {
+    SerializeField<DetectedObjectCounts>(writer, /*tag=*/ 8, detection_merger_object_counts_);
   }
 }
 
@@ -413,6 +417,11 @@ void GetHealthStatusResponse::DeserializeFrom(PbReader& reader) noexcept(false) 
       case 7: {
         DeserializeField<Duration>(reader, detection_merger_total_overall_frame_latency_);
         set_fields_[6] = true;
+        break;
+      }
+      case 8: {
+        DeserializeField<DetectedObjectCounts>(reader, detection_merger_object_counts_);
+        set_fields_[7] = true;
         break;
       }
       default: {

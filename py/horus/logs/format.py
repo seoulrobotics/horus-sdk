@@ -1148,7 +1148,7 @@ def format_db_commit_failed(log: _logs_pb.DbCommitFailed) -> str:
 
 def format_detection_service_rpc_queue_full(log: _logs_pb.DetectionServiceRpcQueueFull) -> str:
     """Formats log `DetectionServiceRpcQueueFull` to a string."""
-    return f"Dropping {log.num_packets} buffered packet(s) for node {log.node_id} because the detection service RPC queue is full (queue size: {log.queue_size})."
+    return f"Dropping {log.num_packets} buffered packet(s) for node {log.node_id} because the connection to the detection service is backed up ({log.queue_size} bytes buffered)."
 
 def format_project_migration_failed(log: _logs_pb.ProjectMigrationFailed) -> str:
     """Formats log `ProjectMigrationFailed` to a string."""

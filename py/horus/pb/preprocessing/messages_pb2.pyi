@@ -1,4 +1,5 @@
 from horus.pb.config import metadata_pb2 as _metadata_pb2
+from horus.pb.lidar_driver import model_type_pb2 as _model_type_pb2
 from horus.pb.config.schema import detection_range_pb2 as _detection_range_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
@@ -82,7 +83,7 @@ class OccupancyGridListEvent(_message.Message):
     def __init__(self, occupancy_grid_events: _Optional[_Iterable[_Union[OccupancyGridEvent, _Mapping]]] = ...) -> None: ...
 
 class SensorInfo(_message.Message):
-    __slots__ = ("lidar_id", "lidar_name", "status", "measured_frequency", "pose_correction", "num_total_dropped_packets", "num_total_expected_packets", "reference_alignment", "device_status")
+    __slots__ = ("lidar_id", "lidar_name", "status", "measured_frequency", "pose_correction", "num_total_dropped_packets", "num_total_expected_packets", "reference_alignment", "device_status", "model_type")
     class PoseCorrection(_message.Message):
         __slots__ = ("translation", "rotation")
         TRANSLATION_FIELD_NUMBER: _ClassVar[int]
@@ -108,6 +109,7 @@ class SensorInfo(_message.Message):
     NUM_TOTAL_EXPECTED_PACKETS_FIELD_NUMBER: _ClassVar[int]
     REFERENCE_ALIGNMENT_FIELD_NUMBER: _ClassVar[int]
     DEVICE_STATUS_FIELD_NUMBER: _ClassVar[int]
+    MODEL_TYPE_FIELD_NUMBER: _ClassVar[int]
     lidar_id: str
     lidar_name: str
     status: int
@@ -117,4 +119,5 @@ class SensorInfo(_message.Message):
     num_total_expected_packets: int
     reference_alignment: ReferenceAlignmentType
     device_status: SensorInfo.DeviceStatus
-    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ..., status: _Optional[int] = ..., measured_frequency: _Optional[float] = ..., pose_correction: _Optional[_Union[SensorInfo.PoseCorrection, _Mapping]] = ..., num_total_dropped_packets: _Optional[int] = ..., num_total_expected_packets: _Optional[int] = ..., reference_alignment: _Optional[_Union[ReferenceAlignmentType, str]] = ..., device_status: _Optional[_Union[SensorInfo.DeviceStatus, _Mapping]] = ...) -> None: ...
+    model_type: _model_type_pb2.LidarModelType
+    def __init__(self, lidar_id: _Optional[str] = ..., lidar_name: _Optional[str] = ..., status: _Optional[int] = ..., measured_frequency: _Optional[float] = ..., pose_correction: _Optional[_Union[SensorInfo.PoseCorrection, _Mapping]] = ..., num_total_dropped_packets: _Optional[int] = ..., num_total_expected_packets: _Optional[int] = ..., reference_alignment: _Optional[_Union[ReferenceAlignmentType, str]] = ..., device_status: _Optional[_Union[SensorInfo.DeviceStatus, _Mapping]] = ..., model_type: _Optional[_Union[_model_type_pb2.LidarModelType, _Mapping]] = ...) -> None: ...

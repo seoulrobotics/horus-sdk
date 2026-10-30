@@ -514,6 +514,8 @@ void DeepLearningObject::DeserializeFrom(PbReader& reader) noexcept(false) {
 
 
 
+
+
 DetectionEvent_FrameInfo::DetectionEvent_FrameInfo(const DetectionEvent_FrameInfo& other) noexcept(false)
     : frame_timestamp_{other.frame_timestamp_}
     , set_fields_{other.set_fields_} {}

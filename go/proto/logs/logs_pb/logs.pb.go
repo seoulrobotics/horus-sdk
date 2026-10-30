@@ -15521,7 +15521,7 @@ func (b0 DbCommitFailed_builder) Build() *DbCommitFailed {
 
 // Log #226.
 //
-// > Dropping $num_packets buffered packet(s) for node $node_id because the detection service RPC queue is full (queue size: $queue_size).
+// > Dropping $num_packets buffered packet(s) for node $node_id because the connection to the detection service is backed up ($queue_size bytes buffered).
 type DetectionServiceRpcQueueFull struct {
 	state                 protoimpl.MessageState `protogen:"opaque.v1"`
 	xxx_hidden_NumPackets uint64                 `protobuf:"varint,1,opt,name=num_packets,json=numPackets,proto3" json:"num_packets,omitempty"`

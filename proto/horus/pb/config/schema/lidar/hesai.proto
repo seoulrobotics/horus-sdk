@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package horus.pb;
+
+message HesaiLidarConfig {
+
+  enum Model {
+    // Removed PANDAR64 model
+    reserved 1;
+    // Removed PANDAR128 model
+    reserved 2;
+    // Removed AT128 model
+    reserved 3;
+    // Removed QT64 model
+    reserved 4;
+    // Removed QT128 model
+    reserved 5;
+    // Removed FT120 model
+    reserved 6;
+    // Removed XT16 model
+    reserved 7;
+    // Removed OT128 model
+    reserved 9;
+    // Removed XT32M2 model
+    reserved 10;
+
+    MODEL_UNSPECIFIED = 0;
+    XT16 = 11;
+    XT32 = 8;
+    OT128 = 12;
+    JT128 = 13;
+    QT128 = 14;
+  };
+
+  // The removed ptc receiving port
+  reserved 3;
+  // The removed multicast interface IP field
+  reserved 6;
+
+}
