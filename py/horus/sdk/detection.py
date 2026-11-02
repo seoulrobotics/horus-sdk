@@ -91,17 +91,34 @@ class Shape:
 
 
 @dataclasses.dataclass(frozen=True)
+class TimeRange:
+    """A time range with start and end timestamps."""
+
+    start: datetime.datetime
+    end: datetime.datetime
+
+    @staticmethod
+    def _from_pb(pb: detection_pb2.TimeRange) -> "TimeRange":
+        return TimeRange(
+            start=timestamp_to_datetime(pb.start),
+            end=timestamp_to_datetime(pb.end),
+        )
+
+
+@dataclasses.dataclass(frozen=True)
 class Status:
     """The status of an object."""
 
     id: int
     tracking_status: TrackingStatus
+    observation_time_range: TimeRange
 
     @staticmethod
     def _from_pb(pb: detection_pb2.DetectedObject.Status) -> "Status":
         return Status(
             id=pb.id,
             tracking_status=TrackingStatus(pb.tracking_status),
+            observation_time_range=TimeRange._from_pb(pb.observation_time_range),
         )
 
 

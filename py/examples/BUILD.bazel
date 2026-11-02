@@ -13,6 +13,7 @@ load("@rules_python//python:py_binary.bzl", "py_binary")
         "print_logs",
         "print_object_counts",
         "print_object_zones_and_zone_events",
+        "print_observation_time_ranges",
         "print_sensor_status",
         "profile_detection",
     ]

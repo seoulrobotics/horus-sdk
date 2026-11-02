@@ -4,6 +4,7 @@ package horus.pb;
 
 import "horus/pb/config/metadata.proto";
 
+import "horus/pb/detection_service/detection.proto";
 import "horus/pb/logs/logs.proto";
 
 import "horus/pb/preprocessing/messages.proto";
@@ -147,6 +148,7 @@ message GetHealthStatusResponse {
     string node_id = 2;
     Status node_status = 3;
     int64 latency_us = 4;
+    string worker_id = 5;
   }
 
   // Wraps SensorInfo with node unreachable error
@@ -186,4 +188,9 @@ message GetHealthStatusResponse {
   // service. Unset if unavailable (e.g. the detection merger node is
   // unreachable, or no frame has been merged yet).
   optional Duration detection_merger_total_overall_frame_latency = 7;
+
+  // The number of detected objects per label in the last merged event published
+  // by the detection merger service. Unset if unavailable (e.g. the detection
+  // merger node is unreachable, or no frame has been merged yet).
+  optional DetectedObjectCounts detection_merger_object_counts = 8;
 }

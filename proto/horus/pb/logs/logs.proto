@@ -1703,7 +1703,7 @@ message DbCommitFailed {
 
 // Log #226.
 //
-// > Dropping $num_packets buffered packet(s) for node $node_id because the detection service RPC queue is full (queue size: $queue_size).
+// > Dropping $num_packets buffered packet(s) for node $node_id because the connection to the detection service is backed up ($queue_size bytes buffered).
 message DetectionServiceRpcQueueFull {
   uint64 num_packets = 1;
   uint64 queue_size = 2;

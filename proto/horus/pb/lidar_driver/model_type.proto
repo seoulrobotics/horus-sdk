@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+import "horus/pb/config/schema/lidar/hesai.proto";
+import "horus/pb/config/schema/lidar/misc.proto";
+import "horus/pb/config/schema/lidar/ros2_topic.proto";
+
+package horus.pb;
+
+message LidarModelType {
+  // Removed livox lidar config model
+  reserved 2;
+  // Removed ouster lidar config model
+  reserved 4;
+  // Removed seyond lidar config model
+  reserved 5;
+
+  oneof model_type {
+    MiscLidarConfig.Model misc = 1;
+    HesaiLidarConfig.Model hesai = 3;
+    Ros2TopicLidarConfig.Model ros2_topic = 6;
+  }
+}

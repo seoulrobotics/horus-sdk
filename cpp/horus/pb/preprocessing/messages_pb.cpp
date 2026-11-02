@@ -236,6 +236,7 @@ SensorInfo::SensorInfo(const SensorInfo& other) noexcept(false)
     , num_total_expected_packets_{other.num_total_expected_packets_}
     , reference_alignment_{other.reference_alignment_}
     , device_status_{other.device_status_}
+    , model_type_{other.model_type_}
     , set_fields_{other.set_fields_} {}
 
 void SensorInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -265,6 +266,9 @@ void SensorInfo::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[8]) {
     SerializeField<SensorInfo_DeviceStatus>(writer, /*tag=*/ 9, device_status_);
+  }
+  if (set_fields_[9]) {
+    SerializeField<LidarModelType>(writer, /*tag=*/ 10, model_type_);
   }
 }
 
@@ -314,6 +318,11 @@ void SensorInfo::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 9: {
         DeserializeField<SensorInfo_DeviceStatus>(reader, device_status_);
         set_fields_[8] = true;
+        break;
+      }
+      case 10: {
+        DeserializeField<LidarModelType>(reader, model_type_);
+        set_fields_[9] = true;
         break;
       }
       default: {

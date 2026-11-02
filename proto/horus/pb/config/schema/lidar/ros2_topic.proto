@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package horus.pb;
+
+// This config points to a ROS2 topic.
+// It is oblivious of the real LiDAR model. The config of the real LiDAR is out
+// of Horus scope. Horus simply expects to be able to poll LiDAR point clouds
+// from the given topic name.
+message Ros2TopicLidarConfig {
+
+  enum Model {
+    MODEL_UNSPECIFIED = 0;
+    // Mock config to be able to properly use the config in the frontend.
+    ROS2_TOPIC = 1;
+  }
+
+}

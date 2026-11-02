@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package horus.pb;
+
+message MiscLidarConfig {
+
+  enum Model {
+    MODEL_UNSPECIFIED = 0;
+    HORUS_BAG_LIDAR = 1;
+  };
+
+}
