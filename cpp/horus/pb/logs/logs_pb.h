@@ -31581,7 +31581,7 @@ class DbCommitFailed final : public PbMessage {
 
 /// Log #226.
 /// 
-///  > Dropping $num_packets buffered packet(s) for node $node_id because the detection service RPC queue is full (queue size: $queue_size).
+///  > Dropping $num_packets buffered packet(s) for node $node_id because the connection to the detection service is backed up ($queue_size bytes buffered).
 ///
 /// Source: horus/pb/logs/logs.proto:1707:1
 class DetectionServiceRpcQueueFull final : public PbMessage {

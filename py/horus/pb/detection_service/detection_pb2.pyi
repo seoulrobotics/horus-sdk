@@ -155,6 +155,10 @@ class DebugMergerInfo(_message.Message):
     __slots__ = ()
     def __init__(self) -> None: ...
 
+class DetectedObjectCounts(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
+
 class DetectionEvent(_message.Message):
     __slots__ = ("objects", "labeled_point_clouds", "frame_info", "raw_deep_learning_objects", "unrecovered_object_ids", "is_replaying", "overall_frame_latency", "publishing_time", "debug_merger_info")
     class FrameInfo(_message.Message):

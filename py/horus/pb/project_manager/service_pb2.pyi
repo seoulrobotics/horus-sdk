@@ -1,4 +1,5 @@
 from horus.pb.config import metadata_pb2 as _metadata_pb2
+from horus.pb.detection_service import detection_pb2 as _detection_pb2
 from horus.pb.logs import logs_pb2 as _logs_pb2
 from horus.pb.preprocessing import messages_pb2 as _messages_pb2
 from horus.pb.license_server import messages_pb2 as _messages_pb2_1
@@ -75,9 +76,9 @@ class GetHealthStatusRequest(_message.Message):
     def __init__(self) -> None: ...
 
 class GetHealthStatusResponse(_message.Message):
-    __slots__ = ("project_name", "version", "license_status", "sensor_statuses", "service_statuses", "node_resources", "detection_merger_total_overall_frame_latency")
+    __slots__ = ("project_name", "version", "license_status", "sensor_statuses", "service_statuses", "node_resources", "detection_merger_total_overall_frame_latency", "detection_merger_object_counts")
     class NodeHealth(_message.Message):
-        __slots__ = ("service", "node_id", "node_status", "latency_us")
+        __slots__ = ("service", "node_id", "node_status", "latency_us", "worker_id")
         class Service(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
             __slots__ = ()
             SERVICE_UNSPECIFIED: _ClassVar[GetHealthStatusResponse.NodeHealth.Service]
@@ -108,11 +109,13 @@ class GetHealthStatusResponse(_message.Message):
         NODE_ID_FIELD_NUMBER: _ClassVar[int]
         NODE_STATUS_FIELD_NUMBER: _ClassVar[int]
         LATENCY_US_FIELD_NUMBER: _ClassVar[int]
+        WORKER_ID_FIELD_NUMBER: _ClassVar[int]
         service: GetHealthStatusResponse.NodeHealth.Service
         node_id: str
         node_status: GetHealthStatusResponse.NodeHealth.Status
         latency_us: int
-        def __init__(self, service: _Optional[_Union[GetHealthStatusResponse.NodeHealth.Service, str]] = ..., node_id: _Optional[str] = ..., node_status: _Optional[_Union[GetHealthStatusResponse.NodeHealth.Status, str]] = ..., latency_us: _Optional[int] = ...) -> None: ...
+        worker_id: str
+        def __init__(self, service: _Optional[_Union[GetHealthStatusResponse.NodeHealth.Service, str]] = ..., node_id: _Optional[str] = ..., node_status: _Optional[_Union[GetHealthStatusResponse.NodeHealth.Status, str]] = ..., latency_us: _Optional[int] = ..., worker_id: _Optional[str] = ...) -> None: ...
     class SensorHealth(_message.Message):
         __slots__ = ("preprocessing_node_id", "info", "timeout")
         PREPROCESSING_NODE_ID_FIELD_NUMBER: _ClassVar[int]
@@ -132,6 +135,7 @@ class GetHealthStatusResponse(_message.Message):
     SERVICE_STATUSES_FIELD_NUMBER: _ClassVar[int]
     NODE_RESOURCES_FIELD_NUMBER: _ClassVar[int]
     DETECTION_MERGER_TOTAL_OVERALL_FRAME_LATENCY_FIELD_NUMBER: _ClassVar[int]
+    DETECTION_MERGER_OBJECT_COUNTS_FIELD_NUMBER: _ClassVar[int]
     project_name: str
     version: str
     license_status: LicenseStatus
@@ -139,4 +143,5 @@ class GetHealthStatusResponse(_message.Message):
     service_statuses: _containers.RepeatedCompositeFieldContainer[GetHealthStatusResponse.NodeHealth]
     node_resources: _containers.RepeatedCompositeFieldContainer[GetHealthStatusResponse.NodeResources]
     detection_merger_total_overall_frame_latency: _metadata_pb2.Duration
-    def __init__(self, project_name: _Optional[str] = ..., version: _Optional[str] = ..., license_status: _Optional[_Union[LicenseStatus, _Mapping]] = ..., sensor_statuses: _Optional[_Iterable[_Union[GetHealthStatusResponse.SensorHealth, _Mapping]]] = ..., service_statuses: _Optional[_Iterable[_Union[GetHealthStatusResponse.NodeHealth, _Mapping]]] = ..., node_resources: _Optional[_Iterable[_Union[GetHealthStatusResponse.NodeResources, _Mapping]]] = ..., detection_merger_total_overall_frame_latency: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ...) -> None: ...
+    detection_merger_object_counts: _detection_pb2.DetectedObjectCounts
+    def __init__(self, project_name: _Optional[str] = ..., version: _Optional[str] = ..., license_status: _Optional[_Union[LicenseStatus, _Mapping]] = ..., sensor_statuses: _Optional[_Iterable[_Union[GetHealthStatusResponse.SensorHealth, _Mapping]]] = ..., service_statuses: _Optional[_Iterable[_Union[GetHealthStatusResponse.NodeHealth, _Mapping]]] = ..., node_resources: _Optional[_Iterable[_Union[GetHealthStatusResponse.NodeResources, _Mapping]]] = ..., detection_merger_total_overall_frame_latency: _Optional[_Union[_metadata_pb2.Duration, _Mapping]] = ..., detection_merger_object_counts: _Optional[_Union[_detection_pb2.DetectedObjectCounts, _Mapping]] = ...) -> None: ...

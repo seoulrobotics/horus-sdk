@@ -6,6 +6,12 @@ set(horus_sdk_pb_sources
   horus/pb/config/metadata_pb.h
   horus/pb/config/schema/detection_range_pb.cpp
   horus/pb/config/schema/detection_range_pb.h
+  horus/pb/config/schema/lidar/hesai_pb.cpp
+  horus/pb/config/schema/lidar/hesai_pb.h
+  horus/pb/config/schema/lidar/misc_pb.cpp
+  horus/pb/config/schema/lidar/misc_pb.h
+  horus/pb/config/schema/lidar/ros2_topic_pb.cpp
+  horus/pb/config/schema/lidar/ros2_topic_pb.h
   horus/pb/config/schema/zone_pb.cpp
   horus/pb/config/schema/zone_pb.h
   horus/pb/detection_merger/service_client.h
@@ -22,6 +28,8 @@ set(horus_sdk_pb_sources
   horus/pb/detection_service/detection_service_pb.h
   horus/pb/license_server/messages_pb.cpp
   horus/pb/license_server/messages_pb.h
+  horus/pb/lidar_driver/model_type_pb.cpp
+  horus/pb/lidar_driver/model_type_pb.h
   horus/pb/logs/common_pb.cpp
   horus/pb/logs/common_pb.h
   horus/pb/logs/logs_pb.cpp
