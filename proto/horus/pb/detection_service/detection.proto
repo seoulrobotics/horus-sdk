@@ -188,4 +188,8 @@ message DetectionEvent {
   // node. Only populated when debug local objects are enabled in the detection
   // merger configuration.
   optional DebugMergerInfo debug_merger_info = 9;
+
+  // IDs of detection nodes that were inactive when merging detection events
+  // into one.
+  repeated string missing_node_ids = 10;
 }

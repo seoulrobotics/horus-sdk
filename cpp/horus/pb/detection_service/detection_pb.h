@@ -3203,6 +3203,58 @@ class DetectionEvent final : public PbMessage {
     return std::move(set_debug_merger_info(std::move(debug_merger_info)));
   }
 
+  // Field `missing_node_ids` (no 10).
+  // -----
+
+  /// IDs of detection nodes that were inactive when merging detection events
+  ///  into one.
+  ///
+  /// Field no: 10.
+  constexpr const CowRepeated<CowBytes>& missing_node_ids() const& noexcept HORUS_LIFETIME_BOUND {
+    return missing_node_ids_;
+  }
+
+  /// If `missing_node_ids` is set, moves it out of the message (without marking it as unset).
+  ///
+  /// Otherwise, returns a default-initialized value.
+  ///
+  /// Field no: 10.
+  CowRepeated<CowBytes> missing_node_ids() && noexcept {
+    if (!set_fields_[9]) {
+      return {};
+    }
+    return std::move(missing_node_ids_);
+  }
+
+  /// IDs of detection nodes that were inactive when merging detection events
+  ///  into one.
+  ///
+  /// Field no: 10.
+  CowRepeated<CowBytes>& mutable_missing_node_ids() & noexcept HORUS_LIFETIME_BOUND {
+    set_fields_[9] = true;
+    return missing_node_ids_;
+  }
+
+  /// Returns whether `missing_node_ids` (no 10) is set.
+  constexpr bool has_missing_node_ids() const noexcept { return set_fields_[9]; }
+
+  /// Clears `missing_node_ids` (no 10).
+  void clear_missing_node_ids() & noexcept {
+    set_fields_[9] = false;
+    missing_node_ids_ = {};
+  }
+
+  /// Sets `missing_node_ids` (no 10) and returns `*this`.
+  DetectionEvent& set_missing_node_ids(CowRepeated<CowBytes>&& missing_node_ids) & noexcept {
+    set_fields_[9] = true;
+    missing_node_ids_ = std::move(missing_node_ids);
+    return *this;
+  }
+  /// Sets `missing_node_ids` (no 10) and returns `*this`.
+  DetectionEvent&& set_missing_node_ids(CowRepeated<CowBytes>&& missing_node_ids) && noexcept {
+    return std::move(set_missing_node_ids(std::move(missing_node_ids)));
+  }
+
  private:
   /// @see objects()
   CowRepeated<DetectedObject> objects_{};
@@ -3222,9 +3274,11 @@ class DetectionEvent final : public PbMessage {
   Timestamp publishing_time_{};
   /// @see debug_merger_info()
   DebugMergerInfo debug_merger_info_{};
+  /// @see missing_node_ids()
+  CowRepeated<CowBytes> missing_node_ids_{};
 
   /// The set of fields that have been given an explicit value.
-  std::bitset<9> set_fields_;
+  std::bitset<10> set_fields_;
 };
 
 }  // namespace pb

@@ -552,6 +552,7 @@ DetectionEvent::DetectionEvent(const DetectionEvent& other) noexcept(false)
     , overall_frame_latency_{other.overall_frame_latency_}
     , publishing_time_{other.publishing_time_}
     , debug_merger_info_{other.debug_merger_info_}
+    , missing_node_ids_{other.missing_node_ids_}
     , set_fields_{other.set_fields_} {}
 
 void DetectionEvent::SerializeTo(PbWriter& writer) const noexcept(false) {
@@ -581,6 +582,9 @@ void DetectionEvent::SerializeTo(PbWriter& writer) const noexcept(false) {
   }
   if (set_fields_[8]) {
     SerializeField<DebugMergerInfo>(writer, /*tag=*/ 9, debug_merger_info_);
+  }
+  if (set_fields_[9]) {
+    SerializeField<CowRepeated<CowBytes>>(writer, /*tag=*/ 10, missing_node_ids_);
   }
 }
 
@@ -630,6 +634,11 @@ void DetectionEvent::DeserializeFrom(PbReader& reader) noexcept(false) {
       case 9: {
         DeserializeField<DebugMergerInfo>(reader, debug_merger_info_);
         set_fields_[8] = true;
+        break;
+      }
+      case 10: {
+        DeserializeField<CowRepeated<CowBytes>>(reader, missing_node_ids_);
+        set_fields_[9] = true;
         break;
       }
       default: {
